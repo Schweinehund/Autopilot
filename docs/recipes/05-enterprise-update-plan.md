@@ -6,7 +6,7 @@ doc_type: Guide
 platform: all
 last_verified: 2026-08-26
 review_by: 2026-10-25
-applies_to: Every Intune-managed device in the tenant — Windows, macOS, iOS, Android and Linux — across all update surfaces
+applies_to: Every Intune-managed device in the tenant — Windows, macOS, iOS, Android and Linux — across the update surfaces this plan governs
 audience: admin
 ---
 
@@ -18,13 +18,14 @@ audience: admin
 
 Following this plan yields a fleet in which every managed device is covered by exactly one update
 authority per surface — Windows quality and feature updates, drivers and firmware, BIOS settings,
-Microsoft 365 Apps, packaged applications, and the macOS, iOS, Android and Linux estates — with each
-surface's cadence, deadline and exception path recorded as a deliberate choice rather than inherited
-from a tenant default, governed end-to-end from Intune. It covers every platform Intune manages and
-requires the Intune Administrator role, or an equivalent custom role covering update ring policies,
-device configuration profiles, application assignment and compliance policy. Ten Steps take the plan
-from Windows update topology through to deferrals and deadlines; nine of them are decisions this
-document asks you to make rather than making for you.
+Microsoft 365 Apps, packaged Windows applications, and the OS-update posture of the macOS, iOS,
+Android and Linux estates — with each surface's cadence, deadline and exception path recorded as a
+deliberate choice rather than inherited from a tenant default, governed end-to-end from Intune. It
+covers every platform Intune manages and requires the Intune Administrator role, or an equivalent
+custom role covering update ring policies, device configuration profiles, application assignment and
+compliance policy; two branches of Step 4 additionally require a one-time Global Administrator
+consent grant. Ten Steps take the plan from Windows update topology through to deferrals and
+deadlines; nine of them are decisions this document asks you to make rather than making for you.
 
 > **Scope:** A tenant-wide configuration plan, not a per-platform procedure guide. Each Step decides one thing and links the operations guide that owns the mechanism in full.
 
@@ -43,7 +44,9 @@ cannot meet closes a branch outright rather than making it a worse choice.
   **Source:** [Windows Autopatch prerequisites](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/prepare/windows-autopatch-prerequisites) (updated 2026-02-27), as carried by [Windows Autopatch](../operations/patch-management/07-windows-autopatch.md#enrollment-prerequisites).
 - **Workload gate on the same branch:** the Windows Update workload must already be Intune-authoritative — at Pilot Intune or Intune in co-management — before Autopatch can be enabled. Where Configuration Manager is present at all, it must be cloud-attached with Intune. See [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#autopatch-disambiguation).
 - **BIOS password gate on the Dell branch of Step 4:** the Dell BIOS configuration policy requires that devices do **not** already have a BIOS password set, because Intune must hold the password itself. On an existing fleet whose devices were imaged with a BIOS password in place, that branch is closed outright — this is the likeliest reason a reader's chosen branch turns out to be unavailable. See [Dell BIOS Configuration](../operations/firmware-bios/02-dell-bios-configuration.md#prerequisites).
-- **Platform reach gate:** a decision below applies only to the platforms its marker line names. A Windows-only decision has no macOS, iOS, Android or Linux equivalent to make, and leaving it unmade does not leave those platforms ungoverned — their own Steps cover them.
+- **Global Administrator gate on the Dell branch and the HP branch of [Step 4](#decision-bios-firmware-surface):** both vendor paths require a one-time consent grant performed by a Global Administrator, not by an Intune Administrator. The Dell grant additionally carries read access to BitLocker recovery keys and read-write access to Intune device configuration and policies, so evaluate it on that basis rather than on its label. Day-to-day operation on both paths runs under Intune Administrator; only the consent grant needs the higher role. See [Dell BIOS Configuration](../operations/firmware-bios/02-dell-bios-configuration.md#prerequisites) and [HP BIOS Configuration Through Intune](../operations/firmware-bios/03-hp-bios-configuration.md#delivery).
+- **OS-version gate on the declarative branch of [Step 7](#decision-non-windows-enforcement):** the DDM software update assertion requires macOS 14.0 or later, and DDM update enforcement on iOS and iPadOS requires iOS 17.0 or later. A macOS 13 or iOS 16 fleet cannot take that branch, and because the legacy primitives become non-functional in all Apple OS 27.0 operating systems, such a fleet loses MDM-driven update enforcement entirely rather than falling back to a worse option. Treat the OS upgrade as a prerequisite of this Step, not as a consequence of it. See [macOS Update Enforcement](../operations/patch-management/02-macos-update-enforcement.md#ddm-enforcement) and [iOS Update Lifecycle](../operations/patch-management/03-ios-update-lifecycle.md#ddm-update-keys).
+- **Platform reach gate:** a decision below applies only to the platforms its marker line names. A Windows-only decision has no macOS, iOS, Android or Linux equivalent to make, and leaving it unmade does not leave those platforms ungoverned — their own Steps cover them, except where a Step names a scope boundary of its own.
 
 ## Unsupported and Anti-Feature Callouts
 
@@ -55,18 +58,20 @@ cannot meet closes a branch outright rather than making it a worse choice.
 
 ## Steps
 
-Every decision Step below carries a marker line naming the platforms the decision applies to and the
-reversibility of the branch this plan recommends. The reversibility vocabulary is closed — these
-four values and no others:
+Every decision Step below that chooses between named options carries a marker line naming the
+platforms the decision applies to and the reversibility of the branch this plan recommends. The
+reversibility vocabulary is closed — these four values and no others:
 
 - **Reversible** — the choice can be undone from Intune and the fleet returns to its prior state.
-- **Reversible — disruptive** — the choice can be undone, but undoing it re-imposes on users the exact cost the choice was made to avoid.
+- **Reversible — disruptive** — the choice can be undone, but undoing it re-imposes the exact cost the choice was made to avoid, on users or on the administrators who took the choice to avoid it.
 - **Destructive** — the choice can be changed, but changing it destroys state that cannot be recreated from Intune.
 - **Effectively irreversible** — the choice can be changed only by physical or vendor-side intervention, and on some fleets not at all.
 
-A rating is assigned at the branch this plan **recommends**, not at the worst-case branch. Where a
-non-recommended branch is worse, the consequence is stated in that decision's own text and again in
-the Rollback/Recovery section below.
+A rating is assigned at the branch this plan **recommends** where it recommends one, and otherwise at
+the branch carrying the highest cost to undo — so read the rating as the ceiling for the Step rather
+than as a property of the branch you happen to pick. Where a branch is better or worse than its
+Step's rating, the difference is stated in that decision's own text and again in the
+Rollback/Recovery section below.
 
 <a id="decision-windows-update-topology"></a>
 ### Step 1: Windows update topology
@@ -87,7 +92,7 @@ policy left outside any Autopatch group stays admin-authored; a policy pulled in
 service-owned from that point forward, and its cadence then follows the service's own rotation
 instead of your configured deferral.
 
-**Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2026-06-19), as carried by [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#autopatch-disambiguation).
+**Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2025-06-17), as carried by [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#autopatch-disambiguation).
 
 ### Step 1a: Autopatch group configuration
 
@@ -96,7 +101,7 @@ instead of your configured deferral.
 3. Under **Windows Autopatch**, create the Autopatch group that will carry this fleet. Every group carries a Test and a Last deployment ring automatically; neither can be removed or renamed, and a group cannot run on a single deployment ring, because gradual rollout needs at least two.
 4. Choose the device-distribution model for each deployment ring — one or more device-based Microsoft Entra groups under the Dynamic model, or a single device-based group under the Assigned model. The Test and Last deployment rings specifically cannot combine the two models.
 5. Navigate to **Intune admin center** > **Devices** > **Windows Autopatch** > **Devices** and confirm every in-scope device appears in exactly one deployment ring.
-6. Stop editing directly any Update rings policy the group now contains. From this point forward, make configuration changes for a contained deployment ring through the Autopatch group, not by editing the underlying policy object.
+6. Stop editing directly any policy the group now contains — the Update rings policy, the driver update policy, the Microsoft 365 App update policy and the Microsoft Edge update policy alike. From this point forward, make configuration changes for a contained deployment ring through the Autopatch group, not by editing the underlying policy object.
 
 **Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2025-06-17), as carried by [Windows Autopatch](../operations/patch-management/07-windows-autopatch.md#autopatch-groups-test-last).
 
@@ -108,7 +113,7 @@ Continue to Step 2, which decides the hotpatch posture that applies to the deplo
 2. Create the pilot deployment ring and set its quality-update deferral, feature-update deferral, deadline, grace period and restart behavior. Choose the values at Step 10; this plan does not fix them for you.
 3. Create the broad deployment ring with a longer deferral than the pilot, so a regression surfaces in the pilot cohort before the broad cohort receives the same content.
 4. Assign each deployment ring to exactly one device group, and confirm no device is targeted by two of them.
-5. Set your own promotion gate: do not let content advance to the broad deployment ring until every pilot device reports Compliant at **Intune admin center** > **Reports** > **Windows Updates** and no driver-regression incident is open. The policy objects are fixed; only the content advances, by virtue of the longer deferral on the broad deployment ring.
+5. Understand what you do and do not have here. Nothing promotes validated content between cohorts for you, and the broad deployment ring's deferral expires on a calendar rather than on a compliance signal. Your gate is therefore manual: before each broad-ring deferral expires, check that every pilot device reports Compliant at **Intune admin center** > **Reports** > **Windows Updates** and that no driver-regression incident is open. If either check fails, extend the broad ring's deferral or pause the update — editing the policy is the only lever, because the policy objects are fixed and only the content advances.
 6. If you later enable Windows Autopatch, retire any policy left outside the resulting Autopatch group rather than leaving it assigned — an un-contained policy stays admin-authored and drifts against the service-managed devices it was written for.
 
 **Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02), as carried by [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#wufb-deployment-rings).
@@ -139,8 +144,13 @@ the posture you already have rather than as a change you would make.
 **Source:** [Hotpatch updates](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/manage/windows-autopatch-hotpatch-updates) (updated 2026-06-02), as carried by [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#hotpatch).
 
 Eligibility is what makes that default consequential. A device is offered hotpatch only when it holds
-an eligible license, runs Windows 11 **Enterprise** — Windows 365 Enterprise qualifies — and has
-**VBS** (Virtualization-Based Security) enabled at both firmware and OS level. **Arm64 devices are
+an eligible license — the hotpatch list is Windows 11-only and is not the Autopatch list, and both
+are set out in full at
+[Windows Autopatch](../operations/patch-management/07-windows-autopatch.md#autopatch-hotpatch-licensing)
+— and has **VBS** (Virtualization-Based Security) enabled at both firmware and OS level. Whether a
+Windows 11 Pro device holding an otherwise-eligible license is offered hotpatch is **unconfirmed**:
+Microsoft states the prerequisite as a license list, never as an edition list, and this plan carries
+that unresolved state rather than settling it. **Arm64 devices are
 supported**: the feature is not restricted to x64 processors, though Arm64 requires CHPE (Compiled
 Hybrid Portable Executable) binary servicing to be disabled first, through the `DisableCHPE` system
 policy CSP or the `HotPatchRestrictions=1` registry value — a one-time change that requires a
@@ -277,7 +287,8 @@ UEFI menus after the wipe, the reinstall and the handover to its next owner; a D
 tenant subscription has ended has no Intune-side password retrieval left; an HP or Lenovo device
 whose key material is gone has no vendor-documented way back. That is why this Step is rated
 **Effectively irreversible** while every other decision in this plan is a policy change. Decide it
-before the fleet is imaged, not after.
+before the fleet is imaged, not after. That rating is assigned at the three managed branches; the
+*None* branch is reversible by definition, because it creates nothing to reverse.
 
 **Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (updated 2026-07-01), as carried by [Device Firmware Configuration Interface (DFCI)](../operations/firmware-bios/01-windows-dfci.md#retiring-a-device).
 
@@ -362,7 +373,17 @@ Continue to Step 5, which decides the update channel for the Microsoft 365 Apps 
 |---|---|---|
 | Current Channel | You want features as soon as they ship and you have no requirement to roll a build back. This is the channel the fleet is already on unless someone changed it | The tenant's installations left on the default channel, with the rollback support row of the first-party comparison table reading *Not applicable* |
 | Monthly Enterprise Channel | You want a predictable monthly feature release on the second Tuesday and a rollback window behind it. This is the channel this plan recommends, and the branch its reversibility rating is assigned at | An Update Channel setting assigned to the devices in scope, carrying a three-month rollback window |
-| Semi-Annual Enterprise Channel | Your change process cannot absorb monthly feature change, or a line-of-business dependency needs a build to hold still for longer than a month | An Update Channel setting assigned to the devices in scope, carrying a two-month rollback window |
+| Semi-Annual Enterprise Channel | Your change process cannot absorb monthly feature change, or a line-of-business dependency needs a build to hold still for longer than a month — **but read the July 2026 cadence conflict below before choosing this row**, because Microsoft's own pages describe this channel two ways from that date and one of them is monthly | An Update Channel setting assigned to the devices in scope, carrying a two-month rollback window |
+
+**If you took the service-managed branch of [Step 1](#decision-windows-update-topology), this Step is
+already decided.** An Autopatch group creates and assigns Microsoft 365 App update policies among the
+policies it contains, and the service steers eligible devices toward the Monthly Enterprise Channel.
+Because only one channel can be configured per device, enabling Autopatch pins the channel for every
+device it manages, and a channel set elsewhere works against the service rather than alongside it.
+Record Monthly Enterprise Channel as the outcome and skip the procedure below; the other two branches
+of this table are open only on the self-authored branch of Step 1.
+
+**Source:** [What is Windows Autopatch?](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-overview) (updated 2026-07-13), as carried by [Windows Autopatch](../operations/patch-management/07-windows-autopatch.md#update-workloads-objectives).
 
 The rating on this Step is assigned at the branch this plan **recommends** — Monthly Enterprise
 Channel, whose rollback window is three months — and not at the worst branch on the table. Read
@@ -437,6 +458,16 @@ To put the channel in force:
 | Enterprise App Catalog guided supersedence | The application is in the catalog and you want Microsoft's packaging without surrendering the gate — you decide when each version goes, and to which cohort | A catalog application deployed as an app object, with an explicit supersedence relationship to the version it replaces |
 | Hand-packaged Win32 supersedence | The application is in neither the catalog nor the Microsoft Store, or its install needs handling only your own packaging can carry | A Win32 application you package and host, with an explicit supersedence relationship to the version it replaces |
 
+Read the three branches as two first-party mechanisms rather than three. The corpus routes by the
+surface that already holds the application — the Enterprise App Catalog, the Microsoft Store, or
+neither — and the catalog's own auto-update is explicitly **not** supersedence: Microsoft describes it
+as updating targeted devices with no new app object and no supersedence relationship, and auto-update
+applies only to applications assigned **Required**. The middle branch is therefore the Win32
+supersedence mechanism carrying a package the catalog supplies, not a fourth mechanism of its own; it
+exists because the catalog supplies the packaging whether or not you take the auto-update path.
+
+**Source:** [Enterprise App Management](https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management) (updated 2026-06-24), as carried by [Windows App Updates](../operations/patch-management/08-windows-app-updates.md#choosing-an-app-update-mechanism).
+
 Enterprise App Catalog auto-update is the branch with the sharpest trade. It requires a subscription
 in addition to Intune Plan 1 or Plan 2, and it applies only to applications assigned as **Required** —
 an application assigned as Available keeps the existing update workflow instead. It has **no rings
@@ -476,9 +507,13 @@ Intune for any of these surfaces, whatever its name suggests. Both routings are 
 
 **Source:** [Enterprise App Management](https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management) (updated 2026-06-24), as carried by [Windows App Updates](../operations/patch-management/08-windows-app-updates.md#choosing-an-app-update-mechanism).
 
+This Step is Windows-only, and unlike the other Windows-only Steps that is a scope boundary rather
+than a platform absence: application updates on macOS, iOS and Android are governed by the
+app-lifecycle guides and are outside this plan.
+
 To put the mechanism in force:
 
-1. List the applications in scope and mark, for each one, which surface already holds it — the Enterprise App Catalog, the Microsoft Store, or neither. That answer picks the branch; preference does not.
+1. List the applications in scope and mark, for each one, which surface already holds it — the Enterprise App Catalog, the Microsoft Store, or neither. That answer narrows the branch: "neither" forces the hand-packaged branch, and the Microsoft Store routes out of this Step entirely. Only where the application is in the catalog do you then choose between the two catalog branches, and that second choice is a preference — whether you want the release gate or the least work.
 2. For either catalog branch, navigate to **Intune admin center** > **Apps** and add the application from the Enterprise App Catalog. Confirm the current blade for adding an application in the admin center before you start — this plan fixes the decision and the application type, not the admin center's blade layout.
 3. On the auto-update branch, assign the application as **Required** and enable auto-update. An Available assignment does not take the auto-update path, so an application assigned that way stays on the workflow it was already on and will look, in a report, as though the decision never applied.
 4. On the guided supersedence branch, add the catalog application as an app object and create the supersedence relationship to the version it replaces, then assign it to one cohort at a time. This is the branch that lets a ring exist, because you own the assignment schedule.
@@ -524,6 +559,13 @@ published end, not a live equal of the other two options, and a fleet recording 
 macOS posture today is recording something that stops working. The DDM assertion in the Settings
 Catalog is the only forward-compatible enforcement path; read the enforcement model at
 [macOS Update Enforcement](../operations/patch-management/02-macos-update-enforcement.md#ddm-enforcement).
+
+That forward path carries an entitlement gate of its own, and it is the reason this Step can close
+on an older fleet rather than merely worsen: the declarative assertion requires macOS 14.0 or later
+and iOS 17.0 or later. A macOS 13 or iOS 16 fleet can take neither the deprecated primitive nor the
+declarative one, and loses MDM-driven update enforcement outright rather than falling back. Treat the
+OS upgrade as a prerequisite of this Step rather than as a consequence of it; the gate is recorded
+with the other entitlement gates in the [Prerequisites](#prerequisites) section above.
 
 **Source:** [Apple: device management updates](https://support.apple.com/guide/deployment/device-management-updates-depd638aa061/web) (published 2026-06-08), as carried by [macOS Update Enforcement](../operations/patch-management/02-macos-update-enforcement.md#deadlines-cutover-dates).
 
@@ -615,7 +657,7 @@ To put the chosen posture in force:
 2. **Deliver the platform script.** Navigate to **Intune admin center** > **Devices** > **Linux** > **Scripts** and add the Bash script that puts the `unattended-upgrades` configuration in place, then assign it to a Linux device group.
 3. **Set the execution context and the execution frequency in the same edit.** The context default is User, and a User-context script does not run at all on a device with no signed-in user and no user affinity — which is exactly the unattended machine an update script is written for. Choose Root, then set an explicit, justified execution frequency in the same edit rather than inheriting the default. The retry default is no retries, so a script that genuinely fails is reported once and never retried.
 4. **Author the compliance policy.** Navigate to **Intune admin center** > **Devices** > **Linux** > **Compliance policies** > **Scripts** > **Add** to upload the discovery script, then to **Intune admin center** > **Devices** > **Compliance** > **Policies** > **Create Policy** to create the policy that evaluates it. Confirm the current blade layout before you start; this plan fixes the decision and the two artifacts, not the admin center's navigation.
-5. **Attach the access gate.** In the **Entra portal**, navigate to **Protection** > **Conditional Access** > **Policies** > **New policy**, include **Linux** in the device-platform scope, and grant on controls Linux actually supports. Do not apply *Require device to be marked as compliant* to a policy scoped to Linux — that grant is not available there and applying it blocks every Linux user.
+5. **Attach the access gate.** In the **Entra portal**, navigate to **Protection** > **Conditional Access** > **Policies** > **New policy**, include **Linux** in the device-platform scope, and grant on controls Linux actually supports. The device-level grant *Require device to be marked as compliant*, applied to a policy targeting all client apps, is not available for Linux at all — so do not build a Linux gate on it. Validate any Linux-scoped policy in report-only mode before enforcing it.
 6. Record the branch you took, and if it is the third one, record who governs those devices instead. An unrecorded Linux estate reads as an oversight to the next administrator and gets surveyed again from scratch.
 
 **Source:** [Add custom settings to Linux devices](https://learn.microsoft.com/en-us/intune/intune-service/configuration/custom-settings-linux) (updated 2026-07-01), as carried by [Linux Update Delivery](../operations/patch-management/05-linux-update-delivery.md#bash-platform-script-delivery).
@@ -673,10 +715,11 @@ To record an exception:
 
 > **Ask the admin:** What deferral, deadline and grace values will each cohort carry, and is every one of them inside the range its policy surface actually accepts?
 
-This Step is not a decision between named options, which is why it carries no branch table and no
-reversibility rating. It is the point where the plan asks you for numbers. What it fixes is the
-range each number has to sit inside and the policy object each one belongs to; the values themselves
-are yours, and this plan deliberately carries none of them.
+This Step is not a decision between named options, which is why it carries no branch table, no
+reversibility rating and no marker line; it applies to every platform this plan governs. It is the
+point where the plan asks you for numbers. What it fixes is the range each number has to sit inside
+and the policy object each one belongs to; the values themselves are yours, and this plan
+deliberately carries none of them.
 
 **Windows quality and feature updates.** Two deferral periods are set on the deployment ring policy:
 quality updates defer 0–30 days and feature updates defer 0–365 days. The deadline is a separate
@@ -743,7 +786,7 @@ To set the values you chose:
 - [ ] The hotpatch posture chosen at [Step 2](#decision-hotpatch-posture) is in force at both levels it can be set. The tenant-wide default at **Intune admin center** > **Tenant administration** matches the posture you recorded, and every Windows quality update policy at **Intune admin center** > **Devices** > **Windows** that targets a cohort carries the setting that cohort was decided for. Confirm the per-policy value rather than reading the tenant default as fleet-wide, and confirm eligibility too: at **Intune admin center** > **Reports** > **Windows Updates**, an eligible device still taking a monthly restart is on the cumulative-update path rather than failing.
 - [ ] The driver approval mode chosen at [Step 3](#decision-driver-approval-mode) is the mode every driver policy actually carries. At **Intune admin center** > **Devices** > **Windows** > **Driver and firmware updates**, each policy shows the approval type this plan decided and each in-scope device is targeted by exactly one of them. A policy on the wrong mode is evidence the decision was not in force when the policy was created, not a setting to correct — the approval type cannot be edited afterwards.
 - [ ] The BIOS and firmware surface chosen at [Step 4](#decision-bios-firmware-surface) is the only one in force, and the custody answer is written down where a successor will find it. On the DFCI branch, a DFCI configuration profile exists at **Intune admin center** > **Devices** and the unlock-wipe-delete retirement order is in your own runbook. On the Dell branch, the BIOS configuration policy exists and the per-device passwords are backed up outside Intune. On the vendor branch, the HP or Lenovo artifact is deployed and the holder of the secret is named. On the none branch, the recorded exclusion exists and names the next hardware refresh as the re-check.
-- [ ] The Microsoft 365 Apps channel chosen at [Step 5](#decision-m365-apps-channel) is assigned and the rollback window it carries is recorded beside it. At **Intune admin center** > **Devices**, a settings catalog policy carries the **Update Channel** setting with the chosen channel and is assigned to the devices in scope. Expect the device-side confirmation to lag by at least a day, because the value updates only when the **Office Automatic Updates 2.0** scheduled task runs or a user signs in.
+- [ ] The Microsoft 365 Apps channel chosen at [Step 5](#decision-m365-apps-channel) is assigned and the rollback window it carries is recorded beside it. At **Intune admin center** > **Devices**, a settings catalog policy carries the **Update Channel** setting with the chosen channel and is assigned to the devices in scope — unless you took the service-managed branch of Step 1, in which case the service pins the channel and no such policy exists, and what you check instead is that none was authored. Expect the device-side confirmation to lag by at least a day, because the value updates only when the **Office Automatic Updates 2.0** scheduled task runs or a user signs in.
 - [ ] Every application in scope carries exactly one of the mechanisms decided at [Step 6](#decision-app-patch-mechanism), recorded per application rather than per fleet. At **Intune admin center** > **Apps**, confirm that no application carries both an auto-update assignment and a supersedence relationship, and that every application on the auto-update branch is assigned **Required** — an Available assignment silently stays on the workflow it was already on.
 - [ ] The primitive chosen at [Step 7](#decision-non-windows-enforcement) is in force on each of the three platforms that Step names. On macOS, a **Settings catalog** profile carrying **Software Update** > **Enforce Latest** exists at **Intune admin center** > **Devices** > **macOS** > **Configuration profiles**. On iOS and iPadOS, a policy carrying both **Target OS Version** and **Target Date Time** exists at **Intune admin center** > **Devices** > **Apple updates** > **iOS/iPadOS update policies**. On Android, a compliance policy reading the Play Integrity verdict exists at **Intune admin center** > **Devices** > **Compliance** > **Android Enterprise** and is paired with a Conditional Access policy that acts on the signal — an unpaired compliance policy denies nothing. Confirm also that no legacy Apple update-restriction payload is left assigned as an unretired remnant of a deferral posture.
 - [ ] The Linux branch chosen at [Step 8](#decision-linux-posture) produced the artifact that branch actually requires. On the script branch, the Bash platform script exists at **Intune admin center** > **Devices** > **Linux** > **Scripts** with its execution context set to Root and an explicit execution frequency, not the User-context default that never runs on an unattended machine. On the compliance branch, the discovery script and its policy exist and the paired Conditional Access policy in the **Entra portal** does not carry *Require device to be marked as compliant*, which is unavailable for Linux. On the third branch, the recorded exclusion names who governs those devices instead. Read a green script exit code as delivery evidence, never as update evidence.
@@ -756,20 +799,20 @@ Four of the nine mechanisms below have no rollback path at all. Read that as thi
 rather than as a caveat inside it: removing a policy and undoing what the policy did are different
 operations throughout this plan, and for four of these mechanisms only the first one is available.
 
-The count reconciles against RCP-04 by arithmetic rather than by assertion, so it can be audited.
-RCP-04 enumerates six absences; the research behind this plan lists nine mechanisms. The three extras
-are DFCI, the Dell BIOS password and Linux `unattended-upgrades` — the three RCP-04 does not name,
-because each carries a recovery path rather than an absence: DFCI and the Dell BIOS password each
-have a documented procedure, recorded below, and the Linux entry is an open gap rather than a sourced
-absence. Of the remaining six, two hold a documented but partial path: an expedited update's
-in-progress installation can be cancelled on a best-effort basis, and a hotpatch can be uninstalled at
-the cost of a restart. Six less those two leaves four with nothing behind them — the driver update,
-the Autopatch driver mode switch, Enterprise App Catalog auto-update, and Current Channel.
+The count is auditable by arithmetic rather than by assertion. Six of the nine mechanisms below carry
+a recorded absence. The other three are DFCI, the Dell BIOS password and Linux `unattended-upgrades`,
+and they are listed here because each carries a recovery path or an open gap rather than an absence:
+DFCI and the Dell BIOS password each have a documented procedure, recorded below, and the Linux entry
+is an open gap rather than a sourced absence. Of the six, two hold a documented but partial path: an
+expedited update's in-progress installation can be cancelled on a best-effort basis, and a hotpatch
+can be uninstalled at the cost of a restart. Six less those two leaves four with nothing behind them
+— the driver update, the Autopatch driver mode switch, Enterprise App Catalog auto-update, and
+Current Channel.
 
 The nine are ordered worst first. A mechanism holding a documented uninstall path is ordered after one
-holding none, which is why hotpatch sits behind Current Channel despite being the second of RCP-04's
-two flagship absences. The Linux entry is last because an open gap cannot be ranked against a measured
-one.
+holding none, which is why hotpatch sits behind Current Channel despite being, with Current Channel,
+one of the two absences this section treats at greatest length. The Linux entry is last because an
+open gap cannot be ranked against a measured one.
 
 **Microsoft 365 Apps update channel:**
 
@@ -801,18 +844,18 @@ one.
 **Expedited update policies:**
 
 - Deleting an expedite policy removes it from Intune but does not uninstall an update that has already completed installation. Windows Update attempts to cancel an installation still in progress, and successful cancellation cannot be guaranteed.
-- This is one of the six absences RCP-04 enumerates, and it is the one with no guide behind it. No operations guide in this corpus covers expedited updates, so RCP-04 is cited here directly rather than a link being invented to stand in for one.
+- This is one of the six recorded absences, and the only one with no operations guide behind it. No guide in this corpus covers expedited updates, so this entry carries no onward link — read it as a record made here rather than as a treatment carried from elsewhere, and treat the absence of a link as the honest answer rather than one invented to stand in for a guide.
 
 **Hotpatch security updates:**
 
 - Automatic rollback of a hotpatch update is not supported. Unlike the four mechanisms above it, a hotpatch can be uninstalled: remove the hotpatch, then install the latest cumulative update.
 - That path costs the thing hotpatch was adopted for. Uninstalling a hotpatch update is quick, but it requires a device restart — the exact disruption the posture at [Step 2](#decision-hotpatch-posture) exists to avoid.
-- This is the second of RCP-04's two flagship absences, and it is ordered here rather than higher because it holds a documented uninstall path where the four above it hold none. Eligibility and the absent automatic rollback are set out at [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#hotpatch).
+- This is the second of the two absences this section treats at greatest length, and it is ordered here rather than higher because it holds a documented uninstall path where the four above it hold none. Eligibility and the absent automatic rollback are set out at [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md#hotpatch).
 
 **DFCI firmware configuration:**
 
 - The recovery here is an ordering rule rather than an undo. Unlock the UEFI menus through the profile first, wipe or retire the device second, and delete the Autopilot record last — the order set out at [Device Firmware Configuration Interface (DFCI)](../operations/firmware-bios/01-windows-dfci.md#retiring-a-device). Deleting the profile removes no setting and re-enables no menu, so it is not a step in this sequence.
-- Where a device is already locked, the documented route runs through the UEFI menu on the device itself and its option to refresh management from the network, treated at [Device Firmware Configuration Interface (DFCI)](../operations/firmware-bios/01-windows-dfci.md#recovering-locked-device). That is a physical visit, which is why [Step 4](#decision-bios-firmware-surface) is rated **Effectively irreversible** rather than reversible.
+- Where a device is already locked, the documented route runs through the UEFI menu on the device itself and its option to refresh management from the network, treated at [Device Firmware Configuration Interface (DFCI)](../operations/firmware-bios/01-windows-dfci.md#recovering-locked-device). Read two limits with it: recovery unlocks the menus but leaves every UEFI setting at the last profile's values, and a device whose last profile disabled **both** Boot from external media and USB type A cannot perform the refresh at all — that pairing has no software route back on any OEM, Surface included, and makes the device a hardware repair rather than a recovery. That is a physical visit at best, which is why [Step 4](#decision-bios-firmware-surface) is rated **Effectively irreversible** rather than reversible.
 
 **The Dell BIOS password:**
 
@@ -821,7 +864,7 @@ one.
 
 **Linux `unattended-upgrades`:**
 
-- This entry is an open gap rather than a recorded absence, and the distinction is deliberate. The research behind this plan carries no confidence rating for it at all — uniquely among the nine — and what it does carry is a premise about distribution-native tooling, not a sourced finding.
+- This entry is an open gap rather than a recorded absence, and the distinction is deliberate. This corpus has established no first-party position on it — uniquely among the nine — and what stands behind it is a premise about distribution-native tooling, not a sourced finding.
 - What can be said without a source is what [Step 8](#decision-linux-posture) already establishes: Intune delivers a script and reports an exit code, so there is no Intune-side surface for a Linux package update to be rolled back from. Whatever recovery exists belongs to the distribution, and this corpus has not established it.
 - Do not read that silence as a finding that no recovery exists. It is unwritten here because it is unknown here, and this entry says so rather than filling the gap with a plausible sentence. Establishing it is research a later phase owes, not a cell to complete.
 
@@ -844,7 +887,8 @@ one.
 
 - [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this plan's decision blocks instantiate, including the D-08 amendment that admits a fleet configuration plan to the Device Recipe class
 - [Patch Management Overview](../operations/patch-management/00-overview.md) — the domain hub: ring terminology, the deferral-versus-enforcement-versus-attestation taxonomy behind Step 7, and the routing to the four non-Windows guides this plan decides against — [macOS Update Enforcement](../operations/patch-management/02-macos-update-enforcement.md), [iOS Update Lifecycle](../operations/patch-management/03-ios-update-lifecycle.md), [Android Patch Delivery](../operations/patch-management/04-android-patch-delivery.md) and [Linux Update Delivery](../operations/patch-management/05-linux-update-delivery.md)
-- [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md) — deployment ring topology, the containment relationship, hotpatch, and the driver and firmware update policy
+- [Windows WUfB Rings](../operations/patch-management/01-windows-wufb-rings.md) — deployment ring topology, the containment relationship behind Step 1, and hotpatch
+- [Windows Driver and Firmware Updates](../operations/patch-management/06-windows-driver-firmware-updates.md) — the driver and firmware update policy behind Steps 3 and 10: approval modes, the approval workflow and its one-way transitions, and the deferral-does-not-cross / deadline-does asymmetry
 - [Windows Autopatch](../operations/patch-management/07-windows-autopatch.md) — what the service is and is not, its enrollment prerequisites, and the Test and Last deployment ring model
 - [Windows App Updates](../operations/patch-management/08-windows-app-updates.md) — the six Microsoft 365 Apps channels with their rollback windows, and Enterprise App Management's five reachability gates
 - [Firmware and BIOS Governance](../operations/firmware-bios/00-overview.md) — the custody routing behind Step 4, the two native BIOS surfaces, and who holds the secret on each vendor path
