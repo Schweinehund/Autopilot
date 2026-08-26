@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-08-24
-review_by: 2026-10-23
+last_verified: 2026-08-25
+review_by: 2026-10-24
 applies_to: APv1
 audience: admin
 platform: Windows
@@ -46,12 +46,13 @@ coverage are both stated on the Microsoft page for that surface:
 **Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
 
 **HP — HP holds the secret, outside your tenant.** HP hardware is reached through HP Connect for
-Microsoft Endpoint Manager, a vendor connector administered at `admin.hp.com` rather than in the
-Intune console. The BIOS password is never held by your tenant at all:
-
-> Passwords are managed by HP Connect and stored in a cloud vault.
-
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (Version 1.2.0, published 2022-09-27)
+Microsoft Endpoint Manager, a vendor connector administered at `admin.hp.com`. HP Connect has also
+appeared in the Intune admin center's Partner portals tab since April 2023 — the same discovery
+surface Dell's own Management Portal uses, so the two vendors are symmetric on where you find the
+console. They differ on secret custody, which is the distinction this domain actually routes on:
+the BIOS password is never held by your tenant at all — it is held in HP's own cloud vault instead.
+See [HP BIOS Configuration Through Intune](03-hp-bios-configuration.md) for HP's sourced custody
+statement.
 
 That guide is version 1.2.0 from 2022 and is the oldest source cited anywhere in this domain. The
 custody model it documents is the durable fact; the console details, and the Microsoft Endpoint
@@ -61,11 +62,9 @@ on this section.
 
 **Lenovo — you hold the secret.** Lenovo hardware is reached through Think BIOS Config Tool V2 and
 Lenovo BIOS Certificate Tool V2. The secret is either an encrypted INI file that you store and
-protect, or a signing certificate whose private key you keep in your own Azure Key Vault:
-
-> The Lenovo BIOS Certificate Tool has been updated with a new UI and the Lenovo.BIOS.Certificates module has been updated to include support for Azure Key Vault for storage of private keys used in signing the settings change commands.
-
-**Source:** [Introducing Think BIOS Config Tool V2 and Lenovo BIOS Certificate Tool V2](https://blog.lenovocdrt.com/introducing-think-bios-config-tool-v2-and-lenovo-bios-certificate-tool-v2/) (published 2025-11-04)
+protect, or a signing certificate whose private key you keep in your own Azure Key Vault. See
+[Lenovo BIOS Configuration Through Intune](04-lenovo-bios-configuration.md) for Lenovo's sourced
+custody statement.
 
 Of the three, Lenovo is the only manufacturer whose signing key can sit in infrastructure you own
 outright, and therefore under your own Azure role-based access control (RBAC), audit logging and
@@ -125,9 +124,20 @@ Start from the manufacturer, not from the tool.
   under its own **Source:** line.
 
 Two questions settle almost every case: does your hardware appear on the DFCI OEM list, and if it
-does not, who is willing to hold your BIOS password. Vendor-specific procedures for Dell, HP and
-Lenovo are not yet written in this corpus — this section names the surface and the custody model so
-the choice can be made before the procedure exists.
+does not, who is willing to hold your BIOS password. Vendor-specific procedures now exist for all
+three manufacturers, plus a capability matrix that reads the same six dimensions across all three
+manufacturers at once rather than down one guide:
+
+- [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md)
+- [HP BIOS Configuration Through Intune](03-hp-bios-configuration.md)
+- [Lenovo BIOS Configuration Through Intune](04-lenovo-bios-configuration.md)
+- [Firmware OEM Capability Matrix](../../reference/firmware-oem-matrix.md)
+
+Two of those procedures start from opposite prerequisites: Dell's native template requires no
+pre-existing BIOS password and refuses outright when one exists, while Lenovo's Think BIOS Config
+Tool V2 cannot bootstrap an initial supervisor password remotely and requires one already set at
+imaging or during OOBE — in short, Dell wants a virgin BIOS; Lenovo needs a provisioned one. See
+each guide's own Prerequisites section for the sourced detail.
 
 <a id="domain-boundary"></a>
 ## What This Domain Does Not Own
@@ -228,6 +238,14 @@ currently documented, and re-check it whenever the settings reference is revised
 - [Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md) — DFCI mechanics,
   prerequisites and disqualifiers, OEM support, Surface eligibility, the settings surface, and the
   retire, reuse and recover sequences
+- [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md) — delivery, custody and
+  RBAC, scope, prerequisites, offboarding and recovery for Dell hardware
+- [HP BIOS Configuration Through Intune](03-hp-bios-configuration.md) — the same six sections for
+  HP hardware, including the cloud-vault custody quote
+- [Lenovo BIOS Configuration Through Intune](04-lenovo-bios-configuration.md) — the same six
+  sections for Lenovo hardware, including the customer-held-secret custody quote
+- [Firmware OEM Capability Matrix](../../reference/firmware-oem-matrix.md) — the same six
+  capability dimensions read across all three manufacturers at once, rather than down one guide
 - [Windows Driver and Firmware Updates](../patch-management/06-windows-driver-firmware-updates.md)
   — firmware update delivery through the Intune driver and firmware update policy; the other half
   of the updates-versus-configuration seam
