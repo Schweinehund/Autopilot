@@ -548,6 +548,36 @@ would leave the decision indexed only as non-prose runs that retrieve poorly.
 | Shared PC | Multi-app shared desktop | Locked to one app unexpectedly | [Step 5b](#step-5b) |
 ```
 
+### D-08: Device Recipe class widened to admit a fleet or tenant configuration plan
+
+**[AMENDED 2026-08-26]** `[OWNER-RULED]` The Device Recipe doc class — defined for `docs/recipes/*`
+as an end-to-end, step-by-step provisioning walkthrough with embedded admin decision points — is
+**widened** to admit a second admissible form: a **fleet or tenant configuration plan**, a
+prescriptive document whose end-state is a configured fleet rather than a configured device. Both
+forms are Device Recipes. Both use the D-01 composite decision block, the D-02 blank-line rule and
+the D-04 branch floor unchanged. The provisioning walkthrough is now one variant of the class, not
+the whole of it.
+
+**D-06's REQUIRED Summary end-state rule is correspondingly widened.** The opening sentence names a
+concrete **device** end-state for a provisioning walkthrough, or a concrete **fleet** end-state for
+a fleet or tenant configuration plan. In both forms the sentence must still let a reader confirm
+applicability before starting the procedure — that is D-06's stated purpose and this amendment does
+not touch it. A Summary that names unresolved variables in place of a concrete end-state satisfies
+neither form.
+
+**Ground.** `docs/recipes/05-enterprise-update-plan.md` is tenant-scoped: it configures an update
+posture across a whole fleet and produces no single device. Without this widening both its filename
+— which breaks the four-of-four device-end-state naming convention the shipped recipes carry — and
+its H1 would be unjustified divergences from a standard that every future recipe reads. The
+alternative considered and rejected was a second doc class alongside the still-narrow original: that
+would have left the filename, the H1 and the Summary end-state rule permanently indefensible rather
+than legitimising them once, and would have split a class that shares every other rule in this
+section.
+
+This amendment is owner-ruled, dated 2026-08-26, and recorded as **D-04** in
+`.planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md`. It is purely additive:
+D-01 through D-07 above are unchanged in wording and in force.
+
 ---
 
 ## C17 Enforcement Reference (Needle-Spec for Phase 115)
@@ -616,3 +646,4 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 | 2026-07-07 | v1.16 STD-04 — added Mermaid-in-Enrolled-Classes Policy (D-01..D-04: text-equivalent conversion, C17 #1 unchanged, conversion shapes, honesty caveat); added 4 new D-02 Edge-case rulings (glossary, decision-tree, nav-hub, lifecycle) and the D-08 Non-MECE precedence rule; Doc Type Taxonomy 4-value table unchanged |
 | 2026-07-17 | v1.18 STD-05 — added Admin Decision-Point Block Format (D-01..D-07: 3-case composite block, mandatory blank line, case-boundary rule, 3-rule branch floor + RECOMMENDED PSSO-idiom, REQUIRED recipe-Summary end-state rule, fenced worked example + index-excluded-standard carve-out); added Device Recipe documents D-02 Edge-case ruling row (`docs/recipes/*` → `Guide`) |
 | 2026-07-30 | v1.19 HYG-05 — corrected the fenced-content rationale at three sites (STD-05 section intro, D-03 case-boundary rule, D-07 worked-example preamble): the prior claim that fenced content is invisible to retrieval was empirically false; fenced content is indexed but reaches Copilot only as non-prose runs that retrieve poorly. The normative D-03/D-04 rules are unchanged in force, and the Grounding Notes pointers are retained and now cite a correct proposition |
+| 2026-08-26 | v1.21 RCP-01 STD-05 — added D-08, widening the Device Recipe doc class to admit a fleet or tenant configuration plan alongside the provisioning walkthrough, and correspondingly widening D-06's REQUIRED Summary end-state rule to accept a concrete fleet end-state. Purely additive: D-01 through D-07 are unchanged in wording and in force. Ground: `docs/recipes/05-enterprise-update-plan.md` is tenant-scoped. Owner-ruled, recorded as D-04 in `.planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md` |

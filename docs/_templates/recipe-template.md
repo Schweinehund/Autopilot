@@ -1,6 +1,8 @@
 <!-- DEVICE RECIPE TEMPLATE
      Usage: Copy this file as your starting point for any Device Recipe (docs/recipes/*) --
-     an end-to-end, step-by-step provisioning walkthrough with embedded admin decision points.
+     either an end-to-end, step-by-step provisioning walkthrough with embedded admin decision
+     points, or a fleet or tenant configuration plan whose end-state is a configured fleet
+     rather than a configured device (EEE-SOP-standard.md STD-05 D-08).
      Rules:
      - Fill in last_verified and review_by dates at doc creation time (review_by = last_verified + 90 days)
      - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel --
@@ -125,6 +127,18 @@ routing or recording prose like this line lives OUTSIDE the blockquote, never in
 
 - [ ] [How to confirm the configuration is correct -- specific portal location to check, expected state]
 - [ ] [Second verification check]
+
+## Rollback/Recovery
+
+[Prose with one bold pseudo-heading per mechanism -- never a table. Open with a framing sentence
+that distinguishes removing this recipe's own configuration from returning the device to its prior
+state; those are two different procedures and conflating them is the failure this section exists
+to prevent. Then give one bold pseudo-heading per mechanism the recipe configures, each followed
+by the bullets describing how far back that mechanism can actually be taken and what it leaves
+behind. Where a mechanism has no recovery path at all, state that explicitly and state why --
+omitting it reads as coverage. Where a first-party source records an absence in weaker words than
+this corpus draws from it, attribute the stronger reading as an inference rather than presenting
+it as a quotation.]
 
 ## Configuration-Caused Failures
 
