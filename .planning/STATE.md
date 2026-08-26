@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: executing
-stopped_at: Completed 151-02-PLAN.md
-last_updated: "2026-08-26T13:38:00.717Z"
+stopped_at: Completed 151-03-PLAN.md
+last_updated: "2026-08-26T13:51:43.079Z"
 last_activity: 2026-08-26
 last_activity_desc: Phase 151 execution started
-state_head: 720363b0c5fe863c05feb92f578264bb46947e34
+state_head: 3ee55b443408d788dac6bd91913a7e51784869f6
 progress:
   total_phases: 9
   completed_phases: 6
   total_plans: 30
-  completed_plans: 26
+  completed_plans: 27
   percent: 67
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-08-26 — Phase 151 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -444,6 +444,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 150 P05 | 35min | 2 tasks | 1 files |
 | Phase 151 P01 | 42 min | 2 tasks | 3 files |
 | Phase 151 P02 | 35 min | 2 tasks | 1 files |
+| Phase 151 P03 | 7 min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -597,6 +598,10 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 151]: Step 2 (hotpatch) ships on the corrected position: enabled by default for eligible devices, Arm64 supported once CHPE is disabled, VBS required, Windows 11 Enterprise edition constraint, ineligible devices silently take the LCU
 - [Phase 151]: Step 3 carries the recipe's single Destructive rating; the destroy-all-approvals consequence is stated in the recipe's own prose, not deferred to a link
 - [Phase 151]: The hotpatch tenant-level click-path names Tenant administration but tells the reader to confirm the leaf blade — the corpus records the two-level model, not that control's blade
+- [Phase 151]: Step 4 rated Effectively irreversible with all four branch bodies authored; the none branch carries the DFCI-unavailable-not-declined fact
+- [Phase 151]: Step 5 rated at the recommended branch (Monthly Enterprise, three-month window) per D-11, keeping the recipe at exactly one Effectively irreversible rating while stating Current Channel's Not applicable rollback cell in full
+- [Phase 151]: The DCU-versus-Autopatch conflict is named in one clause as unadjudicated and routed to the Dell BIOS guide, never to guide 06 which carries zero Dell Command content
+- [Phase 151]: Enterprise App Management's reachability gates are stated as FIVE (the guide's own measured count), not the eight the plan's read_first prose implied
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -625,8 +630,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T13:37:44.541Z
-Stopped at: Completed 151-02-PLAN.md
+Last session: 2026-08-26T13:51:24.372Z
+Stopped at: Completed 151-03-PLAN.md
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 

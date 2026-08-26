@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 4
+open_count: 5
 waived_count: 0
 fixed_count: 0
-total_count: 4
-last_updated: 2026-08-25T03:30:27.055Z
+total_count: 5
+last_updated: 2026-08-26T13:52:17.689Z
 ---
 
 # Broken Windows Ledger
@@ -19,6 +19,7 @@ last_updated: 2026-08-25T03:30:27.055Z
 | 2 | 147 | deviation | .planning/phases/147-linux-update-delivery/147-01-PLAN.md |  | Task 3 platform-script five-minute negative criterion is mis-specified: the '5 minutes' alternation has no left word boundary and matches inside the mandated 'Every 15 minutes' literal | open |  | 2026-08-21T20:58:30.789Z |  |
 | 3 | 147 | deviation | .planning/phases/147-linux-update-delivery/147-02-PLAN.md |  | Task 1 header-row acceptance criterion is mis-specified: the alternating pipe-gap regex double-consumes the shared table delimiters, returning 0 against both the post-edit five-platform header and the pre-edit four-platform header | open |  | 2026-08-21T21:07:36.570Z |  |
 | 4 | 149 | deviation | docs/operations/firmware-bios/01-windows-dfci.md |  | D-13's 'Pillar-A set' superlative scope replaced with 'the oldest Microsoft Learn page cited anywhere in this guide' — Pillar has zero corpus occurrences | open |  | 2026-08-25T03:30:27.055Z |  |
+| 5 | 151 | stub | docs/recipes/05-enterprise-update-plan.md |  | Steps 7-10 and their four anchors are unauthored; Verification, Rollback/Recovery, Configuration-Caused Failures and See Also remain partial (resolved by Plans 04 and 05) | open |  | 2026-08-26T13:52:17.689Z |  |
 
 ````json
 [
@@ -68,6 +69,18 @@ last_updated: 2026-08-25T03:30:27.055Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-25T03:30:27.055Z",
+    "resolved_at": null
+  },
+  {
+    "id": 5,
+    "kind": "stub",
+    "phase": "151",
+    "file": "docs/recipes/05-enterprise-update-plan.md",
+    "line": null,
+    "description": "Steps 7-10 and their four anchors are unauthored; Verification, Rollback/Recovery, Configuration-Caused Failures and See Also remain partial (resolved by Plans 04 and 05)",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-26T13:52:17.689Z",
     "resolved_at": null
   }
 ]

@@ -86,7 +86,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 ### Recipe — the prescriptive update-plan artifact (RCP)
 
 - [ ] **RCP-01**: `docs/recipes/05-*` ships the enterprise update plan as a Device Recipe — ring topology, deadlines, driver/firmware approval cadence, and app-update channels as one prescriptive artifact. This is what answers the question that scoped the milestone: the corpus has **no configuration artifact of any kind** today.
-- [ ] **RCP-02**: The recipe carries **nine decision points** with reversibility ratings, of which one is rated **Destructive** and one **Effectively irreversible**. The two most consequential were rewritten during review: the Autopatch-versus-standalone-rings decision (the old mutual-exclusivity framing was false) and the hotpatch decision (the old opt-in / x64-only framing was wrong on three counts).
+- [x] **RCP-02**: The recipe carries **nine decision points** with reversibility ratings, of which one is rated **Destructive** and one **Effectively irreversible**. The two most consequential were rewritten during review: the Autopatch-versus-standalone-rings decision (the old mutual-exclusivity framing was false) and the hotpatch decision (the old opt-in / x64-only framing was wrong on three counts).
 - [ ] **RCP-03**: **At least three decision points are Windows-only**, so each decision point carries a platform-applicability marker. A flat plan with implicitly-universal steps is the named failure mode.
 - [ ] **RCP-04**: The `## Rollback/Recovery` section is authored truthfully as **largely a catalogue of absences**: no driver rollback; no Enterprise App Catalog auto-update rollback; no Autopatch mode-switch recovery; expedite deletion does not uninstall; hotpatch has no automatic rollback and uninstalling requires the very restart hotpatch exists to avoid; and Current Channel — the **default** for Microsoft 365 Apps for enterprise — has **no rollback at all**.
 - [ ] **RCP-05**: The recipe-template divergence is **resolved rather than inherited**. `[MEASURED]` `grep -rn "^## Rollback" docs/recipes/*.md` returns 2 hits, and `docs/_templates/recipe-template.md` has no such heading — the doc class does **not** mandate the section. It is a tracked 2-of-4 divergence whose recorded trigger is *"a third recipe needs the slot"*, and **v1.21's recipe fires that trigger**. The milestone either promotes the section into the template or records why it stays a divergence. Recipes 01 and 02 are **not** non-compliant.
@@ -215,7 +215,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | BIOS-11 | Phase 149 | Complete |
 | BIOS-12 | Phase 150 | Complete |
 | RCP-01 | Phase 151 | Pending |
-| RCP-02 | Phase 151 | Pending |
+| RCP-02 | Phase 151 | Complete |
 | RCP-03 | Phase 151 | Pending |
 | RCP-04 | Phase 151 | Pending |
 | RCP-05 | Phase 151 | Pending |
