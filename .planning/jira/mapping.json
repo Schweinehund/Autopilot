@@ -1005,17 +1005,17 @@
         },
         "150": {
           "issueKey": "RTS-812",
-          "status": "in_progress",
+          "status": "done",
           "name": "Per-OEM BIOS Guides & Capability Matrix"
         },
         "151": {
           "issueKey": "RTS-813",
-          "status": "todo",
+          "status": "done",
           "name": "Recipe #5 — The Enterprise Update Plan"
         },
         "152": {
           "issueKey": "RTS-814",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Integration, Registry & Navigation-Last Close"
         },
         "153": {
