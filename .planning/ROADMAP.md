@@ -226,7 +226,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 150-01-PLAN.md — file the SC#1/BIOS-05 six-section amendment, then the TRACER: the complete Dell guide at the locked nine-H2 / seven-anchor shape (BIOS-06 Dell half, BIOS-09 Dell half, BIOS-10 in full); carries the phase-wide rules, the source audit and the 17 edge-probe dispositions
+- [x] 150-01-PLAN.md — file the SC#1/BIOS-05 six-section amendment, then the TRACER: the complete Dell guide at the locked nine-H2 / seven-anchor shape (BIOS-06 Dell half, BIOS-09 Dell half, BIOS-10 in full); carries the phase-wide rules, the source audit and the 17 edge-probe dispositions
 
 **Wave 2** *(blocked on Wave 1; the two plans touch disjoint files and may run in parallel)*
 
@@ -333,7 +333,7 @@ Plans:
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 5/5 | Not started | 2026-08-25 |
-| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
+| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 1/5 | In Progress | - |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
 | 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 0/? | Not started | - |

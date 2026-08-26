@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 150
 current_phase_name: Per-OEM BIOS Guides & Capability Matrix
 status: executing
-stopped_at: Phase 150 context gathered
-last_updated: "2026-08-25T23:40:29.198Z"
+stopped_at: Phase 150 Plan 01 complete (tracer)
+last_updated: "2026-08-25T23:00:00.000Z"
 last_activity: 2026-08-25
-last_activity_desc: Phase 149 complete, transitioned to Phase 150
-state_head: c2d676142b85ffb4030a9902ed47de26949eaf8e
+last_activity_desc: Phase 150 Plan 01 complete — REQUIREMENTS.md BIOS-05 amendment filed, Dell BIOS guide (tracer) authored, intermediate-red state verified
+state_head: 8f71bb2c
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 25
-  completed_plans: 20
+  completed_plans: 21
   percent: 56
 ---
 
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 149 — Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
+**Current focus:** Phase 150 — Per-OEM BIOS Guides & Capability Matrix
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,10 +37,16 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — READY TO EXECUTE
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-08-25 — Phase 149 complete, transitioned to Phase 150
+Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — EXECUTING
+Plan: 1 of 5 complete — Plan 2 of 5 next
+Status: Executing Phase 150 — Plan 01 (tracer) complete
+Last activity: 2026-08-25 — Plan 150-01 complete: filed the BIOS-05 six-section amendment (D-01/D-02),
+  authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
+  verified the four binding gate classes plus the apex — the only red is the enumerated
+  not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
+  firmware-oem-matrix.md), exactly as D-80's deferred-commit design expects. BIOS-10 marked
+  Complete (sole declaring plan). Per D-80, the Dell guide itself stays UNCOMMITTED — Plan 04 lands
+  it in the phase's single content commit.
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
 
@@ -431,6 +437,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 149 P03 | 34 min | 3 tasks | 1 files |
 | Phase 149 P04 | 32 min | 3 tasks | 1 files |
 | Phase 149 P05 | 1h 5m | 3 tasks | 1 files |
+| Phase 150 P01 | ~45min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -570,6 +577,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 149]: Trap 1's evidence line cites configure-dfci-windows — the live fetch located the Conflicts section and the allow-only-Wi-Fi worked example there, not on ref-dfci-settings-windows
 - [Phase 149]: The boot-and-port generic recovery Warning is on ref-dfci-settings-windows (same page as the compliance half), so it joins that blockquote; the Surface replace-the-SSD case takes the second evidence line
 - [Phase 149]: All four page fetches returned HTTP 200, so both strings the plan allowed to ship unquoted ship quoted instead
+- [Phase 150 P01]: D-80's deferred-commit design is confirmed working on this repo (`use_worktrees:false`, sequential main tree): Task 1 committed `.planning/REQUIREMENTS.md` alone (single-file commit verified via `git log -1 --name-only`); the Dell guide authored in Task 2 stays untracked on purpose, awaiting Plan 04's single content commit. The intermediate `check-nav-hub-links` red state is exactly the enumerated 3-target set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md, firmware-oem-matrix.md) — 6 corpus-link failures, 0 hub-presence failures, no other target named.
+- [Phase 150 P01]: BIOS-10 marked Complete in REQUIREMENTS.md — it is the only requirement in this plan's set with no sibling-plan declarer (BIOS-05/06/09 are shared with Plans 02/03/04/05 and stay Pending until their last declaring plan finishes, per the shared-ID gate).
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -598,10 +607,10 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-25T22:14:59.892Z
-Stopped at: Phase 150 context gathered
-Resume file: .planning/phases/150-per-oem-bios-guides-capability-matrix/150-CONTEXT.md
-Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
+Last session: 2026-08-25T23:00:00.000Z
+Stopped at: Phase 150 Plan 01 complete (tracer)
+Resume file: .planning/phases/150-per-oem-bios-guides-capability-matrix/150-01-SUMMARY.md
+Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
 ## Operator Next Steps
 
