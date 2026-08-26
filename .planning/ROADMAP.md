@@ -220,7 +220,7 @@ Plans:
 
 **Blast radius**: the matrix's **registry row is not landed here** — it belongs to Phase 152. Landing it here leaves both publish-bundle canaries red across three phases. These guides stay Intune-delivery-shaped and link-not-copy: no BIOS token tables, no vendor cmdlet syntax reference, no per-model matrices.
 **Research flag**: **YES** — three recovery gaps are `[UNVERIFIED]` (Lenovo lost supervisor password, Lenovo lost certificate private key, HP Endorsement Key loss). Recovery is the most-used content for a service-desk audience; shipping it as a gap undercuts the guides. Also open: whether HP Connect appears under Intune's partner-portal entry point as Dell does, and whether any post-2022 HP Connect user guide exists.
-**Plans**: 3/5 plans executed
+**Plans**: 4/5 plans executed
 
 Plans:
 
@@ -235,7 +235,7 @@ Plans:
 
 **Wave 3** *(blocked on Waves 1-2)*
 
-- [ ] 150-04-PLAN.md — `docs/reference/firmware-oem-matrix.md` (RE-226, C17-enrolled) as a transposition of the three guides, plus four glossary terms, plus **the single content commit** of all five files (BIOS-12)
+- [x] 150-04-PLAN.md — `docs/reference/firmware-oem-matrix.md` (RE-226, C17-enrolled) as a transposition of the three guides, plus four glossary terms, plus **the single content commit** of all five files (BIOS-12)
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -333,7 +333,7 @@ Plans:
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 5/5 | Not started | 2026-08-25 |
-| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 3/5 | In Progress |  |
+| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 4/5 | In Progress |  |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
 | 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 0/? | Not started | - |
