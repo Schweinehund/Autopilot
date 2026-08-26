@@ -5,11 +5,11 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: planning
-stopped_at: Phase 150 complete, ready to plan Phase 151
-last_updated: "2026-08-26T04:08:03.843Z"
+stopped_at: Phase 151 context gathered
+last_updated: "2026-08-26T11:55:25.416Z"
 last_activity: 2026-08-25
 last_activity_desc: Phase 150 complete, transitioned to Phase 151
-state_head: 560090c670c7b7d6248d341a3b069508f3cdc0b7
+state_head: af3c428a6e8c6b1330e4eb6add30eb9e3d6cee44
 progress:
   total_phases: 9
   completed_phases: 6
@@ -617,9 +617,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T03:43:44.753Z
-Stopped at: Phase 150 complete, ready to plan Phase 151
-Resume file: None
+Last session: 2026-08-26T11:55:11.585Z
+Stopped at: Phase 151 context gathered
+Resume file: .planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
 ## Operator Next Steps
