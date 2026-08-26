@@ -4,17 +4,17 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
-status: executing
-stopped_at: Completed 151-04-PLAN.md
-last_updated: "2026-08-26T14:15:16.126Z"
+status: verifying
+stopped_at: Completed 151-05-PLAN.md — phase 151 complete, Commit B a8305b7e, all four gates green
+last_updated: "2026-08-26T14:38:55.520Z"
 last_activity: 2026-08-26
 last_activity_desc: Phase 151 execution started
-state_head: 57f6d88db7b3be43d48f85426b17d0e65830e099
+state_head: a8305b7ef3400c92c0620ca3a1fafc419d73f912
 progress:
   total_phases: 9
   completed_phases: 6
   total_plans: 30
-  completed_plans: 29
+  completed_plans: 30
   percent: 67
 ---
 
@@ -39,7 +39,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-26 — Phase 151 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
@@ -446,6 +446,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 151 P02 | 35 min | 2 tasks | 1 files |
 | Phase 151 P03 | 7 min | 3 tasks | 1 files |
 | Phase 151 P04 | 10 min | 2 tasks | 1 files |
+| Phase 151 P05 | 41min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -606,6 +607,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 151]: Step 7 links 00-overview.md#deferral-vs-enforcement, not the #ring-terminology anchor the plan named — the three-primitive taxonomy lives in the next H2; #ring-terminology is used at Step 10 where the driver deferral it carries is restated
 - [Phase 151]: No range ships tagged [SOURCED, search-summary] — all five ranges Step 10 restates verify in the corpus with first-party quotations, so D-59's tag never fired; the one unverifiable range (expedite restart) is dropped under D-60
 - [Phase 151]: The two ranges the corpus writes with a hyphen inside verbatim Microsoft quotations (2-30 deadline, 0-7 grace) are restated in the paraphrased en-dash form rather than lifted out of their quotation marks — the second branch D-61 permits
+- [Phase 151]: Phase 151 closed the recipe-template Rollback/Recovery divergence at 5-of-5: promoted into the template (Commit A) and retrofitted into recipes 01 and 02 (Commit B), rather than promoting alone and inverting a 2-of-4 additive divergence into a 2-of-5 mandated-section gap
+- [Phase 151]: The recipe's Rollback/Recovery section states the true count of four of nine and shows both subtractions, because D-42's own stated arithmetic (nine minus three extras) reaches six, not four
+- [Phase 151]: D-33's 600-700 line budget is exceeded at 850 lines and is recorded rather than met by trimming; a successor tracking entry is filed per D-56 to adjudicate whether the budget or the artifact's scope is wrong
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -634,8 +638,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T14:15:14.877Z
-Stopped at: Completed 151-04-PLAN.md
+Last session: 2026-08-26T14:38:54.276Z
+Stopped at: Completed 151-05-PLAN.md — phase 151 complete, Commit B a8305b7e, all four gates green
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
