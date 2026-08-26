@@ -1,0 +1,54 @@
+# word-list "should": generally avoid.
+#
+# TIGHTENED after reviewing batch 1. Bare present tense is NOT the default --
+# it inverts meaning whenever the sentence stated an EXPECTATION rather than a
+# fact. "Compliance should show Compliant" became "Compliance shows Compliant",
+# an assertion the next sentence contradicts with "If it shows Not evaluated".
+#
+# Decide per sentence, in this order:
+#
+#  1. Does a conditional nearby handle the OTHER outcome ("If it shows...",
+#     "if present...", "(scope filter issue)")? Then it was an expectation.
+#     -> "Confirm X shows Y" if the reader is checking it
+#     -> "X must show Y"     if it is a required value
+#     NEVER bare present tense: the step exists because X may not show Y.
+#
+#  2. Is it an instruction? -> imperative, with the reader as subject.
+#     "failures should escalate to L2" -> "Escalate failures to L2".
+#     Watch for a non-human subject; failures do not escalate, people do.
+#
+#  3. Is it a genuine requirement? -> "must".
+#
+#  4. Only when it is plain product behaviour with no competing outcome in view
+#     -> present tense ("macOS prompts the user", "ZTE enrollment initiates").
+#
+# "should" inside a condition means intent, not obligation:
+# "if the ownership type should be allowed" -> "is meant to be allowed", never
+# "must be allowed", which reads as a requirement nested in a condition.
+#
+# regex	replacement
+Service Desk agents should start with	Service Desk agents start with
+the device should sync its clock	the device syncs its clock
+if the device should remain on classic Autopilot	if the device stays on classic Autopilot
+\*\* should be selected if the device requires user sign-in	** must be set if the device requires user sign-in
+means no user authentication should appear	means no user authentication appears
+the Wi-Fi icon should appear	the Wi-Fi icon appears
+ask the user what should be working	ask the user what they expect to work
+A profile that should be assigned to this device	A profile expected to be assigned to this device
+Compliance should show	Confirm Compliance shows
+The device should appear with Join type	Confirm the device appears with Join type
+side should escalate to L2	side escalates to L2
+ownership type should be allowed	ownership type is meant to be allowed
+what the user should have seen during setup	what the user sees during setup
+—should show	—shows
+pane should show	pane must show
+an app that should apply based on group membership	an app that is expected to apply based on group membership
+device should NOT be present	device is NOT present
+ZTE enrollment should initiate on next first-boot	ZTE enrollment initiates on the next first boot
+the device should appear in Intune	the device appears in Intune
+the device should appear back in Intune	the device appears back in Intune
+the administrator should restart that parent unit	the administrator must restart that parent unit
+restriction setting would block this user	restriction setting blocks this user
+which would route back to Causes	which routes back to Causes
+that would route to Cause A	that routes to Cause A
+a certificate rejection would produce	a certificate rejection produces

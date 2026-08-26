@@ -1,0 +1,37 @@
+# tense.md: present tense for product behaviour. "will" stays only where the event
+# is genuinely future and contingent for the reader (e.g. "if Microsoft publishes
+# official guidance, this document will be updated").
+#
+# regex	replacement
+will be created if it does not exist	is created if it does not exist
+assigned to user groups will not be delivered during device phase	assigned to user groups are not delivered during the device phase
+The device will reboot\.	The device reboots.
+Querying the legacy path will return no results and mislead	Querying the legacy path returns no results and misleads
+Device will receive the corrected profile on next check-in	The device receives the corrected profile on the next check-in
+the detection will fail silently	the detection fails silently
+app will NOT appear in Company Portal	the app does NOT appear in Company Portal
+before Conditional Access will grant access	before Conditional Access grants access
+Microsoft Support will use to retrieve the logs	Microsoft Support use to retrieve the logs
+the primary key that you will compare against	the primary key that you compare against
+User data on the device will be unrecoverable	User data on the device is unrecoverable
+elements will cause the support case to be returned	elements causes the support case to be returned
+state\) will be blocked by CA	state) are blocked by CA
+will have directed you here	has directed you here
+an expired token will fail enrollment silently	an expired token fails enrollment silently
+through Method A will enroll devices as Fully Managed	through Method A enrolls devices as Fully Managed
+KME and ZTE will silently enroll through KME	KME and ZTE enrolls silently through KME
+the Entra group that will include the newly enrolled	the Entra group that includes the newly enrolled
+permissive-override group will fall back to the default restriction	permissive-override group falls back to the default restriction
+enrollment attempts will be blocked at the Intune registration step	enrollment attempts are blocked at the Intune registration step
+devices will reject the update	devices reject the update
+app logs will show failed check-in attempts	app logs show failed check-in attempts
+corporate proxy will silently block PSSO registration	corporate proxy silently blocks PSSO registration
+An AD mobile account will typically show the domain association	An AD mobile account typically shows the domain association
+the Kerberos extension will not attempt to consume PSSO TGTs	the Kerberos extension does not attempt to consume PSSO TGTs
+The user will see	The user sees
+A token with only read scope will fail on DELETE	A token with only read scope fails on DELETE
+The device will prompt for PSSO re-registration	The device prompts for PSSO re-registration
+TLS interception will silently break the ADE enrollment handshake	TLS interception silently breaks the ADE enrollment handshake
+the device will re-attempt enrollment from the locked screen	the device re-attempts enrollment from the locked screen
+running, the channel will be empty	running, the channel is empty
+RADIUS will reject the cert	RADIUS rejects the cert

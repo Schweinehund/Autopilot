@@ -1,0 +1,8 @@
+# reference directional, pass 2.
+#
+# regex	replacement
+The table below adds a migration blocker	The following table adds a migration blocker
+The three scenarios below describe	The following three scenarios describe
+in the Windows table above	in the preceding Windows table
+it is preserved as-is below\.	it is preserved as-is in the following table.
+heading now used below\.	heading now used later in this document.

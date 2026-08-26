@@ -1,0 +1,55 @@
+# Directional pass for the operations tree.
+#
+# Out of scope and deliberately absent:
+#  - "[HIGH-RISK — see callout above]" -- that string is part of an H3 heading,
+#    so its anchor is linked; changing the body copies but not the heading would
+#    make them disagree. Left verbatim everywhere.
+#  - "Android 13 or above" -- the title of a cited Microsoft article.
+#  - "is the device at or above the target patch level?" -- a quoted example
+#    metric, and a magnitude rather than a position on the page.
+#
+# regex	replacement
+per-platform guides linked below	per-platform guides linked in the following sections
+see comparison table above\)	see the preceding comparison table)
+comparison table above maps	preceding comparison table maps
+comparison table above\)\. When designing	preceding comparison table). When designing
+\(states \+ intents above\)	(states and intents listed earlier)
+The matrix below encodes	The following matrix encodes
+\(the 30-day grace period above\)	(the 30-day grace period noted earlier)
+in the H2 sections above	in the preceding H2 sections
+\(the 3-step workflow above\)	(the 3-step workflow described earlier)
+The 7 rows above satisfy	The preceding 7 rows satisfy
+\] above\)	] section)
+The migration sequence below is risk-ordered	The following migration sequence is risk-ordered
+signal classes covered below:	signal classes covered in the following sections:
+Investigating macOS Drift section below\.	Investigating macOS Drift section.
+Investigating iOS / Android Drift section below\.	Investigating iOS / Android Drift section.
+attestation mechanisms covered below\.	attestation mechanisms covered in the following sections.
+report an OS version below the configured minimum	report an OS version earlier than the configured minimum
+the data-risk window described below\.	the data-risk window described in the following section.
+documented below as the BASELINE	documented in the following section as the BASELINE
+encryption-drift section below\)	encryption-drift section)
+per-ownership-mode section below\.	per-ownership-mode section.
+differ from the descriptions below\.	differ from the following descriptions.
+Windows tenant migration section above\)	preceding Windows tenant migration section)
+tenant migration sections above\.	preceding tenant migration sections.
+Cross-reference the v1\.2 doc above for exact sequencing	Cross-reference the preceding v1.2 doc for exact sequencing
+three approaches enumerated below\.	three approaches that follow.
+See the escrow validation section below\.	See the escrow validation section.
+are enumerated below WITHOUT Microsoft preference	are enumerated here WITHOUT Microsoft preference
+enforcement \(see below\)\.	enforcement (see the following section).
+the two-level model above\.	the preceding two-level model.
+Pilot WUfB deployment ring above is intentional	preceding Pilot WUfB deployment ring is intentional
+three enforcement keys above despite	preceding three enforcement keys despite
+cited in the paragraph above\.	cited in the preceding paragraph.
+the all-partitions scoping above\.	the preceding all-partitions scoping.
+Treat the mechanics below as 24\.04-documented	Treat the following mechanics as 24.04-documented
+\(the option above\) is set to	(the preceding option) is set to
+until the gate above is turned	until the preceding gate is turned
+The limits quoted below belong to	The following limits belong to
+co-existence procedure below carries	following co-existence procedure carries
+Step 3 below says	Step 3 says
+The procedure below is the fallback	The following procedure is the fallback
+read the step 3 warning above before	read the preceding step 3 warning before
+2004 and above and to Windows 11	2004 and later and to Windows 11
+the items above:	the preceding items:

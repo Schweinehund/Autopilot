@@ -1,0 +1,111 @@
+# Directional pass for the admin-setup families.
+#
+# Same ruling as batches 1-5: spatial above/below becomes preceding/following,
+# or is DROPPED when a named anchor link, a numbered step or a labelled callout
+# already identifies the target. Version and magnitude comparisons are NOT
+# spatial -- they take "earlier than".
+#
+# The two anchored rules at the end fire only on a prose segment that BEGINS
+# with the directional word. After the PROTECT split that means the character
+# before it closed a markdown link -- exactly the "the link already names the
+# target" family -- so the word is deleted outright.
+#
+# regex	replacement
+\(items 3-7 below\)	(items 3-7)
+into step 6 below\)	into step 6)
+exclusion list above:	exclusion list:
+the per-platform cert matrix below\)	the following per-platform cert matrix)
+address the two high-consequence wired-only prerequisites below\.	address the following two high-consequence wired-only prerequisites.
+certificate profiles above\.	certificate profiles.
+The matrix below documents	The following matrix documents
+WARNING immediately below before	WARNING that follows before
+^note below\.	note.
+The nmcli commands below are	The following nmcli commands are
+The command examples above use	The preceding command examples use
+from the table below, then	from the following table, then
+The table below shows	The following table shows
+is represented below as one row	is represented in the following table as one row
+from the table above, then	from the preceding table, then
+Paste the JSON below into	Paste the following JSON into
+Conditional Access prerequisite below load-bearing	following Conditional Access prerequisite load-bearing
+semantics above\. Do not copy	semantics described earlier. Do not copy
+Each row below names	Each row that follows names
+The table below is the canonical record	The following table is the canonical record
+deltas below explain	deltas that follow explain
+error documented below\.	error documented there.
+guides linked above\.	guides linked earlier.
+anti-paste blockquote above for	preceding anti-paste blockquote for
+JSON shown above;	JSON shown earlier;
+the verbatim Microsoft Learn note above\.	the preceding verbatim Microsoft Learn note.
+the COPE-specific re-enrollment note above\.	the preceding COPE-specific re-enrollment note.
+the verbatim MS Learn note above;	the preceding verbatim MS Learn note;
+decision matrix above\)	decision matrix)
+failure above, plus verify	failure described earlier, plus verify
+The failure modes below are scoped	The following failure modes are scoped
+The MEDIUM marker above documents	The preceding MEDIUM marker documents
+ add-on H2 below	 add-on H2
+the three enterprise SKUs above before	the three preceding enterprise SKUs before
+the decision table below to determine	the following decision table to determine
+as table rows below\.	as table rows that follow.
+beyond the five above	beyond the preceding five
+the CSV Import path above\.	the preceding CSV Import path.
+ command above is process-scoped	 command is process-scoped
+consequences documented below\.	consequences documented in the following sections.
+see setting 11 below\)	see setting 11)
+Configure each setting below\.	Configure each of the following settings.
+beyond the above	beyond those already listed
+See Step 2 above for	See Step 2 for
+not listed below should remain	not listed here should remain
+ETG group owner below\.	ETG group owner in the next step.
+Failures table below\.	Failures table.
+from the table above for the intended	from the preceding table for the intended
+" below\)	")
+Each category below lists	Each category that follows lists
+The nine settings below are	The following nine settings are
+a detailed treatment below\.	a detailed treatment in the sections that follow.
+is summarized below\.	is summarized in the following table.
+The table below summarizes	The following table summarizes
+Renewal / Maintenance below\)	Renewal / Maintenance)
+the three views above\.	the preceding three views.
+A dedicated section below answers	A dedicated section later in this guide answers
+patterns above are sufficient	preceding patterns are sufficient
+ table above applies equally	 table applies equally
+ configuration above is in place	 configuration is in place
+from the step above\.	from the preceding step.
+summary below; per-capability	summary that follows; per-capability
+capability section below so	capability section so
+Each capability below lists	Each capability that follows lists
+\(documented above\)\.	(documented earlier).
+see the sections below\.	see the following sections.
+\(linked above\);	(linked earlier);
+The procedure below is	The following procedure is
+version below the setting's minimum	version earlier than the setting's minimum
+is below 102\.x	is earlier than 102.x
+stage list below \(not	stage list that follows (not
+profile created above\.	profile created earlier.
+the compensating controls above\.	the preceding compensating controls.
+ value below\.	 value that follows.
+floor below \(5\.2404\.0\)	floor (5.2404.0)
+the version floor above\.	the preceding version floor.
+version is below the floor,	version is earlier than the floor,
+the prerequisites below\.	the following prerequisites.
+the four dimensions below\.	the following four dimensions.
+\(Step 5 below\)	(Step 5)
+The matrix below covers	The following matrix covers
+in the matrix below means	in the following matrix means
+per the sequence above \(step 6\)	per the preceding sequence (step 6)
+Read the table below before	Read the following table before
+ example above; this section	 example; this section
+ pattern above is primary	 pattern is primary
+the two read-only commands below are documented	the following two read-only commands are documented
+ as described below\.	 as described in the following steps.
+per the table above, re-assign	per the preceding table, re-assign
+ anchors above are stable	 anchors are stable
+ anchor above is stable	 anchor is stable
+ prerequisite callout above	 prerequisite callout
+ callout above	 callout
+ callout below	 callout
+ section above	 section
+ section below\)	 section)
+^ above(?![\w-])	
+^ below(?![\w-])	

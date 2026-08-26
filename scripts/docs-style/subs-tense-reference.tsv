@@ -1,0 +1,13 @@
+# tense.md for the reference class. Every one of these shortens the line, so none
+# can breach the C17 #12 blockquote cap.
+#
+# regex	replacement
+registration will be removed OR APv1 profile will be removed	registration is removed OR the APv1 profile is removed
+New devices will fail enrollment	New devices fail enrollment
+"Require compliant device" will allow access	"Require compliant device" allow access
+you will see no data	you see no data
+Custom OMA-URI entries will technically succeed	Custom OMA-URI entries technically succeeds
+macOS ADE\) will find the iOS	macOS ADE) find the iOS
+entitlement will Entra-join successfully but MDM enrollment will fail silently	entitlement Entra-joins successfully but MDM enrollment fails silently
+assigned will go through standard Windows setup	assigned goes through standard Windows setup
+one setting will interrupt the ESP flow	one setting interrupts the ESP flow

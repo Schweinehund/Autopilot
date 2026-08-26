@@ -1,0 +1,22 @@
+# Remaining l2 word-list calls.
+#
+# Out of scope and deliberately absent: ⚙️ Config / [CONFIG] (a fixed taxonomy
+# label with its own gloss, "[CONFIG]—Configuration error"), every hit inside a
+# heading (editing one changes its GitHub anchor), "quick reference" (a document
+# type here, not a claim about reader effort), quoted CLI output
+# ("Unit intune-agent.service could not be found"), quoted UI messages, and the
+# counterfactual "if GMS were present, COBO would be the right path".
+#
+# regex	replacement
+distinguishing actionable event IDs	distinguishing event IDs you can act on
+evaluate fleet impact before adjusting	evaluate the effect on the fleet before adjusting
+with no actionable Intune error	with no Intune error you can act on
+with no actionable error code	with no error code you can act on
+with no actionable error\.	with no error you can act on.
+with no actionable detail in the Intune error field	with no detail you can act on in the Intune error field
+\(not just upgrade\)	(not only upgrade)
+on a device that just enrolled is normal	on a device that enrolled recently is normal
+the L2-actionable signal is	the signal L2 can act on is
+—master error code lookup	—primary error code lookup
+Cross-platform APNs blast radius	Cross-platform APNs scope
+\*\*Scope impact:\*\*	**Scope effect:**

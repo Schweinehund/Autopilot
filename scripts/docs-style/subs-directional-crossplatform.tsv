@@ -1,0 +1,31 @@
+# Directional pass for the cross-platform tree. This corpus labels its callouts
+# (OP-1, OP-5, OP-6, OP-12, OP-15) and names its sections, so the directional
+# word is usually just dropped -- the label already identifies the target.
+#
+# regex	replacement
+see OP-12 callout above	see the OP-12 callout
+After completing Steps 1–3 above,	After completing Steps 1–3,
+see training-data notice above\]	see the preceding training-data notice]
+section above establishes\.	section establishes.
+The impact matrix above \(OP-5\)	The preceding impact matrix (OP-5)
+bundle above\) provides this capability	preceding bundle) provides this capability
+dimensions listed above \(Category,	preceding dimensions (Category,
+from the table above also included	from the preceding table also included
+Path B anti-feature note above\),	preceding Path B anti-feature note),
+see Manual path above\)	see the preceding Manual path)
+Target-Scope section above\.	Target-Scope section.
+See OP-1 superprivilege explainer above\.	See the OP-1 superprivilege explainer.
+from the Lookup Pattern section above	from the preceding Lookup Pattern section
+Sub-Org Admin Bundle table above\.	preceding Sub-Org Admin Bundle table.
+\(see callout above\)\.	(see the preceding callout).
+pre-transfer checklist above\.	preceding pre-transfer checklist.
+DENY-by-default contract below\.	DENY-by-default contract.
+decision table\n> below\.	decision table.
+\(Step 2 below\) is	(Step 2) is
+pre-release checklist \(below\) BEFORE	pre-release checklist BEFORE
+heuristic below \(OP-15\) to determine	following heuristic (OP-15) to determine
+DENY-by-default callout below\)\.	DENY-by-default callout).
+matrix below compares them	following matrix compares them
+See the OP-6 callout below\.	See the OP-6 callout.
+Target-Scope section below for the critical	Target-Scope section for the critical
+Lookup table below\. Resolution method:	following Lookup table. Resolution method:

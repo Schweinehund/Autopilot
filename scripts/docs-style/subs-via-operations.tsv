@@ -1,0 +1,10 @@
+# "via" for the operations tree, mapped by sense (see subs-via-sense.tsv).
+# Overwhelmingly channel-sense here (via Intune / ABM / MGP / VPP / Knox / ADE),
+# so the generic rule runs last, after the mechanism-sense exceptions.
+#
+# regex	replacement
+via PowerShell	using PowerShell
+stdout written via 	stdout written using 
+MDM client logs via 	MDM client logs using 
+validate enforcement via:	validate enforcement using:
+(?<![\w-])via(?![\w-])	through

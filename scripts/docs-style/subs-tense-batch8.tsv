@@ -1,0 +1,138 @@
+# Tense, modal and word-list pass for batch 8 (the remaining classes).
+#
+# will  -> present for product behaviour. KEPT for the three genuinely future
+#          statements ("expanded in a future documentation phase", "the L1
+#          runbook will be published", "will not be reassigned") and inside the
+#          `> **Ask the admin:**` decision-point questions, which ask about an
+#          action the operator has not taken yet.
+# should-> must for a requirement, present tense for behaviour, and the
+#          expectation form where a step VERIFIES a value. KEPT in all eight
+#          `> **Ask the admin:**` prompts: "When should an account be deleted?"
+#          is an interrogative, not the ambiguous modal Google warns about.
+# would  -> KEPT: all seven are true conditionals in EEE-SOP-standard.md
+#          ("would inject a person name", "would tabulate nothing").
+# could  -> KEPT: both are past ability.
+# quick  -> KEPT, all seven. Every one means FAST ("quick lookup", "quick
+#          overview"), never "this task is easy", which is the sense Google's
+#          entry actually bars. Same call as batch 7's `## Action Quick Reference`.
+# just   -> "not just X" is "not only X". KEPT where it means recently ("a
+#          device that just completed enrollment") or in the idiom "just the same".
+# master -> the three prose uses become "primary". The document TITLE "Master
+#          Error Code Index" is a heading and stays frozen under Option 1.
+# simple/easily -> KEPT: a complexity property and a comparative about which
+#          recovery arm is easier, neither a minimizer.
+# "We couldn't sign you in." -> KEPT: verbatim UI error string.
+#
+# regex	replacement
+permissions will fail silently	permissions fail silently
+in place will halt all	in place halts all
+what the administrator will see, what the end user will see	what the administrator sees, what the end user sees
+devices will show as Personal ownership	devices show as Personal ownership
+the action will be available in the portal but will fail on the device	the action is available in the portal but fails on the device
+it will fail to re-provision	it fails to re-provision
+Your IT department will provide	Your IT department provides
+TPM 1\.2 will always fail with	TPM 1.2 always fail with
+ABM account will not appear in ABM	ABM account do not appear in ABM
+The device will not appear in your device list	The device does not appear in your device list
+in ABM will not appear in Intune	in ABM do not appear in Intune
+will have multiple tokens in Intune	have multiple tokens in Intune
+it will proceed through standard	it proceeds through standard
+the device will not enroll in MDM	the device does not enroll in MDM
+New enrollments will fail\.	New enrollments fail.
+payload\) will block the release signal	payload) blocks the release signal
+device registration will block access to protected resources	device registration block access to protected resources
+or compliance will block the user	or compliance block the user
+or earlier will not receive the in-place migration behavior	or earlier do not receive the in-place migration behavior
+pre-26 devices will result in pre-26 devices	pre-26 devices results in pre-26 devices
+on the device will receive an uninstall command	on the device receives an uninstall command
+the device will restart but cannot complete re-enrollment	the device restarts but cannot complete re-enrollment
+the device will restart at the deadline	the device restarts at the deadline
+in the cadence will appear at the scheduled time	in the cadence appears at the scheduled time
+enrollment will fail\. Ensure Intune readiness	enrollment fails. Ensure Intune readiness
+enrollment will fail\. Ensure network connectivity	enrollment fails. Ensure network connectivity
+configuration will not match the shipping device	configuration does not match the shipping device
+no assigned profile will reach OOBE	no assigned profile reaches OOBE
+it will complete standard Windows setup instead	it completes standard Windows setup instead
+this key will not be written	this key is not written
+hybrid join deployments will fail at OOBE	hybrid join deployments fail at OOBE
+guest Wi-Fi will fail\.	guest Wi-Fi fail.
+during provisioning will block the ESP	during provisioning block the ESP
+just completed enrollment will show	just completed enrollment shows
+registration will match the hardware	registration matches the hardware
+from the old record will differ from	from the old record differ from
+the deployment will fail silently	the deployment fails silently
+the APv1 profile will take	the APv1 profile takes
+the device will not be added to the security group	the device is not added to the security group
+Preparation policy will not activate	Preparation policy does not activate
+time out will trigger a failure	time out trigger a failure
+it will not be reflected in the deployment status	it is not reflected in the deployment status
+Users will see a prompt	Users see a prompt
+actions will require a follow-up PSSO	actions require a follow-up PSSO
+notification will not appear until the policy arrives	notification does not appear until the policy arrives
+keys and will report no certificate	keys and report no certificate
+earlier will not receive the in-place migration prompt	earlier do not receive the in-place migration prompt
+in ABM will receive the enrollment profile	in ABM receive the enrollment profile
+the device will display the non-dismissible lock screen	the device displays the non-dismissible lock screen
+LaunchDaemons\) will receive an uninstall command	LaunchDaemons) receives an uninstall command
+the device will proceed to the deadline	the device proceeds to the deadline
+the device will hit the deadline enforcement screen	the device hits the deadline enforcement screen
+at deadline time will be locked	at deadline time is locked
+no new key will be generated and escrowed	no new key is generated and escrowed
+registration will not have working PSSO SSO	registration do not have working PSSO SSO
+resources will be inaccessible until	resources are inaccessible until
+The device will go through a standard ADE enrollment	The device goes through a standard ADE enrollment
+the device will be wiped and will need to go through Setup Assistant	the device is wiped and must go through Setup Assistant
+the user will need to reconfigure	the user must reconfigure
+it will find the Intune MDM server assignment	it finds the Intune MDM server assignment
+this device will connect to	this device connects to
+Every app that will appear on the MHS grid	Every app that appears on the MHS grid
+new deployments should provision WPCO	new deployments must provision WPCO
+Admins should treat Private Space	Admins must treat Private Space
+new bindings should use Entra	new bindings must use Entra
+Device API access should consult	Device API access must consult
+Organizations should establish a break-glass	Organizations must establish a break-glass
+organizations should select one approach	organizations must select one approach
+screen should launch automatically	screen launches automatically
+apps and scripts should show progress	apps and scripts show progress
+grounding behavior should read	grounding behavior must read
+each step should have one clear action	each step must have one clear action
+determine which mode a given device deployment should use	determine which mode to use for a given device deployment
+devices that should carry no personal content	devices that must carry no personal content
+differ and should not be conflated	differ and must not be conflated
+administrators should account for during rollout planning	administrators must account for during rollout planning
+Admins should adjust user-facing privacy messaging	Admins must adjust user-facing privacy messaging
+personal files the user should keep	personal files the user must keep
+a device that should be fully decommissioned	a device that must be fully decommissioned
+record should be removed before tenant migration	record must be removed before tenant migration
+you should see \*\*Microsoft Intune Portal\*\* appear	**Microsoft Intune Portal** appears
+it should show your work email address	it shows your work email address
+Other OEM customers should contact	Other OEM customers must contact
+administrators should evaluate whether User Enrollment	administrators must evaluate whether User Enrollment
+VPP apps should be assigned in Intune	VPP apps must be assigned in Intune
+registry should match the Autopilot registration record	registry matches the Autopilot registration record
+flows should treat all Linux enrollments	flows must treat all Linux enrollments
+disabled when it should be enabled	disabled when it must be enabled
+The user should tap "Try Again"	The user must tap "Try Again"
+that it should attempt registration	that it must attempt registration
+recovery path and should be the first action	recovery path and must be the first action
+supervision should be re-granted by the re-enrollment	supervision is expected to be re-granted by the re-enrollment
+The recovery key should appear in the Intune admin center	The recovery key appears in the Intune admin center
+but it should be treated as deprecated	but it must be treated as deprecated
+The notification should reappear at the next check-in	The notification reappears at the next check-in
+Critical cross-platform blast radius:	Critical cross-platform scope:
+\(cross-platform blast radius\)	(cross-platform scope)
+cross-platform blast radius;	cross-platform scope;
+This is the master routing hub	This is the primary routing hub
+This is the master error-code lookup reference	This is the primary error-code lookup reference
+This is the master lookup table	This is the primary lookup table
+\(Play Integrity tier impact\)	(Play Integrity tier effects)
+COBO \(no impact—QR	COBO (no effect—QR
+The practical impact:	The practical effect:
+not just changes\)	not only changes)
+simultaneously, not just iOS\.	simultaneously, not only iOS.
+devices, not just new enrollments\.	devices, not only new enrollments.
+stops -- not just new enrollments\.	stops -- not only new enrollments.
+the device simply matched an APv1 profile	the device matched an APv1 profile
+the device simply restarts and re-enrolls	the device restarts and re-enrolls
+worked example simply uses the user-group path	worked example uses the user-group path
+stage guide for actionable steps	stage guide for steps you can act on

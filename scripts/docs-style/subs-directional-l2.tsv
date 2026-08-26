@@ -1,0 +1,84 @@
+# Directional pass for l2-runbooks. One rule per case -- never a [Cc] class with a
+# fixed-case replacement (that recased "Escalation Criteria" in batch 1).
+# Where an anchor link or a named section already identifies the target, the
+# directional word is simply dropped rather than replaced.
+#
+# regex	replacement
+The runbooks below cover 	The following runbooks cover 
+see the tables above\.	see the preceding tables.
+, see above\.	, see the preceding section.
+using the steps below\.	using the following steps.
+per Escalation Ceiling below	per the Escalation Ceiling section
+the event ID lookup tables below\.	the following event ID lookup tables.
+using the event IDs above does not identify	using the preceding event IDs does not identify
+Use the reference tables below to interpret	Use the following reference tables to interpret
+follow the matching investigation path below\.	follow the matching investigation path.
+not covered by the scenarios above	not covered by the preceding scenarios
+using one of the three methods below	using one of the three methods that follow
+using the Decision Matrix below\.	using the following Decision Matrix.
+the decision matrix below guides method selection	the following decision matrix guides method selection
+The decision matrix below selects	The following decision matrix selects
+The Decision Matrix below routes	The following Decision Matrix routes
+The decision matrix below routes	The following decision matrix routes
+Both are documented below	Both are documented in the following sections
+with the above M365 app list	with the preceding M365 app list
+through one of the three paths above\.	through one of the three preceding paths.
+see PII warning below	see the PII warning that follows
+AssistiveTouch 5-step procedure above for	preceding AssistiveTouch 5-step procedure for
+drastically below ABM device count	drastically lower than the ABM device count
+data-collection checklist below\.	following data-collection checklist.
+advisory cross-reference above\)	preceding advisory cross-reference)
+The tables below enumerate	The following tables enumerate
+conditions above have been verified	preceding conditions have been verified
+\(captured in Step 2 above\)	(captured in Step 2)
+\[DEFECT\] checklist above\.	preceding [DEFECT] checklist.
+"Per-Cause Deep-Dive" section below\.	"Per-Cause Deep-Dive" section.
+in the Per-Cause Deep-Dive below for	in the Per-Cause Deep-Dive for
+in the Per-Cause Deep-Dive below\.	in the Per-Cause Deep-Dive.
+Match against the sub-sections below\.	Match against the following sub-sections.
+If all of the above pass:	If all the preceding checks pass:
+Method Selection block below	following Method Selection block
+proceed to the matching Section below\.	proceed to the matching Section.
+Match Against Known Patterns below\.	Match Against Known Patterns.
+may be below Android 10	may be earlier than Android 10
+Each Pattern sub-section above includes	Each preceding Pattern sub-section includes
+Each Per-Cause Deep-Dive sub-section above includes	Each preceding Per-Cause Deep-Dive sub-section includes
+Three-Class Disambiguation below and	Three-Class Disambiguation and
+Begin at Investigation by Axis below to	Begin at Investigation by Axis to
+using the Triage block above\.	using the preceding Triage block.
+see dedicated sub-section below\.	see the dedicated sub-section that follows.
+terminal-state sub-section below\.	terminal-state sub-section.
+to one of five Patterns below\.	to one of the five Patterns that follow.
+to one of five per-OEM Patterns below\.	to one of the five per-OEM Patterns that follow.
+Firmware below floor	Firmware earlier than the floor
+Tenant SKU is below Intune Plan 1	Tenant SKU is lower than Intune Plan 1
+the layered caveat below\.	the following layered caveat.
+Source confidence blockquote above\)	preceding Source confidence blockquote)
+the version-track matrix above\.	the preceding version-track matrix.
+use the user-scope form below\.	use the following user-scope form.
+trap families documented below are	trap families documented here are
+pattern above is an inferred broad	preceding pattern is an inferred broad
+Proceed through the steps below to identify	Proceed through the following steps to identify
+The sysdiagnose procedure above is the verified	The preceding sysdiagnose procedure is the verified
+The Microsoft identity endpoints above are the documented	The preceding Microsoft identity endpoints are the documented
+When the steps above do not resolve	When the preceding steps do not resolve
+as the post-lockout steps below\.\)	as the following post-lockout steps.)
+802\.1X-specific signals below	802.1X-specific signals that follow
+listed in the Context section above	listed in the preceding Context section
+11006 above\)	11006 listed earlier)
+If the above returns no output	If the preceding command returns no output
+as iOS/iPadOS above	as iOS/iPadOS earlier
+Route to the matching platform subsection below\.	Route to the matching platform subsection.
+as the machine store above\.	as the machine store earlier.
+visibility is limited \(see below\)\.	visibility is limited (see the following section).
+the same fields as macOS above:	the same fields as macOS earlier:
+link to the foundation files above\.	link to the preceding foundation files.
+Route to the matching section below	Route to the matching section
+Every item below is a	Every item that follows is a
+in the diagnosis sections below\.\)	in the following diagnosis sections.)
+The per-platform diagnosis below	The following per-platform diagnosis
+item 2 above\)	item 2)
+Provide the portal paths below to	Provide the following portal paths to
+per-platform sections above\.	preceding per-platform sections.
+L2 runbooks above	preceding L2 runbooks
+Skip to the event ID lookup	Skip to the event ID lookup

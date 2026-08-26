@@ -1,0 +1,8 @@
+# reference via, pass 2: fix a doubled "through" I created, plus two lines
+# actionable.py had suppressed because they carry a long validator literal.
+#
+# regex	replacement
+(ADE) through Apple Business Manager	(ADE) with Apple Business Manager
+enrolled manually via Company Portal	enrolled manually through Company Portal
+managed via the same Intune tenant	managed through the same Intune tenant
+web-app CA via Microsoft Edge for Linux	web-app CA through Microsoft Edge for Linux

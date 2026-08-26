@@ -1,0 +1,23 @@
+# "via" for batch 8 (the remaining classes), mapped by sense.
+#
+# 208 prose hits, 10 exceptions. The distribution is the flattest of any batch:
+# lifecycle and glossary prose is nearly all channel-sense, so the generic rule
+# does ~95% of the work.
+#
+# Package sources take "from", not "through": a snap or an Ubuntu archive is
+# where a package COMES FROM, and "not available through snap" reads as a
+# capability claim rather than a distribution one. APT is a protocol, so it
+# takes "over".
+#
+# regex	replacement
+macOS ADE configuration via Apple Business Manager	macOS ADE configuration with Apple Business Manager
+served via the Advanced Package Tool	served over the Advanced Package Tool
+available via the default Ubuntu archive nor via snap	available from the default Ubuntu archive nor from snap
+NOT available via snap, NOT available via the default Ubuntu archive	NOT available from snap, NOT available from the default Ubuntu archive
+\(via TPM when available\)	(using the TPM when available)
+via #36 required	per #36 required
+via anchor links	using anchor links
+hardware hash via CIM from	hardware hash using CIM from
+matched via hardware hash	matched by hardware hash
+kiosk mode via the autologon local account	kiosk mode using the autologon local account
+(?<![\w-])via(?![\w-])	through

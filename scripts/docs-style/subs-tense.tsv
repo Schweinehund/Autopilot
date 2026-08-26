@@ -1,0 +1,25 @@
+# tense.md: describe how the product behaves in present tense. "will" survives
+# only where the event is genuinely in the future for the reader.
+# regex	replacement
+token validation will fail	token validation fails
+the device will remain on	the device remains on
+the app will only appear in Company Portal	the app appears only in Company Portal
+deployments from this token will fail until renewed	deployments from this token fail until renewed
+a sync on an expired token will not surface devices	a sync on an expired token does not surface devices
+Unlicensed paid apps will fail to install	Unlicensed paid apps fail to install
+AOSP enrollment will not work	AOSP enrollment does not work
+field—it will be 	field—it is 
+the administrator will need this to locate	the administrator needs this to locate
+the compliance state will transition to	the compliance state transitions to
+web-app access will resolve automatically	web-app access resolves automatically
+The user will be prompted to complete MFA	The user is prompted to complete MFA
+the output will typically show	the output typically shows
+The Mac will log in to	The Mac logs in to
+macOS will prompt the user	macOS prompts the user
+macOS will guide the user	macOS guides the user
+Platform SSO will not function until	Platform SSO does not function until
+this path will not be available	this path is not available
+a password they will remember	a password they can remember
+password they will remember and confirm it	password they can remember and confirm it
+You will need this information if you need to escalate	You need this information if you escalate
+you will need it for escalation data	you need it for escalation data

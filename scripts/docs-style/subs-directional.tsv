@@ -1,0 +1,34 @@
+# Google directional rule (accessibility.md): no above/below for position on the
+# page. Longest phrases first -- sweep3 applies these in file order.
+#
+# Version and firmware comparisons are the word-list "below" entry instead
+# ("Don't use for a range of version numbers. Instead, use earlier.").
+#
+# regex	replacement
+below minimum or above maximum	earlier than the minimum or later than the maximum
+below the minimum Android version	earlier than the minimum Android version
+Device below minimum Android version	Device earlier than the minimum Android version
+device below minimum Android version	device earlier than the minimum Android version
+OS version below minimum	OS version earlier than the minimum
+version is below 	version is earlier than 
+firmware below floor	firmware earlier than the floor
+firmware is below floor	firmware is earlier than the floor
+If below floor	If earlier than the floor
+a passcode below the policy minimum	a passcode shorter than the policy minimum
+none of the above applies	none of these apply
+none of the above matches	none of these match
+the four root causes above	the four preceding root causes
+portal checks above are clear	preceding portal checks are clear
+First Checks steps above	First Checks steps
+If all checks above pass	If all the preceding checks pass
+noted above	noted earlier
+not covered above	not covered earlier
+per sub-cause above	per the preceding sub-cause
+\*\* below\.	**.
+all data listed below	the following data
+the escalation data below	the following escalation data
+with the steps below	with the following steps
+the paths below	the following paths
+from the list below	from the following list
+\(#escalation-criteria\) below	(#escalation-criteria)
+matching runbook below	matching runbook

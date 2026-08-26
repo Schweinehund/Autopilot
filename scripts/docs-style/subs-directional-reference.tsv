@@ -1,0 +1,23 @@
+# Directional pass for the reference doc class.
+#
+# One convention dominates: "The table below compares/documents/lists/pairs/
+# shows ...", the standing lead-in for every capability matrix. "Table summary:"
+# IS a validator literal, but "table below" is not, and none of these lines are
+# blockquotes, so the +4 characters are safe here.
+#
+# Numeric thresholds keep "above": "success rate above 95%" and "a 15-minute
+# buffer above" are magnitudes, not positions on the page.
+#
+# regex	replacement
+The table below compares	The following table compares
+The table below documents	The following table documents
+The table below lists	The following table lists
+The table below pairs	The following table pairs
+The table below shows	The following table shows
+The table below maps	The following table maps
+from the table below satisfies	from the following table satisfies
+in the table below\.	in the following table.
+Recalculate using the formula above\.	Recalculate using the preceding formula.
+using the Readiness Checklist above	using the preceding Readiness Checklist
+four capability sub-tables above	preceding four capability sub-tables
+Each item below must be checked	Each of the following items must be checked

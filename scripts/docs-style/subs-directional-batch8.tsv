@@ -1,0 +1,126 @@
+# Directional pass for batch 8 (the remaining classes).
+#
+# Same three-way split as batches 1-7: spatial -> preceding/following, DROP
+# when a named anchor / step / callout already identifies the target, and
+# version or magnitude comparisons -> "earlier than" because they are not
+# directional at all.
+#
+# Two shapes are new here and both keep a positional word on purpose:
+#   "the Stage Summary Table below the ADE Pipeline table" is genuine LAYOUT --
+#     it locates one named table relative to another -- so it takes "after".
+#   "a `v5:` element reaches a device below its floor" compares a DEVICE to a
+#     version floor, so neither "earlier than" nor "preceding" is grammatical;
+#     it becomes "a device that predates its floor".
+#
+# The two anchored rules at the end fire only on a prose segment that BEGINS
+# with the word, which after the PROTECT split means a markdown link just
+# closed -- the "link already names the target" family.
+#
+# regex	replacement
+OS version below minimum requirement	OS version earlier than minimum requirement
+\(below 22H2 without KB5035942\)	(earlier than 22H2 without KB5035942)
+shipping a build below 5\.2604\.0	shipping a build earlier than 5.2604.0
+Company Portal below the A2 floor,	Company Portal earlier than the A2 floor,
+Company Portal version below floor\.	Company Portal version earlier than floor.
+If the version is below the floor,	If the version is earlier than the floor,
+not deployed or below version floor,	not deployed or earlier than the version floor,
+reaches a device below its floor	reaches a device that predates its floor
+\*\* below the ADE Pipeline table	** after the ADE Pipeline table
+\*\* below the pipeline diagram	** after the pipeline diagram
+The table below compares	The following table compares
+The table below maps	The following table maps
+The table below decomposes	The following table decomposes
+see the table below for the per-mode	see the following table for the per-mode
+described in the table below\.	described in the following table.
+field values in the table below\.	field values in the following table.
+the app type tracking table above before	the preceding app type tracking table before
+The capability table above \(Supported Management Surface\)	The preceding capability table (Supported Management Surface)
+in the matrix above, the Microsoft Intune Linux client	in the preceding matrix, the Microsoft Intune Linux client
+a value not in the table above,	a value not in the preceding table,
+the anti-feature table above\.	the preceding anti-feature table.
+anti-feature table\'s retired-client row above\.	anti-feature table's retired-client row.
+the anti-feature table below\)	the following anti-feature table)
+the A2 requirements table above\.	the preceding A2 requirements table.
+the diagrams and table below—when	the following diagrams and table—when
+For Autopilot Device Preparation, see below\.	For Autopilot Device Preparation, see the following section.
+use the runbooks below\.	use the following runbooks.
+event ID ranges \(see below\)	event ID ranges (see the following section)
+three tiered methods—see below\.	three tiered methods—see the following section.
+not hybrid joined—see below\)	not hybrid joined—see the following section)
+collection method available \(see below\)	collection method available (see the following section)
+The H3 entries below are concepts	The following H3 entries are concepts
+IME log folder below\.	IME log folder.
+Each breakpoint below documents	Each breakpoint that follows documents
+verify all items below\.	verify all of the following items.
+Find your error code below and follow	Find your error code in the following table and follow
+Each of the seven stages below contains	Each of the seven stages that follow contains
+one of the three paths below\.	one of the three paths that follow.
+through the checklist below\.	through the following checklist.
+ALL prerequisites below must be met	ALL of the following prerequisites must be met
+All requirements below must be met	All of the following requirements must be met
+the linked references below for those	the following linked references for those
+the layered configuration below,	the following layered configuration,
+The payload below is complete	The following payload is complete
+paste the payload below\.	paste the following payload.
+the payload below take effect	the following payload take effect
+Paste the JSON below into	Paste the following JSON into
+Declined from the payload below,	Declined from the following payload,
+the two procedures below are the ones	the two procedures that follow are the ones
+the settings below apply the same way	the following settings apply the same way
+The UI path below is confirmed	The following UI path is confirmed
+documented below at conceptual depth	documented in the following steps at conceptual depth
+Cross-platform mental-model bridges below help	The following cross-platform mental-model bridges help
+the six structural doc classes below	the following six structural doc classes
+The composite shape below is	The following composite shape is
+Each step is explained below with	Each step is explained with
+is represented below; both branches	is represented in the following table; both branches
+is represented below; the two branches	is represented in the following table; the two branches
+see Terminology Usage Notes below\)	see Terminology Usage Notes)
+see the AOSP detail below	see the AOSP detail
+Policy Conflicts section below\.	Policy Conflicts section.
+the A2 divergence callout below\.	the A2 divergence callout.
+the A2 divergence callout below for	the A2 divergence callout for
+Block Format \(STD-05\) section below for	Block Format (STD-05) section for
+worked example below \(D-07\)	worked example (D-07)
+relies on in Verification below\.	relies on in Verification.
+the enrollment-policy step below\.	the enrollment-policy step.
+\(Stage 8B below\)	(Stage 8B)
+same sequencing as Stage 2 above\)	same sequencing as Stage 2)
+\(Stage 2 above\)	(Stage 2)
+steps 3 and 4 above fill this gap	steps 3 and 4 fill this gap
+already in Key Terminal Commands above;	already in Key Terminal Commands;
+already in Platform SSO Attestation Command above;	already in Platform SSO Attestation Command;
+\(see Grounding Notes above\)	(see Grounding Notes)
+own enforcement posture above\)	own enforcement posture)
+banned under D-03 above;	banned under D-03;
+the \*\*Add Store app\*\* step above\.	the preceding **Add Store app** step.
+ block above\.	 block.
+Choose your platform below, then	Choose your platform, then
+Select a category above or use	Select a category from the preceding list or use
+For any of the above, use Wipe\.	For any of these, use Wipe.
+After completing the steps above, confirm	After completing the preceding steps, confirm
+same as LOB/M365 scenario above\)	same as the preceding LOB/M365 scenario)
+ESP are preserved above:	ESP are preserved:
+All other SKUs listed above are supported	All other SKUs listed here are supported
+material" language above to name	material" language to name
+the four-value taxonomy above:	the preceding four-value taxonomy:
+The five structural classes above are not	The preceding five structural classes are not
+per the rules above—include	per the preceding rules—include
+The five modes above are named combinations	The preceding five modes are named combinations
+bridge subsection above in	preceding bridge subsection in
+UI path above confirmed identical	preceding UI path confirmed identical
+the GUI path above is the primary	the preceding GUI path is the primary
+anti-pattern covered above\.	anti-pattern covered earlier.
+timeout above \(seconds\)	preceding timeout (seconds)
+in the payload above, twelve lines apart	in the preceding payload, twelve lines apart
+Treat the two facts above as separate	Treat the preceding two facts as separate
+Every key above ships in the fence	Every key listed here ships in the fence
+string in the fence above\.	string in the preceding fence.
+entries in the fence above;	entries in the preceding fence;
+out of the payload above—it is inert	out of the preceding payload—it is inert
+back-button gesture above still reaches	preceding back-button gesture still reaches
+preserved as-is below\.	preserved as-is.
+heading now used below\.	heading now in use.
+ section above\. See	 section. See
+^ above(?![\w-])	
+^ below(?![\w-])	

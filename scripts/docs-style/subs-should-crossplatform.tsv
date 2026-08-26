@@ -1,0 +1,30 @@
+# "should" and "impact" for the cross-platform tree.
+#
+# "impact matrix" is KEPT everywhere: it is the name of a specific artifact
+# (OP-5, the 4-cell impact matrix) and the title of an H2 whose anchor other
+# docs link to. Only the bare noun changes.
+#
+# regex	replacement
+All downstream\nimpact \(VPP, enrollment profile\) must be planned	All downstream\neffects (VPP, enrollment profile) must be planned
+the downstream impact must be planned before the click	the downstream effects must be planned before the click
+transfers, the OU-A administrator\n> should notify	transfers, the OU-A administrator\n> must notify
+re-added through Configurator should not be	re-added through Configurator must not be
+but should never have \(a\)	but must never have (a)
+and should not re-enroll\.	and must not re-enroll.
+logs should be exported to an external SIEM	Export logs to an external SIEM
+If the sub-org administrator should cover multiple OUs	If the sub-org administrator needs to cover multiple OUs
+a device that should not re-enroll:	a device that must not re-enroll:
+it should remain absent	it must remain absent
+which OU should own a CRD-mode Apple TV	which OU is meant to own a CRD-mode Apple TV
+audit log collection should be aware of this limitation	audit log collection must be aware of this limitation
+only the Account Holder should	only the Account Holder must
+Offboarding a sub-org administrator should be performed promptly	Offboard a sub-org administrator promptly
+SHOULD resolve through one of these backends	must resolve through one of these backends
+an MDM server should be granted	an MDM server must be granted
+Organizations should treat missed-deadline cases	Organizations must treat missed-deadline cases
+Deletion should be reserved for accounts	Deletion must be reserved for accounts
+portal should treat it as requiring	portal must treat it as requiring
+seeking ADE enrollment should purchase	seeking ADE enrollment must purchase
+OU count ceiling should be treated as unverified	OU count ceiling must be treated as unverified
+options should be confirmed against the live portal	options must be confirmed against the live portal
+administrators should confirm the destination OU's MDM	administrators must confirm the destination OU's MDM

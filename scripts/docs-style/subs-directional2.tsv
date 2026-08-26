@@ -1,0 +1,17 @@
+# Second directional pass -- the cases that needed full-line context.
+# regex	replacement
+Cause ordering below reflects	The following cause ordering reflects
+this sets expectations for the triage steps below	this sets expectations for the following triage steps
+in the Symptom section above	in the preceding Symptom section
+the prerequisite gap above applies	the preceding prerequisite gap applies
+Use the navigation below to go to	Use the following navigation to go to
+per-platform diagnostic table below	following per-platform diagnostic table
+continue triage below	continue with the following triage
+per the guardrails below	per the following guardrails
+\(step 1 above\)	(step 1)
+device is below the required minimum	device is earlier than the required minimum
+is now below the limit	is now less than the limit
+Criteria\) below\.	Criteria).
+Criteria below\.	Criteria.
+Criteria\) below for Cause E	Criteria) for Cause E
+admin-action-required\) below\)	admin-action-required))

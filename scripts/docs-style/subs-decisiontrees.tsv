@@ -1,0 +1,24 @@
+# Judgment pass for the decision-trees class (batch 7, 11 files).
+#
+# These docs are ~90% table, so 386 rows are protected and the prose surface is
+# tiny: 31 term hits total. The directional rules all DROP the word rather than
+# swapping in preceding/following -- every one of them points at the table that
+# is the body of the document, and several name it outright.
+#
+# NOT edited here, consistent with batches 1-6:
+#   Intune admin center   UI label
+#   Master Error Code Index / ## Action Quick Reference   doc title, heading
+#   Admin Setup link text and "Admin configuration reference"   the open
+#     corpus-wide capitalised-Admin class, deferred to its own pass
+#
+# regex	replacement
+LTS via 	LTS from 
+(?<![\w-])via(?![\w-])	through
+is grouped below into	is grouped into
+are represented below; each row traces	are represented in the following table; each row traces
+as their own explicit rows below, not flattened	as their own explicit rows, not flattened
+are preserved below as explicit per-mode rows	are preserved as explicit per-mode rows
+in the Routing Verification table below;	in the Routing Verification table;
+is represented below; the Routing Verification table already carries	is represented in the Routing Verification table, which already carries
+The tree will route you to	The tree routes you to
+and you just need to clean up	and you need to clean up

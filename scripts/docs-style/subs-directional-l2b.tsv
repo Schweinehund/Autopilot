@@ -1,0 +1,15 @@
+# l2 directional, pass 2: corrections plus the cases the earlier over-broad
+# bare-domain mask had hidden (802.1X read as a hostname).
+#
+# The first two rules repair my own bad word order: replacing "conditions above"
+# with "preceding conditions" in place produced "ALL [CONFIG] preceding
+# conditions". The qualifier has to move to the front of the noun phrase.
+#
+# regex	replacement
+ALL \[CONFIG\] preceding conditions have been verified	ALL the preceding [CONFIG] conditions have been verified
+ALL ⚙️ Config preceding conditions have been verified	ALL the preceding ⚙️ Config conditions have been verified
+802\.1X-specific signals below	802.1X-specific signals that follow
+The conflict categories below are stable	The following conflict categories are stable
+If Android 9 or below, COBO enrollment	If Android 9 or earlier, COBO enrollment
+returns verdict below policy	returns a verdict under the policy threshold
+persists per sub-section above	persists per the preceding sub-section

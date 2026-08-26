@@ -1,0 +1,15 @@
+# tense.md for the cross-platform tree.
+#
+# Kept as "will": the template email to end users in 16-managed-apple-account-
+# runbook.md (user-facing copy, same class as a speech script), genuinely future
+# commitments ("deferred to v1.7+", "this note will be updated", "will
+# cross-link"), and consequences a user is warned about ahead of an action.
+#
+# regex	replacement
+display name as it will appear in the portal	display name as it appears in the portal
+the device will attempt MDM	the device attempts MDM
+dependency pair will produce blank-UI symptoms	dependency pair produces blank-UI symptoms
+administrator will be unable to authenticate on next sign-in attempt	administrator is unable to authenticate on the next sign-in attempt
+rather than ADE\) will require Configurator	rather than ADE) require Configurator
+but it will NOT resolve a Shared iPad partition passcode	but it does NOT resolve a Shared iPad partition passcode
+that affected apps will stop working after transfer	that affected apps stop working after transfer

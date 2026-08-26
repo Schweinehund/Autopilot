@@ -1,0 +1,8 @@
+v1.15 EEE reformat — content not re-reviewed
+**LOCKED — 23 (nodes + labeled edges)**
+[802.1X Triage](decision-trees/10-8021x-triage.md) — 802.1X authentication failure symptom routing (cross-platform)
+| Network Authentication (802.1X) | Supported — [matrix](linux-capability-matrix.md#configuration)
+| Network Authentication (802.1X) | Partial — [guide](../admin-setup-8021x/06-android.md)
+> **⛔ MDM EraseDevice — DESTRUCTIVE / L2 approval required (OP-11)**
+> **⛔ Untouched-OU — DO NOT ACT until migration completes (OP-9)**
+9 macOS L1 runbooks — 6 ADE plus 3 Platform SSO; see row below

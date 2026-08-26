@@ -1,0 +1,26 @@
+# Batch 9 -- the corpus-wide capitalised Admin / Admins class (RESUME "OPEN corpus-wide class").
+#
+# The split, and the rule behind it: TITLE CASE is a label and is frozen under the same
+# Option 1 spirit that freezes headings; SENTENCE CASE is prose and gets expanded. That is
+# exactly the distinction RESUME already draws between the frozen taxonomy label
+# "Admin Action Required" and the prose lead-in "Admin action required."
+#
+# Blocked by (?! ?[A-Z]):  Admin Setup / Guide(s) / Portal / Note: / Action Required /
+#   Sees / Directory / Decision-Point Block / Bundle / Holder / Owns This Pool?
+# Blocked by lookbehind:   Intune Admin(s), Sub-Org Admin(s), Google Admin account,
+#   Local Admin Setting|= Selected, [macOS Admin] and [iOS Admin] link text (RESUME
+#   never-touch), the "> Admin" UI breadcrumbs (Entra Provisioning > Admin, ABM People >
+#   Admin), and the "Standard / Admin / Groups" enum.
+# Blocked by lookahead:    Admin log (an event channel), Admin consent (Entra's own button),
+#   Admin directory (mirrors _admin-directory.md), Admin (Intune): (a procedure label whose
+#   sibling is "On the device (Terminal):"), **Admin:** (a routing label whose siblings are
+#   **L1:** / **L2:** / **Decision Tree:**), and Admin sees.
+#
+# "Admin sees" (47) is THE documented exception: it pairs with "End user sees" (37) and with
+# 58 Title Case "What the Admin Sees" headings and column cells. RESUME rules it one unit --
+# either both or neither -- and Option 1 freezes the Title Case half, so it is neither.
+#
+# Not reachable and so not ruled on here: frontmatter owner: Intune Admin Lead, table rows,
+# headings, and > **Ask the admin:** (pinned twice, blocked by the exact pin check).
+(?<!Intune )(?<!Sub-Org )(?<![\w-])Admins(?! [A-Z])(?![\w-])	Administrators
+(?<!Intune )(?<!Sub-Org )(?<!Google )(?<!Local )(?<!macOS )(?<!iOS )(?<!> )(?<!/ )(?<![\w-])Admin(?![\w-])(?! ?[A-Z])(?! log)(?! consent)(?! directory)(?! sees)(?! \(Intune\))(?!:)	Administrator

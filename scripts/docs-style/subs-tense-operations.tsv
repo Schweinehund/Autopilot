@@ -1,0 +1,29 @@
+# tense.md for the operations tree. Kept as "will": genuinely future events
+# ("Phase 59 Hub Navigation Integration will add ...", "devices that will be
+# enrolled in Autopatch") and the inline quotation "a logged-in user will not
+# stop one." Cited blockquotes are refused by the engine, not listed here.
+#
+# regex	replacement
+the remediation script will run on the next interval	the remediation script runs on the next interval
+the remediation script will then run	the remediation script then runs
+unsigned MSIX will not install	unsigned MSIX does not install
+Microsoft Support will not assist with troubleshooting	Microsoft Support does not assist with troubleshooting
+Microsoft Support will not troubleshoot	Microsoft Support does not troubleshoot
+devices will lose MDM management immediately	devices lose MDM management immediately
+assignment will NOT receive the superseding app	assignment do NOT receive the superseding app
+built on one will simply fail to evaluate	built on one fails to evaluate
+silent—Intune will continue	silent—Intune continues
+compliance and will be	compliance and are
+fires on a monthly cadence will need re-baselining	fires on a monthly cadence needs re-baselining
+status report will see only	status report see only
+the policy will not honour it	the policy does not honour it
+will not pick up ordinary bug-fix updates	does not pick up ordinary bug-fix updates
+policy creation will block:	policy creation blocks:
+Intune will not allow the Revoke	Intune does not allow the Revoke
+Autopatch will not auto-rotate driver/firmware approvals	Autopatch does not auto-rotate driver/firmware approvals
+policy will not honor any WUfB deployment	policy does not honor any WUfB deployment
+shared Ubuntu machines will	shared Ubuntu machines
+FAQ's phrasing will not find it	FAQ's phrasing does not find it
+the device's status will be reported as	the device's status is reported as
+still attached will silently lose update	still attached silently loses update
+^will fail Intune compliance and be blocked	fail Intune compliance and are blocked

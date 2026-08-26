@@ -1,0 +1,15 @@
+# Remaining reference word-list calls.
+#
+# Out of scope here: "Enrolled via DEP: Yes" and "Some settings could not be
+# applied" and "Would be blocked" (quoted command output and UI strings),
+# "Unified Log Quick Reference" (a heading), "simple cloud-only deployments"
+# (a property contrasted with complex ones, not a claim about reader effort),
+# "could not join" (past inability), and "etc." (Google's own preference).
+#
+# regex	replacement
+Both app IDs should be excluded, not just one	Both app IDs must be excluded, not only one
+Some GPO categories should not be migrated	Some GPO categories must not be migrated
+validate the impact of a CA policy	validate the effect of a CA policy
+check encoding—should be UTF-16	check encoding—must be UTF-16
+the only OEM requiring just Intune Plan 1	the only OEM requiring only Intune Plan 1
+success rate should be above 95%	success rate must be above 95%

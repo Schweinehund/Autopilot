@@ -1,0 +1,6 @@
+# via, pass 2: the agent and the token are mechanisms, so "using" avoids a
+# "through ... through" pairing where the two senses differ.
+#
+# regex	replacement
+\(through the Intune management agent\)	(using the Intune management agent)
+synced to Intune through a VPP token	synced to Intune using a VPP token

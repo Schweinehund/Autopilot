@@ -1,0 +1,130 @@
+# Tense, modal and minimizer pass for the admin-setup families.
+#
+# will  -> present tense for product behaviour. KEPT for events genuinely in
+#          the reader's future (Phase 39 scope notes, the v1.5.1 LIN-DEFER-01
+#          cross-link) and inside the four verbatim vendor quotations, which
+#          are evidence, not prose.
+# should-> present tense for behaviour, must for a requirement, imperative for
+#          an instruction. Where a step VERIFIES a value, the expectation form
+#          wins ("Profile Status shows", "expect ~365 days") -- bare present
+#          tense inverts the meaning when the sentence stated an expectation.
+# would  -> KEPT everywhere here: all seven are true conditionals ("would drift
+#          if duplicated", "would mismatch the short name").
+# could  -> KEPT for past inability and inside the quoted UI string "Setup could
+#          not be completed"; the one present-ability use becomes "can".
+# just   -> "not just X" is "not only X", never a minimizer. simply is cut.
+# simple -> KEPT: every hit is a property (simple vs complex OEMConfig cases)
+#          or the macOS setting name "Block simple passwords".
+# master -> KEPT: "FileVault master keychain" is Apple's term.
+#
+# The Microsoft re-registration passage in 08-auth-methods-deep-dive is a
+# verbatim quotation in double quotes, not a blockquote, so the cited-quotation
+# guard does not see it. Its "will need to undergo" stays as written.
+#
+# regex	replacement
+who expect this setting will not find it on	who expect this setting do not find it on
+NAC environments will see a different MAC	NAC environments see a different MAC
+the Wi-Fi profile will deploy successfully	the Wi-Fi profile deploys successfully
+the device-identifier type they will upload	the device-identifier type they upload
+on the Intune cloud app will block it	on the Intune cloud app blocks it
+Wi-Fi authentication will lose access	Wi-Fi authentication lose access
+End users will see both Company Portal	End users see both Company Portal
+which apps will run on the device	which apps run on the device
+the EMM the device will hand off to	the EMM the device hands off to
+mode the device will land in	mode the device lands in
+the reseller upload completes will boot to consumer setup	the reseller upload completes boot to consumer setup
+assignment after first boot will not retro-trigger KME	assignment after first boot does not retro-trigger KME
+registered in both portals will enroll through KME	registered in both portals enroll through KME
+re-provisioning will block at the Google-account credential prompt	re-provisioning blocks at the Google-account credential prompt
+when each headset will be checked out	when each headset is checked out
+the authoritative gate for what Intune will accept	the authoritative gate for what Intune accepts
+supported list and will fail Intune AOSP enrollment	supported list and fail Intune AOSP enrollment
+Apps relying on location services will fail until	Apps relying on location services fail until
+Wi-Fi will NOT work	Wi-Fi does NOT work
+User-targeted policies will not apply during deployment	User-targeted policies do not apply during deployment
+devices will not auto-enroll into Intune during OOBE	devices do not auto-enroll into Intune during OOBE
+the APv2 deployment will fail at the enrollment step	the APv2 deployment fails at the enrollment step
+The Intune Provisioning Client will add devices automatically	The Intune Provisioning Client adds devices automatically
+Devices will enroll through APv2	Devices enroll through APv2
+enrollment restriction will never reach the Device Preparation experience	enrollment restriction never reaches the Device Preparation experience
+supervised-only configuration profiles will not apply	supervised-only configuration profiles do not apply
+no primary user—Company Portal will not function	no primary user—Company Portal does not function
+Conditional Access policies will not apply, and per-user app assignments will not deliver	Conditional Access policies do not apply, and per-user app assignments do not deliver
+The device will not enroll in MDM	The device does not enroll in MDM
+devices will be marked non-compliant but nothing prevents	devices are marked non-compliant but nothing prevents
+the device will always be flagged non-compliant	the device is always flagged non-compliant
+which capabilities will be available afterward	which capabilities are available afterward
+the management-profile download will not trigger because	the management-profile download does not trigger because
+personal Apple ID during enrollment will be rejected	personal Apple ID during enrollment are rejected
+The Snap path will not receive Identity Broker	The Snap path does not receive Identity Broker
+authentication and enrollment will fail at the sign-in step	authentication and enrollment fails at the sign-in step
+Conditional Access policies will scope to Linux devices	Conditional Access policies scope to Linux devices
+CA policy targeting Linux will block all Linux device access	CA policy targeting Linux blocks all Linux device access
+unlisted distribution or version will report non-compliant	unlisted distribution or version report non-compliant
+those devices will immediately report non-compliant	those devices immediately report non-compliant
+a syntax error will cause compliance evaluation to fail	a syntax error causes compliance evaluation to fail
+without encryption enabled, it will report non-compliant immediately	without encryption enabled, it reports non-compliant immediately
+the password requirements will report non-compliant	the password requirements report non-compliant
+on the device baseline will cause devices to report non-compliant	on the device baseline cause devices to report non-compliant
+not available on Linux and will block all Linux users if applied	not available on Linux and blocks all Linux users if applied
+the server token downloaded from ABM will fail validation	the server token downloaded from ABM fails validation
+assigned to the intended MDM server will not appear in Intune	assigned to the intended MDM server do not appear in Intune
+Without user affinity, Company Portal will not work	Without user affinity, Company Portal does not work
+It will \*\*not\*\* be auto-filled	It is **not** auto-filled
+to a device group will not appear in Company Portal	to a device group does not appear in Company Portal
+configuration profiles, devices will be marked non-compliant but nothing enforces	configuration profiles, devices are marked non-compliant but nothing enforces
+the latest available macOS update will mark ALL devices non-compliant	the latest available macOS update marks ALL devices non-compliant
+user affinity and will result in users being unable	user affinity and results in users being unable
+PSSO feature hard-gates at macOS 26 and will not activate on earlier versions	PSSO feature hard-gates at macOS 26 and does not activate on earlier versions
+non-T2 Intel Macs WILL fail to provision and should fall back to Password sync	non-T2 Intel Macs CANNOT provision and must fall back to Password sync
+Secure Enclave auth method WILL FAIL to provision	Secure Enclave auth method FAILS to provision
+that Platform SSO will prompt for re-registration	that Platform SSO prompts for re-registration
+Touch ID will have NO authentication path	Touch ID has NO authentication path
+users will not be prompted automatically	users are not prompted automatically
+without filtering; macOS 13 devices will fail	without filtering; macOS 13 devices fail
+those checks will report "device not joined	those checks report "device not joined
+re-registration before Conditional Access will pass	re-registration before Conditional Access passes
+shows when each ticket will expire	shows when each ticket expires
+has not yet expired is functioning correctly and will be renewed automatically	has not yet expired is functioning correctly and is renewed automatically
+The user will see the "Registration Required" prompt	The user sees the "Registration Required" prompt
+the system will prompt for MFA before completing the delete	the system prompts for MFA before completing the delete
+The user will be prompted for PSSO re-registration	The user is prompted for PSSO re-registration
+devices should consult their network or infrastructure team	devices must consult their network or infrastructure team
+End users enrolling personal devices should read	End users enrolling personal devices read
+both should target the same WS50 device set	both must target the same WS50 device set
+the blocking app list should be finalized	the blocking app list must be finalized
+Profile Status should show "Assigning"	Profile Status shows "Assigning"
+Assign apps that should be available to all users	Assign apps that must be available to all users
+not listed here should remain at the default	not listed here must remain at the default
+\) should appear in the owners list	) appears in the owners list
+scripts that should install during APv2 enrollment	scripts that you want installed during APv2 enrollment
+the users who should receive this APv2 deployment	the users who receive this APv2 deployment
+\(should be ~365 days	(expect ~365 days
+settings covered here, and should be set to Yes	settings covered here, and must be set to Yes
+However, you should explicitly set supervised mode	However, explicitly set supervised mode
+if compliance status should gate access	if compliance status must gate access
+for devices that should be exempt	for devices to exempt
+For corporate devices that should arrive supervised	For corporate devices that must arrive supervised
+Tenants supporting both flows should document	Tenants supporting both flows must document
+Use when the policy should govern	Use when the policy governs
+vendor URLs should be verified against published checksums	vendor URLs must be verified against published checksums
+macOS configuration profiles should be created through the Settings Catalog	macOS configuration profiles must be created through the Settings Catalog
+^should inform users that	must inform users that
+Only after CBA is confirmed working should the Smart Card PSSO Settings Catalog profile be deployed	Deploy the Smart Card PSSO Settings Catalog profile only after CBA is confirmed working
+dialogs that users could click through	dialogs that users can click through
+not just the first user during Autopilot provisioning	not only the first user during Autopilot provisioning
+not just local administrator rights	not only local administrator rights
+\(not just Members\)	(not only Members)
+\(not just "non-compliant"\)	(not only "non-compliant")
+\(not just a generic non-compliant state\)	(not only a generic non-compliant state)
+\(not just deprecated\)	(not only deprecated)
+\(just earlier in the flow	(only earlier in the flow
+device-side symptom is simply continued access	device-side symptom is continued access
+the registration flow simply stalls or is blocked	the registration flow stalls or is blocked
+produces no actionable error -- registration simply fails	produces no error you can act on -- registration fails
+\(no machine-wide impact\)	(no machine-wide effect)
+No functional impact but adds an extra step	No functional effect but adds an extra step
+The impact is highest for user-assigned devices	The effect is highest for user-assigned devices
+to limit the blast radius of an accidental token disclosure	to limit the scope of an accidental token disclosure
+reduces the blast radius and makes rollback tractable	reduces the scope of a failure and makes rollback tractable
+not "did we use the enrollment profile"	not "did you use the enrollment profile"

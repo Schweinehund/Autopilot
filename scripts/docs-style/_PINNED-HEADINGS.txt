@@ -1,0 +1,186 @@
+# 802.1X Certificate Delivery Foundation
+# 802.1X Certificate Failure
+# 802.1X Log Collection
+# 802.1X Triage Decision Tree
+# Android Enterprise 802.1X Admin Setup: Wi-Fi
+# Linux 802.1X Admin Setup: EAP-TLS via nmcli
+# Windows 802.1X Admin Setup: Wi-Fi and Wired
+# iOS/iPadOS 802.1X Admin Setup: Wi-Fi and Wired
+# macOS 802.1X Admin Setup: Wi-Fi and Wired
+## APv2 Quick Reference
+## Alphabetical Index
+## Amendment procedure
+## Android Enterprise Failure Scenarios
+## Android Enterprise Failure Scenarios H2 missing
+## Android Enterprise Provisioning
+## Android Enterprise Provisioning H2 missing
+## Android Enterprise Quick Reference
+## Android Enterprise Quick Reference H2 missing
+## Android L1 Runbooks
+## Android L1 Runbooks H2 missing
+## Android L2 Runbooks
+## Android L2 Runbooks not found (regression)
+## Android tenant migration H2 missing
+## App Deployment
+## App Lifecycle Automation
+## App Lifecycle H2
+## App-lifecycle terminology H2 missing
+## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle
+## Apple Business
+## Apple Business Governance Failure Scenarios
+## Apple Business Quick Reference
+## CI-1
+## CI-2
+## CI-3
+## Canonical script-authoring pattern H2 missing
+## Choose Your Platform
+## Co-Management
+## Compliance
+## Compliance Drift Detection + Tenant Migration
+## Conditional Access
+## Conditional Access H2 missing — D-04 retrofit incomplete
+## Conditional Access H2 present
+## Configuration
+## Configuration-Caused Failures
+## ContentPrepTool Packaging H2 missing
+## Cross-Platform Collisions
+## Cross-Platform References
+## Cross-Platform References H2 missing
+## Cross-platform encryption drift H2 missing
+## Cross-platform encryption drift H2 present
+## Deadlines & Cutover Dates H2 missing
+## Decision Matrix H2 not found
+## Dependency Graphs H2 missing
+## Device Configuration Recipes
+## Device-Level Conditional Access
+## Drift H2
+## Drift terminology H2 missing
+## Enrollment
+## Enrollment Constraints
+## Explicitly Excluded
+## GOV-02 grep procedure
+## Hotpatch H2 missing
+## Linux L1 Runbooks
+## Linux L1 Runbooks H2 not found
+## Linux L1 Runbooks H2 substring not found via indexOf
+## Linux L2 Runbooks
+## Linux L2 Runbooks H2 not found
+## Linux Provisioning
+## Linux Quick Reference
+## Log Collection
+## Managed Google Play Private App Publishing H2 missing
+## Mermaid-in-Enrolled-Classes Policy (STD-04)
+## OU
+## Operations
+## Organizational Units
+## Out of Scope for Linux via Intune
+## Patch & Update Management
+## Patch Management H2
+## Path A
+## Path B
+## Path C
+## Prerequisites
+## Rebrand Mapping Table
+## Required Role & Permission
+## Ring Terminology H2 missing
+## Roles & Permissions
+## Rollback/Recovery
+## SC3 — Deployment Policy
+## See Also
+## Software Updates
+## Steps
+## Sub-Org Admin Bundle
+## Summary
+## Supersedence H2 missing
+## Supported Management Surface
+## Tenant Migration H2
+## Three Workload Slider States
+## Three Workload Slider States H2 missing
+## Top 5 Checks
+## Unsupported and Anti-Feature Callouts
+## Verification
+## Version History
+## WUfB Deployment Rings
+## Which admin owns this pool?
+## Windows Autopilot
+## Zebra OEMConfig H2 missing
+## iOS L1 Runbooks section found
+## iOS L1 Runbooks section not found in 00-index.md
+## iOS L2 Runbooks heading not found
+## iOS/iPadOS Failure Scenarios
+## iOS/iPadOS Provisioning
+## iOS/iPadOS Quick Reference
+## macOS ADE Quick Reference
+## macOS Provisioning
+## v1.5
+## v1.5 not found [v1.5-frozen @ ba2cbc0]
+### ABM
+### ABM (Apple Business Manager)
+### ADE
+### Account-Driven User Enrollment
+### Admin Setup
+### Android Decision Tree
+### Android Diagnostic Data Collection (3 methods)
+### Android Escalation Triggers
+### Android Investigation Runbooks
+### Android Runbooks
+### Android: AOSP Enrollment Failed
+### Android: Compliance Blocked
+### Android: Device Not Enrolled
+### Android: Enrollment Blocked
+### Android: Knox Enrollment Failed
+### Android: MGP App Not Installed
+### Android: Work Profile Not Created
+### Android: ZTE Enrollment Failed
+### App Lifecycle Automation
+### Await Configuration
+### BYOD
+### COBO
+### COBO / COPE / WPCO
+### COPE
+### Co-Management
+### Compliance Drift Detection + Tenant Migration
+### Corporate Identifiers
+### Corporate identifiers
+### DPC
+### DPC (Device Policy Controller)
+### Desktop Engineering (L2)
+### ESP
+### Hardware Hash
+### Hardware hash
+### Kandji / Iru
+### Kandji-Iru
+### Key Intune Portal Paths (Android L2)
+### Key Intune Portal Paths (Linux L2)
+### Linux Compliance Category Reference
+### Linux Decision Tree
+### Linux Diagnostic Data Collection (3 methods)
+### Linux Escalation Triggers
+### Linux Investigation Runbooks
+### Linux Runbooks
+### MAM-WE
+### Managed Google Play
+### Managed Google Play (MGP)
+### Non-version Breakpoints
+### OOBE
+### Patch & Update Management
+### Path A
+### Path B
+### Path C
+### Play Integrity Verdict Reference
+### Service Desk (L1)
+### Setup Assistant
+### Step 5a: Kiosk configuration
+### Step 5b: Shared PC configuration
+### Supervision
+### Top Checks
+### Ubuntu 20.04 \u2014 End-of-Support
+### User Enrollment
+### VPP
+### VPP (Volume Purchase Program)
+### WPCO
+### Web-app CA
+### Work Profile
+### Zero-Touch Enrollment
+### Zero-Touch Enrollment (ZTE)
+#### Non-MECE precedence rule (D-08)

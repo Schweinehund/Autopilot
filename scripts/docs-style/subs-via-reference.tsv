@@ -1,0 +1,23 @@
+# "via" for the reference doc class, mapped by sense (see subs-via-sense.tsv).
+# Nearly every other occurrence here sits in a capability-matrix table row and is
+# protected. One case takes "with" rather than "through" purely to stay under the
+# C17 #12 blockquote cap -- that line is already at 198 of 200 characters.
+#
+# regex	replacement
+Device Enrollment via Apple Business Manager	Device Enrollment through Apple Business Manager
+\(ADE\) via Apple Business Manager	(ADE) through Apple Business Manager
+LTS via the 	LTS through the 
+LTS via the intune-portal deb client	LTS through the intune-portal deb client
+WPCO\) via the Knox Admin Portal	WPCO) through the Knox Admin Portal
+re-provisions via APv1	re-provisions through APv1
+enrolled via Account-Driven UE	enrolled through Account-Driven UE
+must sequence via separate compliance-gated assignments	must be sequenced using separate compliance-gated assignments
+web-app CA via Edge as the sole enforcement path	web-app CA with Edge as the sole enforcement path
+Conditional Access \(via Microsoft Edge\)	Conditional Access (through Microsoft Edge)
+discover proxy settings via DNS	discover proxy settings through DNS
+certificate deployed via Intune	certificate deployed through Intune
+proxy CA cert via a provisioning package	proxy CA cert using a provisioning package
+hardware hash via CIM from	hardware hash using CIM from
+attestation capability via 	attestation capability using 
+re-attestation via 	re-attestation using 
+support `-WhatIf` via 	support `-WhatIf` through 

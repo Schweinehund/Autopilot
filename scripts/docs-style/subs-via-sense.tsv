@@ -1,0 +1,24 @@
+# Correction pass: blanket via -> through is too coarse.
+#
+# Google offers by / through / with / by using. Which one depends on what "via"
+# introduced:
+#   a channel, portal, product or enrollment path  -> through   (correct already)
+#   a command, cmdlet, script or tool              -> using
+#   a property or field you read a value out of    -> from
+#   a physical medium                              -> with / over
+#   a URL you go to                                -> at
+#
+# Batch 1 (l1-runbooks) happened to be almost all channel-sense, which is why the
+# blanket rule looked safe there. l2 is investigation runbooks, so it is full of
+# cmdlets, Graph calls and device properties.
+#
+# regex	replacement
+through one of three methods	using one of three methods
+through Restart-EnrollmentStatusPage	using Restart-EnrollmentStatusPage
+through Reset-TPMForAutopilot	using Reset-TPMForAutopilot
+through `ManufacturerId`	from `ManufacturerId`
+through Sync after	using Sync after
+through cable	with a cable
+through Graph	using Graph
+through `app-sso	with `app-sso
+through meta\.com	at meta.com

@@ -1,0 +1,34 @@
+# "should" for l2-runbooks, using the tightened procedure in subs-should.tsv.
+#
+# The dominant l2 case is a diagnostic expectation: "**Managed by** field: should
+# show `Microsoft Intune`". A conditional handling the other outcome is always
+# nearby (that is the whole point of an investigation runbook), so these take
+# "must show", never bare present tense.
+#
+# regex	replacement
+user-targeted policies should not block device phase	user-targeted policies do not block the device phase
+Specific policy setting names should be validated against	Validate specific policy setting names against
+AppLocker CSP policies should only be applied to	AppLocker CSP policies must be applied only to
+Unknown event IDs should be noted with full event XML and included in	Note unknown event IDs with full event XML and include them in
+Post-AMAPI tenants should treat 	For post-AMAPI tenants, treat 
+Post-AMAPI tenants should treat Microsoft Intune app logs	For post-AMAPI tenants, treat Microsoft Intune app logs
+L2 engineers should validate adb command output against	Validate adb command output against
+the affected users should re-attempt enrollment	have the affected users re-attempt enrollment
+field: should show	field: must show
+should be `Block` for new enrollments	must be `Block` for new enrollments
+GMS-mode devices should enroll through Android Enterprise	GMS-mode devices must enroll through Android Enterprise
+status should show 	status must show 
+ZT account should show 	ZT account must show 
+Admin should update the policy to reflect	The administrator must update the policy to reflect
+the device should now reach the Knox profile handoff	the device reaches the Knox profile handoff
+the device should enter the ZT DPC flow	the device enters the ZT DPC flow
+screen should now advance to the Intune DPC handoff	screen advances to the Intune DPC handoff
+device row: should be populated with	device row: must be populated with
+orgs requiring Strong integrity should evaluate whether	if your organization requires Strong integrity, evaluate whether
+The network team should confirm proxy bypass rules	Ask the network team to confirm proxy bypass rules
+of the output should show that SSO tokens	of the output must show that SSO tokens
+agent should self-remove at its next 15-minute check-in	agent self-removes at its next 15-minute check-in
+the ABM administrator should cancel the migration deadline	the ABM administrator must cancel the migration deadline
+Both journals should be collected together\.	Collect both journals together.
+should contain the RADIUS server's domain suffix	must contain the RADIUS server's domain suffix
+should point to the RADIUS root CA certificate file	must point to the RADIUS root CA certificate file

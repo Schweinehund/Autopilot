@@ -1,0 +1,562 @@
+do not move this slider until Intune Defender for Endpoint policy is published, targeted, and confirmed reporting healthy
+[802.1X Triage](decision-trees/10-8021x-triage.md) — 802.1X authentication failure symptom routing (cross-platform)
+Intune provides no native 802.1X profiles for Linux; this guide documents an OS-level nmcli workaround
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** STD-001 · **Status:** Approved
+| Network Authentication (802.1X) | Supported — [matrix](linux-capability-matrix.md#configuration)
+docs/linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-[NNN] · **Status:** Draft
+The **Deployment channel** setting determines where authentication certificates are stored
+| Network Authentication (802.1X) | Partial — [guide](../admin-setup-8021x/06-android.md)
+converted Mermaid decision graph to the pre-existing Routing Verification decision table
+static user group and delivered before the device reaches the Entra credential screen
+Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) runbook** first
+pre-logon domain connectivity failures on Hybrid Entra Joined devices (pitfall B-03)
+Android Enterprise 802.1X requires three distinct Intune configuration profiles
+An unmapped `platform:` value is a HARD FAILURE. There is NO silent fallback.
+[Android Enterprise Failure Scenarios](#android-enterprise-failure-scenarios)
+# iOS/iPadOS MDM Migration Walkthrough: In-Place Migration (iOS/iPadOS 26+)
+Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune
+](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration
+iOS/iPadOS 802.1X requires three distinct Intune configuration profiles
+<a id="exit-kiosk-pin-synchronization"></a><a id="exit-kiosk-pin"></a>
+docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints
+31-linux-compliance-non-compliant.md#cause-d-custom-compliance-failure
+> **802.1X / Network authentication:** For 802.1X protocol terminology
+> **⛔ MDM EraseDevice — DESTRUCTIVE / L2 approval required (OP-11)**
+> **⛔ Untouched-OU — DO NOT ACT until migration completes (OP-9)**
+docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md
+9 macOS L1 runbooks — 6 ADE plus 3 Platform SSO; see row below
+<a id="deferred-4-platform-unified-capability-comparison"></a>
+## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle
+docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md
+via the Intune Management Extension (IME), not VPP licensing
+line-of-business (LOB) app, or as an unmanaged macOS PKG app
+docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md
+docs/admin-setup-macos/11-graph-api-platform-credential.md
+EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS -- as co-equal paths
+docs/l2-runbooks/20-android-app-install-investigation.md
+docs/macos-lifecycle/01-psso-provisioning-walkthrough.md
+30-linux-enrollment-failed.md#cause-c-enrollment-timeout
+04-android-patch-delivery.md#play-integrity-attestation
+docs/l2-runbooks/26-apple-business-permission-denied.md
+docs/l2-runbooks/28-macos-kerberos-sso-investigation.md
+docs/end-user-guides/linux-intune-portal-enrollment.md
+../reference/macos-capability-matrix.md#authentication
+mandatory PSSO re-registration after password recovery
+30-linux-enrollment-failed.md#cause-a-package-install
+docs/l2-runbooks/33-8021x-radius-eap-investigation.md
+30-linux-enrollment-failed.md#cause-b-sign-in-failure
+| Feature | Windows | macOS | iOS | Android | Linux |
+docs/admin-setup-8021x/02-cert-delivery-foundation.md
+docs/l1-runbooks/41-8021x-eap-negotiation-failure.md
+../end-user-guides/linux-intune-portal-enrollment.md
+L1 Triage Steps in this runbook are read-only checks
+docs/l1-runbooks/15-macos-company-portal-sign-in.md
+does NOT reset the independent local macOS password
+docs/admin-setup-macos/10-kerberos-sso-extension.md
+docs/admin-setup-macos/03-configuration-profiles.md
+macos-lifecycle/01-psso-provisioning-walkthrough.md
+docs/admin-setup-macos/08-auth-methods-deep-dive.md
+docs/l2-runbooks/30-macos-mdm-migration-failure.md
+<a id="deferred-full-aosp-capability-mapping"></a>
+docs/reference/4-platform-capability-comparison.md
+docs/end-user-guides/android-work-profile-setup.md
+### Android Diagnostic Data Collection (3 methods)
+docs/admin-setup-android/12-aosp-htc-vive-focus.md
+docs/admin-setup-android/03-fully-managed-cobo.md
+### Compliance Drift Detection + Tenant Migration
+docs/l1-runbooks/37-macos-local-password-reset.md
+docs/l1-runbooks/40-8021x-server-trust-failure.md
+[Linux Provisioning Glossary](_glossary-linux.md)
+docs/admin-setup-ios/04-configuration-profiles.md
+docs/l1-runbooks/38-8021x-certificate-failure.md
+docs/l1-runbooks/35-macos-sso-sign-in-failure.md
+## Compliance Drift Detection + Tenant Migration
+Registration Approach: Decision and Alternatives
+../l2-runbooks/30-macos-mdm-migration-failure.md
+### Linux Diagnostic Data Collection (3 methods)
+systemctl enable --user --now intune-agent.timer
+# iOS/iPadOS 802.1X Admin Setup: Wi-Fi and Wired
+docs/l2-runbooks/25-linux-agent-investigation.md
+docs/android-lifecycle/00-enrollment-overview.md
+docs/admin-setup-8021x/01-eap-method-overview.md
+docs/recipes/02-shared-ipad-full-provisioning.md
+docs/l2-runbooks/32-8021x-cert-investigation.md
+docs/admin-setup-linux/01-intune-linux-agent.md
+docs/l2-runbooks/17-ios-compliance-ca-timing.md
+docs/admin-setup-linux/05-conditional-access.md
+supervised and unsupervised devices (iOS 17.0+)
+docs/l1-runbooks/36-macos-secure-enclave-key.md
+](l1-runbooks/37-macos-local-password-reset.md)
+docs/admin-setup-linux/02-enrollment-profile.md
+docs/admin-setup-macos/07-platform-sso-setup.md
+docs/admin-setup-macos/02-enrollment-profile.md
+docs/admin-setup-macos/01-abm-configuration.md
+docs/linux-lifecycle/01-linux-prerequisites.md
+docs/linux-lifecycle/00-enrollment-overview.md
+## Apple Business Governance Failure Scenarios
+docs/admin-setup-linux/03-compliance-policy.md
+# Android Enterprise 802.1X Admin Setup: Wi-Fi
+../l1-runbooks/35-macos-sso-sign-in-failure.md
+docs/l2-runbooks/27-macos-sso-investigation.md
+docs/admin-setup-android/13-aosp-meta-quest.md
+## Mermaid-in-Enrolled-Classes Policy (STD-04)
+l2-runbooks/30-macos-mdm-migration-failure.md
+recipes/04-android-dedicated-mhs-multi-app.md
+# Linux 802.1X Admin Setup: EAP-TLS via nmcli
+Step 7: Apply the per-role user-group overlay
+docs/l1-runbooks/20-ios-device-cap-reached.md
+Setup-Assistant SSO-Extension Diagnostic Tree
+docs/l1-runbooks/21-ios-compliance-blocked.md
+../admin-setup-macos/07-platform-sso-setup.md
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
+docs/macos-lifecycle/02-mdm-migration-psso.md
+# Windows 802.1X Admin Setup: Wi-Fi and Wired
+../admin-setup-linux/02-enrollment-profile.md
+docs/admin-setup-ios/06-compliance-policy.md
+docs/recipes/01-shared-windows-avd-client.md
+docs/admin-setup-ios/07-device-enrollment.md
+docs/l2-runbooks/15-ios-ade-token-profile.md
+v1.15 EEE reformat — content not re-reviewed
+../l2-runbooks/27-macos-sso-investigation.md
+](l2-runbooks/27-macos-sso-investigation.md)
+End-User Sign-In Experience (Secure Enclave)
+docs/admin-setup-android/09-aosp-realwear.md
+docs/l2-runbooks/31-8021x-log-collection.md
+This tree uses a flat symptom-primary shape
+removed orphaned VPP glossary quick-ref row
+docs/reference/android-capability-matrix.md
+docs/l1-runbooks/17-ios-ade-not-starting.md
+docs/l2-runbooks/24-linux-log-collection.md
+# macOS 802.1X Admin Setup: Wi-Fi and Wired
+docs/admin-setup-macos/04-app-deployment.md
+android-lifecycle/00-enrollment-overview.md
+com.microsoft.CompanyPortalMac.ssoextension
+../../admin-setup-ios/05-app-deployment.md
+docs/admin-setup-apv1/08-self-deploying.md
+admin-setup-macos/07-platform-sso-setup.md
+docs/l1-runbooks/39-8021x-radius-reject.md
+Admin Decision-Point Block Format (STD-05)
+docs/l1-runbooks/19-ios-license-invalid.md
+_glossary-apple-business.md#apple-business
+../../admin-setup-android/10-aosp-zebra.md
+| RE-001 | docs/l1-runbooks/00-index.md |
+docs/l2-runbooks/14-ios-log-collection.md
+docs/admin-setup-ios/05-app-deployment.md
+docs/admin-setup-android/10-aosp-zebra.md
+docs/reference/macos-capability-matrix.md
+l2-runbooks/27-macos-sso-investigation.md
+docs/reference/linux-capability-matrix.md
+docs/admin-setup-linux/04-app-delivery.md
+Required assignment for this user's group
+18-ios-enrollment-restriction-blocking.md
+docs/decision-trees/00-initial-triage.md
+# 802.1X Certificate Delivery Foundation
+docs/decision-trees/08-android-triage.md
+macos-lifecycle/02-mdm-migration-psso.md
+docs/admin-setup-android/06-aosp-stub.md
+## Unsupported and Anti-Feature Callouts
+device-operations/04-tenant-migration.md
+Require device to be marked as compliant
+docs/macos-lifecycle/00-ade-lifecycle.md
+recipes/03-windows-11-multi-app-kiosk.md
+### Key Intune Portal Paths (Android L2)
+docs/admin-setup-android/11-aosp-pico.md
+scripts/validation/c17-eee-contract.mjs
+20-android-app-install-investigation.md
+docs/l1-runbooks/16-ios-apns-expired.md
+Step 6: Apply the device-group baseline
+### Linux Compliance Category Reference
+docs/reference/ios-capability-matrix.md
+## Android Enterprise Failure Scenarios
+**LOCKED — 23 (nodes + labeled edges)**
+19-android-enrollment-investigation.md
+../../reference/win32-app-packaging.md
+docs/l2-runbooks/16-ios-app-install.md
+docs/decision-trees/06-macos-triage.md
+Supervision status (MEDIUM confidence)
+21-android-compliance-investigation.md
+23-android-work-profile-not-created.md
+docs/decision-trees/09-linux-triage.md
+reference/android-capability-matrix.md
+docs/ios-lifecycle/02-mdm-migration.md
+docs/decision-trees/10-8021x-triage.md
+### Key Intune Portal Paths (Linux L2)
+docs/admin-setup-macos/00-overview.md
+### Android: Work Profile Not Created
+#compliance-failure-or-access-blocked
+docs/reference/win32-app-packaging.md
+docs/admin-setup-8021x/00-overview.md
+docs/admin-setup-linux/00-overview.md
+Resolved Phase 31 L2 cross-references
+## Android Enterprise Quick Reference
+28-android-knox-enrollment-failed.md
+#### Non-MECE precedence rule (D-08)
+docs/admin-setup-ios/02-abm-token.md
+docs/admin-setup-8021x/06-android.md
+29-android-aosp-enrollment-failed.md
+docs/admin-setup-8021x/03-windows.md
+docs/decision-trees/07-ios-triage.md
+### Play Integrity Verdict Reference
+> **What breaks if misconfigured:**
+4-platform-capability-comparison.md
+](37-macos-local-password-reset.md)
+### Android: Knox Enrollment Failed
+26-android-mgp-app-not-installed.md
+docs/_standards/EEE-SOP-standard.md
+decision-trees/08-android-triage.md
+docs/cross-platform/apple-business/
+27-android-zte-enrollment-failed.md
+### Android: AOSP Enrollment Failed
+### Android Investigation Runbooks
+docs/admin-setup-8021x/04-macos.md
+../_glossary-macos.md#platform-sso
+docs/cross-platform/apple-business
+### Android: MGP App Not Installed
+## Android Enterprise Provisioning
+docs/admin-setup-8021x/07-linux.md
+### Android: ZTE Enrollment Failed
+### DPC (Device Policy Controller)
+### Account-Driven User Enrollment
+#platform-sso-attestation-command
+### VPP (Volume Purchase Program)
+15-mdm-server-reassign-runbook.md
+33-linux-agent-service-failure.md
+linux-intune-portal-enrollment.md
+docs/reference/drift-detection.md
+Apple Business delegation surface
+24-android-device-not-enrolled.md
+Android Dedicated multi-app kiosk
+## Apple Business Quick Reference
+### Android: Device Not Enrolled
+docs/_glossary-apple-business.md
+23-android-aosp-investigation.md
+22-android-knox-investigation.md
+4-Platform Capability Comparison
+Enable Registration During Setup
+### ABM (Apple Business Manager)
+22-android-enrollment-blocked.md
+Step 5b: Shared PC configuration
+### Linux Investigation Runbooks
+25-android-compliance-blocked.md
+docs/admin-setup-8021x/05-ios.md
+### Android Escalation Triggers
+platform: ios+macos+shared-ipad
+### Android: Enrollment Blocked
+### Android: Compliance Blocked
+## iOS/iPadOS Failure Scenarios
+journalctl | grep intune-portal
+never distributed via Apple VPP
+#apple-business-quick-reference
+Recovery Key Rotation In Months
+#ios-compliance--access-blocked
+#account-driven-user-enrollment
+### Zero-Touch Enrollment (ZTE)
+windows+macos+ios+android+linux
+## Three Workload Slider States
+## Device Configuration Recipes
+Android Provisioning Lifecycle
+mdm-server-reassign-runbook.md
+com.microsoft.CompanyPortalMac
+exit-kiosk-pin-synchronization
+## Which admin owns this pool?
+docs/lifecycle/00-overview.md
+12-shared-ipad-passcode-reset
+## Required Role & Permission
+## iOS/iPadOS Quick Reference
+# 802.1X Triage Decision Tree
+### Managed Google Play (MGP)
+03-cocmgmt-migration-paths.md
+### Linux Escalation Triggers
+> **Platform applicability:**
+Configuration-Caused Failures
+formerly "VPP location token"
+systemctl status intune-agent
+### Patch & Update Management
+#dpc-device-policy-controller
+18-android-log-collection.md
+## Patch & Update Management
+docs/l2-runbooks/00-index.md
+## macOS ADE Quick Reference
+Device Configuration Recipes
+20-ios-device-cap-reached.md
+# 802.1X Certificate Failure
+docs/l1-runbooks/00-index.md
+#vpp-volume-purchase-program
+## Cross-Platform References
+Linux Provisioning Lifecycle
+Step 5a: Kiosk configuration
+### Desktop Engineering (L2)
+### App Lifecycle Automation
+docs/error-codes/00-index.md
+21-ios-compliance-blocked.md
+IntuneMDMDaemon LaunchAgent
+docs/operations/00-index.md
+](07-platform-sso-setup.md)
+No co-management equivalent
+#abm-apple-business-manager
+_glossary-apple-business.md
+## App Lifecycle Automation
+iOS / iPadOS / macOS / tvOS
+#which-admin-owns-this-pool
+linux-capability-matrix.md
+17-ios-ade-not-starting.md
+| Resource | When to Use |
+docs/_registry/RE-index.md
+## iOS/iPadOS Provisioning
+03-ios-update-lifecycle.md
+journalctl -u intune-agent
+https://business.apple.com
+Windows 11 multi-app kiosk
+/var/log/intune-update.log
+scripts/pipeline/README.md
+/var/log/microsoft/intune/
+#zero-touch-enrollment-zte
+### Android Decision Tree
+docs/_glossary-network.md
+11-vpp-catalog-runbook.md
+### Zero-Touch Enrollment
+iOS + macOS + Shared iPad
+### Corporate identifiers
+reciprocal disambiguation
+Microsoft Intune App Logs
+microsoft-identity-broker
+Android Capability Matrix
+Apple Business Governance
+Device Enrollment Manager
+### Corporate Identifiers
+Apple calls this artifact
+Extension Identifier typo
+19-ios-license-invalid.md
+docs/_glossary-android.md
+Non Platform SSO Accounts
+> **Source confidence:**
+docs/admin-setup-android
+Office Click-to-Run Apps
+#managed-google-play-mgp
+## Linux Quick Reference
+15-mdm-server-reassign-2
+## WUfB Deployment Rings
+## Rebrand Mapping Table
+## APv2 Quick Reference
+### Await Configuration
+## Choose Your Platform
+imaging-to-autopilot.md
+### Managed Google Play
+05-compliance-policy.md
+## Organizational Units
+docs/_glossary-macos.md
+Windows Update Policies
+## Sub-Org Admin Bundle
+Linux Capability Matrix
+# 802.1X Log Collection
+docs/_glossary-linux.md
+### Linux Decision Tree
+## Roles & Permissions
+## Android L1 Runbooks
+## Explicitly Excluded
+mdmdiagnosticstool.exe
+MEETS_DEVICE_INTEGRITY
+#zero-touch-enrollment
+docs/admin-setup-linux
+trap-d-identity-broker
+16-ios-apns-expired.md
+MEETS_STRONG_INTEGRITY
+Apple Business Manager
+docs/android-lifecycle
+### COBO / COPE / WPCO
+| Device Configuration
+ADE Path Prerequisites
+## Android L2 Runbooks
+#corporate-identifiers
+MEETS_BASIC_INTEGRITY
+## macOS Provisioning
+review_by: YYYY-MM-DD
+Configuration Manager
+LOW-MEDIUM confidence
+end-user-guides/linux
+ios+ipados+macos+tvos
+DestroyFVKeyOnStandby
+docs/common-issues.md
+no workload switching
+ios+macos+shared-ipad
+## Conditional Access
+### Service Desk (L1)
+## Linux Provisioning
+| Endpoint Protection
+Allowed Distributions
+## Alphabetical Index
+| Compliance Policies
+Local Password Policy
+> **Ask the admin:**
+## Windows Autopilot
+Device Administrator
+doc_id: RE-[FILL-IN]
+docs/end-user-guides
+Shared iPad sessions
+#managed-google-play
+trap-c-service-state
+#await-configuration
+iOS / iPadOS / macOS
+## Linux L2 Runbooks
+trap-b-delivery-path
+docs/linux-lifecycle
+## Linux L1 Runbooks
+docs/quick-ref-l2.md
+WUfB deployment ring
+Device Configuration
+docs/admin-setup-ios
+### Android Runbooks
+docs/quick-ref-l1.md
+Prefill account info
+scripts/validation/
+Recovery Key Escrow
+Apple TV management
+learn.microsoft.com
+Organization Access
+Compliance Policies
+Company Portal Logs
+dontAllowFDEDisable
+trap-a-kernel-track
+Endpoint Protection
+OP-3 companion View
+### User Enrollment
+## Software Updates
+doc_type: Reference
+### Setup Assistant
+Office Click-to-Run
+v1.16 EEE reformat
+scripts/validation
+Basic Organization
+Manage MDM Servers
+intune-agent.timer
+### Linux Runbooks
+VPP location token
+assignment intents
+COBO / COPE / WPCO
+|------|--------|
+TEMPLATE-SENTINEL
+iOS + Shared iPad
+support.kandji.io
+Custom Compliance
+Edit without View
+## Apple Business
+34-apple-business
+docs/_glossary.md
+OU Scope Coverage
+doc_type: Runbook
+script-based only
+#cobo--cope--wpco
+does not exist in
+platform: Windows
+### Hardware Hash
+FileVault Options
+Device Encryption
+### Co-Management
+## Log Collection
+/var/log/dpkg.log
+### Hardware hash
+collection-scoped
+## App Deployment
+Edit-without-View
+deferred to v1.6+
+## Co-Management
+docs/l2-runbooks
+Restrict editing
+workload sliders
+AccountShortName
+Managed Apple ID
+ABM MDM transfer
+Role assignments
+<TENANT_FILL_IN>
+ios+ipados+macos
+### Work Profile
+owner: [FILL-IN]
+#user-enrollment
+#setup-assistant
+c17-eee-contract
+cobo--cope--wpco
+status: Approved
+lifecycle states
+## Configuration
+docs/l1-runbooks
+## Verification
+policy conflict
+DO-NOT-DELEGATE
+Resource Access
+### Admin Setup
+Content Manager
+EXCLUDED (OP-2)
+# [Issue Title]
+Password Policy
+ios+shared-ipad
+## Top 5 Checks
+EXCLUDED (OP-1)
+platform: macOS
+DO NOT DELEGATE
+DENY-by-default
+applies_to: ADE
+### Supervision
+doc_id: RE-217
+doc_id: RE-176
+support.iru.io
+Account Holder
+doc_id: RE-219
+Autopatch ring
+last_verified:
+Cross-Platform
+doc_id: RE-144
+doc_id: RE-108
+### Kandji-Iru
+{{partialUPN}}
+companion View
+Apple Business
+#hardware-hash
+Content tokens
+scope-boundary
+### Top Checks
+exit-kiosk-pin
+cross-platform
+does not exist
+doc_id: RE-001
+but unreadable
+doc_id: RE-175
+People Manager
+apple-business
+doc_id: RE-116
+### Web-app CA
+Table summary:
+doc_id: RE-117
+doc_id: RE-218
+iOS + Android
+last_verified
+Package-state
+## Compliance
+content token
+## Enrollment
+status: Draft
+Managed Apple
+platform: all
+All Platforms
+Ask the admin
+docs/index.md
+| Client Apps
+#work-profile
+intune-portal
+## Operations
+docs.iru.com
+LIN-DEFER-01
+not written.
+{{username}}
+Pilot Intune
+| Permission
+exactly once
+#supervision
+prerequisite
+audience: L1
+troubleshoot
+distribution
+check-phase-
+snap install
+native terms
+file missing

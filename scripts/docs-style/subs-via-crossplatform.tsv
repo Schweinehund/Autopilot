@@ -1,0 +1,8 @@
+# "via" for the cross-platform tree, mapped by sense. Predominantly
+# channel-sense (via ADE / ABM / MDM / Apple Business), so the generic rule runs
+# last. A cable is a physical medium and a role is a mechanism.
+#
+# regex	replacement
+via USB-C or USB-C to USB-A cable	with a USB-C or USB-C to USB-A cable
+delegatable via custom role	delegatable using a custom role
+(?<![\w-])via(?![\w-])	through

@@ -1,0 +1,36 @@
+# "via" for the admin-setup families, mapped by sense (see subs-via-sense.tsv).
+# Predominantly channel-sense (Intune / ABM / ADE / KME / ZT / VPP / Company
+# Portal), so the generic rule runs LAST, after the mechanism-sense exceptions.
+#
+# The nmcli rule carries a negative lookahead: "(EAP-TLS via nmcli)" is link
+# text that mirrors the H1 of 07-linux.md, and headings are out of scope under
+# Option 1 -- restyling only the link text would desync it from its target.
+#
+# regex	replacement
+via nmcli(?!\))	using nmcli
+via an OS-level nmcli	using an OS-level nmcli
+discoverable via 	discoverable using 
+verify via 	verify using 
+Verify via 	Verify using 
+managed via script or	managed using a script or
+configured via custom OMA-URI	configured using custom OMA-URI
+enrollment via a URL	enrollment using a URL
+February 20, 2026 via 	February 20, 2026 at 
+via PowerShell	using PowerShell
+via Microsoft Graph	using Microsoft Graph
+deb package via 	deb package from 
+via MSCHAPv2	using MSCHAPv2
+via WebAuthn APIs	using WebAuthn APIs
+via custom-compliance Bash	using custom-compliance Bash
+via StageNow Export	using StageNow Export
+via the headset's	using the headset's
+first via Programs and Features	first using Programs and Features
+via three methods	using three methods
+via an Extension Data key	using an Extension Data key
+via Platform SSO TGT	using the Platform SSO TGT
+escrow via certificate	escrow using a certificate
+via USB trust	using USB trust
+device via USB\.	device over USB.
+via Bluetooth	over Bluetooth
+upload via CSV	upload using CSV
+(?<![\w-])via(?![\w-])	through
