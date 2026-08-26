@@ -5,10 +5,10 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: executing
-stopped_at: Phase 151 context gathered
+stopped_at: Phase 151 planned
 last_updated: "2026-08-26T13:01:58.743Z"
-last_activity: 2026-08-25
-last_activity_desc: Phase 150 complete, transitioned to Phase 151
+last_activity: 2026-08-26
+last_activity_desc: Phase 151 planned — 5 plans, 5 waves
 state_head: 0845e227ae1857972d2c9bab7e8d32072be81dd5
 progress:
   total_phases: 9
@@ -40,7 +40,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 Phase: 151 (Recipe #5 — The Enterprise Update Plan) — READY TO EXECUTE
 Plan: Not started
 Status: Ready to execute
-Last activity: 2026-08-25 — Phase 150 complete, transitioned to Phase 151
+Last activity: 2026-08-26 — Phase 151 planned (5 plans, 5 waves); prior entry:
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
   not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
