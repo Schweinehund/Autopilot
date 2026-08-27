@@ -4,144 +4,145 @@ Everything needed to continue after a `/clear`. Read this first, then start the 
 
 ---
 
-# ⏩ NEXT SESSION STARTS HERE — judge the 653-hunk worklist (2026-08-26, session 2)
+# ⏩ NEXT SESSION STARTS HERE — the verification is DONE; decide whether to land (2026-08-27)
 
-**State:** the deterministic half of the verifier is **DONE and green**. All 40 findings
-are dispositioned or fixed, three over-firing rules were tightened, and the full gate
-re-ran clean. What remains is the half that has no textual signature: the **judge
-worklist, 653 hunks (164 high-risk)**. Nothing on it has been read.
+**State:** both halves of the verifier are worked and green. The deterministic set exits 0.
+The judge worklist has been judged end to end by ten independent fresh Agents, all 46
+findings applied, and the full gate re-ran clean afterwards. **There is no verification
+work left.** What is left is a decision that is not mine: whether to land the pass into
+`docs/`, and how, given the corpus has moved.
 
-## Reproduce the current state in one command
+## Reproduce the current state
 
 ```bash
 cd /d/claude/docs-google-style-test && python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 \
   --dispositions /d/claude/Autopilot/scripts/docs-style/_DISPOSITIONS.tsv
 ```
 
-Expected, exactly:
-
 ```
   6  dispositioned (silent)
-  JUDGE WORKLIST: 653 hunks (164 high-risk)
-  PASS: no undispositioned findings.            exit=0
+  JUDGE WORKLIST: 642 hunks (153 high-risk)    <- raw, over-inclusive; already judged
+  PASS: no undispositioned findings.           exit=0
 ```
+
+The worklist count still prints because the detector is deliberately over-inclusive — it
+emits every CHANGED line that CONTAINED a modal, whether or not the modal survived. It went
+653 -> 642 only because restoring 11 modals made those lines match the baseline again.
+**Do not re-judge it.** The real, filtered set was 406 hunks and every one has a recorded
+verdict in `scripts/docs-style/_JUDGE-VERDICTS.json`.
 
 `c97d322` is the corrected pristine baseline — **not** `6010dd5`.
-`python verify-meaning.py --self-test` must still print `PASS: 10/10`.
+`python verify-meaning.py --self-test` must print `PASS: 10/10`.
 
-## The job
+## What the judge pass found
 
-**Judge worklist, 653 hunks, 164 high-risk.** Start with the 164 `risk: high` — a
-`should` was dropped, which is the shape that produced all 5 recorded inversions.
+Ten fresh Agents, ~41 hunks each, chunked by file so one judge saw a whole document. Each
+got the §3 decision procedure, an explicit blocklist (RESUME.md, `subs-*.tsv`, `sweep3.py`,
+both skills) so none inherited the formatter's rationale, and a requirement to read the
+surrounding section in the real file and quote evidence.
+
+```
+406 hunks judged   360 PRESERVED   26 STRENGTHENED   19 INVERTED   1 WEAKENED
+```
+
+**The distribution inverts what the record predicted.** The documented failure mode was
+INVERTED — an expectation flattened into a bare assertion. That happened 19 times. But the
+larger class, 26, was **STRENGTHENED**: a hedge promoted to `must`. Nothing in the tooling
+looks for it, and §3 of the skill *recommended it* ("the correct rewrite is `Confirm X
+shows Y` **or `must`**"). That clause has been removed. Several `must`s contradicted their
+own surrounding text:
+
+| File | The contradiction |
+|---|---|
+| `cross-platform/apple-business/01-role-permission-model.md:159` | `must never have (a)` sits directly above "unless explicitly reviewed and approved by the tenant's central IT administrator" |
+| `admin-setup-macos/08-auth-methods-deep-dive.md:42` | `must fall back` inside a stated Recommended / Second choice / Third choice preference order |
+| `cross-platform/apple-business/16-managed-apple-account-runbook.md:288` | `must treat` on a path tagged `[ASSUMED — needs live verification]` where Apple only "**may** forcibly rename" |
+| `android-lifecycle/03-android-version-matrix.md:105` | paragraph opens "**Administrator action required:** None", then mandates "Administrators must adjust user-facing privacy messaging" |
+| `operations/drift-migration/04-tenant-migration-runbook.md:380` | `must not expect` in a section labelled "educational and comparative, not prescriptive" |
+
+The 19 INVERTED are the classic shape and read exactly like the record says: a
+`**Verification:**` step asserting that the thing it exists to check is already true, with
+the failure branch documented on the next line. `l1-runbooks/27:117` is the clearest —
+"device is NOT present (if present, this is not Cause B)" asserts as fact the very thing
+the parenthetical exists to test.
+
+**Four subject-verb agreement breaks were reported unprompted**, outside the judges' task
+and invisible to every check in step 2: dropping `will` from a long compound subject leaves
+a singular verb. "Devices upgrading … silently **loses**", "Devices with …, or models
+without Touch ID **has**", "QR codes generated from an expired token **fails**",
+"Attempting to migrate … succeeds … but **fail** at runtime". All four fixed. The
+`split-verb` check cannot see this — it looks for a bare infinitive under a dropped modal,
+not a number mismatch.
+
+## Rule changes forced by the verdicts (this is the part that matters)
+
+**Twenty `subs-*.tsv` rows were deleted.** A judge verdict that restores `should` is undone
+by the very next sweep run unless the row that removed it is gone. Verified by re-running
+every rule set after applying: without this, six rule sets wanted to re-break 20 of the 46
+fixes.
+
+| Rule set | Rows removed |
+|---|---|
+| `subs-should-crossplatform.tsv` | 5 |
+| `subs-should-operations.tsv` | 6 |
+| `subs-should-l2.tsv` | 3 |
+| `subs-tense-batch8.tsv` | 4 |
+| `subs-tense-adminsetup.tsv` | 1 |
+| `subs-tense-operations.tsv` | 1 |
+
+This is the same failure the 30th defect had: **a revert with no corresponding rule change
+is not a fix.** Session 2 hit it too (`KEEP_LINE`, `subs-directional.tsv`). Assume any
+hand-adjudicated revert is re-breakable until the rule agrees with it.
+
+**New tool: `scripts/docs-style/judge-packets.py`.** The raw worklist has no after-line, so
+it is unjudgeable from the JSON alone, and 247 of its 653 entries are lines whose modal
+survived intact. This aligns each hunk, drops the survivors (a count comparison, not a
+judgment), and attaches before + after + 4 lines of context. Chunks by file.
 
 ```bash
-cd /d/claude/docs-google-style-test && python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 --json > worklist.json
+python judge-packets.py c97d322 /d/claude/docs-google-style-test --chunk-file out/chunk --chunks 10
 ```
 
-**Spawn fresh Agents to judge. Do not judge them yourself in a context that has read
-this file.** Independence is the whole point: all 30 defects were found by a reader who
-did not author the edit. The decision procedure and a worked example are in
-`.claude/skills/google-style-verify/SKILL.md` §3.
+**Two judge fixes silently reverted the em-dash canon** (` — ` back to `-`) and were repaired
+before applying. Any applier of judge output must check that the mechanical set survives —
+the guard is a per-hunk em-dash count comparison between the current line and the fix.
 
-A modal drop that this session found *by hand*, outside any deterministic rule, shows
-the worklist is not theoretical: `cross-platform/apple-business/_admin-directory.md:26`
-had `SHOULD resolve via` rewritten to `must resolve through` — a recommendation carrying
-an explicit "(in tenant preference order)" turned into a requirement. Reverted to
-`should`. It was one of only two capitalised `SHOULD`s in the corpus; the other
-(`l1-runbooks/21:142`) correctly became "is expected to".
-
-## What session 2 did (do not redo)
-
-**Rules tightened — three classes were over-firing, exactly as the previous block warned.**
-Each new guard reuses `mech_canon()`, the same suppression the quotation rule already had,
-and the self-test still passes 10/10.
-
-| Class | Before | After | Guard added |
-|---|---|---|---|
-| `doubled-connective` | 14 | 0 | fires only if the doubled `through` span did **not** already exist in the baseline. Four hits were lines edited for an unrelated reason (`admin` to `administrator`, dash spacing) that happened to carry a pre-existing double. |
-| `prose-crossref` | 9 | 0 | skip when `mech_canon(old).count() == mech_canon(new).count()`. Six references differed **only** by dash spacing: headings are pinned and keep the spaced dash, prose was canonicalised to the tight one. Nothing a reader can misread. |
-| `label-drift` | 9 | 0 | same `mech_canon` guard. `mech_canon` does not touch `admin`/`administrator`, so the C1 defect this rule exists to catch still fires — the self-test fixture proves it. |
-
-**10 real doubled connectives reworded** (`or through X` to `or X`; `added through Apple
-Configurator` to `added using`; `controlled through the "Await Configuration"` to
-`controlled by`; `NOT through Managed Google Play` to `NOT from`; and so on).
-
-**5 label pairs re-joined.** The pass never edits table cells, so expanding only the prose
-copy split the label. Uniform resolution: **revert the prose copy to match the untouched
-table copy.**
-
-| File | Reverted to |
-|---|---|
-| `admin-setup-android/03-fully-managed-cobo.md:112` | `fully managed, via staging` |
-| `admin-setup-android/08-cope-full-admin.md:115` | `with work profile, via staging` |
-| `cross-platform/apple-business/14-device-transfer-runbook.md:72` | `Intune config profiles` |
-| `l1-runbooks/21-ios-compliance-blocked.md:98` | `OS version below minimum` |
-| `reference/android-capability-matrix.md:148` | `Tri-portal admin surface` |
-
-**2 prose cross-references fixed** (real, not cosmetic): `linux-lifecycle/00:35` had the
-link **text** rewritten to `Out of Scope for Linux through Intune` while the heading and
-the `#out-of-scope-for-linux-via-intune` anchor still said `via` — reverted;
-`operations/drift-migration/04:390` had `preceding` inserted inside the heading name
-(`macOS / iOS preceding tenant migration`) — moved to `see the preceding / Windows and
-macOS / iOS tenant migration sections`. Same word-order break as
-`l2-runbooks/00-index.md:256` (`APv2 preceding L2` to `preceding APv2 L2`), also fixed.
-
-**1 quotation reverted, 4 kept.** `l2-runbooks/14` had `"configuration didn't apply"` put
-back to `"config didn't apply"` — it is a quoted **user complaint**, and the register is
-the point of quoting it. The other four are the corpus's own scare quotes / rhetorical
-questions, not vendor sentences; each has a reason in `_DISPOSITIONS.tsv`.
-
-**`split-verb`'s one finding was the predicted false positive** and is dispositioned with
-the grammatical reason, not "fixed".
-
-**Idempotency was NOT what the old block claimed.** Re-running `sweep3.py` would have
-**re-broken three hand-adjudicated reverts**, including `Create a local admin account` —
-the 30th defect, reverted in `dc7e996` and re-broken by the very next sweep run because
-nothing pinned it. Fixed at the rule level:
-
-- `sweep3.py` `KEEP_LINE` now also protects `Create a local admin account`,
-  `Tri-portal admin surface`, `Intune config profiles`, and `via staging`.
-- `subs-directional.tsv` lost its `OS version below minimum` row: it split a label pair,
-  and "below minimum" is the compliance setting's own phrasing.
-
-Verified: `sweep3.py` with `_CONTENT-PINS.txt` and **every** `subs-*.tsv` now applies
-**0** edits corpus-wide.
-
-⚠ **`sweep3.py` takes a PINSFILE argument and the two available files are not
-interchangeable.** Running it with `_EMDASH-PINS.txt` (8 pins) instead of
-`_CONTENT-PINS.txt` (562 pins) reports 20 wanted edits, 17 of them on the
-validator-pinned `> **Ask the admin:**` lines in `recipes/01-04`,
-`_standards/EEE-SOP-standard.md` and `_templates/recipe-template.md`. Those lines are
-pinned verbatim by `check-phase-131.mjs` and `check-phase-136.mjs` and must never be
-expanded. Always pass `_CONTENT-PINS.txt`.
-
-**One known residual, pre-existing and out of scope:** `subs-directional-adminsetup.tsv`
-still wants `see callout above` shortened to `see callout` in
-`operations/co-management/02-windows-workload-sliders.md:115,134`. That file belongs to
-the `operations` batch, whose directional rule set has no `callout above` row. Two lines,
-cosmetic, nobody's defect.
-
-## Gate re-run after all of the above — all green
+## Gate after everything — all green
 
 ```
-verify-meaning.py            PASS, exit 0 (6 dispositioned, 653 judge hunks outstanding)
+verify-meaning.py            PASS, exit 0 (6 dispositioned)
 verify-meaning --self-test   PASS 10/10
 verify2.py                   link/anchor INTRODUCED by the sweep: 0
                              (6017 resolved / 29 missing file / 340 missing anchor, identical to baseline)
 pins2.py                     4030 literals scanned, 562 pinned; grep -vxF vs _CONTENT-PINS.txt empty
+sweep3 idempotency           0 real edits, base + every subs-*.tsv (one known residual, below)
 c17-eee-contract.mjs         234 files, 0 with violations, 0 total (#1..#13 all 0)
 check-nav-hub-links.mjs      0 hub-presence, 0 corpus-link, 0 total
-check-phase-144.mjs          101 PASS, 0 FAIL, 0 SKIPPED (~33s)
+check-phase-144.mjs          101 PASS, 0 FAIL, 0 SKIPPED
 ```
 
-The gate ran in the `c17-sandbox` clone (at `534073f4`) with `docs/` replaced by the
-scratch corpus and the generated `_PASSIVE-REPORT.md` removed.
+Gate ran in the `c17-sandbox` clone (at `534073f4`) with `docs/` replaced by the scratch
+corpus and the generated `_PASSIVE-REPORT.md` removed.
 
-## ⚠ The corpus moved under us — re-measure before trusting any drift number
+⚠ **`sweep3.py` takes a PINSFILE argument and the two files are not interchangeable.**
+`_EMDASH-PINS.txt` has 8 pins, `_CONTENT-PINS.txt` has 562. With the wrong one the dry run
+reports 20 phantom edits, 17 of them on the `> **Ask the admin:**` prompts in `recipes/01-04`,
+`_standards/EEE-SOP-standard.md` and `_templates/recipe-template.md` — pinned verbatim by
+`check-phase-131.mjs` and `check-phase-136.mjs` and never to be expanded. Always pass
+`_CONTENT-PINS.txt`.
 
-v1.21 phases **149, 150 and 151 shipped while the first session was running**, from a
-separate workstream in the same repo. `docs/` drift since the scratch fork
-(`534073f4`) is no longer the 3 files measured earlier:
+**One known residual, pre-existing and out of scope:** `subs-directional-adminsetup.tsv`
+still wants `see callout above` shortened in
+`operations/co-management/02-windows-workload-sliders.md:115,134`. That file belongs to the
+`operations` batch, whose directional rule set has no `callout above` row. Two lines,
+cosmetic, nobody's defect.
+
+## The open decision — landing the pass
+
+This is the only thing left, and it is an owner call.
+
+v1.21 phases **149, 150 and 151 shipped from a parallel workstream** while this work was
+running. `docs/` drift since the scratch fork (`534073f4`):
 
 ```
 15 files changed, 3969 insertions(+), 9 deletions(-)
@@ -149,14 +150,14 @@ separate workstream in the same repo. `docs/` drift since the scratch fork
   9 files  brand new, never seen by the pass               -> unformatted
 ```
 
-The nine new ones are the whole `operations/firmware-bios/` tree (00-overview,
-01-windows-dfci, 02-dell, 03-hp, 04-lenovo), `patch-management/07-windows-autopatch`,
-`08-windows-app-updates`, and `recipes/05-enterprise-update-plan`.
+The nine new ones are the whole `operations/firmware-bios/` tree (00-overview, 01-windows-dfci,
+02-dell, 03-hp, 04-lenovo), `patch-management/07-windows-autopatch`, `08-windows-app-updates`,
+and `recipes/05-enterprise-update-plan`.
 
-**Consequences.** Landing the pass is a real merge, not a copy. The nine new docs
-have had no style pass at all, so shipping the pass would make the corpus *inconsistent*
-rather than consistent. And this repo takes commits from other sessions — re-run
-`git diff --shortstat 534073f4 HEAD -- docs` at the start of every session rather than
+**Consequences.** Landing is a real merge, not a copy. The nine new docs have had no style
+pass, so shipping as-is makes the corpus *inconsistent* rather than consistent — they would
+need a batch 10 first. And this repo takes commits from other sessions: **re-run
+`git diff --shortstat 534073f4 HEAD -- docs` at the start of every session** rather than
 trusting any number written here, including this one.
 
 ---
@@ -193,10 +194,11 @@ no history.
 
 ## Status
 
-**THE PASS IS COMPLETE, and its deterministic verification is GREEN.** See the
-NEXT SESSION block at the top: all 40 deterministic findings were adjudicated on
-2026-08-26 (session 2) and the verifier now exits 0. The 653-hunk judge worklist
-is still unread -- that is the only open work. "Nothing is open" below refers to the
+**THE PASS IS COMPLETE and FULLY VERIFIED.** See the NEXT SESSION block at the top:
+the deterministic set exits 0, and all 406 real modal-loss hunks were judged by ten
+independent fresh Agents on 2026-08-27 with all 46 findings applied. Nothing about the
+verification is open. The only open item is the owner decision on landing the pass into
+`docs/`, which is now a real merge. "Nothing is open" below refers to the
 
 Mechanical phase green, all 8 class batches done
 (`l1-runbooks` 42, `l2-runbooks` 33, `reference` 26, `operations` 22,

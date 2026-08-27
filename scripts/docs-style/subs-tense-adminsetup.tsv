@@ -105,7 +105,6 @@ However, you should explicitly set supervised mode	However, explicitly set super
 if compliance status should gate access	if compliance status must gate access
 for devices that should be exempt	for devices to exempt
 For corporate devices that should arrive supervised	For corporate devices that must arrive supervised
-Tenants supporting both flows should document	Tenants supporting both flows must document
 Use when the policy should govern	Use when the policy governs
 vendor URLs should be verified against published checksums	vendor URLs must be verified against published checksums
 macOS configuration profiles should be created through the Settings Catalog	macOS configuration profiles must be created through the Settings Catalog

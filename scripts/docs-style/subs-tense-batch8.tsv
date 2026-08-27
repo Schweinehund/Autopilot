@@ -86,15 +86,12 @@ the user will need to reconfigure	the user must reconfigure
 it will find the Intune MDM server assignment	it finds the Intune MDM server assignment
 this device will connect to	this device connects to
 Every app that will appear on the MHS grid	Every app that appears on the MHS grid
-new deployments should provision WPCO	new deployments must provision WPCO
 Admins should treat Private Space	Admins must treat Private Space
-new bindings should use Entra	new bindings must use Entra
 Device API access should consult	Device API access must consult
 Organizations should establish a break-glass	Organizations must establish a break-glass
 organizations should select one approach	organizations must select one approach
 screen should launch automatically	screen launches automatically
 apps and scripts should show progress	apps and scripts show progress
-grounding behavior should read	grounding behavior must read
 each step should have one clear action	each step must have one clear action
 determine which mode a given device deployment should use	determine which mode to use for a given device deployment
 devices that should carry no personal content	devices that must carry no personal content
@@ -108,7 +105,6 @@ you should see \*\*Microsoft Intune Portal\*\* appear	**Microsoft Intune Portal*
 it should show your work email address	it shows your work email address
 Other OEM customers should contact	Other OEM customers must contact
 administrators should evaluate whether User Enrollment	administrators must evaluate whether User Enrollment
-VPP apps should be assigned in Intune	VPP apps must be assigned in Intune
 registry should match the Autopilot registration record	registry matches the Autopilot registration record
 flows should treat all Linux enrollments	flows must treat all Linux enrollments
 disabled when it should be enabled	disabled when it must be enabled

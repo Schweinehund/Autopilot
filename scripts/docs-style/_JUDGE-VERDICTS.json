@@ -1,0 +1,3262 @@
+{
+ "baseline": "c97d322",
+ "judged": 406,
+ "judges": 10,
+ "note": "Verdicts on the modal-drop judge worklist, 2026-08-27. Each hunk was judged by a fresh Agent with no rewrite rationale in context, given before/after plus 4 lines of surrounding text, and required to read the section in the real file. All non-PRESERVED verdicts carry an evidence quote and a full replacement line; every one was applied. Source worklist: verify-meaning.py --json, filtered by judge-packets.py to hunks where a modal was actually LOST (653 raw -> 406).",
+ "counts": {
+  "STRENGTHENED": 26,
+  "PRESERVED": 360,
+  "INVERTED": 19,
+  "WEAKENED": 1
+ },
+ "verdicts": [
+  {
+   "file": "_glossary-android.md",
+   "baseline_line": 99,
+   "verdict": "STRENGTHENED",
+   "fix": "Corporate-Owned, Personally-Enabled (COPE) is an older Android Enterprise mode that combines a fully managed corporate device with a separately provisioned work profile for the user's personal use. Google recommends [WPCO](#wpco) as the successor pattern for the same use case, so new deployments should provision WPCO rather than COPE. COPE is still functionally supported on existing fleets—no formal deprecation notice from Google—but WPCO is the preferred terminology and the path documented in current Google Android Enterprise guidance.",
+   "evidence": "COPE is still functionally supported on existing fleets—no formal deprecation notice from Google",
+   "reason": "The same sentence says Google only recommends WPCO and that COPE is undeprecated, so a recommendation cannot yield a 'must'."
+  },
+  {
+   "file": "_glossary-android.md",
+   "baseline_line": 135,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Intune** cannot manage Private Space content, visibility, or settings",
+   "reason": "The platform fact leaves no alternative, so 'must treat as out-of-scope' carries the same force as 'should'."
+  },
+  {
+   "file": "_glossary-android.md",
+   "baseline_line": 277,
+   "verdict": "STRENGTHENED",
+   "fix": "Managed Google Play (MGP) is Google's enterprise app distribution surface, tenant-bound to Intune. Administrators use MGP to approve public Play Store apps for managed devices, distribute private (line-of-business) Android apps uploaded to the tenant's MGP catalog, and deliver web apps as app-wrapped shortcuts. Since August 2024, the preferred MGP binding uses a Microsoft Entra account rather than a Gmail account; existing Gmail-bound tenants continue to function but new bindings should use Entra. MGP is mandatory for all GMS-based Android Enterprise enrollment modes (COBO, BYOD, Dedicated, Zero-Touch); only out-of-GMS AOSP deployments bypass it.",
+   "evidence": "Since August 2024, the preferred MGP binding uses a Microsoft Entra account rather than a Gmail account; existing Gmail-bound tenants continue to function",
+   "reason": "'preferred' plus 'existing Gmail-bound tenants continue to function' marks this as a preference, not a hard requirement."
+  },
+  {
+   "file": "_glossary-apple-business.md",
+   "baseline_line": 92,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "this entry acknowledges the role's existence in Apple Business but does not document its permission set in depth",
+   "reason": "No alternative source is offered, so 'must consult the Apple Business User Guide' is the only path and the force is unchanged."
+  },
+  {
+   "file": "_glossary-apple-business.md",
+   "baseline_line": 96,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Custom Roles that grant Edit permissions without the corresponding View permissions fail silently",
+   "reason": "Plain description of system behavior; present tense is equivalent to the original 'will'."
+  },
+  {
+   "file": "_glossary-apple-business.md",
+   "baseline_line": 148,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "plan for rotation runbooks before provisioning API integrations",
+   "reason": "The same paragraph already states the runbook obligation imperatively, and the 'halts' clause stays conditional on an unplanned revocation."
+  },
+  {
+   "file": "_glossary-apple-business.md",
+   "baseline_line": 156,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "SCIM provisioning and OIDC+JIT federation are mutually exclusive deployment patterns",
+   "reason": "Mutual exclusivity means selecting one approach genuinely is required; the preference order that follows is about which one, not whether."
+  },
+  {
+   "file": "_standards/EEE-SOP-standard.md",
+   "baseline_line": 256,
+   "verdict": "STRENGTHENED",
+   "fix": "changes that affect the grounding behavior should read PIPE-02-FINDINGS.md.",
+   "evidence": "These notes record the empirical findings from Phase-113 PIPE-02 grounding validation that inform the architectural choices in this standard.",
+   "reason": "In a normative standards document a should/must swap is a real obligation change, and this sits in an informational Grounding Notes section rather than a requirements list."
+  },
+  {
+   "file": "_templates/admin-template.md",
+   "baseline_line": 61,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** [Specific downstream failure this causes.",
+   "reason": "Template placeholder telling an author what to document; present tense carries the same instruction."
+  },
+  {
+   "file": "_templates/l1-template.md",
+   "baseline_line": 54,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "All remediation steps requiring elevated access or technical investigation must be escalated to L2.",
+   "reason": "Template authoring guidance offers no alternative or preference order, and the template already speaks in the must-register, so should->must does not change what an author does."
+  },
+  {
+   "file": "_templates/recipe-template.md",
+   "baseline_line": 112,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Configure **[setting name]**: [value or instruction].",
+   "reason": "Template placeholder telling the author what to document; 'will see' -> 'sees' does not change what the author must supply."
+  },
+  {
+   "file": "admin-setup-8021x/03-windows.md",
+   "baseline_line": 51,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "suppresses interactive certificate-trust dialogs that users can click through without understanding the risk",
+   "reason": "could/can both express capability here; the risk statement is unchanged."
+  },
+  {
+   "file": "admin-setup-8021x/04-macos.md",
+   "baseline_line": 47,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "macOS does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles.",
+   "reason": "\"will not find it\" describes a static platform fact already asserted in the preceding clause, so present tense is equivalent."
+  },
+  {
+   "file": "admin-setup-8021x/05-ios.md",
+   "baseline_line": 36,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "iOS/iPadOS does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles.",
+   "reason": "Generic description of an absent UI element; present tense carries the same force as the descriptive 'will not find'."
+  },
+  {
+   "file": "admin-setup-8021x/05-ios.md",
+   "baseline_line": 68,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Without this setting, NAC environments see a different MAC each time the device joins a new network",
+   "reason": "Consequence stays explicitly conditional on 'Without this setting', so present tense keeps the warning force."
+  },
+  {
+   "file": "admin-setup-8021x/06-android.md",
+   "baseline_line": 36,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Android Enterprise does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles.",
+   "reason": "Same descriptive statement of an absent selector; no expectation or verification step involved."
+  },
+  {
+   "file": "admin-setup-8021x/06-android.md",
+   "baseline_line": 93,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Once the SCEP profile includes the UPN in the SAN, the Wi-Fi profile deploys successfully.",
+   "reason": "The 'Once ...' clause preserves the conditional-outcome reading of the dropped 'will'."
+  },
+  {
+   "file": "admin-setup-8021x/06-android.md",
+   "baseline_line": 114,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Without \"Use device MAC\", NAC environments see a different MAC address each time",
+   "reason": "Conditional 'Without ...' framing retains the future-consequence force."
+  },
+  {
+   "file": "admin-setup-8021x/06-android.md",
+   "baseline_line": 122,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "there is no equivalent profile type for Android Enterprise and no documented OMA-URI workaround",
+   "reason": "No alternative is offered to organizations that require wired 802.1X, so consulting the network team is the sole prescribed action and 'must' does not change what the reader does."
+  },
+  {
+   "file": "admin-setup-android/02-zero-touch-portal.md",
+   "baseline_line": 159,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Before the reseller uploads devices to the ZT system, confirm three items with them",
+   "reason": "The confirm-before-upload framing keeps the upload in the future; 'the device-identifier type they upload' still names a planned reseller action."
+  },
+  {
+   "file": "admin-setup-android/03-fully-managed-cobo.md",
+   "baseline_line": 172,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding.",
+   "reason": "The blocking is stated conditionally on such a policy existing, so present tense keeps the same warning force."
+  },
+  {
+   "file": "admin-setup-android/04-byod-work-profile.md",
+   "baseline_line": 42,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Intune administrators read linearly. ... L1 Service Desk uses the [Android L1 Runbooks]",
+   "reason": "Audience-routing sentence whose siblings are already bare present tense; 'should read' was directional, not a hedged recommendation."
+  },
+  {
+   "file": "admin-setup-android/04-byod-work-profile.md",
+   "baseline_line": 80,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Wi-Fi profiles using username/password authentication ... are not reliable on BYOD work profile devices.",
+   "reason": "Describes established post-AMAPI system behavior, already framed by the preceding present-tense assertion."
+  },
+  {
+   "file": "admin-setup-android/04-byod-work-profile.md",
+   "baseline_line": 266,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "| Company Portal | ... | Visible - remains installed for MAM |",
+   "reason": "The table directly above already states both apps are visible, so present tense states the same fact."
+  },
+  {
+   "file": "admin-setup-android/05-dedicated-devices.md",
+   "baseline_line": 46,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The operations owner defines the locked app(s); the Intune administrator configures the enrollment and kiosk policy.",
+   "reason": "'which apps will run' describes the deployment being defined, not a consequence the reader must anticipate."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 84,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "KME does NOT enroll devices into a separate \"KME mode\"; it provisions Samsung devices into one of the existing Android Enterprise device-owner modes",
+   "reason": "Descriptive of how the KME profile behaves; present tense carries the same force."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 111,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "1. Confirm with your authorized Samsung reseller:",
+   "reason": "The imperative Confirm still carries the action; the relative clause is descriptive either way."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 115,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Devices that ship before the reseller upload completes boot to consumer setup and require factory-reset retry once the upload lands.",
+   "reason": "Generic conditional consequence; the conditional clause preserves the anticipation."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 133,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Profile assignment must occur BEFORE first boot",
+   "reason": "The requirement is carried by the retained must; the negative outcome clause is plain system behavior."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 208,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "KME takes precedence at the device firmware level.",
+   "reason": "Statement of deterministic precedence behavior, and the Google quotation below keeps its own will."
+  },
+  {
+   "file": "admin-setup-android/07-knox-mobile-enrollment.md",
+   "baseline_line": 219,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- [ ] KME profile assigned to device set BEFORE first boot",
+   "reason": "Checklist item retains the BEFORE-first-boot requirement; the parenthetical is descriptive."
+  },
+  {
+   "file": "admin-setup-android/08-cope-full-admin.md",
+   "baseline_line": 194,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding.",
+   "reason": "The preceding callout supplies the condition, so present tense reads as the system behavior under that condition, not a lost warning."
+  },
+  {
+   "file": "admin-setup-android/08-cope-full-admin.md",
+   "baseline_line": 310,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Capture the pre-reset Google account associated with the COPE configuration BEFORE issuing a Settings-app reset",
+   "reason": "The consequence stays conditional on \"without it\", so \"blocks\" carries the same anticipated failure as \"will block\"."
+  },
+  {
+   "file": "admin-setup-android/09-aosp-realwear.md",
+   "baseline_line": 68,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "choose user-associated when each headset is checked out by a named worker",
+   "reason": "Describes how a mode is used, not a future consequence; force unchanged."
+  },
+  {
+   "file": "admin-setup-android/10-aosp-zebra.md",
+   "baseline_line": 124,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Recovery: align assignment scopes for the LOB app and the OEMConfig profile",
+   "reason": "The clause states the required end state of a recovery action with no alternative offered, so should->must does not add a requirement that was not already there."
+  },
+  {
+   "file": "admin-setup-android/11-aosp-pico.md",
+   "baseline_line": 61,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Pico hardware that is enterprise-positioned by Pico but not yet listed on MS Learn cannot be enrolled under AOSP.",
+   "reason": "Describes a standing gate; the hard cannot in the same sentence preserves the consequence."
+  },
+  {
+   "file": "admin-setup-android/11-aosp-pico.md",
+   "baseline_line": 83,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Consumer Pico 4 / Neo3 procured by mistake -> device fails Intune AOSP enrollment with no clear error surface",
+   "reason": "Deterministic outcome already restated in present tense in the adjacent what-breaks callout."
+  },
+  {
+   "file": "admin-setup-android/12-aosp-htc-vive-focus.md",
+   "baseline_line": 62,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "`[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`",
+   "reason": "'what Intune will accept' -> 'what Intune accepts' describes a standing gate; the imperative 'Confirm hardware is one of the three...' is untouched."
+  },
+  {
+   "file": "admin-setup-android/13-aosp-meta-quest.md",
+   "baseline_line": 69,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The MS Learn AOSP supported-devices list is the authoritative gate for what Intune accepts",
+   "reason": "Describes standing gate behavior; present tense is equivalent."
+  },
+  {
+   "file": "admin-setup-apv1/02-deployment-profile.md",
+   "baseline_line": 61,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**What breaks if misconfigured:** Hiding disables location services by default.",
+   "reason": "A what-breaks consequence clause; present tense states the same failure mode."
+  },
+  {
+   "file": "admin-setup-apv1/03-esp-policy.md",
+   "baseline_line": 32,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "## Prerequisites ... - Intune Administrator role - Deployment profile already created and assigned",
+   "reason": "The bullet sits in a Prerequisites list whose other entries are unconditional requirements, so must adds no obligation the heading did not already impose."
+  },
+  {
+   "file": "admin-setup-apv1/04-dynamic-groups.md",
+   "baseline_line": 86,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Cross-check in **Intune admin center** ... -- Profile Status shows \"Assigning\" or \"Assigned\"",
+   "reason": "The imperative \"Cross-check\" still instructs the reader to verify, and the Verification checklist uses the same bare \"shows\" phrasing."
+  },
+  {
+   "file": "admin-setup-apv1/07-pre-provisioning.md",
+   "baseline_line": 53,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "1. Connect the device to **wired ethernet** (mandatory -- Wi-Fi does NOT work).",
+   "reason": "Describes a fixed platform limitation; 'does NOT work' carries the same prohibition as 'will NOT work' and 'mandatory' is untouched."
+  },
+  {
+   "file": "admin-setup-apv1/08-self-deploying.md",
+   "baseline_line": 81,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> Self-deploying devices have no primary user. Apps must be assigned to **device groups**, not user groups.",
+   "reason": "System-behavior statement; present tense states the same limitation."
+  },
+  {
+   "file": "admin-setup-apv1/08-self-deploying.md",
+   "baseline_line": 88,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **User-targeted apps:** Assign apps that must be available to all users of the device through device groups",
+   "reason": "The modal sat in a descriptive relative clause identifying which apps; the actionable instruction (\"Assign ... through device groups\") is unchanged."
+  },
+  {
+   "file": "admin-setup-apv2/01-prerequisites-rbac.md",
+   "baseline_line": 36,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Without this, the Entra join step during OOBE fails with an access denied error.",
+   "reason": "Conditional consequence under an explicit 'Without this,' clause; the sibling prerequisite already states its consequence in bare present tense."
+  },
+  {
+   "file": "admin-setup-apv2/01-prerequisites-rbac.md",
+   "baseline_line": 82,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "organizations using least-privilege administration require a custom role scoped to APv2",
+   "reason": "The clause defines the role spec inside a numbered procedure rather than offering advice with alternatives; 'must remain at the default (No)' asks for exactly the same action."
+  },
+  {
+   "file": "admin-setup-apv2/02-etg-device-group.md",
+   "baseline_line": 49,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Do not add any members at this time.",
+   "reason": "Plain description of service-principal behavior at enrollment time."
+  },
+  {
+   "file": "admin-setup-apv2/02-etg-device-group.md",
+   "baseline_line": 109,
+   "verdict": "INVERTED",
+   "fix": "**Verification:** Navigate to the ETG group in the Entra ID portal > select the group > **Owners**. Confirm the Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) appears in the owners list.",
+   "evidence": "> **What breaks if misconfigured:** **Admin sees:** Device Preparation policy is created and assigned to both groups without error.",
+   "reason": "A Verification step whose failure branch is documented immediately below became a bare assertion that the owner is already present."
+  },
+  {
+   "file": "admin-setup-apv2/02-etg-device-group.md",
+   "baseline_line": 117,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "must be **both** selected in the Device Preparation policy ... **and** assigned to the ETG device group",
+   "reason": "'that should install' -> 'that you want installed' names the same set; the MUST in the main clause is untouched."
+  },
+  {
+   "file": "admin-setup-apv2/03-device-preparation-policy.md",
+   "baseline_line": 162,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Select the **user** group here, not the ETG device group.",
+   "reason": "The step still names the intended target group; no verification step or requirement changed."
+  },
+  {
+   "file": "admin-setup-apv2/04-corporate-identifiers.md",
+   "baseline_line": 33,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Corporate identifiers are needed when **both** of the following are true:",
+   "reason": "The line is one arm of a stated condition, so present tense reads identically."
+  },
+  {
+   "file": "admin-setup-apv2/04-corporate-identifiers.md",
+   "baseline_line": 107,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Enrollment restrictions are evaluated **BEFORE** the Device Preparation policy.",
+   "reason": "General statement of ordering behavior; 'never reaches' carries the same consequence as 'will never reach'."
+  },
+  {
+   "file": "admin-setup-ios/01-apns-certificate.md",
+   "baseline_line": 110,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "9. Verify the new expiration date (expect ~365 days from renewal).",
+   "reason": "'expect' keeps the expectation explicit and the line still opens with the imperative 'Verify'."
+  },
+  {
+   "file": "admin-setup-ios/01-apns-certificate.md",
+   "baseline_line": 121,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- [ ] Certificate expiration date is visible (expect ~365 days from creation or renewal)",
+   "reason": "Checklist item retains the hedge via 'expect', so the reader still compares rather than assumes."
+  },
+  {
+   "file": "admin-setup-ios/02-abm-token.md",
+   "baseline_line": 113,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- [ ] Token expiration date is visible (expect ~365 days from creation)",
+   "reason": "Same pattern: 'expect' preserves the expectation inside a verification checklist."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 19,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** Setting supervised to No on a corporate ADE deployment means locked enrollment cannot be enforced,",
+   "reason": "The document itself treats supervised=No on corporate ADE as a misconfiguration with irreversible breakage, so \"must be set to Yes\" matches its stated stance."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 41,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "However, explicitly set supervised mode to **Yes** in the enrollment profile to:",
+   "reason": "Imperative plus the rationale list that follows carries the same guidance force as \"you should\"."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 102,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** Setting supervised to No on a corporate ADE deployment means locked enrollment cannot be enforced,",
+   "reason": "Consequence clause inside an explicit conditional \"what breaks\" block; present tense reads as the same outcome."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 130,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** Without user affinity, the device has no primary user",
+   "reason": "The \"Without user affinity\" conditional supplies the futurity; present tense keeps the consequence."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 132,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> Symptom appears in: Intune admin center (device shows no primary user) and Company Portal app (not functional).",
+   "reason": "Continuation of the same conditional consequence list; force unchanged."
+  },
+  {
+   "file": "admin-setup-ios/03-ade-enrollment-profile.md",
+   "baseline_line": 194,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** If no enrollment profile is assigned before the device is powered on, the device boots through standard (non-managed) iOS Setup Assistant.",
+   "reason": "Governed by the preceding \"If no enrollment profile is assigned\" conditional, so present tense keeps the consequence."
+  },
+  {
+   "file": "admin-setup-ios/06-compliance-policy.md",
+   "baseline_line": 44,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If compliance policies are deployed without corresponding configuration profiles (where pairing is possible),",
+   "reason": "Conditional consequence of a misconfiguration; force unchanged."
+  },
+  {
+   "file": "admin-setup-ios/06-compliance-policy.md",
+   "baseline_line": 57,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- Conditional Access policies configured (if compliance status must gate access to corporate resources)",
+   "reason": "The modal sits inside an intent-conditional \"if\" clause, so the prerequisite still applies only to tenants that gate on compliance."
+  },
+  {
+   "file": "admin-setup-ios/06-compliance-policy.md",
+   "baseline_line": 98,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "there is no system email profile to detect.",
+   "reason": "Describes an unavoidable consequence of the misconfiguration; present tense is equivalent."
+  },
+  {
+   "file": "admin-setup-ios/06-compliance-policy.md",
+   "baseline_line": 209,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "2. Optionally choose **Excluded groups** for devices to exempt.",
+   "reason": "\"Optionally\" already carries the hedge; \"devices to exempt\" states the same optional choice."
+  },
+  {
+   "file": "admin-setup-ios/07-device-enrollment.md",
+   "baseline_line": 66,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The two flows produce identical managed-device outcomes",
+   "reason": "Describes a fixed capability set, not a future contingency."
+  },
+  {
+   "file": "admin-setup-ios/07-device-enrollment.md",
+   "baseline_line": 78,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Device Enrollment does not support kiosk/shared-iPad deployments because those require supervision.",
+   "reason": "A routing condition describing a device class rather than advice to the reader; the ADE recommendation is unchanged."
+  },
+  {
+   "file": "admin-setup-ios/07-device-enrollment.md",
+   "baseline_line": 164,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If users are directed to the enrollment URL from a non-Safari browser (Chrome, Edge, Firefox on iOS)",
+   "reason": "The leading If clause keeps the outcome conditional; present tense states the mechanism."
+  },
+  {
+   "file": "admin-setup-ios/07-device-enrollment.md",
+   "baseline_line": 174,
+   "verdict": "STRENGTHENED",
+   "fix": "Tenants supporting both flows should document which flow is preferred for which user population rather than leaving the choice entirely to end users. Recommended patterns:",
+   "evidence": "- **Either flow supported**-acceptable as long as help-desk runbooks cover both; support cost increases slightly because troubleshooting steps differ between flows.",
+   "reason": "The section is explicitly labelled Recommended patterns and its third bullet accepts leaving both flows open, so a mandatory must contradicts the surrounding advice."
+  },
+  {
+   "file": "admin-setup-ios/08-user-enrollment.md",
+   "baseline_line": 40,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Confusing the two identities is the most common configuration error",
+   "reason": "States a platform behavior (personal Apple IDs are refused), not an expectation the reader must verify."
+  },
+  {
+   "file": "admin-setup-ios/09-mam-app-protection.md",
+   "baseline_line": 142,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Select custom apps**-Manually curated list. Use when specific apps must be excluded",
+   "reason": "\"Use when the policy governs X only\" remains a selection criterion matching the sibling bullets' bare-present voice."
+  },
+  {
+   "file": "admin-setup-linux/01-intune-linux-agent.md",
+   "baseline_line": 89,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The Snap package (`snap install intune-portal`) was available during preview and is **deprecated**.",
+   "reason": "Statement of fact about a deprecated channel; present tense carries the same dead-end warning."
+  },
+  {
+   "file": "admin-setup-linux/01-intune-linux-agent.md",
+   "baseline_line": 107,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If `microsoft-identity-broker` is not running",
+   "reason": "Conditional consequence already gated by the 'If ...' clause; present tense is standard."
+  },
+  {
+   "file": "admin-setup-linux/02-enrollment-profile.md",
+   "baseline_line": 38,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- Microsoft Entra ID P1 minimum (P2 if risk-based Conditional Access policies scope to Linux devices)",
+   "reason": "A conditional prerequisite reads identically in present tense; no expectation or consequence was lost."
+  },
+  {
+   "file": "admin-setup-linux/02-enrollment-profile.md",
+   "baseline_line": 84,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "do NOT use **Require device to be marked as compliant**-this grant condition is not available for Linux devices",
+   "reason": "\"will block\" -> \"blocks\" describes invariant system behaviour already asserted in the adjacent step."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 74,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Devices running an unlisted distribution or version report non-compliant",
+   "reason": "Outcome statement about policy evaluation, not an action the reader must anticipate."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 76,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the Allowed Distribution list excludes the Ubuntu version running on your enrolled devices",
+   "reason": "The If clause preserves conditionality; immediately is retained."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 99,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A Bash script with a syntax error causes compliance evaluation to fail",
+   "reason": "Deterministic cause-and-effect in a what-breaks callout."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 119,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If Device Encryption is required but the device was enrolled without encryption enabled",
+   "reason": "Conditional framing intact; consequence unchanged."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 139,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Devices that do not meet the password requirements report non-compliant",
+   "reason": "Policy-evaluation outcome, same force in present tense."
+  },
+  {
+   "file": "admin-setup-linux/03-compliance-policy.md",
+   "baseline_line": 141,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Password-policy thresholds that exceed what is configured on the device baseline cause devices to report non-compliant immediately.",
+   "reason": "Deterministic consequence in a what-breaks callout."
+  },
+  {
+   "file": "admin-setup-linux/04-app-delivery.md",
+   "baseline_line": 61,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Orgs are responsible for verifying script sources and signatures before uploading to Intune.",
+   "reason": "The adjacent supply-chain note already assigns hard responsibility for verification, so 'must be verified' carries the force the paragraph already had."
+  },
+  {
+   "file": "admin-setup-linux/05-conditional-access.md",
+   "baseline_line": 92,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "that grant is not available on Linux and blocks all Linux users if applied",
+   "reason": "The trailing 'if applied' keeps the consequence conditional and anticipatory."
+  },
+  {
+   "file": "admin-setup-macos/01-abm-configuration.md",
+   "baseline_line": 58,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> Symptom appears in: Intune admin center (token upload error).",
+   "reason": "Standard What-breaks consequence; present tense carries the same certainty."
+  },
+  {
+   "file": "admin-setup-macos/01-abm-configuration.md",
+   "baseline_line": 89,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> Symptom appears in: Intune admin center (devices list empty after sync).",
+   "reason": "Consequence of a misconfiguration, not a future event the reader must anticipate."
+  },
+  {
+   "file": "admin-setup-macos/01-abm-configuration.md",
+   "baseline_line": 150,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- [ ] Token expiration date is visible (expect ~365 days from creation)",
+   "reason": "\"expect\" explicitly re-encodes the expectation, so the checklist item still asks the reader to compare."
+  },
+  {
+   "file": "admin-setup-macos/02-enrollment-profile.md",
+   "baseline_line": 56,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**What breaks if misconfigured:** Without user affinity, Company Portal does not work",
+   "reason": "Callout is explicitly a misconfiguration-consequence statement; the parallel clause in the same sentence was already present tense."
+  },
+  {
+   "file": "admin-setup-macos/02-enrollment-profile.md",
+   "baseline_line": 118,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "It is **not** auto-filled-and the user is prompted to create a local password-when the sign-in is:",
+   "reason": "The 'when the sign-in is:' clause preserves the conditional force."
+  },
+  {
+   "file": "admin-setup-macos/03-configuration-profiles.md",
+   "baseline_line": 25,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The older Endpoint protection template is deprecated for new policies -- do not create new profiles through Templates > Endpoint protection.",
+   "reason": "The callout label already says \"required\" and the next line bans the alternative, so \"must\" matches the existing force."
+  },
+  {
+   "file": "admin-setup-macos/04-app-deployment.md",
+   "baseline_line": 139,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Available deployment intent for VPP works only with user groups.",
+   "reason": "Product constraint restated in present tense; the following line keeps the corrective action."
+  },
+  {
+   "file": "admin-setup-macos/05-compliance-policy.md",
+   "baseline_line": 45,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Users can change settings freely, and Conditional Access may block access.",
+   "reason": "Conditional consequence of deploying compliance without configuration; force unchanged."
+  },
+  {
+   "file": "admin-setup-macos/05-compliance-policy.md",
+   "baseline_line": 89,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "with no remediation path until Apple releases the update.",
+   "reason": "A what-breaks consequence; present tense states the same fleet-wide outcome."
+  },
+  {
+   "file": "admin-setup-macos/07-platform-sso-setup.md",
+   "baseline_line": 244,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Do NOT assign to device groups or use filters on device groups",
+   "reason": "The prohibition is carried by Do NOT; the consequence clause is plain system behavior."
+  },
+  {
+   "file": "admin-setup-macos/07-platform-sso-setup.md",
+   "baseline_line": 432,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "macOS version | macOS 26 or newer (hard gate - no earlier macOS)",
+   "reason": "hard-gates is retained and the prerequisite table repeats the hard gate; force unchanged."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 42,
+   "verdict": "STRENGTHENED",
+   "fix": "- **Secure Enclave key** -- Best for most organizations. Passwordless, phishing-resistant, hardware-bound, and drives device-wide SSO through a Primary Refresh Token. Requires T2 Intel or Apple Silicon hardware; pre-2018 non-T2 Intel Macs CANNOT provision and should fall back to Password sync.",
+   "evidence": "- Pre-2018 Intel Macs WITHOUT T2: **Secure Enclave auth method FAILS to provision.** Recommend fallback to Password sync for these devices.",
+   "reason": "The doc frames Password sync as a recommended fallback inside an explicit preference order (Recommended / Second choice / Third choice), so 'must fall back' converts a recommendation into a mandate and forecloses the Smart card option."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 72,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Secure Enclave auth method FAILS to provision.** Recommend fallback to Password sync for these devices.",
+   "reason": "'WILL FAIL' to 'FAILS' keeps the same categorical hardware-incompatibility claim."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 115,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Resolution:** The user must complete a fresh PSSO registration after the password reset.",
+   "reason": "Informing users is the only prescribed helpdesk action and the adjacent resolution is already 'must'; 'PSSO prompts for re-registration' still describes the same system behavior."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 146,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Before enabling this policy, confirm that **all target devices** have functioning Touch ID hardware.",
+   "reason": "The 'once this policy is active' clause keeps the anticipatory force; separately note the rewrite leaves a subject-verb agreement break ('Devices ... has NO authentication path')."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 156,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This re-registration process must be admin-driven, as users won't see a re-registration prompt.",
+   "reason": "Present tense restates the quoted source fact with the same force."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 261,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Step 5 -- Verify CBA works before deploying the PSSO profile:**",
+   "reason": "Rewritten as an imperative that keeps the 'only after CBA is confirmed working' ordering constraint intact."
+  },
+  {
+   "file": "admin-setup-macos/08-auth-methods-deep-dive.md",
+   "baseline_line": 267,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Do NOT deploy the SmartCard value to a mixed 13/14 fleet without filtering; macOS 13 devices fail.",
+   "reason": "Categorical unsupported-platform outcome; present tense keeps the same warning force."
+  },
+  {
+   "file": "admin-setup-macos/09-enterprise-sso-plugin-migration.md",
+   "baseline_line": 76,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The `security find-certificate` command returns **false negatives** for all PSSO-enrolled devices",
+   "reason": "Describes deterministic tool behavior already stated in present tense one paragraph above."
+  },
+  {
+   "file": "admin-setup-macos/09-enterprise-sso-plugin-migration.md",
+   "baseline_line": 152,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Instruct affected users to open Company Portal and complete WPJ re-registration before Conditional Access passes.",
+   "reason": "The imperative \"Instruct\" carries the step and \"before Conditional Access passes\" is the same temporal gate."
+  },
+  {
+   "file": "admin-setup-macos/10-kerberos-sso-extension.md",
+   "baseline_line": 352,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "a ticket near expiry that has not yet expired is functioning correctly and is renewed automatically",
+   "reason": "Both modals described routine system behavior (column semantics and automatic renewal); present tense is equivalent."
+  },
+  {
+   "file": "admin-setup-macos/11-graph-api-platform-credential.md",
+   "baseline_line": 132,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.**",
+   "reason": "Futurity is carried by 'on their next Conditional Access-gated sign-in', so the consequence of the delete is still anticipated."
+  },
+  {
+   "file": "admin-setup-macos/11-graph-api-platform-credential.md",
+   "baseline_line": 193,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**MFA re-prompt:** If a user deletes their own credential and last authenticated more than 10 minutes ago",
+   "reason": "Conditional system behavior; present tense in an if-clause states the same service behavior as 'will prompt'."
+  },
+  {
+   "file": "admin-setup-macos/11-graph-api-platform-credential.md",
+   "baseline_line": 246,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**What happens after deletion:** The user's macOS device retains the Secure Enclave private key",
+   "reason": "A 'what happens' description of service behavior; 'on their next ... sign-in' still marks the future occurrence."
+  },
+  {
+   "file": "android-lifecycle/00-enrollment-overview.md",
+   "baseline_line": 19,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the ownership-by-management-scope axes that determine which mode to use for a given device deployment",
+   "reason": "'which mode a deployment should use' and 'which mode to use' are the same selection guidance; no assertion of fact is introduced."
+  },
+  {
+   "file": "android-lifecycle/00-enrollment-overview.md",
+   "baseline_line": 77,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The entire device is managed, there is no personal profile",
+   "reason": "COBO is described as having no personal profile at all, so 'devices that must carry no personal content' restates the mode's own architecture rather than hardening advice."
+  },
+  {
+   "file": "android-lifecycle/01-android-prerequisites.md",
+   "baseline_line": 38,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "but the binding model and account requirements differ and must not be conflated",
+   "reason": "A caution about a mental model, not a configuration recommendation; no alternative or preference order is offered and the reader action is identical."
+  },
+  {
+   "file": "android-lifecycle/01-android-prerequisites.md",
+   "baseline_line": 59,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Asset tag...also remains functional on Android 12+ BYOD WP devices and is the documented fallback",
+   "reason": "Describes standing platform behavior after Android 12; the requirement ('must use asset tags or accept') is untouched."
+  },
+  {
+   "file": "android-lifecycle/03-android-version-matrix.md",
+   "baseline_line": 19,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Platform gate:** This reference shows the minimum Intune-supported Android OS per enrollment mode",
+   "reason": "Summary sentence describing the guide's contents; no optionality is offered anywhere in the section."
+  },
+  {
+   "file": "android-lifecycle/03-android-version-matrix.md",
+   "baseline_line": 105,
+   "verdict": "STRENGTHENED",
+   "fix": "**Administrator action required:** None—Private Space is an OS-level personal-side feature without an administrator policy lever in Intune. **Intune** cannot manage Private Space content, visibility, or installed apps on COPE, COBO, BYOD, or any other Android Enterprise mode. Administrators should adjust user-facing privacy messaging to acknowledge that Private Space content is outside IT visibility regardless of enrollment mode. (Applies to Android 15.0+.)",
+   "evidence": "**Administrator action required:** None",
+   "reason": "The same paragraph declares that no administrator action is required, so a mandatory messaging change contradicts its own lead-in."
+  },
+  {
+   "file": "cross-platform/apple-business/01-role-permission-model.md",
+   "baseline_line": 159,
+   "verdict": "STRENGTHENED",
+   "fix": "> Sub-org administrators legitimately need (c) but should never have (a). Since Apple bundles all four",
+   "evidence": "MUST be denied in all non-Account-Holder reference roles unless explicitly reviewed and approved by the tenant's central IT administrator.",
+   "reason": "The contract in the very next sentence carries a documented review-and-approve exception that an absolute 'must never have (a)' contradicts."
+  },
+  {
+   "file": "cross-platform/apple-business/01-role-permission-model.md",
+   "baseline_line": 183,
+   "verdict": "STRENGTHENED",
+   "fix": "> **Note:** \"Accept Terms of Service\" is DENY-by-default because only the Account Holder is authorized to",
+   "evidence": "Delegating this to a sub-org administrator risks an unreviewed T&C acceptance that binds the organization legally.",
+   "reason": "'only the Account Holder must be accepting' reads as an obligation on the Account Holder to accept updates rather than the intended prohibition on delegating the action to anyone else."
+  },
+  {
+   "file": "cross-platform/apple-business/01-role-permission-model.md",
+   "baseline_line": 283,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "\"Manage MDM Servers\" MUST be denied in all non-Account-Holder reference roles",
+   "reason": "The DENY-by-default contract is already stated in MUST terms in the same document, so 'must be granted the narrower permission' matches the established force."
+  },
+  {
+   "file": "cross-platform/apple-business/01-role-permission-model.md",
+   "baseline_line": 369,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "every Edit permission included in the bundle MUST have its companion View permission from the preceding table also included",
+   "reason": "Describes a deterministic UI symptom of a known misconfiguration; present tense is equivalent."
+  },
+  {
+   "file": "cross-platform/apple-business/01-role-permission-model.md",
+   "baseline_line": 385,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**v1.6 policy:** Acknowledge existence; do not document deeply.",
+   "reason": "The sentence sits inside an explicitly labelled policy statement with no alternative handling offered, so 'must treat' matches the stated policy force."
+  },
+  {
+   "file": "cross-platform/apple-business/02-ous-architecture.md",
+   "baseline_line": 62,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Do not publish deeper nesting assumptions in downstream runbooks until Phase 63 portal verification resolves this gap.",
+   "reason": "The section already issues flat prohibitions about unverified assumptions; must-treat-as-unverified matches that register and offers no competing option."
+  },
+  {
+   "file": "cross-platform/apple-business/04-custom-role-authoring.md",
+   "baseline_line": 120,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "\"Manage MDM Servers\" MUST be denied in all non-Account-Holder reference roles",
+   "reason": "The surrounding DENY-by-default block already states the prohibition as MUST, so 'must never have (a)' matches the established force."
+  },
+  {
+   "file": "cross-platform/apple-business/05-sub-org-admin-onboarding.md",
+   "baseline_line": 78,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Name** (display name as it appears in the portal)",
+   "reason": "Field-label gloss describing portal behavior; no expectation lost."
+  },
+  {
+   "file": "cross-platform/apple-business/05-sub-org-admin-onboarding.md",
+   "baseline_line": 84,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If you set IT Administrator here, the custom role in Step 2 is redundant",
+   "reason": "Consequence remains governed by the explicit \"If you set...\" condition."
+  },
+  {
+   "file": "cross-platform/apple-business/05-sub-org-admin-onboarding.md",
+   "baseline_line": 158,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. If the sub-org administrator needs to cover multiple OUs, add each OU scope individually.",
+   "reason": "\"should cover\" was an intent conditional; \"needs to cover\" keeps it conditional and the imperative unchanged."
+  },
+  {
+   "file": "cross-platform/apple-business/05-sub-org-admin-onboarding.md",
+   "baseline_line": 210,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "offboarding steps mirror the onboarding paths (manual / SCIM / OIDC + JIT) and must complete all three gates",
+   "reason": "Passive \"should be performed promptly\" became an imperative of the same obligatory force, consistent with the \"must complete all three gates\" that follows."
+  },
+  {
+   "file": "cross-platform/apple-business/05-sub-org-admin-onboarding.md",
+   "baseline_line": 259,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Verify by attempting a sign-in as the offboarded account (incognito)—confirm redirect fails at the IdP",
+   "reason": "This is the stated outcome of step 1 and the separate verification is kept in step 3, so no check was turned into an assertion."
+  },
+  {
+   "file": "cross-platform/apple-business/06-mdm-server-assignment.md",
+   "baseline_line": 38,
+   "verdict": "STRENGTHENED",
+   "fix": "> Sub-org administrators who need to assign devices to an MDM server should be granted",
+   "evidence": "In OUs-only topologies, the Device Enrollment Manager preset provides equivalent capability.",
+   "reason": "The next line and the summary table both offer a second valid path (DEM preset), so 'must be granted ... through the canonical Sub-Org Admin custom role bundle' forecloses an alternative the document explicitly allows."
+  },
+  {
+   "file": "cross-platform/apple-business/06-mdm-server-assignment.md",
+   "baseline_line": 81,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the sub-org administrator must raise an escalation to a central IT administrator",
+   "reason": "A pre-transfer safety check with no alternative offered; the document already uses 'must' in this register, so force is unchanged."
+  },
+  {
+   "file": "cross-platform/apple-business/10-apple-tv-lifecycle.md",
+   "baseline_line": 57,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Retail Apple TVs purchased from a consumer store are NOT pre-registered in Apple Business and therefore do NOT qualify for ADE.**",
+   "reason": "The doc already states ADE requires purchase-time registration, so 'must' matches the stated hard constraint; the two named channels are ways to comply, not alternatives to complying."
+  },
+  {
+   "file": "cross-platform/apple-business/10-apple-tv-lifecycle.md",
+   "baseline_line": 170,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Heuristic:** Assign the Apple TV to the OU that owns the **primary physical space**",
+   "reason": "Rhetorical question about intended ownership; 'is meant to own' keeps the normative sense before the heuristic answers it."
+  },
+  {
+   "file": "cross-platform/apple-business/12-shared-ipad-passcode-reset.md",
+   "baseline_line": 116,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "It is NOT applicable to the Shared iPad per-user partition passcode problem.",
+   "reason": "'will NOT resolve' to 'does NOT resolve' states the same categorical incapability asserted two lines above."
+  },
+  {
+   "file": "cross-platform/apple-business/13-device-release-runbook.md",
+   "baseline_line": 87,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A released device can re-appear in Apple Business if the reseller re-pushes it.",
+   "reason": "The consequence stays inside its 'If re-appeared and a default enrollment profile is set' conditional, so present tense reads as the conditional outcome."
+  },
+  {
+   "file": "cross-platform/apple-business/13-device-release-runbook.md",
+   "baseline_line": 116,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the end user has a **30-day window** to unilaterally remove the device from MDM",
+   "reason": "Restates a stated Apple constraint the reader must plan around; 'must not be considered permanently enrolled' asks for the same posture as 'should not'."
+  },
+  {
+   "file": "cross-platform/apple-business/13-device-release-runbook.md",
+   "baseline_line": 123,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "### Scenario 1: Device Decommission (Fleet Retirement)",
+   "reason": "Scenario premise stating intent (the device is not meant to come back); no reader choice or alternative is narrowed."
+  },
+  {
+   "file": "cross-platform/apple-business/13-device-release-runbook.md",
+   "baseline_line": 160,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "### Verifying the Device Has Not Re-Appeared",
+   "reason": "Restatement of the decommission intent introducing the verification section, not an instruction whose compliance level changed."
+  },
+  {
+   "file": "cross-platform/apple-business/13-device-release-runbook.md",
+   "baseline_line": 163,
+   "verdict": "STRENGTHENED",
+   "fix": "2. Search for the device serial in Apple Business Devices—confirm it remains absent",
+   "evidence": "3. If the device re-appears, the reseller has re-pushed the serial. Contact the reseller to",
+   "reason": "The next step handles the opposite outcome, so this was an expected-result check; 'must remain absent' recasts a verification expectation as a requirement on reseller-controlled behavior."
+  },
+  {
+   "file": "cross-platform/apple-business/14-device-transfer-runbook.md",
+   "baseline_line": 109,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "notify the device user that affected apps stop working after transfer",
+   "reason": "The \"after transfer\" adverbial keeps the future framing intact; only the tense changed."
+  },
+  {
+   "file": "cross-platform/apple-business/14-device-transfer-runbook.md",
+   "baseline_line": 145,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "retail Apple TV devices enrolled through Apple Configurator (rather than ADE) require Configurator re-enrollment",
+   "reason": "Generic statement of how Configurator-enrolled devices behave; force unchanged."
+  },
+  {
+   "file": "cross-platform/apple-business/15-mdm-server-reassign-runbook.md",
+   "baseline_line": 94,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "MDM server reassignment requires a **factory erase and re-enrollment**",
+   "reason": "Use-case description of fleets already being reimaged; no reader-facing consequence lost."
+  },
+  {
+   "file": "cross-platform/apple-business/16-managed-apple-account-runbook.md",
+   "baseline_line": 288,
+   "verdict": "STRENGTHENED",
+   "fix": "> ticket** with identity verification. Organizations should treat missed-deadline cases as",
+   "evidence": "`[ASSUMED-Apple Enterprise Support ticket; needs live verification]`",
+   "reason": "The whole recovery path is flagged ASSUMED and unverified ('Apple may forcibly rename'), so hardening the guidance to 'must' over-claims what the document itself hedges."
+  },
+  {
+   "file": "cross-platform/apple-business/16-managed-apple-account-runbook.md",
+   "baseline_line": 304,
+   "verdict": "STRENGTHENED",
+   "fix": "> deactivation (SCIM) over deletion. Deletion should be reserved for accounts that were",
+   "evidence": "For off-boarding, prefer deactivation (SCIM) over deletion.",
+   "reason": "The sentence sits in an explicit preference order ('prefer X over Y'), so 'must be reserved' converts a preference into a prohibition on an action the permission table allows tenant IT administrators to perform."
+  },
+  {
+   "file": "cross-platform/apple-business/17-audit-log-scoping-runbook.md",
+   "baseline_line": 78,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "`[CITED: training; needs live verification]`",
+   "reason": "The note's own tag already declares live verification necessary, so \"must be confirmed\" matches the stated status."
+  },
+  {
+   "file": "cross-platform/apple-business/17-audit-log-scoping-runbook.md",
+   "baseline_line": 116,
+   "verdict": "STRENGTHENED",
+   "fix": "> should notify the OU-B administrator directly and document the transfer reason in a ticket or",
+   "evidence": "> **Note (OU-A administrator best practice):** When performing cross-OU transfers, the OU-A administrator",
+   "reason": "The note is explicitly labelled \"best practice\", so \"must notify\" promotes advice into a mandate its own label contradicts."
+  },
+  {
+   "file": "cross-platform/apple-business/17-audit-log-scoping-runbook.md",
+   "baseline_line": 126,
+   "verdict": "STRENGTHENED",
+   "fix": "logs should be exported to an external SIEM or log archive on a regular schedule.",
+   "evidence": "For compliance retention requirements (SOX, ISO 27001, NIST, HIPAA), Apple Business Activity",
+   "reason": "The recommendation became a bare imperative and the subject swap orphaned the previous line, leaving \"...Apple Business Activity\" as a dangling sentence fragment."
+  },
+  {
+   "file": "cross-platform/apple-business/17-audit-log-scoping-runbook.md",
+   "baseline_line": 170,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **UI-only**—the only export mechanism is the manual **Download Logs** button",
+   "reason": "\"must be aware\" of a hard platform limitation is not an actionable requirement change; force is effectively unchanged."
+  },
+  {
+   "file": "decision-trees/00-initial-triage.md",
+   "baseline_line": 33,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The tree routes you to a specific scenario tree or to an escalation point",
+   "reason": "Describes how the document works, not an outcome the reader must verify."
+  },
+  {
+   "file": "decision-trees/04-apv2-triage.md",
+   "baseline_line": 27,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Follow each decision point, answering the question shown using only what you can observe",
+   "reason": "Describes how the tree behaves; 'routes you' is the same navigational promise as 'will route you'."
+  },
+  {
+   "file": "device-operations/01-autopilot-reset.md",
+   "baseline_line": 110,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If you attempt Autopilot Reset on a hybrid joined device, the action is available in the portal but fails on the device.",
+   "reason": "The 'If you attempt' clause keeps both outcomes conditional and anticipatory."
+  },
+  {
+   "file": "device-operations/02-retire-wipe.md",
+   "baseline_line": 33,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "BYOD offboarding, employee departure where personal data must be preserved",
+   "reason": "The comparison table above already states 'personal data must be preserved', so 'must keep' matches the established force."
+  },
+  {
+   "file": "device-operations/02-retire-wipe.md",
+   "baseline_line": 60,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If decommissioning permanently, do NOT select this option.",
+   "reason": "Describes the device's intended disposition inside a conditional warning; the operative instruction is unchanged."
+  },
+  {
+   "file": "device-operations/02-retire-wipe.md",
+   "baseline_line": 90,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the device is still active and in use, it fails to re-provision through Autopilot on next reset",
+   "reason": "The consequence remains governed by its 'If the device is still active and in use' conditional."
+  },
+  {
+   "file": "device-operations/02-retire-wipe.md",
+   "baseline_line": 98,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Use Delete to remove a stale Intune/Autopilot record without affecting the physical device. Required before tenant migration.",
+   "reason": "The section intro already says 'Required before tenant migration', so 'must be removed' restates an existing requirement."
+  },
+  {
+   "file": "end-user-guides/linux-intune-portal-enrollment.md",
+   "baseline_line": 58,
+   "verdict": "INVERTED",
+   "fix": "2. **Install the Intune Portal app.** Your IT department provides the exact terminal commands to add Microsoft's package source to apt and install `intune-portal`. Run those commands in a terminal. When the installation finishes, confirm **Microsoft Intune Portal** appears in your application launcher. If you have not received these commands from IT, contact them before continuing—the commands are specific to your organization's configuration.",
+   "evidence": "If you have not received these commands from IT, contact them before continuing",
+   "reason": "\"you should see Microsoft Intune Portal appear\" was an end-user verification that the install succeeded; the bare assertion tells the reader it is there and removes the check."
+  },
+  {
+   "file": "end-user-guides/linux-intune-portal-enrollment.md",
+   "baseline_line": 84,
+   "verdict": "INVERTED",
+   "fix": "- **\"Access blocked\" in Microsoft Edge after enrollment:** Make sure you signed into **Microsoft Edge** with your organization account in Step 5. You can verify by clicking the profile icon in the top-right corner of Edge—confirm it shows your work email address. If you are signed in but still blocked, confirm your Edge version is 102 or higher by running `microsoft-edge --version` in a terminal. If the version is correct and you are still blocked, contact IT.",
+   "evidence": "You can verify by clicking the profile icon in the top-right corner of Edge",
+   "reason": "The clause is the expected result of an explicit verification in a troubleshooting entry where the account may well be the wrong one; asserting it shows the work email defeats the check."
+  },
+  {
+   "file": "error-codes/02-tpm-attestation.md",
+   "baseline_line": 50,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Contact your OEM for a firmware update; the fix is available from affected OEMs.",
+   "reason": "Sibling entries state the same action as a bare imperative and no alternative remedy exists, so \"must contact\" carries the original force."
+  },
+  {
+   "file": "error-codes/04-pre-provisioning.md",
+   "baseline_line": 49,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This is by design, not a configuration error.",
+   "reason": "always is retained and the doc explicitly calls it by-design, so present tense states the same invariant."
+  },
+  {
+   "file": "ios-lifecycle/00-enrollment-overview.md",
+   "baseline_line": 74,
+   "verdict": "STRENGTHENED",
+   "fix": "Device Enrollment is appropriate for BYOD or corporate devices not eligible for ADE. Personal devices enrolled through this path are subject to full device-level management—evaluate whether User Enrollment provides a better privacy boundary.",
+   "evidence": "### User Enrollment ... Account-driven User Enrollment is the privacy-preserving BYOD path for iOS 15 and later.",
+   "reason": "A genuine \"consider the alternative\" recommendation (User Enrollment is documented as a sibling path) became a mandate; the imperative \"evaluate whether\" keeps the advisory force."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 145,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Contact the reseller to establish the ABM relationship, or use Apple Configurator to manually add devices to ABM",
+   "reason": "Describes a standing condition of non-linked resellers, with the remedy in the same bullet."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 146,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Follow up with the reseller and provide your ABM organization ID.",
+   "reason": "'until the transfer is completed' supplies the condition, so present tense reads as the same general truth."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 171,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A lapsed token silently stops new device syncing",
+   "reason": "The clause is already conditioned on 'until the token is renewed', so no anticipated consequence is lost."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 172,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Each ADE token in Intune corresponds to exactly one MDM server in ABM.",
+   "reason": "Statement of a structural fact about multi-server tenants, not a future outcome."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 211,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Profile assignment must occur before the device is powered on for the first time",
+   "reason": "Consequence sits inside an explicit 'If the device reaches Setup Assistant before...' conditional."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 215,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the device starts Setup Assistant before a profile is assigned in Intune, the device does not enroll in MDM.",
+   "reason": "Conditional antecedent is present and sibling bullets in the same list already use bare present tense."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 279,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the MDM channel fails to establish during Setup Assistant",
+   "reason": "The preceding clause in the same bullet is already present tense under the same 'If ... has expired' condition."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 314,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A required configuration profile with errors prevents the hold from releasing.",
+   "reason": "The sibling bullet states the identical mechanism in bare present tense."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 341,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the user does not complete Company Portal sign-in, the device is enrolled in Intune ... but is not registered with Entra ID.",
+   "reason": "Blocking is conditioned on the stated unregistered state, so present tense carries the same force."
+  },
+  {
+   "file": "ios-lifecycle/01-ade-lifecycle.md",
+   "baseline_line": 346,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **User skips Company Portal sign-in.** The device is MDM-managed but not Entra-registered.",
+   "reason": "'until they complete sign-in' remains, preserving the consequence the reader must anticipate."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 112,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The iOS/iPadOS 26 OS gate is a hard gate enforced by Apple.",
+   "reason": "Behind the Scenes statement of a platform gate; present tense states the same fact."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 118,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Always segment by OS version before applying deadlines.",
+   "reason": "Conditional consequence in a Watch Out For bullet; the corrective instruction that follows is unchanged."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 171,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the agent may attempt to contact Kandji/Iru servers",
+   "reason": "Describes agent behavior at the next check-in; the 'Until this occurs' clause preserves the sequencing."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 176,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the ADE enrollment policy is not assigned to the device serial number in Intune",
+   "reason": "Consequence stays gated by the 'If ...' clause; matches sibling bullets at lines 212 and 313."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 212,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If ABM \"Assign Device Management\" is completed but the Intune ADE enrollment policy is not assigned",
+   "reason": "Same conditional-consequence pattern; present tense is consistent across the file."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 247,
+   "verdict": "STRENGTHENED",
+   "fix": "- **VPP app pre-assignment timing.** VPP apps should be assigned in Intune before the migration deadline is set (or at minimum before the deadline is reached), to maximize the chance that apps are available when the device re-enrolls.",
+   "evidence": "to maximize the chance that apps are available when the device re-enrolls",
+   "reason": "A hedged best practice with a fallback timing and a probabilistic goal became a hard requirement; Stage 2 states only 'Pre-assign iOS apps ... to minimize disruption'."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 271,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The notification cadence is fixed by Apple and cannot be customized.",
+   "reason": "Describes fixed Apple notification behavior; no verification step involved."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 281,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Ensure Intune readiness (Stage 3) is complete before the first notification appears on devices.",
+   "reason": "Conditional failure consequence; the corrective instruction that follows is unchanged."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 313,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The result is a device that is unmanaged post-restart",
+   "reason": "Conditional consequence with the outcome spelled out in the next sentence."
+  },
+  {
+   "file": "ios-lifecycle/02-mdm-migration.md",
+   "baseline_line": 314,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Ensure network connectivity (Wi-Fi) is available at the expected deadline time",
+   "reason": "Conditional consequence; the mitigation instruction is untouched."
+  },
+  {
+   "file": "l1-runbooks/00-index.md",
+   "baseline_line": 19,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Start with the [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) to identify which runbook applies, or select directly from the following list.",
+   "reason": "Summary prose describing the intended navigation flow; the imperative with its explicit alternative still stands a paragraph below, so no recommendation was hardened."
+  },
+  {
+   "file": "l1-runbooks/02-esp-stuck-or-failed.md",
+   "baseline_line": 56,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Note the current time and record what the ESP screen shows",
+   "reason": "The conditional 'if you escalate' preserves the anticipated future need; no instruction is lost."
+  },
+  {
+   "file": "l1-runbooks/04-network-connectivity.md",
+   "baseline_line": 50,
+   "verdict": "INVERTED",
+   "fix": "6. Check the device clock: look at the time displayed on the device. If the clock is incorrect by more than 5 minutes, [Azure AD](../_glossary.md#hybrid-join) token validation fails—the device is expected to sync its clock to `time.windows.com` automatically when connected to the internet. If the clock is wrong and no internet is available, note this as a contributing factor.",
+   "evidence": "If the clock is wrong and no internet is available, note this as a contributing factor.",
+   "reason": "'should sync' was an expectation that may have failed; 'the device syncs its clock automatically' asserts it as fact and contradicts the failure this step and the escalation criterion 'Device clock is incorrect and cannot sync' exist to catch."
+  },
+  {
+   "file": "l1-runbooks/05-oobe-failure.md",
+   "baseline_line": 40,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Note the expected mode",
+   "reason": "'you will need it' -> 'you need it' is the same instruction to record the value for escalation."
+  },
+  {
+   "file": "l1-runbooks/08-apv2-apv1-conflict.md",
+   "baseline_line": 75,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- [APv1 vs APv2](../apv1-vs-apv2.md) -- Framework comparison and selection guidance",
+   "reason": "A See Also routing condition: \"if the device stays on classic Autopilot\" carries the same conditional sense as \"should remain\"."
+  },
+  {
+   "file": "l1-runbooks/11-macos-setup-assistant-failed.md",
+   "baseline_line": 54,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "4. Review the **User affinity** setting on the enrollment profile:",
+   "reason": "The bullet is a review criterion under an explicit Review step, so 'must be set' still reads as the expected value to check against."
+  },
+  {
+   "file": "l1-runbooks/11-macos-setup-assistant-failed.md",
+   "baseline_line": 55,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "if Setup Assistant is asking for one, the profile may be misconfigured",
+   "reason": "The deviation branch stays in the same sentence, so the reader is still told what to do when the expectation fails."
+  },
+  {
+   "file": "l1-runbooks/11-macos-setup-assistant-failed.md",
+   "baseline_line": 75,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "verify **Await device configuration** is set to **Yes** only if required",
+   "reason": "The consequence is explicitly gated on 'If enabled', so present tense keeps the conditional force."
+  },
+  {
+   "file": "l1-runbooks/11-macos-setup-assistant-failed.md",
+   "baseline_line": 95,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Ask the user to confirm the device is connected to Wi-Fi",
+   "reason": "The imperative 'Ask the user to confirm' plus the 'If not connected' branch keep the verification force the modal used to carry."
+  },
+  {
+   "file": "l1-runbooks/12-macos-profile-not-applied.md",
+   "baseline_line": 29,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- Name of the configuration profile or setting that is expected but missing",
+   "reason": "expected is retained in the bullet and what they expect to work keeps the user-report framing."
+  },
+  {
+   "file": "l1-runbooks/12-macos-profile-not-applied.md",
+   "baseline_line": 44,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Entry condition:** A profile expected to be assigned to this device is absent from the Intune device profile list.",
+   "reason": "The hedge survives intact as expected to be assigned; no assertion of fact was introduced."
+  },
+  {
+   "file": "l1-runbooks/13-macos-app-not-installed.md",
+   "baseline_line": 59,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Only \"Required\" assignments install automatically.",
+   "reason": "Conditional branch describing product behavior already asserted in present tense in the preceding step."
+  },
+  {
+   "file": "l1-runbooks/13-macos-app-not-installed.md",
+   "baseline_line": 73,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "2. If the token shows **Expired**: the VPP license connection is broken.",
+   "reason": "The \"If the token shows Expired\" conditional supplies the consequence framing; present tense keeps it."
+  },
+  {
+   "file": "l1-runbooks/14-macos-compliance-access-blocked.md",
+   "baseline_line": 83,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If it shows \"Not evaluated\" or \"Not compliant\", wait 15 minutes for Intune-to-Entra sync",
+   "reason": "Rewritten as 'Confirm Compliance shows \"Compliant\"' — the verification step survives as an imperative."
+  },
+  {
+   "file": "l1-runbooks/15-macos-company-portal-sign-in.md",
+   "baseline_line": 53,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Confirm the device appears with Join type \"Registered\"",
+   "reason": "The expectation was correctly converted to an explicit verification imperative rather than a bare assertion."
+  },
+  {
+   "file": "l1-runbooks/16-ios-apns-expired.md",
+   "baseline_line": 104,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "As of Phase 30 execution, macOS has no equivalent L1 APNs-expired runbook.",
+   "reason": "\"should escalate\" became a direct imperative to escalate along the same single named path."
+  },
+  {
+   "file": "l1-runbooks/17-ios-ade-not-starting.md",
+   "baseline_line": 52,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Do not perform the manual sync (step 7) until the token is renewed",
+   "reason": "The instruction and its rationale are unchanged; the trailing clause states fixed service behavior."
+  },
+  {
+   "file": "l1-runbooks/18-ios-enrollment-restriction-blocking.md",
+   "baseline_line": 61,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "6. Note which specific restriction setting blocks this user's enrollment attempt",
+   "reason": "The runbook's entry condition is that enrollment is already blocked, so identifying the setting that blocks it is factual rather than hypothetical."
+  },
+  {
+   "file": "l1-runbooks/21-ios-compliance-blocked.md",
+   "baseline_line": 142,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "4. Also document whether the user exists in any Entra group that is expected to have a compliance policy assigned",
+   "reason": "'is expected to' explicitly preserves the expectation the SHOULD carried, and the step verb 'document' is unchanged."
+  },
+  {
+   "file": "l1-runbooks/22-android-enrollment-blocked.md",
+   "baseline_line": 72,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Ask the administrator to:**",
+   "reason": "'is meant to be allowed' preserves the intent-versus-actual distinction the original 'should' carried."
+  },
+  {
+   "file": "l1-runbooks/23-android-work-profile-not-created.md",
+   "baseline_line": 47,
+   "verdict": "INVERTED",
+   "fix": "**End-user flow reference:** For the user-facing BYOD enrollment steps (what the user was expected to see during setup), see [Android Work Profile Setup (end-user guide)](../end-user-guides/android-work-profile-setup.md). L1 does NOT walk the user through these steps directly; if re-enrollment is needed after administrator action, refer the user back to that guide.",
+   "evidence": "(b) User reports the Microsoft Intune app (or Company Portal) hit an error during the \"Set up your Work Profile\" step",
+   "reason": "The runbook exists because setup failed, so 'what the user should have seen' was an expectation about a flow the user may never have completed; 'what the user sees' asserts it as fact."
+  },
+  {
+   "file": "l1-runbooks/23-android-work-profile-not-created.md",
+   "baseline_line": 60,
+   "verdict": "INVERTED",
+   "fix": "   - **Ownership**—confirm it shows \"Personal\" for a BYOD work profile device",
+   "evidence": "4. Click into the device detail pane. Observe and record the following fields:",
+   "reason": "This is an L1 field-comparison step whose purpose is detecting a wrong value; 'shows \"Personal\"' asserts the expected value as fact while sibling items keep their hedges ('typically shows', 'note whether', 'confirm')."
+  },
+  {
+   "file": "l1-runbooks/23-android-work-profile-not-created.md",
+   "baseline_line": 62,
+   "verdict": "INVERTED",
+   "fix": "   - **Enrollment type**—confirm it shows \"Android Enterprise personally-owned work profile\" (or similar label for AMAPI-enrolled BYOD) <!-- verify UI at execute time -->",
+   "evidence": "if it shows \"Android device administrator,\" the device enrolled in legacy DA mode",
+   "reason": "Line 84 of the same runbook handles the other outcome explicitly, proving this was an expected value to check rather than a statement of what the field contains."
+  },
+  {
+   "file": "l1-runbooks/23-android-work-profile-not-created.md",
+   "baseline_line": 84,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Verify the user is not enrolled as **Android device administrator (legacy DA mode)** in Intune.",
+   "reason": "The bullet still opens with 'Verify' and the 'if it shows \"Android device administrator\"' branch remains, so the reader still compares; 'must show' states the genuine BYOD requirement."
+  },
+  {
+   "file": "l1-runbooks/25-android-compliance-blocked.md",
+   "baseline_line": 185,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "P-09 transitions to \"Compliant\" (expected outcome) OR transitions to \"Not compliant\" with actual failing settings listed",
+   "reason": "'would' was conditional on the second branch, which the sentence still states explicitly, so the routing instruction is unchanged."
+  },
+  {
+   "file": "l1-runbooks/26-android-mgp-app-not-installed.md",
+   "baseline_line": 93,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the app must be licensed to the tenant. Unlicensed paid apps fail to install even if correctly assigned in Intune.",
+   "reason": "States an invariant product behavior that justifies the preceding 'must be licensed'; force unchanged."
+  },
+  {
+   "file": "l1-runbooks/26-android-mgp-app-not-installed.md",
+   "baseline_line": 114,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Device shows **Not Applicable** for an app that is expected to apply based on group membership",
+   "reason": "'is expected to apply' keeps the mismatch between expectation and observed state that makes it an escalation trigger."
+  },
+  {
+   "file": "l1-runbooks/27-android-zte-enrollment-failed.md",
+   "baseline_line": 117,
+   "verdict": "INVERTED",
+   "fix": "2. In Intune admin center, verify device absence: `Devices > All devices` filtered platform = Android—confirm the device is NOT present (if present, this is not Cause B).",
+   "evidence": "(if present, this is not Cause B)",
+   "reason": "The parenthetical explicitly handles the device being present, so the line was an expected-result check; 'device is NOT present' asserts as fact the very thing the step exists to test."
+  },
+  {
+   "file": "l1-runbooks/27-android-zte-enrollment-failed.md",
+   "baseline_line": 210,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Verify:** - Device is removed from KME portal (confirmed by administrator).",
+   "reason": "The Verify block immediately below keeps the check, and that block already states expected outcomes in bare present tense."
+  },
+  {
+   "file": "l1-runbooks/29-android-aosp-enrollment-failed.md",
+   "baseline_line": 150,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Consumer Pico 4 and consumer Neo3 are NOT supported under AOSP",
+   "reason": "Statement of an unsupported SKU; present tense states the same hard fact."
+  },
+  {
+   "file": "l1-runbooks/30-linux-enrollment-failed.md",
+   "baseline_line": 180,
+   "verdict": "INVERTED",
+   "fix": "- After restart: `systemctl --user is-active intune-agent.timer` returns `active`. Confirm the device appears in Intune admin center > Devices > All devices with an updated last-check-in timestamp within approximately 30 minutes.",
+   "evidence": "### Escalation (within Cause C) - \"Timer restarts cleanly but no check-in occurs within 60 minutes\"",
+   "reason": "This sits under **Verify:** and the escalation block handles the not-appearing case, so the expectation must not read as a statement of fact."
+  },
+  {
+   "file": "l1-runbooks/31-linux-compliance-non-compliant.md",
+   "baseline_line": 212,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- Locate the custom-compliance Bash discovery script source by the detection name shown in P-09",
+   "reason": "States why the detail is collected; 'the administrator needs this' carries the same necessity as 'will need this'."
+  },
+  {
+   "file": "l1-runbooks/32-linux-ca-blocking-web-access.md",
+   "baseline_line": 93,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The CA block on web-app access resolves automatically once the device is enrolled and compliant.",
+   "reason": "The 'once ...' clause preserves the conditional future outcome."
+  },
+  {
+   "file": "l1-runbooks/32-linux-ca-blocking-web-access.md",
+   "baseline_line": 128,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Open P-CA-LOG and confirm the most recent block reason is \"device not compliant\"",
+   "reason": "The counterfactual is a routing rule; 'that routes to Cause A' states the same branch as 'would route'."
+  },
+  {
+   "file": "l1-runbooks/32-linux-ca-blocking-web-access.md",
+   "baseline_line": 136,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Once the failing setting is resolved and the device next checks in, the compliance state transitions to \"Compliant\"",
+   "reason": "'Once ... and ... next checks in' keeps the outcome conditional on actions not yet taken."
+  },
+  {
+   "file": "l1-runbooks/33-linux-agent-service-failure.md",
+   "baseline_line": 77,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "L1 documents and hands this packet to the Intune administrator.",
+   "reason": "Conditional branch inside an action list for the administrator; 'must restart that parent unit instead' keeps the same instruction."
+  },
+  {
+   "file": "l1-runbooks/33-linux-agent-service-failure.md",
+   "baseline_line": 84,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "verify the timer with `systemctl --user is-active intune-agent.timer`—expected `active`",
+   "reason": "The bullet sits under a **Verify:** heading whose sibling clause already uses bare expected-value phrasing, so the check is not lost."
+  },
+  {
+   "file": "l1-runbooks/35-macos-sso-sign-in-failure.md",
+   "baseline_line": 82,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "After repair or re-registration completes, ask the user to run `app-sso platform -s` again",
+   "reason": "Describes what the Repair flow does; the following step still directs the technician to verify the result."
+  },
+  {
+   "file": "l1-runbooks/36-macos-secure-enclave-key.md",
+   "baseline_line": 46,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the output typically shows User Registration not in a REGISTERED state, while Device Registration may still show REGISTERED",
+   "reason": "'typically' and 'may still' survive, so the diagnostic expectation is still hedged."
+  },
+  {
+   "file": "l1-runbooks/36-macos-secure-enclave-key.md",
+   "baseline_line": 63,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "After completing MFA, a new Secure Enclave key is provisioned and Platform SSO is restored.",
+   "reason": "Describes the repair flow in the same present tense the rest of the step already uses."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 73,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "5. Once the new password is accepted, the user can log in to their Mac with the new password.",
+   "reason": "Describes the macOS prompt that follows the step; the guidance to pick a memorable password is unchanged in force."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 79,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Proceed immediately to [L1 #36...] for the mandatory PSSO re-registration before closing this ticket.",
+   "reason": "The 'until a new Secure Enclave key is provisioned' clause keeps the consequence, and the mandatory follow-up runbook is called out immediately after."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 103,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "2. > **Say to the user:** \"In the username field, type exactly: [provide the LAPS Account name from Intune]...\"",
+   "reason": "Narrates the result of the preceding login step; no verification branch depends on it."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 117,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "2. > **Say to the user:** \"Please log in with your own account name and the temporary password...\"",
+   "reason": "Describes the macOS forced-change prompt after a LAPS temporary password; same force as 'will prompt'."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 123,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Proceed immediately to [L1 #36...] for the mandatory PSSO re-registration before closing this ticket.",
+   "reason": "Identical PSSO consequence line to Path A; the 'until' clause and the mandatory follow-up preserve the warning."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 137,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- If the user has **no Apple ID associated** with their Mac account—use Path A or Path B instead.",
+   "reason": "The bullet's own 'If the user has no Apple ID' condition governs the clause, so unavailability is not asserted unconditionally."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 150,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "5. Once the new password is accepted, the user can log in to their Mac.",
+   "reason": "Describes the macOS reset flow the user is walked through; force unchanged."
+  },
+  {
+   "file": "l1-runbooks/37-macos-local-password-reset.md",
+   "baseline_line": 158,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Proceed immediately to [L1 #36...] for the mandatory PSSO re-registration before closing this ticket.",
+   "reason": "Same PSSO consequence line as Paths A and B; the mandatory re-registration instruction follows immediately."
+  },
+  {
+   "file": "l1-runbooks/41-8021x-eap-negotiation-failure.md",
+   "baseline_line": 29,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The 802.1X connection attempt fails after a **longer delay** than a certificate rejection produces.",
+   "reason": "\"would produce\" was a generic comparison of two failure timings; present tense states the same contrast."
+  },
+  {
+   "file": "l2-runbooks/01-log-collection.md",
+   "baseline_line": 44,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The output folder `C:\\Temp\\AutopilotDiag` is created if it does not exist.",
+   "reason": "Tool behavior; the if clause keeps the condition."
+  },
+  {
+   "file": "l2-runbooks/02-esp-deep-dive.md",
+   "baseline_line": 83,
+   "verdict": "INVERTED",
+   "fix": "- Policies assigned to user groups (not device groups) showing up in device phase expected list—user-targeted policies should not block the device phase",
+   "evidence": "If a policy in this list is never delivered (targeting error, sync delay, or policy not yet applied server-side), the device phase stalls indefinitely.",
+   "reason": "A 'What to look for' anomaly clause ('are not supposed to block') became a factual claim that user-targeted policies are harmless, contradicting the stall symptom that makes them worth flagging."
+  },
+  {
+   "file": "l2-runbooks/02-esp-deep-dive.md",
+   "baseline_line": 187,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "investigate the policy targeting in Intune",
+   "reason": "States delivery behavior during the device phase; matches the factual framing used elsewhere in the file."
+  },
+  {
+   "file": "l2-runbooks/03-tpm-attestation.md",
+   "baseline_line": 140,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "# Execute after confirming — device WILL reboot",
+   "reason": "The warning still precedes \"Confirm with the user or technician before executing\" and the code block repeats the reboot consequence in capitals."
+  },
+  {
+   "file": "l2-runbooks/04-hybrid-join.md",
+   "baseline_line": 76,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Do not use** the legacy path `Applications and Services Logs > ODJ Connector Service`",
+   "reason": "The prohibition is carried by 'Do not use'; present tense states why, with the same force as 'will return no results'."
+  },
+  {
+   "file": "l2-runbooks/05-policy-conflicts.md",
+   "baseline_line": 77,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "AppLocker CSP configured through Intune causes reboot loops during OOBE and ESP",
+   "reason": "The stated mechanism makes this a hard constraint, and no alternative or preference order is offered, so must does not overstate."
+  },
+  {
+   "file": "l2-runbooks/05-policy-conflicts.md",
+   "baseline_line": 123,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Policy names change between baseline versions.",
+   "reason": "Passive \"should be validated\" became an imperative addressed to the same reader; the obligation is unchanged."
+  },
+  {
+   "file": "l2-runbooks/07-apv2-event-ids.md",
+   "baseline_line": 105,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Event IDs not listed here may appear in the BootstrapperAgent log.",
+   "reason": "The passive recommendation became a direct imperative of the same force."
+  },
+  {
+   "file": "l2-runbooks/11-macos-profile-delivery.md",
+   "baseline_line": 156,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Redeploy and verify status changes to Succeeded.",
+   "reason": "Standard remediation-outcome description; neighbouring scenarios state their outcomes in bare present tense too."
+  },
+  {
+   "file": "l2-runbooks/12-macos-app-install.md",
+   "baseline_line": 121,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the DMG was updated and the `.app` path changed, the detection fails silently.",
+   "reason": "Consequence remains explicitly conditional on the 'If ...' clause."
+  },
+  {
+   "file": "l2-runbooks/12-macos-app-install.md",
+   "baseline_line": 140,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "VPP Available assignment must target a **user group** for the app to appear in Company Portal",
+   "reason": "Categorical failure-scenario statement; the adjacent line still carries the requirement."
+  },
+  {
+   "file": "l2-runbooks/13-macos-compliance.md",
+   "baseline_line": 140,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the Entra device object exists but compliance status has not synced from Intune",
+   "reason": "Describes the CA precondition; present tense keeps the same dependency."
+  },
+  {
+   "file": "l2-runbooks/14-ios-log-collection.md",
+   "baseline_line": 111,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "without it, the upload cannot be matched to this device",
+   "reason": "Describes the role of the incident ID; the warning clause after it is untouched."
+  },
+  {
+   "file": "l2-runbooks/15-ios-ade-token-profile.md",
+   "baseline_line": 112,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Capture this GUID for Pattern C/D debugging",
+   "reason": "Describes what the captured GUID is used for later in the runbook; no obligation or expectation lost."
+  },
+  {
+   "file": "l2-runbooks/15-ios-ade-token-profile.md",
+   "baseline_line": 172,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Destructive action:** Pattern D resolution requires a device wipe. Confirm with the device owner AND organizational policy before proceeding.",
+   "reason": "The warning sits under a Destructive action callout and keeps \"after the wipe unless backed up beforehand\", so the anticipatory force survives."
+  },
+  {
+   "file": "l2-runbooks/17-ios-compliance-ca-timing.md",
+   "baseline_line": 87,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "is it **Not compliant**? If so, devices without an assigned policy ... are blocked by CA",
+   "reason": "The If so conditional is retained; the consequence is CA behavior, not a reader expectation."
+  },
+  {
+   "file": "l2-runbooks/17-ios-compliance-ca-timing.md",
+   "baseline_line": 185,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Do not escalate to Microsoft Support without:**",
+   "reason": "The prohibition carries the force; the trailing clause is the stated consequence either way."
+  },
+  {
+   "file": "l2-runbooks/18-android-log-collection.md",
+   "baseline_line": 31,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**From L1 escalation?** Proceed to the Decision Matrix",
+   "reason": "Future perfect to present perfect in a rhetorical aside; the routing instruction is unchanged."
+  },
+  {
+   "file": "l2-runbooks/18-android-log-collection.md",
+   "baseline_line": 101,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Company Portal may remain installed on the device in a secondary capacity.",
+   "reason": "Recommendation restated as a scoped imperative for the same tenant class; the secondary-capacity hedge survives."
+  },
+  {
+   "file": "l2-runbooks/18-android-log-collection.md",
+   "baseline_line": 123,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **AMAPI April 2025 callout:** Per Phase 37 AMAPI migration",
+   "reason": "Same scoped imperative as the Section 1 note it mirrors."
+  },
+  {
+   "file": "l2-runbooks/18-android-log-collection.md",
+   "baseline_line": 158,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> Verify command availability against current Android Developer docs at `review_by` cadence.",
+   "reason": "Imperative matches the sibling MEDIUM-confidence instruction directly above; audience is the L2 reader throughout."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 51,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Observables to collect:**",
+   "reason": "Under an observables checklist, 'must show ... for a successfully enrolled device' still reads as the criterion to compare against."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 70,
+   "verdict": "STRENGTHENED",
+   "fix": "- **Android (device administrator)**: should be `Block` for new enrollments—Android Device Administrator is deprecated; GMS-mode devices should enroll through Android Enterprise.",
+   "evidence": "Android Device Administrator is deprecated",
+   "reason": "Deprecation supports a recommendation, not a mandate; 'must be Block' would mark a tenant that deliberately still allows DA for legacy devices as misconfigured."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 74,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Check the device limit restriction for the enrolling user's group.",
+   "reason": "General rule about what happens at the cap; present tense is equivalent."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 90,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Check that the Managed Google Play (MGP) binding is active",
+   "reason": "The imperative 'Check that' precedes it, so 'status must show `Active`' remains a check criterion."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 96,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "For ZTE: also check Intune admin center",
+   "reason": "'also check' frames the clause, so 'must show `Active`' is the expected value being verified."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 100,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Check enrollment token expiry and QR code generation timestamp.",
+   "reason": "Same force, but the rewrite broke subject-verb agreement (plural 'QR codes' with singular 'fails'), which invites reading 'an expired token' as the subject."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 213,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Method A (iframe) creates a Fully Managed default that overrides Method B ZT portal configurations",
+   "reason": "Generic conditional rule about a misconfiguration; present tense carries the same consequence."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 214,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Per [KME / ZT device claim mutual exclusion]",
+   "reason": "Description of deterministic system behavior for a device registered in both portals."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 244,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the policy is not assigned, the device enrolls but displays the full Android launcher.",
+   "reason": "The pattern covers a device that has already enrolled, so the group that 'includes' it is not a future-only reference."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 276,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "For per-group restriction overrides: confirm the Entra group containing the affected users is assigned to the correct override restriction.",
+   "reason": "States the standing fallback rule; present tense is equivalent."
+  },
+  {
+   "file": "l2-runbooks/19-android-enrollment-investigation.md",
+   "baseline_line": 278,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "No device factory-reset is required for restriction-only fixes",
+   "reason": "The recommendation became a direct imperative addressed to the administrator, which is the same force."
+  },
+  {
+   "file": "l2-runbooks/20-android-app-install-investigation.md",
+   "baseline_line": 148,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Every update to an LOB APK must be signed with the same certificate as the original upload.",
+   "reason": "States platform behavior that follows from the stated 'must be signed' requirement, which is untouched."
+  },
+  {
+   "file": "l2-runbooks/21-android-compliance-investigation.md",
+   "baseline_line": 159,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "evaluate these Android-specific causes (D-21):",
+   "reason": "The line is one hypothesis in an enumerated cause list, so present tense reads as that cause's diagnostic signature."
+  },
+  {
+   "file": "l2-runbooks/21-android-compliance-investigation.md",
+   "baseline_line": 174,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Do not escalate to Microsoft Support without:**",
+   "reason": "Generic consequence of an incomplete escalation package; the prohibition it supports is untouched."
+  },
+  {
+   "file": "l2-runbooks/21-android-compliance-investigation.md",
+   "baseline_line": 201,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "this is the default-posture variant—administrator must assign a compliance policy",
+   "reason": "The runbook already uses \"administrator must\" for the parallel config-error fix, and the misaligned policy has no alternative remedy."
+  },
+  {
+   "file": "l2-runbooks/22-android-knox-investigation.md",
+   "baseline_line": 54,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Manufacturer** field: must show `Samsung` for any KME-eligible device.",
+   "reason": "\"must show ... for a successfully enrolled KME device\" is still a criterion the reader compares against, matching the sibling observable."
+  },
+  {
+   "file": "l2-runbooks/22-android-knox-investigation.md",
+   "baseline_line": 73,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "An empty Profile column despite administrator assignment attempt indicates KAP cache lag OR administrator assignment never completed",
+   "reason": "The same line explicitly handles the empty case, so the observable is still read as a check rather than an assertion."
+  },
+  {
+   "file": "l2-runbooks/22-android-knox-investigation.md",
+   "baseline_line": 211,
+   "verdict": "INVERTED",
+   "fix": "5. Retry first-boot enrollment. Confirm the device reaches the Knox profile handoff cleanly if KME is canonical, or enters the ZT DPC flow at first boot if ZT is canonical.",
+   "evidence": "**Microsoft Support escalation packet (D-09):** ... capture the post-removal screenshot of the non-canonical portal",
+   "reason": "The final resolution step stated the expected result of a fix; without \"should now\" it asserts the remediation always works and the escalation packet that follows is never reached."
+  },
+  {
+   "file": "l2-runbooks/22-android-knox-investigation.md",
+   "baseline_line": 271,
+   "verdict": "INVERTED",
+   "fix": "4. Re-attempt first-boot enrollment. Confirm the \"Applying configuration...\" screen advances to the Intune DPC handoff cleanly.",
+   "evidence": "**Symptom:** Samsung device hits \"Applying configuration...\" screen and never advances past it",
+   "reason": "Post-remediation expectation turned into a flat claim that the screen advances, removing the verification the escalation packet depends on."
+  },
+  {
+   "file": "l2-runbooks/23-android-aosp-investigation.md",
+   "baseline_line": 56,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**What a missing or wrong-mode device tells you:**",
+   "reason": "\"must show ... for a successfully enrolled AOSP device\" still states an expectation rather than asserting the observed value, and the wrong-value branch is handled immediately below."
+  },
+  {
+   "file": "l2-runbooks/23-android-aosp-investigation.md",
+   "baseline_line": 315,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "if your organization requires Strong integrity, evaluate whether AOSP is the right path for the workload",
+   "reason": "The conditional was retained and the advice became an imperative of the same force."
+  },
+  {
+   "file": "l2-runbooks/27-macos-sso-investigation.md",
+   "baseline_line": 55,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Interpreting the output:** If the output shows either `Device Registration` or `User Registration` is not in the `REGISTERED` state",
+   "reason": "The section explicitly handles the failure outcome, so the line still reads as a criterion the technician checks rather than an assertion that it already holds."
+  },
+  {
+   "file": "l2-runbooks/27-macos-sso-investigation.md",
+   "baseline_line": 124,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The device side cannot detect TLS interception-verification requires the network team to inspect proxy and firewall configuration.",
+   "reason": "Describes standing platform behavior; present tense keeps the same categorical claim."
+  },
+  {
+   "file": "l2-runbooks/27-macos-sso-investigation.md",
+   "baseline_line": 131,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Action:** Contact the network team and confirm that the following endpoint categories are excluded",
+   "reason": "Recast as an imperative to the runbook operator, matching the Action line directly above it."
+  },
+  {
+   "file": "l2-runbooks/27-macos-sso-investigation.md",
+   "baseline_line": 178,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "An AD mobile account typically shows the domain association in its account details.",
+   "reason": "'typically' already carries the hedge, so dropping 'will' changes nothing."
+  },
+  {
+   "file": "l2-runbooks/28-macos-kerberos-sso-investigation.md",
+   "baseline_line": 159,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If this key is absent or set to `<false/>`, the Kerberos extension does not attempt to consume PSSO TGTs.",
+   "reason": "The 'If ...' clause preserves the conditional-consequence force."
+  },
+  {
+   "file": "l2-runbooks/29-macos-graph-credential-investigation.md",
+   "baseline_line": 69,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**If the collection is empty:** The user has no Platform Credential registered in Entra. Possible causes:",
+   "reason": "Describes system behavior under one listed cause; force unchanged."
+  },
+  {
+   "file": "l2-runbooks/29-macos-graph-credential-investigation.md",
+   "baseline_line": 104,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.**",
+   "reason": "The user-visible prompt remains stated as the consequence of the delete described in the same sentence."
+  },
+  {
+   "file": "l2-runbooks/29-macos-graph-credential-investigation.md",
+   "baseline_line": 143,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Expected user experience:**",
+   "reason": "The \"Expected user experience\" label preserves the expectation framing that the modal carried."
+  },
+  {
+   "file": "l2-runbooks/29-macos-graph-credential-investigation.md",
+   "baseline_line": 168,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If Step 1, 2, or 3 returns a `401 Unauthorized` or `403 Forbidden` response, the calling identity lacks the required permission",
+   "reason": "Deterministic API behavior explaining an observed error; present tense is equivalent."
+  },
+  {
+   "file": "l2-runbooks/30-macos-mdm-migration-failure.md",
+   "baseline_line": 77,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "confirm that these endpoints are excluded from inspection",
+   "reason": "The imperative confirm is retained; the rationale is a deterministic failure mode."
+  },
+  {
+   "file": "l2-runbooks/30-macos-mdm-migration-failure.md",
+   "baseline_line": 87,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The lock clears automatically when enrollment succeeds.",
+   "reason": "Wait is retained and the adjacent sentence was already present tense, so the expected self-recovery still reads as something to wait for."
+  },
+  {
+   "file": "l2-runbooks/30-macos-mdm-migration-failure.md",
+   "baseline_line": 118,
+   "verdict": "INVERTED",
+   "fix": "After a B1 in-place migration, the Kandji (Iru) agent is expected to self-remove at its next 15-minute check-in following the Delete Device Record action in Kandji/Iru. If the Delete Device Record step was skipped or the agent did not receive the removal command before the ABM migration proceeded, the agent may still be present and can interfere with Intune enrollment by presenting stale MDM certificates.",
+   "evidence": "### Step 1: Check for leftover source-MDM agent artifacts ... the agent may still be present and can interfere with Intune enrollment",
+   "reason": "The step exists precisely to check whether removal happened and the next clause handles the other outcome, so asserting the agent self-removes turns the expectation into a fact and undercuts the check."
+  },
+  {
+   "file": "l2-runbooks/30-macos-mdm-migration-failure.md",
+   "baseline_line": 183,
+   "verdict": "STRENGTHENED",
+   "fix": "If the device is running macOS 25 or earlier, it received the ABM deadline prompt but cannot complete B1 in-place enrollment. The device needs the B2 path (wipe-and-re-enroll through Intune ADE after a wipe). In the interim, the ABM administrator should cancel the migration deadline for this device (Track A Recovery Option B-pre-lockout cancellation) and route it to the B2 fallback path.",
+   "evidence": "**Note:** The following steps describe ABM administrator recovery at MEDIUM confidence. ... The exact ABM UI navigation for a device currently in the locked enrollment state is not confirmed in a single authoritative source.",
+   "reason": "The cross-referenced Recovery Option B is explicitly MEDIUM-confidence with unverified steps, so mandating it as must overstates what the runbook supports."
+  },
+  {
+   "file": "l2-runbooks/31-8021x-log-collection.md",
+   "baseline_line": 107,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**NOTE:** Before collecting this log, confirm the Wired AutoConfig service (`dot3svc`) is running on the device.",
+   "reason": "Conditional consequence under 'If dot3svc is not running'; the confirm instruction that precedes it is untouched."
+  },
+  {
+   "file": "l2-runbooks/31-8021x-log-collection.md",
+   "baseline_line": 371,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Interpretation:** Collect both journals together.",
+   "reason": "'should be collected' became a direct imperative, which is equal or stronger, not weaker."
+  },
+  {
+   "file": "l2-runbooks/32-8021x-cert-investigation.md",
+   "baseline_line": 180,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- `Extended Key Usage`—must include `TLS Web Client Authentication`",
+   "reason": "The requirement is stated in the parent bullet; the dropped-modal clause is the consequence of failing it."
+  },
+  {
+   "file": "l2-runbooks/33-8021x-radius-eap-investigation.md",
+   "baseline_line": 290,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Check whether a user-visible trust prompt appeared on the device during the connection attempt.",
+   "reason": "The imperative Check keeps the verification, and the same sentence still handles the unexpected-prompt outcome."
+  },
+  {
+   "file": "l2-runbooks/33-8021x-radius-eap-investigation.md",
+   "baseline_line": 416,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If this field is empty (`--`), the supplicant skips server name verification, which is a misconfiguration",
+   "reason": "The doc already labels an empty field a misconfiguration, so the field was a requirement before the swap."
+  },
+  {
+   "file": "l2-runbooks/33-8021x-radius-eap-investigation.md",
+   "baseline_line": 419,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the file is missing or empty, the supplicant cannot validate the RADIUS server certificate chain.",
+   "reason": "Parallel required field, and the following verification step confirms the requirement force was already there."
+  },
+  {
+   "file": "lifecycle-apv2/01-prerequisites.md",
+   "baseline_line": 25,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If any prerequisite is missing, the deployment fails silently or produces unclear errors",
+   "reason": "Consequence sits inside an explicit \"If any prerequisite is missing\" conditional; present tense is equivalent."
+  },
+  {
+   "file": "lifecycle-apv2/01-prerequisites.md",
+   "baseline_line": 27,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> precedence over this APv2 policy—silently. Complete prerequisite 0 before any other step.",
+   "reason": "Warning retains its conditional and its imperative remedy line, so the anticipated consequence still reads as one."
+  },
+  {
+   "file": "lifecycle-apv2/01-prerequisites.md",
+   "baseline_line": 89,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **What happens if missing:** Administrator cannot create or assign Device Preparation policies.",
+   "reason": "The \"What happens if missing\" heading supplies the conditional; the rest of the bullet was already present tense."
+  },
+  {
+   "file": "lifecycle-apv2/02-deployment-flow.md",
+   "baseline_line": 68,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Key detail:** APv2 requires Windows 11, version 22H2 with KB5035942 or later.",
+   "reason": "The consequence stays inside its 'If the device runs Windows 10 or an unsupported Windows 11 version' conditional."
+  },
+  {
+   "file": "lifecycle-apv2/02-deployment-flow.md",
+   "baseline_line": 124,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Failure here fails the deployment.**",
+   "reason": "Describes deterministic system behavior; the bolded consequence sentence is preserved verbatim."
+  },
+  {
+   "file": "lifecycle-apv2/02-deployment-flow.md",
+   "baseline_line": 163,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Only app and script installations are tracked and can cause deployment failure.",
+   "reason": "Restates the tracking gap already asserted in the preceding paragraph; 'is not reflected' is the same fact."
+  },
+  {
+   "file": "lifecycle/01-hardware-hash.md",
+   "baseline_line": 116,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Hardware hash must be captured from the final hardware configuration",
+   "reason": "The must is retained; the trailing clause states a deterministic mismatch."
+  },
+  {
+   "file": "lifecycle/02-profile-assignment.md",
+   "baseline_line": 29,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Depends on:** Hardware Hash Import (Stage 1)—device must be registered in the Autopilot service.",
+   "reason": "Describes deterministic OOBE behavior for an unassigned device."
+  },
+  {
+   "file": "lifecycle/02-profile-assignment.md",
+   "baseline_line": 88,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Both endpoints must be reachable.",
+   "reason": "The consequence is explicitly conditional on the device failing to reach the ZTD service."
+  },
+  {
+   "file": "lifecycle/02-profile-assignment.md",
+   "baseline_line": 130,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This is an infrastructure dependency, not a profile configuration issue.",
+   "reason": "The failure is stated conditionally on the ODJ Connector or DC being unreachable, so the warning force survives."
+  },
+  {
+   "file": "lifecycle/03-oobe.md",
+   "baseline_line": 183,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Hybrid join (Azure AD + on-premises AD) requires the device to reach a domain controller during OOBE",
+   "reason": "Follows a stated hard requirement, so \"Devices on isolated network segments or guest Wi-Fi fail\" reads as the same consequence."
+  },
+  {
+   "file": "lifecycle/04-esp.md",
+   "baseline_line": 169,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Audit app assignments against the preceding app type tracking table before deployment.",
+   "reason": "Failure-mode description in a Watch Out For list; the remedial imperative follows in the same bullet."
+  },
+  {
+   "file": "lifecycle/05-post-enrollment.md",
+   "baseline_line": 89,
+   "verdict": "INVERTED",
+   "fix": "> - **ZTDID verification:** Confirm the [ZTDID](../_glossary.md#ztdid) embedded in the device's registry matches the Autopilot registration record in Graph.",
+   "evidence": "> Mismatches indicate re-imaging without cleanup. `Get-AutopilotRegistrationState` surfaces this value locally.",
+   "reason": "The bullet is labelled 'ZTDID verification' and the next line handles the mismatch case, so 'should match' was a check; 'matches' asserts it and the L2 reader stops verifying."
+  },
+  {
+   "file": "lifecycle/05-post-enrollment.md",
+   "baseline_line": 129,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Treat \"Not evaluated\" as a waiting state, not a problem state.",
+   "reason": "Describes normal post-enrollment behavior, and the follow-up 'If it persists beyond 1 hour' keeps the diagnostic branch."
+  },
+  {
+   "file": "lifecycle/05-post-enrollment.md",
+   "baseline_line": 133,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the new enrollment creates a second device record",
+   "reason": "Both 'will' clauses describe the resulting record state under the stated re-imaging condition."
+  },
+  {
+   "file": "linux-lifecycle/00-enrollment-overview.md",
+   "baseline_line": 93,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "There is no API, MDM payload, or compliance setting that distinguishes a BYOD Linux device from a corporate-owned Linux device in Intune.",
+   "reason": "The platform offers no alternative, so 'must treat all Linux enrollments as a single ownership category' matches the stated fact."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 117,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Contact the reseller to establish the ABM relationship",
+   "reason": "Watch Out For entry describing an invariant, with the remedy stated in the same bullet."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 118,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "until the transfer is completed by the reseller",
+   "reason": "The \"until\" clause keeps the future framing; only tense changed."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 143,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "until the token is renewed",
+   "reason": "Behind the Scenes fact about a lapsed token; force unchanged."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 145,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Each ADE token in Intune corresponds to exactly one MDM server in ABM.",
+   "reason": "Structural fact, present tense matches the sentence it continues."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 190,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Profile assignment must occur before the device is powered on for the first time",
+   "reason": "Consequence of missing the deadline; the requirement in the same bullet still carries the force."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 203,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The fix is to wipe the device, assign the profile, and then re-image.",
+   "reason": "Failure-mode description with its remedy; present tense is equally definite."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 303,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Review the enrollment profile settings in Stage 3 if users report missing configurations",
+   "reason": "The bullet title still names a conditional mismatch scenario (\"disabled when it must be enabled\"), and the diagnostic advice after it is unchanged."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 327,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "is enrolled in Intune (MDM management is active) but is not registered with Entra ID",
+   "reason": "Describes how CA policies behave for an unregistered device; no verification step lost."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 379,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the device may be marked non-compliant after reaching the desktop",
+   "reason": "The hedge that matters (\"may be marked non-compliant\") is untouched; the prompt statement is a plain consequence."
+  },
+  {
+   "file": "macos-lifecycle/00-ade-lifecycle.md",
+   "baseline_line": 381,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Warn users and helpdesk staff that MDM password reset actions require a follow-up PSSO re-registration step",
+   "reason": "The instruction to warn is intact and the required follow-up step is still stated as mandatory."
+  },
+  {
+   "file": "macos-lifecycle/01-psso-provisioning-walkthrough.md",
+   "baseline_line": 200,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Tap \"Try Again\"—this is expected when Company Portal is still installing.",
+   "reason": "The Watch Out For section prescribes the same recovery action, so \"must tap\" matches the document's own instruction."
+  },
+  {
+   "file": "macos-lifecycle/01-psso-provisioning-walkthrough.md",
+   "baseline_line": 233,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "For A2 devices (macOS 26+ with `EnableRegistrationDuringSetup`), PSSO registration occurs inside Setup Assistant at this stage.",
+   "reason": "Describes what a configuration flag directs the extension to do; the surrounding text states that behavior as deterministic."
+  },
+  {
+   "file": "macos-lifecycle/01-psso-provisioning-walkthrough.md",
+   "baseline_line": 265,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the PSSO Settings Catalog policy is not in the \"Awaiting final configuration\" delivery set",
+   "reason": "Consequence inside an explicit conditional; \"until the policy arrives\" preserves the timing."
+  },
+  {
+   "file": "macos-lifecycle/01-psso-provisioning-walkthrough.md",
+   "baseline_line": 349,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "`security find-certificate` returns false negatives for Secure Enclave-stored keys.",
+   "reason": "Deterministic tool behavior stated in present tense elsewhere in the same file."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 127,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The macOS 26 OS gate is a hard gate enforced by Apple.",
+   "reason": "Describes a platform gate that is permanently true, not a future event the reader must anticipate."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 128,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "receive the enrollment profile during their next Setup Assistant (after wipe)",
+   "reason": "'during their next Setup Assistant' carries the futurity; the contrast with the in-place flow is intact."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 132,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If a device is running macOS 25 or earlier and receives the deadline, the device displays the non-dismissible lock screen at the deadline",
+   "reason": "Conditional consequence inside an if-clause; 'at the deadline' preserves the future timing."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 189,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Until this occurs, the agent may attempt to contact the Kandji/Iru servers",
+   "reason": "'Until this occurs' anchors the sequence, so the present-tense agent removal still reads as a pending event."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 194,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the ADE enrollment policy is not assigned to the device serial number in Intune before the device attempts re-enrollment",
+   "reason": "Conditional failure mode in a Watch Out For list; the recovery instruction after it is unchanged."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 233,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This is the primary cause of Track A lockout scenarios in L2 #30.",
+   "reason": "Conditional consequence in a Watch Out For bullet; the warning force is unchanged."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 294,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The notification cadence is fixed by Apple and cannot be customized.",
+   "reason": "Describes a fixed, Apple-controlled cadence, so present tense states the same mechanism."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 300,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Ensure Intune readiness (Stage 3) is complete before the first notification appears on devices.",
+   "reason": "Conditional failure with the preventive imperative retained in the same bullet."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 327,
+   "verdict": "STRENGTHENED",
+   "fix": "- The \"Change Deadline → remove deadline\" path in ABM (before lockout) is the cleanest recovery path and is the preferred first action when enrollment issues are identified.",
+   "evidence": "**Before lockout (preferred):** In ABM, navigate to the device and select **Change Deadline → remove deadline** ... **After lockout:** Fix the Intune-side enrollment issue",
+   "reason": "The document labels this path 'preferred' and 'cleanest' among two branches and it is unavailable after lockout, so 'must be the first action' turns a preference order into a mandate."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 332,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Verify network connectivity to required Intune and Apple endpoints before deadlines are set.",
+   "reason": "Conditional consequence 'at deadline time'; the preventive imperative that follows is unchanged."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 352,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "MEDIUM confidence is correct and must not be upgraded to a flat assertion.",
+   "reason": "'should be re-granted' became 'is expected to be re-granted', which keeps the hedge the paragraph explicitly demands."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 374,
+   "verdict": "INVERTED",
+   "fix": "In the **Intune admin center**, navigate to **Devices > macOS > [device name] > Recovery Keys**. After migration and enrollment, Intune's FileVault escrow policy generates and escrows a new FileVault recovery key for the device. Confirm the recovery key appears in the Intune admin center after the first FileVault escrow policy enforcement cycle.",
+   "evidence": "**FileVault escrow policy not assigned.** If Intune's FileVault escrow Settings Catalog policy is not assigned to the device (or its target group), no new key is generated and escrowed.",
+   "reason": "The stage's own 'Verify key availability' step and a Watch Out For bullet handle the key NOT appearing, so 'should appear' was a check the admin performs, not a guaranteed outcome."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 391,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Rely on the Intune-escrowed key going forward.",
+   "reason": "The bullet's next sentence is already a flat directive and no alternative key is offered, so must-be-treated-as-deprecated matches the existing instruction."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 392,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Confirm the FileVault escrow policy is part of the Intune readiness setup (Stage 2) for all migration targets.",
+   "reason": "Conditional consequence with the corrective imperative retained; nothing became optional."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 426,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Train users to complete this step immediately after migration.",
+   "reason": "States the consequence of skipping registration as a present condition, and the corrective imperative closes the bullet."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 427,
+   "verdict": "INVERTED",
+   "fix": "- **MFA not completed.** If the user starts the registration flow but abandons it before MFA completes, the Secure Enclave key is not written. Registration remains incomplete. The notification is expected to reappear at the next check-in.",
+   "evidence": "**\"Registration Required\" not appearing.** ... If the notification is absent and the policy shows as delivered, wait one MDM check-in cycle (typically 8 hours).",
+   "reason": "The very next bullet is the troubleshooting path for the notification not coming back, so the reappearance was an expectation to watch for, not guaranteed behavior."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 464,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This path requires a full device wipe.",
+   "reason": "Describes the shape of the B2 path generally; the preceding sentence already states the wipe requirement."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 490,
+   "verdict": "INVERTED",
+   "fix": "2. Proceed with the B2 retire/wipe/re-enroll path. Communicate to the device's user that the device will be wiped and must go through Setup Assistant to re-enroll with Intune.",
+   "evidence": "3. Schedule the wipe during a maintenance window or coordinate with the user for a convenient time",
+   "reason": "The wipe is still being scheduled in the next step, so 'the device is wiped' states an unperformed future action as an accomplished fact in a message the admin sends to the user."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 491,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the user must reconfigure personal settings and access resources after re-enrollment",
+   "reason": "'will need to' became 'must', which keeps the obligation and its 'after re-enrollment' timing."
+  },
+  {
+   "file": "macos-lifecycle/02-mdm-migration-psso.md",
+   "baseline_line": 521,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. The device contacts ABM during Setup Assistant to determine its MDM assignment",
+   "reason": "Numbered sequence of what happens during the wipe flow; present tense matches steps 1 and 2 of the same list."
+  },
+  {
+   "file": "operations/app-lifecycle/00-overview.md",
+   "baseline_line": 171,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Treat any deployment as a forward-only action by default; rollback is the exception.",
+   "reason": "The clause is governed by the imperative 'Treat any deployment as a forward-only action by default', which still carries the normative force."
+  },
+  {
+   "file": "operations/app-lifecycle/00-overview.md",
+   "baseline_line": 189,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Planning a fleet-wide rollout**—The Cross-Platform Planning Considerations section",
+   "reason": "'decisions to make once at the top of a rollout' is the same obligation as 'that should be made'."
+  },
+  {
+   "file": "operations/app-lifecycle/01-windows-win32-msix-scale.md",
+   "baseline_line": 68,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Supersedence auto-update only applies to apps assigned with **Available for enrolled devices** intent.",
+   "reason": "Describes a documented product limitation; the following sentence still states the required manual remedy."
+  },
+  {
+   "file": "operations/app-lifecycle/01-windows-win32-msix-scale.md",
+   "baseline_line": 202,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "All MSIX packages must be signed (Developer ID certificate)",
+   "reason": "The requirement is still carried by 'must be signed'; the consequence clause is plain behavior."
+  },
+  {
+   "file": "operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+   "baseline_line": 176,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**does not endorse them as a supported delivery path**",
+   "reason": "Rewritten as a conditional imperative; the 'If you choose this path' clause preserves the hedge that this path is optional."
+  },
+  {
+   "file": "operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+   "baseline_line": 178,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Both projects are community-maintained on GitHub and are **NOT Microsoft-supported**.",
+   "reason": "States a standing support-policy fact already asserted as 'NOT Microsoft-supported' two sentences earlier."
+  },
+  {
+   "file": "operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+   "baseline_line": 189,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Default to the Microsoft-supported paths when feasible and treat Installomator / Intuneomator as supplementary automation tooling",
+   "reason": "The 'when feasible' hedge and the 'supplementary automation tooling' allowance are retained, so the recommendation stays a preference, not a rule."
+  },
+  {
+   "file": "operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+   "baseline_line": 192,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "non-Microsoft-supported attribution is load-bearing",
+   "reason": "Support-policy fact, identical in force to the 'does not assist' sentence in the same callout."
+  },
+  {
+   "file": "operations/app-lifecycle/03-ios-vpp-licensing.md",
+   "baseline_line": 69,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Removing the assignment is a prerequisite to revoking the license",
+   "reason": "Describes a fixed product constraint; the prerequisite framing in the same sentence keeps the force."
+  },
+  {
+   "file": "operations/app-lifecycle/04-android-mgp-lifecycle.md",
+   "baseline_line": 39,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "MGP supports two private-publishing paths",
+   "reason": "The clause defines a category of apps by an organizational constraint rather than advising the reader, and the document already uses 'must' in this register."
+  },
+  {
+   "file": "operations/app-lifecycle/04-android-mgp-lifecycle.md",
+   "baseline_line": 113,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Verify by checking the Intune device-app inventory",
+   "reason": "The sentence still opens with 'Verify by checking', so the parenthetical reads as the pass criterion rather than an assertion that stops the check."
+  },
+  {
+   "file": "operations/co-management/00-overview.md",
+   "baseline_line": 115,
+   "verdict": "STRENGTHENED",
+   "fix": "tenants on CB 2203—CB 2403 (deprecated but still configurable), Resource Access policies should",
+   "evidence": "Tenants upgrading to CB 2403 have this workload moved automatically",
+   "reason": "Advance migration is advisory because the CB 2403 upgrade moves the workload automatically; 'must' invents an obligation the doc does not impose."
+  },
+  {
+   "file": "operations/co-management/02-windows-workload-sliders.md",
+   "baseline_line": 97,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Starting in CB 2403, the Resource Access node is removed from the ConfigMgr console and the slider is moved automatically.",
+   "reason": "The surrounding text documents a mandated migration, so must matches the stated deprecation rather than inventing a requirement."
+  },
+  {
+   "file": "operations/drift-migration/00-overview.md",
+   "baseline_line": 141,
+   "verdict": "STRENGTHENED",
+   "fix": "  check-in cadence varies by device state. A unified fleet dashboard should account for",
+   "evidence": "several considerations cut across all four platforms and benefit from being addressed at the program level",
+   "reason": "Program-level design advice in a 'Considerations' list became a requirement on a dashboard the doc does not govern."
+  },
+  {
+   "file": "operations/drift-migration/00-overview.md",
+   "baseline_line": 173,
+   "verdict": "STRENGTHENED",
+   "fix": "  highlights signal latency, remediation scope, and drift recurrence patterns that should be",
+   "evidence": "Use this overview document when:",
+   "reason": "Advisory 'when to read this' guidance became a precondition ('must be understood') on consulting per-platform runbooks."
+  },
+  {
+   "file": "operations/drift-migration/01-windows-drift-detection.md",
+   "baseline_line": 52,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Remediation script**—Runs only when the detection script returned `exit 1`.",
+   "reason": "Describes the fixed exit-code contract, restated in bare present tense two bullets later."
+  },
+  {
+   "file": "operations/drift-migration/01-windows-drift-detection.md",
+   "baseline_line": 104,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- `exit 0`—Device is compliant; reported as `No issues detected`. The remediation script does NOT run.",
+   "reason": "Sibling exit-code bullet already uses bare present tense for the same contract."
+  },
+  {
+   "file": "operations/drift-migration/01-windows-drift-detection.md",
+   "baseline_line": 105,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- Any other exit code (or unhandled exception)—Reported as `Error`.",
+   "reason": "Platform reporting behavior, stated in the same tense as the neighbouring outcomes."
+  },
+  {
+   "file": "operations/drift-migration/01-windows-drift-detection.md",
+   "baseline_line": 174,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The portal per-device status report shows summary status only.",
+   "reason": "Restates a fact the section already asserts in present tense."
+  },
+  {
+   "file": "operations/drift-migration/01-windows-drift-detection.md",
+   "baseline_line": 181,
+   "verdict": "STRENGTHENED",
+   "fix": "  detection scripts under 30 seconds; remediations may take longer but should fail fast on",
+   "evidence": "- **Signed scripts in production**—SHA256-signed PowerShell scripts are recommended;",
+   "reason": "This authoring-guidelines list deliberately mixes registers (an enforced cap, 'may', 'are recommended'); nothing enforces fail-fast, so 'must fail fast' promotes advice to a requirement."
+  },
+  {
+   "file": "operations/drift-migration/02-macos-drift-detection.md",
+   "baseline_line": 37,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Profile revocation**—When the MDM-pushed configuration profile is removed by the user",
+   "reason": "'classes to monitor' preserves the same instruction to monitor all three signal classes."
+  },
+  {
+   "file": "operations/drift-migration/03-ios-android-drift-detection.md",
+   "baseline_line": 38,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Two iOS-side compliance drift signal classes to monitor:",
+   "reason": "A list lead-in whose force is unchanged; the two signal classes are still presented as things to watch."
+  },
+  {
+   "file": "operations/drift-migration/04-tenant-migration-runbook.md",
+   "baseline_line": 177,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "If the recovery key is absent or stale (protector ID from the source tenant only), re-run",
+   "reason": "The step still opens with 'Confirm that ...', so 'must match' reads as the acceptance criterion for that check, not a new mandate."
+  },
+  {
+   "file": "operations/drift-migration/04-tenant-migration-runbook.md",
+   "baseline_line": 282,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Plan the disconnect timing to coincide with the device",
+   "reason": "'upon disconnect' keeps the consequence explicitly tied to the not-yet-taken action."
+  },
+  {
+   "file": "operations/drift-migration/04-tenant-migration-runbook.md",
+   "baseline_line": 339,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Verify the work profile (BYOD) or fully-managed surface (corporate-owned) is bound to the",
+   "reason": "The bullet opens with 'Verify', so 'must show' is the acceptance criterion of that verification."
+  },
+  {
+   "file": "operations/drift-migration/04-tenant-migration-runbook.md",
+   "baseline_line": 380,
+   "verdict": "STRENGTHENED",
+   "fix": "  should not expect any iOS-side encryption-key handling. The compliance signal (`isEncrypted`)",
+   "evidence": "This section is **educational and comparative**",
+   "reason": "In an explicitly educational, non-prescriptive section, expectation-setting advice became a prohibition on the reader ('must not expect')."
+  },
+  {
+   "file": "operations/drift-migration/04-tenant-migration-runbook.md",
+   "baseline_line": 382,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Test compliance policy behavior with each OEM model in use.",
+   "reason": "Recommendation restated as an imperative, matching the imperative sibling sentence in the same bullet."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 110,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Confirm Autopatch ring assignments through Intune > Devices > Windows Autopatch > Devices.",
+   "reason": "The step leads with \"Confirm\" and \"must appear\" still states an expected state rather than asserting the observed one."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 160,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Failing to re-baseline reboot-based alerting after this guide's May 2026 cutover framing takes effect causes false-quiet alarms",
+   "reason": "The need to re-baseline is restated as a hard consequence two lines later, so present tense loses nothing."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 162,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Failing to re-baseline reboot-based alerting ... causes false-quiet alarms (no monthly reboot signal does not mean devices are unpatched",
+   "reason": "The paragraph names a concrete failure for not distinguishing the two signals, so \"you must distinguish\" matches the document's own stakes."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 181,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**This is NOT a ring**—neither a WUfB deployment ring nor an Autopatch ring.",
+   "reason": "Describes a fixed product limitation; present tense states the same thing."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 182,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A driver/firmware policy does not honor any WUfB deployment ring deferral",
+   "reason": "Parallel clause of the same product-limitation sentence; force unchanged."
+  },
+  {
+   "file": "operations/patch-management/01-windows-wufb-rings.md",
+   "baseline_line": 210,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. **(Deprecated)** Use Group Policy to disable dual-scan during the transition",
+   "reason": "The modal governs a caution about a deprecated workaround (keep it transitional), not the choice among the four mitigation options, so \"must\" matches the warning's intent."
+  },
+  {
+   "file": "operations/patch-management/02-macos-update-enforcement.md",
+   "baseline_line": 75,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Tenants must migrate to DDM \"Software Update Enforce Latest\" before Apple OS 26 ships.",
+   "reason": "The migration is already mandated elsewhere in the same document, so 'must plan to retire' adds no obligation."
+  },
+  {
+   "file": "operations/patch-management/02-macos-update-enforcement.md",
+   "baseline_line": 151,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Critical scheduling note:** Migration MUST complete before Apple OS 27.0 ships.",
+   "reason": "Consequence stays gated by 'upgrading to Apple OS 27.0 with legacy command profiles still attached'; note the rewrite broke subject-verb agreement ('Devices ... loses')."
+  },
+  {
+   "file": "operations/patch-management/02-macos-update-enforcement.md",
+   "baseline_line": 153,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "because Intune cannot detect that the MDM command was ignored by the OS",
+   "reason": "Describes ongoing Intune reporting behavior; the silent-failure warning is intact."
+  },
+  {
+   "file": "operations/patch-management/03-ios-update-lifecycle.md",
+   "baseline_line": 112,
+   "verdict": "STRENGTHENED",
+   "fix": "update enforcement should standardize on DDM regardless of supervision state. Legacy MDM",
+   "evidence": "`ScheduleOSUpdate` (the pre-DDM enforcement primitive) is being deprecated and may be removed in future iOS releases.",
+   "reason": "A forward-compatibility recommendation became a mandate even though the legacy alternative still works and is only \"being deprecated\"."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 78,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Devices not returning MEETS_STRONG_INTEGRITY [HARD-DEADLINE—see Deadlines H2] post Oct 31 2026",
+   "reason": "The sentence carries its own \"post Oct 31 2026\" time marker, so the future consequence stays explicit."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 83,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The older SafetyNet attestation API was deprecated by Google in January 2025 and no longer appears in current Intune Android compliance blade options.",
+   "reason": "The alternative has already been removed from the product, so migration was never optional and \"must\" matches."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 111,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Stage 1—Google enforcement (May 2025):** Google's Play Integrity API began returning",
+   "reason": "\"could query\" described an available capability that remains available; the discretionary contrast (\"enforcement remained tenant-discretionary\") is untouched."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 121,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Devices failing the verdict post-deadline cannot pass Intune compliance",
+   "reason": "\"post-deadline\" carries the futurity and the paired \"cannot pass\" is unchanged."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 134,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Critical scheduling note:** The October 31 2026 [HARD-DEADLINE—see Deadlines H2] is fleet-wide.",
+   "reason": "The obligation derives from a hard fleet-wide deadline with no alternative path offered, so \"must plan\" does not overstate."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 171,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "the Q-to-Q gap means a missed quarterly release can slip the 12-month window—schedule LifeGuard campaigns conservatively against the Oct 31 2026 deadline.",
+   "reason": "A validation directive under a hard deadline, already paired with a bare imperative in the same paragraph."
+  },
+  {
+   "file": "operations/patch-management/04-android-patch-delivery.md",
+   "baseline_line": 206,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Samsung KSP can force update windows but cannot accelerate Samsung's underlying quarterly release schedule.",
+   "reason": "The audit is the only available control for mid-tier devices against a hard deadline, so \"must be audited\" keeps the force."
+  },
+  {
+   "file": "operations/patch-management/05-linux-update-delivery.md",
+   "baseline_line": 35,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "The RHEL equivalents are deliberately out of scope here because no first-party Intune source documents them.",
+   "reason": "A scope disclaimer with no alternative reading offered; must and should carry the same instruction to the RHEL reader."
+  },
+  {
+   "file": "operations/patch-management/05-linux-update-delivery.md",
+   "baseline_line": 145,
+   "verdict": "WEAKENED",
+   "fix": "script does not run at all-an update script targeted at unattended or shared Ubuntu machines will",
+   "evidence": "a User-context script does not run at all-an update script ... appear healthy in the admin center while doing nothing",
+   "reason": "Dropping \"will\" left \"an update script ... appear healthy\", which no longer agrees with its subject and reads as the machines appearing healthy, blunting the silent-no-op consequence."
+  },
+  {
+   "file": "operations/patch-management/05-linux-update-delivery.md",
+   "baseline_line": 165,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "This guide deliberately ships no runnable package-upgrade script body",
+   "reason": "Self-referential editorial rule already enacted by the sentence before it; force unchanged."
+  },
+  {
+   "file": "operations/patch-management/05-linux-update-delivery.md",
+   "baseline_line": 210,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Three entries are commented out by default**",
+   "reason": "States a default-configuration fact; present tense is if anything more accurate."
+  },
+  {
+   "file": "operations/patch-management/05-linux-update-delivery.md",
+   "baseline_line": 370,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "They can't check for system-level settings that require elevation.",
+   "reason": "Consequence of a documented platform constraint; certainty unchanged."
+  },
+  {
+   "file": "operations/patch-management/06-windows-driver-firmware-updates.md",
+   "baseline_line": 96,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "treat an unmet prerequisite as a probable silent no-op and verify against the reports rather than assuming policy creation blocks",
+   "reason": "The whole point is that the reader must not assume blocking; the instruction to verify is intact."
+  },
+  {
+   "file": "operations/patch-management/06-windows-driver-firmware-updates.md",
+   "baseline_line": 634,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "In the Group Policy editor the setting is named differently",
+   "reason": "States a naming divergence that holds now; nothing conditional was lost."
+  },
+  {
+   "file": "operations/patch-management/06-windows-driver-firmware-updates.md",
+   "baseline_line": 744,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Computer Hardware ID targeting is not enforced.**",
+   "reason": "The bold lead-in already asserts non-enforcement as fact, so present tense matches."
+  },
+  {
+   "file": "quick-ref-l1.md",
+   "baseline_line": 75,
+   "verdict": "INVERTED",
+   "fix": "1. **Device Preparation experience appeared?** -- After OOBE sign-in, confirm the deployment experience screen launched automatically. If the desktop appeared instead, the device may not be targeted by a Device Preparation policy.",
+   "evidence": "If the desktop appeared instead, the device may not be targeted by a Device Preparation policy.",
+   "reason": "Under \"Top 3 Checks\" with the other outcome handled in the next clause, the original was an expectation to verify, not a description of what the screen does."
+  },
+  {
+   "file": "quick-ref-l1.md",
+   "baseline_line": 76,
+   "verdict": "INVERTED",
+   "fix": "2. **Apps and scripts installing?** -- During the deployment experience, confirm apps and scripts show progress. If items show as \"Failed\" or \"Skipped,\" check the Device Preparation policy configuration in Intune.",
+   "evidence": "If items show as \"Failed\" or \"Skipped,\" check the Device Preparation policy configuration in Intune.",
+   "reason": "Same check pattern: the failure branch in the same bullet proves the clause was an expectation the L1 worker confirms."
+  },
+  {
+   "file": "recipes/01-shared-windows-avd-client.md",
+   "baseline_line": 31,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "- **Licensing:** target users already hold the Azure Virtual Desktop / Windows 365 entitlement",
+   "reason": "Descriptive relative clause identifying the host pool; the prerequisite force is unchanged."
+  },
+  {
+   "file": "recipes/04-android-dedicated-mhs-multi-app.md",
+   "baseline_line": 98,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "on Dedicated devices, only apps assigned Required actually install",
+   "reason": "The requirement modal \"must already be installed\" is intact; only the relative clause moved from future to present."
+  },
+  {
+   "file": "reference/apv1-apv2-migration.md",
+   "baseline_line": 52,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Each of the following items must be checked before moving a device category to APv2. An unchecked item is a **blocker**",
+   "reason": "Checklist items are confirmable states throughout the list and the header supplies the obligation, so 'is removed' fits the pattern."
+  },
+  {
+   "file": "reference/ca-enrollment-timing.md",
+   "baseline_line": 82,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**What breaks if misconfigured:** Same enrollment loop as Scenario 1.",
+   "reason": "Sits inside a 'what breaks if misconfigured' scenario, so the consequence stays conditional on the misconfiguration."
+  },
+  {
+   "file": "reference/ca-enrollment-timing.md",
+   "baseline_line": 104,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "3. Add **\"Microsoft Intune Enrollment\"** and **\"Microsoft Intune\"** to the exclusion list.",
+   "reason": "The numbered fix already instructs adding both app IDs, so 'must be excluded' restates the procedure's own requirement without foreclosing an offered alternative."
+  },
+  {
+   "file": "reference/compliance-timing.md",
+   "baseline_line": 62,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Policy evaluated and the device passes all requirements. This is the healthy state.",
+   "reason": "Describes the Compliant state's effect on Conditional Access; present tense is equivalent."
+  },
+  {
+   "file": "reference/deployment-reporting.md",
+   "baseline_line": 60,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "Administrator looks at APv1 report location for APv2 devices—sees no data.",
+   "reason": "Consequence stays inside its 'If you check this report for APv2 devices' conditional, and the parallel callout already uses bare present tense."
+  },
+  {
+   "file": "reference/gpo-to-intune.md",
+   "baseline_line": 42,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "XML files must use Unicode encoding—ANSI-encoded exports fail to import into GPA",
+   "reason": "The prerequisites already state the encoding as a hard requirement and the step still says Verify/check, so the check action survives."
+  },
+  {
+   "file": "reference/gpo-to-intune.md",
+   "baseline_line": 107,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "## \"Do Not Migrate\" List",
+   "reason": "The heading itself is a prohibition and every table row gives a replacement, so must-not matches the section's stated intent."
+  },
+  {
+   "file": "reference/gpo-to-intune.md",
+   "baseline_line": 118,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> but fail at runtime on cloud-only devices because the scripts reference domain resources",
+   "reason": "Modal force unchanged (succeeds in the portal but fails at runtime), though the edit leaves a subject-verb break across the two blockquote lines: 'technically succeeds ... but fail at runtime'."
+  },
+  {
+   "file": "reference/ios-capability-matrix.md",
+   "baseline_line": 21,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "It highlights Apple-platform differences most relevant to administrators coming from macOS ADE",
+   "reason": "Predictive statement about what readers find, restated as habitual present; no verification step involved."
+  },
+  {
+   "file": "reference/licensing-matrix.md",
+   "baseline_line": 23,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "> **What breaks if misconfigured:** User assigned a license without Intune entitlement. Auto-enrollment to MDM fails silently.",
+   "reason": "The adjacent callout already states the same consequence in present tense; certainty unchanged."
+  },
+  {
+   "file": "reference/new-batch-workflow.md",
+   "baseline_line": 49,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "**Critical sequence note:** Do NOT power on devices (Stage 6) before Profile Assignment is confirmed (Stage 4).",
+   "reason": "The warning's prohibition sits in the preceding line and the consequence remains conditional on reaching OOBE early."
+  },
+  {
+   "file": "reference/new-batch-workflow.md",
+   "baseline_line": 69,
+   "verdict": "STRENGTHENED",
+   "fix": "1. Check the deployment report: confirm the success rate is above 95% (see [Deployment Reporting](deployment-reporting.md)).",
+   "evidence": "4. Document any failures with error codes for process improvement.",
+   "reason": "A post-batch review target the reader checks against became a hard requirement on an already-completed batch, where the list's own next step merely documents failures."
+  },
+  {
+   "file": "reference/security-baseline-conflicts.md",
+   "baseline_line": 52,
+   "verdict": "PRESERVED",
+   "fix": null,
+   "evidence": "A baseline applies as a unit—one conflicting setting blocks the entire baseline.",
+   "reason": "'multiplies the chance that one setting interrupts the ESP flow' keeps the probabilistic hedge intact."
+  }
+ ]
+}

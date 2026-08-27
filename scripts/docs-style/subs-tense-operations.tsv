@@ -22,7 +22,6 @@ policy creation will block:	policy creation blocks:
 Intune will not allow the Revoke	Intune does not allow the Revoke
 Autopatch will not auto-rotate driver/firmware approvals	Autopatch does not auto-rotate driver/firmware approvals
 policy will not honor any WUfB deployment	policy does not honor any WUfB deployment
-shared Ubuntu machines will	shared Ubuntu machines
 FAQ's phrasing will not find it	FAQ's phrasing does not find it
 the device's status will be reported as	the device's status is reported as
 still attached will silently lose update	still attached silently loses update

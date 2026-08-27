@@ -10,21 +10,15 @@ Admins choosing this path should treat the tools	If you choose this path, treat 
 Admins should default to the Microsoft-supported paths	Default to the Microsoft-supported paths
 Android apps that should NOT be published	Android apps that must NOT be published
 the OEMConfig app should no longer be listed	the OEMConfig app must no longer be listed
-Resource Access policies should$	Resource Access policies must
 ^should be moved to Intune Configuration Profiles	must be moved to Intune Configuration Profiles
-A unified fleet dashboard should account for	A unified fleet dashboard must account for
-drift recurrence patterns that should be	drift recurrence patterns that must be
-remediations may take longer but should fail fast	remediations may take longer but must fail fast
 drift signal classes that admins should monitor:	drift signal classes to monitor:
 The `KeyProtectorId` shown should	The `KeyProtectorId` shown must
 Account info should show the target	Account info must show the target
-should not expect any iOS-side encryption-key handling	must not expect any iOS-side encryption-key handling
 admins should validate per-OEM encryption	validate per-OEM encryption
 enrolled device should appear in exactly one Autopatch ring	enrolled device must appear in exactly one Autopatch ring
 so admins should distinguish	so you must distinguish
 so it should be a transitional measure	so it must be a transitional measure
 MDM commands to DDM should plan to retire	MDM commands to DDM must plan to retire
-update enforcement should standardize on DDM	update enforcement must standardize on DDM
 extended firmware cadences should$	extended firmware cadences must
 requirement should validate	requirement must validate
 cadence should be audited explicitly	cadence must be audited explicitly

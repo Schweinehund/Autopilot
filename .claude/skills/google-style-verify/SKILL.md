@@ -87,28 +87,65 @@ Exit 1 on any undispositioned finding.
 "Registered"` is structurally identical to a correct declarative sentence. All 5 recorded
 inversions came from a removed modal; measured recall of this trigger on them is **5/5**.
 
+Spawn a **fresh Agent** per chunk with no rewrite rationale, given before/after plus
+surrounding lines. Feed it `judge-packets.py` output, not the raw worklist: the worklist
+emits every CHANGED line that CONTAINED a modal, whether or not the modal survived, and it
+carries no after-line at all. `judge-packets.py` aligns each hunk, drops the ones whose
+modal is still intact (a deterministic count comparison, not a judgment), and attaches the
+after-line plus surrounding context.
+
 ```bash
-python scripts/docs-style/verify-meaning.py BASE --json > /tmp/worklist.json
+python scripts/docs-style/verify-meaning.py BASE --json > worklist.json      # raw, 653
+python scripts/docs-style/judge-packets.py BASE <ROOT> --chunk-file out/chunk --chunks 10
 ```
 
-Spawn a **fresh Agent** per chunk with no rewrite rationale, given only before/after plus
-surrounding lines. The decision procedure, from the record:
+The decision procedure, from the record. **There are two failure directions, and the
+second is the larger one:**
 
 > Bare present tense is **not** the safe default — it inverts meaning when the sentence
 > stated an expectation. If a nearby conditional handles the **other** outcome, it was an
-> expectation: the correct rewrite is `Confirm X shows Y` or `must`, never a bare
-> assertion. A reader who meets an assertion stops verifying.
+> expectation: the correct rewrite is `Confirm X shows Y`, never a bare assertion. A reader
+> who meets an assertion stops verifying.
 
-Real example — the fix, not the theory:
+> **Do not reach for `must`.** Promoting a hedge to a mandate is its own defect and, on the
+> one corpus measured, it was **more common than inversion** — 26 STRENGTHENED against 19
+> INVERTED across 406 hunks. Advice in a section labelled "best practice", "Recommended
+> patterns", "Considerations", "educational and comparative, not prescriptive", or
+> `[ASSUMED — needs live verification]` must stay hedged. Several `must`s contradicted the
+> next sentence: `must never have (a)` sat directly above "unless explicitly reviewed and
+> approved"; `must fall back` sat inside a stated Recommended/Second/Third preference order.
+> When a real alternative exists in the surrounding text, `should` was right.
+
+Real examples — the fixes, not the theory:
 
 ```
+INVERTED (expectation -> fact)
 before:  The device should appear with Join type "Registered"
 WRONG:   The device appears with Join type "Registered"      <- reader stops checking
 right:   Confirm the device appears with Join type "Registered"
+
+STRENGTHENED (recommendation -> mandate)
+before:  Organizations should treat missed-deadline cases as ...
+WRONG:   Organizations must treat missed-deadline cases as ...
+right:   (unchanged) -- the section is tagged [ASSUMED] and says Apple "may" rename
 ```
 
 Judge each hunk **with its surrounding lines**, never the line alone. "The diff summary
 always looks clean — the inversions only appear in the surrounding lines."
+
+**Watch for agreement breaks while you are in there.** Dropping `will` from a long compound
+subject leaves a singular verb behind, and no rule in step 2 sees it: "Devices upgrading …
+silently **loses**", "Devices with …, or models without Touch ID **has**", "QR codes
+generated from an expired token **fails**". Four shipped past the whole gate and were caught
+only because judges reported them unprompted, outside their own task. The `split-verb` check
+does not cover this shape — its `BARE_INFINITIVE` list is a dozen verbs long, and the defect
+is a number mismatch, not a bare infinitive. Ask for these explicitly.
+
+**Re-check idempotency after applying the verdicts.** A judge verdict that restores `should`
+is undone by the next sweep run unless the rule row that removed it is deleted from its
+`subs-*.tsv`. Twenty rows had to go on the measured corpus. A revert with no corresponding
+rule change is not a fix.
+
 
 ### 4. Disposition, then re-run
 
@@ -133,9 +170,27 @@ is normal here; a residual you did not read is not.
 ## Calibration
 
 On the completed 9-batch pass (281 files, 6,166 changed lines) this reports **40
-findings** and a **653-hunk judge worklist, 164 high-risk** — versus `check.py`'s 9,363
-candidates on the same accepted corpus. If findings ever reach the hundreds, a rule is
-over-firing: fix the rule, do not bulk-disposition.
+deterministic findings** and a **653-hunk judge worklist, 164 high-risk** — versus
+`check.py`'s 9,363 candidates on the same accepted corpus. If findings ever reach the
+hundreds, a rule is over-firing: fix the rule, do not bulk-disposition. Three of the six
+classes did over-fire on first contact and were tightened to zero false positives by
+reusing `mech_canon()`; the deterministic set landed at 10 real defects and 6 documented
+keeps.
+
+Both halves have now been worked end to end, and the judge half is where the defects were:
+
+```
+deterministic   40 findings  ->  10 fixed, 6 dispositioned, 24 were rule over-fire
+judge          653 raw hunks ->  406 real modal losses (judge-packets.py filter)
+                              ->  46 defects / 360 preserved, across 10 fresh Agents
+                                  26 STRENGTHENED  19 INVERTED  1 WEAKENED
+                              +  4 subject-verb agreement breaks reported unprompted
+```
+
+**The judge half found 4.6x what the deterministic half found**, and its largest class —
+a hedge promoted to `must` — is one this skill previously *recommended*. Budget for it.
+The full verdict record, with an evidence quote per finding, is
+`scripts/docs-style/_JUDGE-VERDICTS.json`.
 
 Verify the tool itself with `python scripts/docs-style/verify-meaning.py --self-test`
 (10 assertions built from the real defect record, including two negatives that must stay
