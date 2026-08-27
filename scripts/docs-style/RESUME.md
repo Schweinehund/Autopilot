@@ -2,6 +2,84 @@
 
 Everything needed to continue after a `/clear`. Read this first, then start the next batch.
 
+---
+
+# ⏩ NEXT SESSION STARTS HERE — work the verifier findings (2026-08-26)
+
+**State:** the 9-batch pass is shipped. A verifier now exists and has been run once.
+Its output is **unworked**: 40 findings and a 653-hunk judge worklist. Nothing has been
+dispositioned except one pre-ratified keep. That is the job.
+
+**Two commits landed this session** (in `D:\claude\Autopilot`, on master):
+`4efe0405` vendored the skill + tooling into the repo; `856234d2` added the verifier.
+One commit landed in the scratch corpus: `dc7e996`, the 30th defect (see the
+`Create a local admin account` row below — the audit log had recorded it as fixed
+for four batches while it was live).
+
+## Reproduce the current state in one command
+
+```bash
+cd /d/claude/docs-google-style-test && python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 \
+  --dispositions /d/claude/Autopilot/scripts/docs-style/_DISPOSITIONS.tsv
+```
+
+Expected, exactly (if these numbers differ, something moved — find out what before working):
+
+```
+  14  doubled-connective      9  label-drift        9  prose-crossref
+   5  quotation               1  split-verb         1  word-order
+   1  dispositioned (silent)
+  JUDGE WORKLIST: 653 hunks (164 high-risk)     exit=1
+```
+
+`c97d322` is the corrected pristine baseline — **not** `6010dd5`, which is one commit
+earlier and drags in the generated `_PASSIVE-REPORT.md`. Using the wrong one shifts every
+count by one file and 3,931 lines.
+
+## The job, in order
+
+1. **Deterministic findings (40).** For each: fix it, or add its `id` + a real reason to
+   `scripts/docs-style/_DISPOSITIONS.tsv`. Ids are stable across runs and keyed to the
+   evidence text, so a disposition self-invalidates if that line changes again.
+   Work by class, not by file — a whole class often shares one ruling.
+   **If a class needs more than a handful of dispositions, the RULE is wrong. Fix the
+   rule.** Three of mine over-fired on the first run (120 findings) and were tightened
+   down to 40 rather than bulk-dispositioned.
+2. **Judge worklist (653 hunks, 164 high-risk).** Start with the 164 `risk: high` — a
+   `should` was dropped, which is the shape that produced all 5 recorded inversions.
+   ```bash
+   python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 --json > /tmp/worklist.json
+   ```
+   **Spawn fresh Agents to judge. Do not judge them yourself in a context that has read
+   this file.** Independence is the whole point: all 30 defects were found by a reader who
+   did not author the edit. The decision procedure and a worked example are in
+   `.claude/skills/google-style-verify/SKILL.md` §3.
+3. **Re-run until `exit=0`,** then the gate (C17 / nav-hub / apex) one more time.
+
+## Known-live gotchas for this specific job
+
+- **`split-verb` currently has 1 finding and it is probably a false positive**
+  (`are NOT on the supported list and fail` — grammatical). Confirm and disposition it;
+  do not "fix" correct prose.
+- **`word-order` has 1 finding**, `l2-runbooks/00-index.md:256` `APv2 preceding L2`.
+  Unjudged. Read it in context.
+- **`quotation` at 5 is post-suppression.** Mechanical-only changes inside quoted spans
+  are already filtered by `mech_canon()`. Anything still reported is a genuine wording
+  change inside quotes — check whether it is a vendor citation (falsification, must fix)
+  or the corpus's own scare quote (editable, disposition).
+- **`label-drift` at 9** is the class that hid the 30th defect for four batches. Treat
+  every one as guilty until read.
+- The verifier's own self-test must stay green: `python verify-meaning.py --self-test`
+  → `PASS: 10/10`.
+
+## Do not redo these — already done and verified
+
+Idempotency (`sweep3 --subs` twice → 0 edits), link/anchor health (`verify2.py`, 0
+introduced), validator pins (`pins2.py`, 562 intact), and the full gate (C17 234/0/0,
+nav-hub 0, apex 101/0/0). All green as of `dc7e996`.
+
+---
+
 ## Decision already made (do not re-litigate)
 
 **Option 1.** Adopt every Google dev-docs style rule EXCEPT sentence-case headings.
@@ -34,7 +112,12 @@ no history.
 
 ## Status
 
-**THE PASS IS COMPLETE.** Mechanical phase green, all 8 class batches done
+**THE PASS IS COMPLETE — but its output is now UNVERIFIED-BY-TOOL.** See the
+NEXT SESSION block at the top: a verifier exists as of 2026-08-26 and its 40 findings
+plus 653-hunk judge worklist are unworked. "Nothing is open" below refers to the
+*formatting* work only.
+
+Mechanical phase green, all 8 class batches done
 (`l1-runbooks` 42, `l2-runbooks` 33, `reference` 26, `operations` 22,
 `cross-platform` 20, `admin-setup-*` 66, `decision-trees` 11, `the rest` 64),
 and the one corpus-wide class -- capitalised `Admin` / `Admins` in prose --
@@ -42,6 +125,7 @@ closed as **batch 9**. Nothing is open. The numbers are ready to scope as a
 v1.22 milestone or a `/gsd-capture` backlog item.
 
 ```
+dc7e996  fix(batch6): revert the 'Create a local admin account' label expansion  <- the 30th defect
 3a85b08  judgment/batch9: capitalised Admin/Admins in prose (115 edits, 63 files)
 b7fafaf  judgment/batch8: tense, should, minimizers, word list (batch 8 complete)
 eb15df4  judgment/batch8: directional language (117 -> 0)
@@ -217,6 +301,39 @@ the sentence stated an expectation. The decision procedure is written at the top
 of `subs-should.tsv`. Short version: if a conditional nearby handles the OTHER
 outcome, it was an expectation, so use `Confirm X shows Y` or `must`.
 
+## The verifier (2026-08-26)
+
+`google-style-verify` (skill) + `verify-meaning.py` (script) now cover the classes the
+gate structurally cannot see. Designed against the real defect record via `/grill-me` +
+`/adversarial-review`, which killed four of eight candidate design questions as already
+settled and surfaced three that had been missed entirely.
+
+Two layers, because the record splits cleanly:
+
+- **Deterministic** — seven classes with a textual signature: frontmatter drift,
+  quotation drift, HTML-comment drift, label-drift, split-verb, word-order-inside-a-
+  proper-name, and prose cross-reference recasing. That last one is invisible to every
+  link checker because it is *not a link*: `See Escalation Criteria` -> `Escalation
+  criteria`.
+- **Judge worklist** — modal->assertion inversion, which *provably* has no textual
+  signature. `The device appears with Join type "Registered"` is identical in shape to a
+  correct declarative sentence. Every hunk where a modal was removed is emitted for an
+  **independent fresh-context** reader. Measured recall on the 5 recoverable inversions:
+  **5/5**, all inside the high-risk (`should` dropped) subset.
+
+**Independence is the load-bearing rule.** All 30 defects were found by a reader who did
+not author the edit. A judge holding the formatter's rationale inherits exactly the blind
+spot this document catalogues.
+
+Output is a **gate with persisted dispositions**, keyed to the evidence text so a keep
+goes stale when that line changes again. A binary gate dies on day one against a corpus
+full of correct-by-ruling residuals; a pure report gets ignored -- which is precisely how
+a false Intune setting label survived four batches while this file recorded it as fixed.
+
+Calibration: **40 findings** on the completed pass, vs `check.py`'s **9,363** candidates
+on the same accepted corpus. Three of the verifier's own rules over-fired at 120 findings
+on the first run and were tightened, not bulk-dispositioned.
+
 ## The gate cannot see this class of error
 
 Every meaning inversion found in batch 1 passed C17, check-nav-hub-links, the
@@ -302,7 +419,7 @@ nine pairs in batch 8; each wanted `using`, `with` or `over` on the second half)
 | Term | Ruling |
 |---|---|
 | `config` (admin-setup) | IN scope here, unlike l2. Every prose hit is Intune's own noun -- `app config policy` is really **app configuration policy**, `config profile` is **configuration profile** -- so expanding it moves the text TOWARD the UI. The `.exe.config` filenames and table cells are protected already. |
-| `Create a local admin account` | KEEP. It is the verbatim Intune enrollment-profile setting label; the table row two screens up carries it as the setting-name column. The prose echo at `admin-setup-macos/02:146` had to be reverted after the blanket rule expanded it. |
+| `Create a local admin account` | KEEP. It is the verbatim Intune enrollment-profile setting label; the table row two screens up carries it as the setting-name column. **This row was FALSE from batch 6 until 2026-08-26.** It said the prose echo at `admin-setup-macos/02:146` "had to be reverted after the blanket rule expanded it" — the revert never happened. `git log -S` shows the expansion introduced at `f30c37b` and untouched for four batches while this line recorded it as fixed. Actually reverted in `dc7e996`, found by an adversarial review of the verifier design, not by the gate. **The defect count is 30, not 29, and a written audit log is not evidence.** |
 | `not just X` | -> `not only X`. It means "only", never "merely" -- treating it as a minimizer and cutting it inverts the sentence. |
 | `simple` (admin-setup) | KEEP. Every hit is a complexity property (`simple OEMConfig configurations` vs the StageNow path) or the macOS policy setting **Block simple passwords**. |
 | `master` | KEEP. `FileVault master keychain` is Apple's term. |
