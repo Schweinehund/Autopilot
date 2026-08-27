@@ -1,18 +1,21 @@
 ---
 phase: 152-integration-registry-navigation-last-close
 verified: 2026-08-27T17:22:02Z
-status: human_needed
+status: passed
 score: 5/5 must-haves verified
 behavior_unverified: 0
 overrides_applied: 0
 deferred:
+
   - truth: "SC#5 enforcement half — Recipe #5's hub coverage is enforced by a successor validator authored additively"
     addressed_in: "Phase 153"
     evidence: "ROADMAP Phase 153 Success Criterion 3: 'the 19th Path-A lineage bump exists — milestone audit script, allowlist sidecar and baseline — together with the leaf validators for Phases 145 through 152 and the apex'. The needle-spec is fully pre-specified at .planning/STATE.md:633 (HARN-04) covering both hub files and the filename map, plus the negative needle and the never-edit-the-frozen-validator constraint."
 human_verification:
+
   - test: "Read docs/index.md:276 against docs/recipes/05-enterprise-update-plan.md:30 and decide whether the recipes section lead-in must be amended now or deferred to a hygiene pass."
     expected: "The lead-in should not universally promise 'a concrete, reproducible device configuration end-to-end ... from zero to verified end state' when Recipe #5 self-describes as 'A tenant-wide configuration plan, not a per-platform procedure guide.'"
     why_human: "Prose-accuracy judgement. No validator can see it — the apex, C17 and the link checker are all green with the contradiction in place. This phase amended the sibling quick-nav lead-in at line 38 for exactly this reason and left line 276, so the omission is inconsistent rather than deliberate; whether that is worth a third content commit against D-01's two-commit contract is an owner call."
+
   - test: "Decide whether build-publish-bundle.mjs:40's 'v1.17' VERSION default is fixed in code before Phase 153 regenerates the bundle, or stays under D-23's procedural mitigation."
     expected: "Either the default becomes fail-closed (require --version) or D-23's 'always pass --version' is carried forward as an explicit Phase 153 precondition."
     why_human: "Risk-acceptance judgement on inherited debt. Phase 152 discharged its own obligation (dist/docs-library-v1.21.0.zip exists, dist/docs-library-v1.17.zip is absent), but Phase 153 SC#4 regenerates the bundle and a forgotten flag there silently writes a misnamed archive."

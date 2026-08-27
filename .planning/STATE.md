@@ -2,30 +2,30 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 152
-current_phase_name: Integration, Registry & Navigation-Last Close
-status: verifying
-stopped_at: Completed 152-04-PLAN.md (Commit B 4816635b; all three terminal gates green; needle-spec handed to Phase 153)
-last_updated: "2026-08-27T16:56:08.505Z"
+current_phase: 153
+current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
+status: planning
+stopped_at: Phase 152 complete, ready to plan Phase 153
+last_updated: "2026-08-27T20:25:17.907Z"
 last_activity: 2026-08-27
-last_activity_desc: Phase 152 execution started
-state_head: 4816635bd55ebddc6fb595d4d9009a7477e8465f
+last_activity_desc: Phase 152 complete, transitioned to Phase 153
+state_head: 673963dc77c3db6ce514e086a1996dc1319b564c
 progress:
   total_phases: 9
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 34
   completed_plans: 34
-  percent: 78
+  percent: 89
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
+See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; Phase 152 landed the registry rows and navigation)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 152 — Integration, Registry & Navigation-Last Close
+**Current focus:** Phase 153 — Harness Close (V120 pin, C17 frozen-aware residue, 19th Path-A lineage bump)
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,18 +37,16 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 152 (Integration, Registry & Navigation-Last Close) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
-Last activity: 2026-08-27 — Phase 152 execution started
-  authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
-  verified the four binding gate classes plus the apex — the only red is the enumerated
-  not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
-  firmware-oem-matrix.md), exactly as D-80's deferred-commit design expects. BIOS-10 marked
-  Complete (sole declaring plan). Per D-80, the Dell guide itself stays UNCOMMITTED — Plan 04 lands
-  it in the phase's single content commit.
+Phase: 153 — Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-27 — Phase 152 complete, transitioned to Phase 153.
+  UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
+  lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
+  as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
+  human_needed -> passed.
 
-Progress: [████████░░] 78% (4 of 9 phases; 15/15 planned plans complete)
+Progress: [██████████████████░░] 89% (8 of 9 phases; 34/34 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -634,13 +632,16 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 
 ### Pending Todos
 
-None yet for v1.21. Per-phase gray areas are tracked in ROADMAP.md's phase details and in the DISCUSS-PHASE-FLAGS decision above; resolve them via `/gsd-discuss-phase` + `/adversarial-review` per project convention.
+- **[Phase 153 PRECONDITION — from Phase 152 UAT test 2, owner-ruled 2026-08-27] Always pass `--version=` to `build-publish-bundle.mjs`.** `scripts/pipeline/build-publish-bundle.mjs:40` defaults `VERSION` to the literal `'v1.17'` when `--version=` is absent. This is inherited debt from Phase 127 (`2eae4653`), not a Phase 152 regression, and the owner ruled it carried forward rather than made fail-closed. Phase 153 SC#4 regenerates the publish bundle: a forgotten flag there silently writes `dist/docs-library-v1.17.zip` — a misnamed archive over a reserved name, in a gitignored directory, with no recovery path. Phase 152 discharged its own obligation (`dist/docs-library-v1.21.0.zip` exists; `dist/docs-library-v1.17.zip` is absent). Verify both facts again after the Phase 153 regeneration.
+- **[Phase 152 UAT test 1, owner-ruled 2026-08-27 — CLOSED, no action]** The `docs/index.md:276` recipes lead-in keeps its "concrete, reproducible device configuration end-to-end ... from zero to verified end state" promise even though Recipe #5 self-describes at `docs/recipes/05-enterprise-update-plan.md:30` as "A tenant-wide configuration plan, not a per-platform procedure guide." The sibling quick-nav lead-in at line 38 was amended to "provisioning **and governance** recipes" (D-46); line 276 was deliberately left. No validator can see the divergence — apex 101/0/0, C17 236/0 and the link checker 0/0 are all green with it in place.
+
+Otherwise none open for v1.21. Per-phase gray areas are tracked in ROADMAP.md's phase details and in the DISCUSS-PHASE-FLAGS decision above; resolve them via `/gsd-discuss-phase` + `/adversarial-review` per project convention.
 
 ### Blockers/Concerns
 
 No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured four times, zero archival drift, both accepted-red dispositions deleted, tag pushed. v1.21 durable watch items:
 
-- **`docs/operations/patch-management/00-overview.md` is the likeliest source of a mid-execution remediation round.** It is touched by Phases 145, 146, 147 **and** 148, and carries five live pins on an apex chain member. Phases 145-147 have landed; **Phase 148 is the final content touch**, and the 4-platform table is now a 5-platform table, so re-read the live pins before editing rather than reasoning from the 4-column shape. Its 4-platform table regex survives *appending* a Linux column but not a 5-platform rewrite that drops one of the four pinned literals; its frontmatter platform value stays `cross-platform`; and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
+- **[SPENT 2026-08-27] `docs/operations/patch-management/00-overview.md`** was the milestone's likeliest remediation source across Phases 145-148. All four have landed and the file is now out of scope — Phase 153 is harness-only and touches no `docs/` content. Retained for the record: its five live pins sit on an apex chain member, its frontmatter platform value stays `cross-platform`, and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
 - **The C11 keyword-substitution ordering is a same-commit ordering constraint, not a preference.** `00-overview.md:78` is kept green **solely** by the mutual-exclusivity word pair the milestone is removing. Substitute an allowlisted keyword into the window first, then remove the wording — in that order, in the same commit.
 - **FIX-11 cannot be deferred.** The glossary link into `.planning/research/` re-breaks the moment v1.21's own research is archived at close — *after* the close-gate apex has been measured green, and nobody re-runs the apex after archival. Re-pointing at an archived copy does not work; inlining the substance is the only viable fix.
 - **Both publish-bundle canaries count different sets** (all registry rows versus Approved-only) and are equal today only because every row is Approved. Compute both from the registry after the rows land; never hard-code a number derived from a document count.
@@ -651,14 +652,15 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-27T16:55:46.578Z
-Stopped at: Completed 152-04-PLAN.md (Commit B 4816635b; all three terminal gates green; needle-spec handed to Phase 153)
+Last session: 2026-08-27T20:30:00Z
+Stopped at: Phase 152 complete and UAT-verified, ready to plan Phase 153
 Resume file: None
-Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
+Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
 ## Operator Next Steps
 
-- **Phase 148 is next.** Phases 145-147 have shipped (corpus corrections + frozen-read conversion + archival-drift fix; driver/firmware depth; Linux update delivery). Phase 148 is the **last content touch on `docs/operations/patch-management/00-overview.md`** and carries the milestone’s largest open research flag — the Intune-side M365 Apps update policy surface was never fetched, the post-July-2026 SAEC cadence is unverified against an internally inconsistent first-party page, and the Win32 Store app type’s preview status is unconfirmed. Resolve those at plan time, not in prose.
+- **Phase 153 is next, and it is the milestone's terminal phase.** All eight content phases (145-152) have shipped and are UAT-verified; 34/34 plans complete. Phase 153 is harness-only — it touches no `docs/` content — and carries three obligations: pin `V120` in `_lib/frozen-at-close.mjs` to the v1.20 close-gate SHA `246fa3dd` (recover it with the subject-line pair discriminator, count=1, regression-checked against V117/V118/V119), discharge `C17-FROZEN-AWARE-RESIDUE-V15-V19`, and bump the 19th Path-A lineage. Start with `/gsd-discuss-phase 153`; the research pass is deliberately skipped per the Plan-Time Research Flags block.
+- **`check-phase-152.mjs` does not exist and that is by design.** Phase 152 shipped a fully pre-specified needle-spec instead of the validator — the authoritative source is `.planning/phases/152-integration-registry-navigation-last-close/152-04-SUMMARY.md`, mirrored in compressed form under Plan-Time Research Flags. Transcribe it; do not re-derive a literal, and never edit the frozen `scripts/validation/check-phase-132.mjs`.
 - v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`, both landing in Phase 153.
 - v1.21 **does not pick up** and still carries forward: `FENCE-AXIS-02`, the out-of-census divergent fence-handling sites, the unowned `check-phase-30/31` tooling residue, `check-phase-66`'s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN` (Phase 152 works *around* it additively rather than fixing it), `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third *lockdown* recipe and does not fire on Recipe #5).
 - `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` **fires this milestone** — Recipe #5 needs the slot, which is the divergence's own recorded trigger. RCP-05 owns the resolution in Phase 151.

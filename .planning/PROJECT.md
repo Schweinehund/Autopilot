@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Current Milestone: v1.21 Enterprise Update, Driver & Firmware/BIOS Governance
 
-**Status:** 🔵 STARTED 2026-08-18 — scoping complete, requirements + roadmap pending. Phase numbering continues from the v1.20 close at Phase 144 → v1.21 spans **Phase 145+**.
+**Status:** 🔵 IN PROGRESS — started 2026-08-18. **All eight content phases (145-152) shipped and UAT-verified; 34/34 plans complete, 8 of 9 phases done.** Pillars A-F are closed: firmware/BIOS governance authored from zero, driver-update depth promoted out of the 45-line disambiguation section, application update management, Linux update delivery, freshness re-verification, and Recipe #5 landed with its registry rows and navigation. **Only Phase 153 remains** — the harness close carrying Pillars G (`V120-PIN-DEFERRAL` + 19th Path-A lineage bump) and H (`C17-FROZEN-AWARE-RESIDUE-V15-V19` across all five C17-bearing harnesses). Phase numbering continues from the v1.20 close at Phase 144 → v1.21 spans **Phase 145+**.
 
 **Goal:** Turn the four-platform patch-management concept hub into a complete, current, five-platform enterprise update plan spanning operating systems, applications, drivers, firmware and BIOS — delivered as both operations guides and one prescriptive Device Recipe — while discharging the mandatory `V120` back-anchor pin and the C17 frozen-aware residue.
 
