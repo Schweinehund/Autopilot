@@ -779,6 +779,8 @@ policy exists to prevent.
   workload migration sequence, including the Windows Update workload slider
 - [Migration Paths and Autopatch](../co-management/03-cocmgmt-migration-paths.md) — Windows
   Autopatch prerequisites and co-management workload sequencing
+- [Firmware and BIOS Governance](../firmware-bios/00-overview.md) — DFCI eligibility, per-OEM
+  BIOS configuration paths, and the OEM capability matrix
 
 ## External References
 

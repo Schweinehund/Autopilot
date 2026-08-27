@@ -208,6 +208,8 @@ routing surface.
   overview (Phase 54)
 - [Co-Management Overview](../co-management/00-overview.md) — Sibling ops-domain overview
   (Phase 53)
+- [Windows Application Updates](../patch-management/08-windows-app-updates.md) — Enterprise App
+  Management, Store apps and WinGet routing for Windows
 
 ## External References
 

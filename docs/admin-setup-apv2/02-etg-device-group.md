@@ -126,7 +126,7 @@ Apps and PowerShell scripts that should install during APv2 enrollment must be *
 6. Save the assignment.
 7. Repeat for all required apps. The Device Preparation policy supports up to 25 apps (limit raised from 10 on January 30, 2026).
 
-   **Supported app types:** LOB (.msi/.intunewin), Win32, Microsoft Store (WinGet), Microsoft 365 apps, Enterprise App Catalog.
+   **Supported app types:** LOB (.msi/.intunewin), Win32, [Microsoft Store (WinGet)](../operations/patch-management/08-windows-app-updates.md#enterprise-app-management-store-apps-and-winget--routing), Microsoft 365 apps, Enterprise App Catalog.
 
    > **What breaks if misconfigured:** **Admin sees:** Apps show "Skipped" status in the APv2 deployment report, or no app status entries appear at all.
    > **End user sees:** Device Preparation experience appears during OOBE but apps are not installed. Desktop appears without the expected applications.

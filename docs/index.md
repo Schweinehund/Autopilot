@@ -20,7 +20,7 @@ This is the master routing hub for the entire documentation suite, indexing trou
 
 > **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning,
 
-> plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration),
+> plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration, firmware and BIOS governance),
 
 > and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
 
@@ -35,7 +35,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 - [iOS/iPadOS Provisioning](#iosipados-provisioning) -- iOS/iPadOS device provisioning via Microsoft Intune (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE)
 - [Android Enterprise Provisioning](#android-enterprise-provisioning) -- Android device provisioning via Intune (Zero-Touch, Fully Managed, Work Profile, Dedicated, AOSP stub)
 - [Linux Provisioning](#linux-provisioning) -- Linux device provisioning via Microsoft Intune Linux client (Ubuntu 24.04 / 26.04 LTS, intune-portal package, web-app conditional access)
-- [Device Configuration Recipes](#device-configuration-recipes) -- End-to-end provisioning recipes with embedded admin decision points (shared Windows AVD-client device, Shared iPad full provisioning, Windows 11 multi-app kiosk, Android Dedicated multi-app kiosk)
+- [Device Configuration Recipes](#device-configuration-recipes) -- End-to-end provisioning and governance recipes with embedded admin decision points (shared Windows AVD-client device, Shared iPad full provisioning, Windows 11 multi-app kiosk, Android Dedicated multi-app kiosk, enterprise update plan)
 - [Operations](#operations) -- Cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration)
 - [Cross-Platform References](#cross-platform-references) -- Glossaries, concept comparison, and shared resources
 
@@ -281,6 +281,7 @@ Step-by-step, admin-decision-point-driven provisioning recipes -- each yields a 
 | [Shared iPad Full Provisioning: Federated Sign-In to Verified End State](recipes/02-shared-ipad-full-provisioning.md) | Provision a supervised Shared iPad end-to-end -- ADE enrollment, federated Managed Apple Account sign-in, device-licensed Required apps, and per-role layered configuration |
 | [Windows 11 Multi-App Kiosk: Assigned Access Provisioning](recipes/03-windows-11-multi-app-kiosk.md) | Lock a Windows 11 device to a restricted user experience -- a multi-app allow-list, Start layout, and Taskbar -- delivered through an AssignedAccess CSP custom OMA-URI profile, with no Templates GUI path available |
 | [Android Dedicated Multi-App Kiosk: Managed Home Screen Provisioning](recipes/04-android-dedicated-mhs-multi-app.md) | Lock an Android Enterprise Dedicated device to a curated Managed Home Screen app grid -- MHS assigned as Required, an App Configuration policy carrying the worked JSON payload, and exit-PIN hardening |
+| [Enterprise Update Plan: A Governed Update Posture for the Whole Fleet](recipes/05-enterprise-update-plan.md) | Establish exactly one update authority per surface across the whole fleet -- Windows quality and feature updates, drivers and firmware, BIOS settings, Microsoft 365 Apps and packaged Windows applications, plus the macOS, iOS, Android and Linux update posture -- with each cadence, deadline and exception path chosen deliberately rather than inherited from a tenant default |
 
 ---
 
@@ -307,6 +308,7 @@ Cross-platform OS update enforcement -- Windows Update for Business rings, macOS
 | [Patch & Update Management Overview](operations/patch-management/00-overview.md) | 4-platform update-enforcement comparison hub (Windows + macOS + iOS + Android) |
 | [Windows WUfB Rings](operations/patch-management/01-windows-wufb-rings.md) | Windows Update for Business ring topology; Hotpatch; dual-scan source conflict |
 | [Android Patch Delivery](operations/patch-management/04-android-patch-delivery.md) | Per-OEM patch delivery; Play Integrity MEETS_STRONG_INTEGRITY enforcement cascade |
+| [Linux Update Delivery](operations/patch-management/05-linux-update-delivery.md) | Ubuntu apt and unattended-upgrades delivered by a Bash platform script; reboot handling; Ubuntu Pro Livepatch; compliance signal |
 
 ### App Lifecycle Automation
 
@@ -337,6 +339,16 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 | [Apple Business Operations Overview](cross-platform/apple-business/00-overview.md) | Governance tree root; links to all 18 admin-context docs |
 | [L1 #34: Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) | Path A (Apple Business UI, L1-delegatable) |
 | [L2 #26: Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) | 7-leaf Mermaid triage tree |
+
+### Firmware and BIOS Governance
+
+Windows firmware and BIOS configuration governance -- who holds the BIOS secret across Dell, HP and Lenovo hardware, the two native Intune BIOS surfaces, and the per-OEM delivery, offboarding and recovery paths.
+
+| Resource | Description |
+|----------|-------------|
+| [Firmware and BIOS Governance Overview](operations/firmware-bios/00-overview.md) | Routing by who holds the BIOS secret; the two native Intune BIOS surfaces and why they are disjoint |
+| [Windows DFCI](operations/firmware-bios/01-windows-dfci.md) | DFCI prerequisites and disqualifiers, OEM and Surface eligibility, the settings surface, and the retire / reuse / recover sequences |
+| [Dell BIOS Configuration](operations/firmware-bios/02-dell-bios-configuration.md) | DCECMI per-device agent plus the native BIOS configuration Templates policy; Intune stores the BIOS password |
 
 ---
 
@@ -376,6 +388,7 @@ This table cross-links glossaries, capability matrices, lifecycle overviews, and
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-08-27 | Phase 152 plan 152-03: appended the firmware and BIOS governance clause to the operational-domain banner paragraph; amended the recipes quick-nav bullet lead-in and appended its enterprise update plan fragment; added the Recipe #5 row to the recipes table; added the ### Firmware and BIOS Governance Operations sub-H3 (3 rows); added the Linux row to the Patch & Update Management sub-table (INT-04) | -- |
 | 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Phase 99 (RUN-01): extended line-110 macOS Platform SSO Runbooks row to reference runbook #37 (local password recovery) | -- |
 | 2026-06-24 | Phase 87 (REF-03): enriched macOS Admin Setup Platform SSO row to name guides 10/11; added macOS L2 rows for Kerberos SSO Investigation (#28) and Graph Credential Investigation (#29) | -- |

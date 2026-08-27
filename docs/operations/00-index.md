@@ -34,6 +34,10 @@ Cross-platform OS update enforcement guidance — Windows Update for Business ri
 | [macOS Update Enforcement](patch-management/02-macos-update-enforcement.md) | DDM Software Update Enforce Latest; deprecated MDM commands removed with Apple OS 26 |
 | [iOS Update Lifecycle](patch-management/03-ios-update-lifecycle.md) | DDM TargetOSVersion / TargetBuildVersion / TargetLocalDateTime; unsupervised iOS 17+ scope |
 | [Android Patch Delivery](patch-management/04-android-patch-delivery.md) | Per-OEM patch delivery, Play Integrity MEETS_STRONG_INTEGRITY enforcement cascade, Zebra LifeGuard OTA |
+| [Linux Update Delivery](patch-management/05-linux-update-delivery.md) | Ubuntu apt and unattended-upgrades via a Bash platform script, reboot handling, Ubuntu Pro Livepatch, compliance signal |
+| [Windows Driver and Firmware Updates](patch-management/06-windows-driver-firmware-updates.md) | Driver update policy approval modes and workflow, deferral and deadline behavior, OEM catalog firmware delivery |
+| [Windows Autopatch](patch-management/07-windows-autopatch.md) | Autopatch service prerequisites, Autopatch groups and the Test and Last deployment rings, update workloads and service objectives |
+| [Windows Application Updates](patch-management/08-windows-app-updates.md) | Microsoft 365 Apps update channels, Enterprise App Management catalog, Store apps and the WinGet control surface |
 
 ## App Lifecycle Automation
 
@@ -71,9 +75,25 @@ Apple Business delegated governance — sub-org admin onboarding, Shared iPad pa
 | [L1 Runbooks](../l1-runbooks/00-index.md#apple-business-l1-runbooks) | L1 #34 — Shared iPad passcode reset (Path A) |
 | [L2 Runbooks](../l2-runbooks/00-index.md#apple-business-l2-runbooks) | L2 #26 — Permission denied investigation (7-leaf triage) |
 
+## Firmware and BIOS Governance
+
+Windows firmware and BIOS configuration governance — custody of the BIOS secret across Dell, HP
+and Lenovo hardware, the two native Intune BIOS surfaces, per-OEM delivery and recovery paths, and
+the cross-vendor capability comparison.
+
+| Guide | Covers |
+|-------|--------|
+| [Overview: Firmware and BIOS Governance](firmware-bios/00-overview.md) | Routing by who holds the BIOS secret; the two native Intune BIOS surfaces and why they are disjoint |
+| [Windows DFCI](firmware-bios/01-windows-dfci.md) | DFCI prerequisites and disqualifiers, OEM and Surface eligibility, settings surface, retire / reuse / recover sequences |
+| [Dell BIOS Configuration](firmware-bios/02-dell-bios-configuration.md) | DCECMI per-device agent plus the native BIOS configuration Templates policy; Intune stores the BIOS password |
+| [HP BIOS Configuration](firmware-bios/03-hp-bios-configuration.md) | HP Connect connector publishing Sure Admin and BIOS password policies as Remediations; vendor-held secret |
+| [Lenovo BIOS Configuration](firmware-bios/04-lenovo-bios-configuration.md) | Think BIOS Config Tool V2 and BIOS Certificate Tool V2; customer-held key material, no vendor connector |
+| [Firmware OEM Capability Matrix](../reference/firmware-oem-matrix.md) | Cross-vendor comparison of delivery, authentication, scope, prerequisites, offboarding and recovery |
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-08-27 | Phase 152 plan 152-03: appended Firmware and BIOS Governance H2 (6 rows; 6th Operations sub-section) and appended 4 rows to the Patch & Update Management table for Linux update delivery, Windows driver and firmware updates, Windows Autopatch and Windows application updates (INT-04) | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Governance H2 (ABNAV-06; 5th Operations sub-section) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added 3 new H2 sections (Patch & Update Management 5 rows / App Lifecycle Automation 5 rows / Compliance Drift Detection + Tenant Migration 5 rows) mirroring Co-Management section template; updated frontmatter `platform: Windows` -> `platform: cross-platform`; discharges DPO-Phase56-01 hand-off chain (D-10) | -- |

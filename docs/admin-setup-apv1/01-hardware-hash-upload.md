@@ -185,6 +185,7 @@ After uploading via any path, confirm registration:
 
 - [Hardware Hash Lifecycle Stage](../lifecycle/01-hardware-hash.md)
 - [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)
+- [DFCI Prerequisites and Disqualifiers](../operations/firmware-bios/01-windows-dfci.md#prerequisites-and-disqualifiers)
 
 ---
 *Next step: [Deployment Profile](02-deployment-profile.md)*
@@ -193,5 +194,6 @@ After uploading via any path, confirm registration:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-08-27 | Phase 152 INT-04: added a See Also link to the DFCI guide's prerequisites and disqualifiers section. | -- |
 | 2026-07-08 | Phase 122 plan 07: converted Mermaid flowchart to a Step 1 / Step 2 / Destination decision table (both OEM and BATCH decision points preserved); removed the mermaid fence; LOCKED — 10 (nodes + labeled edges, R1 convention); reworded "decision tree" to "decision table"; split 8 pre-existing over-200-char blockquote groups into 15 word-preserving paragraphs; enrolled as RE-077. | -- |
 | 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
