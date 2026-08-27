@@ -54,6 +54,7 @@ BARE_INFINITIVE = re.compile(r"^(fail|receive|block|show|match|take|appear|repor
                              r"return|send|apply|install|enroll|produce|remove|be)$")
 # A directional word inserted INSIDE a multi-word proper name:
 #   "Per-OU Admin Holder Lookup table below" -> "Per-OU Admin Holder following Lookup"
+DOUBLED_THROUGH = re.compile(r"\bthrough\b[^.,;:]{0,60}\bthrough\b")
 WORD_ORDER = re.compile(r"([A-Z][\w-]*)\s+(following|preceding)\s+([A-Z][\w-]*)")
 SENTENCE_INITIAL = {"The", "A", "An", "This", "That", "These", "Those", "See",
                     "Each", "Every", "Use", "Set", "If", "When", "For", "In",
@@ -158,6 +159,13 @@ def check_label_drift(f, old, new, add):
         # NOT `if core in new: continue` -- the surviving copy keeps it present,
         # which short-circuits exactly the case this must catch. The signature is
         # that ONE of N verbatim copies stopped matching.
+        # A copy that differs ONLY by the mechanical set has not diverged as a
+        # label -- the heading/code-span copy keeps ` - ` spacing because those
+        # regions were out of the pass's scope, while the bold prose copy was
+        # canonicalised. mech_canon does not touch admin/administrator, so the
+        # C1 defect this rule exists to catch still fires (self-test proves it).
+        if mech_canon(old).count(mech_canon(core)) == mech_canon(new).count(mech_canon(core)):
+            continue
         if old.count(core) > 1 and 1 <= new.count(core) < old.count(core):
             add("label-drift", f, 0,
                 "A string that appears verbatim more than once in the baseline "
@@ -184,7 +192,12 @@ def check_line_shapes(f, old, new, add):
         # with them: (a) the corporate Google account ... with"). The documented
         # grep is `through .{0,80} through` -- the via-rule's own failure mode.
         # Clause-bounded, not sentence-bounded, or it spans a colon list.
-        if re.search(r"\bthrough\b[^.,;:]{0,60}\bthrough\b", bare):
+        # Only a defect if the PASS created the double. A line edited for an
+        # unrelated reason (admin->administrator, dash spacing) can carry a
+        # doubled `through` that was already in the baseline; canonicalise the
+        # mechanical set away and check whether the span pre-existed.
+        dbl = re.search(DOUBLED_THROUGH, bare)
+        if dbl and mech_canon(dbl.group(0)) not in mech_canon(old):
             add("doubled-connective", f, i,
                 "'through' repeated in one clause. The generic via-rule produced "
                 "nine of these; each wanted a different second word.",
@@ -214,6 +227,13 @@ def check_prose_crossrefs(f, old, new, add):
         if len(h) < 8 or h not in old:
             continue
         before, after = old.count(h), new.count(h)
+        # A prose reference that differs ONLY by the mechanical set (dash
+        # spacing, e.g./i.e./cf.) has not drifted in any way a reader can
+        # misread. Headings are pinned Title Case and keep ` - ` spacing while
+        # prose was canonicalised, so the raw count diverges on six references
+        # that still read identically. Same suppression the quotation rule uses.
+        if mech_canon(old).count(mech_canon(h)) == mech_canon(new).count(mech_canon(h)):
+            continue
         if after < before and h.lower() in new.lower():
             add("prose-crossref", f, 0,
                 "A prose reference to a heading changed case or wording. No link "

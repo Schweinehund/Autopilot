@@ -4,17 +4,12 @@ Everything needed to continue after a `/clear`. Read this first, then start the 
 
 ---
 
-# ⏩ NEXT SESSION STARTS HERE — work the verifier findings (2026-08-26)
+# ⏩ NEXT SESSION STARTS HERE — judge the 653-hunk worklist (2026-08-26, session 2)
 
-**State:** the 9-batch pass is shipped. A verifier now exists and has been run once.
-Its output is **unworked**: 40 findings and a 653-hunk judge worklist. Nothing has been
-dispositioned except one pre-ratified keep. That is the job.
-
-**Two commits landed this session** (in `D:\claude\Autopilot`, on master):
-`4efe0405` vendored the skill + tooling into the repo; `856234d2` added the verifier.
-One commit landed in the scratch corpus: `dc7e996`, the 30th defect (see the
-`Create a local admin account` row below — the audit log had recorded it as fixed
-for four batches while it was live).
+**State:** the deterministic half of the verifier is **DONE and green**. All 40 findings
+are dispositioned or fixed, three over-firing rules were tightened, and the full gate
+re-ran clean. What remains is the half that has no textual signature: the **judge
+worklist, 653 hunks (164 high-risk)**. Nothing on it has been read.
 
 ## Reproduce the current state in one command
 
@@ -23,60 +18,130 @@ cd /d/claude/docs-google-style-test && python /d/claude/Autopilot/scripts/docs-s
   --dispositions /d/claude/Autopilot/scripts/docs-style/_DISPOSITIONS.tsv
 ```
 
-Expected, exactly (if these numbers differ, something moved — find out what before working):
+Expected, exactly:
 
 ```
-  14  doubled-connective      9  label-drift        9  prose-crossref
-   5  quotation               1  split-verb         1  word-order
-   1  dispositioned (silent)
-  JUDGE WORKLIST: 653 hunks (164 high-risk)     exit=1
+  6  dispositioned (silent)
+  JUDGE WORKLIST: 653 hunks (164 high-risk)
+  PASS: no undispositioned findings.            exit=0
 ```
 
-`c97d322` is the corrected pristine baseline — **not** `6010dd5`, which is one commit
-earlier and drags in the generated `_PASSIVE-REPORT.md`. Using the wrong one shifts every
-count by one file and 3,931 lines.
+`c97d322` is the corrected pristine baseline — **not** `6010dd5`.
+`python verify-meaning.py --self-test` must still print `PASS: 10/10`.
 
-## The job, in order
+## The job
 
-1. **Deterministic findings (40).** For each: fix it, or add its `id` + a real reason to
-   `scripts/docs-style/_DISPOSITIONS.tsv`. Ids are stable across runs and keyed to the
-   evidence text, so a disposition self-invalidates if that line changes again.
-   Work by class, not by file — a whole class often shares one ruling.
-   **If a class needs more than a handful of dispositions, the RULE is wrong. Fix the
-   rule.** Three of mine over-fired on the first run (120 findings) and were tightened
-   down to 40 rather than bulk-dispositioned.
-2. **Judge worklist (653 hunks, 164 high-risk).** Start with the 164 `risk: high` — a
-   `should` was dropped, which is the shape that produced all 5 recorded inversions.
-   ```bash
-   python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 --json > /tmp/worklist.json
-   ```
-   **Spawn fresh Agents to judge. Do not judge them yourself in a context that has read
-   this file.** Independence is the whole point: all 30 defects were found by a reader who
-   did not author the edit. The decision procedure and a worked example are in
-   `.claude/skills/google-style-verify/SKILL.md` §3.
-3. **Re-run until `exit=0`,** then the gate (C17 / nav-hub / apex) one more time.
+**Judge worklist, 653 hunks, 164 high-risk.** Start with the 164 `risk: high` — a
+`should` was dropped, which is the shape that produced all 5 recorded inversions.
 
-## Known-live gotchas for this specific job
+```bash
+cd /d/claude/docs-google-style-test && python /d/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 --json > worklist.json
+```
 
-- **`split-verb` currently has 1 finding and it is probably a false positive**
-  (`are NOT on the supported list and fail` — grammatical). Confirm and disposition it;
-  do not "fix" correct prose.
-- **`word-order` has 1 finding**, `l2-runbooks/00-index.md:256` `APv2 preceding L2`.
-  Unjudged. Read it in context.
-- **`quotation` at 5 is post-suppression.** Mechanical-only changes inside quoted spans
-  are already filtered by `mech_canon()`. Anything still reported is a genuine wording
-  change inside quotes — check whether it is a vendor citation (falsification, must fix)
-  or the corpus's own scare quote (editable, disposition).
-- **`label-drift` at 9** is the class that hid the 30th defect for four batches. Treat
-  every one as guilty until read.
-- The verifier's own self-test must stay green: `python verify-meaning.py --self-test`
-  → `PASS: 10/10`.
+**Spawn fresh Agents to judge. Do not judge them yourself in a context that has read
+this file.** Independence is the whole point: all 30 defects were found by a reader who
+did not author the edit. The decision procedure and a worked example are in
+`.claude/skills/google-style-verify/SKILL.md` §3.
+
+A modal drop that this session found *by hand*, outside any deterministic rule, shows
+the worklist is not theoretical: `cross-platform/apple-business/_admin-directory.md:26`
+had `SHOULD resolve via` rewritten to `must resolve through` — a recommendation carrying
+an explicit "(in tenant preference order)" turned into a requirement. Reverted to
+`should`. It was one of only two capitalised `SHOULD`s in the corpus; the other
+(`l1-runbooks/21:142`) correctly became "is expected to".
+
+## What session 2 did (do not redo)
+
+**Rules tightened — three classes were over-firing, exactly as the previous block warned.**
+Each new guard reuses `mech_canon()`, the same suppression the quotation rule already had,
+and the self-test still passes 10/10.
+
+| Class | Before | After | Guard added |
+|---|---|---|---|
+| `doubled-connective` | 14 | 0 | fires only if the doubled `through` span did **not** already exist in the baseline. Four hits were lines edited for an unrelated reason (`admin` to `administrator`, dash spacing) that happened to carry a pre-existing double. |
+| `prose-crossref` | 9 | 0 | skip when `mech_canon(old).count() == mech_canon(new).count()`. Six references differed **only** by dash spacing: headings are pinned and keep the spaced dash, prose was canonicalised to the tight one. Nothing a reader can misread. |
+| `label-drift` | 9 | 0 | same `mech_canon` guard. `mech_canon` does not touch `admin`/`administrator`, so the C1 defect this rule exists to catch still fires — the self-test fixture proves it. |
+
+**10 real doubled connectives reworded** (`or through X` to `or X`; `added through Apple
+Configurator` to `added using`; `controlled through the "Await Configuration"` to
+`controlled by`; `NOT through Managed Google Play` to `NOT from`; and so on).
+
+**5 label pairs re-joined.** The pass never edits table cells, so expanding only the prose
+copy split the label. Uniform resolution: **revert the prose copy to match the untouched
+table copy.**
+
+| File | Reverted to |
+|---|---|
+| `admin-setup-android/03-fully-managed-cobo.md:112` | `fully managed, via staging` |
+| `admin-setup-android/08-cope-full-admin.md:115` | `with work profile, via staging` |
+| `cross-platform/apple-business/14-device-transfer-runbook.md:72` | `Intune config profiles` |
+| `l1-runbooks/21-ios-compliance-blocked.md:98` | `OS version below minimum` |
+| `reference/android-capability-matrix.md:148` | `Tri-portal admin surface` |
+
+**2 prose cross-references fixed** (real, not cosmetic): `linux-lifecycle/00:35` had the
+link **text** rewritten to `Out of Scope for Linux through Intune` while the heading and
+the `#out-of-scope-for-linux-via-intune` anchor still said `via` — reverted;
+`operations/drift-migration/04:390` had `preceding` inserted inside the heading name
+(`macOS / iOS preceding tenant migration`) — moved to `see the preceding / Windows and
+macOS / iOS tenant migration sections`. Same word-order break as
+`l2-runbooks/00-index.md:256` (`APv2 preceding L2` to `preceding APv2 L2`), also fixed.
+
+**1 quotation reverted, 4 kept.** `l2-runbooks/14` had `"configuration didn't apply"` put
+back to `"config didn't apply"` — it is a quoted **user complaint**, and the register is
+the point of quoting it. The other four are the corpus's own scare quotes / rhetorical
+questions, not vendor sentences; each has a reason in `_DISPOSITIONS.tsv`.
+
+**`split-verb`'s one finding was the predicted false positive** and is dispositioned with
+the grammatical reason, not "fixed".
+
+**Idempotency was NOT what the old block claimed.** Re-running `sweep3.py` would have
+**re-broken three hand-adjudicated reverts**, including `Create a local admin account` —
+the 30th defect, reverted in `dc7e996` and re-broken by the very next sweep run because
+nothing pinned it. Fixed at the rule level:
+
+- `sweep3.py` `KEEP_LINE` now also protects `Create a local admin account`,
+  `Tri-portal admin surface`, `Intune config profiles`, and `via staging`.
+- `subs-directional.tsv` lost its `OS version below minimum` row: it split a label pair,
+  and "below minimum" is the compliance setting's own phrasing.
+
+Verified: `sweep3.py` with `_CONTENT-PINS.txt` and **every** `subs-*.tsv` now applies
+**0** edits corpus-wide.
+
+⚠ **`sweep3.py` takes a PINSFILE argument and the two available files are not
+interchangeable.** Running it with `_EMDASH-PINS.txt` (8 pins) instead of
+`_CONTENT-PINS.txt` (562 pins) reports 20 wanted edits, 17 of them on the
+validator-pinned `> **Ask the admin:**` lines in `recipes/01-04`,
+`_standards/EEE-SOP-standard.md` and `_templates/recipe-template.md`. Those lines are
+pinned verbatim by `check-phase-131.mjs` and `check-phase-136.mjs` and must never be
+expanded. Always pass `_CONTENT-PINS.txt`.
+
+**One known residual, pre-existing and out of scope:** `subs-directional-adminsetup.tsv`
+still wants `see callout above` shortened to `see callout` in
+`operations/co-management/02-windows-workload-sliders.md:115,134`. That file belongs to
+the `operations` batch, whose directional rule set has no `callout above` row. Two lines,
+cosmetic, nobody's defect.
+
+## Gate re-run after all of the above — all green
+
+```
+verify-meaning.py            PASS, exit 0 (6 dispositioned, 653 judge hunks outstanding)
+verify-meaning --self-test   PASS 10/10
+verify2.py                   link/anchor INTRODUCED by the sweep: 0
+                             (6017 resolved / 29 missing file / 340 missing anchor, identical to baseline)
+pins2.py                     4030 literals scanned, 562 pinned; grep -vxF vs _CONTENT-PINS.txt empty
+c17-eee-contract.mjs         234 files, 0 with violations, 0 total (#1..#13 all 0)
+check-nav-hub-links.mjs      0 hub-presence, 0 corpus-link, 0 total
+check-phase-144.mjs          101 PASS, 0 FAIL, 0 SKIPPED (~33s)
+```
+
+The gate ran in the `c17-sandbox` clone (at `534073f4`) with `docs/` replaced by the
+scratch corpus and the generated `_PASSIVE-REPORT.md` removed.
 
 ## ⚠ The corpus moved under us — re-measure before trusting any drift number
 
-v1.21 phases **149, 150 and 151 shipped while this session was running**, from a
+v1.21 phases **149, 150 and 151 shipped while the first session was running**, from a
 separate workstream in the same repo. `docs/` drift since the scratch fork
-(`534073f4`) is no longer the 3 files measured earlier this session:
+(`534073f4`) is no longer the 3 files measured earlier:
 
 ```
 15 files changed, 3969 insertions(+), 9 deletions(-)
@@ -88,17 +153,11 @@ The nine new ones are the whole `operations/firmware-bios/` tree (00-overview,
 01-windows-dfci, 02-dell, 03-hp, 04-lenovo), `patch-management/07-windows-autopatch`,
 `08-windows-app-updates`, and `recipes/05-enterprise-update-plan`.
 
-**Consequences.** Landing the pass is now a real merge, not a copy. The nine new docs
+**Consequences.** Landing the pass is a real merge, not a copy. The nine new docs
 have had no style pass at all, so shipping the pass would make the corpus *inconsistent*
 rather than consistent. And this repo takes commits from other sessions — re-run
 `git diff --shortstat 534073f4 HEAD -- docs` at the start of every session rather than
 trusting any number written here, including this one.
-
-## Do not redo these — already done and verified
-
-Idempotency (`sweep3 --subs` twice → 0 edits), link/anchor health (`verify2.py`, 0
-introduced), validator pins (`pins2.py`, 562 intact), and the full gate (C17 234/0/0,
-nav-hub 0, apex 101/0/0). All green as of `dc7e996`.
 
 ---
 
@@ -134,10 +193,10 @@ no history.
 
 ## Status
 
-**THE PASS IS COMPLETE — but its output is now UNVERIFIED-BY-TOOL.** See the
-NEXT SESSION block at the top: a verifier exists as of 2026-08-26 and its 40 findings
-plus 653-hunk judge worklist are unworked. "Nothing is open" below refers to the
-*formatting* work only.
+**THE PASS IS COMPLETE, and its deterministic verification is GREEN.** See the
+NEXT SESSION block at the top: all 40 deterministic findings were adjudicated on
+2026-08-26 (session 2) and the verifier now exits 0. The 653-hunk judge worklist
+is still unread -- that is the only open work. "Nothing is open" below refers to the
 
 Mechanical phase green, all 8 class batches done
 (`l1-runbooks` 42, `l2-runbooks` 33, `reference` 26, `operations` 22,

@@ -38,7 +38,15 @@ SUBS = [
 # "Enrolled via DEP" is a line of `profiles status` OUTPUT. It sits verbatim in a
 # code fence four lines up and again as the bold label of the bullet that
 # interprets it; batch 3 kept it and a corpus-wide generic via rule broke it.
-KEEP_LINE = re.compile(r"Tenant admin\b|Ask the user: \"|Enrolled via DEP")
+# Three label pairs adjudicated against verify-meaning.py's label-drift rule
+# (2026-08-26). Each appears twice in its document; the second copy sits in a
+# table cell the sweep never touches, so converting the prose copy alone
+# splits the label. "Create a local admin account" is the 30th defect -- it was
+# reverted in dc7e996 and re-broken by the very next sweep run because nothing
+# pinned it.
+KEEP_LINE = re.compile(r"Tenant admin\b|Ask the user: \"|Enrolled via DEP"
+                       r"|Create a local admin account|Tri-portal admin surface"
+                       r"|Intune config profiles|via staging")
 EMDASH = re.compile(r"\s+—\s+|\s+—|—\s+")
 # The bare-domain arm is load-bearing: without it the admin rule rewrote the real
 # host admin.microsoft.com into administrator.microsoft.com. Schemeless hosts are
