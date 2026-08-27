@@ -72,6 +72,28 @@ count by one file and 3,931 lines.
 - The verifier's own self-test must stay green: `python verify-meaning.py --self-test`
   → `PASS: 10/10`.
 
+## ⚠ The corpus moved under us — re-measure before trusting any drift number
+
+v1.21 phases **149, 150 and 151 shipped while this session was running**, from a
+separate workstream in the same repo. `docs/` drift since the scratch fork
+(`534073f4`) is no longer the 3 files measured earlier this session:
+
+```
+15 files changed, 3969 insertions(+), 9 deletions(-)
+  6 files  the pass edited AND the repo has since changed  -> real merge conflicts
+  9 files  brand new, never seen by the pass               -> unformatted
+```
+
+The nine new ones are the whole `operations/firmware-bios/` tree (00-overview,
+01-windows-dfci, 02-dell, 03-hp, 04-lenovo), `patch-management/07-windows-autopatch`,
+`08-windows-app-updates`, and `recipes/05-enterprise-update-plan`.
+
+**Consequences.** Landing the pass is now a real merge, not a copy. The nine new docs
+have had no style pass at all, so shipping the pass would make the corpus *inconsistent*
+rather than consistent. And this repo takes commits from other sessions — re-run
+`git diff --shortstat 534073f4 HEAD -- docs` at the start of every session rather than
+trusting any number written here, including this one.
+
 ## Do not redo these — already done and verified
 
 Idempotency (`sweep3 --subs` twice → 0 edits), link/anchor health (`verify2.py`, 0
