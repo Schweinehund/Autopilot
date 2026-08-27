@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 152
 current_phase_name: Integration, Registry & Navigation-Last Close
 status: executing
-stopped_at: Completed 152-01-PLAN.md
-last_updated: "2026-08-27T14:48:19.328Z"
+stopped_at: Completed 152-02-PLAN.md
+last_updated: "2026-08-27T16:30:49.924Z"
 last_activity: 2026-08-27
 last_activity_desc: Phase 152 execution started
-state_head: 74917b7d2ba31a49a73f95bd9a05b5175d525b4b
+state_head: 3b5378aafa2e3b41bd45fba7667c7110e9ef1c4e
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 34
-  completed_plans: 31
+  completed_plans: 32
   percent: 78
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 152 (Integration, Registry & Navigation-Last Close) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-08-27 — Phase 152 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -448,6 +448,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 151 P04 | 10 min | 2 tasks | 1 files |
 | Phase 151 P05 | 41min | 3 tasks | 4 files |
 | Phase 152 P01 | 18min | 4 tasks | 4 files |
+| Phase 152 P02 | 22min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -615,6 +616,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 152]: All eleven registry rows land at Status Approved because the Approved filter is the publish gate
 - [Phase 152]: Doc Type derived from EEE-SOP-standard D-08 rule 2, not asserted: Guide x10, Reference for the matrix
 - [Phase 152]: No Draft-to-Approved flip commit needed this time, unlike Phase 137's c3733928
+- [Phase 152]: 152-02: publish bundle run with --version=v1.21.0; 236/236 converted+guarded, parity 0/0/0, filename map byte-identical, no content commit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -643,8 +645,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-27T14:48:17.817Z
-Stopped at: Completed 152-01-PLAN.md
+Last session: 2026-08-27T16:30:47.976Z
+Stopped at: Completed 152-02-PLAN.md
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
