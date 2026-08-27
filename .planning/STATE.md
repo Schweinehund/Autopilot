@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 152
 current_phase_name: Integration, Registry & Navigation-Last Close
 status: executing
-stopped_at: Phase 152 context gathered
-last_updated: "2026-08-27T13:35:58.181Z"
-last_activity: 2026-08-26
-last_activity_desc: Phase 151 complete, transitioned to Phase 152
-state_head: b0e4da0cbed652753110394fd2711d3abcde8a86
+stopped_at: Completed 152-01-PLAN.md
+last_updated: "2026-08-27T14:48:19.328Z"
+last_activity: 2026-08-27
+last_activity_desc: Phase 152 execution started
+state_head: 74917b7d2ba31a49a73f95bd9a05b5175d525b4b
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 34
-  completed_plans: 30
+  completed_plans: 31
   percent: 78
 ---
 
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 151 — Recipe #5 — The Enterprise Update Plan
+**Current focus:** Phase 152 — Integration, Registry & Navigation-Last Close
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 152 (Integration, Registry & Navigation-Last Close) — READY TO EXECUTE
-Plan: Not started
+Phase: 152 (Integration, Registry & Navigation-Last Close) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-08-26 — Phase 151 complete, transitioned to Phase 152
+Last activity: 2026-08-27 — Phase 152 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
   not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
@@ -48,7 +48,7 @@ Last activity: 2026-08-26 — Phase 151 complete, transitioned to Phase 152
   Complete (sole declaring plan). Per D-80, the Dell guide itself stays UNCOMMITTED — Plan 04 lands
   it in the phase's single content commit.
 
-Progress: [███████░░░] 67% (4 of 9 phases; 15/15 planned plans complete)
+Progress: [████████░░] 78% (4 of 9 phases; 15/15 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -447,6 +447,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 151 P03 | 7 min | 3 tasks | 1 files |
 | Phase 151 P04 | 10 min | 2 tasks | 1 files |
 | Phase 151 P05 | 41min | 3 tasks | 4 files |
+| Phase 152 P01 | 18min | 4 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -610,6 +611,10 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 151]: Phase 151 closed the recipe-template Rollback/Recovery divergence at 5-of-5: promoted into the template (Commit A) and retrofitted into recipes 01 and 02 (Commit B), rather than promoting alone and inverting a 2-of-4 additive divergence into a 2-of-5 mandated-section gap
 - [Phase 151]: The recipe's Rollback/Recovery section states the true count of four of nine and shows both subtractions, because D-42's own stated arithmetic (nine minus three extras) reaches six, not four
 - [Phase 151]: D-33's 600-700 line budget is exceeded at 850 lines and is recorded rather than met by trimming; a successor tracking entry is filed per D-56 to adjudicate whether the budget or the artifact's scope is wrong
+- [Phase 152]: RE-228..RE-236 allocated in path order, operator-confirmed at a one-way blocking checkpoint
+- [Phase 152]: All eleven registry rows land at Status Approved because the Approved filter is the publish gate
+- [Phase 152]: Doc Type derived from EEE-SOP-standard D-08 rule 2, not asserted: Guide x10, Reference for the matrix
+- [Phase 152]: No Draft-to-Approved flip commit needed this time, unlike Phase 137's c3733928
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -638,9 +643,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-27T04:36:57.803Z
-Stopped at: Phase 152 context gathered
-Resume file: .planning/phases/152-integration-registry-navigation-last-close/152-CONTEXT.md
+Last session: 2026-08-27T14:48:17.817Z
+Stopped at: Completed 152-01-PLAN.md
+Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
 ## Operator Next Steps

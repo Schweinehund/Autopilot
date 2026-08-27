@@ -93,9 +93,9 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 ### Integration — registry, publish reach and navigation-last close (INT)
 
-- [ ] **INT-01**: **One atomic unit, one commit** — every new registry row at `Status: Approved`, `filename-map.md` **regenerated** via `node scripts/pipeline/build-filename-map.mjs` (never hand-edited), and **both** canary literals bumped. Content phases author documents and do **not** touch `docs/_registry/RE-index.md`.
-- [ ] **INT-02**: New `docs/operations/**` documents receive **registry rows and filename-map rows but no `doc_id`**. **[OWNER-RULED 2026-08-19]** They reach the `.docx` publish bundle, SharePoint and Copilot Studio; they are **not** C17-gated; the 20 legacy operations documents are **not** retrofitted. `[MEASURED]` verified end to end — the publish gate is the registry table, and an unenrolled operations document converted cleanly (exit 0, 18,214-byte `.docx`) and passed `guard-docx.mjs` 3/0.
-- [ ] **INT-03**: The canary target is **computed from the registry after the rows land** — `grep -c "^| RE-"` — and **never hard-coded from a document count**. `[MEASURED]` the two canaries **count different sets**: `build-filename-map.mjs` counts all rows, `build-publish-bundle.mjs` counts Approved-only. They are equal today at 225 solely because every row is Approved, so a single non-Approved row silently diverges them.
+- [x] **INT-01**: **One atomic unit, one commit** — every new registry row at `Status: Approved`, `filename-map.md` **regenerated** via `node scripts/pipeline/build-filename-map.mjs` (never hand-edited), and **both** canary literals bumped. Content phases author documents and do **not** touch `docs/_registry/RE-index.md`.
+- [x] **INT-02**: New `docs/operations/**` documents receive **registry rows and filename-map rows but no `doc_id`**. **[OWNER-RULED 2026-08-19]** They reach the `.docx` publish bundle, SharePoint and Copilot Studio; they are **not** C17-gated; the 20 legacy operations documents are **not** retrofitted. `[MEASURED]` verified end to end — the publish gate is the registry table, and an unenrolled operations document converted cleanly (exit 0, 18,214-byte `.docx`) and passed `guard-docx.mjs` 3/0.
+- [x] **INT-03**: The canary target is **computed from the registry after the rows land** — `grep -c "^| RE-"` — and **never hard-coded from a document count**. `[MEASURED]` the two canaries **count different sets**: `build-filename-map.mjs` counts all rows, `build-publish-bundle.mjs` counts Approved-only. They are equal today at 225 solely because every row is Approved, so a single non-Approved row silently diverges them.
 - [ ] **INT-04**: Navigation-last wiring lands only after all content: `docs/index.md` (recipes table row, quick-nav bullet **appended to the single existing line**, Operations entry) and `docs/operations/00-index.md` (Patch row, a Firmware H2 that is **not** the barred literal heading, Version History row).
 - [ ] **INT-05**: Recipe #5's hub coverage is added **additively in a successor validator** — `[MEASURED]` `check-phase-132.mjs`'s generic `docs/recipes` arm never fires (hub files live inside `docs/`, so real links carry no `docs/` prefix), so recipe #5 is enforced by nothing today. The frozen validator is **never edited**.
 - [ ] **INT-06**: Full-corpus C17 and the link checker are green at close, with **no accepted-violation baseline** introduced.
@@ -219,9 +219,9 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | RCP-03 | Phase 151 | Complete |
 | RCP-04 | Phase 151 | Complete |
 | RCP-05 | Phase 151 | Complete |
-| INT-01 | Phase 152 | Pending |
-| INT-02 | Phase 152 | Pending |
-| INT-03 | Phase 152 | Pending |
+| INT-01 | Phase 152 | Complete |
+| INT-02 | Phase 152 | Complete |
+| INT-03 | Phase 152 | Complete |
 | INT-04 | Phase 152 | Pending |
 | INT-05 | Phase 152 | Pending |
 | INT-06 | Phase 152 | Pending |
