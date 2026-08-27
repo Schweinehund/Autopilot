@@ -311,7 +311,7 @@ None. This plan added no network endpoint, no auth path, no schema change at a t
 
 | Commit | Subject | Files |
 |---|---|---|
-| *(see final metadata commit)* | `docs(152-02): publish-bundle reachability proof summary` | `.planning/**` only — SUMMARY, run log, STATE, ROADMAP |
+| `96f11afa` | `docs(152-02): publish-bundle reachability proof over the committed 236-row registry` | `.planning/**` only — SUMMARY, run log, STATE, ROADMAP |
 
 No content commit. No commit of any tracked pipeline file.
 
@@ -320,3 +320,7 @@ No content commit. No commit of any tracked pipeline file.
 - The bundle is proved reachable at 236 rows; `dist/docs-library-v1.21.0.zip` is this plan's proof artifact and is deliberately named apart from the plain `v1.21` artifact HARN-05 produces in Phase 153.
 - `?? scripts/docs-style/judge-packets.py` is untracked and foreign. Any later plan whose verification uses a bare `git status --porcelain -- docs/ scripts/` emptiness test will fail on it; use `-uno`, or narrow the pathspec.
 - The nine unregistered `docs/operations/**` link targets are enumerated above and are the concrete content-completeness gap the phase leaves open.
+
+## Self-Check: PASSED
+
+`dist/docs-library-v1.21.0.zip`, the SUMMARY and the retained run log all exist on disk. Commit `96f11afa` is present in `git log` and contains four `.planning/**` paths and nothing under `docs/` or `scripts/`. The filename map remains byte-identical to its committed blob after the commit.
