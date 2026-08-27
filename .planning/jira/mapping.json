@@ -1015,12 +1015,12 @@
         },
         "152": {
           "issueKey": "RTS-814",
-          "status": "in_progress",
+          "status": "done",
           "name": "Integration, Registry & Navigation-Last Close"
         },
         "153": {
           "issueKey": "RTS-815",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump"
         }
       }
