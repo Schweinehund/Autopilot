@@ -4,17 +4,17 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 152
 current_phase_name: Integration, Registry & Navigation-Last Close
-status: executing
-stopped_at: Completed 152-02-PLAN.md
-last_updated: "2026-08-27T16:30:49.924Z"
+status: verifying
+stopped_at: Completed 152-04-PLAN.md (Commit B 4816635b; all three terminal gates green; needle-spec handed to Phase 153)
+last_updated: "2026-08-27T16:56:08.505Z"
 last_activity: 2026-08-27
 last_activity_desc: Phase 152 execution started
-state_head: 3b5378aafa2e3b41bd45fba7667c7110e9ef1c4e
+state_head: 4816635bd55ebddc6fb595d4d9009a7477e8465f
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 34
-  completed_plans: 32
+  completed_plans: 34
   percent: 78
 ---
 
@@ -38,8 +38,8 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 152 (Integration, Registry & Navigation-Last Close) — EXECUTING
-Plan: 3 of 4
-Status: Ready to execute
+Plan: 4 of 4
+Status: Phase complete — ready for verification
 Last activity: 2026-08-27 — Phase 152 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
@@ -449,6 +449,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 151 P05 | 41min | 3 tasks | 4 files |
 | Phase 152 P01 | 18min | 4 tasks | 4 files |
 | Phase 152 P02 | 22min | 3 tasks | 2 files |
+| Phase 152 P03 | 25min | 3 tasks | 2 files |
+| Phase 152 P04 | 35min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -617,6 +619,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 152]: Doc Type derived from EEE-SOP-standard D-08 rule 2, not asserted: Guide x10, Reference for the matrix
 - [Phase 152]: No Draft-to-Approved flip commit needed this time, unlike Phase 137's c3733928
 - [Phase 152]: 152-02: publish bundle run with --version=v1.21.0; 236/236 converted+guarded, parity 0/0/0, filename map byte-identical, no content commit
+- [Phase 152]: Phase 152 Commit B 4816635b: the four deferred inbound links plus both hub files land as one six-file content commit; the phase closes at exactly two content commits
+- [Phase 152]: The 01-windows-wufb-rings.md companion firmware link is deferred on the milestone-level Phase-146 isolation constraint, NOT on a validator-pin premise — check-phase-54's bare-ring negative was measured and could not fire on a firmware-bios link
+- [Phase 152]: Phase 152 authored zero validators; a third option (a non-leaf validator authored in-phase, precedented by c17-eee-contract.mjs and check-nav-hub-links.mjs) was declined because the Phase 153 leaf would duplicate it
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -625,6 +630,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - **Phases 149-150 (BIOS-05, BIOS-09): three recovery gaps, all UNVERIFIED.** Lenovo lost-supervisor-password recovery (no first-party statement located), Lenovo lost-certificate-private-key recovery (page fetched, explicitly silent), and HP Endorsement-Key loss (premise only, no documented escape hatch). Recovery is the most-used content for a service-desk audience — ship it as an explicit "not documented by the vendor; escalate to vendor support" statement, never as an omitted heading and never as unsourced industry expectation. Also open: is HP Connect reachable from Intune's partner-portal entry point as Dell is, and does a post-2022 HP Connect user guide exist? The oldest source in the entire set is the sole source for three load-bearing Phase-149 claims — re-fetch it first.
 - **Skip a research pass on Phases 146, 147, 152 and 153** — all four are either fully first-party sourced (146, 147, including their documented silences) or ride well-worn repo precedent with a ratified precedent commit (152, 153).
 - **Phase 151** needs no external research pass — it synthesises content authored in 146-150 — but carries one open design decision (promote `## Rollback/Recovery` into the recipe template, or record why it stays a tracked 2-of-4 divergence).
+- **Phase 153 (HARN-04): the `check-phase-152.mjs` needle-spec is fully pre-specified — transcribe it, do not re-derive it.** Full spec with every literal is in `.planning/phases/152-integration-registry-navigation-last-close/152-04-SUMMARY.md`. Lightweight leaf, no chain, both chain constants empty. Needles — master hub `docs/index.md`: a recipes-table row whose link target is `recipes/05-enterprise-update-plan.md`; the quick-nav bullet tested **line-scoped** (extract lines matching `^- \[Device Configuration Recipes\]\(#device-configuration-recipes\)`, assert match count is exactly 1, then test the fragment `enterprise update plan` against that isolated line only — a whole-file substring test false-matches lines above the bullet); the sub-heading literal `### Firmware and BIOS Governance`. Operations index `docs/operations/00-index.md`: the heading literal `## Firmware and BIOS Governance`; all four Patch path fragments `patch-management/05-linux-update-delivery.md`, `patch-management/06-windows-driver-firmware-updates.md`, `patch-management/07-windows-autopatch.md`, `patch-management/08-windows-app-updates.md`; a Version History row citing `INT-04`. Filename map `scripts/pipeline/filename-map.md`: all eleven identifiers `RE-226` through `RE-236` present — carrying this is not optional, the structural twin `check-phase-132.mjs` carries a filename-map needle and omitting it is a straight regression. Negative needle: `docs/common-issues.md`, `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` must **not** contain the fragment `recipes/05-`. Plus the self-reference guard in the twin's shape. **The frozen recipe-hub validator `scripts/validation/check-phase-132.mjs` is never edited** — its generic recipes arm does not cover `recipes/05-`, and that coverage is added additively in the new leaf, not by amending the frozen file.
 
 ### Pending Todos
 
@@ -645,8 +651,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-27T16:30:47.976Z
-Stopped at: Completed 152-02-PLAN.md
+Last session: 2026-08-27T16:55:46.578Z
+Stopped at: Completed 152-04-PLAN.md (Commit B 4816635b; all three terminal gates green; needle-spec handed to Phase 153)
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
