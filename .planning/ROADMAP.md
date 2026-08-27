@@ -292,8 +292,25 @@ Plans:
   5. Recipe #5's hub coverage is enforced by a **successor** validator authored additively — the frozen validator that enforces nothing for recipes 03 and later is byte-unchanged — and full-corpus C17 plus the link checker both exit 0.
 
 **Blast radius**: this is where the reference matrix's registry row lands, not Phase 150. The quick-nav assertion requires **exactly one** matching line — splitting it reproduces a known prior defect. Every ops-index edit lands here, which is why Phase 145's frozen-read conversion was a prerequisite rather than a nicety.
-**Research flag**: no research pass — the registry, filename-map, canary and nav-last mechanics are a well-worn repo pattern with named precedents. One pre-plan verification is worth thirty seconds: run the publish bundle end to end against a scratch row pointing at an unenrolled operations file and confirm the output lands in the bundle and its manifest.
-**Plans**: TBD
+**Research flag**: no research pass — the registry, filename-map, canary and nav-last mechanics are a well-worn repo pattern with named precedents. One pre-plan verification is worth thirty seconds: run the publish bundle end to end against a scratch row pointing at an unenrolled operations file and confirm the output lands in the bundle and its manifest. **[DISCHARGED at plan time 2026-08-27]** — the probe was run end to end and reverted clean; per D-27 it covered convert and guard only, so Plan 02's real-row run is the accepted full discharge.
+**Plans**: 4 plans, 4 waves, strictly sequential (D-05). Two content commits total (D-01).
+
+Plans:
+**Wave 1**
+
+- [ ] 152-01-PLAN.md — the registry atom: eleven rows at `Status: Approved`, the generator-produced filename map, both canaries bumped from measured counts (INT-01, INT-02, INT-03); Commit A, exactly four files
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 152-02-PLAN.md — the publish-bundle proof in isolation: a real run over the committed 236-row registry with an explicit version flag, computed parity assertions, no commit (INT-02, SC#3)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 152-03-PLAN.md — navigation-last on both index surfaces: the Firmware and BIOS Governance section, four Patch rows, the recipes row, the banner clause and the single-line quick-nav amendment (INT-04); left uncommitted for Commit B
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 152-04-PLAN.md — the four inbound links, Commit B (six files, one commit), the three terminal gates, and the pre-specified needle-spec handoff to Phase 153 (INT-04, INT-05, INT-06)
 
 ### Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 
