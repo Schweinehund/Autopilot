@@ -239,6 +239,17 @@
 | RE-223 | docs/recipes/02-shared-ipad-full-provisioning.md | Shared iPad Full Provisioning: Federated Sign-In to Verified End State | Guide | Approved |
 | RE-224 | docs/recipes/03-windows-11-multi-app-kiosk.md | Windows 11 Multi-App Kiosk: Assigned Access Provisioning | Guide | Approved |
 | RE-225 | docs/recipes/04-android-dedicated-mhs-multi-app.md | Android Dedicated Multi-App Kiosk: Managed Home Screen Provisioning | Guide | Approved |
+| RE-226 | docs/reference/firmware-oem-matrix.md | Firmware OEM Capability Matrix | Reference | Approved |
+| RE-227 | docs/recipes/05-enterprise-update-plan.md | Enterprise Update Plan: A Governed Update Posture for the Whole Fleet | Guide | Approved |
+| RE-228 | docs/operations/firmware-bios/00-overview.md | Firmware and BIOS Governance | Guide | Approved |
+| RE-229 | docs/operations/firmware-bios/01-windows-dfci.md | Device Firmware Configuration Interface (DFCI) | Guide | Approved |
+| RE-230 | docs/operations/firmware-bios/02-dell-bios-configuration.md | Dell BIOS Configuration Through Intune | Guide | Approved |
+| RE-231 | docs/operations/firmware-bios/03-hp-bios-configuration.md | HP BIOS Configuration Through Intune | Guide | Approved |
+| RE-232 | docs/operations/firmware-bios/04-lenovo-bios-configuration.md | Lenovo BIOS Configuration Through Intune | Guide | Approved |
+| RE-233 | docs/operations/patch-management/05-linux-update-delivery.md | Linux Update Delivery | Guide | Approved |
+| RE-234 | docs/operations/patch-management/06-windows-driver-firmware-updates.md | Windows Driver and Firmware Updates | Guide | Approved |
+| RE-235 | docs/operations/patch-management/07-windows-autopatch.md | Windows Autopatch | Guide | Approved |
+| RE-236 | docs/operations/patch-management/08-windows-app-updates.md | Windows Application Updates | Guide | Approved |
 
 ## Review Notes
 
@@ -250,3 +261,13 @@
   lifecycle-flavored naming (122-CONTEXT.md D-04(a), same rule that makes RE-068 a Runbook
   despite containing a converted decision tree). Recorded here so a future reviewer does not
   re-litigate the filename-vs-directory question.
+
+- **RE-228 through RE-236 (the nine `docs/operations/` firmware-BIOS and patch-management guides) — `Approved` without an EEE retrofit.**
+  These nine documents carry no `doc_id` and are deliberately not C17-gated, per the dated owner
+  ruling recorded as INT-02 (2026-08-26). They are `Approved` because the `Status: Approved` filter
+  in `scripts/pipeline/build-publish-bundle.mjs` is the publish gate — any other value silently
+  excludes the document from the `.docx` bundle and from the indexed library. The header note above
+  describes a completed 2026-07 retrofit wave (phases 116–118) and binds nothing executable, so the
+  dated ruling governs where the two read differently; the twenty legacy `docs/operations/`
+  documents stay unregistered and un-retrofitted, which is out of scope rather than an oversight.
+  Recorded here so a future reviewer does not re-litigate nine rows.

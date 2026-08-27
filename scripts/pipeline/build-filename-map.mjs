@@ -271,16 +271,18 @@ if (isMainModule && SELF_TEST) {
     );
   }
 
-  // (c) Parsing the REAL docs/_registry/RE-index.md yields exactly 225 rows
+  // (c) Parsing the REAL docs/_registry/RE-index.md yields exactly 236 rows
   //     (bumped 221 -> 223 at v1.18 close: RE-222/RE-223 recipes added in Phase 132;
   //      bumped 223 -> 225 in Phase 137: RE-224/RE-225 recipes added;
+  //      bumped 225 -> 236 in Phase 152: RE-226..RE-236 registered (the firmware OEM matrix,
+  //      Recipe #5 and nine docs/operations/ guides);
   //      deliberate drift-canary, bump on each registry-row addition)
   {
     const content = readFile(REGISTRY_REL_PATH);
     const rows = content ? parseRegistry(content) : [];
     stAssert(
-      '(c) parseRegistry(docs/_registry/RE-index.md) yields exactly 225 rows',
-      rows.length === 225,
+      '(c) parseRegistry(docs/_registry/RE-index.md) yields exactly 236 rows',
+      rows.length === 236,
       'rows.length=' + rows.length
     );
   }

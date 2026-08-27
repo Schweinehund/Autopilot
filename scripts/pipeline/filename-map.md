@@ -234,3 +234,14 @@
 | RE-223 | docs/recipes/02-shared-ipad-full-provisioning.md | shared-ipad-full-provisioning-federated-sign-in-to-verified-end-state.docx |
 | RE-224 | docs/recipes/03-windows-11-multi-app-kiosk.md | windows-11-multi-app-kiosk-assigned-access-provisioning.docx |
 | RE-225 | docs/recipes/04-android-dedicated-mhs-multi-app.md | android-dedicated-multi-app-kiosk-managed-home-screen-provisioning.docx |
+| RE-226 | docs/reference/firmware-oem-matrix.md | firmware-oem-capability-matrix.docx |
+| RE-227 | docs/recipes/05-enterprise-update-plan.md | enterprise-update-plan-a-governed-update-posture-for-the-whole-fleet.docx |
+| RE-228 | docs/operations/firmware-bios/00-overview.md | firmware-and-bios-governance.docx |
+| RE-229 | docs/operations/firmware-bios/01-windows-dfci.md | device-firmware-configuration-interface-dfci.docx |
+| RE-230 | docs/operations/firmware-bios/02-dell-bios-configuration.md | dell-bios-configuration-through-intune.docx |
+| RE-231 | docs/operations/firmware-bios/03-hp-bios-configuration.md | hp-bios-configuration-through-intune.docx |
+| RE-232 | docs/operations/firmware-bios/04-lenovo-bios-configuration.md | lenovo-bios-configuration-through-intune.docx |
+| RE-233 | docs/operations/patch-management/05-linux-update-delivery.md | linux-update-delivery.docx |
+| RE-234 | docs/operations/patch-management/06-windows-driver-firmware-updates.md | windows-driver-and-firmware-updates.docx |
+| RE-235 | docs/operations/patch-management/07-windows-autopatch.md | windows-autopatch.docx |
+| RE-236 | docs/operations/patch-management/08-windows-app-updates.md | windows-application-updates.docx |
