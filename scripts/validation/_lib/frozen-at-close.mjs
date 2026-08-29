@@ -31,11 +31,26 @@
 // helper pair, which extends the import block's write verbs (line 27) rather than appending net-new
 // lines only. Both edits are named here, on the record, rather than taken silently. This amendment
 // does not reopen APPEND-ONLY for any future phase — the default reverts after Phase 153.
+//
+// CHARACTER CHANGE (Phase 153 D-19): this module is no longer read-only. `materializeDocsAtClose`
+// and `withDocsAtClose` (both exported below, alongside the existing readers) are its first write
+// verbs -- they create a temp directory, write the frozen docs/ tree into it, and remove it again.
+// Every prior export in this file only ever read from the git object store; these two touch disk.
+//
+// MATERIALIZED-SET COUPLING (Phase 153 D-21): `withDocsAtClose` materializes exactly docs/** at a
+// milestone's close SHA and hands that directory to a caller-supplied callback as its cwd. This is
+// a SILENT CONTRACT with whatever byte-frozen validator the callback spawns: if a future milestone's
+// contract validator ever reads a path outside docs/, every harness using this helper goes
+// vacuously green at once, because the helper materializes only what it is told to and nothing the
+// contract validator additionally expects. The residue this coupling belongs to is tracked in
+// `.planning/phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/` (HARN-03,
+// `C17-FROZEN-AWARE-RESIDUE-V15-V19`); a future contract-validator change must re-verify this
+// coupling before assuming an unrelated harness conversion is safe.
 
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, rmSync, existsSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join, resolve, dirname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // SWEEP-04 (v1.20 Phase 139 Plan 02, D-28/D-29): typed frozen-read cause classifier, shared by
@@ -391,6 +406,77 @@ export function createFrozenCorpusReader(milestoneTag, { extraPaths = [] } = {})
     get: (relPath) => content.get(relPath),  // string | null (absent-at-SHA) | undefined (never requested)
     paths: docPaths,
   };
+}
+
+/**
+ * Materialize the frozen docs/ tree at a milestone close onto disk under destDir (Phase 153
+ * D-12/D-13/D-19/D-21). Enumerates docs/** via lsTreeAtClose (no ext filter -- the whole tree,
+ * not just .md), batch-reads every enumerated path via readManyAtClose, and writes each file at
+ * its repo-relative path under destDir. Materializes docs/** and nothing else -- callers needing
+ * extra paths (e.g. a sidecar) must fetch and write those separately; this keeps the coupling
+ * D-21 names narrow and auditable.
+ *
+ * Both underlying reads (lsTreeAtClose, readManyAtClose) already route git-object failures
+ * through the same frozenCause enrichment every other reader in this module uses, so a
+ * materialize failure surfaces identically to a frozen-read failure -- no separate catch needed
+ * here for that class of error.
+ *
+ * T-153-01 (Tampering, high, mitigated): every written path is resolved against destDir and
+ * asserted to remain inside it before any write. lsTreeAtClose paths are always repo-relative
+ * git tree entries under the 'docs' prefix, so this can only fire as defense-in-depth against a
+ * future tree listing containing an unexpected '..' segment -- not an expected runtime path.
+ *
+ * @param {keyof MILESTONE_CLOSE_SHAS} milestoneTag
+ * @param {string} destDir - absolute path to an existing directory to materialize into
+ * @returns {string[]} repo-relative paths actually written
+ * @throws if milestoneTag is unpinned, on any git failure (frozenCause-enriched), or if a
+ *   materialized path would resolve outside destDir
+ */
+export function materializeDocsAtClose(milestoneTag, destDir) {
+  const paths = lsTreeAtClose(milestoneTag, 'docs');
+  const content = readManyAtClose(milestoneTag, paths);
+  const destRoot = resolve(destDir);
+  const written = [];
+  for (const relPath of paths) {
+    const body = content.get(relPath);
+    if (body === null || body === undefined) continue; // absent-at-SHA or never fetched -- skip, not fatal
+    const abs = resolve(destRoot, relPath);
+    if (abs !== destRoot && !abs.startsWith(destRoot + sep)) {
+      throw new Error(`materializeDocsAtClose: path escapes temp root (T-153-01): ${relPath}`);
+    }
+    mkdirSync(dirname(abs), { recursive: true });
+    writeFileSync(abs, body, 'utf8');
+    written.push(relPath);
+  }
+  return written;
+}
+
+/**
+ * Materialize the frozen docs/ tree into a fresh temp directory, hand it to a callback, and
+ * remove it afterward in a `finally` regardless of outcome (D-13). A callback wrapper, never a
+ * path-returning function -- returning a path would push cleanup into every call site; owning
+ * creation and deletion here keeps it in exactly one place.
+ *
+ * Removal is recursive, forced, and retry-carrying (D-18). Both existing bare-removal
+ * precedents in this repository -- this file's own --self-test cleanup and
+ * frozen-read-negative-test.mjs's temp-clone cleanup -- omit retry options, which is
+ * EPERM/EBUSY-flaky on Windows immediately after writing a few hundred files, and Windows is
+ * this repository's primary authoring platform. The realistic collision this guards against
+ * (T-153-04) is several harnesses materializing concurrently on one developer machine under a
+ * local apex run, not separate CI runners.
+ *
+ * @param {keyof MILESTONE_CLOSE_SHAS} milestoneTag
+ * @param {(tmpDir: string, writtenPaths: string[]) => any} fn
+ * @returns {any} whatever fn returns
+ */
+export function withDocsAtClose(milestoneTag, fn) {
+  const tmpDir = mkdtempSync(join(tmpdir(), `frozen-at-close-${milestoneTag}-`));
+  try {
+    const writtenPaths = materializeDocsAtClose(milestoneTag, tmpDir);
+    return fn(tmpDir, writtenPaths);
+  } finally {
+    rmSync(tmpDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  }
 }
 
 // ---------------------------------------------------------------------------------------------
