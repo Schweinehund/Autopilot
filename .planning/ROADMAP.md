@@ -327,7 +327,7 @@ Plans:
 
 **Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
 **Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
-**Plans**: 1/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
+**Plans**: 2/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
 
 **Wave 1**
 
@@ -335,7 +335,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 153-02-PLAN.md — the four remaining identical C17 legs converted, each with its own milestone-unique known-member guard, and the five-leg set proved structurally uniform (HARN-03)
+- [x] 153-02-PLAN.md — the four remaining identical C17 legs converted, each with its own milestone-unique known-member guard, and the five-leg set proved structurally uniform (HARN-03)
 - [ ] 153-03-PLAN.md — the owner-ruled six-not-five scope amendment across seven stale surfaces, the sixth harness's full corpus conversion, and the pre-conversion commit and blob hash recorded for the next plan's copy source (HARN-03)
 
 **Wave 3** *(blocked on Wave 2)*
@@ -420,4 +420,4 @@ Plans:
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | Complete | 2026-08-25 |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 5/5 | Complete | 2026-08-26 |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 4/4 | Complete | 2026-08-27 |
-| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 1/14 | Not started |  |
+| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 2/14 | Not started |  |
