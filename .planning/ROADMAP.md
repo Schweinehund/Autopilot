@@ -327,7 +327,54 @@ Plans:
 
 **Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
 **Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
-**Plans**: TBD
+**Plans**: 14 plans across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
+
+**Wave 1**
+
+- [ ] 153-01-PLAN.md — TRACER: the `V120` pin inserted before `V14`, both frozen-read exports, the corrected project-document instruction, the `withDocsAtClose` materialize helper, and the first C17 leg converted and proved end to end against its own frozen corpus (HARN-01, HARN-02, HARN-03)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 153-02-PLAN.md — the four remaining identical C17 legs converted, each with its own milestone-unique known-member guard, and the five-leg set proved structurally uniform (HARN-03)
+- [ ] 153-03-PLAN.md — the owner-ruled six-not-five scope amendment across seven stale surfaces, the sixth harness's full corpus conversion, and the pre-conversion commit and blob hash recorded for the next plan's copy source (HARN-03)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 153-04-PLAN.md — the 19th Path-A lineage as one indivisible unit: the new harness forked from the hash-verified unconverted source, the allowlist sidecar, and `BASELINE_25` (HARN-04)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 153-05-PLAN.md — the 18th CI workflow authored by mechanical per-job diff against an explicit literal inventory, born with full fetch depth, carrying its own apex and eight standalone leaf jobs (HARN-05)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 153-06-PLAN.md — content leaves for phases 145, 146 and 147, including the corpus-wide archival-drift negative and the stub-and-move retention set (HARN-04)
+- [ ] 153-07-PLAN.md — content leaves for phases 148, 149 and 150, with positive needles replacing the non-transcribable base-commit assertions and per-file scoping across the three identically-shaped vendor guides (HARN-04)
+- [ ] 153-08-PLAN.md — content leaves for phases 151 and 152, the second transcribed verbatim from its pre-specified needle-spec with the false twin claim corrected on the record (HARN-04)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 153-09-PLAN.md — the apex `check-phase-153.mjs` as a structural copy with a generated `[48..152]` chain, four module-load guards, three hazard fixes, the repointed harness constant, and the additive carve-out successor (HARN-04)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [ ] 153-10-PLAN.md — the local terminal evidence the apex structurally cannot produce: six direct harness runs with per-run guard confirmation, the dynamic nested-fail child scan, the class-one archival-drift census and the glossary margin re-measurement (HARN-03, HARN-06)
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [ ] 153-11-PLAN.md — the retired carve regime with its correction of record, the four orphan artifacts committed before archival, the all-untracked hygiene measurement, the atom-branch audit, the hook sequencing, and the blocking owner push checkpoint (HARN-06)
+
+**Wave 9** *(blocked on Wave 8)*
+
+- [ ] 153-12-PLAN.md — all 18 workflows dispatched at one shared commit with head-commit read-backs, job-level evidence keyed on four fields with every skip classified, both reproduction axes, and the single remediation-round decision (HARN-06)
+
+**Wave 10** *(blocked on Wave 9)*
+
+- [ ] 153-13-PLAN.md — `v1.21-MILESTONE-AUDIT.md` and `v1.21-DEFERRED-CLEANUP.md`, with the carry-forward inventory sourced from two named places and the double-booking adjudication run in writing (HARN-06)
+
+**Wave 11** *(blocked on Wave 10)*
+
+- [ ] 153-14-PLAN.md — the publish bundle regenerated at this milestone's version with both filenames verified, the SINGLE close-gate commit flipping all 58 requirements under an explicit commit-contract override, the post-gate confirmatory apex in a separate commit, and the lifecycle handoff (HARN-05, HARN-06)
 
 ## Progress
 
