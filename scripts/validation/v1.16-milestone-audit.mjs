@@ -37,11 +37,11 @@
 // Exit code: 0 on all-PASS; 1 on any-FAIL.
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';  // Phase 119: C17 failure-detail formatting (DRY, per check-phase-112.mjs precedent)
-import { createFrozenCorpusReader } from './_lib/frozen-at-close.mjs';
+import { createFrozenCorpusReader, withDocsAtClose } from './_lib/frozen-at-close.mjs';  // Phase 153: withDocsAtClose converts the C17 spawn below to frozen-corpus mode (D-11)
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -825,21 +825,57 @@ const checks = [
     // 13 assertions / D1_MAP (a second copy would be divergence-prone — explicitly rejected per RESEARCH
     // Don't-Hand-Roll).
     run() {
-      const CONTRACT = 'scripts/validation/c17-eee-contract.mjs';
-      // SWEEP-05 EXCEPTION (Phase 140, deferred per CONTEXT.md <deferred>): this guard and the C17
-      // spawn below intentionally stay LIVE-HEAD. c17-eee-contract.mjs is CARVE Category 3, owned by
-      // Phase 143 -- converting this leg here would collide two phases' scopes. Recorded as a named
-      // SWEEP-05 limitation via the D-14 amendment, not a code comment alone.
-      if (!existsSync(join(process.cwd(), CONTRACT))) {
-        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT + ' not present (EEE contract validator missing)' };
+      const CONTRACT_REL = 'scripts/validation/c17-eee-contract.mjs';
+      // D-15: absolutized against the LIVE repo root BEFORE the working directory is swapped --
+      // a relative path resolved against the swapped tmpdir cwd dies module-not-found, which the
+      // catch below would otherwise misreport as a corpus violation.
+      const CONTRACT_ABS = resolve(process.cwd(), CONTRACT_REL);
+      // D-11: the existence guard stays against the LIVE repository root -- whether the validator
+      // exists is correctly a live question, independent of which corpus it is about to audit.
+      if (!existsSync(CONTRACT_ABS)) {
+        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT_REL + ' not present (EEE contract validator missing)' };
       }
+      // Phase 153 conversion (D-11/D-16, replicated from the v1.15 tracer): the frozen docs/ tree at
+      // V116's own close SHA is materialized into a temp directory and the byte-unchanged
+      // c17-eee-contract.mjs is spawned with that directory as its cwd -- a working-directory swap,
+      // not a code change. The prior Phase 140 deferral comment declaring this leg intentionally
+      // live-HEAD is now false and has been removed; this leg reads its own frozen corpus like every
+      // other check above it.
       try {
-        execFileSync('node', [CONTRACT], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
-        return { pass: true, detail: 'c17-eee-contract.mjs exits 0 (all enrolled files pass 13 assertions)' };
+        return withDocsAtClose('V116', (tmpDir, writtenPaths) => {
+          // Known-member guard (D-16), runs BEFORE the spawn -- an empty-corpus or wrong-milestone
+          // materialization must not reach c17-eee-contract.mjs's empty-corpus exit(0), which would
+          // read as a silent, vacuous PASS. [MEASURED 2026-08-29] V115, V116 and V117 share a
+          // byte-identical docs/ path list (sha1 of sorted git ls-tree -r --name-only <sha> -- docs
+          // output matches across all three) -- V116 has zero paths absent from its immediate
+          // successor V117, extending the plateau Plan 153-01 recorded for V115 one milestone
+          // further. docs/_registry/RE-index.md was added at the V114->V115 boundary (absent from
+          // predecessor V114, present throughout the V115/V116/V117 plateau) and is used here as the
+          // guard, same class as the v1.15 tracer's guard but an independent path literal. It
+          // distinguishes V116 from a regression to V114 or earlier, the realistic wrong-milestone-tag
+          // failure; it structurally cannot distinguish V116 from V115 or V117 by path presence --
+          // no such path exists, a Rule 1 deviation recorded in the plan summary.
+          const KNOWN_MEMBER = join(tmpDir, 'docs', '_registry', 'RE-index.md');
+          if (!existsSync(KNOWN_MEMBER)) {
+            throw new Error('C17 FAIL: known-member guard failed -- ' + KNOWN_MEMBER + ' absent from materialized V116 corpus');
+          }
+          // Secondary, cheap catch for the empty-materialize case -- explicitly not the primary guard.
+          if (!writtenPaths || writtenPaths.length === 0) {
+            throw new Error('C17 FAIL: materialize guard failed -- zero files written to the temp directory');
+          }
+          try {
+            execFileSync('node', [CONTRACT_ABS], { stdio: 'pipe', timeout: 300000, cwd: tmpDir });
+            return { pass: true, detail: 'c17-eee-contract.mjs exits 0 against frozen V116 corpus (' + writtenPaths.length + ' files materialized; all enrolled files pass 13 assertions)' };
+          } catch (err) {
+            const stderr = err.stderr ? err.stderr.toString() : '';
+            const stdout = err.stdout ? err.stdout.toString() : '';
+            return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+          }
+        });
       } catch (err) {
-        const stderr = err.stderr ? err.stderr.toString() : '';
-        const stdout = err.stdout ? err.stdout.toString() : '';
-        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+        // Guard throws above (known-member / empty-materialize) surface here as a normal FAIL
+        // rather than crashing the harness; withDocsAtClose's finally still removes the temp dir.
+        return { pass: false, detail: err.message };
       }
     }
   }
