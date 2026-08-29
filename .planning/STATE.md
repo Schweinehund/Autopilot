@@ -4,18 +4,18 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
-status: planning
+status: executing
 stopped_at: Phase 153 context gathered
-last_updated: "2026-08-29T05:48:44.600Z"
+last_updated: "2026-08-29T14:15:33.182Z"
 last_activity: 2026-08-27
 last_activity_desc: Phase 152 complete, transitioned to Phase 153
-state_head: d103fbc7f202373a9b5f6094ad8dc5d449b0fbf4
+state_head: f7277ffdb7117ce82b21d737c1032cd19e0a2b13
 progress:
   total_phases: 9
   completed_phases: 8
-  total_plans: 34
+  total_plans: 48
   completed_plans: 34
-  percent: 89
+  percent: 71
 ---
 
 # Project State
@@ -37,9 +37,9 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: 153 — Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
+Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — READY TO EXECUTE
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-08-27 — Phase 152 complete, transitioned to Phase 153.
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
   lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
