@@ -5,17 +5,17 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 status: executing
-stopped_at: Phase 153 context gathered
-last_updated: "2026-08-29T14:15:33.182Z"
-last_activity: 2026-08-27
-last_activity_desc: Phase 152 complete, transitioned to Phase 153
-state_head: f7277ffdb7117ce82b21d737c1032cd19e0a2b13
+stopped_at: Completed 153-01-PLAN.md
+last_updated: "2026-08-29T16:04:05.994Z"
+last_activity: 2026-08-29
+last_activity_desc: Phase 153 execution started
+state_head: 53d55232f90c51d9d3b4d728868659562802f204
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 48
-  completed_plans: 34
-  percent: 71
+  completed_plans: 35
+  percent: 73
 ---
 
 # Project State
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; Phase 152 landed the registry rows and navigation)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 153 — Harness Close (V120 pin, C17 frozen-aware residue, 19th Path-A lineage bump)
+**Current focus:** Phase 153 — Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,16 +37,16 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — READY TO EXECUTE
-Plan: Not started
+Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
+Plan: 2 of 14
 Status: Ready to execute
-Last activity: 2026-08-27 — Phase 152 complete, transitioned to Phase 153.
+Last activity: 2026-08-29 — Phase 153 execution started
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
   lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
   human_needed -> passed.
 
-Progress: [██████████████████░░] 89% (8 of 9 phases; 34/34 planned plans complete)
+Progress: [███████░░░] 73% (8 of 9 phases; 34/34 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -449,6 +449,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 152 P02 | 22min | 3 tasks | 2 files |
 | Phase 152 P03 | 25min | 3 tasks | 2 files |
 | Phase 152 P04 | 35min | 3 tasks | 7 files |
+| Phase 153 P01 | 35min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -620,6 +621,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 152]: Phase 152 Commit B 4816635b: the four deferred inbound links plus both hub files land as one six-file content commit; the phase closes at exactly two content commits
 - [Phase 152]: The 01-windows-wufb-rings.md companion firmware link is deferred on the milestone-level Phase-146 isolation constraint, NOT on a validator-pin premise — check-phase-54's bare-ring negative was measured and could not fire on a firmware-bios link
 - [Phase 152]: Phase 152 authored zero validators; a third option (a non-leaf validator authored in-phase, precedented by c17-eee-contract.mjs and check-nav-hub-links.mjs) was declined because the Phase 153 leaf would duplicate it
+- [Phase 153]: V120 pin inserted strictly before V14, never appended -- V-140-V14PIN regex-asserts V14 stays the object's last key
+- [Phase 153]: Known-member guard for v1.15 C17 tracer targets predecessor V114 (not both neighbours) -- V116's docs/ path set is measurably identical to V115's, so no path satisfies 'absent from both'
+- [Phase 153]: Phase 144 D-31 APPEND-ONLY ruling on frozen-at-close.mjs amended once, in writing, scoped to Phase 153's two mid-file edits
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -652,9 +656,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-29T05:48:40.641Z
-Stopped at: Phase 153 context gathered
-Resume file: .planning/phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-CONTEXT.md
+Last session: 2026-08-29T16:04:04.331Z
+Stopped at: Completed 153-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
 ## Operator Next Steps
