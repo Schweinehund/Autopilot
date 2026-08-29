@@ -22,6 +22,15 @@
 // Plan 68-03 Task 1 commit d7d7d5f + readCorpusFileAtV17Close() introduced
 // Plan 70-02 Atom 1 commit 26a1ae9; readers centralized into this module per D-02 LOCKED
 // Option C, adopted by check-phase-{67,68,70} in v1.14 Phase 111 (check-phase-61 excepted).
+//
+// APPEND-ONLY AMENDMENT (Phase 153 D-06, one-time, scoped to this phase only): Phase 144's D-31
+// ratified this module APPEND-ONLY with one carved exception, already spent by Phase 144 itself.
+// Phase 153 takes TWO mid-file edits instead of pure appends: (1) the V120 pin, inserted strictly
+// before the existing V14 entry inside MILESTONE_CLOSE_SHAS (append would fail V-140-V14PIN, which
+// requires V14 to remain the object's last key); and (2) the withDocsAtClose/materializeDocsAtClose
+// helper pair, which extends the import block's write verbs (line 27) rather than appending net-new
+// lines only. Both edits are named here, on the record, rather than taken silently. This amendment
+// does not reopen APPEND-ONLY for any future phase — the default reverts after Phase 153.
 
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, rmSync, existsSync } from 'node:fs';
@@ -142,8 +151,25 @@ export const MILESTONE_CLOSE_SHAS = {
                     // Validated"). Abbreviated (7-8 char) form stored, matching every
                     // V15..V118 entry -- load-bearing for frozenCause()'s stderr taxonomy, not a style
                     // choice. Single entry — same single-entry pattern as V18..V118 (back-anchor
-                    // invariant: V119 references a PAST close SHA; the V120 pin is deferred to the
-                    // v1.21 close per the back-anchor rule — V120-PIN-DEFERRAL).
+                    // invariant: V119 references a PAST close SHA; the V120 pin below discharges the
+                    // V120-PIN-DEFERRAL note this entry used to carry).
+  V120: '246fa3dd',  // Phase 144 Plan 144-12 close-gate — v1.20 milestone close-gate; atom == close-gate.
+                    // Message contains both "v1.20" and "MILESTONE CLOSE". Recovery used the SUBJECT-LINE
+                    // pair discriminator (confirmed via `git log --all --format="%H|%s" | awk -F'|'
+                    // '$2 ~ /v1\.20/ && $2 ~ /MILESTONE CLOSE/'` -> count=1 ->
+                    // 246fa3ddc88a73792744285468a0265dfbab68e8, subject: "docs(144-12): v1.20 MILESTONE
+                    // CLOSE — single close-gate commit, 28/28 requirements Validated"). Correction of
+                    // record (153-01 D-05/HARN-02): the naive dual-token `--grep --all-match` form was
+                    // regression-checked against V117 (b56bba5), V118 (7af8a147) and V119 (a7bda73e)
+                    // before trusting this result — all three still return count=1 via the subject-line
+                    // discriminator, and the v1.20 discriminator run also returns count=1, so no v1.20
+                    // false positive occurred and none is claimed here (unlike the genuine V118/V119
+                    // dual-token traps recorded above). Single entry — same single-entry pattern as
+                    // V18..V119 (back-anchor invariant: V120 references a PAST close SHA; the V121 pin
+                    // is deferred to the v1.22 close per the back-anchor rule). PLACEMENT: inserted here,
+                    // strictly before the V14 entry immediately below — never appended — because
+                    // `V-140-V14PIN` (check-phase-140.mjs) regex-asserts no V-tag key follows the V14
+                    // literal inside this object body; V14 must remain the last entry.
   V14: '0b3be9ab',  // Phase 43 terminal commit of the viable window 2574c794..ba9ecd87 — subject
                     // "docs(phase-43): validation audit - 4 predicate fixes, 27/27 green,
                     // nyquist_compliant" (v1.20 Phase 140 SWEEP-08/D-19). No `MILESTONE CLOSE`
@@ -217,6 +243,7 @@ export const readAtV116Close      = (p) => readAtClose('V116',         p);
 export const readAtV117Close      = (p) => readAtClose('V117',         p);
 export const readAtV118Close      = (p) => readAtClose('V118',         p);
 export const readAtV119Close      = (p) => readAtClose('V119',         p);
+export const readAtV120Close      = (p) => readAtClose('V120',         p);
 
 /**
  * Enumerate repo-relative file paths under `dirPrefix` at a frozen milestone-close SHA, via
@@ -285,6 +312,7 @@ export const lsTreeAtV116Close      = (dir, opts) => lsTreeAtClose('V116',      
 export const lsTreeAtV117Close      = (dir, opts) => lsTreeAtClose('V117',          dir, opts);
 export const lsTreeAtV118Close      = (dir, opts) => lsTreeAtClose('V118',          dir, opts);
 export const lsTreeAtV119Close      = (dir, opts) => lsTreeAtClose('V119',          dir, opts);
+export const lsTreeAtV120Close      = (dir, opts) => lsTreeAtClose('V120',          dir, opts);
 
 /**
  * Batch-read many repo-relative paths at a frozen close SHA via ONE `git cat-file --batch`
