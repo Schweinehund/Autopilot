@@ -1418,3 +1418,242 @@ and no illegitimate skip was counted as a pass") is met.
 **No accepted-red disposition is available at this close.** Both were discharged and deleted at
 the v1.20 predecessor close (per D-78); this evidence file invokes none, and none was needed —
 there is no red to absorb.
+---
+
+## Plan 12, Task 3 — Axis one (fresh clone) and axis three (working tree), same recorded commit
+
+Recorded commit (unchanged from Tasks 1 and 2): `478e633e78e9670b31db1f39e7660c9f0e9c888c`.
+
+### 3.1 Axis one — fresh full-depth clone
+
+**Clone-depth trap avoided.** A `git clone --depth 1 D:/path` silently ignores `--depth` against a
+bare local path and produces a false-non-shallow clone. The clone below therefore used an explicit
+`file://` URL, not a bare Windows path, and non-shallow status was asserted afterward rather than
+assumed.
+
+```
+$ date -u +"%Y-%m-%dT%H:%M:%SZ"
+2026-08-30T16:21:34Z
+$ git clone --no-hardlinks "file:///D:/claude/Autopilot" v121ac
+Cloning into 'v121ac'...
+```
+
+`[MEASURED]` **First attempt into a deeply-nested scratchpad path failed** — Windows `MAX_PATH`
+truncation (`Filename too long` on ~5 files under a long milestone-phase directory name, followed
+by `fatal: unable to checkout working tree`). This is a real failure mode, not swallowed: the
+attempt was abandoned (partial clone directory removed) and retried into a short path (`C:\tmp\`)
+close to the drive root, which cloned clean — `Updating files: 100% (3025/3025), done.`, exit 0.
+
+```
+$ git rev-parse HEAD
+4f02ea8f08e66ac66e7f69fbecaf2edb6cfdd28a
+```
+
+`[MEASURED]` The clone's default checkout landed on the live local HEAD at clone time (`4f02ea8f`,
+this plan's own Task 2 commit — later than the recorded one, since cloning happens after Tasks 1-2
+land). This is expected: a plain clone tracks the source repo's current branch tip, not this
+plan's recorded commit. Pinned explicitly:
+
+```
+$ git checkout 478e633e78e9670b31db1f39e7660c9f0e9c888c
+HEAD is now at 478e633e docs(153-11): complete plan 11 -- owner push checkpoint resolved
+$ git rev-parse HEAD
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+```
+
+**Non-shallow assertion:**
+
+```
+$ git rev-parse --is-shallow-repository
+false
+$ ls .git/shallow
+ls: cannot access '.git/shallow': No such file or directory
+```
+
+`[MEASURED]` **Not shallow — asserted, not assumed.**
+
+**Cannot carry untracked files (D-64), asserted:**
+
+```
+$ git status --porcelain --untracked-files=all | wc -l
+0
+```
+
+`[MEASURED]` **Zero.** This is the axis-1/axis-3 asymmetry this task records explicitly: axis one
+is a clone and by construction starts with nothing untracked; the seven unruled untracked
+populations that live in the real working tree (`.agents/`, both `fireworks-tech-graph` skill
+trees, the jira-milestone hook, `.obsidian/`, `e1`/`e2`/`ee`, `skills-lock.json`) do not exist here
+at all. The predecessor milestone's claim that axis one and axis three both run against this state
+(inherited by 144's D-18) was wrong and is not repeated here.
+
+**Triple 1 — the harness (`v1.21-milestone-audit.mjs`):**
+
+```
+$ node scripts/validation/v1.21-milestone-audit.mjs --verbose
+...
+Summary: 16 passed, 0 failed, 0 skipped
+```
+
+`[MEASURED]` **16 PASS, 0 FAIL, 0 SKIPPED.** Exit 0.
+
+**Triple 2 — the eight leaves (`check-phase-145.mjs` through `check-phase-152.mjs`):**
+
+| Leaf | Result |
+|---|---|
+| check-phase-145.mjs | 16 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-146.mjs | 7 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-147.mjs | 8 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-148.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-149.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-150.mjs | 17 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-151.mjs | 7 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-152.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+
+`[MEASURED]` **All eight leaves exit 0, zero fails, zero skips.**
+
+**Triple 3 — the apex (`check-phase-153.mjs`), run in its own invocation, `CHECK_PHASE_NESTED`
+unset (per D-77, never combined with a verification pass in the same session):**
+
+```
+$ unset CHECK_PHASE_NESTED
+$ node scripts/validation/check-phase-153.mjs
+...
+[AUDIT/111] V-153-AUDIT: 153-VERIFICATION.md exists ... SKIPPED -- not yet authored (PASS-via-skip
+pre-close-gate; expected -- this phase has not reached its close-gate yet)
+...
+Result: 110 PASS, 0 FAIL, 1 SKIPPED (total checks: 111)
+```
+
+`[MEASURED]` **110 PASS, 0 FAIL, 1 SKIPPED (111 total).** The one skip is `V-153-AUDIT` — expected
+and documented pre-close-gate behavior (see `<prior_wave_context>`), not a gap.
+
+**Clone removed post-audit; main working tree confirmed unchanged:**
+
+```
+$ rm -rf /c/tmp/v121ac
+$ (in D:\claude\Autopilot) git status --porcelain --untracked-files=no
+ M .planning/config.json
+$ git rev-parse HEAD
+4f02ea8f08e66ac66e7f69fbecaf2edb6cfdd28a
+```
+
+`[MEASURED]` The `.planning/config.json` modification is a pre-existing, unrelated local override
+(not touched by this axis) — the same single line present before this task began. Zero orphan temp
+directories or files remain.
+
+### 3.2 Axis three — the working tree, at the same recorded commit, barred from planning documents
+
+**Mechanism disclosed in full.** By the time this task ran, the working tree's HEAD had already
+advanced past the recorded commit — this plan's own Task 1 and Task 2 evidence commits
+(`072c99f3`, `4f02ea8f`) sit on top of it, as does an unrelated pre-existing uncommitted change to
+`.planning/config.json` (`_auto_chain_active`, toggled by the orchestrator, not part of this
+plan's `files_modified`). Neither touches any file any of these validators read
+(`scripts/validation/`, `docs/`) — confirmed by `grep -l "config.json"` across all ten target
+scripts returning no hits before this axis ran — but the plan's own acceptance criteria require the
+literal recorded SHA, quoted from an independent source, not an argument that the corpus is
+equivalent. To satisfy that literally without violating the destructive-git-prohibition (no stash,
+no worktree, no force), the working tree was pinned to the exact recorded commit via a
+fully-reversible sequence, executed and reversed in this same task:
+
+1. The uncommitted `.planning/config.json` content was read and copied to a scratch backup file
+   (outside the repo) before any tree mutation, so it could be restored byte-for-byte.
+2. `git checkout -- .planning/config.json` discarded the local override (restoring the file to its
+   committed value), which was the only uncommitted change blocking a checkout.
+3. `git checkout 478e633e78e9670b31db1f39e7660c9f0e9c888c` (detached HEAD) pinned the working tree
+   to the recorded commit. The 103 pre-existing untracked files were untouched by this — untracked
+   paths do not participate in `git checkout <commit>`.
+4. The axis-three triple below was run against this state.
+5. `git checkout master` returned the branch to its tip.
+6. The scratch-backed `.planning/config.json` content was diffed against the restored file, found
+   to differ (as expected — the checkout-away-and-back sequence restores the committed value, not
+   the local override), and the backup was copied back byte-for-byte. Post-restore `git status`
+   confirms the working tree returned to its exact pre-task state: the same single tracked
+   modification, the same 103 untracked paths (104 total lines including the modified file).
+
+No `git stash`, `git worktree`, `git reset --hard`, or force flag was used anywhere in this
+sequence. Every step was individually reversible and was reversed.
+
+**Zero-context disclosure.** This session has no agent-dispatch primitive available in its
+toolset — the same disclosed gap the v1.20 predecessor recorded for its own Axis-3 measurement
+(a): "this executor's toolset exposed no agent-dispatch primitive at that plan." This axis-three
+run is therefore **NOT genuinely context-independent** — it was executed by the same agent session
+that authored Tasks 1-2 and holds the plan's own context, not a fresh zero-context sub-agent. It
+IS, however, run against the recorded commit, against the real dirty working tree (103 untracked
+files, confirmed present throughout), and this task's own instruction not to consult any
+`.planning/` document during the reproduction run itself was honored — no `.planning/` file was
+read between the checkout in step 3 and the checkout-back in step 5 above.
+
+**Untracked-file count during this axis, re-confirmed:**
+
+```
+$ git status --porcelain --untracked-files=all | wc -l
+103
+```
+
+`[MEASURED]` Matches the pre-task count exactly (D-64's dirty-tree axis).
+
+**Triple 1 — the harness:**
+
+```
+$ node scripts/validation/v1.21-milestone-audit.mjs --verbose
+...
+Summary: 16 passed, 0 failed, 0 skipped
+```
+
+`[MEASURED]` **16 PASS, 0 FAIL, 0 SKIPPED** — identical to axis one.
+
+**Triple 2 — the eight leaves:**
+
+| Leaf | Result |
+|---|---|
+| check-phase-145.mjs | 16 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-146.mjs | 7 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-147.mjs | 8 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-148.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-149.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-150.mjs | 17 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-151.mjs | 7 PASS, 0 FAIL, 0 SKIPPED |
+| check-phase-152.mjs | 9 PASS, 0 FAIL, 0 SKIPPED |
+
+`[MEASURED]` **All eight leaves — identical to axis one.**
+
+**Triple 3 — the apex, own invocation, `CHECK_PHASE_NESTED` unset:**
+
+```
+$ node scripts/validation/check-phase-153.mjs
+...
+Result: 110 PASS, 0 FAIL, 1 SKIPPED (total checks: 111)
+```
+
+`[MEASURED]` **110 PASS, 0 FAIL, 1 SKIPPED (111 total)** — identical to axis one, same single
+expected pre-close-gate skip (`V-153-AUDIT`).
+
+**No leg was incomplete.** All ten legs (1 harness + 8 leaves + 1 apex) completed with output on
+both axis one and axis three; none is labelled incomplete, unlike the predecessor's genuinely
+independent Axis-3(b) attempt, which left the apex leg incomplete under
+`WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`. That hazard did not reproduce here.
+
+**HEAD during the axis-three run, and restoration verified:**
+
+```
+$ git rev-parse HEAD        # during the run
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+$ git status --porcelain --untracked-files=all | wc -l   # during the run
+103
+$ git checkout master
+$ git rev-parse HEAD        # after restoration
+4f02ea8f08e66ac66e7f69fbecaf2edb6cfdd28a
+$ git status --porcelain --untracked-files=all | wc -l   # after restoration + config.json restore
+104
+```
+
+### 3.3 The identical commit, quoted from three independent sources
+
+| Axis | Source | Head commit |
+|---|---|---|
+| Axis one (fresh clone) | `git rev-parse HEAD` inside the clone, after explicit checkout | `478e633e78e9670b31db1f39e7660c9f0e9c888c` |
+| Axis two (dispatch) | Task 1's read-back table, `headSha` field from `gh run list --json`, all 18 rows | `478e633e78e9670b31db1f39e7660c9f0e9c888c` |
+| Axis three (working tree) | `git rev-parse HEAD` in the main tree during the pinned reproduction window | `478e633e78e9670b31db1f39e7660c9f0e9c888c` |
+
+`[MEASURED]` **All three values are the single identical SHA.**
+
