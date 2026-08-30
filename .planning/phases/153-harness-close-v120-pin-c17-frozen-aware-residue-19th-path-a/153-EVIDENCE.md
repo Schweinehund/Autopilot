@@ -546,6 +546,138 @@ that binds them is `check-phase-139.mjs` (`V-139-GOVARTIFACTS`), a chain member 
 
 ---
 
+## Task 4 — Carve regime retirement: gate run, corrected reasoning, surviving obligation (Plan 11 Task 1)
+
+### 4.1 The gate's run output at the current head, census method, and de-registration
+
+`node scripts/validation/carve-gate.mjs --json` run this session at the current head:
+
+```
+$ node scripts/validation/carve-gate.mjs --json
+Exit: 1
+carve-gate FAIL: 99 off-list path(s): docs/_glossary-linux.md, docs/_registry/RE-index.md,
+docs/_standards/EEE-SOP-standard.md, docs/_templates/recipe-template.md,
+docs/admin-setup-apv1/01-hardware-hash-upload.md, docs/admin-setup-linux/00-overview.md,
+... (99 paths total, spanning docs/, scripts/docs-style/, and scripts/validation/) ...
+scripts/validation/v1.21-audit-allowlist.json
+```
+
+`[MEASURED]` exit 1, 99 off-list paths at the current head (up from D-39's originally-measured 89
+— the population has grown as this milestone's content phases and the docs-style pass landed
+further commits since that count was taken; the exit-1 verdict itself is unchanged).
+
+**Census method — text-forcing grep, not plain grep.** `scripts/validation/carve-gate.mjs` is
+classified binary by grep (`file` also reports "a node script executable (binary data)"):
+
+```
+$ grep -n "CARVE_PATH" scripts/validation/carve-gate.mjs
+Binary file scripts/validation/carve-gate.mjs matches
+```
+
+A plain grep against this file silently collapses to a single "Binary file ... matches" line —
+no line numbers, no content — which would make a census over this script look empty even when
+matches exist. The text-forcing flag (`-a`) recovers real output:
+
+```
+$ grep -a -n "CARVE_PATH\|DEFAULT_BASE" scripts/validation/carve-gate.mjs
+34:const CARVE_PATH = '.planning/milestones/v1.20-CARVE.md';
+35:const DEFAULT_BASE = 'a7bda73e23efc5e3f9607c3fef37abf8ec4030aa'; // v1.19 MILESTONE CLOSE (docs(138-06))
+```
+
+`[MEASURED]` confirms both D-39/D-40's cited constants verbatim: `CARVE_PATH =
+'.planning/milestones/v1.20-CARVE.md'`, `DEFAULT_BASE = a7bda73e...` (the v1.19 close commit).
+
+**De-registration.** `.claude/settings.local.json` is machine-local and gitignored (`git
+check-ignore -v .claude/settings.local.json` confirms it matches `.gitignore:66`), so this is a
+reversible local edit, not a repository change.
+
+Before (three Stop hooks, in registration order):
+```
+1. jira-milestone-gate.cjs
+2. publish-bundle-gate.cjs
+3. v1.20-carve-gate.cjs
+```
+
+After (two Stop hooks, same order, carve hook removed):
+```
+1. jira-milestone-gate.cjs
+2. publish-bundle-gate.cjs
+```
+
+### 4.2 The ruling and its ground (D-39)
+
+The v1.20 CARVE regime is retired for v1.21. `carve-gate.mjs`'s path constant
+(`.planning/milestones/v1.20-CARVE.md`) and its default base (`a7bda73e...`, the v1.19 close)
+both name the predecessor milestone, not this one. It reports FAIL with a large off-list
+population (99, measured above) at the current head, and all eight v1.21 content phases (145
+through 152) already shipped past it red — it was never re-adopted for this milestone. No
+amendment plan gates this phase: Phase 144's D-07 hard blocker does not carry forward across a
+milestone boundary.
+
+### 4.3 The correction of record (D-40)
+
+The draft premise that the carve gate "had zero execution sites" was measured over the
+`scripts/`, `.github/` and `package.json` surfaces and missed `.claude/` entirely. The hook at
+`.claude/hooks/v1.20-carve-gate.cjs:86-91` runs `execFileSync('node', [gatePath, '--json'])`
+against `carve-gate.mjs` and was registered as the third Stop hook at
+`.claude/settings.local.json:22-30` (confirmed above, "Before" list) — a genuine execution site a
+source-tree-only grep cannot see, because the file that registers it is gitignored.
+
+`[MEASURED]` the gate returns exit 1 with a non-empty `offList` (99 paths, section 4.1), so the
+hook's own fail-open guard (`v1.20-carve-gate.cjs:130`, the `!parsed || offList.length === 0`
+branch) does **not** engage — a real, non-empty off-list was parsed. Per the hook's
+`computeDecision()` (`:50-56`): first Stop with this off-list set → `block`/`nudge`; every
+subsequent Stop with the same off-list set → `block`/`warn`. The two block behaviours the hook
+produces: **nudge** on the first fire naming the off-list paths and pointing at the CARVE's
+Amendment procedure section, **warn** on every fire after that additionally stating the gate is
+hard-blocking in the plan's verification step.
+
+D-39's ruling (retire the regime) is right. The reasoning that produced it (zero execution
+sites) was not — the corrected reasoning above is what goes on the record.
+
+### 4.4 The surviving obligation (D-41)
+
+The obligation that actually survives is `V-139-GOVARTIFACTS`, not byte-equality on
+`carve-gate.mjs`. `check-phase-139.mjs`'s `V-139-CARVEBLOB` check (lines 60-76) pins
+`carve-gate.mjs`'s blob at a **fixed past commit** (`FIXED_SHA =
+'04e26106c859176d58b98079575a50faceeed7cd'`), so the script's current bytes at HEAD are
+structurally unconstrained by that check — HEAD can diverge from the pin freely without
+regressing `V-139-CARVEBLOB`.
+
+What is live is `V-139-GOVARTIFACTS` (`check-phase-139.mjs:135-172`), which reads
+`.planning/milestones/v1.20-CARVE.md` and `.planning/milestones/v1.20-GOV-02-LEDGER.md` at
+current HEAD (not frozen) and asserts four things:
+
+| Assertion | Current measured value |
+|---|---|
+| Exactly 1 fenced ` ```carve-allowlist ` block in `v1.20-CARVE.md` | **1** |
+| `## Amendment procedure` H2 carries exactly 3 numbered rules | **3** |
+| `## GOV-02 grep procedure` H2 present | present (1) |
+| GOV-02 ledger row-count floor (>= 57) | **60** (>= floor of 57) |
+
+`node scripts/validation/check-phase-139.mjs` this session:
+
+```
+[CARVEBLOB/5] V-139-CARVEBLOB: carve-gate.mjs blob @04e26106 matches baseline 849f9639e1108090bc360e705aaa784b0144fe66 (frozen-to-frozen) PASS
+[FETCHDEPTH/5] V-139-FETCHDEPTH: every .github/workflows/audit-harness-*.yml has checkout-step count === fetch-depth:0 count PASS
+[PROBEJOB/5] V-139-PROBEJOB: every audit-harness-*.yml declares a frozen-read-probe job with no needs: key PASS
+[GOVARTIFACTS/5] V-139-GOVARTIFACTS: .planning/milestones/v1.20-CARVE.md structurally intact; .planning/milestones/v1.20-GOV-02-LEDGER.md row count >= 57 PASS
+[SELF/5] V-139-SELF: CHAIN_PHASES does NOT include 139; CHAIN_SKIP is empty Set PASS
+
+Result: 5 PASS, 0 FAIL, 0 SKIPPED
+```
+
+`[MEASURED]` exit 0, 5/0/0, `V-139-GOVARTIFACTS`'s own PASS detail string:
+`CARVE structurally intact (1 fenced block, 3-rule amendment procedure, GOV-02 grep procedure
+section); ledger carries 60 rows (floor 57)`.
+
+`check-phase-139.mjs` is a chain member of the new apex (`check-phase-153.mjs`'s generated span
+`[48..152]` includes 139), so the two governance files this check reads —
+`.planning/milestones/v1.20-CARVE.md` and `.planning/milestones/v1.20-GOV-02-LEDGER.md` — may be
+neither edited nor moved. Neither file is touched by this task.
+
+---
+
 *Phase: 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a*
-*Plan: 10*
-*Evidence captured: 2026-08-30 (session date; committed under the phase's 2026-08-29 working date)*
+*Plan: 11*
+*Evidence captured: 2026-08-29*
