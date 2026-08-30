@@ -1,15 +1,14 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.21
-milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — SHIPPED 2026-08-30
+milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 153
-current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
-status: shipped
-stopped_at: "Completed 153-14-PLAN.md — v1.21 MILESTONE CLOSE, 58/58 requirements Validated"
-last_updated: "2026-08-30T17:11:49.000Z"
+status: completed
+stopped_at: Phase 153 complete — all phases complete
+last_updated: "2026-08-30T17:31:28.651Z"
 last_activity: 2026-08-30
-last_activity_desc: Phase 153 close-gate landed — v1.21 SHIPPED
-state_head: dfa276200c51316a715be1d6a2b3e3f18c079895
+last_activity_desc: Phase 153 complete
+state_head: f675276738062d6cf64dd4b947c9aaa167dd1ab8
 progress:
   total_phases: 9
   completed_phases: 9
@@ -37,10 +36,10 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — COMPLETE
-Plan: 14 of 14
-Status: v1.21 SHIPPED — 58/58 requirements Validated via the Phase 153 Plan 153-14 single close-gate commit
-Last activity: 2026-08-30 — Phase 153 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
+Phase: 153
+Plan: Not started
+Status: All phases complete
+Last activity: 2026-08-30 — Phase 153 complete
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
   lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
@@ -691,7 +690,7 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 ## Session Continuity
 
 Last session: 2026-08-30T17:11:49.000Z
-Stopped at: "Completed 153-14-PLAN.md — v1.21 MILESTONE CLOSE, 58/58 requirements Validated"
+Stopped at: Phase 153 complete — all phases complete
 Resume file: None
 Next action: Code review, user-acceptance testing and `/gsd-audit-milestone`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
