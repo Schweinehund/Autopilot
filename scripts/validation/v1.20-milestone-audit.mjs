@@ -37,23 +37,24 @@
 // Exit code: 0 on all-PASS; 1 on any-FAIL.
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';  // Phase 119: C17 failure-detail formatting (DRY, per check-phase-112.mjs precedent)
-import { createFrozenCorpusReader } from './_lib/frozen-at-close.mjs';  // Phase 153 Task 3: C1-C16 corpus + sidecar reads frozen at V120 (D-09)
+import { createFrozenCorpusReader, withDocsAtClose } from './_lib/frozen-at-close.mjs';  // Phase 153: withDocsAtClose converts the C17 spawn below to frozen-corpus mode (D-11)
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
 const SELF_TEST = argv.includes('--self-test');
 
-// SWEEP-05 (Phase 153 Task 3, D-09): this harness reads its corpus and its sidecar frozen at its
-// own milestone-close SHA (V120 = 246fa3dd, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for
-// the pin) instead of live HEAD -- EXCEPT the C17 contract-presence guard below (check id 17),
-// which stays live-HEAD as of this commit and converts in the plan's next task (Task 4); the
-// `node:fs` existsSync/readFileSync/readdirSync/statSync import stays in place for that reason
-// and is otherwise unused by the helpers below (mirrors the v1.19-milestone-audit.mjs precedent,
-// which also keeps its now-unused readdirSync/statSync imports after conversion).
+// SWEEP-05 (Phase 153, D-09): this harness reads its corpus and its sidecar frozen at its own
+// milestone-close SHA (V120 = 246fa3dd, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for the
+// pin) instead of live HEAD -- including the C17 contract-presence guard below (check id 17),
+// converted in Task 4 (D-11/D-16, replicated from the v1.15 tracer and the v1.16-v1.19 legs); the
+// `node:fs` existsSync/readFileSync/readdirSync/statSync import stays in place because the C17
+// leg's existence guard is deliberately still a LIVE question (D-11) and is otherwise unused by
+// the helpers below (mirrors the v1.19-milestone-audit.mjs precedent, which also keeps its
+// now-unused readdirSync/statSync imports after conversion).
 const MILESTONE_TAG = 'V120';
 const SIDECAR_PATH = 'scripts/validation/v1.20-audit-allowlist.json'; // UNCHANGED literal -- GOV-02
                                                                        // pins search for this exact string
@@ -827,17 +828,57 @@ const checks = [
     // 13 assertions / D1_MAP (a second copy would be divergence-prone — explicitly rejected per RESEARCH
     // Don't-Hand-Roll).
     run() {
-      const CONTRACT = 'scripts/validation/c17-eee-contract.mjs';
-      if (!existsSync(join(process.cwd(), CONTRACT))) {
-        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT + ' not present (EEE contract validator missing)' };
+      const CONTRACT_REL = 'scripts/validation/c17-eee-contract.mjs';
+      // D-15: absolutized against the LIVE repo root BEFORE the working directory is swapped --
+      // a relative path resolved against the swapped tmpdir cwd dies module-not-found, which the
+      // catch below would otherwise misreport as a corpus violation.
+      const CONTRACT_ABS = resolve(process.cwd(), CONTRACT_REL);
+      // D-11: the existence guard stays against the LIVE repository root -- whether the validator
+      // exists is correctly a live question, independent of which corpus it is about to audit.
+      if (!existsSync(CONTRACT_ABS)) {
+        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT_REL + ' not present (EEE contract validator missing)' };
       }
+      // Phase 153 Task 4 conversion (D-11/D-16, replicated from the v1.15 tracer and the v1.16-v1.19
+      // legs): the frozen docs/ tree at V120's own close SHA is materialized into a temp directory
+      // and the byte-unchanged c17-eee-contract.mjs is spawned with that directory as its cwd -- a
+      // working-directory swap, not a code change. This is the sixth and final C17-bearing harness
+      // converted under the D-08 six-not-five scope amendment.
       try {
-        execFileSync('node', [CONTRACT], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
-        return { pass: true, detail: 'c17-eee-contract.mjs exits 0 (all enrolled files pass 13 assertions)' };
+        return withDocsAtClose('V120', (tmpDir, writtenPaths) => {
+          // Known-member guard (D-16), runs BEFORE the spawn -- an empty-corpus or wrong-milestone
+          // materialization must not reach c17-eee-contract.mjs's empty-corpus exit(0), which would
+          // read as a silent, vacuous PASS. [MEASURED 2026-08-29] `git ls-tree -r --name-only <sha>
+          // -- docs` for V119 (a7bda73e) and V120 (246fa3dd) are BYTE-IDENTICAL sorted path lists
+          // (296 entries each, zero diff) -- the same plateau 153-02 already found and recorded on
+          // v1.19's own C17 leg comment above. No path can distinguish V120 from its immediate
+          // predecessor V119 by presence alone. The guard instead reaches one step further back to
+          // V118 (7af8a147), the nearest ACTUALLY DIFFERING predecessor: docs/recipes/03-windows-11-
+          // multi-app-kiosk.md was added at the V118->V119 boundary and is present in both V119 and
+          // V120 (the plateau), absent from V118. This distinguishes V120 from a regression to V118
+          // or earlier, the realistic wrong-milestone-tag failure; it structurally cannot distinguish
+          // V120 from V119 by path presence -- no such path exists, a Rule 1 deviation recorded in
+          // the plan summary (mirrors 153-01's V115/V116 and 153-02's four legs).
+          const KNOWN_MEMBER = join(tmpDir, 'docs', 'recipes', '03-windows-11-multi-app-kiosk.md');
+          if (!existsSync(KNOWN_MEMBER)) {
+            throw new Error('C17 FAIL: known-member guard failed -- ' + KNOWN_MEMBER + ' absent from materialized V120 corpus');
+          }
+          // Secondary, cheap catch for the empty-materialize case -- explicitly not the primary guard.
+          if (!writtenPaths || writtenPaths.length === 0) {
+            throw new Error('C17 FAIL: materialize guard failed -- zero files written to the temp directory');
+          }
+          try {
+            execFileSync('node', [CONTRACT_ABS], { stdio: 'pipe', timeout: 300000, cwd: tmpDir });
+            return { pass: true, detail: 'c17-eee-contract.mjs exits 0 against frozen V120 corpus (' + writtenPaths.length + ' files materialized; all enrolled files pass 13 assertions)' };
+          } catch (err) {
+            const stderr = err.stderr ? err.stderr.toString() : '';
+            const stdout = err.stdout ? err.stdout.toString() : '';
+            return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+          }
+        });
       } catch (err) {
-        const stderr = err.stderr ? err.stderr.toString() : '';
-        const stdout = err.stdout ? err.stdout.toString() : '';
-        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+        // Guard throws above (known-member / empty-materialize) surface here as a normal FAIL
+        // rather than crashing the harness; withDocsAtClose's finally still removes the temp dir.
+        return { pass: false, detail: err.message };
       }
     }
   }
