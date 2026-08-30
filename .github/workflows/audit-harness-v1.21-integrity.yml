@@ -93,3 +93,149 @@ jobs:
       - name: Run v1.21-milestone-audit.mjs
         run: node scripts/validation/v1.21-milestone-audit.mjs --verbose
 
+  linux-chain-ubuntu-latest:
+    name: Validator chain on Linux LF (Phase 69 CILINUX-01)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - name: Disable autocrlf BEFORE checkout (LF-fidelity contract)
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run chain-apex check-phase-153.mjs (recursively spawns 48..152)
+        run: |
+          START=$(date +%s)
+          node scripts/validation/check-phase-153.mjs --verbose
+          END=$(date +%s)
+          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: deep-nest at [48..152]; subprocess timeout: 600s)"
+
+  check-phase-145:
+    name: check-phase-145 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-145.mjs
+        run: node scripts/validation/check-phase-145.mjs
+
+  check-phase-146:
+    name: check-phase-146 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-146.mjs
+        run: node scripts/validation/check-phase-146.mjs
+
+  check-phase-147:
+    name: check-phase-147 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-147.mjs
+        run: node scripts/validation/check-phase-147.mjs
+
+  check-phase-148:
+    name: check-phase-148 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-148.mjs
+        run: node scripts/validation/check-phase-148.mjs
+
+  check-phase-149:
+    name: check-phase-149 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-149.mjs
+        run: node scripts/validation/check-phase-149.mjs
+
+  check-phase-150:
+    name: check-phase-150 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-150.mjs
+        run: node scripts/validation/check-phase-150.mjs
+
+  check-phase-151:
+    name: check-phase-151 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-151.mjs
+        run: node scripts/validation/check-phase-151.mjs
+
+  check-phase-152:
+    name: check-phase-152 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-152.mjs
+        run: node scripts/validation/check-phase-152.mjs
+
+  check-phase-153:
+    name: check-phase-153 validator (apex; recursively spawns 48..152)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-153.mjs
+        run: node scripts/validation/check-phase-153.mjs
+
