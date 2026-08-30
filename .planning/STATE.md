@@ -5,17 +5,17 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 status: executing
-stopped_at: Completed 153-07-PLAN.md
-last_updated: "2026-08-30T01:25:20.154Z"
+stopped_at: Completed 153-08-PLAN.md
+last_updated: "2026-08-30T01:35:09.778Z"
 last_activity: 2026-08-29
 last_activity_desc: Phase 153 execution started
-state_head: ba02cd82c94a3a60f51314e3baf22673c06497fe
+state_head: 445772efef62793932cddd3a26272fbc8642598a
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 48
-  completed_plans: 41
-  percent: 85
+  completed_plans: 42
+  percent: 88
 ---
 
 # Project State
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 ## Current Position
 
 Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
-Plan: 8 of 14
+Plan: 9 of 14
 Status: Ready to execute
 Last activity: 2026-08-29 — Phase 153 execution started
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
@@ -46,7 +46,7 @@ Last activity: 2026-08-29 — Phase 153 execution started
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
   human_needed -> passed.
 
-Progress: [█████████░] 85% (8 of 9 phases; 34/34 planned plans complete)
+Progress: [█████████░] 88% (8 of 9 phases; 34/34 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -456,6 +456,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a P05 | ~30min | 3 tasks | 1 files |
 | Phase 153 P06 | 45min | 3 tasks | 3 files |
 | Phase 153 P07 | 50min | 3 tasks | 3 files |
+| Phase 153 P08 | 35min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -640,6 +641,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 153]: check-phase-147's misattribution guard is intra-file region-scoped, not corpus-wide -- the five-minute discovery-script cap is legitimately documented elsewhere in the same guide
 - [Phase 153]: check-phase-148.mjs replaces two non-transcribable base-SHA prohibitions with positive needles (D-28) — git-diff-against-phase-local-base-SHA emptiness assertions are unpinnable in a permanent apex member; asserted the protected state directly instead
 - [Phase 153]: check-phase-150.mjs asserts the amended six-capability-H2 vendor-guide shape, not the plan text's pre-amendment five-section premise — 150-VERIFICATION.md reads SC#1 through the filed D-01/D-02 amendment; measured the live corpus before baking
+- [Phase 153]: 153-08: check-phase-151.mjs derives positive needles replacing 151-VERIFICATION.md's non-transcribable base-commit prohibitions (D-28); check-phase-152.mjs transcribes its pre-specified spec verbatim (D-29) and corrects the spec's false twin-shape claim on the record (D-30). All eight content leaves 145-152 now exist, all green in one sequence.
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -672,8 +674,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-30T01:25:18.505Z
-Stopped at: Completed 153-07-PLAN.md
+Last session: 2026-08-30T01:35:08.065Z
+Stopped at: Completed 153-08-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
