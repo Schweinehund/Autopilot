@@ -239,3 +239,86 @@ jobs:
       - name: Run check-phase-153.mjs
         run: node scripts/validation/check-phase-153.mjs
 
+  rotting-external-quarterly:
+    name: Quarterly c13_rotting_external link-check
+    runs-on: ubuntu-latest
+    needs: harness-run
+    if: github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+    # DEFAULT continue-on-error: false -- quarterly drift FAILS the scheduled run per D-A9 fully-blocking
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check@3.14.2  # Pinned via `npm view markdown-link-check version` at Phase 66 Wave 3 authoring (2026-05-25); inherited through v1.21
+      - name: Extract URLs from c13_rotting_external
+        run: |
+          node -e "
+            const fs = require('fs');
+            const sidecar = JSON.parse(fs.readFileSync('scripts/validation/v1.21-audit-allowlist.json','utf8'));
+            const c13 = sidecar.c13_rotting_external || {};
+            const urls = [];
+            if (Array.isArray(c13.ci_1_abm_urls)) urls.push(...c13.ci_1_abm_urls.map(e => e.url).filter(Boolean));
+            // CI-2 + CI-3 entries do not carry URLs -- they are line-ref tracking only
+            fs.writeFileSync('quarterly-urls.txt', urls.join('\n'));
+            console.log('Quarterly URL check candidates: ' + urls.length);
+          "
+      - name: Run markdown-link-check
+        run: |
+          if [ -s quarterly-urls.txt ]; then
+            while IFS= read -r url; do
+              markdown-link-check <(echo "[link]($url)") || exit 1
+            done < quarterly-urls.txt
+          else
+            echo "No URLs to check in c13_rotting_external (empty population -- DEFERRED-CLEANUP.md notes calibration finding)"
+          fi
+
+  pin-helper-advisory:
+    name: Supervision-pin drift advisory (CI)
+    # NON-EVIDENCE (D-54/D-48): continue-on-error:true + `|| true` + `|| echo` make this job's
+    # conclusion structurally always success. Never cited as pin-drift proof for any requirement.
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # Phase 43 D-14 / Phase 48 D-22: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report || true
+          echo "[advisory] CI advisory job; never blocks merge per Phase 43 D-14 + Phase 48 D-22"
+      - name: Run --self-test (advisory only)
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --self-test || \
+            echo "[advisory] --self-test failed; advisory only"
+  frozen-read-probe:
+    name: Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Raw frozen git show (v1.5 close ba2cbc0)
+        run: git show ba2cbc0:docs/_glossary-linux.md | head -5
+      - name: Real reader -- readAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const c = m.readAtV15Close('docs/_glossary-linux.md');
+              if (!c || c.length === 0) { console.error('readAtV15Close returned empty'); process.exit(1); }
+              console.log('readAtV15Close OK: ' + c.length + ' bytes');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
+      - name: Real enumeration -- lsTreeAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const a = m.lsTreeAtV15Close('docs/l1-runbooks');
+              if (a.length !== 34) { console.error('expected 34 entries, got ' + a.length); process.exit(1); }
+              console.log('lsTreeAtV15Close OK: 34 entries');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
