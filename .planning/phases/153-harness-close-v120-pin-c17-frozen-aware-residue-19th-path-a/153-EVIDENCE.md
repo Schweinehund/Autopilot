@@ -940,3 +940,170 @@ ruling.
 *Phase: 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a*
 *Plan: 11*
 *Evidence captured: 2026-08-29*
+
+---
+
+## Plan 12 — Shared-commit supersession (recorded before Task 1)
+
+**The `07e6e844` commit recorded in section 6.5 above is SUPERSEDED.** Before Task 1's dispatch
+could begin, the plan-12 executor re-measured ahead/behind per this plan's own Task 1 precondition
+("the remote tracking branch is not behind the local default branch") and found it violated:
+
+```
+$ git status --short
+ M .planning/config.json
+?? .agents/
+?? .claude/skills/fireworks-tech-graph/
+?? .claude/skills/jira-milestone/install-jira-milestone-hook.cjs
+?? .obsidian/
+?? .planning/milestone.lock
+?? e1
+?? e2
+?? ee
+?? skills-lock.json
+$ git fetch origin
+$ git rev-list --left-right --count master...origin/master
+3	0
+$ git rev-parse HEAD
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+$ git rev-parse origin/master
+07e6e844c841db7e13553063b569d6cb9f624c48
+```
+
+`[MEASURED]` Local `master` was 3 commits ahead of `origin/master`. The plan-11 executor made
+three MORE commits after recording the `07e6e844` push in section 6.5 — a SUMMARY commit
+(`17d24e2d`), a push-confirmation evidence commit (`5e953202`), and a plan-complete
+STATE/ROADMAP/REQUIREMENTS commit (`478e633e`) — none of which were pushed. These are not
+cosmetic: `git diff --stat 07e6e844..478e633e` shows `.planning/REQUIREMENTS.md` and
+`.planning/ROADMAP.md` both modified, and both are live-read by chain validators. Dispatching the
+18-workflow axis against `07e6e844` would have run every workflow against a corpus missing those
+two files' changes.
+
+**Corrective action taken:** pushed the trailing 3 commits.
+
+```
+$ git push origin master
+To https://github.com/Schweinehund/Autopilot.git
+   07e6e844..478e633e  master -> master
+$ git fetch origin
+$ git rev-parse HEAD
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+$ git rev-parse origin/master
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+$ git rev-list --left-right --count master...origin/master
+0	0
+```
+
+`[MEASURED]` `master` and `origin/master` are now identical, 0 ahead / 0 behind.
+
+**THE SUPERSEDING SHARED COMMIT FOR ALL THREE AXES OF THIS PLAN IS:**
+
+```
+478e633e78e9670b31db1f39e7660c9f0e9c888c
+```
+
+This SHA supersedes `07e6e844c841db7e13553063b569d6cb9f624c48` (section 6.5 above) for every
+purpose in plan 153-12: the dispatch axis (Task 1), the job-level evidence (Task 2), and both
+reproduction axes (Task 3). `07e6e844` is a real, pushed, valid commit — it is not wrong, it is
+merely not current — but it is never reused as the recorded commit anywhere below. No workflow is
+dispatched against it.
+
+
+---
+
+## Plan 12, Task 1 — Live enumeration, dispatch, read-back at the superseding commit
+
+**Recorded commit for this task and every subsequent one in this plan:**
+`478e633e78e9670b31db1f39e7660c9f0e9c888c` (see the supersession section immediately above).
+
+### 1.1 Live enumeration
+
+```
+$ ls -1 .github/workflows/*.yml .github/workflows/*.yaml 2>/dev/null | sort
+.github/workflows/audit-harness-integrity.yml
+.github/workflows/audit-harness-v1.10-integrity.yml
+.github/workflows/audit-harness-v1.11-integrity.yml
+.github/workflows/audit-harness-v1.12-integrity.yml
+.github/workflows/audit-harness-v1.13-integrity.yml
+.github/workflows/audit-harness-v1.14-integrity.yml
+.github/workflows/audit-harness-v1.15-integrity.yml
+.github/workflows/audit-harness-v1.16-integrity.yml
+.github/workflows/audit-harness-v1.17-integrity.yml
+.github/workflows/audit-harness-v1.18-integrity.yml
+.github/workflows/audit-harness-v1.19-integrity.yml
+.github/workflows/audit-harness-v1.20-integrity.yml
+.github/workflows/audit-harness-v1.21-integrity.yml
+.github/workflows/audit-harness-v1.5-integrity.yml
+.github/workflows/audit-harness-v1.6-integrity.yml
+.github/workflows/audit-harness-v1.7-integrity.yml
+.github/workflows/audit-harness-v1.8-integrity.yml
+.github/workflows/audit-harness-v1.9-integrity.yml
+```
+
+`[MEASURED]` **18 files**, `.yml` extension only, `.yaml` glob matched zero (both extensions were
+covered by the glob; only one is populated). No count was carried from this plan's own frontmatter
+or from any prior phase document.
+
+### 1.2 Trigger confirmation
+
+```
+$ for f in .github/workflows/*.yml; do
+    disp=$(grep -c "workflow_dispatch" "$f")
+    pushtrig=$(grep -E "^\s*push:" "$f" | wc -l)
+    echo "$f | workflow_dispatch_hits=$disp | push_trigger_hits=$pushtrig"
+  done
+```
+
+All 18 files report `workflow_dispatch_hits=1`, `push_trigger_hits=0`. `[MEASURED]` **Every
+enumerated workflow carries a `workflow_dispatch` trigger. Zero carry a `push` trigger.** This is
+why the section-6.5 push (which landed the superseding commit) fired nothing on its own — the
+dispatch below is the sole instrument that produces evidence.
+
+### 1.3 Dispatch
+
+`gh auth status` confirmed an authenticated token with `workflow` scope against
+`Schweinehund/Autopilot`. All 18 workflows were dispatched with `gh workflow run <file> --ref
+master`, one command per file, sequentially, starting `2026-08-30T16:11:07Z`. `gh workflow run`
+returns no run identifier on success (confirmed empty stdout for all 18 invocations, matching this
+task's own precondition text) — every dispatch call exited 0 with no error output.
+
+### 1.4 Read-back — reconciliation table
+
+Runs were located ~15s after the last dispatch via `gh run list --json
+databaseId,workflowName,workflowDatabaseId,event,headSha,status,conclusion,createdAt,url`, filtered
+to `event=="workflow_dispatch"` and `headSha=="478e633e78e9670b31db1f39e7660c9f0e9c888c"`. All 18
+runs were located on the first read-back; **zero required re-dispatch.** Polled every 15-20s until
+every run's `status` reached `completed` (final poll at `16:16:57Z`, ~6 minutes total).
+
+| # | Workflow file | Workflow name | Run ID | Head commit | Matches recorded commit? |
+|---|---|---|---|---|---|
+| 1 | `audit-harness-integrity.yml` | Audit Harness Integrity | 33321742097 | `478e633e...` | YES |
+| 2 | `audit-harness-v1.5-integrity.yml` | Audit Harness v1.5 Integrity | 33321772943 | `478e633e...` | YES |
+| 3 | `audit-harness-v1.6-integrity.yml` | Audit Harness v1.6 Integrity | 33321775155 | `478e633e...` | YES |
+| 4 | `audit-harness-v1.7-integrity.yml` | Audit Harness v1.7 Integrity | 33321777268 | `478e633e...` | YES |
+| 5 | `audit-harness-v1.8-integrity.yml` | Audit Harness v1.8 Integrity | 33321779135 | `478e633e...` | YES |
+| 6 | `audit-harness-v1.9-integrity.yml` | Audit Harness v1.9 Integrity | 33321781140 | `478e633e...` | YES |
+| 7 | `audit-harness-v1.10-integrity.yml` | Audit Harness v1.10 Integrity | 33321744094 | `478e633e...` | YES |
+| 8 | `audit-harness-v1.11-integrity.yml` | Audit Harness v1.11 Integrity | 33321746318 | `478e633e...` | YES |
+| 9 | `audit-harness-v1.12-integrity.yml` | Audit Harness v1.12 Integrity | 33321748698 | `478e633e...` | YES |
+| 10 | `audit-harness-v1.13-integrity.yml` | Audit Harness v1.13 Integrity | 33321750987 | `478e633e...` | YES |
+| 11 | `audit-harness-v1.14-integrity.yml` | Audit Harness v1.14 Integrity | 33321753442 | `478e633e...` | YES |
+| 12 | `audit-harness-v1.15-integrity.yml` | Audit Harness v1.15 Integrity | 33321755955 | `478e633e...` | YES |
+| 13 | `audit-harness-v1.16-integrity.yml` | Audit Harness v1.16 Integrity | 33321758409 | `478e633e...` | YES |
+| 14 | `audit-harness-v1.17-integrity.yml` | Audit Harness v1.17 Integrity | 33321760730 | `478e633e...` | YES |
+| 15 | `audit-harness-v1.18-integrity.yml` | Audit Harness v1.18 Integrity | 33321763130 | `478e633e...` | YES |
+| 16 | `audit-harness-v1.19-integrity.yml` | Audit Harness v1.19 Integrity | 33321765762 | `478e633e...` | YES |
+| 17 | `audit-harness-v1.20-integrity.yml` | Audit Harness v1.20 Integrity | 33321768262 | `478e633e...` | YES |
+| 18 | `audit-harness-v1.21-integrity.yml` | Audit Harness v1.21 Integrity | 33321770727 | `478e633e...` | YES |
+
+`478e633e...` = `478e633e78e9670b31db1f39e7660c9f0e9c888c` (truncated for table width). Full SHA
+verified byte-for-byte via `jq` filter equality, not truncated-string comparison, for all 18 rows.
+
+**Reconciliation:** dispatched set = 18 (section 1.1). Observed-run set at the recorded commit,
+event `workflow_dispatch` = 18 (this table). **Sets are identical. Zero gaps. Zero mismatches.
+Zero re-dispatches were required.**
+
+All 18 runs reached `status: completed`. Top-level `conclusion` for all 18 is `success` — this is
+a **top-level run colour** per this plan's own evidence-discipline rule and is recorded here only
+as a completion signal, never as the pass/fail determination for HARN-06. Job-level evidence,
+keyed on all four fields, is captured next in Task 2.
