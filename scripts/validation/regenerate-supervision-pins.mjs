@@ -564,6 +564,26 @@ function doEmitStubs() {
 // next milestone close per the Path-A inheritance pattern (... -> v1.19 -> BASELINE_23 -> v1.20
 // -> BASELINE_24). This is the terminal close of v1.20; v1.20 itself carries no back-anchor pin
 // of its own (V120-PIN-DEFERRAL) -- the next refresh belongs to v1.21.
+// BASELINE_25 refreshed 2026-08-29 (Phase 153 Plan 04): closes BASELINE_24's V120-PIN-DEFERRAL --
+// v1.21 now has a real back-anchor SHA to diff against (MILESTONE_CLOSE_SHAS.V120 = 246fa3dd,
+// landed earlier in this same phase at 153-01/153-03). BASELINE_9 entries above remain unchanged
+// -- Phase 153 does NOT alter the line-coord array; this comment records the audit-trail event
+// that line-positions were re-verified at Phase 153 Plan 04 authoring time and remain valid for
+// the v1.21 corpus. Pin validity for the v1.21 corpus is positively proven via the same
+// sidecar-derived pinned-file-set used by BASELINE_24 (33 distinct docs/ files across all 6
+// sidecar sections plus the nested c13_rotting_external object, byte-identical between
+// v1.20-audit-allowlist.json and v1.21-audit-allowlist.json per D-47) x `git diff --name-only
+// 246fa3dd..HEAD -- docs scripts .github` intersection (122 changed files; candidate intersection
+// 2 -- docs/_glossary-apple-business.md, docs/_glossary-linux.md -- 0 line-pinned: both
+// intersecting entries are c13_rotting_external count-based file pins with no `line` key, so no
+// BASELINE_9 line coordinate is at risk from either diff) -- real drift is ZERO, adjudicated
+// file-granular for the only pin kind actually in the candidate set (NOT via
+// `regenerate-supervision-pins.mjs`'s report-mode flag, which hardcodes the v1.7 sidecar and
+// walks only 26 of 59 pins -- D-48, never cited as pin-drift proof; see 153-04-SUMMARY.md Task 3
+// section). Resolution path: BASELINE_26 will refresh at the next milestone close per the Path-A
+// inheritance pattern (... -> v1.20 -> BASELINE_24 -> v1.21 -> BASELINE_25). This is the terminal
+// close of v1.21; per D-46, v1.21's own harness is born live-HEAD with no V121 close SHA of its
+// own to freeze against -- the next refresh belongs to v1.22.
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 145],  // ### Supervision heading (was 80 pre-rebase; live content verified 2026-08-07)
   ['docs/_glossary-android.md', 147],  // Supervision disambiguation blockquote (was 82 pre-rebase)
