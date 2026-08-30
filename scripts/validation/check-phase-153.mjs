@@ -8,9 +8,9 @@
 // module-load guards are INDEPENDENTLY RE-DERIVED here, never transcribed forward. The three HAZARD
 // FIXes present in check-phase-144.mjs are INHERITED as MECHANISM, not re-invented, but every count
 // and span string they emit is re-derived at authoring time -- see below. This apex additionally
-// carries ONE check beyond the predecessor's five categories (added by Task 2 of this plan): the
-// frozen carve-out successor (C17CARVEOUT-SUCCESSOR, D-20), because Phase 153 is this phase's own
-// successor validator and a standalone file for one check would be a sixteenth validator nobody runs.
+// carries ONE check beyond the predecessor's five categories: the frozen carve-out successor
+// (C17CARVEOUT-SUCCESSOR, D-20), because Phase 153 is this phase's own successor validator and a
+// standalone file for one check would be a sixteenth validator nobody runs.
 // Source of truth: .planning/phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-CONTEXT.md
 //   and .planning/phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-PATTERNS.md
 //
@@ -35,17 +35,39 @@
 // CHAIN_EXTRA into the span is forbidden.
 //
 // CRITICAL -- ordering: the AUDIT-HARNESS step's existence-absent branch is a hard FAIL and sits
-// BEFORE the NESTED guard (added by Task 2), so an ordering slip becomes a recorded FAIL, not a
-// silently skipped regression. Ordering is harness, then leaves, then apex -- an apex run before the
-// harness exists emits a failure indistinguishable from a real regression.
+// BEFORE the NESTED guard, so an ordering slip becomes a recorded FAIL, not a silently skipped
+// regression. Ordering is harness, then leaves, then apex -- an apex run before the harness exists
+// emits a failure indistinguishable from a real regression.
+//
+// CRITICAL -- archive-root token (D-36): this apex asserts the LITERAL STRING token 'v1.21-phases'
+// (v1.21's own archival root -- where 153-VERIFICATION.md will land when a future
+// /gsd-complete-milestone archives v1.21 at the next milestone's close). The resolver's null-vs-
+// success behavior is explicitly NOT used as the wrong-token detector (D-37): _lib/archive-path.mjs
+// checks the LIVE path first and returns success regardless of token correctness before archival --
+// proven by counterexample check-phase-125.mjs:86, which carries the wrong ['v1.15-phases'] token and
+// has been permanently green with a false detail string for two milestones. Never copy a
+// predecessor's token. The archive directory for v1.21 cannot exist while this phase runs -- archival
+// happens after the phase -- so every in-phase invocation of the AUDIT check takes the live branch
+// and SKIP-PASSes regardless of token correctness; the token is verified here as a literal string in
+// this apex's own source, the only in-phase check available. The resolver is exercised against the
+// archived path only in the post-archival re-run.
+//
+// CRITICAL -- frozen carve-out successor (D-20): scripts/validation/check-phase-140.mjs's own
+// V-140-C17CARVEOUT check now carries FALSE prose on two counts -- its scope claim ("v1.15..v1.18
+// harnesses" -- now 6, not 4, since Phase 153's own Plans 153-01..153-04 converted v1.15 through
+// v1.20 to frozen-corpus mode) and its exception-comment claim (each harness "still reference[s] the
+// c17-eee-contract spawn + exception comment" -- the SWEEP-05 EXCEPTION marker has been REMOVED from
+// every one of the six, not merely "still referenced"). check-phase-140.mjs is FROZEN and is never
+// edited here (D-79); this apex adds V-153-C17CARVEOUT-SUCCESSOR to state the corrected truth
+// additively, naming V-140-C17CARVEOUT by id so the correction is discoverable from either end.
 //
 // HAZARD FIX 1 (inherited mechanism) -- explicit maxBuffer on execFileSync: sets
 // maxBuffer: 20 * 1024 * 1024 (20 MiB) -- generous headroom for the most verbose single child (the
 // AUDIT-HARNESS step running the 16-check v1.21-milestone-audit.mjs --verbose, counted directly off
 // the live checks array at authoring time, not copied from any predecessor's stale count) without
-// masking a genuinely runaway process. Applied at BOTH spawn sites -- the chain spawn (this task) and
-// the harness spawn (Task 2) -- because the default overflows into a throw that is not a
-// missing-executable throw and therefore becomes a FAIL.
+// masking a genuinely runaway process. Applied at BOTH spawn sites -- the chain spawn and the harness
+// spawn -- because the default overflows into a throw that is not a missing-executable throw and
+// therefore becomes a FAIL.
 //
 // HAZARD FIX 2 (inherited mechanism) -- narrowed missing-child classifier: restricts classification
 // to the two unambiguous OS-level signals -- ENOENT (file not found) and shell exit status 127
@@ -62,18 +84,22 @@
 // apex -- apex-first would emit eight FAILs indistinguishable from a real regression.
 //
 // Assertion classes:
-//   V-153-AUDIT                153-VERIFICATION.md heading-presence (added Task 2)
+//   V-153-AUDIT                153-VERIFICATION.md heading-presence via ['v1.21-phases'] resolver
+//                               (SKIP-PASS is legitimate pre-close-gate, not a throw)
 //   V-153-CHAIN-{48..152}      105 subprocesses; each check-phase-{N}.mjs exits 0 (NESTED-aware)
 //   V-153-CHAIN-{30,31}        2 sidecar subprocesses (CHAIN_EXTRA), same shape, disjoint from the span
-//   V-153-AUDIT-HARNESS        scripts/validation/v1.21-milestone-audit.mjs exits 0 (added Task 2)
-//   V-153-C17CARVEOUT-SUCCESSOR  corrects check-phase-140.mjs's now-false C17CARVEOUT prose (added Task 2)
+//   V-153-AUDIT-HARNESS        scripts/validation/v1.21-milestone-audit.mjs exits 0 (current-milestone
+//                               harness; NESTED-aware; absent branch precedes the NESTED guard)
+//   V-153-C17CARVEOUT-SUCCESSOR  corrects check-phase-140.mjs's now-false C17CARVEOUT prose additively
+//                               (D-20); check-phase-140.mjs itself stays byte-unchanged
 //   V-153-SELF                 CHAIN_PHASES does NOT include 153 AND CHAIN_SKIP is empty Set
 //                               (dual-invariant)
 //
-// Executed children (this task's chain loop): 107 (105 CHAIN_PHASES + 2 CHAIN_EXTRA). Full apex total
-// checks once Task 2 lands: 111 (1 AUDIT + 107 chain + 1 AUDIT-HARNESS + 1 C17CARVEOUT-SUCCESSOR +
-// 1 SELF). Formula: 1 + 105 + 2 + 1 + 1 + 1 = 111.
-// Expected result triples for the FULL apex (post-Task-2), exact:
+// Executed children: 107 (105 CHAIN_PHASES + 2 CHAIN_EXTRA). Total checks: 111 (1 AUDIT + 107 chain +
+// 1 AUDIT-HARNESS + 1 C17CARVEOUT-SUCCESSOR + 1 SELF).
+// Formula: 1 AUDIT + 105 chain + 2 CHAIN_EXTRA + 1 AUDIT-HARNESS + 1 C17CARVEOUT-SUCCESSOR + 1 SELF
+//        = 111.
+// Expected result triples, exact:
 //   111 PASS, 0 FAIL, 0 SKIPPED   -- once 153-VERIFICATION.md exists
 //   110 PASS, 0 FAIL, 1 SKIPPED   -- while 153-VERIFICATION.md does not yet exist (AUDIT SKIP-PASSES)
 //   109 PASS, 1 FAIL, 1 SKIPPED   -- if run before v1.21-milestone-audit.mjs exists (AUDIT-HARNESS
@@ -100,6 +126,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
@@ -143,6 +170,36 @@ if (CHAIN_PHASES[0] !== 48 || CHAIN_PHASES[CHAIN_PHASES.length - 1] !== 152) {
 }
 
 const checks = [];
+
+// V-153-AUDIT: heading-presence check on 153-VERIFICATION.md (SKIP-PASS until the close-gate lands).
+// Uses this milestone's OWN, objectively correct archive-root token ['v1.21-phases'] -- asserted as a
+// LITERAL STRING here, a deliberate correction away from the predecessor-copied wrong tokens that
+// check-phase-119/125/128 carry (frozen, not fixed here). resolveArchivedPhasePath's resolver-null ->
+// SKIP-PASS is legitimate pre-close-gate behavior, NOT the silent-wrong bug class D-36 guards against
+// -- the resolver checks the LIVE path first and succeeds regardless of token correctness before
+// archival, so the archive directory for v1.21 cannot exist while this phase runs and every in-phase
+// invocation takes the live branch and SKIP-PASSes regardless of token correctness (D-37). A WRONG
+// token would only be exposed post-archival, permanently (check-phase-125.mjs:86 counterexample).
+// Getting the token objectively right at authoring time -- verified here as a literal in the source,
+// the only in-phase check available -- is what keeps this SKIP-PASS branch honest. The resolver is
+// exercised against the archived path only in the post-archival re-run.
+const ARCHIVE_ROOT_TOKEN = 'v1.21-phases';
+checks.push({
+  id: 'AUDIT',
+  name: 'V-153-AUDIT: 153-VERIFICATION.md exists and contains Phase 153 verification heading',
+  run() {
+    const verifPath = resolveArchivedPhasePath(
+      '153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-VERIFICATION.md',
+      [ARCHIVE_ROOT_TOKEN]
+    );
+    const verif = verifPath ? readFile(verifPath) : null;
+    if (!verif) return { pass: true, skipped: true, detail: '153-VERIFICATION.md not yet authored (PASS-via-skip until the Phase 153 close-gate lands; correct-token resolver-null is legitimate pre-close-gate -- see D-37: the archive directory cannot exist while this phase runs, so this branch cannot itself confirm the token, only the live-path absence)' };
+    if (!/Phase 153/i.test(verif)) {
+      return { pass: false, detail: '153-VERIFICATION.md missing "Phase 153" section heading' };
+    }
+    return { pass: true, detail: '153-VERIFICATION.md exists with Phase 153 verification content' };
+  }
+});
 
 // CHAIN_EXTRA: carried forward verbatim from check-phase-144.mjs -- NOT part of the arithmetic
 // CHAIN_PHASES span and NOT subject to its three module-load guards (dedup/length/termini) above, nor
@@ -203,6 +260,70 @@ for (const phaseNum of [...CHAIN_PHASES, ...CHAIN_EXTRA]) {
     }
   });
 }
+
+// === V-153-AUDIT-HARNESS: v1.21-milestone-audit.mjs subprocess exits 0 (current-milestone harness) ===
+checks.push({
+  id: 'AUDIT-HARNESS',
+  name: 'V-153-AUDIT-HARNESS: v1.21-milestone-audit.mjs exits 0 (current-milestone harness)',
+  run() {
+    if (!existsSync(join(process.cwd(), HARNESS))) {
+      // Mirrors HAZARD FIX 3's reasoning: the current-milestone harness is a mandatory, not optional,
+      // deliverable of this same close phase -- if it is absent, that is a regression, not a skip.
+      // This branch precedes the NESTED guard below: an ordering slip records a FAIL.
+      return { pass: false, detail: HARNESS + ' is absent -- current-milestone harness regression' };
+    }
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip AUDIT-HARNESS re-run against evolved corpus' };
+    }
+    try {
+      // HAZARD FIX 1: enlarged buffer applied here too (second of the two spawn sites).
+      execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, maxBuffer: SUBPROCESS_MAX_BUFFER, cwd: process.cwd() });
+      return { pass: true, detail: 'v1.21-milestone-audit.mjs exits 0 (current-milestone harness)' };
+    } catch (err) {
+      const stderr = err.stderr ? err.stderr.toString() : '';
+      const stdout = err.stdout ? err.stdout.toString() : '';
+      const isMissing = err.code === 'ENOENT' || err.status === 127;
+      if (isMissing) return { pass: true, skipped: true, detail: 'node executable unavailable (ENOENT/127) -- skipped' };
+      return { pass: false, detail: execFailDetail(stdout, stderr, { n: 300, trim: false, prefix: 'harness FAIL: ' }) };
+    }
+  }
+});
+
+// === V-153-C17CARVEOUT-SUCCESSOR: corrects check-phase-140.mjs's now-false C17CARVEOUT prose (D-20) ===
+// scripts/validation/check-phase-140.mjs's own V-140-C17CARVEOUT check (frozen -- never edited here,
+// D-79) is scoped to "v1.15..v1.18 harnesses" and its name/detail text claims each "still
+// reference[s] the c17-eee-contract spawn + exception comment". BOTH claims are now false: this
+// phase's own Plans 153-01..153-04 converted ALL SIX C17-bearing harnesses (v1.15 through v1.20, not
+// four) to frozen-corpus mode via withDocsAtClose, and the SWEEP-05 EXCEPTION comment that v1.15
+// alone once carried (declaring the C17 leg intentionally deferred / live-HEAD) has been removed from
+// every one of them -- there is no longer an exception to name. This check states the corrected truth
+// additively; check-phase-140.mjs itself stays byte-unchanged.
+const C17_SIX_HARNESSES = [
+  'scripts/validation/v1.15-milestone-audit.mjs',
+  'scripts/validation/v1.16-milestone-audit.mjs',
+  'scripts/validation/v1.17-milestone-audit.mjs',
+  'scripts/validation/v1.18-milestone-audit.mjs',
+  'scripts/validation/v1.19-milestone-audit.mjs',
+  'scripts/validation/v1.20-milestone-audit.mjs',
+];
+checks.push({
+  id: 'C17CARVEOUT-SUCCESSOR',
+  name: 'V-153-C17CARVEOUT-SUCCESSOR: corrects V-140-C17CARVEOUT (check-phase-140.mjs) now-false scope + exception-comment claims -- all 6 C17-bearing harnesses (v1.15..v1.20, not 4) reference c17-eee-contract by name AND spawn it via withDocsAtClose; the SWEEP-05 EXCEPTION marker is absent from all 6',
+  run() {
+    const problems = [];
+    for (const p of C17_SIX_HARNESSES) {
+      const c = readFile(p);
+      if (c === null) { problems.push(p + ' (missing)'); continue; }
+      if (!c.includes('c17-eee-contract')) problems.push(p + ' (c17-eee-contract reference absent)');
+      if (!c.includes('withDocsAtClose')) problems.push(p + ' (withDocsAtClose spawn absent -- not frozen-materialized)');
+      if (c.includes('SWEEP-05 EXCEPTION')) problems.push(p + ' (stale SWEEP-05 EXCEPTION marker still present -- exception no longer applies)');
+    }
+    if (problems.length > 0) {
+      return { pass: false, detail: 'C17CARVEOUT-SUCCESSOR regression: ' + problems.join(', ') };
+    }
+    return { pass: true, detail: '6/6 C17-bearing harnesses (v1.15..v1.20) reference c17-eee-contract by name, spawn it via withDocsAtClose, and carry no SWEEP-05 EXCEPTION marker -- corrects V-140-C17CARVEOUT (check-phase-140.mjs), whose name/detail text is now false on both its scope claim ("v1.15..v1.18 only" -- now 6 harnesses, not 4) and its exception-comment claim (the marker has been REMOVED, not merely "still referenced")' };
+  }
+});
 
 // === V-153-SELF: dual-invariant guard (CHAIN_PHASES excludes 153; CHAIN_SKIP empty) ===
 // Asserts two invariants:
