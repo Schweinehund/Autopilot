@@ -5,17 +5,17 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 status: executing
-stopped_at: Completed 153-05-PLAN.md
-last_updated: "2026-08-30T01:01:59.202Z"
+stopped_at: Completed 153-06-PLAN.md
+last_updated: "2026-08-30T01:12:36.569Z"
 last_activity: 2026-08-29
 last_activity_desc: Phase 153 execution started
-state_head: d5f44d4ddc551e1b7c284001f50d8f0249effee3
+state_head: 9999031c55874b215cea73bbca2f32ae5db83730
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 48
-  completed_plans: 39
-  percent: 81
+  completed_plans: 40
+  percent: 83
 ---
 
 # Project State
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 ## Current Position
 
 Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
-Plan: 6 of 14
+Plan: 7 of 14
 Status: Ready to execute
 Last activity: 2026-08-29 — Phase 153 execution started
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
@@ -46,7 +46,7 @@ Last activity: 2026-08-29 — Phase 153 execution started
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
   human_needed -> passed.
 
-Progress: [████████░░] 81% (8 of 9 phases; 34/34 planned plans complete)
+Progress: [████████░░] 83% (8 of 9 phases; 34/34 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -454,6 +454,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 153 P03 | 55min | 3 tasks | 7 files |
 | Phase 153 P04 | 35min | 3 tasks | 3 files |
 | Phase 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a P05 | ~30min | 3 tasks | 1 files |
+| Phase 153 P06 | 45min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -634,6 +635,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 153]: V120 known-member guard targets V118 (nearest actually-differing predecessor), not V119 -- V119/V120 docs trees are byte-identical (296 entries, zero diff)
 - [Phase 153]: 153-04: v1.21-milestone-audit.mjs forked from unconverted (pre-153-03) v1.20 source, hash-verified 9b0e77240a3bf96fc94547273914e52f9c12fa76; sidecar+BASELINE_25 landed as one indivisible unit
 - [Phase 153]: 18th CI workflow authored as mechanical per-job diff of v1.20's; recomputed fan-out=12 (not carried); path-filter count corrected from plan's stated 6 to actual 5
+- [Phase 153]: Scoped 145's archival-drift negative to markdown link syntax, not literal transcription -- the naive grep from 145-VERIFICATION.md now returns 2 hits (legitimate Phase-151 governance citations, not links)
+- [Phase 153]: check-phase-147's misattribution guard is intra-file region-scoped, not corpus-wide -- the five-minute discovery-script cap is legitimately documented elsewhere in the same guide
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -666,8 +669,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-30T01:01:57.513Z
-Stopped at: Completed 153-05-PLAN.md
+Last session: 2026-08-30T01:12:34.950Z
+Stopped at: Completed 153-06-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
