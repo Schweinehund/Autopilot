@@ -61,7 +61,9 @@ are recorded in `<specifics>`.
   extending it is a change to ratified requirement text and needs this repo's own instrument (inline
   marker, superseded text preserved). `[MEASURED CORRECTION]` the residue is **5 of the 5
   C17-bearing harnesses**, not 5 of 17 — only v1.15–v1.19 carry a C17 check at all. Register that
-  residue as a NEW deferred item (see D-27).
+  residue as a NEW deferred item (see D-27). `[SUCCESS-CRITERION AMENDMENT, D-08 — Phase 153]`
+  superseded in scope: v1.21 widens this set to six of six by adding v1.20's own harness (seven
+  contract references against the other five's eight) and converts all six simultaneously.
 
 - **D-03: `check-phase-67.mjs`'s remaining fail-loud sites land here — TEN sites in TWO classes, not seven. OWNER-RATIFIED 2026-08-12.** `v1.20-CARVE.md:272-274` states the obligation as "7
   chicken-and-egg guards **plus 3 partial-null silent passes**". `[MEASURED]` the 7
