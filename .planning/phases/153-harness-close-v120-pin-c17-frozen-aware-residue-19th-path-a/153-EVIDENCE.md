@@ -544,4 +544,8 @@ The two governance files `.planning/milestones/v1.20-CARVE.md` and
 that binds them is `check-phase-139.mjs` (`V-139-GOVARTIFACTS`), a chain member of
 `check-phase-153.mjs`'s span `[48..152]`.
 
-<!-- gsd:write-continue -->
+---
+
+*Phase: 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a*
+*Plan: 10*
+*Evidence captured: 2026-08-30 (session date; committed under the phase's 2026-08-29 working date)*
