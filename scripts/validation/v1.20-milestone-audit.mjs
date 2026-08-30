@@ -3,7 +3,7 @@
 // Source of truth: .planning/phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-CONTEXT.md (D-17)
 // Sidecar allow-list: scripts/validation/v1.20-audit-allowlist.json (v1.20 Path-A from v1.19's sidecar — header-fields-only copy [generated + phase], all 59 line-pins across 5 arrays carried forward byte-identical; the rotting-external section is an object of nested arrays, so any file-set derivation must recurse — a naive top-level walk finds 16 docs/ files where the true whole-sidecar pinned-file-set is 33; pin validity against the V119 back-anchor SHA is MEASURED, not speculative: intersecting the sidecar-derived 33-file pinned set with `git diff --name-only a7bda73e..HEAD -- docs scripts .github` (106 changed files) yields a candidate set of 5 (3 line-pinned), and all 21 hunks in that candidate set are 1:1 line-neutral under `git diff -U0` — real pin drift is ZERO, adjudicated line-granular, not merely file-granular; the pin generator's report-mode instrument is explicitly NOT cited as this proof, since it hardcodes the v1.7 sidecar and walks only 26 of 59 pins; see 144-CONTEXT.md D-17)
 // Frozen-predecessor reproducibility anchor: v1.6-milestone-audit.mjs pinned at Phase 66 close
-// File reads: C1-C16 load all content via fs.readFileSync (no shell invocations). C17 (id 17) spawns a subprocess (execFileSync node c17-eee-contract.mjs) — the one shell invocation in this harness, treated exit-code-as-pass/fail per the check-phase-112.mjs AUDIT-HARNESS spawn precedent.
+// File reads: C1-C16 load all content via the frozen-at-close reader (Phase 153 SWEEP-05 conversion; see MILESTONE_TAG below), not live fs.readFileSync. C17 (id 17) spawns a subprocess (execFileSync node c17-eee-contract.mjs) — the one shell invocation in this harness, treated exit-code-as-pass/fail per the check-phase-112.mjs AUDIT-HARNESS spawn precedent.
 //
 // C6 (PITFALL-7) + C7 (bare-Knox): BLOCKING per Phase 48 D-04/D-05 (inherited from v1.5).
 // C9 (cope_banned_phrases): BLOCKING per Phase 60 D-17/D-18 (inherited from v1.5).
@@ -41,46 +41,50 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';  // Phase 119: C17 failure-detail formatting (DRY, per check-phase-112.mjs precedent)
+import { createFrozenCorpusReader } from './_lib/frozen-at-close.mjs';  // Phase 153 Task 3: C1-C16 corpus + sidecar reads frozen at V120 (D-09)
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
 const SELF_TEST = argv.includes('--self-test');
+
+// SWEEP-05 (Phase 153 Task 3, D-09): this harness reads its corpus and its sidecar frozen at its
+// own milestone-close SHA (V120 = 246fa3dd, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for
+// the pin) instead of live HEAD -- EXCEPT the C17 contract-presence guard below (check id 17),
+// which stays live-HEAD as of this commit and converts in the plan's next task (Task 4); the
+// `node:fs` existsSync/readFileSync/readdirSync/statSync import stays in place for that reason
+// and is otherwise unused by the helpers below (mirrors the v1.19-milestone-audit.mjs precedent,
+// which also keeps its now-unused readdirSync/statSync imports after conversion).
+const MILESTONE_TAG = 'V120';
+const SIDECAR_PATH = 'scripts/validation/v1.20-audit-allowlist.json'; // UNCHANGED literal -- GOV-02
+                                                                       // pins search for this exact string
+const FROZEN = createFrozenCorpusReader(MILESTONE_TAG, { extraPaths: [SIDECAR_PATH] });
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 function readFile(relPath) {
-  const abs = join(process.cwd(), relPath);
-  if (!existsSync(abs)) return null;
-  return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization per Phase 31 ca40eb9
-}
+  const c = FROZEN.get(relPath);
+  return c === undefined ? null : c;   // undefined (never enumerated) and null (absent-at-SHA)
+}                                       // both read as "missing" to every existing caller
 
-// walkMd: recursive .md file walker (verbatim from scripts/validation/check-phase-30.mjs lines 21-38)
+// walkMd: enumerate frozen paths under `dir` (D-09) -- re-absolutized because every call site
+// immediately runs relNormalize(abs), which strips process.cwd() back off (Pitfall 2).
 function walkMd(dir) {
-  const abs = join(process.cwd(), dir);
-  if (!existsSync(abs)) return [];
-  const results = [];
-  function walk(current) {
-    let entries;
-    try { entries = readdirSync(current); } catch { return; }
-    for (const entry of entries) {
-      const full = join(current, entry);
-      let stat;
-      try { stat = statSync(full); } catch { continue; }
-      if (stat.isDirectory()) { walk(full); }
-      else if (entry.endsWith('.md')) { results.push(full); }
-    }
-  }
-  walk(abs);
-  return results;
+  const prefix = dir.endsWith('/') ? dir : dir + '/';
+  return FROZEN.paths
+    .filter((p) => p.startsWith(prefix))
+    .map((p) => join(process.cwd(), p));
 }
 
-// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract).
-// Follows check-phase-31.mjs parseInventory() degradation pattern -- degrade to empty arrays on parse failure.
+// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract) frozen at MILESTONE_TAG.
+// D-07: absence at the pinned SHA fails loud (never a silent degrade to empty arrays); a
+// malformed-but-present sidecar still degrades, per check-phase-31.mjs parseInventory() precedent.
 function parseAllowlist() {
-  const raw = readFile('scripts/validation/v1.20-audit-allowlist.json');
-  if (!raw) return { safetynet_exemptions: [], supervision_exemptions: [] };
+  const raw = FROZEN.get(SIDECAR_PATH);
+  if (raw === undefined || raw === null) {
+    throw new Error(`Sidecar absent at frozen SHA (${MILESTONE_TAG}): ${SIDECAR_PATH} -- D-07 fail-loud`);
+  }
   try {
     return JSON.parse(raw);
   } catch (err) {
@@ -100,7 +104,7 @@ function appleBusinessDocPaths() {
   for (const p of [
     'docs/_glossary-apple-business.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walk: all .md under docs/cross-platform/apple-business/
@@ -113,7 +117,7 @@ function appleBusinessDocPaths() {
     'docs/admin-setup-macos/01-abm-configuration.md',
     'docs/admin-setup-ios/02-abm-token.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // D-24 scope-filter: exclude any DIRECTORY segment starting with "_"
@@ -161,7 +165,7 @@ function androidDocPaths() {
     'docs/reference/android-capability-matrix.md',
     'docs/decision-trees/08-android-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks (all .md under these two lifecycle and admin trees are Android-scoped by construction)
@@ -212,7 +216,7 @@ function linuxDocPaths() {
     'docs/reference/linux-capability-matrix.md',
     'docs/decision-trees/09-linux-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks
