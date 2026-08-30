@@ -11,28 +11,39 @@ re_verification:
   gaps_remaining: []
   regressions: []
 deferred:
+
   - truth: "AOSP admin setup guide (06-aosp-stub.md) exists as the destination of multiple forward-references"
     addressed_in: "Phase 39"
     evidence: "Phase 39 name/goal: 'Zero-Touch Enrollment + AOSP Stub' — explicitly produces docs/admin-setup-android/06-aosp-stub.md as per Plan 01 and Plan 02 forward-references"
+
   - truth: "Full KME admin coverage and device-claim workflow (#device-claim-workflow, #profile-assignment, #dual-sim-imei-1, #reseller-upload-handoff anchors in 02-zero-touch-portal.md)"
     addressed_in: "Phase 39 (initial extension) and v1.4.1 (full KME coverage)"
     evidence: "Plan 04 D-22/D-23 explicitly splits Phase 35/39 scope and reserves Phase 39 anchor namespace; Phase 39 roadmap name 'Zero-Touch Enrollment + AOSP Stub' extends this same file"
 human_verification:
+
   - test: 'Open docs/admin-setup-android/00-overview.md on GitHub and verify the mermaid 5-branch flowchart renders with all expected nodes and edges'
     expected: 'Flowchart shows Admin lands here -> Choose your mode -> three branches (COBO/BYOD/Dedicated -> MGP -> three mode leaves; ZTE -> MGP -> ZT -> ZTE content; AOSP -> AOSP stub); all node labels legible'
     why_human: 'Mermaid source verified by grep; rendered output requires visual inspection'
+
   - test: 'Read each of four deliverables top-to-bottom and confirm SC5 callout placement is at decision point, not deferred'
     expected: 'Inline blockquotes appear at the moment of each URL/account/disconnect/KME/Method decision; no Gotchas section exists'
     why_human: 'Subjective placement judgment beyond grep scope'
+
   - test: 'Copy the DPC extras JSON from 02-zero-touch-portal.md lines 93-105 into a JSON validator'
     expected: 'Parses without error; zero in-JSON // or /* */ comments'
     why_human: 'Copy-paste behavior from markdown fence to portal is the actual admin workflow'
+
   - test: 'With authenticated Intune admin session, walk the documented portal navigation paths (endpoint.microsoft.com > Devices > Enrollment > Android; Devices > By platform > Android > Device onboarding > Enrollment > Bulk enrollment methods > Zero-touch enrollment; enterprise.google.com/android/zero-touch/customers sidebar; accounts.google.com/signupwithoutgmail; verify CloudDPC signature checksum I5YvS0O5hXY46mb01BlRjq4oJJGs2kuUcHvVkAPEXlg against current MS Learn ref-corporate-methods)'
     expected: 'All paths resolve; all URLs load; signature checksum matches'
     why_human: 'Portal authentication required; worktree agent cannot log in. last_verified frontmatter is the documented trust boundary'
+
   - test: 'Review REVIEW.md warnings WR-01 (meta-comment leak line 100), WR-02 (Google requires vs recommends two owners line 26), WR-03 (65,535 days vs 65 years inconsistency line 120) and decide fix or accept'
     expected: 'Either apply three edits or accept with rationale'
     why_human: 'Editorial/correctness judgment calls, not grep-checkable; already detailed in REVIEW.md'
+audit_acknowledged:
+  milestone: v1.21
+  at: 2026-08-30
+  status: human_needed
 ---
 
 # Phase 35: Android Prerequisites — MGP & Zero-Touch Portal Verification Report
@@ -188,11 +199,13 @@ Phase 35 is documentation-only. The phase produces 4 markdown files plus one add
 ### 4. Live-portal re-verification of research-flagged URLs and UI paths
 
 **Test:** With an authenticated Intune admin session, walk the documented portal navigation paths:
+
 - Intune admin center at `https://endpoint.microsoft.com` → Devices > Enrollment > Android tab > Prerequisites > Managed Google Play
 - Intune admin center → Devices > By platform > Android > Device onboarding > Enrollment > Bulk enrollment methods > Zero-touch enrollment
 - `https://enterprise.google.com/android/zero-touch/customers` sidebar: Configurations / Devices / Users / Resellers / Customer details
 - `accounts.google.com/signupwithoutgmail` loads a corporate-email Google account creation form
 - Current CloudDPC signature checksum matches `I5YvS0O5hXY46mb01BlRjq4oJJGs2kuUcHvVkAPEXlg` on MS Learn `ref-corporate-methods`
+
 **Expected:** All paths resolve to the expected UI; all URLs load; signature checksum matches.
 **Why human:** The worktree agent cannot log in to Intune or Google portals. Plans 03 and 04 SUMMARYs both explicitly flag this (Research-Flag Verification section). The `last_verified: 2026-04-21` frontmatter is the documented trust boundary; a human reviewer must re-validate these five assertions before publishing to admins. Portal-UI-specific assertions carry inline `<!-- verify UI at execute time -->` comments as documentation-level flags.
 

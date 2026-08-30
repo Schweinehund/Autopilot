@@ -60,6 +60,7 @@ predecessor audits' + `regenerate-supervision-pins.mjs`' own reads frozen-aware.
 ---
 
 ## DEFER-128-03-A: check-phase-62.mjs standalone exit is 1 — HYG-02-caused (Phase 126), NESTED-masked, non-blocking [SEE CORRECTION ABOVE]
+  **Status:** acknowledged
 
 **Discovered during:** Plan 128-03 Task 2 verification (running each of the 8 converted validators standalone).
 

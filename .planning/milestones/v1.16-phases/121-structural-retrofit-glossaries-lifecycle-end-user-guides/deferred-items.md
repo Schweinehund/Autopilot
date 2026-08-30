@@ -52,6 +52,7 @@ or done as a quick standalone hygiene commit before Phase 125 close — do not l
 frozen-surface re-baseline unfilled.
 
 ## DEFER-121-07-B — retrofit-structural.mjs idempotency + CRLF-write gaps (from 121-REVIEW.md)
+  **Status:** acknowledged
 
 **Source:** advisory code review (gsd-code-reviewer), 2026-07-07. Non-blocking — Phase 121 output is verified-clean (C17 195/0); these are robustness gaps for FUTURE re-runs, not defects in the shipped docs.
 

@@ -5,15 +5,22 @@ status: human_needed
 score: 8/8 must-haves verified
 overrides_applied: 0
 human_verification:
+
   - test: "Triage tree Mermaid renders correctly in GitHub/GitLab flavored markdown"
     expected: "All 6 mode branches render; ANDR22-27 nodes display in green; ANDE1/2/3 nodes display in red; all runbook click directives are navigable links"
     why_human: "Mermaid rendering is a visual property; no grep can confirm rendering or click-directive behavior in a rendered markdown viewer"
+
   - test: "L1 agent can route an Android ticket in <= 2 decision steps using 08-android-triage.md"
     expected: "Three fabricated tickets ('my phone won't connect to work' -> BYOD branch; 'work apps never installed' -> COBO/BYOD branch; 'corporate kiosk won't enroll') each reach a runbook terminal in exactly 2 decisions from AND1"
     why_human: "Path-navigation is a cognitive walkthrough, not a textual pattern; ROADMAP SC #1 is the gate"
+
   - test: "ZT portal UI click-path specifics in runbook 27 match 2026 portal layout"
     expected: "Lines containing '<!-- verify UI at execute time -->' in runbook 27 Cause A-D admin-action steps correctly describe current ZTE portal navigation (e.g., 'Devices tab', no type-selection for 2026 redesign)"
     why_human: "Live ZTE customer portal only accessible to an enrolled admin; cannot verify current screen layout programmatically"
+audit_acknowledged:
+  milestone: v1.21
+  at: 2026-08-30
+  status: human_needed
 ---
 
 # Phase 40: Android L1 Triage & Runbooks — Verification Report
@@ -188,6 +195,7 @@ Not applicable — this is a documentation-only phase. No dynamic data rendering
 ### 1. Mermaid Triage Tree Visual Rendering
 
 **Test:** Open `docs/decision-trees/08-android-triage.md` in GitHub rendered view (or VSCode with Mermaid Preview extension). Confirm:
+
 - All 6 mode branches are visible from AND1 root
 - Green terminal nodes (ANDR22-27) link to their respective runbook files
 - Red terminal nodes (ANDE1, ANDE2, ANDE3) are visually distinct from green nodes
@@ -202,6 +210,7 @@ Not applicable — this is a documentation-only phase. No dynamic data rendering
 ### 2. L1 Ticket-Routing Walkthrough (ROADMAP SC #1 Gate)
 
 **Test:** Pick 3 fabricated L1 tickets and walk through `08-android-triage.md` manually:
+
 1. "My personal Android phone won't connect to work" — expected path: AND1 → AND2 (BYOD) → ANDR22 or ANDR24 depending on whether user saw an error message
 2. "Work apps never installed on the new kiosk" — expected path: AND1 → AND4 (Dedicated) → ANDR26 (MGP app not installed)
 3. "Our corporate phone enrolled wrong — it went through normal setup instead of automatic ZTE" — expected path: AND1 → AND5 (ZTE) → ANDR27

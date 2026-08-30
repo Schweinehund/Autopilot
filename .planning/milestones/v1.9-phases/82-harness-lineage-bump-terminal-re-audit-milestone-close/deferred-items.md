@@ -1,6 +1,7 @@
 # Phase 82 — Deferred Items (out-of-scope discoveries)
 
 ## PRE-EXISTING-CHAIN-RED-AT-HEAD-01
+  **Status:** acknowledged
 
 **Discovered during:** Plan 82-02, Task 3 (check-phase-82 chain-apex verification)
 

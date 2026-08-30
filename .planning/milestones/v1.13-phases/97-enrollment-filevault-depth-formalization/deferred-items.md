@@ -1,6 +1,7 @@
 # Phase 97: Deferred Items
 
 ## Pre-existing chain failure: check-phase-66
+  **Status:** acknowledged
 
 **Discovered during:** Phase 97 chain regression gate check
 **Scope:** OUT OF SCOPE for Phase 97 — pre-existing failure

@@ -5,18 +5,26 @@ status: human_needed
 score: 11/11 must-haves verified
 overrides_applied: 0
 human_verification:
+
   - test: "Privacy-callout prose voice — neutral-factual, not alarmist"
     expected: "Every `> **Privacy limit:**` line in 08-user-enrollment.md reads as a factual statement with no 'IT cannot spy', 'Don't worry', 'beware', 'warning', or end-user-reassurance framing"
     why_human: "Prose voice and tone cannot be grepped; reader judgement needed"
+
   - test: "Capabilities table scannability test for 07-device-enrollment.md"
     expected: "A reader locates 3 arbitrary capabilities (e.g., app deployment modes, OS update enforcement, silent install) in under 30 seconds each"
     why_human: "UX / scannability judgement cannot be automated"
+
   - test: "MAM-WE standalone-ness reader test"
     expected: "Reading 09-mam-app-protection.md without following any cross-link, every core concept (MAM-WE definition, SDK requirement, three-level framework, dual-targeting, selective wipe scope) is comprehensible in isolation — no unexplained MDM terminology"
     why_human: "Reading-flow judgement cannot be automated"
+
   - test: "Mermaid diagram rendering + semantic check (00-overview.md)"
     expected: "When rendered, the diagram communicates 'choose your path' with BYOD/MAM-WE branches clearly parallel to (not downstream of) the ADE chain; four CHOOSE branches visually equal"
     why_human: "Visual comprehension of rendered diagram cannot be grepped; only the absence of forbidden edges can be automated"
+audit_acknowledged:
+  milestone: v1.21
+  at: 2026-08-30
+  status: human_needed
 ---
 
 # Phase 29: iOS Admin Setup — BYOD & MAM Verification Report

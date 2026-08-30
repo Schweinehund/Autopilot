@@ -1,7 +1,7 @@
 {
   "workflow": {
     "research": true,
-    "_auto_chain_active": true,
+    "_auto_chain_active": false,
     "ui_safety_gate": false,
     "ui_phase": false,
     "use_worktrees": false,

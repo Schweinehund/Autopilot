@@ -3,6 +3,7 @@
 Logged per the executor SCOPE BOUNDARY rule. These are NOT fixed in the plan that discovered them.
 
 ## DEFER-119-A — `regenerate-supervision-pins.mjs --self-test` is pre-existing RED (frozen-fixture vs live-corpus divergence)
+  **Status:** acknowledged
 
 **Discovered during:** Plan 119-02 (Atom 1), Task 3.
 
@@ -31,6 +32,7 @@ Logged per the executor SCOPE BOUNDARY rule. These are NOT fixed in the plan tha
 **Disposition:** DEFER to the **119-05 remediation slot**. Options (per 119-01 SUMMARY): (a) insert `<!-- ABAUDIT-## -->` immediately before the Summary line — permitted this milestone since Phase-1 surfaces are deliberately re-baselined; or (b) reword the Summary to break the Intune-admin↔Apple-Business proximity. Note `--self-test` (the Atom-1 harness acceptance gate) is unaffected — it runs the 9 synthetic C14/C15/C16 tests, which pass, and exits 0.
 
 ## DEFER-119-C — Pandoc YAML-metadata alias trap on italic `*Previous:` / `*Next step:` nav footers (systemic conversion defect)
+  **Status:** acknowledged
 
 **Discovered during:** Plan 119-06 (PIPE-02 close representative-set conversion).
 

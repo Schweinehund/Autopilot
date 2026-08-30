@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 153
-status: completed
+status: Awaiting next milestone
 stopped_at: Phase 153 complete — all phases complete
-last_updated: "2026-08-30T17:31:28.651Z"
+last_updated: "2026-08-30T18:26:01.499Z"
 last_activity: 2026-08-30
-last_activity_desc: Phase 153 complete
-state_head: f675276738062d6cf64dd4b947c9aaa167dd1ab8
+last_activity_desc: Milestone v1.21 completed and archived
+state_head: cc1e69418cf8107ba9b7a5f353dda9dc957e949a
 progress:
   total_phases: 9
   completed_phases: 9
   total_plans: 48
   completed_plans: 48
   percent: 100
+current_phase: 153
 ---
 
 # Project State
@@ -24,7 +24,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; Phase 152 landed the registry rows and navigation)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** v1.21 SHIPPED 2026-08-30 (Phase 153 close-gate complete, 58/58 requirements Validated) — next: code review, UAT, `/gsd-audit-milestone`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
+**Current focus:** v1.21 SHIPPED, ARCHIVED & TAGGED 2026-08-30 (close-gate `e129081e`, 58/58 requirements Validated, tag `v1.21`). Code review, UAT and `/gsd-audit-milestone` all complete; `/gsd-complete-milestone` run 2026-08-30 with the apex re-measured 111/0/0 after archival — zero archival drift. **No active milestone.** Next: `/gsd-new-milestone` scopes v1.22 from Phase 154.
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -36,18 +36,10 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: 153
-Plan: Not started
-Status: All phases complete
-Last activity: 2026-08-30 — Phase 153 complete
-  UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
-  lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
-  as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
-  human_needed -> passed.
-
-**Next step:** Code review of the new validator files, the library helper and the workflow, then user-acceptance testing, then `/gsd-audit-milestone`, then `/gsd-complete-milestone` (archive v1.21, tag) or `/gsd-new-milestone` to scope v1.22. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
-
-Progress: [██████████] 100% (9 of 9 phases; 48/48 planned plans complete)
+Phase: Milestone v1.21 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-08-30 — Milestone v1.21 completed and archived
 
 ## v1.21 Phase Dependency Summary
 
@@ -676,7 +668,16 @@ Otherwise none open for v1.21. Per-phase gray areas are tracked in ROADMAP.md's 
 
 ### Blockers/Concerns
 
-No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured four times, zero archival drift, both accepted-red dispositions deleted, tag pushed. v1.21 durable watch items:
+No open blockers. v1.21 shipped clean: 58/58 Validated, apex 111/0/0 measured before and after archival, zero archival drift for a third consecutive close, three-axis re-audit owner-ruled all-green with the remediation round unspent, archived and tagged `v1.21`.
+
+**Live watch items carried into v1.22** (the v1.21-era entries below are retained for provenance; those marked SPENT are closed):
+
+- **`V121-PIN-DEFERRAL` is mandatory at the v1.22 close** — see Operator Next Steps item 2. Insert before `V14`, never append.
+- **A one-time measurement is not a guard.** FIX-11 proved `docs/` carried zero `.planning/` references at Phase 145; Phase 151 reintroduced two, and nothing noticed because no validator asserts it. Any success criterion that must still hold at close needs a gate, not a checklist tick.
+- **9 audit items are structurally un-suppressible** until `DEFER-121-07-A`'s date placeholders are filled — they surface at every close by design.
+- **Glossary zero-margin hazard remains live.** Re-measure glossary `last_verified` / `review_by` metadata at plan time; never assume the margin held.
+
+v1.21 watch items (historical):
 
 - **[SPENT 2026-08-27] `docs/operations/patch-management/00-overview.md`** was the milestone's likeliest remediation source across Phases 145-148. All four have landed and the file is now out of scope — Phase 153 is harness-only and touches no `docs/` content. Retained for the record: its five live pins sit on an apex chain member, its frontmatter platform value stays `cross-platform`, and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
 - **The C11 keyword-substitution ordering is a same-commit ordering constraint, not a preference.** `00-overview.md:78` is kept green **solely** by the mutual-exclusivity word pair the milestone is removing. Substitute an allowlisted keyword into the window first, then remove the wording — in that order, in the same commit.
@@ -687,19 +688,86 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 - **Zero line-shifting edits to the pinned capability matrices** — prefer cell-value edits over structural edits; line-shifting `android-capability-matrix.md` is the known prior pin hazard.
 - **Skips are gaps, not passes.** Every job in the C17-bearing workflows depends on the harness job, so a harness failure produces one visible red plus a fan-out of silent skips. Read job-level output, never the top-level run colour, and never read CI while the remote is behind — workflows fire on pull request, schedule and dispatch only.
 
+## Deferred Items
+
+Items acknowledged and deferred at milestone close, most recent first. Acknowledgment is **verdict-preserving and self-invalidating** — it never rewrites an artifact's own verdict, and the suppression lapses automatically the moment the artifact changes, so a stale acknowledgment can never hide a new problem.
+
+**v1.21 close (2026-08-30) — 26 acknowledged.** Every one is an **archived-milestone carry-forward** (v1.0 through v1.17). **Zero** are in v1.21's own scope: v1.21 shipped 58/58 requirements Validated, 9/9 phases verified, and a milestone audit of `passed`. These had ridden along unsuppressed since their own closes because no prior close ever acknowledged them — `acknowledged.total` was `0` before this close.
+
+| Category | Item | Status | Deferred At | Milestone |
+|----------|------|--------|-------------|-----------|
+| deferred_items | 119/deferred-items.md (archived v1.15): DEFER-119-A — `regenerate-supervision-pins.mjs --self-test` is pre-existing RED (frozen-fixture vs live-corpus | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 119/deferred-items.md (archived v1.15): DEFER-119-C — Pandoc YAML-metadata alias trap on italic `*Previous:` / `*Next step:` nav footers (systemic con | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 121/deferred-items.md (archived v1.16): DEFER-121-07-B — retrofit-structural.mjs idempotency + CRLF-write gaps (from 121-REVIEW.md) **Status:** acknow | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 128/deferred-items.md (archived v1.17): DEFER-128-03-A: check-phase-62.mjs standalone exit is 1 — HYG-02-caused (Phase 126), NESTED-masked, non-blocki | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): **V-60-14** (check-phase-51) FAILs: 3 sub-checks failing as documented above (Mermaid block regex doesn't norm | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): **V-60-16** (check-phase-53) FAILs: 2 sub-checks failing — `docs/operations/00-index.md` missing `platform: Wi | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): **V-60-21** (check-phase-58) FAILs: 2 sub-checks failing — `docs/reference/4-platform-capability-comparison.md | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): check-phase-51 (Linux triage Mermaid) **Status:** acknowledged - V-51-06: 09-linux-triage.md missing Mermaid b | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): check-phase-53 (Operations content scaffolding) **Status:** acknowledged - V-53-06: docs/operations/00-index.m | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): check-phase-58 (4-platform comparison doc) **Status:** acknowledged - V-58-09: comparison doc intro Windows-so | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): Disposition **Status:** acknowledged These failures are **NOT** caused by Plan 60-08 changes. Verified via `gi | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): Plan 60-08 commit safety **Status:** acknowledged Plan 60-08 atomic commit: - Adds C9/C11/C13 promotions + C12 | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 60/deferred-items.md (archived v1.5): Plan 60-09 commit safety **Status:** acknowledged Plan 60-09 commit: - Adds NEW file `scripts/validation/check | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 62/deferred-items.md (archived v1.6): 1. v1.5-audit-allowlist.json line-number rebase needed **Status:** acknowledged **Root cause:** Phase 62 Plans | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 62/deferred-items.md (archived v1.6): 3. check-phase-51 and check-phase-58 -- CRLF vs LF line-ending mismatch **Status:** acknowledged **Root cause: | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 82/deferred-items.md (archived v1.9): PRE-EXISTING-CHAIN-RED-AT-HEAD-01 **Status:** acknowledged **Discovered during:** Plan 82-02, Task 3 (check-ph | acknowledged | 2026-08-30 | v1.21 |
+| deferred_items | 97/deferred-items.md (archived v1.13): Pre-existing chain failure: check-phase-66 **Status:** acknowledged **Discovered during:** Phase 97 chain regr | acknowledged | 2026-08-30 | v1.21 |
+| uat_gaps | 07/07-UAT.md (archived v1.0) | testing::scenarios=7 | 2026-08-30 | v1.21 |
+| uat_gaps | 149/149-UAT.md (archived v1.21) | passed::scenarios=0 | 2026-08-30 | v1.21 |
+| uat_gaps | 35/35-HUMAN-UAT.md (archived v1.4) | partial::scenarios=5 | 2026-08-30 | v1.21 |
+| uat_gaps | 40/40-HUMAN-UAT.md (archived v1.4) | partial::scenarios=3 | 2026-08-30 | v1.21 |
+| verification_gaps | 29/29-VERIFICATION.md (archived v1.3) | human_needed | 2026-08-30 | v1.21 |
+| verification_gaps | 32/32-VERIFICATION.md (archived v1.3) | human_needed | 2026-08-30 | v1.21 |
+| verification_gaps | 35/35-VERIFICATION.md (archived v1.4) | human_needed | 2026-08-30 | v1.21 |
+| verification_gaps | 40/40-VERIFICATION.md (archived v1.4) | human_needed | 2026-08-30 | v1.21 |
+| verification_gaps | 45/45-VERIFICATION.md (archived v1.4.1) | human_needed | 2026-08-30 | v1.21 |
+
+### Not acknowledgeable — carried forward unsuppressed (9)
+
+Nine further open items could **not** be acknowledged by any sanctioned path. All nine are GFM **table rows** in `.planning/milestones/v1.16-phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/deferred-items.md`, belonging to a single deferral, `DEFER-121-07-A` — unfilled `YYYY-MM-DD` Version-History date placeholders in 9 documents, self-rated **Low / cosmetic** by its own author:
+
+```
+docs/_glossary.md                                  docs/android-lifecycle/02-provisioning-methods.md
+docs/_glossary-linux.md                            docs/android-lifecycle/03-android-version-matrix.md
+docs/ios-lifecycle/00-enrollment-overview.md       docs/linux-lifecycle/00-enrollment-overview.md
+docs/android-lifecycle/00-enrollment-overview.md   docs/linux-lifecycle/01-linux-prerequisites.md
+docs/android-lifecycle/01-android-prerequisites.md
+```
+
+**Why they cannot be acknowledged.** For `deferred_items` the suppression marker is the entry's own `status:` field set to `acknowledged`. That works for heading and bullet entries — 17 of them were marked this close. It cannot work for table rows: `parseDeferredItemsWithStatus` appends rows from `parseDeferredTableItems` with a hardcoded empty status, so no status a human writes is ever read back. The CLI writer refuses them outright, and its own source comments describe table rows as *"permanently un-acknowledgeable via the CLI writer — a known, deliberate limitation"*. A hand-edit is equally powerless, for the same reason.
+
+**Why they were not fixed instead.** The remediation is trivial — fill `2026-07-07` into 9 Version-History rows, matching the sibling files retrofitted the same day. But landing it here means editing frozen corpus content **after** the close-gate apex was already measured green, which is exactly the archival-drift hazard Phase 145 spent a requirement (FIX-11) disarming. Deferred to v1.22, where it can ride a normal phase behind a normal gate.
+
+**They will resurface at every future milestone close** until either the 9 dates are filled or `deferred-items.md` gains a table-row acknowledgment path. That is the correct behaviour: an item nothing can suppress should stay visible.
+
 ## Session Continuity
 
-Last session: 2026-08-30T17:11:49.000Z
-Stopped at: Phase 153 complete — all phases complete
+Last session: 2026-08-30
+Stopped at: v1.21 SHIPPED, ARCHIVED & TAGGED — milestone close complete
 Resume file: None
-Next action: Code review, user-acceptance testing and `/gsd-audit-milestone`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
+Next action: `/gsd-new-milestone` to scope v1.22 (Phase 154+)
 
 ## Operator Next Steps
 
-- **Phase 153 is next, and it is the milestone's terminal phase.** All eight content phases (145-152) have shipped and are UAT-verified; 34/34 plans complete. Phase 153 is harness-only — it touches no `docs/` content — and carries three obligations: pin `V120` in `_lib/frozen-at-close.mjs` to the v1.20 close-gate SHA `246fa3dd` (recover it with the subject-line pair discriminator, count=1, regression-checked against V117/V118/V119), discharge `C17-FROZEN-AWARE-RESIDUE-V15-V19`, and bump the 19th Path-A lineage. Start with `/gsd-discuss-phase 153`; the research pass is deliberately skipped per the Plan-Time Research Flags block.
-- **`check-phase-152.mjs` does not exist and that is by design.** Phase 152 shipped a fully pre-specified needle-spec instead of the validator — the authoritative source is `.planning/phases/152-integration-registry-navigation-last-close/152-04-SUMMARY.md`, mirrored in compressed form under Plan-Time Research Flags. Transcribe it; do not re-derive a literal, and never edit the frozen `scripts/validation/check-phase-132.mjs`.
-- v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`, both landing in Phase 153.
-- v1.21 **does not pick up** and still carries forward: `FENCE-AXIS-02`, the out-of-census divergent fence-handling sites, the unowned `check-phase-30/31` tooling residue, `check-phase-66`'s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN` (Phase 152 works *around* it additively rather than fixing it), `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third *lockdown* recipe and does not fire on Recipe #5).
-- `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` **fires this milestone** — Recipe #5 needs the slot, which is the divergence's own recorded trigger. RCP-05 owns the resolution in Phase 151.
-- **The corpus-wide past-due population goes to backlog, not to this milestone.** 217 of the 271 files carrying both date stamps are past their `review_by`, worst 71 days, and no validator compares `review_by` to the current date — every rule constrains the interval between the two stamps. Pillar E is scoped to the five patch-management files plus whatever else v1.21 modifies.
-- `.planning/seeds/SEED-001` is still stale-but-open (its macOS PSSO content shipped in v1.13 while the file reads `status: planted`). Not folded into v1.21; close it separately.
+1. **`/gsd-new-milestone`** — scope v1.22. Phase numbering continues from the v1.21 close at Phase 153, so **v1.22 spans Phase 154+**. Read `.planning/milestones/v1.21-DEFERRED-CLEANUP.md` as the backlog source.
+
+2. **`V121-PIN-DEFERRAL` is MANDATORY at the v1.22 close** — the sixth link in an unbroken back-anchor chain (V117 → V118 → V119 → V120 → V121). The v1.22 harness-close phase must add to `scripts/validation/_lib/frozen-at-close.mjs`:
+   - `MILESTONE_CLOSE_SHAS.V121 = 'e129081e'` — **inserted before the `V14` entry, never appended.** `V-140-V14PIN` regex-asserts that `V14` stays the object's last key; appending fails it, and that check sits inside the apex chain. Phase 153 proved both branches by executing the assertion rather than reasoning about it.
+   - `readAtV121Close` / `lsTreeAtV121Close` exports, following the V18..V120 single-entry pattern.
+   - Recover the SHA with the **subject-line pair discriminator** (returns count=1), never the naive dual-token `--grep --all-match` form, which matches on the commit body and returns multiple candidates:
+     ```
+     git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.21/ && $2 ~ /MILESTONE CLOSE/'
+     ```
+     Positively confirm the returned commit's **subject line** carries both tokens before trusting it. Already recovered and confirmed at this close: `e129081e`.
+
+3. **Also newly open at this close:**
+   - `C17-FROZEN-AWARE-RESIDUE-V21` — `v1.21-milestone-audit.mjs` is live-HEAD by construction, because no `V121` pin exists yet. This is *not* the accumulated-debt class Phase 153 discharged; it is the ordinary state of every milestone-audit harness at its own birth, and it resolves when item 2 above lands.
+   - **9 un-acknowledgeable audit items** (see `## Deferred Items` above) — `DEFER-121-07-A`'s 9 `YYYY-MM-DD` Version-History placeholders. Cheap to fix inside any v1.22 content phase; they will keep surfacing at every close until then.
+   - **Two stale provenance citations** at `docs/_standards/EEE-SOP-standard.md:578` and `:649` point at `.planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md`, which is now archived under `.planning/milestones/v1.21-phases/`. Introduced by Phase 151, six phases after FIX-11 eliminated exactly this class. **No gate catches them** — they are inline code, not links, so the link checker is blind to them and the apex is green. Left unedited on purpose (frozen corpus, post-green-apex). Worth a validator in v1.22, not just a repair: FIX-11's success criterion was measured once and never asserted again.
+
+4. **Durable close-time carve-outs for this repo** (fifth consecutive close):
+   - **Never `git rm .planning/REQUIREMENTS.md`.** `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism. `/gsd-new-milestone` overwrites it anyway.
+   - **`.planning/ROADMAP.md` is also live-read** by `check-phase-54` (V-54-21 and V-54-32: `05-compliance-policy.md` must be absent, and the file must be non-empty). The close-time ROADMAP shrink was verified against both validators rather than assumed safe — do the same next time.
+   - **The `milestone.complete` summarizer cannot be trusted.** Second consecutive close where it undercounted tasks (116 vs the measured 131) and scraped deviation-log fragments into MILESTONES.md as accomplishments, including a truncated one. Rewrite the entry, the task count, and these Operator Next Steps by hand every close.
+   - **Re-run the apex *after* archival, not just before.** Nothing in the workflow does this, and archival drift is invisible until someone looks. Measured 111/0/0 both sides this close.

@@ -9,6 +9,7 @@ Discovered during Task 62-08-03 execution (check-phase-62.mjs chain assertions).
 These failures predate Plan 62-08 and are NOT regressions introduced by Phase 62.
 
 ### 1. v1.5-audit-allowlist.json line-number rebase needed
+  **Status:** acknowledged
 
 **Root cause:** Phase 62 Plans 62-06/62-07 added a banner line at line 13 of
 `docs/_glossary-android.md`, shifting all subsequent line numbers by +1. The
@@ -38,6 +39,7 @@ no longer exists (file is at `.planning/milestones/v1.5-phases/48-.../48-VERIFIC
 either update check-phase-48 to use the new path or skip this assertion.
 
 ### 3. check-phase-51 and check-phase-58 -- CRLF vs LF line-ending mismatch
+  **Status:** acknowledged
 
 **Root cause:** On this Windows worktree, several files have CRLF line endings:
 - `docs/decision-trees/09-linux-triage.md` (check-phase-51 Mermaid regex uses literal `\n`)

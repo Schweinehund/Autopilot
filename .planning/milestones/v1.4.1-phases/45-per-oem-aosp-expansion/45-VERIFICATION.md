@@ -6,13 +6,19 @@ score: 9/9 must-haves verified (5 SCs + 9 REQ-IDs all PASS in shipped state; 1 a
 overrides_applied: 0
 audit_harness: 8/8 PASS
 deferred:
+
   - truth: "REQUIREMENTS.md AEAOSPFULL-05 checkbox `[ ]` reflects shipped state `[x]`"
     addressed_in: "Pre-existing inconsistency from Plan 45-05 — shipped artifact present, only the checkbox flip remains. Tracked for human/orchestrator action prior to /gsd-verify-work UAT closure."
     evidence: "Plan 45-05 SUMMARY claims AEAOSPFULL-05 closed; shipped 13-aosp-meta-quest.md verified at 36900 bytes with 13 H2s + Feb 20 callout + Step 0 + 30-day re-verify; Plan 45-10 executor flagged this in advance"
 human_verification:
+
   - test: "Flip REQUIREMENTS.md line 35 AEAOSPFULL-05 checkbox from `[ ]` to `[x]`"
     expected: "AEAOSPFULL-05 reads `[x]` matching all other AEAOSPFULL-01..09 entries"
     why_human: "Mechanical bookkeeping fix not caught by Plan 45-05 SUMMARY closure step; orchestrator decision (flip in /gsd-verify-work UAT closure or defer to Phase 47 AEINTEG-04 'move to Validated' batch). All shipped artifact evidence is in place."
+audit_acknowledged:
+  milestone: v1.21
+  at: 2026-08-30
+  status: human_needed
 ---
 
 # Phase 45: Per-OEM AOSP Expansion — Verification Report
@@ -195,6 +201,7 @@ Summary: 8 passed, 0 failed, 0 skipped
 ### Bookkeeping inconsistency requiring human action
 
 **REQUIREMENTS.md line 35 AEAOSPFULL-05 checkbox.** Currently reads `[ ]`; should read `[x]` to reflect the shipped Meta Quest admin guide. This is metadata-only — does NOT affect goal achievement, audit harness state, or downstream consumer experience. The checkbox should be flipped either:
+
 - **Option A:** During /gsd-verify-work UAT closure (one-line edit prior to milestone audit)
 - **Option B:** Deferred to Phase 47 AEINTEG-04, which is the dedicated batch step ("move AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 from Active → Validated"). Phase 47 will catch this consistency anyway.
 

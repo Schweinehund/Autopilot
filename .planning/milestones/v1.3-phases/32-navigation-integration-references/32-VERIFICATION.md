@@ -8,25 +8,35 @@ re_verification:
   previous_status: human_needed
   previous_score: 4/4 must-haves verified (autonomous); 5 human-verification items deferred
   gaps_closed:
+
     - "UAT Test 15 — sysdiagnose trigger documentation now reflects Apple-canonical AssistiveTouch procedure with Apple Support URL citation (resolved by plan 32-09)"
   gaps_remaining: []
   regressions: []
 human_verification:
+
   - test: "Rendered markdown visual inspection of iOS capability matrix"
     expected: "Apple-parity preamble reads naturally (2-4 sentences); all 5 domain tables render without column wrap/overflow at ~100-char width; Key Gaps Summary is scannable (8 numbered gaps)"
     why_human: "Visual rendering quality, narrative tone, and table-width behavior cannot be verified programmatically"
+
   - test: "Portal-path currency verification for quick-ref-l2.md iOS tables (Diagnostic Data Collection + Intune Portal Paths ONLY — sysdiagnose table superseded by 32-09)"
     expected: "Each portal-path string (2 remaining tables — Diagnostic Data Collection, Key Intune Portal Paths) matches current Intune admin center UI OR current Microsoft Learn documentation"
     why_human: "Intune admin center UI can shift without deprecation notice; requires live access to the portal OR cross-check against Microsoft Learn pages listed in 32-AUDIT.md Check 2 fallback"
+
   - test: "Apple-parity framing preamble readability as Apple-platform admin"
     expected: "Preamble immediately signals iOS↔macOS comparison is most meaningful for Apple admins (DDM/supervision/VPP); Windows readers don't feel excluded; 2-4 sentences (not narrative drift)"
     why_human: "Tone and reader-perception judgment — requires a human with Apple-admin context to evaluate"
+
   - test: "Full-suite click-through spot-check from docs/index.md"
     expected: "Clicking iOS/iPadOS Provisioning in Choose Your Platform lands at iOS H2; iOS Enrollment Path Overview from L1 table resolves; iOS Capability Matrix from Admin Setup table resolves; 3 pre-existing non-iOS links (macOS Capability Matrix, Windows Autopilot Glossary, APv1 vs APv2) still resolve (regression spot-check); sysdiagnose cross-link from quick-ref-l2 now resolves to renamed Section 3 anchor"
     why_human: "End-to-end user-flow validation on a rendered markdown viewer — best completed by a human driver"
+
   - test: "Step 2 AssistiveTouch wording accuracy check (WR-01 from 32-REVIEW)"
     expected: "Implementation reads 'Customize Top Level Menu > tap an icon (or tap + to add a new slot) > select Analytics' — reviewer flagged that the UAT-spec verbatim 'tap Custom' phrasing was NOT preserved. The deviation appears intentional (modern iOS UI no longer labels a 'Custom' button — the Customize Top Level Menu shows icon slots and a + button). Human should cross-check against the live Apple Support URL (https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web) and either (a) accept the implementation's UI-accurate paraphrase, or (b) restore the UAT-verbatim 'tap Custom' wording."
     why_human: "Requires live access to Apple Support URL to determine whether 'Custom' is currently a UI label; reviewer identified as a judgment call"
+audit_acknowledged:
+  milestone: v1.21
+  at: 2026-08-30
+  status: human_needed
 ---
 
 # Phase 32: Navigation Integration & References — Verification Report (Re-verification after 32-09 Gap Closure)
@@ -160,6 +170,7 @@ All 17 autonomous behavioral spot-checks PASS.
 | — | — | — | — | No blocking anti-patterns found in Phase 32 touched files (including 32-09 updates). |
 
 Automated scans performed:
+
 - `grep -rn "Phase 32 NAV-0[123]" docs/` — zero placeholder markers in shipped docs (all `Phase 32` occurrences are legitimate Version History rows or NAV-03 requirement-ID annotations).
 - `grep -n "TODO\|FIXME\|PLACEHOLDER"` across 11 Phase 32 / 32-09 touched files — zero hits.
 - `link-check.sh` on all 11 touched files — zero broken links introduced by Phase 32 or 32-09.
