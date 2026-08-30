@@ -975,7 +975,7 @@
     },
     "v1.21": {
       "epicKey": "RTS-806",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-08-18",
       "phases": {
         "145": {
@@ -1020,10 +1020,11 @@
         },
         "153": {
           "issueKey": "RTS-815",
-          "status": "in_progress",
+          "status": "done",
           "name": "Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump"
         }
-      }
+      },
+      "completedDate": "2026-08-30"
     }
   },
   "lastUpdated": "2026-07-30",
