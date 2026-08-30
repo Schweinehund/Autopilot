@@ -1657,3 +1657,63 @@ $ git status --porcelain --untracked-files=all | wc -l   # after restoration + c
 
 `[MEASURED]` **All three values are the single identical SHA.**
 
+## Task 4 — Owner decision checkpoint: three-axis terminal re-audit ruling
+
+**Presentation, put to the owner before the selection was requested (per this task's own
+acceptance criteria — all five items presented before asking):**
+
+1. **Job-level totals (§2.5), every failure and every illegitimate skip named individually:**
+   227 jobs observed, 193 successes, 16 legitimate skips, 0 illegitimate skips, 0 failures, 18
+   non-evidence (continue-on-error). Zero failures and zero illegitimate skips to name — there
+   were none.
+2. **The derived legitimate-skip anchor and how it was derived:** 16 of 18, the
+   `rotting-external-quarterly` job, event-gated off under `workflow_dispatch`, derived by reading
+   each workflow's schedule guard (not by grepping the literal condition string, which undercounts
+   by two owing to the always-plus-condition form used in two of the eighteen workflows) — see
+   §2.2.
+3. **The two reproduction results, with any incomplete leg named:** Axis one (fresh, full-depth,
+   non-shallow clone) — 10/10 legs complete (1 harness + 8 leaves + 1 apex), all identical to the
+   dispatch-axis job-level results. Axis three (working tree, pinned to the recorded commit,
+   103 untracked files present throughout) — 10/10 legs complete, identical results. **No leg was
+   incomplete on either axis.** The axis-three context-independence gap is disclosed and carried
+   forward here without softening: this reproduction ran inside the same agent session that
+   authored Tasks 1-2 of this plan, not a fresh zero-context sub-agent — this session's toolset
+   exposed no agent-dispatch primitive, the same disclosed gap the v1.20 predecessor recorded for
+   its own Axis-3(a). It is NOT genuinely context-independent, though it did run against the real
+   dirty working tree at the recorded commit without consulting any `.planning/` document during
+   the reproduction window itself (§3.2).
+4. **Whether the round has already been spent:** No. Zero remediation rounds have been spent at
+   any point in this plan — there was no red or gap at any stage to remediate.
+5. **The identical head commit, quoted from all three axes (§3.3):**
+   `478e633e78e9670b31db1f39e7660c9f0e9c888c`, quoted independently from the fresh-clone
+   `git rev-parse HEAD`, the dispatch axis's `gh run list --json` `headSha` field (all 18 rows),
+   and the working-tree axis's `git rev-parse HEAD` during the pinned reproduction window.
+
+**Orchestrator-side corroboration (recorded here as the orchestrator's own measurement, not
+this executor's):** before putting the ruling to the owner, the orchestrator independently
+verified `gh run list` filtered to `headSha == 478e633e78e9670b31db1f39e7660c9f0e9c888c` and
+`event == workflow_dispatch` and reported exactly **18 runs, all with conclusion `success`.** This
+corroborates §2.1's reconciliation table from an independent angle (run-level conclusion vs. this
+plan's job-level classification) but is cited here as an orchestrator-side check, not re-typed as
+a `[MEASURED]` row of this executor's own.
+
+**Owner ruling, given explicitly by the human owner, 2026-08-30 (verbatim):**
+
+> `all-green`
+>
+> Accept the evidence as green: all three axes green at the one shared commit
+> `478e633e78e9670b31db1f39e7660c9f0e9c888c`. The single permitted remediation round is NOT spent
+> and remains available.
+
+**Selection: `all-green`.** The criterion is met. All three axes are green at one shared commit;
+every non-success job was classified (16 legitimate skips derived from the workflow guards, 0
+illegitimate skips, 0 failures, 18 non-evidence); no illegitimate skip was counted as a pass; no
+accepted-red disposition was created or invoked (none was needed — there was nothing to absorb).
+
+**Remediation round state: UNSPENT.** Zero of the single permitted round has been used. It remains
+available for a later phase in this milestone if a red surfaces there.
+
+**No re-dispatch, no re-capture, no re-axis-run followed this ruling** — the evidence already on
+record at commit `478e633e78e9670b31db1f39e7660c9f0e9c888c` from Tasks 1-3 is the accepted
+evidence; this section records the ruling on it, not a new measurement.
+
