@@ -810,6 +810,87 @@ rediscovered in isolation at the moment it actually fires later in the terminal 
 
 ---
 
+## Task 6 — Owner push checkpoint: pre-flights measured, presentation recorded, decision AWAITED
+
+Per D-60/D-57: pre-flights are run **at the checkpoint** and never carried from planning time or
+from an earlier task in this same plan. Both figures below were re-measured after Tasks 1 and 2's
+commits landed, in this same session, immediately before this section was written.
+
+### 6.1 Ahead/behind, measured now
+
+```
+$ git fetch origin
+$ git rev-list --left-right --count master...origin/master
+258	0
+```
+
+`[MEASURED]` **258 ahead, 0 behind** — `master` at `cf81137d`. This supersedes every
+earlier-carried figure in this plan's own frontmatter (`210 ahead`) and in `153-CONTEXT.md`
+(`208 ahead`); both were planning-time snapshots and neither is reused here, per D-60's explicit
+instruction not to carry the number. The three commits this plan itself produced (Tasks 1 and 2,
+`29d32dca`, `755aa911`, `cf81137d`) account for the growth from the CONTEXT-time 208/210 figure to
+258.
+
+### 6.2 Working-tree state, re-measured now (all-untracked form)
+
+```
+$ git status --porcelain | wc -l
+10
+$ git status --porcelain=v1 --untracked-files=all | wc -l
+104
+```
+
+`[MEASURED]` unchanged from section 5.2 (Tasks 1-2 touched only tracked files already committed;
+nothing new became untracked). The full population table from 5.2 is re-affirmed as current:
+
+| Population | Count | Status |
+|---|---|---|
+| `.agents/skills/fireworks-tech-graph/*` | 46 | Unruled |
+| `.claude/skills/fireworks-tech-graph/*` | 46 | Unruled |
+| `.claude/skills/jira-milestone/install-jira-milestone-hook.cjs` | 1 | Unruled |
+| `.obsidian/*` | 5 | Unruled |
+| `.planning/milestone.lock` | 1 | Unruled |
+| `e1`, `e2`, `ee` | 3 | Unruled |
+| `skills-lock.json` | 1 | Unruled |
+| `.planning/config.json` (modified, tracked) | 1 | Unruled |
+
+An untracked population nobody has ruled on is a question, not a detail — the third audit axis
+(Axis-3) reproduces against exactly this state once the owner pushes, so every population above
+travels into that reproduction as-is if the owner proceeds.
+
+### 6.3 The five presentation items, put to the owner
+
+1. **Ahead/behind, measured now:** 258 ahead of `origin/master`, 0 behind (section 6.1).
+2. **Working-tree state:** 10 bare / 104 all-untracked; every population named and marked ruled
+   (only the four now-committed orphans) or unruled (all seven remaining populations, section 6.2)
+   — none of the seven unruled populations is included in this plan's commits.
+3. **Style-pass scope ruling (5.5):** `scripts/docs-style/` is tracked, 50 files, 6 unpushed
+   commits already inside the 258-commit push set — it cannot be held back without rewriting that
+   entire unpushed history, and it publishes automatically on any `proceed`/`partial` push that
+   includes those 6 commits.
+4. **Atom-branch audit (5.4):** all four remote branches (`phase-119-atom-2`, `phase-125-atom-2`,
+   `phase-128-atom-2`, `phase-139-atom-5`) reachable from `origin/master`, evidence resting on each
+   quoted in 5.4. `phase-139-atom-5`'s tip is the head commit SWEEP-01/02's completion evidence
+   rests on; a deleted remote branch has no reflog. **Explicit question to the owner: delete or
+   keep each of the four?** No branch is deleted by this plan regardless of the answer — deletion,
+   if chosen, is a follow-up action outside this plan's own commits.
+5. **Consequence of declining:** if the owner declines or defers, the 18-workflow dispatch axis
+   cannot run (no workflow in the set carries a `push:` trigger, and `workflow_dispatch:` requires
+   the file to exist on `origin/master`'s default branch, which it does not until this push
+   happens), both reproduction axes cannot execute against a shared SHA, and the milestone does not
+   close this phase.
+
+### 6.4 Owner decision — AWAITED, not recorded
+
+No push has occurred. No `proceed`/`defer`/`partial`/`decline` selection has been made. No
+atom-branch delete-or-keep answer has been given. This plan halts here per its own `autonomous:
+false` frontmatter and the `gate="blocking-human"` on this task — the executor does not
+self-approve a blocking-human checkpoint under any mode, including auto-mode, and does not act on
+the owner's behalf. The owner's selection, once given, and the resulting head commit (if a push
+occurs) are recorded in this section by the continuation agent that resumes this plan.
+
+---
+
 *Phase: 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a*
 *Plan: 11*
 *Evidence captured: 2026-08-29*
