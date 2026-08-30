@@ -880,14 +880,42 @@ travels into that reproduction as-is if the owner proceeds.
    happens), both reproduction axes cannot execute against a shared SHA, and the milestone does not
    close this phase.
 
-### 6.4 Owner decision — AWAITED, not recorded
+### 6.4 Owner decision — RECORDED (ruled 2026-08-30)
 
-No push has occurred. No `proceed`/`defer`/`partial`/`decline` selection has been made. No
-atom-branch delete-or-keep answer has been given. This plan halts here per its own `autonomous:
-false` frontmatter and the `gate="blocking-human"` on this task — the executor does not
-self-approve a blocking-human checkpoint under any mode, including auto-mode, and does not act on
-the owner's behalf. The owner's selection, once given, and the resulting head commit (if a push
-occurs) are recorded in this section by the continuation agent that resumes this plan.
+**Re-measured immediately before acting on the ruling (never reusing the 258 figure from 6.1,
+which was itself already stale by the time the checkpoint was reached):**
+
+```
+$ git fetch origin
+$ git rev-list --left-right --count master...origin/master
+259	0
+```
+
+`[MEASURED]` **259 ahead, 0 behind** at `master` = `a64bb7e8` (the pre-flight-record commit added
+by this task before halting). This is the live figure the push below acts on — not the 258 quoted
+in 6.1, and not the 210/208 figures carried from planning time. The one additional commit between
+`cf81137d` (6.1's HEAD) and `a64bb7e8` (this HEAD) is this plan's own pre-flight-record commit.
+Working-tree state re-confirmed unchanged: 10 bare / 104 all-untracked (same as 6.2).
+
+**Owner ruling, given explicitly, both parts, verbatim:**
+
+1. **Push decision: `proceed`.** Push the full unpushed set from local `master` to
+   `origin/master`. The owner was shown and accepted that this also publishes the 6 unpushed
+   `scripts/docs-style/` commits (5.5), which cannot be held back without rewriting history.
+2. **Atom branches: KEEP ALL FOUR.** `phase-119-atom-2`, `phase-125-atom-2`, `phase-128-atom-2`,
+   `phase-139-atom-5` all remain. Rationale the owner accepted: `phase-139-atom-5`'s tip holds
+   SWEEP-01/02's completion evidence and a deleted remote branch has no reflog. **Delete nothing.**
+
+No branch is deleted by this task, per the ruling and per this task's own prohibition.
+
+### 6.5 The push — executed
+
+```
+$ git push origin master
+```
+
+Result and resulting head SHA are recorded in the SUMMARY for this plan and are the single shared
+commit plan 153-12's three terminal audit axes key to.
 
 ---
 
