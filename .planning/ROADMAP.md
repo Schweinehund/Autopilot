@@ -327,7 +327,7 @@ Plans:
 
 **Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
 **Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
-**Plans**: 9/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
+**Plans**: 10/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
 
 **Wave 1**
 
@@ -358,7 +358,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6)*
 
-- [ ] 153-10-PLAN.md — the local terminal evidence the apex structurally cannot produce: six direct harness runs with per-run guard confirmation, the dynamic nested-fail child scan, the class-one archival-drift census and the glossary margin re-measurement (HARN-03, HARN-06)
+- [x] 153-10-PLAN.md — the local terminal evidence the apex structurally cannot produce: six direct harness runs with per-run guard confirmation, the dynamic nested-fail child scan, the class-one archival-drift census and the glossary margin re-measurement (HARN-03, HARN-06)
 
 **Wave 8** *(blocked on Wave 7)*
 
@@ -420,4 +420,4 @@ Plans:
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | Complete | 2026-08-25 |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 5/5 | Complete | 2026-08-26 |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 4/4 | Complete | 2026-08-27 |
-| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 9/14 | Not started |  |
+| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 10/14 | Not started |  |
