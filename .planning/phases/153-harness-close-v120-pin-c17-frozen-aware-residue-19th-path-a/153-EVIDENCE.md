@@ -678,6 +678,138 @@ neither edited nor moved. Neither file is touched by this task.
 
 ---
 
+## Task 5 — Four orphans tracked, hygiene measured correctly, atom branches audited, hooks sequenced (Plan 11 Task 2)
+
+### 5.1 The four-path orphan commit (D-62)
+
+Committed by explicit path (no blanket add): `git ls-files --error-unmatch` on all four exits 0
+and lists all four:
+
+```
+.planning/phases/145-corpus-correction-validator-gate-archival-drift-fix/145-PATTERNS.md
+.planning/phases/146-windows-driver-firmware-update-depth/146-PATTERNS.md
+.planning/phases/147-linux-update-delivery/147-PATTERNS.md
+.planning/research/PER-OEM-BIOS-GAP.md
+```
+
+`git show --stat 755aa911` — the commit contains exactly those four paths, `4 files changed, 1192
+insertions(+)`, no other file touched. `git show --name-only 755aa911` (message body + file list,
+the combined form the exclusion check reads) contains no literal `.planning/milestones/v1.20-CARVE.md`,
+`v1.20-GOV-02-LEDGER.md`, `carve-gate.mjs` or `check-phase-139.mjs` path (D-76) — `[MEASURED]`
+verified by direct grep, zero matches.
+
+### 5.2 Hygiene measured the correct way (D-63)
+
+Re-measured after the orphan commit landed:
+
+| Form | Command | Count |
+|---|---|---|
+| Bare | `git status --porcelain \| wc -l` | **10** |
+| All-untracked | `git status --porcelain=v1 --untracked-files=all \| wc -l` | **104** |
+
+`[MEASURED]` this session. The bare form under-reports by 94 lines — it collapses each untracked
+directory (`.agents/skills/fireworks-tech-graph/`, `.claude/skills/fireworks-tech-graph/`,
+`.obsidian/`) to a single line instead of enumerating their contents. Every hygiene figure in this
+phase's evidence uses the all-untracked form.
+
+**Remaining populations, each marked ruled or deliberately unruled in this phase:**
+
+| Population | Count | Status |
+|---|---|---|
+| `.agents/skills/fireworks-tech-graph/*` | 46 files | **Unruled** — reviewed at the discussion (`<deferred>`), needs a gitignore/commit/delete decision in its own right, not made here |
+| `.claude/skills/fireworks-tech-graph/*` | 46 files | **Unruled** — same population as above (the ~92-file figure the deferred block names is these two directories combined: 46+46=92) |
+| `.claude/skills/jira-milestone/install-jira-milestone-hook.cjs` | 1 file | **Unruled** — not named in this phase's discussion; new since the CONTEXT session, out of this plan's scope |
+| `.obsidian/*` (5 config files) | 5 files | **Unruled** — not named in this phase's discussion; out of scope |
+| `.planning/milestone.lock` | 1 file | **Unruled** — not named in this phase's discussion; out of scope |
+| `e1`, `e2`, `ee` | 3 files | **Unruled** — named in the deferred block as stray git-stderr captures (0/59/96 bytes), harmless but present in the tree the owner pushes |
+| `skills-lock.json` | 1 file | **Unruled** — not named in this phase's discussion; out of scope |
+| `.planning/config.json` (tracked, **modified**, not untracked) | 1 file | **Unruled** — the one modified tracked file (`_auto_chain_active: true→false`); named in the deferred block, a `git commit -a` would carry it, this plan does not |
+| The four orphan artifacts | 4 files | **Ruled** — committed in 5.1, no longer untracked |
+
+`46 + 46 + 1 + 5 + 1 + 3 + 1 = 103` untracked entries + the 1 modified tracked file = **104**,
+matching the all-untracked count above exactly. This plan's own prohibition ("no blanket add-all")
+means every one of the seven unruled populations stays untracked/modified through this plan's own
+commits; only the four named orphans move.
+
+### 5.3 The axis asymmetry (D-64)
+
+Only the third audit axis runs against this dirty tree. The first axis is a fresh
+`git clone --no-hardlinks` (per `PROJECT.md`), and a fresh clone by construction contains only
+what is committed to the cloned ref — it cannot carry a single one of the 104 untracked/modified
+entries enumerated above. The predecessor phase's claim that both the first and third axes run
+against this same state was inherited without re-checking and is wrong; it is corrected here so
+it is not inherited again.
+
+### 5.4 Atom-branch audit (D-65) — reported, none deleted
+
+`git fetch origin` was run this session before recording tip commits. All four branches are
+reachable from `origin/master` (confirmed via `git merge-base --is-ancestor`):
+
+| Branch | Tip commit | Reachable from `origin/master` | Evidence resting on this tip |
+|---|---|---|---|
+| `origin/phase-119-atom-2` | `652f48e7` | Yes | Phase 119's authoritative Axis-2 GHA cascade run (`28825186128`, headSha `652f48e`, PR #2, event `pull_request`/synchronize), conclusion **success** — the v1.15 close's CI evidence (`119-04-SUMMARY.md`) |
+| `origin/phase-125-atom-2` | `ce62fe58` | Yes | Phase 125's Axis-2 GHA cascade (PR #3, `phase-125-atom-2`→`master`); pushed tip `ce62fe5` matches local HEAD at the time — the v1.16 close's CI evidence (`125-05-SUMMARY.md`) |
+| `origin/phase-128-atom-2` | `4e89d68c` | Yes | Phase 128's Atom-2a (`066a906`) + Atom-2b (`5da45802`) pushed as this branch, opening PR #4 (base `master`) and firing the CI cascade — the v1.17 close's CI evidence (`128-05-SUMMARY.md`) |
+| `origin/phase-139-atom-5` | `c2450efa` | Yes | 16/16 `frozen-read-probe` jobs report job-level success (never run-level colour) across all 16 `audit-harness-*.yml` workflows dispatched against this branch — closes SWEEP-01 SC#2 and the D-24-rescoped SWEEP-02 (`139-06-SUMMARY.md`); the owner-approved KEEP disposition (as of Phase 139) held it until Phase 144's close audit |
+
+`[MEASURED]` all four tips and reachability confirmed this session via `git rev-parse
+origin/<branch>` and `git merge-base --is-ancestor origin/<branch> origin/master`. No branch is
+deleted by this task. `phase-139-atom-5`'s tip holds evidence for a completed sweep and a deleted
+remote branch has no reflog — the delete-or-keep call for all four goes to the owner at the push
+checkpoint (Task 3).
+
+### 5.5 The style-pass scope ruling (D-61)
+
+`scripts/docs-style/` is **tracked**: `git ls-files scripts/docs-style/ | wc -l` → **50** files.
+It carries **6** unpushed commits inside the 255-ahead push set (re-measured; see Task 3's
+pre-flight for the current ahead/behind figures):
+
+```
+$ git log origin/master..HEAD --oneline -- scripts/docs-style/
+9b3007c1 feat(docs-style): judge-packets.py, the 406 verdicts, and the rule rows they overturned
+0332a61c fix(docs-style): tighten three over-firing verifier rules, close the sweep's idempotency hole
+56f55307 docs(docs-style): RESUME -- record the corpus drift from v1.21 phases 149-151
+761caba0 docs(docs-style): RESUME -- next-session block, verifier section, and one correction
+856234d2 feat(docs-style): add google-style-verify -- prove a style pass preserved meaning
+4efe0405 chore(docs-style): vendor the google-style skill and its tooling into the repo
+```
+
+Because it is tracked with commits already inside the push set, it cannot be "ruled on and not
+pushed" — a push of the unpushed set publishes it regardless of any separate ruling. It lands on
+`origin/master` and appears in the `v1.21` tag's history the moment the push happens. The
+milestone audit (`v1.21-MILESTONE-AUDIT.md`) must own this explicitly as recorded scope rather
+than let the tag carry unnarrated work. Splitting it out is not an option: doing so would mean
+rewriting the entire unpushed 255-commit history at a close whose evidence (all 18 CI workflow
+dispatches, both reproduction axes) is keyed to one shared SHA — a rewrite here invalidates that
+key before it is ever used.
+
+### 5.6 Stop-hook sequencing as one decision (D-69)
+
+The three registered Stop hooks are sequenced against the terminal ordering (D-55) as a single
+decision, not three independently rediscovered ones:
+
+1. **`jira-milestone-gate.cjs`** fires at **execution-complete**, which is **pre-verification** —
+   the known race this repo has hit before (a prior milestone's Stop-hook nudged mid-verify). The
+   active Jira Story is held **In Progress** until VERIFICATION passes, never flipped to Done on
+   the hook's own nudge. This hook remains registered (first in order) and fires throughout the
+   remaining terminal-ordering steps (evidence, owner push, dispatch, both axes) whenever a turn
+   ends mid-flight.
+2. **`publish-bundle-gate.cjs`** blocks on the **milestone-complete transition**, demanding
+   `dist/docs-library-v1.21.zip` (D-68's explicit `--version=v1.21` requirement). Its idempotency
+   probe is a read-only presence check for that exact versioned filename — it will **not**
+   recognize Phase 152's differently-named `v1.21.0.zip` as satisfying the probe, so this hook
+   fires for real (not a false-positive skip) at the `/gsd-complete-milestone` step unless the
+   publish bundle is actually run with `--version=v1.21` first, per D-55's ordering
+   (`publish bundle --version=v1.21` precedes the `SINGLE close-gate commit`).
+3. **`v1.20-carve-gate.cjs`** is retired for the duration of this phase (Task 1 / 4.1) and does
+   not fire at any step.
+
+**Two of the three block()** — `jira-milestone-gate.cjs` and `publish-bundle-gate.cjs`; the third
+is de-registered. Stating this as one ordered decision means neither surviving hook is
+rediscovered in isolation at the moment it actually fires later in the terminal ordering.
+
+---
+
 *Phase: 153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a*
 *Plan: 11*
 *Evidence captured: 2026-08-29*
