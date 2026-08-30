@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 status: executing
-stopped_at: Completed 153-12-PLAN.md (owner ruled all-green on three-axis terminal re-audit; HARN-06 satisfied)
-last_updated: "2026-08-30T16:36:23.352Z"
+stopped_at: Completed 153-13-PLAN.md (v1.21 milestone audit and deferred-cleanup authored; HARN-06 fully satisfied)
+last_updated: "2026-08-30T16:52:48.224Z"
 last_activity: 2026-08-29
 last_activity_desc: Phase 153 execution started
-state_head: bbad0272d9b5ec79311638f53fe4f693c7612c67
+state_head: dfa276200c51316a715be1d6a2b3e3f18c079895
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 48
-  completed_plans: 46
+  completed_plans: 47
   percent: 89
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 ## Current Position
 
 Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
-Plan: 13 of 14
+Plan: 14 of 14
 Status: Ready to execute
 Last activity: 2026-08-29 — Phase 153 execution started
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
@@ -461,6 +461,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 153 P10 | 24min | 3 tasks | 1 files |
 | Phase 153 P11 | ~15min active | 3 tasks | 6 files |
 | Phase 153 P12 | 15min | 1 tasks | 1 files |
+| Phase 153 P13 | 65min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -652,6 +653,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 153]: Owner ruling (2026-08-30): proceed with pushing the full 259-commit unpushed set to origin/master; keep all four remote atom branches, delete none.
 - [Phase 153]: v1.20 CARVE regime retired for v1.21; corrected reasoning recorded — the original 'zero execution sites' claim missed the machine-local carve stop hook; surviving obligation is V-139-GOVARTIFACTS, not byte-equality on the frozen-pinned gate script.
 - [Phase 153]: Owner ruled all-green on the three-axis terminal re-audit at shared commit 478e633e; single permitted remediation round unspent — All three axes (fresh clone, live 18-workflow dispatch, working-tree reproduction) recorded green with zero illegitimate skips and zero failures; no accepted-red disposition needed
+- [Phase 153]: Section ordering for both v1.21 close artifacts inherited the v1.20 predecessor's shape (Claude's Discretion), chosen once and held — Plan 153-13 acceptance criteria require a stated, one-time discretionary choice
+- [Phase 153]: C17-FROZEN-AWARE-RESIDUE-V21 named fresh rather than a re-scope of the discharged C17-FROZEN-AWARE-RESIDUE-V15-V19 -- adjudicated in writing per D-67, the discharged entry was accumulated multi-milestone debt now fixed, the new entry is a single harness's self-resolving birth-cycle state — Double-booking adjudication mandated by the plan; the shared root cause and the disposition must both be stated on the record
+- [Phase 153]: ROLLBACK-RECOVERY-DIVERGENCE-COUNT discovered discharged mid-milestone by Phase 151/RCP-05 during the carry-forward diff -- v1.20-DEFERRED-CLEANUP.md's own copy was never updated to CLOSED, so it moved to Dropped-and-Closed instead of being silently re-opened as still-carried — The no-dropped-entry comparison requires cross-checking predecessor entries against live evidence, not trusting the predecessor document's text at face value
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -684,8 +688,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-30T16:36:21.472Z
-Stopped at: Completed 153-12-PLAN.md (owner ruled all-green on three-axis terminal re-audit; HARN-06 satisfied)
+Last session: 2026-08-30T16:52:46.305Z
+Stopped at: Completed 153-13-PLAN.md (v1.21 milestone audit and deferred-cleanup authored; HARN-06 fully satisfied)
 Resume file: None
 Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
