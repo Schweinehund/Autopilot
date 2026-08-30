@@ -1107,3 +1107,314 @@ All 18 runs reached `status: completed`. Top-level `conclusion` for all 18 is `s
 a **top-level run colour** per this plan's own evidence-discipline rule and is recorded here only
 as a completion signal, never as the pass/fail determination for HARN-06. Job-level evidence,
 keyed on all four fields, is captured next in Task 2.
+
+---
+
+## Plan 12, Task 2 — Job-level evidence, four-key rows, skip classification
+
+Recorded commit (unchanged from Task 1): `478e633e78e9670b31db1f39e7660c9f0e9c888c`.
+
+### 2.1 Job-level pull
+
+For each of the 18 runs in Task 1's reconciliation table, job-level JSON was pulled via `gh run
+view <id> --json jobs` (never a top-level run colour). **227 jobs observed across the 18 runs.**
+
+### 2.2 Skip-anchor derivation (read the guard, not a grep)
+
+`grep -l "schedule"` over the 18 workflow files hits all 18 — an insufficient signal, since
+`schedule:` also appears as the workflow-level *trigger* declaration, not just on the job that is
+gated by it. Reading each workflow's job graph directly: the base workflow
+(`audit-harness-integrity.yml`) and `audit-harness-v1.5-integrity.yml` carry a **weekly** cron
+(`0 8 * * 1`) and no quarterly job at all. The remaining 16 (`v1.6` through `v1.21`) each carry
+exactly one `rotting-external-quarterly` job (name: "Quarterly c13_rotting_external link-check"),
+`needs: harness-run`, gated to the quarterly cron event:
+
+```
+$ for f in .github/workflows/audit-harness-v1.{6..21}-integrity.yml; do
+    awk '/^  rotting-external-quarterly:/{p=1} p{print; if(/steps:/){exit}}' "$f"
+  done
+```
+
+14 of the 16 read `if: github.event_name == 'schedule' && github.event.schedule == '0 8 1
+1,4,7,10 *'`. **Two — `audit-harness-v1.6-integrity.yml` and `audit-harness-v1.7-integrity.yml` —
+read `if: always() && github.event_name == 'schedule' && ...`**, the always-plus-condition form
+this task's `<read_first>` warned would undercount a literal-string grep (a grep anchored on `if:
+github.event_name` as a literal prefix misses these two, since their `if:` line starts with
+`always()`). Both forms evaluate identically for a `workflow_dispatch` event — `always()` only
+forces evaluation past an upstream failure; the `event_name == 'schedule'` clause still gates the
+job off, since the actual event here is `workflow_dispatch`, not `schedule`.
+
+**`[MEASURED]` Legitimate-skip anchor: 16 of 18** — one `rotting-external-quarterly` skip
+expected per workflow that carries the job (16 workflows), zero expected in the 2 that do not
+carry it (base, v1.5). This is derived from reading each workflow's guard clause, never from a
+literal-string grep, and is not the figure carried from the predecessor milestone (the plan's own
+`<read_first>` warns against reusing that number unchecked).
+
+### 2.3 Non-evidence: continue-on-error jobs
+
+Every one of the 18 workflows carries exactly one `pin-helper-advisory` job with `continue-on-error:
+true` (D-14/D-15/D-22 — "advisory only; never fails build"; the v1.21 file additionally comments
+"NON-EVIDENCE (D-54/D-48)... conclusion structurally always success"). GitHub reports all 18 as
+`conclusion: success` regardless of the underlying command's real outcome, because
+`continue-on-error` rewrites a failing step's job conclusion to success. **These 18 rows are
+excluded from the success count and recorded as non-evidence,** per this task's own instruction
+never to cite a continue-on-error job as evidence.
+
+### 2.4 Full job-level table (227 rows, all four keys)
+
+Event is `workflow_dispatch` for every row (this plan's dispatch axis only — Task 1's read-back
+already proved 18/18 runs are `workflow_dispatch` events at the recorded commit). Head commit is
+`478e633e78e9670b31db1f39e7660c9f0e9c888c` for every row (inherited from its parent run, verified
+in Task 1's reconciliation table by full-SHA `jq` equality, not truncation) — shown truncated below
+for table width.
+
+| # | Workflow file | Job (display name) | Event | Head commit | Conclusion | Class |
+|---|---|---|---|---|---|---|
+| 1 | audit-harness-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 2 | audit-harness-integrity.yml | Sidecar JSON parse | workflow_dispatch | 478e633e... | success | success |
+| 3 | audit-harness-integrity.yml | Sidecar path matches harness | workflow_dispatch | 478e633e... | success | success |
+| 4 | audit-harness-integrity.yml | Harness replay | workflow_dispatch | 478e633e... | success | success |
+| 5 | audit-harness-integrity.yml | Supervision pin helper (advisory) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 6 | audit-harness-v1.5-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 7 | audit-harness-v1.5-integrity.yml | Parse v1.5 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 8 | audit-harness-v1.5-integrity.yml | Harness references v1.5 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 9 | audit-harness-v1.5-integrity.yml | Run v1.5 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 10 | audit-harness-v1.5-integrity.yml | check-phase-55 validator | workflow_dispatch | 478e633e... | success | success |
+| 11 | audit-harness-v1.5-integrity.yml | check-phase-60 validator | workflow_dispatch | 478e633e... | success | success |
+| 12 | audit-harness-v1.5-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 13 | audit-harness-v1.5-integrity.yml | check-phase-53 validator | workflow_dispatch | 478e633e... | success | success |
+| 14 | audit-harness-v1.5-integrity.yml | check-phase-52 validator | workflow_dispatch | 478e633e... | success | success |
+| 15 | audit-harness-v1.5-integrity.yml | check-phase-51 validator | workflow_dispatch | 478e633e... | success | success |
+| 16 | audit-harness-v1.5-integrity.yml | check-phase-50 validator | workflow_dispatch | 478e633e... | success | success |
+| 17 | audit-harness-v1.5-integrity.yml | check-phase-48 validator | workflow_dispatch | 478e633e... | success | success |
+| 18 | audit-harness-v1.5-integrity.yml | check-phase-54 validator | workflow_dispatch | 478e633e... | success | success |
+| 19 | audit-harness-v1.5-integrity.yml | check-phase-49 validator | workflow_dispatch | 478e633e... | success | success |
+| 20 | audit-harness-v1.5-integrity.yml | check-phase-58 validator | workflow_dispatch | 478e633e... | success | success |
+| 21 | audit-harness-v1.5-integrity.yml | check-phase-57 validator | workflow_dispatch | 478e633e... | success | success |
+| 22 | audit-harness-v1.5-integrity.yml | check-phase-61 validator | workflow_dispatch | 478e633e... | success | success |
+| 23 | audit-harness-v1.5-integrity.yml | check-phase-59 validator | workflow_dispatch | 478e633e... | success | success |
+| 24 | audit-harness-v1.5-integrity.yml | check-phase-56 validator | workflow_dispatch | 478e633e... | success | success |
+| 25 | audit-harness-v1.6-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 26 | audit-harness-v1.6-integrity.yml | Parse v1.6 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 27 | audit-harness-v1.6-integrity.yml | Harness references v1.6 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 28 | audit-harness-v1.6-integrity.yml | Run v1.6 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 29 | audit-harness-v1.6-integrity.yml | check-phase-62 validator | workflow_dispatch | 478e633e... | success | success |
+| 30 | audit-harness-v1.6-integrity.yml | check-phase-65 validator | workflow_dispatch | 478e633e... | success | success |
+| 31 | audit-harness-v1.6-integrity.yml | check-phase-66 validator | workflow_dispatch | 478e633e... | success | success |
+| 32 | audit-harness-v1.6-integrity.yml | check-phase-64 validator | workflow_dispatch | 478e633e... | success | success |
+| 33 | audit-harness-v1.6-integrity.yml | check-phase-63 validator | workflow_dispatch | 478e633e... | success | success |
+| 34 | audit-harness-v1.6-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 35 | audit-harness-v1.6-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 36 | audit-harness-v1.7-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 37 | audit-harness-v1.7-integrity.yml | Parse v1.7 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 38 | audit-harness-v1.7-integrity.yml | Harness references v1.7 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 39 | audit-harness-v1.7-integrity.yml | Run v1.7 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 40 | audit-harness-v1.7-integrity.yml | check-phase-70 validator | workflow_dispatch | 478e633e... | success | success |
+| 41 | audit-harness-v1.7-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 42 | audit-harness-v1.7-integrity.yml | check-phase-67 validator | workflow_dispatch | 478e633e... | success | success |
+| 43 | audit-harness-v1.7-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 44 | audit-harness-v1.7-integrity.yml | check-phase-68 validator | workflow_dispatch | 478e633e... | success | success |
+| 45 | audit-harness-v1.7-integrity.yml | check-phase-69 validator | workflow_dispatch | 478e633e... | success | success |
+| 46 | audit-harness-v1.7-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 47 | audit-harness-v1.8-integrity.yml | Parse v1.8 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 48 | audit-harness-v1.8-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 49 | audit-harness-v1.8-integrity.yml | Harness references v1.8 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 50 | audit-harness-v1.8-integrity.yml | Run v1.8 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 51 | audit-harness-v1.8-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 52 | audit-harness-v1.8-integrity.yml | check-phase-72 validator | workflow_dispatch | 478e633e... | success | success |
+| 53 | audit-harness-v1.8-integrity.yml | check-phase-74 validator | workflow_dispatch | 478e633e... | success | success |
+| 54 | audit-harness-v1.8-integrity.yml | check-phase-73 validator | workflow_dispatch | 478e633e... | success | success |
+| 55 | audit-harness-v1.8-integrity.yml | check-phase-71 validator | workflow_dispatch | 478e633e... | success | success |
+| 56 | audit-harness-v1.8-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 57 | audit-harness-v1.8-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 58 | audit-harness-v1.9-integrity.yml | Parse v1.9 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 59 | audit-harness-v1.9-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 60 | audit-harness-v1.9-integrity.yml | Harness references v1.9 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 61 | audit-harness-v1.9-integrity.yml | Run v1.9 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 62 | audit-harness-v1.9-integrity.yml | check-phase-77 validator | workflow_dispatch | 478e633e... | success | success |
+| 63 | audit-harness-v1.9-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 64 | audit-harness-v1.9-integrity.yml | check-phase-79 validator | workflow_dispatch | 478e633e... | success | success |
+| 65 | audit-harness-v1.9-integrity.yml | check-phase-75 validator | workflow_dispatch | 478e633e... | success | success |
+| 66 | audit-harness-v1.9-integrity.yml | check-phase-76 validator | workflow_dispatch | 478e633e... | success | success |
+| 67 | audit-harness-v1.9-integrity.yml | check-phase-78 validator | workflow_dispatch | 478e633e... | success | success |
+| 68 | audit-harness-v1.9-integrity.yml | check-phase-80 validator | workflow_dispatch | 478e633e... | success | success |
+| 69 | audit-harness-v1.9-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 70 | audit-harness-v1.9-integrity.yml | check-phase-82 validator | workflow_dispatch | 478e633e... | success | success |
+| 71 | audit-harness-v1.9-integrity.yml | check-phase-81 validator | workflow_dispatch | 478e633e... | success | success |
+| 72 | audit-harness-v1.9-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 73 | audit-harness-v1.10-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 74 | audit-harness-v1.10-integrity.yml | Parse v1.10 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 75 | audit-harness-v1.10-integrity.yml | Harness references v1.10 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 76 | audit-harness-v1.10-integrity.yml | Run v1.10 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 77 | audit-harness-v1.10-integrity.yml | check-phase-84 validator | workflow_dispatch | 478e633e... | success | success |
+| 78 | audit-harness-v1.10-integrity.yml | check-phase-88 validator | workflow_dispatch | 478e633e... | success | success |
+| 79 | audit-harness-v1.10-integrity.yml | check-phase-85 validator | workflow_dispatch | 478e633e... | success | success |
+| 80 | audit-harness-v1.10-integrity.yml | check-phase-83 validator | workflow_dispatch | 478e633e... | success | success |
+| 81 | audit-harness-v1.10-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 82 | audit-harness-v1.10-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 83 | audit-harness-v1.10-integrity.yml | check-phase-87 validator | workflow_dispatch | 478e633e... | success | success |
+| 84 | audit-harness-v1.10-integrity.yml | check-phase-86 validator | workflow_dispatch | 478e633e... | success | success |
+| 85 | audit-harness-v1.10-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 86 | audit-harness-v1.11-integrity.yml | Parse v1.11 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 87 | audit-harness-v1.11-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 88 | audit-harness-v1.11-integrity.yml | Harness references v1.11 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 89 | audit-harness-v1.11-integrity.yml | Run v1.11 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 90 | audit-harness-v1.11-integrity.yml | check-phase-92 validator | workflow_dispatch | 478e633e... | success | success |
+| 91 | audit-harness-v1.11-integrity.yml | check-phase-90 validator | workflow_dispatch | 478e633e... | success | success |
+| 92 | audit-harness-v1.11-integrity.yml | check-phase-89 validator | workflow_dispatch | 478e633e... | success | success |
+| 93 | audit-harness-v1.11-integrity.yml | check-phase-91 validator | workflow_dispatch | 478e633e... | success | success |
+| 94 | audit-harness-v1.11-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 95 | audit-harness-v1.11-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 96 | audit-harness-v1.11-integrity.yml | check-phase-93 validator | workflow_dispatch | 478e633e... | success | success |
+| 97 | audit-harness-v1.11-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 98 | audit-harness-v1.12-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 99 | audit-harness-v1.12-integrity.yml | Parse v1.12 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 100 | audit-harness-v1.12-integrity.yml | Harness references v1.12 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 101 | audit-harness-v1.12-integrity.yml | Run v1.12 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 102 | audit-harness-v1.12-integrity.yml | check-phase-94 validator | workflow_dispatch | 478e633e... | success | success |
+| 103 | audit-harness-v1.12-integrity.yml | check-phase-95 validator | workflow_dispatch | 478e633e... | success | success |
+| 104 | audit-harness-v1.12-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 105 | audit-harness-v1.12-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 106 | audit-harness-v1.12-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 107 | audit-harness-v1.13-integrity.yml | Parse v1.13 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 108 | audit-harness-v1.13-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 109 | audit-harness-v1.13-integrity.yml | Harness references v1.13 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 110 | audit-harness-v1.13-integrity.yml | Run v1.13 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 111 | audit-harness-v1.13-integrity.yml | check-phase-97 validator | workflow_dispatch | 478e633e... | success | success |
+| 112 | audit-harness-v1.13-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 113 | audit-harness-v1.13-integrity.yml | check-phase-100 validator | workflow_dispatch | 478e633e... | success | success |
+| 114 | audit-harness-v1.13-integrity.yml | check-phase-96 validator | workflow_dispatch | 478e633e... | success | success |
+| 115 | audit-harness-v1.13-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 116 | audit-harness-v1.13-integrity.yml | check-phase-98 validator | workflow_dispatch | 478e633e... | success | success |
+| 117 | audit-harness-v1.13-integrity.yml | check-phase-99 validator | workflow_dispatch | 478e633e... | success | success |
+| 118 | audit-harness-v1.13-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 119 | audit-harness-v1.14-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 120 | audit-harness-v1.14-integrity.yml | Parse v1.14 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 121 | audit-harness-v1.14-integrity.yml | Harness references v1.14 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 122 | audit-harness-v1.14-integrity.yml | Run v1.14 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 123 | audit-harness-v1.14-integrity.yml | check-phase-101 validator | workflow_dispatch | 478e633e... | success | success |
+| 124 | audit-harness-v1.14-integrity.yml | check-phase-105 validator | workflow_dispatch | 478e633e... | success | success |
+| 125 | audit-harness-v1.14-integrity.yml | check-phase-107 validator | workflow_dispatch | 478e633e... | success | success |
+| 126 | audit-harness-v1.14-integrity.yml | check-phase-102 validator | workflow_dispatch | 478e633e... | success | success |
+| 127 | audit-harness-v1.14-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 128 | audit-harness-v1.14-integrity.yml | check-phase-104 validator | workflow_dispatch | 478e633e... | success | success |
+| 129 | audit-harness-v1.14-integrity.yml | check-phase-106 validator | workflow_dispatch | 478e633e... | success | success |
+| 130 | audit-harness-v1.14-integrity.yml | check-phase-109 validator | workflow_dispatch | 478e633e... | success | success |
+| 131 | audit-harness-v1.14-integrity.yml | check-phase-103 validator | workflow_dispatch | 478e633e... | success | success |
+| 132 | audit-harness-v1.14-integrity.yml | check-phase-110 validator | workflow_dispatch | 478e633e... | success | success |
+| 133 | audit-harness-v1.14-integrity.yml | check-phase-112 validator | workflow_dispatch | 478e633e... | success | success |
+| 134 | audit-harness-v1.14-integrity.yml | check-phase-108 validator | workflow_dispatch | 478e633e... | success | success |
+| 135 | audit-harness-v1.14-integrity.yml | check-phase-111 validator | workflow_dispatch | 478e633e... | success | success |
+| 136 | audit-harness-v1.14-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 137 | audit-harness-v1.14-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 138 | audit-harness-v1.15-integrity.yml | Parse v1.15 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 139 | audit-harness-v1.15-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 140 | audit-harness-v1.15-integrity.yml | Harness references v1.15 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 141 | audit-harness-v1.15-integrity.yml | Run v1.15 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 142 | audit-harness-v1.15-integrity.yml | check-phase-117 validator | workflow_dispatch | 478e633e... | success | success |
+| 143 | audit-harness-v1.15-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 144 | audit-harness-v1.15-integrity.yml | check-phase-116 validator | workflow_dispatch | 478e633e... | success | success |
+| 145 | audit-harness-v1.15-integrity.yml | check-phase-115 validator | workflow_dispatch | 478e633e... | success | success |
+| 146 | audit-harness-v1.15-integrity.yml | check-phase-113 validator | workflow_dispatch | 478e633e... | success | success |
+| 147 | audit-harness-v1.15-integrity.yml | check-phase-114 validator | workflow_dispatch | 478e633e... | success | success |
+| 148 | audit-harness-v1.15-integrity.yml | check-phase-119 validator (apex; recursively spawns 48..118) | workflow_dispatch | 478e633e... | success | success |
+| 149 | audit-harness-v1.15-integrity.yml | check-phase-118 validator | workflow_dispatch | 478e633e... | success | success |
+| 150 | audit-harness-v1.15-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 151 | audit-harness-v1.15-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 152 | audit-harness-v1.16-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 153 | audit-harness-v1.16-integrity.yml | Parse v1.16 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 154 | audit-harness-v1.16-integrity.yml | Harness references v1.16 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 155 | audit-harness-v1.16-integrity.yml | Run v1.16 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 156 | audit-harness-v1.16-integrity.yml | check-phase-122 validator | workflow_dispatch | 478e633e... | success | success |
+| 157 | audit-harness-v1.16-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 158 | audit-harness-v1.16-integrity.yml | check-phase-123 validator | workflow_dispatch | 478e633e... | success | success |
+| 159 | audit-harness-v1.16-integrity.yml | check-phase-124 validator | workflow_dispatch | 478e633e... | success | success |
+| 160 | audit-harness-v1.16-integrity.yml | check-phase-120 validator | workflow_dispatch | 478e633e... | success | success |
+| 161 | audit-harness-v1.16-integrity.yml | check-phase-121 validator | workflow_dispatch | 478e633e... | success | success |
+| 162 | audit-harness-v1.16-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 163 | audit-harness-v1.16-integrity.yml | check-phase-125 validator (apex; recursively spawns 48..124) | workflow_dispatch | 478e633e... | success | success |
+| 164 | audit-harness-v1.16-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 165 | audit-harness-v1.17-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 166 | audit-harness-v1.17-integrity.yml | Parse v1.17 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 167 | audit-harness-v1.17-integrity.yml | Harness references v1.17 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 168 | audit-harness-v1.17-integrity.yml | Run v1.17 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 169 | audit-harness-v1.17-integrity.yml | check-phase-126 validator | workflow_dispatch | 478e633e... | success | success |
+| 170 | audit-harness-v1.17-integrity.yml | check-phase-128 validator (apex; recursively spawns 48..127) | workflow_dispatch | 478e633e... | success | success |
+| 171 | audit-harness-v1.17-integrity.yml | check-phase-127 validator | workflow_dispatch | 478e633e... | success | success |
+| 172 | audit-harness-v1.17-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 173 | audit-harness-v1.17-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 174 | audit-harness-v1.17-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 175 | audit-harness-v1.18-integrity.yml | Parse v1.18 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 176 | audit-harness-v1.18-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 177 | audit-harness-v1.18-integrity.yml | Harness references v1.18 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 178 | audit-harness-v1.18-integrity.yml | Run v1.18 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 179 | audit-harness-v1.18-integrity.yml | check-phase-130 validator | workflow_dispatch | 478e633e... | success | success |
+| 180 | audit-harness-v1.18-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 181 | audit-harness-v1.18-integrity.yml | check-phase-133 validator | workflow_dispatch | 478e633e... | success | success |
+| 182 | audit-harness-v1.18-integrity.yml | check-phase-129 validator | workflow_dispatch | 478e633e... | success | success |
+| 183 | audit-harness-v1.18-integrity.yml | check-phase-132 validator | workflow_dispatch | 478e633e... | success | success |
+| 184 | audit-harness-v1.18-integrity.yml | check-phase-134 validator (apex; recursively spawns 48..133) | workflow_dispatch | 478e633e... | success | success |
+| 185 | audit-harness-v1.18-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 186 | audit-harness-v1.18-integrity.yml | check-phase-131 validator | workflow_dispatch | 478e633e... | success | success |
+| 187 | audit-harness-v1.18-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 188 | audit-harness-v1.19-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 189 | audit-harness-v1.19-integrity.yml | Parse v1.19 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 190 | audit-harness-v1.19-integrity.yml | Harness references v1.19 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 191 | audit-harness-v1.19-integrity.yml | Run v1.19 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 192 | audit-harness-v1.19-integrity.yml | check-phase-135 validator | workflow_dispatch | 478e633e... | success | success |
+| 193 | audit-harness-v1.19-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 194 | audit-harness-v1.19-integrity.yml | check-phase-137 validator | workflow_dispatch | 478e633e... | success | success |
+| 195 | audit-harness-v1.19-integrity.yml | check-phase-136 validator | workflow_dispatch | 478e633e... | success | success |
+| 196 | audit-harness-v1.19-integrity.yml | check-phase-138 validator (apex; recursively spawns 48..137) | workflow_dispatch | 478e633e... | success | success |
+| 197 | audit-harness-v1.19-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 198 | audit-harness-v1.19-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 199 | audit-harness-v1.20-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 200 | audit-harness-v1.20-integrity.yml | Parse v1.20 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 201 | audit-harness-v1.20-integrity.yml | Harness references v1.20 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 202 | audit-harness-v1.20-integrity.yml | Run v1.20 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 203 | audit-harness-v1.20-integrity.yml | check-phase-143 validator | workflow_dispatch | 478e633e... | success | success |
+| 204 | audit-harness-v1.20-integrity.yml | check-phase-140 validator | workflow_dispatch | 478e633e... | success | success |
+| 205 | audit-harness-v1.20-integrity.yml | check-phase-139 validator | workflow_dispatch | 478e633e... | success | success |
+| 206 | audit-harness-v1.20-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 207 | audit-harness-v1.20-integrity.yml | check-phase-142 validator | workflow_dispatch | 478e633e... | success | success |
+| 208 | audit-harness-v1.20-integrity.yml | check-phase-141 validator | workflow_dispatch | 478e633e... | success | success |
+| 209 | audit-harness-v1.20-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 210 | audit-harness-v1.20-integrity.yml | check-phase-144 validator (apex; recursively spawns 48..143) | workflow_dispatch | 478e633e... | success | success |
+| 211 | audit-harness-v1.20-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+| 212 | audit-harness-v1.21-integrity.yml | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | workflow_dispatch | 478e633e... | success | success |
+| 213 | audit-harness-v1.21-integrity.yml | Parse v1.21 sidecar JSON | workflow_dispatch | 478e633e... | success | success |
+| 214 | audit-harness-v1.21-integrity.yml | Harness references v1.21 sidecar | workflow_dispatch | 478e633e... | success | success |
+| 215 | audit-harness-v1.21-integrity.yml | Run v1.21 milestone audit harness | workflow_dispatch | 478e633e... | success | success |
+| 216 | audit-harness-v1.21-integrity.yml | check-phase-147 validator | workflow_dispatch | 478e633e... | success | success |
+| 217 | audit-harness-v1.21-integrity.yml | check-phase-146 validator | workflow_dispatch | 478e633e... | success | success |
+| 218 | audit-harness-v1.21-integrity.yml | check-phase-152 validator | workflow_dispatch | 478e633e... | success | success |
+| 219 | audit-harness-v1.21-integrity.yml | check-phase-153 validator (apex; recursively spawns 48..152) | workflow_dispatch | 478e633e... | success | success |
+| 220 | audit-harness-v1.21-integrity.yml | Validator chain on Linux LF (Phase 69 CILINUX-01) | workflow_dispatch | 478e633e... | success | success |
+| 221 | audit-harness-v1.21-integrity.yml | check-phase-149 validator | workflow_dispatch | 478e633e... | success | success |
+| 222 | audit-harness-v1.21-integrity.yml | check-phase-151 validator | workflow_dispatch | 478e633e... | success | success |
+| 223 | audit-harness-v1.21-integrity.yml | Supervision-pin drift advisory (CI) | workflow_dispatch | 478e633e... | success | non-evidence (continue-on-error) |
+| 224 | audit-harness-v1.21-integrity.yml | check-phase-148 validator | workflow_dispatch | 478e633e... | success | success |
+| 225 | audit-harness-v1.21-integrity.yml | check-phase-150 validator | workflow_dispatch | 478e633e... | success | success |
+| 226 | audit-harness-v1.21-integrity.yml | check-phase-145 validator | workflow_dispatch | 478e633e... | success | success |
+| 227 | audit-harness-v1.21-integrity.yml | Quarterly c13_rotting_external link-check | workflow_dispatch | 478e633e... | skipped | legitimate skip (event-gated) |
+### 2.5 Totals
+
+| Category | Count | Derivation |
+|---|---|---|
+| Jobs observed | 227 | Sum of `.jobs \| length` across all 18 runs' job-level JSON |
+| Successes (evidence-bearing) | 193 | 211 GitHub-reported successes minus 18 non-evidence (2.3) |
+| Legitimate skips | 16 | `rotting-external-quarterly`, event-gated off under `workflow_dispatch`, anchor = 16 (2.2) |
+| Illegitimate skips | 0 | Zero jobs skipped for any reason other than the event gate above |
+| Failures | 0 | Zero jobs with `conclusion: failure` |
+| Non-evidence (continue-on-error) | 18 | `pin-helper-advisory`, one per workflow (2.3) |
+| **Sum** | **227** | 193 + 16 + 0 + 18 = 227 — reconciles exactly with jobs observed |
+
+`[MEASURED]` **Zero illegitimate skips. Zero failures.** The pre-remediation state (per this
+task's own instruction to record it whether or not remediation is entered) is: **all 227 jobs
+classify cleanly, no red or gap exists, so the Task 4 decision checkpoint is being reached with a
+fully green state** — the `all-green` option's precondition ("every non-success job was classified
+and no illegitimate skip was counted as a pass") is met.
+
+**No accepted-red disposition is available at this close.** Both were discharged and deleted at
+the v1.20 predecessor close (per D-78); this evidence file invokes none, and none was needed —
+there is no red to absorb.
