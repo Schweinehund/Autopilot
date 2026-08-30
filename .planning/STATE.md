@@ -5,17 +5,17 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
 status: executing
-stopped_at: Completed 153-03-PLAN.md
-last_updated: "2026-08-30T00:44:35.312Z"
+stopped_at: Completed 153-04-PLAN.md
+last_updated: "2026-08-30T00:53:15.589Z"
 last_activity: 2026-08-29
 last_activity_desc: Phase 153 execution started
-state_head: de304cc7f1adbd274051e6fed2f4654db92dc3ae
+state_head: 3fcaf6842e76cffc461b19c4c48c62fe88cce7ea
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 48
-  completed_plans: 37
-  percent: 77
+  completed_plans: 38
+  percent: 79
 ---
 
 # Project State
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 ## Current Position
 
 Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
-Plan: 4 of 14
+Plan: 5 of 14
 Status: Ready to execute
 Last activity: 2026-08-29 — Phase 153 execution started
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
@@ -46,7 +46,7 @@ Last activity: 2026-08-29 — Phase 153 execution started
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
   human_needed -> passed.
 
-Progress: [████████░░] 77% (8 of 9 phases; 34/34 planned plans complete)
+Progress: [████████░░] 79% (8 of 9 phases; 34/34 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -452,6 +452,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 153 P01 | 35min | 3 tasks | 3 files |
 | Phase 153 P02 | 40 min | 2 tasks | 4 files |
 | Phase 153 P03 | 55min | 3 tasks | 7 files |
+| Phase 153 P04 | 35min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -630,6 +631,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 153]: Guard path literals differ across V116/V117/V118/V119 even where V116 and V117 share a docs tree and cannot be distinguished from each other by path presence — Keeps each leg self-contained and avoids a spurious appearance of copy-paste divergence between otherwise near-identical files
 - [Phase 153]: createFrozenCorpusReader (tag-parameterized) used over readAtV120Close/lsTreeAtV120Close convenience wrappers for the sixth harness's full-corpus conversion, mirroring v1.19's own Phase-144 precedent
 - [Phase 153]: V120 known-member guard targets V118 (nearest actually-differing predecessor), not V119 -- V119/V120 docs trees are byte-identical (296 entries, zero diff)
+- [Phase 153]: 153-04: v1.21-milestone-audit.mjs forked from unconverted (pre-153-03) v1.20 source, hash-verified 9b0e77240a3bf96fc94547273914e52f9c12fa76; sidecar+BASELINE_25 landed as one indivisible unit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -662,8 +664,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-30T00:44:33.616Z
-Stopped at: Completed 153-03-PLAN.md
+Last session: 2026-08-30T00:53:13.983Z
+Stopped at: Completed 153-04-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
 
