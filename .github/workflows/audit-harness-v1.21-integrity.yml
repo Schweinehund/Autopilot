@@ -1,0 +1,95 @@
+# v1.21 Audit Harness Integrity
+# v1.21 integration surface. v1.4 + v1.4.1 + v1.5 + v1.6 + v1.7 + v1.8 + v1.9 + v1.10 + v1.11 + v1.12 + v1.13 + v1.14 + v1.15 + v1.16 + v1.17 + v1.18 + v1.19 + the immediately-prior milestone's harnesses frozen in their respective workflow files.
+# Phase 153 HARN-05: 18th coexistence workflow. path-filter v1.21-scoped + 2 crons + parse/path-match/harness-run repointed v1.21 +
+#   pin-helper-advisory + rotting-external-quarterly + active check-phase-145..153 invocations.
+# PRESERVES from Phase 69 dd1ff08 + 85521bb + 2d61981 (inherited verbatim via v1.13/v1.14/v1.15/v1.16/v1.17/v1.18/v1.19/the immediately-prior milestone's Path-A):
+#   linux-chain-ubuntu-latest fetch-depth:0 (FETCH-DEPTH-01 inheritance contract)
+#   linux-chain-ubuntu-latest core.autocrlf false (LF-fidelity contract)
+#   linux-chain-ubuntu-latest continue-on-error:false (D-A9 PR-blocking contract)
+#   linux-chain-ubuntu-latest timeout-minutes:30
+#   chain-apex CHAIN_TIMING_LINUX ::notice emission
+# DUAL-APEX (Pitfall 6, D-128-4, carried to GA-4 D-04, re-affirmed 144-08 D-16, re-affirmed 153 D-52):
+#   the standalone check-phase-153 job AND linux-chain-ubuntu-latest BOTH run the full apex recursion
+#   48..152. This is intentional and audited -- do NOT deduplicate, and do NOT add
+#   CHECK_PHASE_NESTED=1 to either top-level GHA invocation. No job in this file runs the predecessor
+#   milestone's apex validator -- the immediately-prior milestone's workflow is the only file that
+#   ever carried a standalone predecessor-apex job, and forward-duplicating that job is the defect
+#   D-54 names, not the pattern to copy.
+# CARVE-1 (unresolved, deliberately untouched this phase per D-04/GA-4): the harness-run job's
+#   checkout carries NO ref -- frozen predecessor harnesses in the other 17 workflow files validate
+#   live HEAD, not a pinned close-SHA. That root cause is deferred to a future dedicated tooling
+#   milestone; adding a ref here would be the rejected fix, out of scope for Phase 153.
+# HARNESS-DEPENDENCY CASCADE (D-53's cascade concern, restated for this file, recomputed not carried):
+#   every job in this file except frozen-read-probe declares `needs: harness-run` (directly or
+#   transitively via parse -> path-match -> harness-run), so a harness-run failure produces TWELVE
+#   silent SKIPS -- linux-chain-ubuntu-latest, check-phase-153, check-phase-145..152,
+#   rotting-external-quarterly, pin-helper-advisory -- rather than one visible red. A future evidence
+#   pass must read those skips as gaps, not as passes.
+# ADVISORY NON-EVIDENCE (D-54/D-48): pin-helper-advisory combines continue-on-error:true with a
+#   trailing `|| true` and `|| echo` fallback on both its steps, so its conclusion is structurally
+#   ALWAYS success. It is never evidence for any requirement.
+
+name: Audit Harness v1.21 Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/v1.21-*'
+      - 'scripts/validation/check-phase-*.mjs'
+      - '.github/workflows/audit-harness-v1.21-integrity.yml'
+      - '.planning/REQUIREMENTS.md'
+      - '.planning/milestones/v1.21-*'
+  schedule:
+    - cron: '0 8 * * 1'         # Weekly bitrot catch: 08:00 UTC every Monday (Path-A from v1.6)
+    - cron: '0 8 1 1,4,7,10 *'  # Quarterly c13_rotting_external check: 08:00 UTC on 1st of Jan/Apr/Jul/Oct (Phase 70 HARNESS-04 inheritance from Phase 66 AUDIT-14)
+  workflow_dispatch:
+
+jobs:
+  parse:
+    name: Parse v1.21 sidecar JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.21-audit-allowlist.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.21-audit-allowlist.json', 'utf8'));
+            if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
+              console.error('supervision_exemptions empty');
+              process.exit(1);
+            }
+            console.log('v1.21 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+          "
+
+  path-match:
+    name: Harness references v1.21 sidecar
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Verify harness sidecar reference
+        run: |
+          if grep -q "scripts/validation/v1.21-audit-allowlist.json" scripts/validation/v1.21-milestone-audit.mjs; then
+            echo "OK: harness references v1.21 sidecar"
+          else
+            echo "FAIL: harness does not reference v1.21-audit-allowlist.json"
+            exit 1
+          fi
+
+  harness-run:
+    name: Run v1.21 milestone audit harness
+    runs-on: ubuntu-latest
+    needs: path-match
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.21-milestone-audit.mjs
+        run: node scripts/validation/v1.21-milestone-audit.mjs --verbose
+
