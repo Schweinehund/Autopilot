@@ -344,7 +344,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 153-05-PLAN.md — the 18th CI workflow authored by mechanical per-job diff against an explicit literal inventory, born with full fetch depth, carrying its own apex and eight standalone leaf jobs (HARN-05)
+- [x] 153-05-PLAN.md — the 18th CI workflow authored by mechanical per-job diff against an explicit literal inventory, born with full fetch depth, carrying its own apex and eight standalone leaf jobs (HARN-05)
 
 **Wave 5** *(blocked on Wave 4)*
 
