@@ -1717,3 +1717,146 @@ available for a later phase in this milestone if a red surfaces there.
 record at commit `478e633e78e9670b31db1f39e7660c9f0e9c888c` from Tasks 1-3 is the accepted
 evidence; this section records the ruling on it, not a new measurement.
 
+
+---
+
+## Plan 153-14 — Close-gate decision checkpoint (Task 2)
+
+### Task 1 result, quoted (bundle regeneration)
+
+```
+$ node scripts/pipeline/build-publish-bundle.mjs --version=v1.21
+... (exit 0, zero conversion errors)
+$ ls -la dist/
+docs-library-v1.18.zip     3750410  Jul 20 01:17
+docs-library-v1.19.zip     3803164  Aug  4 00:52
+docs-library-v1.20.zip     3802777  Aug 17 23:04
+docs-library-v1.21.0.zip   4069321  Aug 27 11:25   (Phase 152's own UAT artifact — untouched)
+docs-library-v1.21.zip     4070799  Aug 30 11:59   (THIS run's output)
+```
+
+`[MEASURED]` (re-verified this session, orchestrator-independent re-check): `dist/docs-library-v1.21.zip`
+exists, 4,070,799 bytes, non-empty. `dist/docs-library-v1.17.zip` (the misnamed-fallback name) is
+**absent** — confirmed by direct listing, no such file present. `git diff --stat` on
+`scripts/pipeline/build-publish-bundle.mjs` and `scripts/pipeline/build-filename-map.mjs` is **empty**
+— neither canary literal was touched (both remain at 236). No commit was made in Task 1.
+
+### The six presentation items, put to the owner before the selection was requested
+
+1. **Evidence at the one shared commit:** all three axes (fresh clone, dispatch, working tree) green
+   at `478e633e78e9670b31db1f39e7660c9f0e9c888c` — recorded above (Plan 153-12/153-13, Task 4). Job-level
+   totals: 227 jobs, 193 successes, 16 legitimate skips, 0 illegitimate skips, 0 failures, 18
+   non-evidence. Six direct harness invocations (v1.15..v1.20, unset nested flag): all 16/0/0. Dynamic
+   nested-fail scan across all 107 apex chain members: zero content-level PASS/FAIL divergence between
+   standalone and nested modes. Apex's own isolated invocation (this session, pre-gate, unset nested
+   flag): **110 PASS, 0 FAIL, 1 SKIPPED (111 total)** — the single skip is `V-153-AUDIT`, a resolver-null
+   skip-pass because `153-VERIFICATION.md` does not exist yet (expected pre-gate; the phase's own output
+   artifact is produced after this plan). Single remediation round: **UNSPENT** (zero rounds used to
+   date).
+2. **The bundle result:** `dist/docs-library-v1.21.zip`, 4,070,799 bytes, present and non-empty;
+   `dist/docs-library-v1.17.zip` (misnamed fallback) confirmed absent. The output directory is
+   gitignored — this listing is the only proof that will ever exist.
+3. **The two close artifacts:** `.planning/milestones/v1.21-MILESTONE-AUDIT.md` (55,678 bytes) and
+   `.planning/milestones/v1.21-DEFERRED-CLEANUP.md` (51,621 bytes) both exist on disk, authored by
+   Plan 153-13.
+4. **What the gate does, derived by command, not recalled:**
+   ```
+   $ awk '/^### /{sec=$0} /^- \[x\]/{cnt[sec]++} /^- \[ \]/{unc[sec]++} END{for(s in cnt) print s": "cnt[s]+0" complete, "unc[s]+0" incomplete"}' .planning/REQUIREMENTS.md
+   FIX (corpus corrections and the validator gate):        12 complete, 0 incomplete
+   DRV (Windows driver and firmware update depth):          7 complete, 0 incomplete
+   LNX (five-platform update delivery):                     4 complete, 0 incomplete
+   APP (application update management):                     6 complete, 0 incomplete
+   BIOS (firmware and BIOS governance):                    12 complete, 0 incomplete
+   RCP (the prescriptive update-plan artifact):             5 complete, 0 incomplete
+   INT (registry, publish reach and navigation-last close): 6 complete, 0 incomplete
+   HARN (V120 pin, C17 frozen-aware residue, 19th Path-A):  5 complete, 1 incomplete (HARN-05)
+   ```
+   `[MEASURED]` Sum: 12+7+4+6+12+5+6+5 = 57 currently validated, **1 remaining** (HARN-05 — the flag
+   this plan's Task 1 already discharged the substantive work of). The gate flips HARN-05 to validated,
+   bringing the total to **58/58**.
+5. **Irreversibility:** the gate is one-way; the requirements document is never removed at close
+   because `check-phase-54.mjs` live-reads it outside the frozen-read mechanism (confirmed at lines
+   28-34 and ~347 per this plan's Task 3 `read_first`).
+6. **Ordering already honored:** the bundle already ran, deliberately before the gate, and exited
+   0 with zero conversion errors — the failable step is already behind us.
+
+### Owner ruling, given explicitly by the human owner, 2026-08-30 (verbatim)
+
+> `proceed`
+>
+> Take the single close-gate commit and close milestone v1.21.
+
+**Selection: `proceed`.** Task 3 executes next: the single four-file close-gate commit (flipping
+HARN-05 and all 58 requirement rows to validated across PROJECT.md, ROADMAP.md, STATE.md,
+REQUIREMENTS.md), followed by a separate post-gate record commit carrying the confirmatory apex
+result. No re-dispatch, no re-run of the bundle, no re-capture of the three axes follows this ruling
+— the evidence already on record is the accepted evidence; this section records the ruling on it.
+
+---
+
+## Plan 153-14 — Task 3: gate commit, post-gate apex, live-read validator
+
+### The gate commit
+
+```
+$ git show --stat e129081e
+commit e129081e512decb469c6d66f61456c669a33173b
+    docs(153-14): v1.21 MILESTONE CLOSE — single close-gate commit, 58/58 requirements Validated
+ .planning/PROJECT.md      | ... 
+ .planning/REQUIREMENTS.md | ...
+ .planning/ROADMAP.md      | ...
+ .planning/STATE.md        | ...
+ 4 files changed, 29 insertions(+), 27 deletions(-)
+```
+
+`[MEASURED]` Exactly 4 files, matching the commit contract. Requirements: 58/58 `[x]`, 0 `[ ]`
+(`grep -c` this session). Discriminator `git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.21/
+&& $2 ~ /MILESTONE CLOSE/'` returns exactly one row — the gate commit itself.
+
+### Post-gate apex — three measurements in this session, the triple that CHANGED and why
+
+| # | When | Command | Result | Why |
+|---|---|---|---|---|
+| 1 | Pre-gate (baseline, cited in the Task 2 presentation) | `node scripts/validation/check-phase-153.mjs` | 110 PASS, 0 FAIL, 1 SKIPPED (111 total) | `V-153-AUDIT` resolver-null — `153-VERIFICATION.md` did not exist |
+| 2 | Post-gate, pre-`153-VERIFICATION.md` | `node scripts/validation/check-phase-153.mjs` | 110 PASS, 0 FAIL, 1 SKIPPED (111 total) | Same reason — the gate flips requirement rows, not this file's existence; `153-VERIFICATION.md` still did not exist at this point |
+| 3 | Post-gate, **after** `153-VERIFICATION.md` was authored | `node scripts/validation/check-phase-153.mjs` | **111 PASS, 0 FAIL, 0 SKIPPED (111 total)** | `V-153-AUDIT`'s heading-presence check now finds the file with a "Phase 153" heading and PASSES for real |
+
+`[MEASURED]` **The triple changed from 110/0/1 to 111/0/0, and the change was caused by authoring
+`153-VERIFICATION.md` — not by the gate commit itself.** The gate commit alone does not move this
+particular skip (measurement #2 proves that). This matches the source file's own documented
+prediction at `check-phase-153.mjs:103-104` verbatim: "111 PASS, 0 FAIL, 0 SKIPPED — once
+153-VERIFICATION.md exists" / "110 PASS, 0 FAIL, 1 SKIPPED — while 153-VERIFICATION.md does not yet
+exist". **This is the phase's own confirmatory apex result: 111 PASS, 0 FAIL, 0 SKIPPED.**
+
+This is a **nested-propagating sweep by construction** (D-75/D-77) — `check-phase-153.mjs` sets
+`CHECK_PHASE_NESTED=1` on every one of its 107 chain children, so this apex triple is not evidence
+for the C17 conversion criterion (see Task 1 above, section 1.5) and was run in isolation, non-nested,
+in its own separate invocation, per this plan's own instruction.
+
+### Live-read validator, post-gate
+
+```
+$ node scripts/validation/check-phase-54.mjs
+...
+Summary: 32 passed, 0 failed, 0 skipped
+```
+
+`[MEASURED]` Both files the gate rewrote (`.planning/REQUIREMENTS.md`, `.planning/ROADMAP.md`) —
+including `V-54-21`'s negative literal assertion over both — read clean post-gate.
+
+### Canaries, re-confirmed post-gate
+
+```
+$ git diff --stat scripts/pipeline/build-publish-bundle.mjs scripts/pipeline/build-filename-map.mjs
+(empty)
+```
+
+`[MEASURED]` Both canary literals (236) remain untouched by the entire plan, gate included.
+
+### The two-commit ordering
+
+The gate commit (`e129081e`) is on record first. The post-gate record commit — carrying
+`153-EVIDENCE.md` (this file) and `153-14-SUMMARY.md` — follows immediately after this section is
+written, per the commit contract. `git log --oneline -2` after that commit lands will show the
+record commit first (most recent) and the gate commit second, and `git show --stat HEAD~1` at that
+point resolves to the gate commit's 4 files — matching the plan's own acceptance criterion.
