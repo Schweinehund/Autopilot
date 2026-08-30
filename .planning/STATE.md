@@ -1,21 +1,21 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.21
-milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
+milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — SHIPPED 2026-08-30
 current_phase: 153
 current_phase_name: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
-status: executing
-stopped_at: Completed 153-13-PLAN.md (v1.21 milestone audit and deferred-cleanup authored; HARN-06 fully satisfied)
-last_updated: "2026-08-30T16:52:48.224Z"
-last_activity: 2026-08-29
-last_activity_desc: Phase 153 execution started
+status: shipped
+stopped_at: "Completed 153-14-PLAN.md — v1.21 MILESTONE CLOSE, 58/58 requirements Validated"
+last_updated: "2026-08-30T17:11:49.000Z"
+last_activity: 2026-08-30
+last_activity_desc: Phase 153 close-gate landed — v1.21 SHIPPED
 state_head: dfa276200c51316a715be1d6a2b3e3f18c079895
 progress:
   total_phases: 9
-  completed_phases: 8
+  completed_phases: 9
   total_plans: 48
-  completed_plans: 47
-  percent: 89
+  completed_plans: 48
+  percent: 100
 ---
 
 # Project State
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; Phase 152 landed the registry rows and navigation)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 153 — Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
+**Current focus:** v1.21 SHIPPED 2026-08-30 (Phase 153 close-gate complete, 58/58 requirements Validated) — next: code review, UAT, `/gsd-audit-milestone`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,16 +37,18 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — EXECUTING
+Phase: 153 (Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump) — COMPLETE
 Plan: 14 of 14
-Status: Ready to execute
-Last activity: 2026-08-29 — Phase 153 execution started
+Status: v1.21 SHIPPED — 58/58 requirements Validated via the Phase 153 Plan 153-14 single close-gate commit
+Last activity: 2026-08-30 — Phase 153 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
   UAT 2/2 passed (both items were owner decisions, not defects): the docs/index.md:276 recipes
   lead-in stays as-is, and build-publish-bundle.mjs's `v1.17` VERSION default is carried forward
   as an explicit Phase 153 precondition rather than fixed here. Canonical verification advanced
   human_needed -> passed.
 
-Progress: [█████████░] 89% (8 of 9 phases; 34/34 planned plans complete)
+**Next step:** Code review of the new validator files, the library helper and the workflow, then user-acceptance testing, then `/gsd-audit-milestone`, then `/gsd-complete-milestone` (archive v1.21, tag) or `/gsd-new-milestone` to scope v1.22. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
+
+Progress: [██████████] 100% (9 of 9 phases; 48/48 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -688,10 +690,10 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-30T16:52:46.305Z
-Stopped at: Completed 153-13-PLAN.md (v1.21 milestone audit and deferred-cleanup authored; HARN-06 fully satisfied)
+Last session: 2026-08-30T17:11:49.000Z
+Stopped at: "Completed 153-14-PLAN.md — v1.21 MILESTONE CLOSE, 58/58 requirements Validated"
 Resume file: None
-Next action: `/gsd-discuss-phase 153` (research pass is deliberately skipped — see Plan-Time Research Flags)
+Next action: Code review, user-acceptance testing and `/gsd-audit-milestone`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 ## Operator Next Steps
 

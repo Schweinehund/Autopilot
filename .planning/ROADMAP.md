@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🔵 **v1.21 Enterprise Update, Driver & Firmware/BIOS Governance** — Phases 145-153 (active, roadmap created 2026-08-19)
+- ✅ **v1.21 Enterprise Update, Driver & Firmware/BIOS Governance** — Phases 145-153 (shipped 2026-08-30)
 - ✅ **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (shipped 2026-08-18)
 - ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
 - ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
@@ -40,7 +40,7 @@
 - [x] **Phase 150: Per-OEM BIOS Guides & Capability Matrix** - Dell, HP and Lenovo at an identical five-section shape so the matrix is a transposition, with recovery gaps stated rather than filled (completed 2026-08-25)
 - [x] **Phase 151: Recipe #5 — The Enterprise Update Plan** - The prescriptive configuration artifact the corpus has never had (completed 2026-08-26)
 - [x] **Phase 152: Integration, Registry & Navigation-Last Close** - One atomic registry commit, then navigation, then a green corpus (completed 2026-08-27)
-- [ ] **Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump** - Both harness debts discharged and the apex green at close
+- [x] **Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump** - Both harness debts discharged and the apex green at close (completed 2026-08-30)
 
 <details>
 <summary>✅ v1.0–v1.20 (Phases 1-144) — SHIPPED</summary>
@@ -327,7 +327,7 @@ Plans:
 
 **Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
 **Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
-**Plans**: 13/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
+**Plans**: 14/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
 
 **Wave 1**
 
@@ -374,7 +374,7 @@ Plans:
 
 **Wave 11** *(blocked on Wave 10)*
 
-- [ ] 153-14-PLAN.md — the publish bundle regenerated at this milestone's version with both filenames verified, the SINGLE close-gate commit flipping all 58 requirements under an explicit commit-contract override, the post-gate confirmatory apex in a separate commit, and the lifecycle handoff (HARN-05, HARN-06)
+- [x] 153-14-PLAN.md — the publish bundle regenerated at this milestone's version with both filenames verified, the SINGLE close-gate commit flipping all 58 requirements under an explicit commit-contract override, the post-gate confirmatory apex in a separate commit, and the lifecycle handoff (HARN-05, HARN-06)
 
 ## Progress
 
@@ -402,7 +402,7 @@ Plans:
 | v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
 | v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
 | v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | ✅ Shipped | 2026-08-18 |
-| v1.21 Enterprise Update, Driver & Firmware/BIOS Governance | 145-153 | 🔵 In progress | — |
+| v1.21 Enterprise Update, Driver & Firmware/BIOS Governance | 145-153 | ✅ Shipped | 2026-08-30 |
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -420,4 +420,4 @@ Plans:
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | Complete | 2026-08-25 |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 5/5 | Complete | 2026-08-26 |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 4/4 | Complete | 2026-08-27 |
-| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 13/14 | Not started |  |
+| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 14/14 | Complete | 2026-08-30 |
