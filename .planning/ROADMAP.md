@@ -327,7 +327,7 @@ Plans:
 
 **Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
 **Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
-**Plans**: 6/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
+**Plans**: 7/14 plans executed across 11 waves (sequential-on-main-tree; waves 2 and 5 carry parallel-safe siblings with zero file overlap)
 
 **Wave 1**
 
@@ -349,7 +349,7 @@ Plans:
 **Wave 5** *(blocked on Wave 4)*
 
 - [x] 153-06-PLAN.md — content leaves for phases 145, 146 and 147, including the corpus-wide archival-drift negative and the stub-and-move retention set (HARN-04)
-- [ ] 153-07-PLAN.md — content leaves for phases 148, 149 and 150, with positive needles replacing the non-transcribable base-commit assertions and per-file scoping across the three identically-shaped vendor guides (HARN-04)
+- [x] 153-07-PLAN.md — content leaves for phases 148, 149 and 150, with positive needles replacing the non-transcribable base-commit assertions and per-file scoping across the three identically-shaped vendor guides (HARN-04)
 - [ ] 153-08-PLAN.md — content leaves for phases 151 and 152, the second transcribed verbatim from its pre-specified needle-spec with the false twin claim corrected on the record (HARN-04)
 
 **Wave 6** *(blocked on Wave 5)*
@@ -420,4 +420,4 @@ Plans:
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | Complete | 2026-08-25 |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 5/5 | Complete | 2026-08-26 |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 4/4 | Complete | 2026-08-27 |
-| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 6/14 | Not started |  |
+| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 7/14 | Not started |  |
