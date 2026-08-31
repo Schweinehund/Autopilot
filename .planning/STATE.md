@@ -1,20 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.21
-milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-status: Awaiting next milestone
-stopped_at: Phase 153 complete — all phases complete
-last_updated: "2026-08-30T18:26:01.499Z"
-last_activity: 2026-08-30
-last_activity_desc: Milestone v1.21 completed and archived
-state_head: cc1e69418cf8107ba9b7a5f353dda9dc957e949a
+milestone: v1.22
+milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe
+status: planning
+last_updated: "2026-08-31T14:42:24.193Z"
+last_activity: 2026-08-31
 progress:
-  total_phases: 9
-  completed_phases: 9
-  total_plans: 48
-  completed_plans: 48
-  percent: 100
-current_phase: 153
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -36,10 +32,10 @@ See: .planning/PROJECT.md (updated 2026-08-27 — v1.21 content pillars closed; 
 
 ## Current Position
 
-Phase: Milestone v1.21 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-08-30 — Milestone v1.21 completed and archived
+Status: Defining requirements
+Last activity: 2026-08-31 — Milestone v1.22 started
 
 ## v1.21 Phase Dependency Summary
 
