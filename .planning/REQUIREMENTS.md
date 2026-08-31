@@ -25,7 +25,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 154+).
 **This pillar lands work that is already done.** `scripts/docs-style/RESUME.md`'s `NEXT SESSION STARTS HERE` block states it directly: *"There is no verification work left."* `[MEASURED 2026-08-31]` the deterministic verifier reproduces at 6 dispositioned / exit 0; all **406** real modal-loss hunks carry a recorded verdict in `scripts/docs-style/_JUDGE-VERDICTS.json` (360 PRESERVED / 26 STRENGTHENED / 19 INVERTED / 1 WEAKENED); all **46** findings were applied. Re-running the pass would discard that verification, which is why ruling 1 chose merge.
 
 - [ ] **STYLE-01**: The scratch corpus at `D:\claude\docs-google-style-test` is merged into `docs/` as a real merge against the post-fork drift. `[MEASURED 2026-08-31]` `git diff --shortstat 534073f4 HEAD -- docs` = **22 files changed, 4,032 insertions, 12 deletions**. The fork point is `534073f4`; the corrected pristine baseline for the verifier is **`c97d322`**, not `6010dd5` — a prior record named the wrong one and every reproduce command depends on the right one. Re-measure the drift at plan time; this repo takes commits from other sessions.
-- [ ] **STYLE-02**: A tenth batch applies the same pass to the **9** documents authored after the fork, which the pass has never seen, plus Recipe #6 from the RCP pillar. `[MEASURED 2026-08-31]` the set is exactly: `docs/operations/firmware-bios/00-overview.md`, `01-windows-dfci.md`, `02-dell-bios-configuration.md`, `03-hp-bios-configuration.md`, `04-lenovo-bios-configuration.md`, `docs/operations/patch-management/07-windows-autopatch.md`, `08-windows-app-updates.md`, `docs/recipes/05-enterprise-update-plan.md`, `docs/reference/firmware-oem-matrix.md`. Landing STYLE-01 without STYLE-02 ships a visibly half-styled corpus — the stated reason the pass was never landed as-is.
+- [ ] **STYLE-02**: A tenth batch applies the same pass to the **9** documents authored after the fork, which the pass has never seen, plus Recipe #6 from the RCP pillar. `[MEASURED 2026-08-31]` the set is exactly: `docs/operations/firmware-bios/00-overview.md`, `01-windows-dfci.md`, `02-dell-bios-configuration.md`, `03-hp-bios-configuration.md`, `04-lenovo-bios-configuration.md`, `docs/operations/patch-management/07-windows-autopatch.md`, `08-windows-app-updates.md`, `docs/recipes/05-enterprise-update-plan.md`, `docs/reference/firmware-oem-matrix.md`. **The batch also covers the three already-styled documents that Pillar C writes new prose into** — RE-222, RE-224 and `docs/reference/licensing-matrix.md` — because RCP-06/07/08 author un-styled text into documents the merge already styled, and nothing else in the milestone would catch it. Landing STYLE-01 without STYLE-02 ships a visibly half-styled corpus — the stated reason the pass was never landed as-is.
 - [ ] **STYLE-03**: Every hand-adjudicated revert carries a `KEEP_LINE` entry, and every blanket substitution row that splits a real label pair is **deleted from its `subs-*.tsv`** rather than worked around. `KEEP_LINE` is the only thing protecting a revert: `Create a local admin account` was reverted in `dc7e996` and was still re-breakable a day later for exactly this reason. Where a judge verdict overturned a mechanical substitution, the corresponding TSV row is removed — 20 such rows were deleted during the original pass, and the next sweep re-breaks the fixes without that step.
 - [ ] **STYLE-04**: Option 1 is preserved intact — every Google rule class is adopted **except** sentence-case headings. Headings stay Title Case because `[MEASURED]` 101 distinct headings (590 occurrences) are pinned verbatim as string literals inside **83** `check-phase-*.mjs` validators, including `## Version History` (249 files), `## See Also` (130) and `## Configuration-Caused Failures` (57). Every style invocation in this milestone passes `--no-headings`.
 - [ ] **STYLE-05**: The em-dash canon survives the merge unbroken. The mechanical canon does **not** reach headings — a heading edit changes its GitHub anchor slug — so a prose reference quoting a heading legitimately carries the tight dash while the heading keeps the spaced one. That is cosmetic, not drift, and is suppressed by applying the mechanical canon to both sides rather than reported. `[MEASURED]` two judge-supplied fixes silently reverted the canon to a hyphen during the original pass, so the mechanical set is diffed per hunk before application.
@@ -40,7 +40,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 154+).
 - [ ] **VERIFY-03**: Judges are asked explicitly for defects outside the modal task. `[MEASURED]` four subject-verb agreement breaks were reported **unprompted** during the original pass — dropping `will` from a long compound subject leaves a singular verb — and no automated check in the toolchain sees them. A judge prompt that does not ask will not find them twice.
 - [ ] **VERIFY-04**: The full structural gate is measured **before and after** landing, at the same commit on both sides where the tree is unchanged: C17, the apex `check-phase-NNN`, the nav-hub link checker, the link differ, and the pin differ. A before-measurement is required because a 4,000-line merge cannot be attributed after the fact.
 - [ ] **VERIFY-05**: `dist/docs-library-v1.22.zip` is rebuilt from the landed corpus with `guard-docx.mjs` fail-closed, a correct CSV manifest and README, and both drift canaries agreeing with the registry row count.
-- [ ] **VERIFY-06**: No claimed fix is trusted on the strength of a written record. Every assertion that a defect was reverted or corrected is confirmed with `git log -S "<the string>"` before any count rests on it. `[MEASURED]` a prior `RESUME.md` ruling stated a revert that never happened; the expansion was introduced at `f30c37b` and stood untouched for four subsequent batches while the same file carried the correct label at another line, and the **full structural gate was green throughout**. Prefer a detector over a ledger entry for anything that must stay fixed.
+- [ ] **VERIFY-06**: No claimed fix is trusted on the strength of a written record. Every assertion that a defect was reverted or corrected is confirmed with `git log -S "<the string>"` before any count rests on it. `[MEASURED]` a prior `RESUME.md` ruling stated a revert that never happened; the expansion was introduced at `f30c37b` and stood untouched for four subsequent batches while the same file carried the correct label at another line, and the **full structural gate was green throughout**. Prefer a detector over a ledger entry for anything that must stay fixed. **This requirement also carries the post-hygiene style sweep:** every file edited by the HYG pillar is dispositioned before the publish bundle is built, because those edits land after the verification phase and write new prose into already-styled documents.
 
 ### Recipe — walk-up AVD kiosk formalization (RCP)
 
@@ -133,13 +133,51 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (pending roadmap) | — | Pending |
+| STYLE-01 | Phase 154 | Pending |
+| STYLE-02 | Phase 156 | Pending |
+| STYLE-03 | Phase 154 | Pending |
+| STYLE-04 | Phase 154 | Pending |
+| STYLE-05 | Phase 154 | Pending |
+| STYLE-06 | Phase 154 | Pending |
+| VERIFY-01 | Phase 154 | Pending |
+| VERIFY-02 | Phase 156 | Pending |
+| VERIFY-03 | Phase 156 | Pending |
+| VERIFY-04 | Phase 156 | Pending |
+| VERIFY-05 | Phase 158 | Pending |
+| VERIFY-06 | Phase 158 | Pending |
+| RCP-01 | Phase 155 | Pending |
+| RCP-02 | Phase 155 | Pending |
+| RCP-03 | Phase 155 | Pending |
+| RCP-04 | Phase 155 | Pending |
+| RCP-05 | Phase 155 | Pending |
+| RCP-06 | Phase 155 | Pending |
+| RCP-07 | Phase 155 | Pending |
+| RCP-08 | Phase 155 | Pending |
+| RCP-09 | Phase 155 | Pending |
+| RCP-10 | Phase 155 | Pending |
+| STD-01 | Phase 157 | Pending |
+| STD-02 | Phase 157 | Pending |
+| STD-03 | Phase 157 | Pending |
+| STD-04 | Phase 157 | Pending |
+| HYG-01 | Phase 157 | Pending |
+| HYG-02 | Phase 157 | Pending |
+| HYG-03 | Phase 157 | Pending |
+| HYG-04 | Phase 157 | Pending |
+| HYG-05 | Phase 157 | Pending |
+| HYG-06 | Phase 157 | Pending |
+| HYG-07 | Phase 157 | Pending |
+| HARN-01 | Phase 159 | Pending |
+| HARN-02 | Phase 159 | Pending |
+| HARN-03 | Phase 159 | Pending |
+| HARN-04 | Phase 159 | Pending |
+| HARN-05 | Phase 159 | Pending |
+| HARN-06 | Phase 159 | Pending |
 
 **Coverage:**
 - v1.22 requirements: 39 total (STYLE 6, VERIFY 6, RCP 10, STD 4, HYG 7, HARN 6)
-- Mapped to phases: 0
-- Unmapped: 39 ⚠️
+- Mapped to phases: 39
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-08-31*
-*Last updated: 2026-08-31 at milestone start — v1.21 requirement traceability is archived in `.planning/milestones/v1.21-REQUIREMENTS.md`.*
+*Last updated: 2026-08-31 — roadmap created: 39/39 requirements mapped across Phases 154-159 (0 orphaned, 0 duplicated). v1.21 requirement traceability is archived in `.planning/milestones/v1.21-REQUIREMENTS.md`.*
