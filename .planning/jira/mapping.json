@@ -1030,7 +1030,38 @@
       "epicKey": "RTS-823",
       "status": "created",
       "created": "2026-08-31",
-      "phases": {}
+      "phases": {
+        "154": {
+          "issueKey": "RTS-824",
+          "status": "todo",
+          "name": "STYLE Landing — Merge the Verified Google-Style Pass"
+        },
+        "155": {
+          "issueKey": "RTS-825",
+          "status": "todo",
+          "name": "RCP — Walk-Up AVD Kiosk Recipe Formalization"
+        },
+        "156": {
+          "issueKey": "RTS-826",
+          "status": "todo",
+          "name": "STYLE Extension & Full-Landing Verification"
+        },
+        "157": {
+          "issueKey": "RTS-827",
+          "status": "todo",
+          "name": "STD + HYG — Authoring Standard & Corpus Hygiene"
+        },
+        "158": {
+          "issueKey": "RTS-828",
+          "status": "todo",
+          "name": "Final Corpus Verification & Publish Bundle"
+        },
+        "159": {
+          "issueKey": "RTS-829",
+          "status": "todo",
+          "name": "HARN — Harness Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-07-30",
