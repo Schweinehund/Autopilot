@@ -1033,7 +1033,7 @@
       "phases": {
         "154": {
           "issueKey": "RTS-824",
-          "status": "todo",
+          "status": "in_progress",
           "name": "STYLE Landing — Merge the Verified Google-Style Pass"
         },
         "155": {
