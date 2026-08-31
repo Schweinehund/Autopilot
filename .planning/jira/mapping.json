@@ -1025,6 +1025,12 @@
         }
       },
       "completedDate": "2026-08-30"
+    },
+    "v1.22": {
+      "epicKey": "RTS-823",
+      "status": "created",
+      "created": "2026-08-31",
+      "phases": {}
     }
   },
   "lastUpdated": "2026-07-30",
