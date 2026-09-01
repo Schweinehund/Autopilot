@@ -87,7 +87,11 @@ Per-phase goals, success criteria, blast radius and plan lists: `.planning/miles
   2. `sweep3.py --dry-run` against `_CONTENT-PINS.txt` (never `_EMDASH-PINS.txt`) reports 0 wanted edits post-merge, and every hand-adjudicated revert carries a `KEEP_LINE` entry; any blanket `subs-*.tsv` row that splits a real label pair is deleted from its file rather than worked around.
   3. `verify-meaning.py` exits 0 against the corrected pristine baseline commit `c97d322` with `_DISPOSITIONS.tsv`, and `verify-meaning.py --self-test` prints 10/10.
   4. The full structural gate (C17, the apex `check-phase-NNN`, the nav-hub link checker, the link differ, the pin differ) is measured and its counts recorded at the commit immediately before the merge lands, establishing the before-half of Phase 156's before/after proof.
-**Plans**: TBD
+**Plans**: 4 plans in 4 waves (strictly sequential — the SC#4 baseline must be captured and committed before the landing, and every later plan measures what the landing produced)
+- [ ] 154-01-PLAN.md — Preserve the scratch corpus (bundle + permanent refs), argv-ify the SC#4 link differ, and capture the five-component pre-merge gate baseline into `154-GATE-BASELINE.json`
+- [ ] 154-02-PLAN.md — The landing tracer: apply the 281-file patch, resolve all three conflicts by their own named rules, conflict-marker gate before each of commits C1 through C4, record the post-merge shortstat at C4
+- [ ] 154-03-PLAN.md — Post-merge proof: mechanical residual at zero over the landed set, `verify-meaning.py` green in both geometries via a new `docs/`-prefixed dispositions sibling, heading census and em-dash canon assertions
+- [ ] 154-04-PLAN.md — Fix the live label-splitting substitution row with a standing detector, confirm STYLE-03's historical evidence with a pickaxe, and amend both planning documents by annotate-and-supersede
 
 ### Phase 155: RCP — Walk-Up AVD Kiosk Recipe Formalization
 **Goal**: RE-237, authored outside the phase flow from a live pilot build, moves from an untracked, unregistered Draft to a registered, cross-linked, review-Approved Device Recipe (Recipe #6) with its executable assets committed and its conflicts against RE-222 and RE-224 reconciled.
