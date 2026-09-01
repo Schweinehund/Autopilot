@@ -534,7 +534,7 @@ cross-repo fetch, which this research independently reproduced end to end.
 | A1 | The `e1`/`e2`/`ee` stray root files D-34 directs be deleted in a housekeeping commit do not currently exist anywhere in the repository (confirmed: not tracked via `git ls-files`, not in `git log --all -- e1 e2 ee`, not present on disk via `find`). Treated here as a likely-stale note from an earlier session rather than a live defect. | Live Drift / Landmines | Low — if the executor blindly attempts `git rm e1 e2 ee` per D-34/STATE.md without checking first, the commit will fail (nothing to remove) or silently no-op; either way it's non-blocking. Recommended default: `git ls-files -- e1 e2 ee` first, skip the housekeeping commit if empty. |
 | A2 | D-04's stated "87 CRLF / 207 LF" corpus split could not be reproduced under any scoping tried this session (whole scratch tree, 281-file patch subset, byte-scan, and independent `file` command all agree: 282 CRLF / 3 LF working-tree, 285/285 LF committed blobs). The specific split may have been measured on a different machine/session with different `core.autocrlf` behavior, or against a different file scope entirely. | Landmines / Pitfall 6 | Low for the merge mechanism itself (independently re-verified to produce the correct 277M+3UU shape regardless), but the D-04 prose citing "87/207" should not be repeated as fact in execution artifacts — cite the blobs-are-100%-LF fact instead, which is directly reproducible. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 None left unresolved. Both items that could not be fully pinned down (the `e1`/`e2`/`ee` file
 existence and the CRLF/LF split) are resolved above into the Assumptions Log with a stated default
