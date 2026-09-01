@@ -90,10 +90,10 @@ Per-phase goals, success criteria, blast radius and plan lists: `.planning/miles
   3. `verify-meaning.py` exits 0 against the corrected pristine baseline commit `c97d322` with `_DISPOSITIONS.tsv`, and `verify-meaning.py --self-test` prints 10/10.
   4. The full structural gate (C17, the apex `check-phase-NNN`, the nav-hub link checker, the link differ, the pin differ) is measured and its counts recorded at the commit immediately before the merge lands, establishing the before-half of Phase 156's before/after proof.
 
-**Plans**: 4 plans in 4 waves (strictly sequential — the SC#4 baseline must be captured and committed before the landing, and every later plan measures what the landing produced)
+**Plans**: 1/4 plans executed in 4 waves (strictly sequential — the SC#4 baseline must be captured and committed before the landing, and every later plan measures what the landing produced)
 **Wave 1**
 
-- [ ] 154-01-PLAN.md — Preserve the scratch corpus (bundle + permanent refs), argv-ify the SC#4 link differ, and capture the five-component pre-merge gate baseline into `154-GATE-BASELINE.json`
+- [x] 154-01-PLAN.md — Preserve the scratch corpus (bundle + permanent refs), argv-ify the SC#4 link differ, and capture the five-component pre-merge gate baseline into `154-GATE-BASELINE.json`
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
