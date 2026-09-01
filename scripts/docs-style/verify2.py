@@ -10,6 +10,7 @@ import re
 import subprocess
 import pathlib
 import collections
+import sys
 
 LINK = re.compile(r'\]\(([^)]*)\)')
 HEAD = re.compile(r'^#{1,6}\s+(.*)$', re.M)
@@ -23,8 +24,9 @@ def canon(s):
     return s
 
 
+BASE = sys.argv[1] if len(sys.argv) > 1 else sys.exit(__doc__)
 def baseline(f):
-    return subprocess.run(['git', 'show', 'HEAD~1:' + f],
+    return subprocess.run(['git', 'show', BASE + ':' + f],
                           capture_output=True, text=True, encoding='utf-8').stdout
 
 
@@ -38,7 +40,7 @@ def slug(h):
     return s.replace(' ', '-').strip('-')
 
 
-files = sorted(p for p in pathlib.Path('.').rglob('*.md') if '.git' not in p.parts)
+files = sorted(p for p in pathlib.Path('docs').rglob('*.md') if '.git' not in p.parts)
 
 print("=== A. proof: only the intended substitutions occurred ===")
 changed_lines = unexplained = 0
