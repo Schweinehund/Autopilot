@@ -1,0 +1,156 @@
+{
+  "gate_baseline": {
+    "sha": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+    "sha_short": "789a348a",
+    "branch": "master",
+    "measured_at": "2026-09-01T12:00:17Z",
+    "path_note": "Phase 156 and Phase 158 must RESOLVE this artifact's path rather than hardcode it -- .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close.",
+    "components": {
+      "c17": {
+        "script": "scripts/validation/c17-eee-contract.mjs",
+        "invocation": "node scripts/validation/c17-eee-contract.mjs",
+        "exitCode": 0,
+        "filesChecked": 237,
+        "totalViolations": 0,
+        "perAssertionViolations": {
+          "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0,
+          "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0
+        },
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check-phase-153": {
+        "script": "scripts/validation/check-phase-153.mjs",
+        "invocation": "node scripts/validation/check-phase-153.mjs",
+        "nested": false,
+        "exitCode": 0,
+        "pass": 111,
+        "fail": 0,
+        "skipped": 0,
+        "wallClockMs": 50069,
+        "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+      },
+      "check-nav-hub-links": {
+        "script": "scripts/validation/check-nav-hub-links.mjs",
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "verify2": {
+        "script": "scripts/docs-style/verify2.py",
+        "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+        "base": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+        "walkRoot": "docs",
+        "exitCode": 0,
+        "changedLines": 0,
+        "explainedByFourRules": 0,
+        "unexplained": 0,
+        "resolvedOk": {"baseline": 6271, "after": 6271},
+        "missingFile": {"baseline": 27, "after": 27},
+        "missingAnchor": {"baseline": 454, "after": 454},
+        "introducedBySweep": 0,
+        "incidentallyFixed": 0,
+        "tallyLine": "changed lines 0; explained by the 4 rules 0; UNEXPLAINED 0"
+      },
+      "pin_differ": {
+        "tool": "none -- set-membership assertion per D-31 (pins2.py must not be run)",
+        "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+        "pinCount": 562,
+        "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+        "found": 562,
+        "lost": 0,
+        "tallyLine": "562 pins / 562 found / 0 lost"
+      }
+    },
+    "mechanical_residual": {
+      "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+      "mode": "dry-run (unconditional default -- sweep3.py has no --dry-run flag; it silently discards unknown argv tokens)",
+      "exitCode": 0,
+      "filesLoaded": 193,
+      "pinsLoaded": 562,
+      "perTokenEdits": {
+        "admin": 765, "admins": 148, "vs": 22, "config": 20,
+        "sign-in-to": 7, "desired": 7
+      },
+      "totalEdits": 969,
+      "protected": {
+        "table row": 6530,
+        "cited verbatim quotation": 384,
+        "heading line": 123,
+        "agent speech script": 92,
+        "validator-pinned string": 31,
+        "UI label line": 30,
+        "blockquote would exceed C17 #12 200-char cap": 1
+      },
+      "tallyLine": "DRY RUN -- 193 files, 562 pins loaded / 969 TOTAL edits"
+    },
+    "negative_control_never_a_gate": {
+      "note": "Recorded ONCE as a labelled negative control per D-31/D-27. This is NEVER a pass/fail input. _EMDASH-PINS.txt must never be supplied to sweep3.py as the input to any gate or acceptance criterion.",
+      "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_EMDASH-PINS.txt",
+      "mode": "dry-run (same unconditional default as above)",
+      "exitCode": 0,
+      "filesLoaded": 195,
+      "pinsLoaded": 8,
+      "perTokenEdits": {
+        "admin": 796, "admins": 148, "vs": 22, "config": 20,
+        "sign-in-to": 7, "desired": 7
+      },
+      "totalEdits": 1000,
+      "protected": {
+        "table row": 6530,
+        "cited verbatim quotation": 384,
+        "heading line": 123,
+        "agent speech script": 92,
+        "UI label line": 30,
+        "blockquote would exceed C17 #12 200-char cap": 1
+      },
+      "tallyLine": "DRY RUN -- 195 files, 8 pins loaded / 1000 TOTAL edits"
+    },
+    "sc3": {
+      "self_test": {
+        "invocation": "python scripts/docs-style/verify-meaning.py --self-test",
+        "exitCode": 0,
+        "resultLine": "PASS: 10/10 self-test assertions"
+      }
+    },
+    "fork_point_drift": {
+      "invocation": "git diff --shortstat 534073f4..HEAD -- docs/",
+      "forkPoint": "534073f4",
+      "shortstat": "23 files changed, 4324 insertions(+), 12 deletions(-)",
+      "filesChanged": 23,
+      "insertions": 4324,
+      "deletions": 12,
+      "ancestorCheck": {
+        "invocation": "git merge-base --is-ancestor 534073f4 HEAD",
+        "exitCode": 0
+      },
+      "agreesWithRequirementsMdStyle01": false,
+      "note": "REQUIREMENTS.md STYLE-01 still quotes '22 files changed, 4,032 insertions, 12 deletions' (measured 2026-08-31). This task's own measurement is '23 files changed, 4324 insertions(+), 12 deletions(-)' -- disagrees on files (22 vs 23) and insertions (4,032 vs 4,324), agrees on deletions (12). This measurement matches CONTEXT.md D-12's corrected figure. Plan 154-04 corrects REQUIREMENTS.md text per the annotate-and-supersede mechanism."
+    },
+    "census": {
+      "note": "Values Phase 156 will diff against. Each measured by a command run during this task, not copied from a prior document.",
+      "heading_escalation_criteria": {
+        "titleCase": {
+          "invocation": "per-line match of '## Escalation Criteria' across docs/**/*.md",
+          "count": 43
+        },
+        "sentenceCase": {
+          "invocation": "per-line match of '## Escalation criteria' across docs/**/*.md",
+          "count": 0
+        }
+      },
+      "tight_em_dash": {
+        "invocation": "python regex (?<!\\s)—(?!\\s) across docs/**/*.md -- counts only TIGHT (unspaced) em-dash occurrences, not the raw character count which also includes still-spaced instances",
+        "occurrences": 7,
+        "files": 5
+      },
+      "admin_guide_label": {
+        "shortForm": {"text": "admin guide", "count": 61},
+        "expandedForm": {"text": "administrator guide", "count": 0}
+      }
+    }
+  },
+  "landing": {},
+  "post_merge": {}
+}
