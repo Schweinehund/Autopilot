@@ -5,8 +5,9 @@ every figure below is re-measured at execution time per D-65 — the live value 
 carried from `159-CONTEXT.md` or `159-RESEARCH.md`, with the delta against the carried figure written
 down explicitly.
 
-**§1-§5** below belong to Plan 159-01 (Land the v1.22 milestone on `master`). **§6 onward** belong to
-Plan 159-02 (the V121 back-anchor pin, HARN-01/HARN-02).
+**§1-§5** below belong to Plan 159-01 (Land the v1.22 milestone on `master`). **§6-§8** belong to
+Plan 159-02 (the V121 back-anchor pin, HARN-01/HARN-02). **§9 onward** belong to Plan 159-03 (fork
+the v1.22 harness, copy the sidecar, insert the `BASELINE_26` journal block).
 
 ---
 
@@ -692,3 +693,226 @@ discipline: a zero-delta result is a result, not a skipped measurement.
 
 `node scripts/validation/check-phase-54.mjs` reports `Summary: 32 passed, 0 failed, 0 skipped`,
 re-run immediately before this evidence commit.
+
+---
+
+## §9 — Plan 159-03 Task 1: fork the harness from the frozen blob, assert three-way byte-equality
+
+### Precondition check (fork ordering)
+
+```
+git show e129081e:scripts/validation/v1.21-milestone-audit.mjs | git hash-object --stdin
+git hash-object scripts/validation/v1.21-milestone-audit.mjs
+```
+→ both `bd56517225e0b587fd31eaac1616ff7cbddab60d` — the working-tree harness had not yet been
+converted; the fork ordering precondition held.
+
+### Three-way hash agreement (before any edit to the new file)
+
+```
+git show e129081e:scripts/validation/v1.21-milestone-audit.mjs > scripts/validation/v1.22-milestone-audit.mjs
+git hash-object scripts/validation/v1.22-milestone-audit.mjs
+```
+
+| Source | SHA-1 (git hash-object) |
+|---|---|
+| Frozen blob (`e129081e:scripts/validation/v1.21-milestone-audit.mjs`) | `bd56517225e0b587fd31eaac1616ff7cbddab60d` |
+| Unconverted working copy (`scripts/validation/v1.21-milestone-audit.mjs`) | `bd56517225e0b587fd31eaac1616ff7cbddab60d` |
+| New file, immediately after creation, before any edit | `bd56517225e0b587fd31eaac1616ff7cbddab60d` |
+
+All three agree. The identity edits made afterward (sidecar path constant, header rewrite naming
+the v1.22 birth condition and its two Part A deferrals, self-identifying `Usage:` line, lineage
+chain and ordinal) are the only bytes that differ from the frozen source.
+
+### Identity edits made
+
+- `SIDECAR_PATH`-equivalent literal at the `parseAllowlist()` read site repointed from
+  `scripts/validation/v1.21-audit-allowlist.json` to `scripts/validation/v1.22-audit-allowlist.json`
+  — constant name and surrounding code shape unchanged; `grep -c "v1.22-audit-allowlist.json"
+  scripts/validation/v1.22-milestone-audit.mjs` → **2** (header prose + the `readFile(...)` call
+  site the coexistence workflow greps for).
+- Header rewritten in place: lineage chain extended to `v1.22`, ordinal `TWENTIETH`, the `Source of
+  truth` pointer repointed to `159-CONTEXT.md` (D-21..D-24), and the `Residue` paragraph rewritten
+  to name `C17-FROZEN-AWARE-RESIDUE-V22` and `V122-PIN-DEFERRAL` as the two Part A deferrals this
+  generation's birth creates (D-22's drop-and-name-as-new shape).
+- `Usage:` comment line updated to self-name `v1.22-milestone-audit.mjs`.
+
+### Predecessor version-string absence (non-comment lines)
+
+```
+awk '!/^\s*\/\// && /1\.21/' scripts/validation/v1.22-milestone-audit.mjs
+```
+→ empty (zero non-comment lines still name the predecessor version). All remaining `1.21` tokens
+sit inside `//`-prefixed comment lines describing lineage/history, which is expected and correct
+(the file's own lineage chain must still name its ancestors).
+
+### No string-command child process call
+
+```
+grep -nE "execSync\(|child_process'\)\.exec\(" scripts/validation/v1.22-milestone-audit.mjs; test $? -eq 1 && echo "no string-command child process call"
+```
+→ `no string-command child process call` (the one subprocess spawn, C17's `execFileSync('node',
+[CONTRACT], ...)`, stays in argument-array form, unchanged from the frozen source).
+
+### Standalone harness runs
+
+```
+node scripts/validation/v1.22-milestone-audit.mjs --self-test
+```
+→ exit 0, `Self-test: 9 passed, 0 failed`.
+
+```
+node scripts/validation/v1.22-milestone-audit.mjs --verbose
+```
+→ exit **1**, `Summary: 12 passed, 4 failed, 0 skipped` (C2, C7, C9, C13 all fail).
+
+### Deviation (Rule 3 — mis-specified verify-command sequencing)
+
+**Issue:** Task 1's acceptance criteria require `--verbose` to exit 0 with 0 failed standalone,
+before Task 2 creates the sidecar. The identity edit that repoints the sidecar-path literal to
+`v1.22-audit-allowlist.json` is itself one of the task's own required edits (the literal the
+coexistence workflow greps for), but that file does not exist until Task 2 runs. `parseAllowlist()`
+degrades silently to empty exemption arrays on a missing sidecar (no fail-loud throw for the
+file-absent case in this generation's inherited code), so C2/C7/C9/C13 report real corpus
+violations against zero pins rather than a clean failure — the literal command cannot pass under
+the task's own correct design, which forks the sidecar-repointed harness in Task 1 and creates its
+sidecar sibling in Task 2 of the same plan.
+**Fix:** Verified intent instead: `--self-test` (which needs no sidecar) passes standalone at 0
+failed, proving the harness's own logic is intact; `--verbose` is re-run immediately after Task 2
+creates `v1.22-audit-allowlist.json` (see §10) and confirmed 0 failed there, before this plan's own
+close and before any consumer (leaf/apex) exists — satisfying the plan's actual success criterion
+("runs green standalone before any consumer exists") in the order the two tasks are designed to run.
+**Files modified:** none beyond the task's own edits.
+**Committed in:** `663f55be`
+
+### git show --stat / docs untouched
+
+```
+git show --stat HEAD
+```
+→ lists exactly one path, `scripts/validation/v1.22-milestone-audit.mjs`.
+
+```
+git status --porcelain -- docs/
+```
+→ empty.
+
+---
+
+## §10 — Plan 159-03 Task 2: copy the sidecar byte-identical, re-measure populations
+
+### Sidecar parses; harness resolves it
+
+```
+node -e "JSON.parse(require('node:fs').readFileSync('scripts/validation/v1.22-audit-allowlist.json','utf8'));console.log('sidecar parses')"
+```
+→ `sidecar parses`.
+
+```
+node scripts/validation/v1.22-milestone-audit.mjs --verbose
+```
+→ exit **0**, `Summary: 16 passed, 0 failed, 0 skipped` — resolves the Task 1 deviation above; the
+new harness now runs green standalone with its own sidecar sibling in place.
+
+### Pin-array byte-identity (programmatic, not by inspection)
+
+```
+node -e "const fs=require('node:fs');const a=JSON.parse(fs.readFileSync('scripts/validation/v1.21-audit-allowlist.json','utf8'));const b=JSON.parse(fs.readFileSync('scripts/validation/v1.22-audit-allowlist.json','utf8'));const keys=Object.keys(a).filter(k=>Array.isArray(a[k]));let bad=[];for(const k of keys){if(JSON.stringify(a[k])!==JSON.stringify(b[k]))bad.push(k)}if(bad.length){console.error('pin arrays differ:',bad.join(','));process.exit(1)}console.log('all '+keys.length+' pin arrays byte-identical')"
+```
+→ `all 8 pin arrays byte-identical` (the 8 top-level arrays: `safetynet_exemptions`,
+`supervision_exemptions`, `cope_banned_phrases`, `c7_knox_allowlist`, `c9_exemptions`,
+`c11_ops_exemptions`, `c13_broken_link_allowlist`, `c16_missing_endpoint_exemptions`).
+
+```
+node -e "const fs=require('node:fs');const a=JSON.parse(fs.readFileSync('scripts/validation/v1.21-audit-allowlist.json','utf8'));const b=JSON.parse(fs.readFileSync('scripts/validation/v1.22-audit-allowlist.json','utf8'));console.log(JSON.stringify(a.c13_rotting_external)===JSON.stringify(b.c13_rotting_external)?'c13_rotting_external byte-identical':'DIFFERS')"
+```
+→ `c13_rotting_external byte-identical` (the 9th, nested array-of-arrays object; a naive
+`Object.keys(...).filter(Array.isArray)` walk does not recurse into it, so it is checked
+separately per the header's own "recursive-vs-naive" note).
+
+Header fields changed (the only fields that differ from the v1.21 sidecar): `generated` →
+`2026-09-09T00:00:00Z`, `phase` → `159-harn-harness-close`. `schema_version` (`1.1`) carried
+unchanged.
+
+### Four populations re-measured live (D-23, D-65 — live value wins)
+
+```
+grep -c '"file":' scripts/validation/v1.22-audit-allowlist.json
+```
+→ **89** total entries (delta vs carried 89: **0**).
+
+```
+grep -c '"line":' scripts/validation/v1.22-audit-allowlist.json
+```
+→ **73** line-keyed entries (delta vs carried 73: **0**).
+
+```
+grep -o '"file": *"[^"]*"' scripts/validation/v1.22-audit-allowlist.json | sort -u | wc -l
+```
+→ **33** distinct files (delta vs carried 33: **0**).
+
+**Line-enforced count** — derived from a `grep`-confirmed read of `v1.22-milestone-audit.mjs`'s own
+check bodies (which arrays are actually matched via a `{file}:{line}` `Set` lookup against a live
+violation, vs. arrays only tallied by count or never referenced at all):
+
+| Array | Entries | Line-enforced? | Consulted by |
+|---|---|---|---|
+| `safetynet_exemptions` | 4 | yes | C1 (`{file,line}` lookup) |
+| `supervision_exemptions` | 26 | yes | C2 (`{file,line}` lookup) |
+| `c7_knox_allowlist` | 10 | yes | C7 (`{file,line}` lookup) |
+| `c9_exemptions` | 4 | yes | C9 (`{file,line}` lookup) |
+| `c11_ops_exemptions` | 0 | yes (vacuously) | C11 (`{file,line}` lookup) |
+| `c16_missing_endpoint_exemptions` | 0 | yes (vacuously) | C16 (`{file,line}` lookup) |
+| `cope_banned_phrases` | 8 | n/a (not a pin array — banned-phrase regex source) | C9 |
+| `c13_broken_link_allowlist` | 15 | **no — count-only** | C13 asserts `.length === 15` and tallies `category`; never matches an individual violation's `{file,line}` |
+| `c13_rotting_external.*` | 31 (4+10+17) | **no — never read** | zero references to `c13_rotting_external` anywhere in `v1.22-milestone-audit.mjs` (`grep -c c13_rotting_external scripts/validation/v1.22-milestone-audit.mjs` → 0) |
+
+Line-enforced total: 4+26+10+4+0+0 = **44** (delta vs carried 44: **0**). Not line-enforced: 15
+(`c13_broken_link_allowlist`, count-only) + 31 (`c13_rotting_external`, never read) = 46 of the 89
+`"file":`-bearing entries; `cope_banned_phrases` (8) is excluded from both the 89-count's file-bearing
+denominator (it carries no `file` key) and from the line-enforced tally.
+
+All four figures reproduce their D-23-carried values exactly on this sidecar — a genuine
+zero-delta result, stated per D-65's own discipline that a zero delta is a result, not a skipped
+measurement.
+
+### Dead exemption pins — enumerated, disclosed, not repointed
+
+All four `safetynet_exemptions` entries point at lines carrying no `SafetyNet` token, checked both
+at the V121 close SHA and at HEAD:
+
+```
+git show e129081e:docs/_glossary-android.md | sed -n '186p;201p'
+sed -n '186p;201p' docs/_glossary-android.md
+git show e129081e:docs/android-lifecycle/03-android-version-matrix.md | sed -n '101p;103p'
+sed -n '101p;103p' docs/android-lifecycle/03-android-version-matrix.md
+```
+
+| File | Line | `SafetyNet` at `e129081e`? | `SafetyNet` at HEAD? |
+|---|---|---|---|
+| `docs/_glossary-android.md` | 186 | no | no |
+| `docs/_glossary-android.md` | 201 | no (blank line) | no (blank line) |
+| `docs/android-lifecycle/03-android-version-matrix.md` | 101 | no | no |
+| `docs/android-lifecycle/03-android-version-matrix.md` | 103 | no | no |
+
+All four pass C1 only through the surrounding ±200-character window carrying `successor|turned
+off|deprecated|Play Integrity` (per C1's own exemption clause `(b)`), never on the pinned line's
+own text. Carried byte-identical into `v1.22-audit-allowlist.json`; not repointed, not deleted, not
+silently fixed. Disclosed here, in the `BASELINE_26` journal block (§11), and reserved as a v1.23
+repoint entry in the future `v1.22-DEFERRED-CLEANUP.md` Part A.
+
+### Entry-class disclosure (dead pin vs. unenforced entry class)
+
+Two different things are being disclosed and must not be conflated:
+- **Dead pins** (4, all in `safetynet_exemptions`): the harness *does* line-enforce this array, but
+  these 4 specific coordinates carry no matching token — the pin passes only through the window
+  fallback.
+- **Unenforced entry classes** (46 entries: 15 `c13_broken_link_allowlist` + 31
+  `c13_rotting_external`): the harness never performs a `{file,line}` match against these arrays at
+  all — count-only or entirely unread — so no individual entry in these classes can be "dead" in
+  the same sense; the class itself is not enforced per-entry.
+
+### Post-task validator run
+
+`node scripts/validation/v1.22-milestone-audit.mjs --verbose` → `Summary: 16 passed, 0 failed, 0
+skipped`, re-confirmed immediately before this evidence commit.
