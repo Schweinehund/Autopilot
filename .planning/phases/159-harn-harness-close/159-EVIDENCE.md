@@ -198,6 +198,29 @@ ref, and the D-65 delta against D-46's carried figures. `state_head` in the fron
 left as the harness's own bookkeeping field (updated automatically at the next state-tooling run) —
 the annotation documents its unreachability rather than editing the field by hand.
 
+### Tracer feedback gate (post-commit re-verification)
+
+Per the executor's tracer protocol, all three of this task's `<verify>` blocks were re-run
+end-to-end after this task's own commit (`0d6ae73f`, which layers the STATE annotation and this
+evidence file on top of the squash commit `9cc84aa6`):
+
+- Close discriminator: still `0`. **PASS**.
+- Single-parent chain: `git rev-list --parents -1 master` shows `0d6ae73f 9cc84aa6` (2 words, one
+  parent) for the tip, and the squash commit `9cc84aa6` itself independently still shows exactly one
+  parent (`8de413aa`) by the same corrected form. **PASS**.
+- Tree equality (`master^{tree}` vs. `refs/archive/v1.22-landing^{tree}`): **no longer equal**
+  (`9d9608f9…` vs. `15f9d290…`) — expected and correct, not a regression. The equality is a
+  point-in-time proof that the squash commit's tree exactly matches the archived branch tip; it was
+  true at the moment of the squash (recorded above, both `15f9d290…`) and necessarily diverges the
+  instant any ordinary commit lands on `master` afterward, by design (D-02: "every later Phase 159
+  commit is an ordinary commit on `master`"). The archive ref stays frozen at the squash point for
+  exactly this reason — it is the durable anchor for that one-time equality proof, not `master` going
+  forward.
+
+Tracer verified end-to-end: the squash mechanism's own properties (single parent, correct archive
+target, 0 close-gate collisions) all hold after this task's metadata commit. Proceeding to expansion
+tasks 3-6.
+
 ### Branch afterlife note
 
 `git push --all` and `git push --tags` never transfer a `refs/archive/*` ref (git's push refspec
