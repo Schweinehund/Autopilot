@@ -2053,3 +2053,124 @@ exactly. This same false-positive recurs against the new v1.22 file's own trigge
 carries a bare `schedule:` key) in Task 2's analogous verify command; it is recorded here so Task 2
 does not mistake a count of 14 (13 real jobs + 1 `schedule:` false positive) for a real job-count
 defect.
+
+## §21 — Plan 159-08 Task 3: re-measure the lineage end to end, record the workflow evidence
+
+### Lineage inventory — every member, live command, live result
+
+| Lineage member | Command | Result |
+|---|---|---|
+| V121 back-anchor pin + exports | `grep -n "V121" scripts/validation/_lib/frozen-at-close.mjs \| wc -l` | present (159-02) |
+| Converted predecessor harness | `node scripts/validation/v1.21-milestone-audit.mjs --verbose \| tail -1` | `16 passed, 0 failed, 0 skipped` |
+| New harness | `node scripts/validation/v1.22-milestone-audit.mjs --verbose \| tail -1` | `Summary: 16 passed, 0 failed, 0 skipped` |
+| Sidecar | `test -f scripts/validation/v1.22-audit-allowlist.json && echo present` | `present` |
+| Baseline journal block | `grep -c "BASELINE_26" scripts/validation/regenerate-supervision-pins.mjs` | `>= 1` (159-03) |
+| Five content leaves | `for f in 154 155 156 157 158; do node scripts/validation/check-phase-$f.mjs \| tail -1; done` | `13/13, 10/10, 10/10, 34/34, 12/12 — 0 FAIL, 0 SKIPPED` each |
+| Apex | `node scripts/validation/check-phase-159.mjs --verbose \| tail -1` | `Result: 116 PASS, 0 FAIL, 1 SKIPPED (total checks: 117)` |
+| Workflow | `test -f .github/workflows/audit-harness-v1.22-integrity.yml && echo present` | `present`; 13 jobs confirmed in §20 |
+
+All eight lineage members exist and are green standalone. This completes the 20th Path-A lineage
+(pin, converted predecessor, new harness, sidecar, baseline block, five leaves, apex, workflow).
+
+### Predecessor-surface census
+
+**`scripts/validation/` diff against the v1.21 close SHA (`e129081e`)** —
+`git diff --name-only e129081e -- scripts/validation/ | sort`:
+
+```
+scripts/validation/_lib/frozen-at-close.mjs
+scripts/validation/check-phase-135.mjs
+scripts/validation/check-phase-154.mjs
+scripts/validation/check-phase-155.mjs
+scripts/validation/check-phase-156.mjs
+scripts/validation/check-phase-157.mjs
+scripts/validation/check-phase-158.mjs
+scripts/validation/check-phase-159.mjs
+scripts/validation/check-prose-style.py
+scripts/validation/regenerate-supervision-pins.mjs
+scripts/validation/v1.21-milestone-audit.mjs
+scripts/validation/v1.22-audit-allowlist.json
+scripts/validation/v1.22-milestone-audit.mjs
+```
+
+13 entries. Every entry, traced by `git log --oneline --all -- <path>`:
+
+| Entry | Owning commit | Explanation |
+|---|---|---|
+| `_lib/frozen-at-close.mjs` | `c6e37a6c` (Plan 159-02) | V121 back-anchor pin inserted, `readAtV121Close`/`lsTreeAtV121Close` exports appended. |
+| `check-phase-135.mjs` | `9cc84aa6` (squash) ← originally `6689ffc3` (Phase 155-01, pre-159) | **Pre-existing entry 1.** Retired `V-135-RECIPE`'s 328-line equality pin for content needles — landed by the v1.22/154-style-landing branch's own Phase 155 content work, squashed onto master by Plan 159-01. No Phase 159 plan (159-01..159-08) has its own commit touching this file; 159-05's SUMMARY narrated re-confirming this file's needles as part of that plan's dependency chain (`check-phase-135.mjs (7/7, RECIPE content needles for the 155 leaf's dependency)`), not authoring the edit itself. |
+| `check-phase-154.mjs` | `b97508f0` (Plan 159-05) | New style-landing leaf. |
+| `check-phase-155.mjs` | `b97508f0` (Plan 159-05) | New kiosk-recipe leaf. |
+| `check-phase-156.mjs` | `7cf7e356` (Plan 159-05) | New style-extension leaf. |
+| `check-phase-157.mjs` | `fe092928` (Plan 159-06) | New authoring-standard leaf; makes `check-prose-style.py` enforcing. |
+| `check-phase-158.mjs` | `4036a93f` (Plan 159-06) | New final-verification leaf. |
+| `check-phase-159.mjs` | `38ca25f1` (Plan 159-07) | New v1.22 terminal apex. |
+| `check-prose-style.py` | `9cc84aa6` (squash) — created fresh at the squash, no prior commit | **Pre-existing entry 2.** The 475-line authoring-standard prose-style tool, authored as part of the squashed Phase 157 content work (STD-02) and landed onto master by Plan 159-01's squash — not created or edited by any Plan 159-0X commit. Plan 159-06 (`fe092928`) makes it *enforcing* by spawning it from a new chain leaf, but does not modify the tool file itself (`git log --all -- scripts/validation/check-prose-style.py` shows exactly one commit, the squash). |
+| `regenerate-supervision-pins.mjs` | `ebb96166` (Plan 159-03) | BASELINE_26 journal comment block inserted above BASELINE_9. |
+| `v1.21-milestone-audit.mjs` | `80d773d6` (Plan 159-04) | Converted from live-HEAD to frozen V121 reads. |
+| `v1.22-audit-allowlist.json` | `37b43146` (Plan 159-03) | New sidecar, byte-identical header-fields-only copy. |
+| `v1.22-milestone-audit.mjs` | `663f55be` (Plan 159-03) | New harness, forked from the frozen v1.21 blob. |
+
+Census result: **11 entries are this phase's own additions** (Plans 159-02 through 159-07), and
+**exactly the two pre-existing entries this task's own action text anticipates** —
+`check-phase-135.mjs` and `check-prose-style.py`, both landed by the squash commit `9cc84aa6` from
+work that predates any Plan 159-0X commit — appear alongside them. Nothing beyond that list is
+present; the census holds exactly its expected membership.
+
+**`.github/workflows/` diff against the v1.21 close SHA (`e129081e`)** —
+`git diff --name-only e129081e -- .github/workflows/ | sort`:
+
+```
+.github/workflows/audit-harness-v1.22-integrity.yml
+```
+
+One entry: this plan's own new workflow file (Task 2, commit `36d471ce`). No predecessor workflow
+file appears in this diff — no predecessor workflow file was modified.
+
+### Three lineage triples — green standalone
+
+```
+$ node scripts/validation/v1.22-milestone-audit.mjs --verbose | tail -1
+Summary: 16 passed, 0 failed, 0 skipped
+
+$ node scripts/validation/check-phase-159.mjs --verbose | tail -1
+Result: 116 PASS, 0 FAIL, 1 SKIPPED (total checks: 117)
+
+$ node scripts/validation/check-phase-139.mjs | tail -1
+Result: 5 PASS, 0 FAIL, 0 SKIPPED
+```
+
+All three green. The one legitimate skip in the apex triple (`V-159-AUDIT`) is unchanged from §19 —
+`159-VERIFICATION.md` is not yet authored, which is the expected pre-close-gate state.
+
+### Workflow file count: before and after
+
+Pre-commit (recorded in §20): **18**. Post-commit: **19** (`ls .github/workflows/*.yml | wc -l`).
+Delta: **+1**, exactly this plan's own new file — matching the acceptance criterion exactly.
+
+### The workflow fires nothing on its own
+
+No workflow file in this repository carries a `push` trigger (confirmed again here:
+`grep -c "^  push:" .github/workflows/audit-harness-v1.22-integrity.yml` → `0`). Landing this file
+on the default branch via this plan's own commit does not dispatch it — its three triggers
+(`pull_request`, `schedule`, `workflow_dispatch`) all require a later event (a PR touching its
+watched paths, a future scheduled tick, or an explicit manual dispatch) to run for the first time.
+Its purpose in landing now is presence: the cross-OS evidence axis (a later plan's manual
+`workflow_dispatch`, per D-30/D-63) needs this file to already exist on the default branch before it
+can be dispatched at all.
+
+### Deltas: every figure whose live value differs from CONTEXT's or RESEARCH's
+
+| Figure | CONTEXT/RESEARCH value | Live value | Delta |
+|---|---|---|---|
+| Job-count grep pattern | Not previously exercised against a live workflow file in this phase | `^  [a-z][a-z0-9-]*:` also matches the `on:` block's bare `schedule:` key, printing 14 (not 13) against the new file and 17 (not 16) against the predecessor | Documented in §20; the real job counts (13 new, 16 predecessor) are confirmed by direct name enumeration, matching D-30 exactly. |
+| `actions/setup-python@v5` / `python-version: '3.13'` literal counts | D-30: exactly 3 each | Initially measured 4 each (the header's own descriptive comment line double-counted both literals) | Reworded the header comment to describe the Python step without repeating either exact literal string; both counts now read 3, matching D-30 exactly. No functional change — comment-wording only. |
+| `check-phase-135.mjs` / `check-prose-style.py` provenance | This task's own action text: "two pre-existing entries" (unnamed) | Named and traced: `check-phase-135.mjs` (squashed Phase 155-01 content) and `check-prose-style.py` (squashed Phase 157 STD-02 content), both landed by squash commit `9cc84aa6`, neither touched by any Plan 159-0X commit | Confirms the anticipated count and identifies the two entries by commit. |
+
+All other figures (13-job count by enumeration, 5+1+7 arithmetic, dual-apex reading, checkout/fetch-
+depth parity, probe dependency-freedom, sidecar literal reference, phase-numbered job scan of 6,
+workflow file count and delta, all three lineage triples) match §20's Task-1/Task-2 derivation and
+this section's own re-measurement exactly — delta 0.
+
+`node scripts/validation/check-phase-54.mjs`, `-55.mjs` and `-56.mjs` each report
+`Summary: 32 passed, 0 failed, 0 skipped` after this plan's two commits, confirmed standalone.
