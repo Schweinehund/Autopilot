@@ -179,3 +179,8 @@ commits). Ready for `159-10` (the push checkpoint itself).
 ---
 *Phase: 159-harn-harness-close*
 *Completed: 2026-09-09*
+
+## Self-Check: PASSED
+
+- `159-09-SUMMARY.md` found on disk.
+- All four commits (`58a49e2a`, `40d02b6b`, `e80e8627`, `132e5451`) found in `git log --oneline --all`.
