@@ -1,9 +1,12 @@
-# Phase 159 Plan 01 — Evidence Log
+# Phase 159 — Evidence Log
 
-Accumulated command-sourced evidence for Plan 159-01 (Land the v1.22 milestone on `master`). Each
-section corresponds to one task; every figure below is re-measured at execution time per D-65 — the
-live value wins over any figure carried from `159-CONTEXT.md` or `159-RESEARCH.md`, with the delta
-against the carried figure written down explicitly.
+Accumulated command-sourced evidence across Phase 159's plans. Each section corresponds to one task;
+every figure below is re-measured at execution time per D-65 — the live value wins over any figure
+carried from `159-CONTEXT.md` or `159-RESEARCH.md`, with the delta against the carried figure written
+down explicitly.
+
+**§1-§5** below belong to Plan 159-01 (Land the v1.22 milestone on `master`). **§6 onward** belong to
+Plan 159-02 (the V121 back-anchor pin, HARN-01/HARN-02).
 
 ---
 
@@ -512,3 +515,52 @@ precedent, which is expected and harmless). No block contains the purged complia
 
 `check-phase-54/55/56.mjs`: **32/32/32 passed, 0 failed, 0 skipped**, all three, after the commit.
 `git status --porcelain -- docs/` is empty.
+
+---
+
+## §6 — Plan 159-02 Task 1: recover and regression-check the close SHA; pre-edit guard triples
+
+### Discriminator command actually run (never the dual-token `--grep --all-match` form)
+
+```
+git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.21/ && $2 ~ /MILESTONE CLOSE/'
+```
+
+The dual-token `--grep "MILESTONE-AUDIT" --grep "MILESTONE CLOSE" --all-match` form is never used
+anywhere in this task — it matches on the commit body (not just the subject line) and is the exact
+trap V118/V119's own comment blocks in `frozen-at-close.mjs` record as returning multiple candidates.
+
+### Five discriminator rows (V117 through V121), all candidate counts = 1
+
+| Version | Candidate count | Full 40-char object name | Subject line |
+|---|---|---|---|
+| V117 | 1 | `b56bba5ea19f9b3fea6376a48dcc24f4ea1d3428` | `docs(128-07): v1.17 MILESTONE-AUDIT + DEFERRED-CLEANUP + 10-req traceability + v1.17 MILESTONE CLOSE` |
+| V118 | 1 | `7af8a14766d346a348f7adf05d260676dbe4c1b2` | `docs(134-05): v1.18 MILESTONE CLOSE — single close-gate commit, 20/20 requirements Validated` |
+| V119 | 1 | `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa` | `docs(138-06): v1.19 MILESTONE CLOSE — single close-gate commit, 17/17 requirements Validated` |
+| V120 | 1 | `246fa3ddc88a73792744285468a0265dfbab68e8` | `docs(144-12): v1.20 MILESTONE CLOSE — single close-gate commit, 28/28 requirements Validated` |
+| V121 | 1 | `e129081e512decb469c6d66f61456c669a33173b` | `docs(153-14): v1.21 MILESTONE CLOSE — single close-gate commit, 58/58 requirements Validated` |
+
+All five counts are exactly 1 (confirmed a second time via `wc -l` on each row's isolated command),
+matching `[MEASURED]` D-14's carried figures exactly (`e129081e`, `b56bba5e`, `7af8a147`, `a7bda73e`,
+`246fa3dd`) — no delta to record for this task.
+
+### Prefix width confirmation
+
+The recovered V121 8-character prefix is `e129081e`. `echo -n "e129081e" | wc -c` = **8**, identical
+to the width of V118 (`7af8a147`, 8), V119 (`a7bda73e`, 8) and V120 (`246fa3dd`, 8) — confirmed by the
+same `wc -c` command against each. `frozenCause()` (`_lib/frozen-at-close.mjs:75-91`) matches on git's
+stderr text substrings only (`invalid object name`, `not a tree object`, `does not exist in`, etc.) —
+it does not branch on prefix length itself, so any abbreviated SHA of this width resolves through the
+same taxonomy the V118-V120 entries already exercise; the file's own SWEEP-04 header comment (lines
+62-64) flags this as worktree-dependent classification, not a width-dependent one.
+
+### Pre-edit guard triple (three live guards, standalone, before any edit)
+
+| Guard | Command | Result |
+|---|---|---|
+| V-140-V14PIN | `node scripts/validation/check-phase-140.mjs` | `[V14PIN/5] V-140-V14PIN: scripts/validation/_lib/frozen-at-close.mjs carries the V14 pin with rationale, still the last entry in MILESTONE_CLOSE_SHAS PASS` — aggregate `Result: 5 PASS, 0 FAIL, 0 SKIPPED` |
+| V-120-HYG01 | `node scripts/validation/check-phase-120.mjs` | `[HYG01/6] V-120-HYG01: "REMAIN INLINE" absent + "Phase 111" present in scripts/validation/_lib/frozen-at-close.mjs PASS` — aggregate `Result: 6 PASS, 0 FAIL, 0 SKIPPED` |
+| V-73-LIB-EXISTS | `node scripts/validation/check-phase-73.mjs` | `[LIB-EXISTS/40] V-73-LIB-EXISTS: _lib/frozen-at-close.mjs exists and exports MILESTONE_CLOSE_SHAS + readAtV{141,15,16,17}Close PASS` — aggregate `Result: 40 PASS, 0 FAIL, 0 SKIPPED` |
+
+All three guards are 0 FAIL, recorded verbatim before any edit to `frozen-at-close.mjs`. No file is
+modified in this task except this evidence document.
