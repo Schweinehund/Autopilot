@@ -1012,3 +1012,103 @@ node scripts/validation/regenerate-supervision-pins.mjs --self-test  # exit 0, P
 node scripts/validation/check-phase-54.mjs                       # Summary: 32 passed, 0 failed, 0 skipped
 ```
 All four re-run immediately before this evidence commit; all green.
+
+---
+
+## §12 — Plan 159-04 Task 1: pre-conversion baseline and conversion preconditions
+
+**Belongs to Plan 159-04** (convert `v1.21-milestone-audit.mjs` from live-HEAD to the V121 frozen
+snapshot, HARN-03). This section is read-only measurement recorded before any line of the harness
+changes.
+
+### Live-read baseline triple (unconverted harness)
+
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose 2>&1 | tail -1
+```
+→ `Summary: 16 passed, 0 failed, 0 skipped`
+
+This is the triple the converted harness must reproduce against the frozen corpus.
+
+### Precondition 1 — the V121 pin resolves to real bytes
+
+```
+node -e "import('./scripts/validation/_lib/frozen-at-close.mjs').then(async (m) => {
+  console.log('V121 read bytes:', m.readAtV121Close('docs/recipes/05-enterprise-update-plan.md').length);
+  console.log('V121 docs path count:', m.lsTreeAtV121Close('docs').length);
+});"
+```
+→ `V121 read bytes: 113803`, `V121 docs path count: 307` (matches the 159-02 end-to-end proof
+exactly, delta 0). The pin resolves through the library, not by inspection.
+
+### Precondition 2 — known member is a one-step-back discriminator
+
+```
+git cat-file -e e129081e:docs/recipes/05-enterprise-update-plan.md && echo "known member present at V121"
+git cat-file -e 246fa3dd:docs/recipes/05-enterprise-update-plan.md 2>/dev/null && echo "UNEXPECTED present at preceding close" || echo "absent at preceding close (246fa3dd) -- expected"
+```
+→ `known member present at V121`, `absent at preceding close (246fa3dd) -- expected`.
+
+Documentation tree path counts:
+```
+git ls-tree -r --name-only e129081e -- docs | wc -l   # V121
+git ls-tree -r --name-only 246fa3dd -- docs | wc -l   # V120 (preceding close)
+```
+→ V121 = **307**, V120 = **296** (delta 0 against D-20's carried figures). V121 strictly dominates
+V120, so `docs/recipes/05-enterprise-update-plan.md` is a genuine one-step-back discriminator
+(unlike v1.20's own C17 leg, which had to reach two milestones back because V119 and V120's docs
+trees were byte-identical).
+
+### Precondition 3 — structural contract validator is byte-frozen since the V121 close
+
+```
+git log --oneline e129081e..HEAD -- scripts/validation/c17-eee-contract.mjs | wc -l
+```
+→ **0** commits. Outside its own `--self-test` flag, `c17-eee-contract.mjs` reads only
+`walkMd('docs')` (confirmed by inspection per D-20) — a working-directory swap is therefore
+provably sufficient to redirect its reads without editing the file itself.
+
+### Non-documentation path literals the harness reads today
+
+```
+grep -oE "'(scripts|assets)/[^']+'" scripts/validation/v1.21-milestone-audit.mjs | sort -u
+```
+→
+```
+'scripts/validation/c17-eee-contract.mjs'
+'scripts/validation/v1.21-audit-allowlist.json'
+```
+The grep catches 2 of the 3 members by design: the third, `_lib/exec-fail-detail.mjs`, is loaded
+via a relative ES-module import (`import { execFailDetail } from './_lib/exec-fail-detail.mjs'`,
+line 69), which uses `./`-relative syntax rather than a `'scripts/...'`-prefixed string literal, so
+it does not match this grep's character class. This is exactly the three-member set D-18 names —
+the sidecar, the shared failure-detail helper, and the structural contract validator — enumerated
+here in full: **(1)** `scripts/validation/v1.21-audit-allowlist.json` (the sidecar, read via
+`readFile`/`parseAllowlist`), **(2)** `scripts/validation/_lib/exec-fail-detail.mjs` (imported at
+module load, used to format C17's failure detail), **(3)** `scripts/validation/c17-eee-contract.mjs`
+(the C17 leg's `existsSync` guard target and subprocess-spawn target). No fourth non-documentation
+path literal exists, so the frozen reader's extra-path set (`extraPaths: [SIDECAR_PATH]`, matching
+the converted twin's shape) is complete — `exec-fail-detail.mjs` is a module import resolved by
+Node's own module loader, not a corpus read routed through `readFile`/`FROZEN`, and needs no entry
+in the frozen reader's extra-paths list.
+
+### Sidecar-pinned files changed since the V121 close
+
+```
+node -e "const j=JSON.parse(require('fs').readFileSync('scripts/validation/v1.21-audit-allowlist.json','utf8'));
+const files=new Set(); function walk(o){if(Array.isArray(o)){for(const x of o)walk(x);}else if(o&&typeof o==='object'){if(o.file)files.add(o.file);for(const k in o)walk(o[k]);}} walk(j);
+console.log(files.size);"
+```
+→ **33** distinct pinned files (matches D-18/D-23's carried figure, delta 0).
+
+```
+# for each of the 33 files: git diff --name-only e129081e..HEAD -- "$f" | wc -l
+```
+→ **33/33 changed** since `e129081e`. The live (unconverted) harness is green today (16/16, above)
+only because every one of these 33 edits happened to be line-neutral with respect to the sidecar's
+pinned line numbers — this is precisely the fact that makes the conversion meaningful rather than
+merely lucky: a future non-line-neutral edit to any of these 33 files would silently move a pin
+against a live-reading harness, whereas the frozen harness (once converted) reads the corpus as it
+stood at the V121 close regardless of what happens on the working tree afterward.
+
+**No source file was modified by this task.**
