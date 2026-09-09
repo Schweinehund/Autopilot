@@ -10,26 +10,31 @@
 // 16 checks registered [ids 1-7, 9-17 -- C8 was never defined, counted from the live checks array,
 // not carried from any predecessor header prose])
 // Source of truth: .planning/phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-CONTEXT.md (D-44, D-45, D-46)
-// Residue (D-46): this harness is BORN LIVE-HEAD, including its C17 leg, because there is no V121
-// close SHA for the current milestone to freeze against -- the back-anchor invariant is that a pin
-// always references a PAST close, and v1.21 has not closed yet. It therefore becomes the successor
-// (v1.22) milestone's SOLE unconverted harness, exactly as v1.20 was this milestone's sole
-// unconverted harness before 153-03 converted it. This residue is tracked in
-// .planning/milestones/v1.21-DEFERRED-CLEANUP.md so the pattern does not silently repeat unrecorded.
+// Converted (Phase 159 Plan 159-04, D-18/D-19/D-20/D-21): this harness's prior birth condition (no
+// close SHA existed yet to freeze against) no longer holds. It now reads its own frozen corpus
+// everywhere -- MILESTONE_TAG = 'V121' (close SHA e129081e,
+// pinned in _lib/frozen-at-close.mjs by Plan 159-02) -- including its C17 leg, which materializes
+// the frozen V121 docs/ tree and spawns c17-eee-contract.mjs against it behind a known-member
+// guard on docs/recipes/05-enterprise-update-plan.md (present at the V121 close, absent at the
+// immediately preceding close, 246fa3dd -- a genuine one-step-back discriminator, unlike v1.20's
+// own C17 leg, which had to reach two milestones back because its neighbouring docs trees were
+// byte-identical). The C17 `existsSync` contract-presence guard STAYS LIVE against the real
+// repository root by standing ruling (v1.21 Phase 153 D-11, restated at v1.21-REQUIREMENTS.md:116):
+// whether the validator exists is correctly a live question, independent of which corpus it is
+// about to audit. This discharges HARN-03 and the C17-FROZEN-AWARE-RESIDUE-V21 class this file's
+// own prior header named; see .planning/phases/159-harn-harness-close/159-CONTEXT.md D-18..D-21,
+// D-26 and 159-EVIDENCE.md §12-§13.
 // Sidecar allow-list: scripts/validation/v1.21-audit-allowlist.json (v1.21 Path-A from v1.20's
 // sidecar — header-fields-only copy [generated + phase], all pin arrays across 5 top-level arrays
 // plus the nested rotting-external object carried forward byte-identical, per D-47; a naive
 // top-level walk undercounts the pinned file set by roughly half because the rotting-external
 // section is an object of nested arrays, so any file-set derivation must recurse -- see Task 2's
-// summary for the recursive-vs-naive count). Pin-drift proof against a back-anchor SHA is NOT
-// re-run for this generation: D-46's residue applies here too -- there is no V121 close SHA yet to
-// diff against, so no back-anchor pin-drift measurement is claimed in this header. When one becomes
-// possible at the next milestone close, it follows the same method v1.20's header recorded: intersect
-// the recursively-derived pinned file set with the changed-file set since the back-anchor SHA and
-// adjudicate the resulting hunks line-granularly -- never the pin generator's report-mode instrument,
-// which hardcodes the v1.7 sidecar and walks fewer than half the pins (D-48).
+// summary for the recursive-vs-naive count). All 33 sidecar-pinned files changed since the V121
+// close (e129081e); the pre-conversion live harness stayed green only because every one of those
+// edits happened to be line-neutral with respect to the sidecar's pinned line numbers -- measured
+// in 159-EVIDENCE.md §12, not asserted.
 // Frozen-predecessor reproducibility anchor: v1.6-milestone-audit.mjs pinned at Phase 66 close
-// File reads: C1-C16 load all content via fs.readFileSync (no shell invocations). C17 (id 17) spawns a subprocess (execFileSync node c17-eee-contract.mjs) — the one shell invocation in this harness, treated exit-code-as-pass/fail per the check-phase-112.mjs AUDIT-HARNESS spawn precedent.
+// File reads: C1-C16 load all content via the frozen-at-close reader (Phase 159 Plan 159-04 conversion; see MILESTONE_TAG below), not live fs.readFileSync. C17 (id 17) spawns a subprocess (execFileSync node c17-eee-contract.mjs) — the one shell invocation in this harness, treated exit-code-as-pass/fail per the check-phase-112.mjs AUDIT-HARNESS spawn precedent.
 //
 // C6 (PITFALL-7) + C7 (bare-Knox): BLOCKING per Phase 48 D-04/D-05 (inherited from v1.5).
 // C9 (cope_banned_phrases): BLOCKING per Phase 60 D-17/D-18 (inherited from v1.5).
@@ -63,50 +68,54 @@
 // Exit code: 0 on all-PASS; 1 on any-FAIL.
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';  // Phase 119: C17 failure-detail formatting (DRY, per check-phase-112.mjs precedent)
+import { createFrozenCorpusReader, withDocsAtClose } from './_lib/frozen-at-close.mjs';  // Phase 159 Plan 159-04: withDocsAtClose converts the C17 spawn below to frozen-corpus mode (D-18/D-19)
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
 const SELF_TEST = argv.includes('--self-test');
+
+// Phase 159 Plan 159-04 (D-18): this harness reads its corpus and its sidecar frozen at its own
+// milestone-close SHA (V121 = e129081e, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for the
+// pin) instead of live HEAD -- including the C17 contract-presence guard below (check id 17),
+// which stays a LIVE question per D-19. The `node:fs` existsSync/readFileSync/readdirSync/statSync
+// import stays in place because the C17 leg's existence guard is deliberately still live and is
+// otherwise unused by the helpers below (mirrors the v1.19/v1.20-milestone-audit.mjs precedent,
+// which also keeps now-unused readdirSync/statSync imports after conversion).
+const MILESTONE_TAG = 'V121';
+const SIDECAR_PATH = 'scripts/validation/v1.21-audit-allowlist.json'; // UNCHANGED literal -- GOV-02
+                                                                       // pins search for this exact string
+const FROZEN = createFrozenCorpusReader(MILESTONE_TAG, { extraPaths: [SIDECAR_PATH] });
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 function readFile(relPath) {
-  const abs = join(process.cwd(), relPath);
-  if (!existsSync(abs)) return null;
-  return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization per Phase 31 ca40eb9
-}
+  const c = FROZEN.get(relPath);
+  return c === undefined ? null : c;   // undefined (never enumerated) and null (absent-at-SHA)
+}                                       // both read as "missing" to every existing caller
 
-// walkMd: recursive .md file walker (verbatim from scripts/validation/check-phase-30.mjs lines 21-38)
+// walkMd: enumerate frozen paths under `dir` (D-18) -- re-absolutized because every call site
+// immediately runs relNormalize(abs), which strips process.cwd() back off (Pitfall 2).
 function walkMd(dir) {
-  const abs = join(process.cwd(), dir);
-  if (!existsSync(abs)) return [];
-  const results = [];
-  function walk(current) {
-    let entries;
-    try { entries = readdirSync(current); } catch { return; }
-    for (const entry of entries) {
-      const full = join(current, entry);
-      let stat;
-      try { stat = statSync(full); } catch { continue; }
-      if (stat.isDirectory()) { walk(full); }
-      else if (entry.endsWith('.md')) { results.push(full); }
-    }
-  }
-  walk(abs);
-  return results;
+  const prefix = dir.endsWith('/') ? dir : dir + '/';
+  return FROZEN.paths
+    .filter((p) => p.startsWith(prefix))
+    .map((p) => join(process.cwd(), p));
 }
 
-// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract).
-// Follows check-phase-31.mjs parseInventory() degradation pattern -- degrade to empty arrays on parse failure.
+// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract) frozen at MILESTONE_TAG.
+// D-18: absence at the pinned SHA fails loud (never a silent degrade to empty arrays); a
+// malformed-but-present sidecar still degrades, per check-phase-31.mjs parseInventory() precedent.
 function parseAllowlist() {
-  const raw = readFile('scripts/validation/v1.21-audit-allowlist.json');
-  if (!raw) return { safetynet_exemptions: [], supervision_exemptions: [] };
+  const raw = FROZEN.get(SIDECAR_PATH);
+  if (raw === undefined || raw === null) {
+    throw new Error(`Sidecar absent at frozen SHA (${MILESTONE_TAG}): ${SIDECAR_PATH} -- D-18 fail-loud`);
+  }
   try {
     return JSON.parse(raw);
   } catch (err) {
@@ -849,17 +858,50 @@ const checks = [
     // 13 assertions / D1_MAP (a second copy would be divergence-prone — explicitly rejected per RESEARCH
     // Don't-Hand-Roll).
     run() {
-      const CONTRACT = 'scripts/validation/c17-eee-contract.mjs';
-      if (!existsSync(join(process.cwd(), CONTRACT))) {
-        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT + ' not present (EEE contract validator missing)' };
+      const CONTRACT_REL = 'scripts/validation/c17-eee-contract.mjs';
+      // D-18: absolutized against the LIVE repo root BEFORE the working directory is swapped --
+      // a relative path resolved against the swapped tmpdir cwd dies module-not-found, which the
+      // catch below would otherwise misreport as a corpus violation.
+      const CONTRACT_ABS = resolve(process.cwd(), CONTRACT_REL);
+      // D-19: the existence guard stays against the LIVE repository root -- whether the validator
+      // exists is correctly a live question, independent of which corpus it is about to audit.
+      if (!existsSync(CONTRACT_ABS)) {
+        return { pass: false, detail: 'C17 FAIL: ' + CONTRACT_REL + ' not present (EEE contract validator missing)' };
       }
+      // Phase 159 Plan 159-04 conversion (D-18/D-20, replicated from the v1.15-v1.20 legs): the
+      // frozen docs/ tree at V121's own close SHA is materialized into a temp directory and the
+      // byte-unchanged c17-eee-contract.mjs is spawned with that directory as its cwd -- a
+      // working-directory swap, not a code change.
       try {
-        execFileSync('node', [CONTRACT], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
-        return { pass: true, detail: 'c17-eee-contract.mjs exits 0 (all enrolled files pass 13 assertions)' };
+        return withDocsAtClose('V121', (tmpDir, writtenPaths) => {
+          // Known-member guard (D-20), runs BEFORE the spawn -- an empty-corpus or wrong-milestone
+          // materialization must not reach c17-eee-contract.mjs's empty-corpus exit(0), which would
+          // read as a silent, vacuous PASS. [MEASURED] docs/recipes/05-enterprise-update-plan.md is
+          // present at V121 (e129081e) and absent at the immediately preceding close (V120,
+          // 246fa3dd), and V121's docs tree (307 paths) strictly dominates V120's (296) -- a
+          // genuine one-step-back discriminator, unlike v1.20's own C17 leg, which had to reach two
+          // milestones back because V119 and V120's docs trees were byte-identical.
+          const KNOWN_MEMBER = join(tmpDir, 'docs', 'recipes', '05-enterprise-update-plan.md');
+          if (!existsSync(KNOWN_MEMBER)) {
+            throw new Error('C17 FAIL: known-member guard failed -- ' + KNOWN_MEMBER + ' absent from materialized V121 corpus');
+          }
+          // Secondary, cheap catch for the empty-materialize case -- explicitly not the primary guard.
+          if (!writtenPaths || writtenPaths.length === 0) {
+            throw new Error('C17 FAIL: materialize guard failed -- zero files written to the temp directory');
+          }
+          try {
+            execFileSync('node', [CONTRACT_ABS], { stdio: 'pipe', timeout: 300000, cwd: tmpDir });
+            return { pass: true, detail: 'c17-eee-contract.mjs exits 0 against frozen V121 corpus (' + writtenPaths.length + ' files materialized; all enrolled files pass 13 assertions)' };
+          } catch (err) {
+            const stderr = err.stderr ? err.stderr.toString() : '';
+            const stdout = err.stdout ? err.stdout.toString() : '';
+            return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+          }
+        });
       } catch (err) {
-        const stderr = err.stderr ? err.stderr.toString() : '';
-        const stdout = err.stdout ? err.stdout.toString() : '';
-        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'C17 FAIL: ' }) };
+        // Guard throws above (known-member / empty-materialize) surface here as a normal FAIL
+        // rather than crashing the harness; withDocsAtClose's finally still removes the temp dir.
+        return { pass: false, detail: err.message };
       }
     }
   }
