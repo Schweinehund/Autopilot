@@ -584,6 +584,45 @@ function doEmitStubs() {
 // inheritance pattern (... -> v1.20 -> BASELINE_24 -> v1.21 -> BASELINE_25). This is the terminal
 // close of v1.21; per D-46, v1.21's own harness is born live-HEAD with no V121 close SHA of its
 // own to freeze against -- the next refresh belongs to v1.22.
+// BASELINE_26 refreshed 2026-09-09 (Phase 159 Plan 03): closes BASELINE_25's V121-PIN-DEFERRAL --
+// v1.22 now has a real back-anchor SHA to diff against (MILESTONE_CLOSE_SHAS.V121 = e129081e,
+// landed earlier in this same phase at 159-02). BASELINE_9 entries above remain unchanged -- Phase
+// 159 does NOT alter the line-coord array; this comment records the audit-trail event that
+// line-positions were re-verified at Phase 159 Plan 03 authoring time and remain valid for the
+// v1.22 corpus.
+//
+// Drift instrument (D-24): a per-pin token check, NOT a line-neutrality diff. For each of the 44
+// line-enforced pins in v1.22-audit-allowlist.json (safetynet_exemptions x4, supervision_exemptions
+// x26, c7_knox_allowlist x10, c9_exemptions x4; c11_ops_exemptions and c16_missing_endpoint_exemptions
+// are 0-length), checked whether the pinned line still carries the token/pattern the pin exempts
+// (`SafetyNet`, `/\bsupervis(ion|ed|ory)\b/i`, `/\bKnox\b/`, the sidecar's own `cope_banned_phrases[]`
+// regex set respectively), read at e129081e and at HEAD independently:
+//   - 40/44 pass at BOTH e129081e and HEAD.
+//   - 4/44 fail at BOTH e129081e and HEAD -- the four safetynet_exemptions dead pins
+//     (docs/_glossary-android.md:186, docs/_glossary-android.md:201,
+//     docs/android-lifecycle/03-android-version-matrix.md:101 and :103), already enumerated and
+//     disclosed in Task 2's sidecar-copy evidence (159-EVIDENCE.md S10) and carried byte-identical
+//     into v1.22-audit-allowlist.json -- not repointed, not fixed. Scheduled as a v1.23 repoint
+//     entry in the future v1.22-DEFERRED-CLEANUP.md Part A.
+//   - 0/44 changed verdict between the two SHAs (no pin that passed at e129081e now fails at HEAD,
+//     or vice versa).
+// `git diff -U0` line-neutrality (the Phase 144 method) is NOT usable here: the window between
+// e129081e and HEAD carries hundreds of hunks with dozens of non-neutral ones across several files
+// (the v1.22 corpus landing alone -- Phases 154-158 -- touches 280+ files), producing no usable
+// per-pin signal. `regenerate-supervision-pins.mjs`'s own --report mode is never cited as evidence
+// for this measurement (it hardcodes the v1.7 sidecar and walks a strict subset of live pins).
+//
+// BASELINE_9 coordinate re-verification (separate from the drift instrument above): all 9
+// coordinates still carry the `supervis` token at their pinned line number at HEAD (9/9). 7 of the
+// 9 lines have themselves changed (CR-stripped byte comparison, to avoid a false "changed" reading
+// from this repo's core.autocrlf/eol=lf normalization) since BASELINE_25's own basis (246fa3dd, the
+// V120 close) -- the Phase 158 corpus-wide em-dash tightening sweep touched most of these lines
+// without moving the supervision token itself off its pinned line. The interesting result stands:
+// a coordinate can survive a changed line. Resolution path: BASELINE_27 will refresh at the next
+// milestone close per the Path-A inheritance pattern (... -> v1.21 -> BASELINE_25 -> v1.22 ->
+// BASELINE_26). This is the terminal close of v1.22; per D-22, v1.22's own harness
+// (v1.22-milestone-audit.mjs) is born live-HEAD with no V122 close SHA of its own to freeze
+// against -- the next refresh belongs to v1.23.
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 145],  // ### Supervision heading (was 80 pre-rebase; live content verified 2026-08-07)
   ['docs/_glossary-android.md', 147],  // Supervision disambiguation blockquote (was 82 pre-rebase)

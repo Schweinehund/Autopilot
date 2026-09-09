@@ -916,3 +916,99 @@ Two different things are being disclosed and must not be conflated:
 
 `node scripts/validation/v1.22-milestone-audit.mjs --verbose` → `Summary: 16 passed, 0 failed, 0
 skipped`, re-confirmed immediately before this evidence commit.
+
+---
+
+## §11 — Plan 159-03 Task 3: BASELINE_26 journal block, per-pin drift measurement
+
+### Position assertion (block sits above the array, no second array created)
+
+```
+node -e "const s=require('node:fs').readFileSync('scripts/validation/regenerate-supervision-pins.mjs','utf8');const i=s.indexOf('BASELINE_26');const j=s.indexOf('const BASELINE_9');if(i===-1){console.error('BASELINE_26 block absent');process.exit(1)}if(j===-1){console.error('baseline array declaration not found');process.exit(1)}if(!(i<j)){console.error('BASELINE_26 block is not above the array');process.exit(1)}console.log('BASELINE_26 block sits above the baseline array')"
+```
+→ `BASELINE_26 block sits above the baseline array`.
+
+```
+grep -c "const BASELINE_2" scripts/validation/regenerate-supervision-pins.mjs
+```
+→ **0** — no second `const BASELINE_NN = [` array declaration was created; there is still exactly
+one array in this file, as the one-array invariant requires.
+
+### Per-pin token drift instrument (D-24) — measured at e129081e and at HEAD
+
+Script: a per-array token/pattern check against the 44 line-enforced pins in
+`v1.22-audit-allowlist.json` (`safetynet_exemptions` → `/SafetyNet/`, `supervision_exemptions` →
+`/\bsupervis(ion|ed|ory)\b/i`, `c7_knox_allowlist` → `/\bKnox\b/`, `c9_exemptions` → the sidecar's
+own `cope_banned_phrases[]` regex set), reading the pinned line via `git show <sha>:<file>` at
+`e129081e` and via the working tree at `HEAD`, run once per pin at both SHAs independently:
+
+```
+git show e129081e:"<file>" | sed -n "<line>p"     # (per pin, at the V121 close SHA)
+sed -n "<line>p" "<file>"                          # (per pin, at HEAD)
+```
+
+| Verdict | Count |
+|---|---|
+| Pass at BOTH `e129081e` and HEAD | **40** |
+| Fail at BOTH `e129081e` and HEAD | **4** |
+| Changed verdict between the two SHAs | **0** |
+
+The 4 always-fail pins are exactly the 4 dead `safetynet_exemptions` entries already enumerated in
+§10 (`docs/_glossary-android.md:186`, `docs/_glossary-android.md:201`,
+`docs/android-lifecycle/03-android-version-matrix.md:101` and `:103`) — this reproduces D-24's
+carried `[MEASURED]` 40/44-valid figure exactly (delta: 0). The line-neutrality diff method (`git
+diff -U0` between the two SHAs) is explicitly not used as the drift instrument here: the changed-file
+window between `e129081e` and HEAD includes the entire v1.22 corpus landing (Phases 154-158, 280+
+files), producing hundreds of hunks with dozens of non-neutral ones across several files — no usable
+per-pin signal. `regenerate-supervision-pins.mjs --report` is never cited as evidence for this
+measurement.
+
+### BASELINE_9 coordinate re-verification
+
+```
+sed -n '<line>p' "<file>"        # HEAD
+git show 246fa3dd:"<file>" | sed -n '<line>p'   # BASELINE_25's own basis (V120 close)
+```
+Token presence (`/supervis/i`) at HEAD: **9/9** coordinates still carry the token at their pinned
+line number.
+
+Lines changed since `246fa3dd` (BASELINE_25's basis), compared with a trailing `\r` stripped from
+both sides to avoid a false "changed" reading purely from this repo's `core.autocrlf` / `eol=lf`
+normalization (memory: two `core.autocrlf` traps — a raw string comparison without the CR-strip
+reported **9/9 changed**, which is the false reading; the CR-insensitive comparison reports the
+real one):
+
+| Comparison | Lines changed / 9 |
+|---|---|
+| Raw string comparison (includes EOL-only false positives) | 9 |
+| CR-stripped comparison (real content change only) | **7** |
+
+7 of 9 lines changed (the Phase 158 corpus-wide em-dash tightening sweep), 2 unchanged — reproducing
+D-24's carried `[MEASURED]` "7 of 9 lines changed" figure exactly (delta: 0). The interesting result
+holds: a coordinate can survive a changed line, because the em-dash tightening did not move the
+`supervis` token itself off its pinned line number.
+
+### Self-test after insertion
+
+```
+node scripts/validation/regenerate-supervision-pins.mjs --self-test
+```
+→ exit 0, `Self-test: PASS` (Phase 43 hand-authored Tier-1 set reproduced exactly: 17 new pins vs
+17 classifier-derived, diff identical, 0 un-pinned Tier-2).
+
+### docs/ untouched
+
+```
+test -z "$(git status --porcelain -- docs/)" && echo "baseline commit touched no docs path"
+```
+→ `baseline commit touched no docs path`.
+
+### Post-task validator triple (plan-level, all three artifacts)
+
+```
+node scripts/validation/v1.22-milestone-audit.mjs --self-test    # exit 0, 9/9
+node scripts/validation/v1.22-milestone-audit.mjs --verbose      # exit 0, 16/16
+node scripts/validation/regenerate-supervision-pins.mjs --self-test  # exit 0, PASS
+node scripts/validation/check-phase-54.mjs                       # Summary: 32 passed, 0 failed, 0 skipped
+```
+All four re-run immediately before this evidence commit; all green.
