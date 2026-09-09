@@ -1,0 +1,291 @@
+# v1.22 Audit Harness Integrity
+# v1.22 integration surface. v1.4 + v1.4.1 + v1.5 + v1.6 + v1.7 + v1.8 + v1.9 + v1.10 + v1.11 + v1.12 + v1.13 + v1.14 + v1.15 + v1.16 + v1.17 + v1.18 + v1.19 + v1.20 + v1.21 + the immediately-prior milestone's harnesses frozen in their respective workflow files.
+# Phase 159 HARN-04: 19th coexistence workflow. path-filter v1.22-scoped + 2 crons + parse/path-match/harness-run repointed v1.22 +
+#   pin-helper-advisory + rotting-external-quarterly + active check-phase-154..159 invocations.
+# PRESERVES from Phase 69 dd1ff08 + 85521bb + 2d61981 (inherited verbatim via v1.13/v1.14/v1.15/v1.16/v1.17/v1.18/v1.19/v1.20/v1.21/the immediately-prior milestone's Path-A):
+#   linux-chain-ubuntu-latest fetch-depth:0 (FETCH-DEPTH-01 inheritance contract)
+#   linux-chain-ubuntu-latest core.autocrlf false (LF-fidelity contract)
+#   linux-chain-ubuntu-latest continue-on-error:false (D-A9 PR-blocking contract)
+#   linux-chain-ubuntu-latest timeout-minutes:30
+#   chain-apex CHAIN_TIMING_LINUX ::notice emission
+# DUAL-APEX (Pitfall 6, D-128-4, carried through v1.21 D-52, re-affirmed 159 D-30):
+#   the standalone check-phase-159 job AND linux-chain-ubuntu-latest BOTH run the full apex recursion
+#   48..158. This is intentional and audited -- do NOT deduplicate, and do NOT add
+#   CHECK_PHASE_NESTED=1 to either top-level GHA invocation. No job in this file runs the predecessor
+#   milestone's apex validator (check-phase-153.mjs) -- the immediately-prior milestone's workflow is
+#   the only file that ever carried a standalone predecessor-apex job, and forward-duplicating that
+#   job is the defect D-30/D-54 name, not the pattern to copy.
+# CARVE-1 (unresolved, deliberately untouched this phase per D-30): the harness-run job's checkout
+#   carries NO ref -- frozen predecessor harnesses in the other 18 workflow files validate live HEAD,
+#   not a pinned close-SHA. That root cause is deferred to a future dedicated tooling milestone;
+#   adding a ref here would be the rejected fix, out of scope for Phase 159.
+# HARNESS-DEPENDENCY CASCADE (restated for this file, recomputed not carried):
+#   every job in this file except frozen-read-probe declares `needs: harness-run` (directly or
+#   transitively via parse -> path-match -> harness-run), so a harness-run failure produces NINE
+#   silent SKIPS -- linux-chain-ubuntu-latest, check-phase-154..159, rotting-external-quarterly,
+#   pin-helper-advisory -- rather than one visible red. A future evidence pass must read those skips
+#   as gaps, not as passes.
+# ADVISORY NON-EVIDENCE (D-54/D-48): pin-helper-advisory combines continue-on-error:true with a
+#   trailing `|| true` and `|| echo` fallback on both its steps, so its conclusion is structurally
+#   ALWAYS success. It is never evidence for any requirement.
+# PYTHON (D-30, 159-08 Task 1): the pinned-minor Python 3 setup step is added to exactly the three
+#   jobs that transitively run the authoring-standard leaf (check-phase-157.mjs):
+#   linux-chain-ubuntu-latest, check-phase-157, check-phase-159. Nowhere else.
+
+name: Audit Harness v1.22 Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/v1.22-*'
+      - 'scripts/validation/check-phase-*.mjs'
+      - '.github/workflows/audit-harness-v1.22-integrity.yml'
+      - '.planning/REQUIREMENTS.md'
+      - '.planning/milestones/v1.22-*'
+  schedule:
+    - cron: '0 8 * * 1'         # Weekly bitrot catch: 08:00 UTC every Monday (Path-A from v1.6)
+    - cron: '0 8 1 1,4,7,10 *'  # Quarterly c13_rotting_external check: 08:00 UTC on 1st of Jan/Apr/Jul/Oct (Phase 70 HARNESS-04 inheritance from Phase 66 AUDIT-14)
+  workflow_dispatch:
+
+jobs:
+  parse:
+    name: Parse v1.22 sidecar JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.22-audit-allowlist.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.22-audit-allowlist.json', 'utf8'));
+            if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
+              console.error('supervision_exemptions empty');
+              process.exit(1);
+            }
+            console.log('v1.22 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+          "
+
+  path-match:
+    name: Harness references v1.22 sidecar
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Verify harness sidecar reference
+        run: |
+          if grep -q "scripts/validation/v1.22-audit-allowlist.json" scripts/validation/v1.22-milestone-audit.mjs; then
+            echo "OK: harness references v1.22 sidecar"
+          else
+            echo "FAIL: harness does not reference v1.22-audit-allowlist.json"
+            exit 1
+          fi
+
+  harness-run:
+    name: Run v1.22 milestone audit harness
+    runs-on: ubuntu-latest
+    needs: path-match
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.22-milestone-audit.mjs
+        run: node scripts/validation/v1.22-milestone-audit.mjs --verbose
+
+  linux-chain-ubuntu-latest:
+    name: Validator chain on Linux LF (Phase 69 CILINUX-01)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - name: Disable autocrlf BEFORE checkout (LF-fidelity contract)
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Run chain-apex check-phase-159.mjs (recursively spawns 48..158)
+        run: |
+          START=$(date +%s)
+          node scripts/validation/check-phase-159.mjs --verbose
+          END=$(date +%s)
+          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: deep-nest at [48..158]; subprocess timeout: 600s)"
+
+  check-phase-154:
+    name: check-phase-154 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-154.mjs
+        run: node scripts/validation/check-phase-154.mjs
+
+  check-phase-155:
+    name: check-phase-155 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-155.mjs
+        run: node scripts/validation/check-phase-155.mjs
+
+  check-phase-156:
+    name: check-phase-156 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-156.mjs
+        run: node scripts/validation/check-phase-156.mjs
+
+  check-phase-157:
+    name: check-phase-157 validator (authoring-standard gate)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Run check-phase-157.mjs
+        run: node scripts/validation/check-phase-157.mjs
+
+  check-phase-158:
+    name: check-phase-158 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-158.mjs
+        run: node scripts/validation/check-phase-158.mjs
+
+  check-phase-159:
+    name: check-phase-159 validator (apex; recursively spawns 48..158)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
+      - name: Run check-phase-159.mjs
+        run: node scripts/validation/check-phase-159.mjs
+
+  rotting-external-quarterly:
+    name: Quarterly c13_rotting_external link-check
+    runs-on: ubuntu-latest
+    needs: harness-run
+    if: github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+    # DEFAULT continue-on-error: false -- quarterly drift FAILS the scheduled run per D-A9 fully-blocking
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check@3.14.2  # Pinned via `npm view markdown-link-check version` at Phase 66 Wave 3 authoring (2026-05-25); inherited through v1.22
+      - name: Extract URLs from c13_rotting_external
+        run: |
+          node -e "
+            const fs = require('fs');
+            const sidecar = JSON.parse(fs.readFileSync('scripts/validation/v1.22-audit-allowlist.json','utf8'));
+            const c13 = sidecar.c13_rotting_external || {};
+            const urls = [];
+            if (Array.isArray(c13.ci_1_abm_urls)) urls.push(...c13.ci_1_abm_urls.map(e => e.url).filter(Boolean));
+            // CI-2 + CI-3 entries do not carry URLs -- they are line-ref tracking only
+            fs.writeFileSync('quarterly-urls.txt', urls.join('\n'));
+            console.log('Quarterly URL check candidates: ' + urls.length);
+          "
+      - name: Run markdown-link-check
+        run: |
+          if [ -s quarterly-urls.txt ]; then
+            while IFS= read -r url; do
+              markdown-link-check <(echo "[link]($url)") || exit 1
+            done < quarterly-urls.txt
+          else
+            echo "No URLs to check in c13_rotting_external (empty population -- DEFERRED-CLEANUP.md notes calibration finding)"
+          fi
+
+  pin-helper-advisory:
+    name: Supervision-pin drift advisory (CI)
+    # NON-EVIDENCE (D-54/D-48): continue-on-error:true + `|| true` + `|| echo` make this job's
+    # conclusion structurally always success. Never cited as pin-drift proof for any requirement.
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # Phase 43 D-14 / Phase 48 D-22: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report || true
+          echo "[advisory] CI advisory job; never blocks merge per Phase 43 D-14 + Phase 48 D-22"
+      - name: Run --self-test (advisory only)
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --self-test || \
+            echo "[advisory] --self-test failed; advisory only"
+  frozen-read-probe:
+    name: Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Raw frozen git show (v1.5 close ba2cbc0)
+        run: git show ba2cbc0:docs/_glossary-linux.md | head -5
+      - name: Real reader -- readAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const c = m.readAtV15Close('docs/_glossary-linux.md');
+              if (!c || c.length === 0) { console.error('readAtV15Close returned empty'); process.exit(1); }
+              console.log('readAtV15Close OK: ' + c.length + ' bytes');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
+      - name: Real enumeration -- lsTreeAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const a = m.lsTreeAtV15Close('docs/l1-runbooks');
+              if (a.length !== 34) { console.error('expected 34 entries, got ' + a.length); process.exit(1); }
+              console.log('lsTreeAtV15Close OK: 34 entries');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
