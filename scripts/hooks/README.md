@@ -49,3 +49,32 @@ rm .git/hooks/pre-commit
 ```
 
 Hooks in `.git/hooks/` are per-clone and never checked into version control, so uninstall is local-only.
+
+## pre-push.sh
+
+Rejects a push whose range would introduce the v1.22 landing branch's archived scrub-source commit
+(`9a114815…`, preserved at `refs/archive/v1.22-landing`), and rejects any push whose remote ref is
+under `refs/archive/`. See "Why Not Husky / lefthook / pre-commit-framework?" above — the same
+minimum-surface rationale applies here; this is a second hand-written hook, not a reason to adopt a
+framework.
+
+### Install (one-time per clone)
+
+```bash
+cp scripts/hooks/pre-push.sh .git/hooks/pre-push
+chmod +x .git/hooks/pre-push   # Git Bash on Windows honors this
+```
+
+On PowerShell / cmd (Windows without Git Bash):
+```powershell
+Copy-Item scripts\hooks\pre-push.sh .git\hooks\pre-push
+# No chmod needed on NTFS -- git respects the hook if a Bash interpreter is on PATH
+```
+
+After install, every `git push` runs the hook. To bypass in an emergency: `git push --no-verify`.
+
+### Uninstall
+
+```bash
+rm .git/hooks/pre-push
+```

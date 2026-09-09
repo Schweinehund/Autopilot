@@ -227,3 +227,83 @@ tasks 3-6.
 defaults only enumerate `refs/heads/*` and `refs/tags/*`); this repository already carries
 `refs/scratch/heads/master` from Phase 154 as the existing precedent for an unpushed, non-standard
 ref surviving in a local clone. No push of any kind was performed in this task.
+
+---
+
+## §3 — Task 4: `scripts/hooks/pre-push.sh`, README, and three throwaway-clone tests
+
+### Deviation (Rule 1 — auto-fixed bug): remote-name argument position
+
+`159-CONTEXT.md` D-08 and `159-01-PLAN.md`'s action text both say to use "the remote name passed as
+the hook's second argument" for `--remotes="$2"`. Per git's actual `pre-push` hook contract
+(`githooks(5)`), the hook is invoked as `pre-push <remote name> <remote URL>` — i.e. `$1` is the
+remote name and `$2` is the remote URL. Passing a URL string to `git rev-list --remotes=<pattern>`
+(which matches remote-tracking-ref *names* like `origin`, not URLs) would silently match nothing,
+making the exclusion inert and the guard's all-zero-remote-SHA arm effectively untested against real
+history — the exact class of hole D-08 itself names ("the first-draft form died on the all-zero
+remote SHA and let a new-ref push through"). Implemented with `$1` instead, confirmed correct by the
+Test (a) transcript below (the exclusion pattern `--remotes="testremote"` correctly matched nothing
+on an empty remote, and the guard fired for the right reason — the range genuinely contains the
+scrub commit — not because `--remotes=` accidentally matched something).
+
+### Throwaway-clone test setup
+
+All three clones and remotes were created in the OS temp scratch directory (never inside the
+project repository), and deleted after the tests completed. The clone was seeded with objects via
+`git clone file:///D:/claude/Autopilot` (local, `file://` per the project's own precedent that a bare
+local path silently ignores `--depth`) plus one explicit `git fetch … refs/archive/v1.22-landing:refs/heads/archived-test`
+to pull the archived history's objects into the clone (a plain clone does not fetch `refs/archive/*`,
+which is D-07's own point). The hook was copied to `.git/hooks/pre-push` and made executable inside
+the clone; a throwaway bare repo was added as remote `testremote`.
+
+### Test (a) — new-ref push carrying the archived history → REJECTED
+
+```
+$ git push testremote archived-test:refs/heads/archived-test
+pre-push: REJECTED - range for 'refs/heads/archived-test' -> 'refs/heads/archived-test' contains the archived scrub-source commit (9a1148156e049bc4ff9cf208de869739a8ff5d43)
+error: failed to push some refs to '../remote_a'
+```
+Exit status: **1**. Fired on the all-zero-remote-SHA arm (`git rev-list "$ls" --not --remotes="$1"`,
+since `testremote` had no refs yet).
+
+### Test (b) — existing-ref push carrying the archived history → REJECTED
+
+A throwaway commit `poisoned` was built by plumbing (`git commit-tree <master's tree> -p master -p
+archived-test`) so its ancestry includes both `master` (already pushed to `testremote` as `master` in
+Test (c) below, giving a non-zero remote SHA) and the entire archived-test history. Built by plumbing
+rather than an ordinary merge because the working-tree merge hit a real content conflict on
+`159-EVIDENCE.md` (expected — this test file itself changed between the archived branch and current
+`master`); the plumbing form needs no conflict resolution and produces the same ancestry property
+(189 commits reachable from `poisoned` and not from `master`).
+
+```
+$ git push testremote poisoned:refs/heads/master
+pre-push: REJECTED - range for 'refs/heads/poisoned' -> 'refs/heads/master' contains the archived scrub-source commit (9a1148156e049bc4ff9cf208de869739a8ff5d43)
+error: failed to push some refs to '../remote_a'
+```
+Exit status: **1**. Fired on the two-dot range arm (`git rev-list "${remote_sha}..${local_sha}"`).
+
+### Test (c) — push of `master` → ACCEPTED
+
+```
+$ git push testremote master:refs/heads/master
+pre-push: OK - no archived history and no refs/archive/* target detected
+To ../remote_a
+ * [new branch]        master -> master
+```
+Exit status: **0**.
+
+### Bonus test — `refs/archive/*` remote refspec → REJECTED (arm 4, not enumerated by the plan's three but proving the fourth rule)
+
+```
+$ git push testremote master:refs/archive/whatever
+pre-push: REJECTED - 'refs/archive/whatever' is a refs/archive/* ref and must never be pushed
+error: failed to push some refs to '../remote_a'
+```
+Exit status: **1**.
+
+### `core.hooksPath` unchanged
+
+`git config --get-all core.hooksPath` in the real repository returns the same single value
+(`D:\claude\Autopilot\.git\hooks`) before and after this task; the throwaway clone's own
+`.git/hooks/pre-push` install is per-clone and never touches the real repository's config.
