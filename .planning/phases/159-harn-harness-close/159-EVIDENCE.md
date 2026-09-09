@@ -1112,3 +1112,138 @@ against a live-reading harness, whereas the frozen harness (once converted) read
 stood at the V121 close regardless of what happens on the working tree afterward.
 
 **No source file was modified by this task.**
+
+---
+
+## §13 — Plan 159-04 Task 3: perturbation proof and two negative probes
+
+**Belongs to Plan 159-04.** Mirrors `153-EVIDENCE.md` section 1 — the harness-run evidence section
+for the harness this generation converts. All scratch-clone work happened in a throwaway clone
+outside the main tree; nothing here touched the main working tree (confirmed below).
+
+### Run set (five triples)
+
+| Harness | Mode | Result |
+|---|---|---|
+| `v1.21-milestone-audit.mjs` | unconverted (live, §12 baseline, commit before Task 2) | `Summary: 16 passed, 0 failed, 0 skipped` |
+| `v1.21-milestone-audit.mjs` | converted (frozen, this task, after Task 2) | `Summary: 16 passed, 0 failed, 0 skipped` |
+| `v1.22-milestone-audit.mjs` | born live-HEAD (159-03 fork) | `Summary: 16 passed, 0 failed, 0 skipped` |
+| `v1.21-milestone-audit.mjs --self-test` | converted | `Self-test: 9 passed, 0 failed` |
+| `v1.22-milestone-audit.mjs --self-test` | live-HEAD | `Self-test: 9 passed, 0 failed` |
+
+The converted harness's triple (16/0/0) matches the unconverted live baseline exactly (delta 0) —
+the conversion changed WHERE the corpus is read from, not the verdict.
+
+### Perturbation test (scratch clone, file:// URL, non-shallow)
+
+```
+git clone file:///D:/claude/Autopilot <scratch>/clone1
+git -C <scratch>/clone1 rev-parse --is-shallow-repository   # -> false
+git -C <scratch>/clone1 log --oneline | wc -l                # -> 3569 (full history, not a shallow stub)
+git -C <scratch>/clone1 rev-parse HEAD                       # -> 80d773d69a2f41ce8beac616d51c6be176b13974 (Task 2's commit)
+```
+Clone made from a `file://` URL, not a bare local path (memory: a bare local path silently ignores
+`--depth`, which would make a shallow-clone check meaningless); the non-shallow assertion is
+recorded above the perturbation itself, not after.
+
+**Edited coordinate:** `docs/_glossary-android.md`, one blank line inserted immediately above the
+`supervision_exemptions` pinned line 37 (`[Supervision](#supervision)` in the Alphabetical Index),
+shifting that content to line 38 — a live re-creation of the repository's own documented `HYG-02`
+line-shift class, chosen specifically because it is a coordinate the sidecar pins (not an arbitrary
+docs edit).
+
+**Converted harness, before and after the edit (run in the scratch clone):**
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose | tail -1
+```
+→ before: `Summary: 16 passed, 0 failed, 0 skipped`; after: `Summary: 16 passed, 0 failed, 0 skipped`
+(byte-for-byte the same verdict). The converted harness's verdict is unchanged by the edit, because
+it reads the frozen V121 git blob, never the scratch clone's working tree.
+
+**The same edit against the unconverted harness would have moved a check — proved, not asserted:**
+the pre-Task-2 unconverted snapshot (`git show 538aea18:scripts/validation/v1.21-milestone-audit.mjs`,
+copied into the scratch clone's `scripts/validation/` directory so its relative imports resolve) was
+run against the identical edited working tree:
+```
+node scripts/validation/unconverted-snapshot.mjs --verbose | grep FAIL
+```
+→
+```
+[2/16] C2: Zero supervision as Android mgmt term ... FAIL -- 25 un-exempted supervision reference(s): docs/_glossary-android.md:38 ("Supervision"), docs/_glossary-android.md:38 ("supervision"), docs/_glossary-android.md:90 ("supervised")
+[7/16] C7: bare-"Knox" disambiguation check ... FAIL -- 5 bare "Knox" occurrence(s) without SKU qualifier
+[9/16] C9: COPE banned-phrase check ... FAIL -- 1 un-exempted COPE banned-phrase hit(s): docs/_glossary-android.md:338
+```
+`Summary: 13 passed, 3 failed, 0 skipped` — a single line insertion shifted every later pinned
+coordinate in the file by one line, un-exempting them all at once (C2, C7, C9 all moved from PASS to
+FAIL). This is exactly the class the conversion eliminates: the live harness's verdict is coupled to
+the current working-tree line numbers; the frozen harness's is not.
+
+The edit was reverted in the scratch clone (`git checkout -- docs/_glossary-android.md`) and the
+converted harness re-confirmed green (`16 passed, 0 failed, 0 skipped`). **No perturbation was
+performed in the main working tree** — confirmed via `git status --short docs/_glossary-android.md`
+in the main tree returning empty both before and after this task.
+
+### Negative probe 1 — bogus known member (proved failable)
+
+In the same scratch clone, a backup of the converted harness was made
+(`scripts/validation/v1.21-milestone-audit.mjs.bak`), then the known-member path was repointed to a
+nonexistent file:
+```
+KNOWN_MEMBER = join(tmpDir, 'docs', 'recipes', '99-does-not-exist.md');   // was 05-enterprise-update-plan.md
+```
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose | grep -E "C17|Summary"
+```
+→
+```
+[17/16] C17: EEE document contract ... FAIL -- C17 FAIL: known-member guard failed -- .../docs/recipes/99-does-not-exist.md absent from materialized V121 corpus
+Summary: 15 passed, 1 failed, 0 skipped
+```
+Reverted from the backup; re-confirmed green (`16 passed, 0 failed, 0 skipped`).
+
+### Negative probe 2 — wrong milestone tag (proved failable)
+
+Same scratch clone, restored to the correct known member, then the materialize wrapper's tag was
+repointed:
+```
+return withDocsAtClose('V120', (tmpDir, writtenPaths) => {   // was 'V121'
+```
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose | grep -E "C17|Summary"
+```
+→
+```
+[17/16] C17: EEE document contract ... FAIL -- C17 FAIL: known-member guard failed -- .../docs/recipes/05-enterprise-update-plan.md absent from materialized V121 corpus
+Summary: 15 passed, 1 failed, 0 skipped
+```
+The known-member assertion (still checking for `05-enterprise-update-plan.md`, the V121-only
+member) correctly fails when the materialize wrapper is pointed at V120's docs tree, since that
+file does not exist at V120. Reverted from the backup; re-confirmed green (`16 passed, 0 failed, 0
+skipped`). Both negative probes and the reverted-green re-run were then removed from the scratch
+clone before it was discarded — a guard that has never failed is decorative, and both have now
+failed and been proven to fail for the right reason.
+
+### Ordering backstop
+
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose > r1
+node scripts/validation/v1.21-milestone-audit.mjs --verbose > r2
+diff -q r1 r2
+```
+→ **two runs byte-identical.** No check's verdict depends on an unstable enumeration order between
+consecutive invocations.
+
+### Post-task validator confirmation
+
+```
+node scripts/validation/check-phase-54.mjs | tail -1
+```
+→ `Summary: 32 passed, 0 failed, 0 skipped`.
+
+### Delta ledger (D-65)
+
+Every figure measured in this task and in §12 reproduces its corresponding CONTEXT/RESEARCH-carried
+figure exactly — **delta 0** in all cases: the V121/V120 docs path counts (307/296, D-20), the known
+member's presence/absence split, the 33-file sidecar-pinned population (D-18), and the converted
+harness's 16/0/0 triple against the unconverted baseline. No figure in this task diverged from its
+carried value.
