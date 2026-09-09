@@ -1445,3 +1445,157 @@ for f in 154 155 156; do node scripts/validation/check-phase-$f.mjs | tail -1; d
 | `check-phase-156.mjs` | 10 | 10 | 0 | 0 | 0 |
 
 Exactly one spawn across the three leaves in this plan, matching D-39's ceiling for these members.
+
+## §16 — Plan 159-06 Task 1: measure the 157 and 158 needle candidates, record every rejection
+
+### Heading needles — full text vs. colon-prefix vs. bare form
+
+Command: `grep -Fc "TEXT" docs/_standards/EEE-SOP-standard.md` per full heading;
+`grep -c "^### D-0N:" file` per colon-prefix; `grep -nE "^### D-0[1-5][^:]" file` for the bare form.
+
+| Full heading text (pinned) | Count |
+|---|---|
+| `### D-01: The non-gate rule` | 1 |
+| `### D-02: The mandate-promotion hazard` | 1 |
+| `### D-03: The passive-to-active hazard` | 1 |
+| `### D-04: Corpus scope` | 1 |
+| `### D-05: Tooling pairing and its risks` | 1 |
+
+| Colon-prefix form (`### D-0N:`, not pinned) | Count |
+|---|---|
+| D-01 | 3 |
+| D-02 | 3 |
+| D-03 | 3 |
+| D-04 | 3 |
+| D-05 | 2 |
+
+Matches D-36's carried figures exactly (delta 0). Combined colon-prefix-or-bare grep
+(`grep -c '^### D-0[1-5]' docs/_standards/EEE-SOP-standard.md`) returns **15** across the whole
+file — three unrelated D-series share the "### D-0N:" shape (the EEE structural sections, the C17
+assertion-shape sections, and this prose-style section). The bare form additionally collides with
+`### D-02 Edge-case rulings` at line 134, an entirely unrelated heading. **Neither the colon-prefix
+form nor the bare form is a needle** for either reason; only the five full heading texts are
+pinnable, each confirmed at exactly one occurrence. The task's own `<verify>` block runs this same
+combined grep as a demonstration command — its printed value of 15 (greater than 5) is the proof
+artifact this section records, not a defect in `check-phase-157.mjs` (which never pins the
+colon-prefix or bare form at all).
+
+### Corpus-wide zeros with the floor (157)
+
+Command shape: `for c in <5 boundaries> HEAD; do printf "%s " "$c"; git grep -c "TOKEN" $c -- docs 2>/dev/null | awk -F: '{s+=$NF} END{print s+0}'; done`; the third token uses a
+line-level predicate command instead: `grep -rn "2026-06-19" docs/ | grep -v "review_by" | wc -l`.
+
+| Token | 8de413aa | ce9b0b73 | 2a46d32a | bb22f89a | 937d0a1f | HEAD | Transition window | Stable after | Owning phase |
+|---|---|---|---|---|---|---|---|---|---|
+| `300 groups` | 1 | 1 | 1 | 1 | 0 | 0 | inside 157 | yes | 157 |
+| `4-platform comparison hub for update enforcement` | 1 | 1 | 1 | 1 | 0 | 0 | inside 157, correction at `18f378aa` | yes | 157 |
+| lines with `2026-06-19` sans `review_by` | 3 | 3 | 3 | 3 | 0 | 0 | inside 157 | yes | 157 |
+
+All three land inside 157's own window (`bb22f89a` -> `937d0a1f`) and stay at 0 through HEAD.
+Matches D-36 exactly — delta 0. Corpus floor: `git ls-files 'docs/*.md' | wc -l` -> **294** files
+at HEAD, above the 250-file floor.
+
+### Per-file counts, confined to 157's own diff
+
+`git diff --name-only bb22f89a 937d0a1f -- docs/` was computed fresh and confirmed to contain
+`docs/_glossary.md`, `docs/operations/patch-management/00-overview.md`,
+`docs/operations/patch-management/01-windows-wufb-rings.md`, and `docs/operations/00-index.md` —
+the four files carrying the eight per-file needles below. Matcher: literal, case-sensitive,
+substring (`grep -Fc "NEEDLE" file` / `c.split(needle).length - 1`).
+
+| File | Needle | Count |
+|---|---|---|
+| `docs/_glossary.md` | `15 deployment rings` | 1 |
+| `docs/_glossary.md` | `300 Autopatch groups` | 1 |
+| `docs/operations/patch-management/00-overview.md` | `15 deployment rings` | 1 |
+| `docs/operations/patch-management/00-overview.md` | `300 Autopatch groups` | 1 |
+| `docs/operations/patch-management/00-overview.md` | `updated 2025-06-17` | 1 |
+| `docs/operations/patch-management/00-overview.md` | `[Linux Update Delivery](05-linux-update-delivery.md)` | 4 |
+| `docs/operations/patch-management/01-windows-wufb-rings.md` | `updated 2025-06-17` | 2 |
+| `docs/operations/00-index.md` | `5-platform comparison hub for update enforcement` | 1 |
+
+All eight match D-36 exactly — delta 0.
+
+**Dropped as not 157's (D-36):** `docs/operations/07-windows-autopatch.md` and
+`docs/recipes/05-enterprise-update-plan.md` — neither file appears in the diff computed above, so
+neither is 157's needle. Both drops are confirmed by the same diff listing, not by CONTEXT's
+say-so.
+
+### 158 candidates measured live
+
+Command shape: same boundary-series loop, applied to 158's window (`937d0a1f` -> HEAD).
+
+| Candidate | 937d0a1f | HEAD | Transition window | Owning phase |
+|---|---|---|---|---|
+| `using apt and unattended-upgrades` in `docs/index.md` | 0 | 1 | inside 158 | 158 |
+| `using apt and unattended-upgrades` in `docs/operations/00-index.md` | 0 | 1 | inside 158 | 158 |
+| `#reboot-handling` in `docs/_glossary-linux.md` | 0 | 1 | inside 158 | 158 |
+| `governs the whole tracked documentation corpus the mechanical gate scans` in the standard | 0 | 1 | inside 158 | 158 |
+| `corrected D-05's falsified point-in-time identity claim` in the standard | 0 | 1 | inside 158 | 158 |
+
+All five land inside 158's own window and match D-37 exactly — delta 0. `git diff --name-only
+937d0a1f HEAD -- docs/` confirms all four files above (`docs/index.md`,
+`docs/operations/00-index.md`, `docs/_glossary-linux.md`, `docs/_standards/EEE-SOP-standard.md`)
+are inside that diff.
+
+Scripts and artifacts confirmed present and non-empty: `scripts/docs-style/audit-claimed-fixes.mjs`
+(559 lines); `scripts/docs-style/_DISPOSITIONS-158.tsv` (9 data rows);
+`scripts/docs-style/_STYLE-DISPOSITIONS-158.tsv` (120 data rows);
+`scripts/docs-style/_JUDGE-VERDICTS-158.json` (presence only); `scripts/docs-style/158-FIX-AUDIT.json`
+(presence only — carries branch-only SHAs that must never become a needle).
+
+### 158 rejections with reasons (D-37)
+
+- **Any em-dash count:** a large population of spaced em dashes remains inside protected spans
+  (`grep -rl " — " docs/` finds 283 files carrying at least one), so no stable count survives —
+  the population is a style-mechanical byproduct, not a 158 deliverable in its own right.
+- **The bare platform-package phrase (`via apt`):** its one remaining occurrence, at
+  `docs/reference/linux-capability-matrix.md:112`, sits inside a technical-accuracy table cell
+  describing the actual installation mechanism and is citation-blocked from a style rewrite.
+- **Archive, manifest, runner and pin totals:** all are build-run artifacts recomputed on every
+  run, not corpus state — pinning any of them would pin a byproduct of the CI environment, not a
+  documentation deliverable.
+
+### Gate timing (D-38)
+
+| Run | Command | Wall time |
+|---|---|---|
+| Full run | `python3 scripts/validation/check-prose-style.py` | **79.3s** (measured `time` output: `real 1m19.343s`) |
+| Self-test | `python3 scripts/validation/check-prose-style.py --self-test` | **0.37s** (measured `time` output: `real 0m0.370s`) |
+| `audit-claimed-fixes.mjs --self-test` | `node scripts/docs-style/audit-claimed-fixes.mjs --self-test` | **1.588s** |
+
+D-38 carried a range of 63-76s for the full run; the live re-measurement (79.3s) is slightly above
+that range. Per D-65 measurement discipline, the live value wins: the accepted per-apex cost is
+stated here as **~79s**, not the carried ~76s figure. The self-test and audit-claimed-fixes
+self-test times match D-38/D-37 closely (both sub-2-second) with no material delta.
+
+### Failability proofs (scratch-copy perturbations, new mechanisms only)
+
+The corpus-wide-zero, per-file-exact-count, and self-test-spawn mechanisms were already proven
+failable in §14 (159-05 Task 1) and are inherited unchanged by this plan's leaves — the check logic
+is identical per mechanism, only the pinned literal differs. This plan introduces two mechanisms
+not covered by §14, plus one already-covered mechanism re-confirmed for its new literal:
+
+| Needle mechanism | Perturbation | Before | After | Confirmed failable |
+|---|---|---|---|---|
+| exact heading count (`### D-01: The non-gate rule`) | renamed the heading text in a scratch copy | 1 | 0 | yes |
+| line-level predicate (date without review key) | appended a line containing `2026-06-19` without `review_by` to a scratch copy | 0 | 1 | yes |
+| corpus-wide zero (`300 groups`) | appended a line containing `300 groups` to a scratch copy | 0 | 1 | yes |
+| per-file exact count (`300 Autopatch groups`) | mutated the literal to `999 Autopatch groups` in a scratch copy | 1 | 0 | yes |
+| full-gate spawn, exit-0-required | pointed a scratch copy of `check-phase-157.mjs` at a fake tool exiting 1 | PASS | FAIL (`corpus violates the prose-style gate`) | yes |
+| tool-presence vs. runtime-absence distinction | deleted the tool from a scratch copy's `scripts/validation/` tree | 1 hard FAIL + 2 graceful SKIP (overall FAIL) | same | yes — confirms absence is never laundered into a pass |
+
+### Not-pinnable list (157, beyond the heading forms above)
+
+- The colon-prefix and bare heading forms — see the heading-needles section above.
+- Any per-file count outside 157's own diff (`07-windows-autopatch.md`,
+  `recipes/05-enterprise-update-plan.md`) — see the drop record above.
+
+### Not-pinnable list (158)
+
+- Any em-dash count, the bare `via apt` phrase, and any archive/manifest/runner/pin total — see
+  the 158 rejections section above.
+
+Every needle carried into `check-phase-157.mjs` and `check-phase-158.mjs` is attributed to the
+correct phase's own window, confined to that phase's own diff where applicable, and proven
+failable by a mechanism-level perturbation. 157 and 158 candidate measurement recorded.
