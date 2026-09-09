@@ -5,17 +5,17 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-02-PLAN.md
-last_updated: "2026-09-09T12:15:00.452Z"
+stopped_at: Completed 159-03-PLAN.md
+last_updated: "2026-09-09T12:30:43.515Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: fe86b59a5fc165dec0f0d7f084fef60c80b8b5f0
+state_head: ebb96166dacda8d872ec15dc64175c2c03fd60be
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 32
-  percent: 74
+  completed_plans: 33
+  percent: 77
 ---
 
 # Project State
@@ -30,11 +30,11 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 3 of 13
+Plan: 4 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
-Progress: [███████░░░] 74% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
+Progress: [████████░░] 77% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
 
 ## v1.22 Requirement Coverage (39/39 mapped — roadmap created 2026-08-31)
 
@@ -130,6 +130,7 @@ Progress: [███████░░░] 74% — 5/6 phases complete; 30/30 au
 | Phase 158 P07 | 27min | 3 tasks | 6 files |
 | Phase 159 P01 | 33min | 6 tasks | 15 files |
 | Phase 159 P02 | 8min | 3 tasks | 2 files |
+| Phase 159 P03 | 13min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -217,6 +218,8 @@ Progress: [███████░░░] 74% — 5/6 phases complete; 30/30 au
 - [Phase 158]: [Phase 158-07]: Rebuilt dist/docs-library-v1.22.zip in one dedicated invocation (488-line log, 239 entries, both canaries 237/237); fixed a build-tooling EOL mismatch (Node wrote LF against core.autocrlf=true) via git checkout -- after proving byte-identity; landed six annotate-and-supersede amendment blocks correcting the pin count, the VERIFY-06 confirmation criterion, the HYG-06 glossary count and the HARN-06 history record; both requirements flip at this plan's boundary.
 - [Phase 159]: Landed v1.22 milestone on master via git commit-tree plumbing squash after scrubbing a recurring verifier-secret-echo leak; caught and reverted a near-miss that would have deleted 16 tracked files during worktree hygiene.
 - [Phase 159]: Followed D-14/D-15/D-16/D-17 exactly: recovered V121 SHA via subject-line pair discriminator (count 1, regression-checked against V117-V120), inserted the pin strictly before V14 (never appended), named the Phase 159 D-15 APPEND-ONLY re-amendment in the file's header, and proved the pin end-to-end with a real frozen read (113803 bytes, 307 docs paths).
+- [Phase 159]: Fork ordering proven: three-way hash equality (frozen blob, unconverted working copy, new v1.22-milestone-audit.mjs) confirmed before any identity edit — D-22 requires the fork source be the frozen v1.21 blob at e129081e, never the working copy, so the byte-equality assertion is the evidence the order was honoured
+- [Phase 159]: Sidecar and BASELINE_26 populations re-measured live reproduce D-23/D-24's carried figures exactly (89/73/33/44 total; 40/44 pass-both, 7/9 BASELINE_9 lines changed) -- zero delta on every figure — D-65 measurement discipline: live value wins over any carried figure, and a zero delta is itself a result worth recording
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -275,8 +278,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T12:14:59.061Z
-Stopped at: Completed 159-02-PLAN.md
+Last session: 2026-09-09T12:30:42.175Z
+Stopped at: Completed 159-03-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 

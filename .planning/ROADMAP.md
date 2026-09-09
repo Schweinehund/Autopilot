@@ -286,7 +286,7 @@ Plans:
 
 **[Phase 158 note, D-28]:** the history-removal mechanism for the scrubbed CMG hostname at commit `9a114815` (`git branch -r --contains 9a114815` empty; `AR-155-01` / carried forward as `AR-158-01`) is this phase's decision to make, not Phase 158's — Phase 158 recorded the position and the squash-merge recommendation in `REQUIREMENTS.md`'s HARN-06 amendment; this note does not change the dependency line above.
 
-**Plans**: 2/13 plans executed in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
+**Plans**: 3/13 plans executed in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
 
 Plans:
 
@@ -300,7 +300,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 159-03-PLAN.md — Fork `v1.22-milestone-audit.mjs` from the frozen v1.21 blob under a three-way hash assertion, copy the sidecar with pins byte-identical, and insert the `BASELINE_26` journal block with a per-pin drift measurement
+- [x] 159-03-PLAN.md — Fork `v1.22-milestone-audit.mjs` from the frozen v1.21 blob under a three-way hash assertion, copy the sidecar with pins byte-identical, and insert the `BASELINE_26` journal block with a per-pin drift measurement
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
