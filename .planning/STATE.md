@@ -5,16 +5,16 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-07-PLAN.md
-last_updated: "2026-09-09T13:48:18.678Z"
+stopped_at: Completed 159-08-PLAN.md
+last_updated: "2026-09-09T14:10:45.503Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: 608ccf1f34ed9ceb36a28298dc87a162a45a34e2
+state_head: caeea707eea7843b396853de7b05092ef9541664
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 37
+  completed_plans: 38
   percent: 83
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 8 of 13
+Plan: 9 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
@@ -135,6 +135,7 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 | Phase 159 P05 | 55min | 3 tasks | 4 files |
 | Phase 159 P06 | 42min | 3 tasks | 3 files |
 | Phase 159 P07 | 55 min | 3 tasks | 2 files |
+| Phase 159 P08 | 48min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -231,6 +232,9 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 - [Phase 159]: check-phase-158.mjs uses a default child_process import (cp.execFileSync) instead of a destructured one to minimize its literal execFileSync-substring count to exactly 1. — Satisfies that leaf's own exact-count gate as tightly as the mandated single spawn permits.
 - [Phase 159]: V-159-HARN03 additive leg copies AUDIT-HARNESS's shape but omits the NESTED-skip branch (D-25) -- the converted v1.21 harness is exercised for real in every apex invocation
 - [Phase 159]: Archive-root token 'v1.22-phases' named directly from D-29, never transcribed from check-phase-153.mjs's own token -- unfalsifiable in-phase per the resolver's live-path-first behavior
+- [Phase 159]: Job count derived by direct enumeration, not the plan's own grep-count verify command -- that pattern also matches the on: block's bare schedule: trigger key (no underscore), inflating both real counts by 1; documented as a measurement-command anomaly, not a defect.
+- [Phase 159]: Python 3.13 pinned in exactly linux-chain-ubuntu-latest, check-phase-157, and check-phase-159 -- matching the local Axis-1 reproduction environment; the header comment describing the step avoids repeating the literal action/version strings after an earlier draft's prose doubled the exact-count acceptance criteria from 3 to 4.
+- [Phase 159]: The predecessor-surface census's two anticipated pre-existing entries were traced and named: check-phase-135.mjs and check-prose-style.py, both landed by the 159-01 squash from Phase 155/157 content predating any Plan 159-0X commit.
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -289,8 +293,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T13:48:17.287Z
-Stopped at: Completed 159-07-PLAN.md
+Last session: 2026-09-09T14:10:28.479Z
+Stopped at: Completed 159-08-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
