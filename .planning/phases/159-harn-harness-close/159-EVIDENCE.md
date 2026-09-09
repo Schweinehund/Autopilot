@@ -85,8 +85,122 @@ when documenting the scrub. Column count matches rows 1–16 (10 columns). Front
 
 ### Gate readings (post-edit, before commit)
 
-Recorded from live execution; see the task's commit for the exact command output.
+`node scripts/validation/check-phase-54.mjs` / `-55.mjs` / `-56.mjs` — all three: **32 passed, 0
+failed, 0 skipped**, both immediately before and immediately after the Task 1 commit (`9cc76587`).
 
-- `node scripts/validation/check-phase-54.mjs` — pending (recorded at commit time below)
-- `node scripts/validation/check-phase-55.mjs` — pending (recorded at commit time below)
-- `node scripts/validation/check-phase-56.mjs` — pending (recorded at commit time below)
+---
+
+## §2 — Task 2 (TRACER): squash the landing branch onto master with plumbing
+
+### Re-measured values vs. carried figures (D-65)
+
+| Value | RESEARCH (session) | CONTEXT | Live (this execution) | Delta |
+|---|---|---|---|---|
+| Branch tip after Task 1's scrub commit | — (Task 1 not yet run at RESEARCH time) | — | `9cc765874978c0c77fcc6b3587426226137f737e` | n/a — first read at this point |
+| Ahead count (`git rev-list --count master..HEAD`) | 182 | 179 | **188** | +6 vs RESEARCH, +9 vs CONTEXT (2 additional commits landed this session: the STATE.md pre-execution sync commit and Task 1's scrub commit, on top of RESEARCH's own +3 drift note) |
+| `master` SHA (pre-squash) | `8de413aa…` | `8de413aa…` | `8de413aae65387a6b381fd34f70f65128592f65d` | none — confirmed |
+
+### Message file
+
+Written to a scratch location outside the repository (never tracked), passed to `git commit-tree`
+via `-F`. Subject: `feat(v1.22): land Phases 154-158 and Phase 159 planning as one commit (squash of
+v1.22/154-style-landing @ 9cc76587)`. Contains `v1.22` (3 occurrences) and does not contain
+`MILESTONE CLOSE` (0 occurrences). Scanned for the derived token: 0 occurrences (D-06 surface 4,
+now populated and clean).
+
+**Full message text, verbatim (appendix, per this task's acceptance criteria):**
+
+```
+feat(v1.22): land Phases 154-158 and Phase 159 planning as one commit (squash of v1.22/154-style-landing @ 9cc76587)
+
+This commit is a single-parent plumbing squash (git commit-tree) of the
+v1.22/154-style-landing branch tip 9cc765874978c0c77fcc6b3587426226137f737e
+onto master, carrying 188 commits as one tree. It is not a merge and does
+not rewrite any commit on the source branch.
+
+Reason for squashing rather than merging or pushing the branch directly: a
+value scrubbed in Phase 155 (and, redundantly, again in Phase 159's own
+Task 1 scrub) remains present in the source branch's local commit history
+at an earlier revision. That history is never published — the branch is
+archived at refs/archive/v1.22-landing and then deleted locally, and is
+never pushed, so the scrubbed value never reaches any remote.
+
+Per-phase artifact SHAs for Phases 154 through 158, and the 46-row binding
+audit produced during Phase 158's verification, resolve only in the
+owner's local repository against the archived branch history. The
+published record for those results is the JSON output and the run log
+committed alongside each phase's own artifacts, not the commit SHAs
+themselves, which become unreachable from origin/master after this squash.
+```
+
+### Mechanism executed
+
+1. `git update-ref refs/archive/v1.22-landing 9cc76587...` (created BEFORE the squash, while the
+   branch tip was still the sole ref pointing at it).
+2. `S=$(git commit-tree HEAD^{tree} -p master -F <msgfile>)` → `S = 9cc84aa6b5db59ecb81ae8310899ad516096e08b`.
+3. `git update-ref refs/heads/master "$S"`.
+4. `git checkout master`.
+5. `git branch -D v1.22/154-style-landing` (a plain `-d` correctly refused with "not fully merged" —
+   expected, since a plumbing squash is not a fast-forward or a recorded merge in git's own ancestry
+   sense despite the tree being provably identical; `-D` is the correct, expected escalation here,
+   not a deviation).
+
+### Assertions
+
+| Assertion | Command | Result |
+|---|---|---|
+| Tree equality | `git rev-parse master^{tree}` vs `git rev-parse refs/archive/v1.22-landing^{tree}` | Both `15f9d29017b042e4feea3af118140c392bed71f3` — **MATCH** |
+| Single parent | `git rev-list --parents -1 master` (word count 2: commit + one parent) | `9cc84aa6… 8de413aa…` — **1 parent, confirmed** |
+| Clean tracked tree | `git status --porcelain \| grep -vc '^??'` | `0` — no staged/modified/deleted tracked files after checkout |
+| Close discriminator | `git log --all --format="%H\|%s" \| awk -F'\|' '$2 ~ /v1\.22/ && $2 ~ /MILESTONE CLOSE/' \| wc -l` | `0` — confirmed; must read 1 after the close-gate commit later in this phase |
+| Archive ref resolves to pre-squash tip | `git rev-parse refs/archive/v1.22-landing` | `9cc765874978c0c77fcc6b3587426226137f737e` — matches recorded tip |
+| Landing branch gone | `git branch --list "v1.22/154-style-landing"` | empty |
+| Scratch bundle still tracked | `git ls-files --error-unmatch .planning/artifacts/154-scratch-corpus.bundle` | exit 0 |
+
+### Deviations found in this task's own `<verify>` block (Rule 3 — mis-specified verify commands)
+
+1. **`git status --porcelain` non-emptiness is pre-existing, not squash-introduced.** The plan's
+   literal verify (`test -z "$(git status --porcelain)"`) fails because 10 pre-existing untracked
+   entries (`.agents/`, `.claude/skills/fireworks-tech-graph/`,
+   `.claude/skills/jira-milestone/install-jira-milestone-hook.cjs`, `.gsd/`, `.obsidian/`,
+   `.planning/milestone.lock`, `154-PATTERNS.md`, `.planning/state.json`, `.playwright-mcp/`,
+   `skills-lock.json`) were present in the working tree before this plan started and are explicitly
+   documented as Task 5's own scope (D-41: gitignore additions and the two orphan-artifact commits).
+   `159-RESEARCH.md`'s own D-41 census (13 directories, ~81 MB, later stated as "105 entries" in the
+   `--untracked-files=all` form) already discloses this population predates the squash. The corrected,
+   intent-true check — no **tracked** file is modified/staged/deleted after the checkout
+   (`git status --porcelain | grep -vc '^??'` = 0) — passes cleanly, proving the checkout itself
+   introduced no residual diff or conflict. Logged rather than silently worked around; the untracked
+   population is resolved by Task 5, not this task.
+2. **`git rev-list --count --parents -1 master | wc -w` is a vacuous check.** `--count` overrides
+   `--parents`' effect on the printed line — the command always prints just the commit count (`1` for
+   `-1`), regardless of how many parents the commit has, so `wc -w` is always `1`, never `2`, and the
+   literal verify command can never pass for ANY commit, single-parent or merge. The corrected form,
+   `git rev-list --parents -1 master | wc -w` (no `--count`), correctly prints `<commit-sha>
+   <parent-sha>` (2 words) for a single-parent commit and was used above to confirm the real property.
+
+Both are acceptance-criteria/verify-command defects in the plan text itself, not in the squash
+mechanism; the underlying properties they intend to assert (clean checkout, single parent) are
+independently confirmed true by the corrected commands. Logged per the executor's deviation
+protocol (Rule 3 — blocking issue in a verify instrument, not in the deliverable).
+
+### STATE reconciliation
+
+Live re-measurement (per D-65) of every commit-SHA-shaped token cited in `.planning/STATE.md` found
+**17** candidates (not `159-CONTEXT.md` D-46's carried **14** — `2016281112` is an Intune error code,
+not a SHA, and was excluded as a false positive from the raw regex scan). Of the 17, **11** — not
+D-46's carried **8** — are unreachable from the new `master` by direct ancestry after the squash:
+`0425921b`, `090ca859`, `83660691`, `845218a4`, `987770f8`, `aa9ae5ae`, `af678f0c`, the pre-squash
+`state_head` (`bdb22fdf…`), `c97d322`, `dc7e996`, `f30c37b`. All 11 remain resolvable via
+`git cat-file`/`git show` against `refs/archive/v1.22-landing`. One annotation was added to
+`.planning/STATE.md`'s Blockers/Concerns section (dated 2026-09-09) naming all 11 SHAs, the archive
+ref, and the D-65 delta against D-46's carried figures. `state_head` in the frontmatter itself is
+left as the harness's own bookkeeping field (updated automatically at the next state-tooling run) —
+the annotation documents its unreachability rather than editing the field by hand.
+
+### Branch afterlife note
+
+`git push --all` and `git push --tags` never transfer a `refs/archive/*` ref (git's push refspec
+defaults only enumerate `refs/heads/*` and `refs/tags/*`); this repository already carries
+`refs/scratch/heads/master` from Phase 154 as the existing precedent for an unpushed, non-standard
+ref surviving in a local clone. No push of any kind was performed in this task.
