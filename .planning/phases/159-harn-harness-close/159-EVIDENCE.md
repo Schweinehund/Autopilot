@@ -455,3 +455,60 @@ census form — confirmed by their absence from the post-commit `git status --po
 4. **STATE's Operator Next Steps are re-authored** at close, not left as this phase's stale text.
 5. **The nine un-acknowledgeable `DEFER-121-07-A` rows are disclosed, not fixed** — no v1.22
    requirement names their remediation.
+
+---
+
+## §5 — Task 6: five amendment blocks in one gated commit
+
+### Pre-task validator triples
+
+`check-phase-54/55/56.mjs`: **32/32/32 passed, 0 failed, 0 skipped**, all three, immediately before
+this task's edit. Pre-task `.planning/ROADMAP.md` amendment-block count (`grep -c
+'SUCCESS-CRITERION AMENDMENT, D-'`): **8**.
+
+### Five blocks landed, by decision tag `D-51`
+
+| # | Location | Topic |
+|---|---|---|
+| 1 | ROADMAP Phase 159 SC#2 | Guard-clause supersession (existsSync stays live; spawn+C1-C16 freeze at V121; v1.21 Phase 153 citation) |
+| 2 | ROADMAP Phase 159 SC#3 | 19th CI coexistence ordinal correction (18 workflows measured live, no delta); 20th Path-A stands; 13 jobs |
+| 3 | ROADMAP Phase 159 SC#5 | Tag/push discharged at archival, four-document after-archival record, explicit branch+tag push |
+| 4 | REQUIREMENTS HARN-03 | Same guard-clause supersession as #1, mirrored for the requirement text |
+| 5 | REQUIREMENTS HARN-06 | Branch-ahead count re-measured against the archive ref (188, superseding 171 and 179), mechanism named |
+
+3 blocks in `ROADMAP.md` (each on its own success-criterion line, per the established wrapper form),
+2 in `REQUIREMENTS.md` (HARN-03 inline within its own bullet; HARN-06 as its own indented paragraph
+following the existing D-28 amendment, matching that document's own precedent shape at, e.g., STYLE-06
+lines 32-33). SC#4 receives no amendment — confirmed by `git diff` showing zero `+`/`-` on its line.
+
+### Deviation (Rule 3 — mis-specified verify command, third instance in this plan)
+
+The task's own literal verify (`grep -c 'SUCCESS-CRITERION AMENDMENT, D-' .planning/ROADMAP.md`,
+expected to increase by at least 4) checks **only `ROADMAP.md`**, but the task's own design — per
+D-51's text and the acceptance criteria's explicit "Success criterion 2 and HARN-03 **both** state…"
+— splits the five blocks **3 in `ROADMAP.md` + 2 in `REQUIREMENTS.md`**, never 4+ in `ROADMAP.md`
+alone. The literal command reads 8 → 11 (**+3**), which is correct for this task's actual design and
+would always under-read the "+4" bar regardless of how correctly the task is executed. Corrected,
+intent-true verification: `grep -c 'AMENDMENT, D-51\]' .planning/ROADMAP.md
+.planning/REQUIREMENTS.md` reads **3** and **2** respectively — exactly 5 total, matching the design.
+
+### Citation scan (also scoped correctly — see below)
+
+The task's literal scan (`for d in $(grep -ohE 'D-[0-9]{2}' .planning/ROADMAP.md
+.planning/REQUIREMENTS.md | sort -u); do grep -q "**$d:" 159-CONTEXT.md || echo "UNRESOLVED $d"; done`)
+sweeps **every** `D-NN`-shaped token in both entire files, including citations that predate this task
+and belong to OTHER phases' own CONTEXT documents (`D-00` — a substring match on Phase 155's own
+`D-00a` exception note; `D-69` — Phase 158's own `158-CONTEXT.md` citation in that phase's ROADMAP
+"Plans" line). Neither is a citation this task introduced, and neither is expected to resolve against
+`159-CONTEXT.md`. Scoped to only the `D-NN` tokens this task's own five blocks actually introduce
+(`D-51`, plus the inline supporting citations `D-11`, `D-13`, `D-14`, `D-65`), every one resolves
+against a `159-CONTEXT.md` bullet (`D-51` is the umbrella decision; `D-11`/`D-13`/`D-14`/`D-65` are
+coincidental same-number collisions with unrelated `159-CONTEXT.md` decisions — the check only proves
+the token exists as *some* bullet, not that it's the same decision being cited inline as v1.20/v1.21
+precedent, which is expected and harmless). No block contains the purged compliance-policy filename
+(`grep -i "compliance"` over the diff returns nothing).
+
+### Post-task validator triples
+
+`check-phase-54/55/56.mjs`: **32/32/32 passed, 0 failed, 0 skipped**, all three, after the commit.
+`git status --porcelain -- docs/` is empty.
