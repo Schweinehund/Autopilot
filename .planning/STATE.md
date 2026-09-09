@@ -5,17 +5,17 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-01-PLAN.md
-last_updated: "2026-09-09T12:05:05.067Z"
+stopped_at: Completed 159-02-PLAN.md
+last_updated: "2026-09-09T12:15:00.452Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: 4c37dd9c666167a8dba51c16cedc7908ed3babf9
+state_head: fe86b59a5fc165dec0f0d7f084fef60c80b8b5f0
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 31
-  percent: 72
+  completed_plans: 32
+  percent: 74
 ---
 
 # Project State
@@ -30,11 +30,11 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 2 of 13
+Plan: 3 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
-Progress: [███████░░░] 72% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
+Progress: [███████░░░] 74% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
 
 ## v1.22 Requirement Coverage (39/39 mapped — roadmap created 2026-08-31)
 
@@ -129,6 +129,7 @@ Progress: [███████░░░] 72% — 5/6 phases complete; 30/30 au
 | Phase 158-final-corpus-verification-publish-bundle P06 | 78min | 2 tasks | 3 files |
 | Phase 158 P07 | 27min | 3 tasks | 6 files |
 | Phase 159 P01 | 33min | 6 tasks | 15 files |
+| Phase 159 P02 | 8min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -215,6 +216,7 @@ Progress: [███████░░░] 72% — 5/6 phases complete; 30/30 au
 - [Phase 158]: 158-07: rebuilt dist/docs-library-v1.22.zip in its own invocation (488-line run log, 239 entries, both canaries 237/237); a build-tooling EOL mismatch (Node wrote LF against core.autocrlf=true) made filename-map.md show git-status-modified with zero actual content diff, resolved via `git checkout --` on that one file after proving byte-identity both before and after (Rule 3). Landed six annotate-and-supersede amendment blocks: the `_CONTENT-PINS.txt` pin count (562→563, commit 83660691), VERIFY-06's confirmation criterion widened to every claim with its retroactivity/reproduce/carve-out parts, HYG-06's glossary-entry count corrected to five (DFCI pre-existed since Phase 149's 8e5070d9), and HARN-06's history record (origin/master…master 0/11, current branch re-measured 171 ahead of master — not CONTEXT's stale 152 — squash recommended, mechanism deferred to Phase 159). The untracked-entry count measured 10 after this plan's own commits (not the plan text's expected 9), consistent with 158-06's own precedent that `.planning/milestone.lock` is a new foreign entry.
 - [Phase 158]: [Phase 158-07]: Rebuilt dist/docs-library-v1.22.zip in one dedicated invocation (488-line log, 239 entries, both canaries 237/237); fixed a build-tooling EOL mismatch (Node wrote LF against core.autocrlf=true) via git checkout -- after proving byte-identity; landed six annotate-and-supersede amendment blocks correcting the pin count, the VERIFY-06 confirmation criterion, the HYG-06 glossary count and the HARN-06 history record; both requirements flip at this plan's boundary.
 - [Phase 159]: Landed v1.22 milestone on master via git commit-tree plumbing squash after scrubbing a recurring verifier-secret-echo leak; caught and reverted a near-miss that would have deleted 16 tracked files during worktree hygiene.
+- [Phase 159]: Followed D-14/D-15/D-16/D-17 exactly: recovered V121 SHA via subject-line pair discriminator (count 1, regression-checked against V117-V120), inserted the pin strictly before V14 (never appended), named the Phase 159 D-15 APPEND-ONLY re-amendment in the file's header, and proved the pin end-to-end with a real frozen read (113803 bytes, 307 docs paths).
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -273,8 +275,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T12:05:03.765Z
-Stopped at: Completed 159-01-PLAN.md
+Last session: 2026-09-09T12:14:59.061Z
+Stopped at: Completed 159-02-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
