@@ -1688,3 +1688,86 @@ Combined with §15's three-leaf summary: all five apex chain members (154-158) e
 standalone, and spawn exactly three tools between them (154, 157, 158), matching D-39's conceptual
 ceiling. The literal grep-substring sum (7) is a measurement artifact of comment/import wording
 across files spanning two plans, explained above, not a fourth spawn.
+
+## §18 — Plan 159-07 Task 1: derive the apex arithmetic, confirm every chain member exists
+
+### Derived arithmetic (command, not recalled)
+
+```
+node -e "const s=48,e=158;const n=e-s+1;const extra=[30,31];const inter=extra.filter(x=>x>=s&&x<=e);
+if(inter.length){console.error('extra entries intersect the generated range:',inter);process.exit(1)}
+const total=1+n+extra.length+1+1+1;console.log('chain='+n+' extra='+extra.length+' total='+total);
+if(n!==111||total!==117){console.error('arithmetic mismatch');process.exit(1)}"
+```
+→ `chain=111 extra=2 total=117`, exit 0.
+
+- Generated chain length: `CHAIN_START=48`, `CHAIN_END=158` (one below this apex's own phase number,
+  159) → `158-48+1 = 111` entries, matching D-29.
+- `CHAIN_EXTRA = [30, 31]` disjointness: `[30,31].filter(x => 48<=x<=158)` → `[]` (empty
+  intersection), proven by the same command.
+- Total = 1 AUDIT + 111 chain + 2 CHAIN_EXTRA + 1 AUDIT-HARNESS + 1 HARN03 + 1 SELF = **117**,
+  matching D-29 exactly (this apex's additive leg is `V-159-HARN03`, replacing `check-phase-153`'s
+  `C17CARVEOUT-SUCCESSOR` slot in the same position of the sum, not adding an eighth term).
+
+### Every chain member confirmed present on disk
+
+```
+miss=0; for n in $(seq 48 158) 30 31; do test -f "scripts/validation/check-phase-$n.mjs" || \
+  { echo "MISSING check-phase-$n.mjs"; miss=1; }; done; test $miss -eq 0 && echo "all chain members present"
+```
+→ `all chain members present` (no `MISSING` line printed). All 111 `CHAIN_PHASES` members
+(48..158) plus both `CHAIN_EXTRA` sidecars (30, 31) exist on disk. Per D-29/HAZARD FIX 3
+(inherited from `check-phase-153.mjs`), a missing member would be a hard FAIL in the apex, not a
+skip — this is exactly why all five content leaves (154-158) had to land (Plans 159-05/159-06)
+before this plan runs.
+
+### Expected pre-verification and post-verification triples
+
+- **Pre-verification** (while `159-VERIFICATION.md` does not yet exist): `116 PASS, 0 FAIL,
+  1 SKIPPED` over 117 total checks. The one legitimate skip is `V-159-AUDIT`: the resolver
+  (`resolveArchivedPhasePath`) checks the live `.planning/phases/159-harn-harness-close/` path
+  first and finds no `159-VERIFICATION.md` there yet, so it SKIP-PASSes rather than throwing — this
+  is the same shape as `check-phase-153.mjs`'s pre-close-gate `110 PASS, 0 FAIL, 1 SKIPPED` (D-29's
+  cited v1.21 precedent).
+- **Post-verification** (once `159-VERIFICATION.md` exists, recorded here as the close-gate plan's
+  stated target rather than a discovered one): `117 PASS, 0 FAIL, 0 SKIPPED` — the AUDIT leg finds
+  the file and reports a real pass instead of skipping; every other leg is unaffected by the
+  document's existence.
+
+### Both spawn targets confirmed green before the apex is written
+
+```
+node scripts/validation/v1.22-milestone-audit.mjs --verbose 2>&1 | tail -1
+```
+→ `Summary: 16 passed, 0 failed, 0 skipped`
+
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose 2>&1 | tail -1
+```
+→ `Summary: 16 passed, 0 failed, 0 skipped`
+
+Both the AUDIT-HARNESS spawn target (the v1.22 harness) and the additive HARN03 leg's spawn target
+(the converted, frozen v1.21 harness) are green (16/16, 0 FAIL, 0 SKIPPED) before `check-phase-159.mjs`
+is authored, satisfying the precondition for Task 2.
+
+### Cap values and the legs they apply to
+
+- **600,000 ms (600 s):** every `CHAIN_PHASES`/`CHAIN_EXTRA` chain leaf whose `phaseNum >= 67` (the
+  `isPeer` threshold inherited from `check-phase-153.mjs:236-237`; chain members below 67 use the
+  shorter 300,000 ms per-subprocess default).
+- **300,000 ms (300 s):** applies only to the `V-159-AUDIT-HARNESS` spawn (the v1.22 harness). It is
+  never applied to `V-159-HARN03`'s spawn target for a shortened-timeout reason — HARN03 copies the
+  same 300 s cap because both spawn a fast, deterministic ~2 s harness run, but the cap's presence is
+  recorded here as scoped explicitly to the two harness-spawning legs, not the chain.
+
+### Flagged planner assumption, recorded verbatim
+
+> HARN-04 unclassified edge (probe row remains unresolved and is surfaced, never dismissed): the
+> deterministic probe could not classify HARN-04's edge family. Flagged planner assumption — the
+> lineage's failure modes are operationalized here as a missing chain member read as a hard FAIL, an
+> empty skip set that must stay empty, an archive-root token that cannot be falsified until
+> archival, and a nested-flag skip applied to a leg that must not skip; there may be a fifth failure
+> mode no gate covers. Residual risk recorded, not dismissed.
+
+No source file was modified by this task — `159-EVIDENCE.md` is the only file this task's frontmatter
+lists, and `git status --porcelain` confirms no other tracked file changed.
