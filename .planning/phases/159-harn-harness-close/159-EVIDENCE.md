@@ -1247,3 +1247,201 @@ figure exactly — **delta 0** in all cases: the V121/V120 docs path counts (307
 member's presence/absence split, the 33-file sidecar-pinned population (D-18), and the converted
 harness's 16/0/0 triple against the unconverted baseline. No figure in this task diverged from its
 carried value.
+
+## §14 — Plan 159-05 Task 1: re-measure attribution boundaries, prove every needle failable
+
+### Boundary SHAs re-read at execution time (no delta against D-32)
+
+Command: `git log -1 --format='%H %ai %s' <sha>` for each of the five boundaries plus HEAD.
+
+| Phase window | SHA | Commit subject | Date |
+|---|---|---|---|
+| 154 start | `8de413aae65387a6b381fd34f70f65128592f65` | docs(154-01): complete preserve-corpus, argv-ify verify2, gate baseline plan | 2026-09-01 |
+| 154 end / 155 start | `ce9b0b73d3d999bf91b0716cf8c34bedaa271149` | docs(phase-154): add security threat verification | 2026-09-03 |
+| 155 end / 156 start | `2a46d32af802c631cc97b007a7062b4810873375` | docs(phase-155): add security threat verification | 2026-09-03 |
+| 156 end / 157 start | `bb22f89a95e2984dd2c5f50bf8d27bc9efb1ce28` | fix(156): restore two falsified HP Sure Admin citations (CR-01) | 2026-09-05 |
+| 157 end / 158 start | `937d0a1f335c37182482dcf77173d98e00a018bf` | docs(phase-157): add security threat verification | 2026-09-06 |
+
+**Delta: 0.** All five SHAs match D-32 exactly, character for character.
+
+### Two-part attribution proof — corpus-wide zero candidates
+
+Command shape: `for c in <5 boundaries> HEAD; do printf "%s " "$c"; git grep -c "TOKEN" $c -- docs 2>/dev/null | awk -F: '{s+=$NF} END{print s+0}'; done`
+
+| Token | 8de413aa | ce9b0b73 | 2a46d32a | bb22f89a | 937d0a1f | HEAD | Transition window | Stable after | Owning phase |
+|---|---|---|---|---|---|---|---|---|---|
+| `i.e.` | 1 | 0 | 0 | 0 | 0 | 0 | inside 154 | yes | 154 |
+| `cf.` | 1 | 0 | 0 | 0 | 0 | 0 | inside 154 | yes | 154 |
+| `sign into` (literal, case-sensitive) | 7 | 1 | 1 | 0 | 0 | 0 | inside 156 | yes | 156 |
+
+**Matcher note (D-31 discipline):** the case-INsensitive reading of "sign into" was tried first and
+rejected — it reports 8/2/2/1/1/1 (never reaching 0 at HEAD), because a different, still-live phrase
+collides under case-folding. Only the literal case-sensitive substring satisfies both halves of the
+attribution proof, so that is the only form pinned in `check-phase-156.mjs`.
+
+Both halves hold for all three tokens: the transition lands strictly inside the owning phase's window
+and the count stays 0 at every later boundary through HEAD. Matches D-33 (154) and D-35 (156) exactly
+— delta 0.
+
+### Documentation corpus floor
+
+`git ls-files 'docs/*.md' | wc -l` → **294** files. Above the 250-file floor. Delta against D-31's
+carried figure of 294: **0**.
+
+### Per-file counts re-measured live
+
+Commands: `grep -Fo "e.g." <file> | wc -l` (154, literal); `grep -Fo "administrator" <file> | wc -l`
+(156, literal, the pinned matcher); `grep -Foi "administrator" <file> | wc -l` (156, case-insensitive
+reading, recorded not pinned); `grep -ow "administrator" <file> | wc -l` (156, word-bounded reading,
+recorded not pinned).
+
+| File | 154 `e.g.` | 156 `administrator` literal (pinned) | 156 case-insensitive (recorded only) | 156 word-bounded (recorded only) |
+|---|---|---|---|---|
+| `docs/admin-setup-android/09-aosp-realwear.md` | 2 | — | — | — |
+| `docs/admin-setup-android/10-aosp-zebra.md` | 1 | — | — | — |
+| `docs/admin-setup-android/11-aosp-pico.md` | 1 | — | — | — |
+| `docs/admin-setup-android/12-aosp-htc-vive-focus.md` | 1 | — | — | — |
+| `docs/admin-setup-android/13-aosp-meta-quest.md` | 1 | — | — | — |
+| `docs/reference/android-capability-matrix.md` | 1 | — | — | — |
+| `docs/operations/firmware-bios/01-windows-dfci.md` | — | 10 | 10 | 8 |
+| `docs/operations/firmware-bios/02-dell-bios-configuration.md` | — | 2 | 5 | 2 |
+| `docs/recipes/05-enterprise-update-plan.md` | — | 15 | 35 | 11 |
+| `docs/recipes/06-walk-up-avd-kiosk-autologon.md` | — | 10 | 13 | 10 |
+
+All ten pinned figures match D-33/D-35 exactly. **Delta: 0.** The leaf pins only the literal
+case-sensitive column; the other two columns are recorded here so a future reader can tell which
+matcher produced the pinned number and cannot silently swap one for another.
+
+### 155 needles re-measured live
+
+- Provenance heading: `## Asset Provenance` occurs exactly 1 time in
+  `docs/recipes/06-walk-up-avd-kiosk-autologon.md`.
+- Seven content substrings all present (`grep -Fc -- "SUBSTRING" <file>`; the `-2016281112` needle
+  required `--` before the pattern on the command line since it begins with a hyphen — the leaf's
+  own `String.prototype.includes` call has no such trap).
+- Registry: `docs/_registry/RE-index.md` carries exactly one row matching `| RE-237 |`, containing
+  both the recipe path and `Approved`.
+- Hub wiring: `docs/index.md`, `docs/recipes/01-shared-windows-avd-client.md`,
+  `docs/recipes/03-windows-11-multi-app-kiosk.md`, `docs/reference/licensing-matrix.md` each contain
+  the recipe's filename (count 1 each); `licensing-matrix.md` contains
+  `no Windows Subscription Activation`.
+- Assets re-hashed live via `git hash-object`:
+  - `Remove-KioskOemBloat.ps1` (packaged vs. remediation) → `d7287e764fb2b7bd4e3f02097a9a55e1390c5991`
+    both sides, identical. Delta against D-34's `d7287e76`: **0**.
+  - `Remove-KioskRunTasks.ps1` (packaged vs. remediation) → `d79c9780c4df51ed493ea084783dc8365278b1c2`
+    both sides, identical. Delta against D-34's `d79c9780`: **0**.
+  - Both contain `SupportsShouldProcess`.
+- `scripts/validation/check-phase-135.mjs` contains both retirement content needles as source
+  substrings, and itself runs `7 PASS, 0 FAIL, 0 SKIPPED`.
+
+### 156 script-tree artifacts re-measured live
+
+- `scripts/docs-style/_JUDGE-VERDICTS-batch10.json`: raw bytes 3590, normalized (CRLF to LF) bytes
+  3590 (the live checkout already uses LF, no conversion needed), containing 17 newlines. A
+  hypothetical CRLF checkout would read 3590 + 17 = **3607** bytes. Delta against D-35's 3590/3607:
+  **0**. Contains the sibling-identification phrase.
+- `scripts/docs-style/subs-batch10.tsv`: 3 non-comment, non-blank data rows.
+- `scripts/docs-style/subs-emdash-batch10.tsv`: 3 non-comment, non-blank data rows.
+- `scripts/docs-style/_DISPOSITIONS-batch10.tsv`: **0 data rows** (header comments only) — see the
+  correction below.
+
+### Live-value correction against D-35 (D-65 measurement discipline)
+
+D-35 states all three batch-10 tables carry "at least 1 data row." Re-measurement found
+`_DISPOSITIONS-batch10.tsv` genuinely carries 0 data rows — its own header comment explains this is
+correct: it is "currently empty of data rows because there is nothing to disposition yet," created
+as the sibling `156-04-SUMMARY.md`'s dispositions path resolves to, with rows appended only as
+future findings surface. Pinning "at least 1 data row" against a file that is correctly empty would
+make `check-phase-156.mjs` permanently red for a reason unrelated to any regression. Resolution: the
+leaf pins presence only for `_DISPOSITIONS-batch10.tsv`, and keeps the "at least 1 data row" needle
+for the two tables that genuinely carry rows. This is the one figure in this plan diverging from its
+CONTEXT-carried value; recorded here per D-65 and in `159-05-SUMMARY.md`.
+
+### Failability proofs (scratch-copy perturbations)
+
+All perturbations were made against copies under a scratchpad temp directory, never the working
+tree, and discarded immediately after confirming the FAIL condition.
+
+| Needle mechanism | Perturbation | Before | After | Confirmed failable |
+|---|---|---|---|---|
+| corpus-wide zero (`i.e.`) | appended a line containing `i.e.` to a docs copy | 0 | 1 | yes |
+| corpus-wide zero (`cf.`) | appended a line containing `cf.` to a docs copy | 0 | 1 | yes |
+| corpus-wide zero (`sign into`, case-sensitive) | appended a line containing `sign into` to a docs copy | 0 | 1 | yes |
+| per-file exact count (`e.g.`) | injected extra `e.g.` markers into a file copy | 1 | 227 | yes |
+| per-file exact count (`administrator`) | replaced every occurrence with `somethingelse` in a copy | 2 | 0 | yes |
+| presence (tool file) | deleted a copy of `verify-meaning.py` | present | absent | yes |
+| content substring (`## Asset Provenance`) | renamed the heading in a recipe copy | 1 | 0 | yes |
+| registry row | mutated `RE-237` to `RE-999` in a copy | 1 match | 0 matches | yes |
+| byte-identity pair | appended a trailing line to one copy of `Remove-KioskOemBloat.ps1` | identical hashes | hashes differ | yes |
+| normalized byte length | appended one byte to a copy of `_JUDGE-VERDICTS-batch10.json` | 3590 | 3591 | yes |
+
+Every needle mechanism used across the three leaves is proven failable by at least one
+representative perturbation of its type; every needle instance built on a proven-failable mechanism
+inherits that proof, since the check logic is identical per mechanism and only the pinned literal
+differs. No needle that entered a leaf is decorative.
+
+### Not-pinnable list (items rejected as not pinnable, with reasons)
+
+**154:** `e.g.` corpus-wide totals (not driven to a stable count by this phase); the bare tokens
+`Admins` and `via`; the phrase `sign in to`; `_PINNED-HEADINGS.txt` and `_CONTENT-PINS.txt` (last
+written by Phase 157, not 154); any invocation of `scripts/docs-style/verify2.py` (no `--help` flag;
+every argv exits 0 after roughly 25 seconds; its report tokens are not stably pinnable);
+`docs/_templates/*` counts (templates are explicitly out of the landing's scope).
+
+**155:** the `[PILOT]` label (quote-only, no count — it recurs unpredictably as the recipe is
+field-amended); the recipe's line count (D-09/D-10 precedent: a line-count equality pin makes any
+future prose correction an immediate apex failure); the two RE-222/RE-224 prose corrections
+(already guarded by five existing checks in the `check-phase-135.mjs` family — re-guarding here
+would be redundant, not additive).
+
+**156:** the non-batch-10 `_JUDGE-VERDICTS.json` file (single commit, predates this milestone
+entirely — not phase 156's deliverable); bare `admin` word counts (too broad, collides with
+unrelated prose); em-dash counts (a style-mechanical byproduct, not a phase-156 deliverable in its
+own right); the `"baseline"` SHA field inside any verdict file (a commit-SHA read, banned outright by
+D-31).
+
+### Attribution supersession
+
+Per D-32: 158 D-35's needle list assigned to `check-phase-158` several deliverables Phase 157 (not
+158) actually made — the hub-phrase fix, the Linux update-delivery link, the Autopatch figures, the
+D-headings, and the glossary entries. D-35's FORM (the needle shapes themselves) is adopted
+unchanged; its ATTRIBUTION is superseded — those five deliverables belong to Phase 157's own leaf
+(plan 159-07), not Phase 158's. This supersession is recorded here per D-32's own instruction and
+belongs in `v1.22-MILESTONE-AUDIT.md`'s Corrections of Record section (D-61), to be written at the
+milestone-close step — this plan only records the pointer.
+
+## §15 — Plan 159-05 Task 3: write the style-extension leaf, close the three-leaf evidence
+
+### check-phase-156.mjs standalone run
+
+`node scripts/validation/check-phase-156.mjs` → `10 PASS, 0 FAIL, 0 SKIPPED`.
+
+### Three-leaf confirmation together
+
+```
+for f in 154 155 156; do node scripts/validation/check-phase-$f.mjs | tail -1; done
+```
+→ `154: Result: 13 PASS, 0 FAIL, 0 SKIPPED`, `155: Result: 10 PASS, 0 FAIL, 0 SKIPPED`,
+`156: Result: 10 PASS, 0 FAIL, 0 SKIPPED`.
+
+### Guard commands
+
+- `grep -cE "execFileSync|spawnSync" scripts/validation/check-phase-156.mjs` → 0 (no spawn).
+- `grep -vE '^\s*(//|\*|/\*)' scripts/validation/check-phase-154.mjs scripts/validation/check-phase-155.mjs scripts/validation/check-phase-156.mjs | grep -cE "\.planning/|[0-9a-f]{7,40}:|:[0-9]+\b"` → 0 across all three leaves (no planning-tree scope, no commit SHA, no line number).
+- `grep -c 'files.length < 250' scripts/validation/check-phase-154.mjs` → 1; same grep against
+  `check-phase-156.mjs` → 1. Both corpus-wide-negative leaves carry the floor literal.
+- `node scripts/validation/check-phase-135.mjs | tail -1` → `Result: 7 PASS, 0 FAIL, 0 SKIPPED` (the
+  predecessor recipe validator the 155 leaf pins content inside is itself green).
+- `node scripts/validation/check-phase-54.mjs | tail -1` → `Summary: 32 passed, 0 failed, 0 skipped`
+  (unaffected by the new leaves — they are standalone chain members, not yet apex-wired).
+- `git status --porcelain -- docs/` → empty after every commit this plan made.
+
+### Summary of all three leaves' triples
+
+| Leaf | Checks | PASS | FAIL | SKIPPED | Spawns |
+|---|---|---|---|---|---|
+| `check-phase-154.mjs` | 13 | 13 | 0 | 0 | 1 (`verify-meaning.py --self-test`, argument-array form, paired with a fail-loud presence assertion) |
+| `check-phase-155.mjs` | 10 | 10 | 0 | 0 | 0 |
+| `check-phase-156.mjs` | 10 | 10 | 0 | 0 | 0 |
+
+Exactly one spawn across the three leaves in this plan, matching D-39's ceiling for these members.
