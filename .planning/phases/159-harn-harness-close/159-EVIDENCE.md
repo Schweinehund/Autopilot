@@ -2174,3 +2174,121 @@ this section's own re-measurement exactly — delta 0.
 
 `node scripts/validation/check-phase-54.mjs`, `-55.mjs` and `-56.mjs` each report
 `Summary: 32 passed, 0 failed, 0 skipped` after this plan's two commits, confirmed standalone.
+
+---
+
+## §22 — Plan 159-09 Task 1: bundle scan — both roots, fixed pattern set, per-pattern counts
+
+### Both roots fetched into a scratch clone outside the repository
+
+`.planning/artifacts/154-scratch-corpus.bundle` was unbundled into a bare scratch clone at a
+temp-directory path outside this repository (`git init --bare` + `git fetch <bundle-path>
+refs/heads/master:refs/heads/master HEAD:refs/heads/bundle-head
+worktrees/_pretree/HEAD:refs/heads/pretree-root`). `git bundle list-heads` confirms the bundle
+itself names both roots directly:
+
+```
+e71f86254fc8add49c2ee98768ec0351144d2e82 refs/heads/master
+e71f86254fc8add49c2ee98768ec0351144d2e82 HEAD
+e5c2fa9538635386e62748b6419d035f21d19e9b worktrees/_pretree/HEAD
+```
+
+**Second root object name (re-measured):** `e5c2fa9538635386e62748b6419d035f21d19e9b` — matches
+D-09's carried short form (`e5c2fa95`) exactly, delta 0. First root: `e71f86254fc8add49c2ee98768ec0351144d2e82`.
+
+### Enumeration
+
+`git rev-list --objects --all` in the scratch clone (both roots now present as local branches)
+enumerated every object reachable from either root; filtering to blobs via
+`git cat-file --batch-check` gave **1,325 distinct blobs**, each with exactly one path in this
+history (1,325 blob-path pairs from `rev-list --objects`, no path collisions). Each blob was
+extracted to a scratch file and walked once against every pattern below.
+
+### Fixed pattern set and per-pattern counts
+
+| # | Pattern class | Pattern | Matched blobs | Distinct paths |
+|---|---|---|---|---|
+| 1 | Private-key header markers | `-----BEGIN [A-Z ]*PRIVATE KEY-----` | 0 | 0 |
+| 2 | Bearer / session-token / cloud access-key shapes | `Bearer [A-Za-z0-9._-]{10,}` or `AKIA[0-9A-Z]{16}` or `ASIA[0-9A-Z]{16}` or `ghp_[A-Za-z0-9]{36}` or `xox[baprs]-[A-Za-z0-9-]+` | 0 | 0 |
+| 3 | Email addresses outside the owner's own | RFC-5322-shaped `local@domain.tld`, excluding `xschweinehundx@gmail.com` | 118 | 23 |
+| 4 | Hostname-shaped tokens with a corporate domain suffix | `[A-Za-z0-9-]+\.(onmicrosoft\.com\|contoso\.com\|corp\.contoso\.com\|corp\.local\|internal\.local)` | 4 | 1 |
+| 5 | Derived label from the leak scrub (D-06) | the in-process value held in `$T`, matched with `grep -F`, never printed | 0 | 0 |
+
+Zero on patterns 1, 2 and 5 is the expected result and holds. Patterns 3 and 4 are non-zero and are
+adjudicated below.
+
+### Adjudication of patterns 3 and 4 — documentation placeholders, not a true hit
+
+Both non-zero patterns matched exclusively inside the scratch corpus's own `docs/`-shaped tree — the
+1,325 blobs walked here ARE the pre-style-pass documentation corpus this bundle exists to preserve
+(paths like `admin-setup-8021x/*.md`, `l1-runbooks/*.md`, `l2-runbooks/*.md`, `ios-lifecycle/*.md`,
+`macos-lifecycle/*.md`, `cross-platform/apple-business/*.md`, `reference/licensing-matrix.md`). The
+distinct domains observed across all 118 pattern-3 matches:
+
+```
+@contoso.com  @CONTOSO.COM  @domain.com  @KERBEROS.MICROSOFTONLINE.COM
+@microsoft.com  @odata.id  @orgdomain.com  @school.org
+@tenant.onmicrosoft.com  @your-tenant.tld
+```
+
+Every one of these is a standard Microsoft-documentation placeholder domain (`contoso.com`,
+`onmicrosoft.com`, `domain.com`, `your-tenant.tld`, `orgdomain.com`) or a protocol/service
+identifier that is not an email at all (`@odata.id` is an OData metadata property name;
+`@KERBEROS.MICROSOFTONLINE.COM` is a realm name in a Kerberos SSO example). None is a real person's
+address outside the owner, and none resolves to a credential. Pattern 4's single matching path
+(`l2-runbooks/05-policy-conflicts.md`) matches the same `tenant.onmicrosoft.com` placeholder. This is
+exactly the kind of generic-example content the corpus is expected to carry — the same
+`contoso.com`/`tenant.onmicrosoft.com` placeholder convention appears throughout this project's live
+`docs/` tree today, not something introduced by this bundle.
+
+**Verdict: not a true hit.** Patterns 1, 2, 3, 4 and 5 all resolve to no genuine secret. The bundle
+stays tracked with no removal from the tracked tree — the "on a true hit" branch of this task's
+action does not fire, and no owner-choice presentation is needed for this bundle in the push
+checkpoint beyond the pattern table above.
+
+**Distinct paths, pattern 3 (23):** `_glossary-network.md`, `admin-setup-8021x/03-windows.md`,
+`admin-setup-8021x/04-macos.md`, `admin-setup-8021x/05-ios.md`, `admin-setup-8021x/06-android.md`,
+`admin-setup-8021x/07-linux.md`, `admin-setup-apv2/03-device-preparation-policy.md`,
+`admin-setup-macos/02-enrollment-profile.md`, `admin-setup-macos/07-platform-sso-setup.md`,
+`admin-setup-macos/10-kerberos-sso-extension.md`,
+`admin-setup-macos/11-graph-api-platform-credential.md`,
+`cross-platform/apple-business/_admin-directory.md`,
+`cross-platform/apple-business/09-shared-ipad-lifecycle.md`,
+`cross-platform/apple-business/16-managed-apple-account-runbook.md`,
+`ios-lifecycle/01-ade-lifecycle.md`, `l1-runbooks/11-macos-setup-assistant-failed.md`,
+`l1-runbooks/15-macos-company-portal-sign-in.md`, `l1-runbooks/19-ios-license-invalid.md`,
+`l2-runbooks/05-policy-conflicts.md`, `l2-runbooks/28-macos-kerberos-sso-investigation.md`,
+`l2-runbooks/29-macos-graph-credential-investigation.md`, `macos-lifecycle/00-ade-lifecycle.md`,
+`reference/licensing-matrix.md`.
+
+**Distinct path, pattern 4 (1):** `l2-runbooks/05-policy-conflicts.md`.
+
+### Bundle byte size and adding commit, re-measured
+
+- **Byte size:** `wc -c .planning/artifacts/154-scratch-corpus.bundle` → **1,701,557 bytes**. Matches
+  D-09's carried figure exactly, delta 0.
+- **Adding commit:** `git log --oneline -- .planning/artifacts/154-scratch-corpus.bundle` →
+  **`f8750c6d`** (`feat(154-01): preserve scratch corpus via bundle and permanent refs`). Matches
+  D-09's carried figure exactly, delta 0.
+- **Blob hash, for completeness, not for comparison:** `git rev-parse
+  HEAD:.planning/artifacts/154-scratch-corpus.bundle` → `1f59b3802375c4379020dabdef74594d1f01bc0d`.
+  **Explicit note:** the figure carried in `159-CONTEXT.md`/`159-RESEARCH.md` (`f8750c6d`) is the
+  **commit** that added the bundle, not a blob hash — this is the same distinction 153-EVIDENCE's
+  own bundle row records for its predecessor. No hash comparison between `f8750c6d` and the blob
+  hash above is meaningful, and none was attempted.
+- `git bundle verify .planning/artifacts/154-scratch-corpus.bundle` → "The bundle records a complete
+  history." / "`.planning/artifacts/154-scratch-corpus.bundle` is okay." Verified.
+
+### Why the bundle stays tracked
+
+Removing `.planning/artifacts/154-scratch-corpus.bundle` from the tracked tree at HEAD would require
+either a `git rm` (leaving the object in history, satisfying nothing) or a history rewrite — and a
+rewrite of `master`'s history would rewrite `8de413aa`, the single-parent squash commit that Phase
+154's own gate baseline is anchored to (D-01/D-09). No true hit was found in this scan, so this
+question stays theoretical for this plan, but the reason is recorded per this task's own
+requirement: the bundle stays tracked because removing it from history, not merely from HEAD, is the
+only way to fully excise it, and that history rewrite is the one operation this whole milestone-close
+sequence (D-01 through D-67) never performs.
+
+`git ls-files --error-unmatch .planning/artifacts/154-scratch-corpus.bundle` → exit 0, "bundle still
+tracked" — confirmed unchanged by this task, as expected given no true hit.
