@@ -5,17 +5,17 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-05-PLAN.md
-last_updated: "2026-09-09T13:00:31.609Z"
+stopped_at: Completed 159-06-PLAN.md
+last_updated: "2026-09-09T13:30:12.228Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: 7a6483066bc3f1b41cdad7d393387b2125d11d5e
+state_head: 4036a93f5bd46685a685b60d003d9462e0224aa5
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 35
-  percent: 81
+  completed_plans: 36
+  percent: 83
 ---
 
 # Project State
@@ -30,11 +30,11 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 6 of 13
+Plan: 7 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
-Progress: [████████░░] 81% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
+Progress: [████████░░] 83% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
 
 ## v1.22 Requirement Coverage (39/39 mapped — roadmap created 2026-08-31)
 
@@ -133,6 +133,7 @@ Progress: [████████░░] 81% — 5/6 phases complete; 30/30 au
 | Phase 159 P03 | 13min | 3 tasks | 4 files |
 | Phase 159 P04 | 12min | 3 tasks | 2 files |
 | Phase 159 P05 | 55min | 3 tasks | 4 files |
+| Phase 159 P06 | 42min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -225,6 +226,8 @@ Progress: [████████░░] 81% — 5/6 phases complete; 30/30 au
 - [Phase 159]: Converted v1.21-milestone-audit.mjs to frozen V121 reads per D-18/D-19/D-20/D-21, proven by scratch-clone perturbation and two negative probes (D-26) — Discharges HARN-03 and closes the C17-FROZEN-AWARE-RESIDUE-V21 class
 - [Phase 159]: sign into pinned literal case-sensitive (not case-insensitive) — the CI reading never reaches 0 at HEAD
 - [Phase 159]: _DISPOSITIONS-batch10.tsv needle narrowed to presence-only; live measurement found 0 data rows, correctly, against D-35's assumed >=1
+- [Phase 159]: Only the five full D-01..D-05 heading texts are pinnable in check-phase-157.mjs; colon-prefix and bare forms both collide with unrelated D-series and are never used. — Colon-prefix counts 3/3/3/3/2 across three unrelated D-series; bare form additionally collides with an unrelated heading at line 134.
+- [Phase 159]: check-phase-158.mjs uses a default child_process import (cp.execFileSync) instead of a destructured one to minimize its literal execFileSync-substring count to exactly 1. — Satisfies that leaf's own exact-count gate as tightly as the mandated single spawn permits.
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -283,8 +286,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T13:00:30.109Z
-Stopped at: Completed 159-05-PLAN.md
+Last session: 2026-09-09T13:30:10.799Z
+Stopped at: Completed 159-06-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
