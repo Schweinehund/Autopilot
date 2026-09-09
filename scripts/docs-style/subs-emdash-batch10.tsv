@@ -1,0 +1,23 @@
+# Batch 10 -- the em-dash tightening pass (D-22/D-23/D-24/D-25), through the unmodified
+# committed sweep3.py rather than a bespoke classifier. The three starting patterns are the
+# three D-23 measured: a spaced em dash with whitespace on both sides, a whitespace run
+# followed by an em dash, and an em dash followed by a whitespace run.
+#
+# Two D-25 guards on every row, as lookarounds rather than a hand revert (a hand revert is
+# re-broken by the next sweep run):
+#   1. (?<=[^\s*]) immediately before the leading whitespace run -- requires a real preceding
+#      character that is neither whitespace nor an asterisk. This blocks BOTH the column-zero
+#      case (list-continuation indentation: no preceding character exists at all, so the
+#      lookbehind cannot match) AND the run-in description-list case dashes.md still rejects in
+#      tight form ("- **Reversible**--the choice", where the character immediately before the
+#      dash is the bold marker's closing "*").
+#   2. (?=\S) immediately after the pattern's own trailing whitespace consumption -- requires a
+#      real following non-whitespace character within the SAME line. sweep3.py processes one
+#      line at a time with no newline characters in scope, so this naturally fails at end-of-line
+#      (nothing follows) and at line-start-with-trailing-content-only cases, blocking the
+#      soft-line-break class where tightening removes the visible space on one side but the
+#      renderer's own line-join still supplies a space on the other -- leaving an asymmetric
+#      spaced dash the per-line checker cannot see because it never looks past one line.
+(?<=[^\s*])\s+—\s+(?=\S)	—
+(?<=[^\s*])\s+—(?=\S)	—
+(?<=[^\s*])—\s+(?=\S)	—

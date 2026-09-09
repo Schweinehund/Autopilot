@@ -29,7 +29,7 @@ The ESP controls what happens between Entra join and desktop access -- which app
 
 - Intune Administrator role
 - Deployment profile already created and assigned (see [Deployment Profile](02-deployment-profile.md))
-- App assignments planned -- the blocking app list should be finalized before configuring ESP
+- App assignments planned -- the blocking app list must be finalized before configuring ESP
 - Maximum 51 ESP profiles per tenant (1 default + 50 custom)
 
 ## Steps
@@ -37,11 +37,11 @@ The ESP controls what happens between Entra join and desktop access -- which app
 ### Step 1: Create ESP Profile
 
 1. Navigate to **Intune admin center** > **Devices** > **Enrollment** (Device onboarding) > **Windows** (tab) > **Windows Autopilot** > **Enrollment Status Page** > **Create**.
-2. Enter a descriptive name (e.g., "APv1-ESP-Standard").
+2. Enter a descriptive name (for example, "APv1-ESP-Standard").
 
 ### Step 2: Configure ESP Settings
 
-Configure each setting below. Every setting includes a what-breaks callout documenting downstream consequences.
+Configure each of the following settings. Every setting includes a what-breaks callout documenting downstream consequences.
 
 1. **Show app and profile configuration progress**: Yes or No.
 
@@ -61,7 +61,7 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 5. **Only show page to devices provisioned by OOBE**: Yes or No.
 
-   > **What breaks if misconfigured:** No = ESP is shown to every new user signing into the device, not just the first user during Autopilot provisioning. Causes confusion on shared devices where subsequent users see a provisioning screen.
+   > **What breaks if misconfigured:** No = ESP is shown to every new user signing into the device, not only the first user during Autopilot provisioning. Causes confusion on shared devices where subsequent users see a provisioning screen.
 
 6. **Install Windows quality updates (might restart)**: Yes or No.
 

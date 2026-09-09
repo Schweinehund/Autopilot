@@ -16,31 +16,31 @@ applies_to: KME
 
 ## Summary
 
-This guide covers Samsung Knox Mobile Enrollment (KME), which provisions Samsung hardware into existing Android Enterprise modes — Fully Managed (COBO), Dedicated, or COPE/WPCO — rather than serving as its own enrollment mode. It requires Managed Google Play binding, but not the Zero-Touch portal, since KME and Zero-Touch are mutually exclusive on Samsung fleets. Requires Knox Admin Portal access and the Intune Administrator role.
+This guide covers Samsung Knox Mobile Enrollment (KME), which provisions Samsung hardware into existing Android Enterprise modes—Fully Managed (COBO), Dedicated, or COPE/WPCO—rather than serving as its own enrollment mode. It requires Managed Google Play binding, but not the Zero-Touch portal, since KME and Zero-Touch are mutually exclusive on Samsung fleets. Requires Knox Admin Portal access and the Intune Administrator role.
 
-> **Platform gate:** Samsung Knox Mobile Enrollment (KME) — Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment.
+> **Platform gate:** Samsung Knox Mobile Enrollment (KME)—Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment.
 
 > Samsung-only.
 
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).
 
-> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both.
+> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment—never both.
 
 > Configuring both causes out-of-sync enrollment state; KME takes precedence at the device firmware level.
 
 > See [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the within-ZT-doc record
 
-> and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
+> and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) for the within-this-doc record.
 
 Phase 44 scope: Samsung Knox Admin Portal B2B account, EMM profile, Knox Custom JSON Data, and Knox→Intune handoff. KME provisions Samsung devices into existing Android Enterprise modes (COBO / Dedicated / WPCO); KME is NOT a separate enrollment mode.
 
 <a id="prerequisites"></a>
 ## Prerequisites
 
-- [ ] **MGP binding complete** — See [01-managed-google-play.md](01-managed-google-play.md); KME via Intune is a GMS path that requires Managed Google Play before Knox profile assignment.
-- [ ] **Samsung Knox B2B account submitted** — Corporate-email-bound Samsung Knox B2B account; approval takes 1-2 business days. See [Step 0](#step-0-b2b-approval) below.
-- [ ] **Samsung devices (Knox-eligible hardware)** — Knox Mobile Enrollment requires Samsung hardware; non-Samsung Android devices must enroll via Zero-Touch (see [02-zero-touch-portal.md](02-zero-touch-portal.md)) or QR / NFC / `afw#setup`.
-- [ ] **Reseller channel OR Knox Deployment App pathway** — New procurement: Samsung devices uploaded by an authorized Samsung reseller. Existing stock: Knox Deployment App (KDA) on a separate Android device used to enroll Samsung devices via Bluetooth or NFC. See [Step 3](#step-3-add-devices) for both paths.
+- [ ] **MGP binding complete**—See [01-managed-google-play.md](01-managed-google-play.md); KME through Intune is a GMS path that requires Managed Google Play before Knox profile assignment.
+- [ ] **Samsung Knox B2B account submitted**—Corporate-email-bound Samsung Knox B2B account; approval takes 1-2 business days. See [Step 0](#step-0-b2b-approval).
+- [ ] **Samsung devices (Knox-eligible hardware)**—Knox Mobile Enrollment requires Samsung hardware; non-Samsung Android devices must enroll through Zero-Touch (see [02-zero-touch-portal.md](02-zero-touch-portal.md)) or QR / NFC / `afw#setup`.
+- [ ] **Reseller channel OR Knox Deployment App pathway**—New procurement: Samsung devices uploaded by an authorized Samsung reseller. Existing stock: Knox Deployment App (KDA) on a separate Android device used to enroll Samsung devices over Bluetooth or NFC. See [Step 3](#step-3-add-devices) for both paths.
 - [ ] **Microsoft Intune Plan 1+** with the Intune Administrator role and an exported Intune enrollment token for use in Knox Custom JSON Data (see [Step 5](#dpc-custom-json)).
 
 <a id="step-0-b2b-approval"></a>
@@ -74,26 +74,26 @@ Once Samsung has approved your B2B account (Step 0), sign in to the Knox Admin P
 1. Navigate to [Knox Admin Portal](https://knox.samsung.com). <!-- verify UI at execute time -->
 2. Sign in using the corporate-email-bound credentials submitted during the Step 0 B2B application.
 3. In the sidebar, locate: **Mobile Enrollment**, **Devices**, **Profiles**, **Resellers**, **Settings**. The Mobile Enrollment area is the entry point for KME profile authoring and device assignment.
-4. Confirm your tenant and admin role; the Knox Admin Portal supports per-admin scope but Knox Mobile Enrollment requires at least Knox admin role (not Knox viewer).
+4. Confirm your tenant and administrator role; the Knox Admin Portal supports per-admin scope but Knox Mobile Enrollment requires at least Knox administrator role (not Knox viewer).
 
-   > **What breaks if misconfigured:** Signing in with a personal Samsung account (not the corporate-bound B2B account) lands the admin in the consumer Samsung account view with no Knox Mobile Enrollment access. Recovery: sign out, sign back in with the corporate-email account approved at Step 0. Symptom appears in: Knox Admin Portal sidebar (Mobile Enrollment / Devices / Profiles entries missing).
+   > **What breaks if misconfigured:** Signing in with a personal Samsung account (not the corporate-bound B2B account) lands the administrator in the consumer Samsung account view with no Knox Mobile Enrollment access. Recovery: sign out, sign back in with the corporate-email account approved at Step 0. Symptom appears in: Knox Admin Portal sidebar (Mobile Enrollment / Devices / Profiles entries missing).
 
 <a id="step-2-emm-profile"></a>
 ## Step 2 — Create KME EMM profile (target Microsoft Intune)
 
-The KME EMM profile defines (a) the EMM the device will hand off to (Microsoft Intune), (b) the Android Enterprise mode the device will land in (Fully Managed / Dedicated / WPCO), and (c) the Custom JSON Data carrying the Intune enrollment token. KME does NOT enroll devices into a separate "KME mode"; it provisions Samsung devices into one of the existing Android Enterprise device-owner modes via the Knox portal handoff.
+The KME EMM profile defines (a) the EMM the device hands off to (Microsoft Intune), (b) the Android Enterprise mode the device lands in (Fully Managed / Dedicated / WPCO), and (c) the Custom JSON Data carrying the Intune enrollment token. KME does NOT enroll devices into a separate "KME mode"; it provisions Samsung devices into one of the existing Android Enterprise device-owner modes through the Knox portal handoff.
 
 #### In Knox Admin Portal
 
 1. Navigate to **Mobile Enrollment** → **Profiles** → **Add profile**. <!-- verify UI at execute time -->
 2. Select **Android Enterprise** as the profile type.
-3. **Profile name** — enter a descriptive name. Record the exact string for later; the profile name is the user-facing identifier when assigning device sets.
-4. **EMM** — select **Microsoft Intune** from the EMM dropdown. This sets the DPC handoff target to the Intune CloudDPC.
+3. **Profile name**—enter a descriptive name. Record the exact string for later; the profile name is the user-facing identifier when assigning device sets.
+4. **EMM**—select **Microsoft Intune** from the EMM dropdown. This sets the DPC handoff target to the Intune CloudDPC.
 
    > **What breaks if misconfigured:** Selecting an EMM other than Microsoft Intune (for example Knox Manage or a partner EMM) at this step routes the device to the wrong management surface; Intune admin center never sees the device. Recovery: edit the KME profile to set EMM to Microsoft Intune; reassign and factory-reset the device. Symptom appears in: Intune admin center > Devices > Android (device absent) and Knox Admin Portal > Devices (device shows wrong EMM column value).
 
-5. **Mode (device-owner mode)** — choose Fully Managed (COBO) for corporate user devices, Dedicated for shared single-purpose devices, or WPCO for Work-Profile-on-Company-Owned. KME does NOT support BYOD Work Profile (Knox is for company-owned hardware).
-6. **Custom JSON Data** — paste the FLAT KME JSON (see [Step 5 — DPC Custom JSON Data](#dpc-custom-json) below). This is the Intune enrollment token surface.
+5. **Mode (device-owner mode)**—choose Fully Managed (COBO) for corporate user devices, Dedicated for shared single-purpose devices, or WPCO for Work-Profile-on-Company-Owned. KME does NOT support BYOD Work Profile (Knox is for company-owned hardware).
+6. **Custom JSON Data**—paste the FLAT KME JSON (see [Step 5—DPC Custom JSON Data](#dpc-custom-json)). This is the Intune enrollment token surface.
 
    > **What breaks if misconfigured:** Selecting the wrong device-owner mode at Step 2 lands the device in the wrong Android Enterprise mode. Recovery: edit the KME profile mode and factory-reset affected devices (mode is set at provisioning time and is not retroactively changeable). Symptom appears in: Intune admin center showing devices in Fully Managed when Dedicated was intended (or vice versa).
 
@@ -104,19 +104,19 @@ KME supports two device-onboarding pathways. Choose based on whether devices are
 
 ### Reseller bulk upload (new procurement)
 
-For new corporate procurement of Samsung devices, the authorized Samsung reseller uploads the device IMEI / serial list directly to the Knox Admin Portal at purchase time. This is the canonical path: devices appear in the Knox Admin Portal Devices view without admin intervention.
+For new corporate procurement of Samsung devices, the authorized Samsung reseller uploads the device IMEI / serial list directly to the Knox Admin Portal at purchase time. This is the canonical path: devices appear in the Knox Admin Portal Devices view without administrator intervention.
 
 #### In Knox Admin Portal
 
-1. Confirm with your authorized Samsung reseller: (a) the corporate Knox Admin Portal account, so uploaded devices appear under your tenancy; (b) the device-identifier type they will upload (IMEI 1 / serial); (c) the expected device count for reconciliation.
+1. Confirm with your authorized Samsung reseller: (a) the corporate Knox Admin Portal account, so uploaded devices appear under your tenancy; (b) the device-identifier type they upload (IMEI 1 / serial); (c) the expected device count for reconciliation.
 2. After upload, devices appear in **Mobile Enrollment** → **Devices** within 24 hours of reseller submission. Reconcile against the expected device count.
 3. Resolve any rejected or invalid identifiers with the reseller and re-upload as needed.
 
-   > **What breaks if misconfigured:** Reseller upload latency exceeds 24 hours; devices not visible in Knox Admin Portal Devices view at first-boot time. Recovery: contact reseller with submission timestamp and identifier list; re-submit if Samsung Knox upload was rejected. Devices that ship before the reseller upload completes will boot to consumer setup and require factory-reset retry once the upload lands. Symptom appears in: Knox Admin Portal > Devices view (expected serials missing).
+   > **What breaks if misconfigured:** Reseller upload latency exceeds 24 hours; devices not visible in Knox Admin Portal Devices view at first-boot time. Recovery: contact reseller with submission timestamp and identifier list; re-submit if Samsung Knox upload was rejected. Devices that ship before the reseller upload completes boot to consumer setup and require factory-reset retry once the upload lands. Symptom appears in: Knox Admin Portal > Devices view (expected serials missing).
 
 ### Knox Deployment App (existing stock)
 
-For existing Samsung stock that was not procured through a Knox-aware reseller, use the Knox Deployment App (KDA) to enroll devices retroactively. KDA runs on a separate Android device and pushes KME registration to target devices via Bluetooth or NFC.
+For existing Samsung stock that was not procured through a Knox-aware reseller, use the Knox Deployment App (KDA) to enroll devices retroactively. KDA runs on a separate Android device and pushes KME registration to target devices over Bluetooth or NFC.
 
 #### In Knox Deployment App
 
@@ -130,7 +130,7 @@ For existing Samsung stock that was not procured through a Knox-aware reseller, 
 <a id="step-4-assign-profile"></a>
 ## Step 4 — Assign KME profile to device set
 
-Once devices are visible in the Knox Admin Portal Devices view (via reseller upload or KDA), assign the KME profile authored at Step 2 to the target device set. Profile assignment must occur BEFORE first boot — assignment after first boot will not retro-trigger KME.
+Once devices are visible in the Knox Admin Portal Devices view (through reseller upload or KDA), assign the KME profile authored at Step 2 to the target device set. Profile assignment must occur BEFORE first boot—assignment after first boot does not retro-trigger KME.
 
 #### In Knox Admin Portal
 
@@ -144,7 +144,7 @@ Once devices are visible in the Knox Admin Portal Devices view (via reseller upl
 <a id="dpc-custom-json"></a>
 ## Step 5 — DPC Custom JSON Data
 
-The Custom JSON Data field in the KME EMM profile carries the Intune enrollment token. Knox uses ONLY a flat key for KME — there is no nested provisioning-extras-bundle wrapper. This is the structural difference from the Zero-Touch DPC extras JSON that makes the anti-paste callout below operationally critical.
+The Custom JSON Data field in the KME EMM profile carries the Intune enrollment token. Knox uses ONLY a flat key for KME—there is no nested provisioning-extras-bundle wrapper. This is the structural difference from the Zero-Touch DPC extras JSON that makes the anti-paste callout operationally critical.
 
 <!-- AEKNOX-03-shared-anti-paste-block -->
 > ⚠️ **DO NOT paste this JSON into the other portal**
@@ -164,13 +164,13 @@ The Custom JSON Data field in the KME EMM profile carries the Intune enrollment 
 |---|---|---|---|
 | `com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN` | Required | Microsoft Learn `setup-samsung-knox-mobile` | Replace `enter Intune enrollment token string` with the token exported from your Intune enrollment profile; preserve double quotes. |
 
-**Structural contrast with Zero-Touch (do NOT copy):** The Zero-Touch DPC extras JSON uses a nested provisioning-admin-extras-bundle wrapper plus three fixed provisioning-device-admin fields (component name, signature checksum, package download location). Knox's Custom JSON Data is FLAT — a single key/value pair with NO nested wrapper. Pasting the ZT-shaped JSON (with the nested wrapper) into Knox silently produces a "stuck applying configuration" failure: Knox does not recognize the wrapper structure and the device hangs at the DPC handoff step. See the anti-paste blockquote above for the per-paste warning.
+**Structural contrast with Zero-Touch (do NOT copy):** The Zero-Touch DPC extras JSON uses a nested provisioning-admin-extras-bundle wrapper plus three fixed provisioning-device-admin fields (component name, signature checksum, package download location). Knox's Custom JSON Data is FLAT—a single key/value pair with NO nested wrapper. Pasting the ZT-shaped JSON (with the nested wrapper) into Knox silently produces a "stuck applying configuration" failure: Knox does not recognize the wrapper structure and the device hangs at the DPC handoff step. See the preceding anti-paste blockquote for the per-paste warning.
 
 > **What breaks if misconfigured:** Pasting Zero-Touch DPC extras JSON (with the nested wrapper structure) into Knox Custom JSON Data silently produces a "stuck applying configuration" failure
 
 > at first boot.
 
-> Recovery: replace the Custom JSON Data field with the FLAT Knox JSON shown above; factory-reset affected devices.
+> Recovery: replace the Custom JSON Data field with the FLAT Knox JSON shown earlier; factory-reset affected devices.
 
 > Symptom appears in: device setup flow (stuck at DPC handoff) and Intune admin center (no enrollment activity for affected serials).
 
@@ -205,7 +205,7 @@ The Samsung Knox SKU family is frequently confused. KME (the deliverable of this
 
 For Samsung fleets, Knox Mobile Enrollment (KME) and Zero-Touch Enrollment are mutually exclusive.
 
-**From the KME side:** when both KME and ZT are configured on the same Samsung device, KME takes precedence at the device firmware level. Devices registered in both portals will enroll via KME and ignore the ZT configuration entirely. To apply Zero-Touch on a Samsung device, remove the KME configuration for that device set in Knox Admin Portal.
+**From the KME side:** when both KME and ZT are configured on the same Samsung device, KME takes precedence at the device firmware level. Devices registered in both portals enroll through KME and ignore the ZT configuration entirely. To apply Zero-Touch on a Samsung device, remove the KME configuration for that device set in Knox Admin Portal.
 
 **From the ZT side:** Google's canonical statement (`support.google.com/work/android/answer/7514005`): *"If a device is registered and configured in both Knox Mobile Enrollment and zero-touch, the device will enroll using Knox Mobile Enrollment."*
 
@@ -216,9 +216,9 @@ For the Zero-Touch-side record of this mutex, see [02-zero-touch-portal.md#kme-z
 After Knox profile assignment + first-boot enrollment:
 
 - [ ] Knox Admin Portal Devices view shows the Samsung device (after reseller upload OR Knox Deployment App enrollment) within 24 hours of upload.
-- [ ] KME profile assigned to device set BEFORE first boot (assignment after first boot will not retro-trigger KME — device must be factory-reset).
-- [ ] Custom JSON Data contains ONLY `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "..."}` — no nested provisioning-extras-bundle wrapper.
-- [ ] Test Samsung device boots into the Intune DPC via KME flow; appears in Intune admin center > Devices > Android within ~15 minutes of first-boot completion.
+- [ ] KME profile assigned to device set BEFORE first boot (assignment after first boot does not retro-trigger KME—device must be factory-reset).
+- [ ] Custom JSON Data contains ONLY `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "..."}`—no nested provisioning-extras-bundle wrapper.
+- [ ] Test Samsung device boots into the Intune DPC through KME flow; appears in Intune admin center > Devices > Android within ~15 minutes of first-boot completion.
 
 <a id="renewal-maintenance"></a>
 ## Renewal / Maintenance
@@ -244,9 +244,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 ## See Also
 
-- [Managed Google Play Binding](01-managed-google-play.md) — prerequisite for Knox Mobile Enrollment via Intune
+- [Managed Google Play Binding](01-managed-google-play.md)—prerequisite for Knox Mobile Enrollment through Intune
 - [Android Enterprise Admin Setup Overview](00-overview.md)
-- [Zero-Touch Portal Configuration](02-zero-touch-portal.md) — for the KME/ZT mutual-exclusion record (Samsung devices choose ONE)
+- [Zero-Touch Portal Configuration](02-zero-touch-portal.md)—for the KME/ZT mutual-exclusion record (Samsung devices choose ONE)
 - [Android Enterprise Prerequisites](../android-lifecycle/01-android-prerequisites.md)
 - [Android Provisioning Methods](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment)
 - [Android Enterprise Provisioning Glossary](../_glossary-android.md#knox)

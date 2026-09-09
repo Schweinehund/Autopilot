@@ -1,0 +1,151 @@
+{
+  "_meta": {
+    "purpose": "RCP-10: dispositions for the two external claims RE-224/RE-237/licensing-matrix.md rest on, plus RCP-08's out-of-scope third claim, re-confirmed against source bytes during plan 155-04 Task 1 execution (not copied from 155-RESEARCH.md).",
+    "task": "155-04 Task 1",
+    "committed_before_any_prose_edit": true,
+    "search_key_carried_from_state_md": "Class is not licensed for use; Intune error code -2016281112",
+    "fetch_window_utc": "2026-09-03T04:05:00Z to 2026-09-03T04:10:00Z"
+  },
+  "claim_1": {
+    "claim_as_stated": "Whether Azure/WindowsAppKiosk, the reference implementation RE-237 cites, genuinely ships a distinct single-app deployment mode for the Windows App kiosk solution, or whether its only deployment modes are multi-app and Shell Launcher.",
+    "fetch_instrument": "GitHub REST API (api.github.com) for org/repo/commit/directory-listing confirmation, then raw.githubusercontent.com for raw source-byte content at the same pinned commit SHA. No WebFetch/summarization used for this claim.",
+    "sources": [
+      {
+        "url": "https://api.github.com/repos/Azure/WindowsAppKiosk",
+        "retrieved_at": "2026-09-03T04:06:02Z",
+        "instrument": "curl -> api.github.com REST",
+        "purpose": "Step zero: confirm the organization and repository exist.",
+        "result": "200 OK, full_name=Azure/WindowsAppKiosk, default_branch=main"
+      },
+      {
+        "url": "https://api.github.com/repos/Azure/WindowsAppKiosk/commits/17e1c09b4883ea2062bef801ae24bbc9722861d7",
+        "retrieved_at": "2026-09-03T04:06:03Z",
+        "instrument": "curl -> api.github.com REST",
+        "purpose": "Confirm the pinned commit SHA (the same SHA plan 155-02 vendored files from) exists and is reachable.",
+        "result": "sha confirmed: 17e1c09b4883ea2062bef801ae24bbc9722861d7 -- also confirmed this is still the tip of Azure/WindowsAppKiosk's default branch (main) at fetch time"
+      },
+      {
+        "url": "https://api.github.com/repos/Azure/WindowsAppKiosk/contents/source/WindowsApp/AssignedAccess?ref=17e1c09b4883ea2062bef801ae24bbc9722861d7",
+        "retrieved_at": "2026-09-03T04:06:04Z",
+        "instrument": "curl -> api.github.com REST contents API, at pinned ref",
+        "purpose": "List the AssignedAccess folder's actual subfolders at the pinned ref, per RE-237:81's own named sub-path, rather than trusting the root README.",
+        "result": "Exactly two entries, both type=dir: \"MultiApp\", \"ShellLauncher\". No \"SingleApp\" sibling."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/Azure/WindowsAppKiosk/17e1c09b4883ea2062bef801ae24bbc9722861d7/source/WindowsApp/README.md",
+        "retrieved_at": "2026-09-03T04:06:05Z",
+        "instrument": "curl -> raw.githubusercontent.com, raw source bytes at pinned SHA",
+        "purpose": "Read the solution-specific README (not the repo root README) as the source of truth for what this solution actually ships.",
+        "result": "Under \"What's Included\": \"The solution provides two deployment modes: ### Multi-App Kiosk Mode ... ### Shell Launcher Mode ...\" -- exactly two named modes, no third."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/Azure/WindowsAppKiosk/17e1c09b4883ea2062bef801ae24bbc9722861d7/README.md",
+        "retrieved_at": "2026-09-03T04:06:33Z",
+        "instrument": "curl -> raw.githubusercontent.com, raw source bytes at pinned SHA",
+        "purpose": "Record the root README's own bullet for completeness, since it is the source of the ambiguity this claim resolves, not because it is authoritative.",
+        "result": "Verbatim: \"Windows App Single App Kiosk or Multi-App Kiosk with restricted user experience and customized Start Menu\" -- a marketing-style bullet naming a third mode that the solution-specific README and the actual folder listing both do not corroborate."
+      }
+    ],
+    "verbatim_evidence": {
+      "subfolder_listing": "source/WindowsApp/AssignedAccess/ at 17e1c09b4883ea2062bef801ae24bbc9722861d7: [\"MultiApp\" (dir), \"ShellLauncher\" (dir)] -- two entries, no SingleApp.",
+      "solution_readme_quote": "\"The solution provides two deployment modes: ### Multi-App Kiosk Mode -- A restricted Windows interface showing only Windows App and optionally Settings, deployed via Assigned Access configuration. ### Shell Launcher Mode -- Windows App completely replaces the Windows Explorer shell, providing a dedicated kiosk experience with the highest level of security.\"",
+      "root_readme_quote_for_context_only": "\"Windows App Single App Kiosk or Multi-App Kiosk with restricted user experience and customized Start Menu\""
+    },
+    "served_revision": "17e1c09b4883ea2062bef801ae24bbc9722861d7 (Azure/WindowsAppKiosk, confirmed both as an existing commit and as the current tip of the default branch `main` at fetch time)",
+    "disposition": "The durable, sourceable statement is that the reference implementation's shipped pattern for this device class is multi-app autologon. Azure/WindowsAppKiosk's solution-specific documentation (source/WindowsApp/README.md, pinned SHA 17e1c09b4883ea2062bef801ae24bbc9722861d7) enumerates exactly two deployment modes for the Windows App kiosk solution -- Multi-App Kiosk Mode and Shell Launcher Mode -- and the AssignedAccess/ folder at the same pinned SHA contains exactly two subfolders matching those modes, MultiApp/ and ShellLauncher/. RCP-06(a) and RCP-07(a) may state this positive claim as fact. No claim is made in either direction about what a third mode named only in the repository's root-level marketing bullet would or would not count as shipping -- that question is genuinely ambiguous in the upstream source and is not resolved here, per D-43.",
+    "governs_sites": [
+      "docs/recipes/01-shared-windows-avd-client.md Step 5a callout (RCP-06(a))",
+      "docs/recipes/03-windows-11-multi-app-kiosk.md:53 anti-feature row (RCP-07(a))"
+    ]
+  },
+  "claim_2": {
+    "claim_as_stated": "Whether the AssignedAccess CSP ShellLauncher node's licensing gate (the 'Class is not licensed for use' failure, Intune error -2016281112) is activation-based, as distinct from edition-based -- the mechanism RE-237:31, RCP-07(c) and RCP-08 currently state as fact.",
+    "fetch_instrument": "Playwright headless-browser navigation plus in-page JavaScript evaluation (`page.evaluate` reading `document.querySelector('main').innerText` and document `<meta>` tags) against the live, fully-rendered Microsoft Learn page. Chosen deliberately over WebFetch: WebFetch performs LLM summarization of fetched content, which is the specific failure mode this project has already recorded (`reference_canonical_source_bytes_not_webfetch.md` -- the same URL returned contradictory answers to two agents in one session). Reading the rendered DOM's own text nodes and meta tags is the actual source bytes the page serves to a browser, not a third party's summary of them. A bare `curl` was tried first and rejected -- it returns only ~350 words of pre-render skeleton HTML against this page's much larger rendered content, confirming 155-RESEARCH.md's own Pitfall 1 finding this session. Microsoft Learn's own full-text search (learn.microsoft.com/search) was used for the targeted troubleshooting-article search. GitHub's issues REST API was used for the corroborating source.",
+    "sources": [
+      {
+        "url": "https://learn.microsoft.com/en-us/windows/client-management/mdm/assignedaccess-csp",
+        "retrieved_at": "2026-09-03T04:08:52Z",
+        "instrument": "Playwright browser_navigate + browser_evaluate (innerText of <main>, and <meta> tag extraction)",
+        "purpose": "Fetch Microsoft's first-party AssignedAccess CSP reference and locate the exact sentence stating the ShellLauncher licensing gate.",
+        "result": "Full rendered text captured (24,239 characters). See verbatim_sentence and front_matter below."
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/search/?terms=%22-2016281112%22",
+        "retrieved_at": "2026-09-03T04:09:05Z",
+        "instrument": "Playwright browser_navigate + browser_evaluate (innerText)",
+        "purpose": "Targeted search for a first-party troubleshooting article naming the specific Intune error code -- the exact gap RESEARCH.md's Assumptions Log A3 left open.",
+        "result": "43 results, none specific to AssignedAccess/ShellLauncher. Results are for unrelated Intune policy types (password policy, WiFi profile, BitLocker, Application Guard). One Microsoft Q&A response states verbatim: \"the error code '-2016281112' is not a specific error\" -- it is a generic Intune remediation-failure code reused across many policy classes, not a ShellLauncher-specific or activation-specific signal."
+      },
+      {
+        "url": "https://learn.microsoft.com/en-us/search/?terms=%22Class%20is%20not%20licensed%20for%20use%22",
+        "retrieved_at": "2026-09-03T04:09:11Z",
+        "instrument": "Playwright browser_navigate + browser_evaluate (innerText)",
+        "purpose": "Second targeted search, on the exact error string rather than the error code, for the same troubleshooting-article gap.",
+        "result": "52 results, none about AssignedAccess/ShellLauncher licensing. Results are generic COM/OLE class-factory-licensing documentation (IClassFactory2, COMException REGDB_E_CLASSNOTREG) -- confirming the string itself is a generic Windows COM licensing error surfaced through the CSP layer, not a Microsoft-documented AssignedAccess-specific troubleshooting topic."
+      },
+      {
+        "url": "https://api.github.com/repos/microsoft/Windows-iotcore-samples/issues/508",
+        "retrieved_at": "2026-09-03T04:09:20Z",
+        "instrument": "curl -> api.github.com REST issues endpoint",
+        "purpose": "Cross-check the pilot's error string against a second, independent source, and record that source's root cause rather than only its symptom (155-RESEARCH.md Pitfall 3).",
+        "result": "Issue #508, title \"Shell Launcher V2 is not working on Windows 11 Pro 22H2\", state=open, comments=0. Body confirms the device is explicitly Windows 11 Pro and the failure is the same 'Class is not licensed for use' operational event."
+      }
+    ],
+    "verbatim_sentence": "\"Shell Launcher as a feature and the ShellLauncher node both require Windows Enterprise or Windows Education to function. The ShellLauncher node is not supported in Windows 10 Pro.\"",
+    "front_matter": {
+      "ms.date": "2025-03-12T00:00:00Z",
+      "updated_at": "2025-03-12T22:44:00Z",
+      "visible_footer": "Last updated on 03/12/2025",
+      "original_content_git_url": "https://github.com/MicrosoftDocs/windows-docs-pr/blob/live/windows/client-management/mdm/assignedaccess-csp.md",
+      "note": "original_content_git_url points at MicrosoftDocs/windows-docs-pr, a private authoring repository -- confirms 155-RESEARCH.md's Common Pitfall 1 finding that the public windows-itpro-docs repository is no longer the current source for this doc family. Confirmed again this session, independently of RESEARCH.md's prior fetch."
+    },
+    "served_revision": "aeb8f2bbd5d93e85c6f2a46e2705928aa1df9c9e (git_commit_id meta tag on the rendered page, resolving into the private windows-docs-pr repository)",
+    "targeted_search": {
+      "outcome": "not-found-with-the-query-used",
+      "queries_run": [
+        "\"-2016281112\" on learn.microsoft.com/search",
+        "\"Class is not licensed for use\" on learn.microsoft.com/search"
+      ],
+      "finding": "No first-party Microsoft troubleshooting article specifically about the AssignedAccess ShellLauncher CSP node and this error code or error string was located by either query. The error code itself is documented (by a Microsoft Q&A community response, not a first-party KB) as a generic, non-specific Intune remediation-failure code reused across unrelated policy classes -- password policy, WiFi profiles, BitLocker, Application Guard -- none of which are AssignedAccess/ShellLauncher. This is the specific gap 155-RESEARCH.md's Assumptions Log A3 flagged as not yet closed; it remains open after this session's targeted search."
+    },
+    "corroborating_source": {
+      "url": "https://github.com/microsoft/Windows-iotcore-samples/issues/508",
+      "title": "Shell Launcher V2 is not working on Windows 11 Pro 22H2",
+      "state": "open, 0 comments (unresolved)",
+      "symptom_reported": "Identical error string, 'Class is not licensed for use', reported as an AssignedAccess operational event when enabling ShellLauncher via WMI.",
+      "root_cause": "The reporting device is explicitly Windows 11 Pro (stated in the issue title and body). Per the verbatim_sentence fetched above, the ShellLauncher node's edition-scope table lists Pro as unsupported (the CSP page's own edition table shows Enterprise/Education/IoT Enterprise supported, Pro explicitly excluded) -- this is an EDITION failure, matching the first-party edition-only gate exactly. It is not an activation failure: nothing in the issue names activation status, and nothing in the fetched first-party page conditions the gate on activation.",
+      "does_root_cause_match_the_activation_claim": false,
+      "does_root_cause_match_the_edition_claim": true
+    },
+    "disposition": "UNVERIFIED for the activation mechanism, matching the predicted outcome. No first-party sentence fetched this session -- on the AssignedAccess CSP reference page itself, nor via two targeted searches for a troubleshooting article naming the specific Intune error code or error string -- states or implies that the ShellLauncher node's licensing gate depends on activation status as distinct from edition. The only first-party statement of the gate is edition-only: 'Shell Launcher as a feature and the ShellLauncher node both require Windows Enterprise or Windows Education to function. The ShellLauncher node is not supported in Windows 10 Pro.' The corroborating GitHub issue's root cause (Windows 11 Pro, an edition failure) matches this edition-only gate and does not corroborate an activation-based mechanism. Per this outcome, the mechanism claim is removed from documents that currently state it as fact (RE-237:31, out of this plan's file scope -- see plan 155-05; RE-224:29 RCP-07(c); licensing-matrix.md RCP-08, both in this plan). The raw pilot observation -- the 'Class is not licensed for use' error firing on an installed-but-reportedly-unactivated Enterprise image during the pilot -- is retained, labelled as a pilot observation, not as documented Microsoft mechanism. NO HALT: this outcome matches the predicted unverified resolution RESEARCH.md and CONTEXT.md D-44 anticipated, so Tasks 2 and 3 proceed on this disposition.",
+    "governs_sites": [
+      "docs/recipes/06-walk-up-avd-kiosk-autologon.md:31 (out of this plan's file scope -- consumed by plan 155-05)",
+      "docs/recipes/03-windows-11-multi-app-kiosk.md:29 (RCP-07(c), this plan)",
+      "docs/reference/licensing-matrix.md Feature-to-License Mapping (RCP-08, this plan)"
+    ]
+  },
+  "rcp_08_remedy_clause": {
+    "claim_as_stated": "RCP-08's remedy clause -- that a per-device volume key or purpose-built hardware IS REQUIRED to resolve the licensing gap a self-deploying kiosk hits.",
+    "fetch_instrument": "Direct read of this repository's own already-authored content (not an external fetch) -- this claim is outside RCP-10's two-external-claim scope per D-45, so it is resolved against what the pilot actually tested versus what is reasoned from documented licensing structure, not against a new external source.",
+    "sources": [
+      {
+        "url": "docs/recipes/06-walk-up-avd-kiosk-autologon.md:106-109 (repository file, read this session)",
+        "retrieved_at": "2026-09-03T04:03:00Z",
+        "instrument": "Read tool, this task",
+        "purpose": "Confirm the pilot-authored reasoning already in RE-237 Step 4 about per-user vs. per-device activation paths (KMS/AD-BA/MAK), which is the basis for the reasoned-consequence wording -- not evidence that a volume key was tested.",
+        "result": "Verbatim: \"Per-user Windows Enterprise E3/E5 cannot license a device nobody signs into. Volume licensing offers three activation methods: KMS needs a routed path to the KMS host and expires in 180 days without it; Active Directory-Based Activation needs a domain-joined device; MAK activates once over the internet and is the only one that fits an Entra-only, internet-only kiosk.\" This is reasoning about which volume-licensing method would fit the constraints, not a report that any of the three, or a volume key, was actually applied and tested in the pilot."
+      },
+      {
+        "url": "docs/reference/licensing-matrix.md:62-66 (repository file, read this session)",
+        "retrieved_at": "2026-09-03T04:03:30Z",
+        "instrument": "Read tool, this task",
+        "purpose": "Confirm the incumbent Windows Subscription Activation row and its two blockquotes are the site RCP-08's consequence and remedy language land in, and that neither currently mentions a volume key.",
+        "result": "Row: '| Windows Subscription Activation (Pro->Enterprise) | Microsoft 365 E3, E5, or A3/A5 | NOT available in Business Premium or F-series; manual OS upgrade required without this |'. Neither the row nor its two blockquotes mention a volume key, MAK, or purpose-built hardware today."
+      }
+    ],
+    "disposition": "The remedy clause is neither first-party-sourced nor pilot-observed -- the pilot never tested a volume key, a MAK activation, or purpose-built (already-activated) hardware; it only hit the failure and stopped at the multi-app branch that does not require activation. It must NOT be labelled as a pilot observation ([PILOT]), because that would assert an event that never happened. It must also not ship as unqualified fact. It will instead be worded as the reasoned consequence of the licensing structure already documented in this repository's own RE-237 Step 4 content: a per-user entitlement cannot license a device nobody signs into, so a self-deploying kiosk needs a device-scoped activation path instead (of which a per-device volume key is the one already-documented candidate that fits an Entra-only, internet-only device) -- attributed explicitly to reasoning from the licensing structure, not to a test that was run.",
+    "governs_sites": [
+      "docs/reference/licensing-matrix.md Feature-to-License Mapping remedy language (RCP-08, this plan)"
+    ]
+  }
+}

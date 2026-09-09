@@ -45,8 +45,8 @@ The Enrollment Time Grouping (ETG) device group is the core mechanism that makes
    | Microsoft Entra roles can be assigned to the group | **No** | Role-assignable groups have a different lifecycle and cannot be used for ETG |
    | Owner | Intune Provisioning Client (AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) | Added in Step 2 below -- must be set for the group to function |
 
-3. Enter a group name (e.g., "APv2-ETG-Devices") and an optional description.
-4. Do not add any members at this time. The Intune Provisioning Client will add devices automatically at enrollment time.
+3. Enter a group name (for example, "APv2-ETG-Devices") and an optional description.
+4. Do not add any members at this time. The Intune Provisioning Client adds devices automatically at enrollment time.
 5. Select **Create**.
 
    > **What breaks if misconfigured:** **Admin sees:** Group appears in Entra ID and can be selected in the Device Preparation policy wizard without any error.
@@ -57,7 +57,7 @@ The Enrollment Time Grouping (ETG) device group is the core mechanism that makes
 
 The Intune Provisioning Client service principal (AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) **must** be an owner of the ETG device group. Without this ownership, the service principal cannot add devices to the group at enrollment time. The service principal is also displayed as **"Intune Autopilot ConfidentialClient"** in some tenants -- both names refer to the same object; verify by AppID if unsure.
 
-**Option A: Add via Entra ID portal**
+**Option A: Add through Entra ID portal**
 
 1. Navigate to **Azure portal** > **Microsoft Entra ID** > **Groups** > select the ETG group created in Step 1.
 2. Select **Owners** > **Add owners**.
@@ -66,7 +66,7 @@ The Intune Provisioning Client service principal (AppID: `f1346770-5b25-470b-88b
 
    > **Note:** If the service principal does not appear in search results, it does not yet exist in your tenant. Use Option B (PowerShell) to add it.
 
-**Option B: Add via PowerShell (required if service principal is not in your tenant)**
+**Option B: Add using PowerShell (required if service principal is not in your tenant)**
 
 Use this procedure if the service principal is not found in the portal owner picker, or to automate setup across multiple tenants.
 
@@ -88,7 +88,7 @@ New-MgServicePrincipal -AppId f1346770-5b25-470b-88bd-d5744ab7952c
 **Expected results after running `New-MgServicePrincipal`:**
 
 - **Success:** Command returns a service principal object with the AppId (`f1346770-5b25-470b-88bd-d5744ab7952c`) and DisplayName ("Intune Provisioning Client" or "Intune Autopilot ConfidentialClient").
-- **`Status: 409 (Conflict)` with `Request_MultipleObjectsWithSameKeyValue`:** The service principal already exists in your tenant. No action needed -- proceed directly to adding it as the ETG group owner below.
+- **`Status: 409 (Conflict)` with `Request_MultipleObjectsWithSameKeyValue`:** The service principal already exists in your tenant. No action needed -- proceed directly to adding it as the ETG group owner in the next step.
 - **`Status: 403 (Forbidden)` with `Authorization_RequestDenied`:** Insufficient permissions. Verify the account running this command has the Global Administrator or Application Administrator role, and that the "Consent on behalf of your organization" checkbox was checked in the consent prompt.
 
 After the service principal exists in your tenant, add it as the ETG group owner:
@@ -106,7 +106,7 @@ New-MgGroupOwnerByRef -GroupId $group.Id -BodyParameter @{
 }
 ```
 
-**Verification:** Navigate to the ETG group in the Entra ID portal > select the group > **Owners**. The Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) should appear in the owners list.
+**Verification:** Navigate to the ETG group in the Entra ID portal > select the group > **Owners**. Confirm the Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) appears in the owners list.
 
    > **What breaks if misconfigured:** **Admin sees:** Device Preparation policy is created and assigned to both groups without error. The deployment report shows "Not started" for all enrolling devices.
    > **End user sees:** OOBE completes to the desktop without the Device Preparation experience ever appearing. Apps selected in the policy are not installed. No error is shown at any point.
@@ -114,7 +114,7 @@ New-MgGroupOwnerByRef -GroupId $group.Id -BodyParameter @{
 
 ### Step 3: Assign apps and scripts to the ETG device group
 
-Apps and PowerShell scripts that should install during APv2 enrollment must be **both** selected in the Device Preparation policy (Step 3 of this setup) **and** assigned to the ETG device group with the correct settings. The assignment and the policy selection are two separate actions in the Intune portal -- one without the other results in apps showing "Skipped" in the deployment report.
+Apps and PowerShell scripts that you want installed during APv2 enrollment must be **both** selected in the Device Preparation policy (Step 3 of this setup) **and** assigned to the ETG device group with the correct settings. The assignment and the policy selection are two separate actions in the Intune portal -- one without the other results in apps showing "Skipped" in the deployment report.
 
 **Assign managed applications:**
 
@@ -148,7 +148,7 @@ Apps and PowerShell scripts that should install during APv2 enrollment must be *
 
 - [ ] ETG security group exists in Entra ID with Group type = **Security** and Membership type = **Assigned**
 - [ ] "Microsoft Entra roles can be assigned to the group" is set to **No** on the ETG group
-- [ ] Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) appears in the group's **Owners** list (not just Members)
+- [ ] Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) appears in the group's **Owners** list (not only Members)
 - [ ] All required apps are assigned to the ETG device group with **Required** intent and **Device (System)** install context
 - [ ] All required PowerShell scripts are assigned to the ETG device group with "Run this script using the logged on credentials" = **No**
 

@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-This guide covers configuration and annual renewal of the Apple Push Notification (APNs) certificate, the shared cross-platform trust anchor that enables MDM communication between Microsoft Intune and every enrolled Apple device — iOS, iPadOS, and macOS alike. Configuring it requires the Intune Administrator role in Intune admin center and access to the Apple Push Certificates Portal signed in with a company-owned (non-personal) Apple ID. No supervised-device prerequisite applies; the certificate is tenant-wide infrastructure independent of any single device's enrollment or supervision state.
+This guide covers configuration and annual renewal of the Apple Push Notification (APNs) certificate, the shared cross-platform trust anchor that enables MDM communication between Microsoft Intune and every enrolled Apple device—iOS, iPadOS, and macOS alike. Configuring it requires the Intune Administrator role in Intune admin center and access to the Apple Push Certificates Portal signed in with a company-owned (non-personal) Apple ID. No supervised-device prerequisite applies; the certificate is tenant-wide infrastructure independent of any single device's enrollment or supervision state.
 
 > **Platform gate:** This guide covers iOS/iPadOS APNs certificate configuration for Intune MDM.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
@@ -25,12 +25,12 @@ This guide covers configuration and annual renewal of the Apple Push Notificatio
 
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
 
-The APNs certificate enables MDM communication between Microsoft Intune and ALL Apple devices — iOS, iPadOS, and macOS. This is shared cross-platform infrastructure: a single APNs certificate covers all Apple platforms enrolled in your Intune tenant. If the certificate expires or is replaced, MDM communication to ALL enrolled iOS, iPadOS, and macOS devices stops simultaneously.
+The APNs certificate enables MDM communication between Microsoft Intune and ALL Apple devices—iOS, iPadOS, and macOS. This is shared cross-platform infrastructure: a single APNs certificate covers all Apple platforms enrolled in your Intune tenant. If the certificate expires or is replaced, MDM communication to ALL enrolled iOS, iPadOS, and macOS devices stops simultaneously.
 
 ## Prerequisites
 
 - Intune Administrator role in Microsoft Intune admin center
-- A company email address Apple ID (NOT a personal Apple ID) — as a best practice, use a distribution list monitored by more than one person
+- A company email address Apple ID (NOT a personal Apple ID)—as a best practice, use a distribution list monitored by more than one person
 - Microsoft Intune Plan 1 (or higher) subscription
 - Access to the [Apple Push Certificates Portal](https://identity.apple.com)
 
@@ -62,7 +62,7 @@ The APNs certificate enables MDM communication between Microsoft Intune and ALL 
 5. Upload the .csr file downloaded in Step 1.
 6. Select **Download** to save the resulting .pem certificate file locally.
 
-> **What breaks if misconfigured:** Uploading the wrong CSR file (e.g., from a different Intune tenant) creates a certificate that cannot communicate with your Intune instance.
+> **What breaks if misconfigured:** Uploading the wrong CSR file (for example, from a different Intune tenant) creates a certificate that cannot communicate with your Intune instance.
 
 > Symptom appears in: Intune admin center (certificate upload succeeds but devices cannot check in).
 
@@ -71,7 +71,7 @@ The APNs certificate enables MDM communication between Microsoft Intune and ALL 
 #### In Intune admin center
 
 1. Return to **Devices** > **Device onboarding** > **Enrollment** > **Apple** tab > **Apple MDM Push Certificate**.
-2. Enter the Apple ID used in Step 2. Record this Apple ID — it is required for all future renewals.
+2. Enter the Apple ID used in Step 2. Record this Apple ID—it is required for all future renewals.
 3. Upload the .pem certificate file downloaded from Apple Push Certificates Portal.
 4. Select **Upload**.
 
@@ -85,7 +85,7 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 
 > A new certificate has a different UID.
 
-> Devices enrolled with the old certificate cannot be managed — they must be wiped and re-enrolled. This affects every Apple device in your organization simultaneously.
+> Devices enrolled with the old certificate cannot be managed—they must be wiped and re-enrolled. This affects every Apple device in your organization simultaneously.
 
 > **Always renew. Never create new.**
 
@@ -107,7 +107,7 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 #### In Intune admin center
 
 8. Upload the renewed .pem file to Intune.
-9. Verify the new expiration date (should be ~365 days from renewal).
+9. Verify the new expiration date (expect ~365 days from renewal).
 
 > **What breaks if misconfigured:** Renewing with a DIFFERENT Apple ID than the one used to create the certificate fails.
 
@@ -118,7 +118,7 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 ## Verification
 
 - [ ] APNs certificate status shows "Active" in Intune admin center > Devices > Device onboarding > Enrollment > Apple > Apple MDM Push Certificate
-- [ ] Certificate expiration date is visible (should be ~365 days from creation or renewal)
+- [ ] Certificate expiration date is visible (expect ~365 days from creation or renewal)
 - [ ] Apple ID used is a company email address (not a personal Apple ID)
 - [ ] Apple ID is recorded and accessible to multiple IT administrators
 

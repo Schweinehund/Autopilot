@@ -27,6 +27,9 @@
      - Do NOT link to cross-platform navigation surfaces: the common-issues symptom
        router, the L1 and L2 quick-reference cards, or the top-level docs index.
        Android cross-platform navigation integration is deferred post-v1.4.
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: Android Platform Lead (role, not person name)
 -->
@@ -47,10 +50,10 @@ audience: admin
 
 ## Summary
 
-[2–3 sentences describing the scope, target audience, and any safety or version constraints for this Android Enterprise admin setup guide. Minimum 30 words. State which Android Enterprise enrollment mode this guide covers (e.g., COBO, BYOD Work Profile, Dedicated, AOSP), whether it requires Managed Google Play and/or Zero-Touch portal access, and the Intune admin role required.]
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this Android Enterprise administrator setup guide. Minimum 30 words. State which Android Enterprise enrollment mode this guide covers (for example, COBO, BYOD Work Profile, Dedicated, AOSP), whether it requires Managed Google Play and/or Zero-Touch portal access, and the Intune administrator role required.]
 
-> **Platform gate:** This guide covers [Android Enterprise feature/mode — e.g., "Managed Google Play binding" or "Fully Managed COBO enrollment"] configuration via Intune admin center, Managed Google Play, and (where applicable) the Zero-Touch portal.
-> For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md). For macOS ADE, see [macOS Admin Setup](../admin-setup-macos/00-overview.md). For Windows Autopilot setup, see [Windows Admin Setup](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers [Android Enterprise feature/mode—for example, "Managed Google Play binding" or "Fully Managed COBO enrollment"] configuration through Intune admin center, Managed Google Play, and (where applicable) the Zero-Touch portal.
+> For iOS/iPadOS administrator setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md). For macOS ADE, see [macOS Admin Setup](../admin-setup-macos/00-overview.md). For Windows Autopilot setup, see [Windows Admin Setup](../admin-setup-apv1/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 <!-- "What breaks if misconfigured" CALLOUT PATTERN
@@ -61,17 +64,17 @@ audience: admin
      misconfiguration in Zero-Touch portal may surface as a symptom on the device itself.
 
      > **What breaks if misconfigured:** [Consequence]. Symptom appears in:
-     > [portal where the admin or user notices the failure — often DIFFERENT from
+     > [portal where the administrator or user notices the failure—often DIFFERENT from
      > the portal where the misconfiguration was set].
      > See: [Runbook Title](../l1-runbooks/[filename].md)
 -->
 
 ## Prerequisites
 
-- [Required admin role — e.g., Intune Administrator, Global Administrator for tenant-scoped MGP binding]
-- [Required license or subscription — e.g., Microsoft Intune Plan 1, Managed Google Play bound via Entra account (preferred since August 2024), Zero-Touch portal reseller relationship]
-- [Prior configuration that must be completed first — e.g., "Complete MGP binding (see 01-managed-google-play.md)" — link to that guide]
-- [Required portal access — specify which of Intune admin center / Managed Google Play / Zero-Touch portal the admin must have access to for this guide]
+- [Required administrator role—for example, Intune Administrator, Global Administrator for tenant-scoped MGP binding]
+- [Required license or subscription—for example, Microsoft Intune Plan 1, Managed Google Play bound through Entra account (preferred since August 2024), Zero-Touch portal reseller relationship]
+- [Prior configuration that must be completed first—for example, "Complete MGP binding (see 01-managed-google-play.md)"—link to that guide]
+- [Required portal access—specify which of Intune admin center / Managed Google Play / Zero-Touch portal the administrator must have access to for this guide]
 
 ## Steps
 
@@ -83,7 +86,7 @@ audience: admin
 2. Navigate to **Devices** > **Android** > **Enrollment** > **[path]**.
 3. [Action].
 
-   > **What breaks if misconfigured:** [Consequence]. Symptom appears in: [portal where the admin or user notices the failure — often different from the portal where the misconfiguration was set].
+   > **What breaks if misconfigured:** [Consequence]. Symptom appears in: [portal where the administrator or user notices the failure—often different from the portal where the misconfiguration was set].
    > See: [Runbook Title](../l1-runbooks/[filename].md)
 
 #### In Managed Google Play
@@ -111,13 +114,13 @@ audience: admin
 
 ### Step 2: [Next configuration action]
 
-[Repeat the tri-portal sub-section pattern per the rules above — include #### In Intune admin center and #### In Managed Google Play always; include #### In Zero-Touch portal only if applicable to this guide's mode.]
+[Repeat the tri-portal sub-section pattern per the preceding rules—include #### In Intune admin center and #### In Managed Google Play always; include #### In Zero-Touch portal only if applicable to this guide's mode.]
 
 ## Verification
 
-- [ ] [How to confirm the configuration is correct in Intune admin center — specific Intune portal location, expected state]
-- [ ] [How to confirm the configuration is correct in Managed Google Play — specific MGP section, expected state]
-- [ ] [How to confirm the configuration is correct in Zero-Touch portal — specific ZT portal section, expected state — OMIT this checklist item if this guide does not use the Zero-Touch portal]
+- [ ] [How to confirm the configuration is correct in Intune admin center—specific Intune portal location, expected state]
+- [ ] [How to confirm the configuration is correct in Managed Google Play—specific MGP section, expected state]
+- [ ] [How to confirm the configuration is correct in Zero-Touch portal—specific ZT portal section, expected state—OMIT this checklist item if this guide does not use the Zero-Touch portal]
 
 ## Configuration-Caused Failures
 
@@ -137,7 +140,7 @@ audience: admin
 
 ## See Also
 
-- [Related Android admin guide](link — e.g., ../admin-setup-android/NN-other-mode.md)
+- [Related Android administrator guide](link — e.g., ../admin-setup-android/NN-other-mode.md)
 - [Android Enterprise Enrollment Overview](../android-lifecycle/00-enrollment-overview.md)
 - [Android Provisioning Methods](../android-lifecycle/02-provisioning-methods.md)
 - [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md)

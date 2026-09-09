@@ -27,9 +27,9 @@ This guide is the index for configuring Linux device management in Microsoft Int
 
 > For the locked Linux management surface (whitelist) + out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
 
-This guide walks Intune administrators through configuring Linux device management in Microsoft Intune. Complete the guides in order — agent install and enrollment profile are prerequisites for all subsequent configuration.
+This guide walks Intune administrators through configuring Linux device management in Microsoft Intune. Complete the guides in order—agent install and enrollment profile are prerequisites for all subsequent configuration.
 
-> **For admins familiar with Windows, macOS, or Android:**
+> **For administrators familiar with Windows, macOS, or Android:**
 
 > see the cross-platform bridge subsection in [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android).
 
@@ -37,7 +37,7 @@ This guide walks Intune administrators through configuring Linux device manageme
 
 ## Setup Sequence
 
-(LOCKED — 5 nodes + labeled edges: fan-out only, one parent B -> three children C/D/E, not a reconvergence)
+(LOCKED—5 nodes + labeled edges: fan-out only, one parent B -> three children C/D/E, not a reconvergence)
 
 1. Intune Linux Agent
 2. Enrollment Profile
@@ -47,22 +47,22 @@ This guide walks Intune administrators through configuring Linux device manageme
 
 Full detail for each stage:
 
-1. **[Intune Linux Agent](01-intune-linux-agent.md)** — Install the `intune-portal` deb package from `packages.microsoft.com` and configure the Microsoft Identity Broker.
+1. **[Intune Linux Agent](01-intune-linux-agent.md)**—Install the `intune-portal` deb package from `packages.microsoft.com` and configure the Microsoft Identity Broker.
 
-2. **[Enrollment Profile](02-enrollment-profile.md)** — Verify Intune + Entra P1 licensing and configure user-initiated Linux enrollment.
+2. **[Enrollment Profile](02-enrollment-profile.md)**—Verify Intune + Entra P1 licensing and configure user-initiated Linux enrollment.
 
-3. **[Compliance Policy](03-compliance-policy.md)** — Configure 4 settings-catalog categories (Allowed Distributions, Custom Compliance, Device Encryption, Password Policy).
+3. **[Compliance Policy](03-compliance-policy.md)**—Configure 4 settings-catalog categories (Allowed Distributions, Custom Compliance, Device Encryption, Password Policy).
 
-4. **[App Delivery](04-app-delivery.md)** — Script-based-only app delivery (no Win32/MSIX/.pkg analog).
+4. **[App Delivery](04-app-delivery.md)**—Script-based-only app delivery (no Win32/MSIX/.pkg analog).
 
-5. **[Conditional Access](05-conditional-access.md)** — Web-app CA via Microsoft Edge for Linux 102.x+ (no device-level CA).
+5. **[Conditional Access](05-conditional-access.md)**—Web-app CA through Microsoft Edge for Linux 102.x+ (no device-level CA).
 
 ## Cross-Platform References
 
-- [Linux Capability Matrix](../reference/linux-capability-matrix.md) — Win|Linux bilateral comparison; explicit "Not supported" cells; Cross-Platform Equivalences with 3 attributed pairs.
-- [Linux Enrollment Overview — Cross-Platform Bridge](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android) — What carries over and what does not from your existing Windows / macOS / Android Intune mental model. Full path: `docs/linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android`
-- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md) — Phase 49 management-surface whitelist + Out of Scope callout.
-- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md) — Ubuntu 24.04/26.04 LTS supported; Ubuntu 20.04 dropped from Intune 2508.
+- [Linux Capability Matrix](../reference/linux-capability-matrix.md)—Win|Linux bilateral comparison; explicit "Not supported" cells; Cross-Platform Equivalences with 3 attributed pairs.
+- [Linux Enrollment Overview—Cross-Platform Bridge](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android)—What carries over and what does not from your existing Windows / macOS / Android Intune mental model. Full path: `docs/linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android`
+- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md)—Phase 49 management-surface whitelist + Out of Scope callout.
+- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md)—Ubuntu 24.04/26.04 LTS supported; Ubuntu 20.04 dropped from Intune 2508.
 
 ## See Also
 

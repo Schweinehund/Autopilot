@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments where the deployment screen completed but expected apps or scripts are missing or failed. Agents review the deployment report for Failed and Skipped statuses, verify install context and ETG group assignment for each affected app, and escalate all script failures and unresolved app failures to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments where the deployment screen completed but expected apps or scripts are missing or failed. Agents review the deployment report for Failed and Skipped statuses, verify install context and ETG group assignment for each affected app, and escalate all script failures and unresolved app failures to L2.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).
@@ -47,7 +47,7 @@ Use this runbook when a device went through Device Preparation but expected apps
 
 6. Select the **Scripts** tab. Review the status of each script. If any script shows **Failed**: note the script name and skip to step 12 (script failures require L2 investigation).
 
-7. For each app with **Failed** status: navigate to **Apps** > **All apps** > search for the app name > **Properties** > **Assignments**. Check the **Install context**: it must be **System** (not **User**). If set to User: this is the likely cause -- inform the admin team that the app assignment context must be changed to System for Device Preparation deployments.
+7. For each app with **Failed** status: navigate to **Apps** > **All apps** > search for the app name > **Properties** > **Assignments**. Check the **Install context**: it must be **System** (not **User**). If set to User: this is the likely cause -- inform the administrator team that the app assignment context must be changed to System for Device Preparation deployments.
 
 8. > **Say to the user:** "I'm checking the configuration of the apps that didn't install on your device. This may take a few minutes while I review each app."
 

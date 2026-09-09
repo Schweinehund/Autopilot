@@ -16,6 +16,9 @@
      - Do NOT include PowerShell commands, registry paths, or log file references
      - Do NOT link to L2-audience content from within steps
      - Link to the glossary for any Autopilot-specific terms
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: L1 Team Lead (role, not person name)
 -->
@@ -37,29 +40,29 @@ audience: L1
 
 ## Summary
 
-[2–3 sentences: scope, audience (L1 service desk), and safety guardrail. Minimum 30 words. Open with the read-only scope banner: this runbook covers read-only diagnostic steps only — no registry edits, no PowerShell execution, no destructive actions. All remediation steps requiring elevated access or technical investigation must be escalated to L2.]
+[2–3 sentences: scope, audience (L1 service desk), and safety guardrail. Minimum 30 words. Open with the read-only scope banner: this runbook covers read-only diagnostic steps only—no registry edits, no PowerShell execution, no destructive actions. All remediation steps requiring elevated access or technical investigation must be escalated to L2.]
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Prerequisites
 
-- [What the L1 agent needs before starting — e.g., Intune portal access, device serial number]
+- [What the L1 agent needs before starting—for example, Intune portal access, device serial number]
 - [Any information to collect from the user before beginning]
 
 ## Steps
 
-1. [First action — use imperative voice, e.g., "Open the Intune portal"]
+1. [First action—use imperative voice, for example, "Open the Intune portal"]
 2. [Second action]
-3. [Continue numbered steps — each step should have one clear action]
+3. [Continue numbered steps—each step must have one clear action]
 
 ## Escalation Criteria
 
 Escalate to L2 if:
-- [Condition that indicates L1 cannot resolve — e.g., "Error persists after retry"]
+- [Condition that indicates L1 cannot resolve—for example, "Error persists after retry"]
 - [Condition requiring technical investigation]
 
 **Before escalating, collect:**
-- [Data item 1 — e.g., "Device serial number"]
-- [Data item 2 — e.g., "Screenshot of error message"]
-- [Data item 3 — e.g., "Intune device status page"]
+- [Data item 1—for example, "Device serial number"]
+- [Data item 2—for example, "Screenshot of error message"]
+- [Data item 3—for example, "Intune device status page"]

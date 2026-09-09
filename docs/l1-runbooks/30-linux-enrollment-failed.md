@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of Linux endpoint enrollment failures (Ubuntu 24.04/26.04 LTS) across three independently diagnosable causes: package install failure, Microsoft Identity Broker sign-in failure, and intune-agent.timer enrollment timeout.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of Linux endpoint enrollment failures (Ubuntu 24.04/26.04 LTS) across three independently diagnosable causes: package install failure, Microsoft Identity Broker sign-in failure, and intune-agent.timer enrollment timeout.
 
 > **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS).
 
@@ -34,25 +34,25 @@ Routed here from the [Linux Triage Decision Tree](../decision-trees/09-linux-tri
 
 > **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
 
-> State-changing commands (`sudo apt install`, package reinstall, service restart) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
+> State-changing commands (`sudo apt install`, package reinstall, service restart) appear ONLY in the per-cause `### Admin Action Required` sections—they are not L1 actions.
 
 ## Prerequisites
 
 - Access to Intune admin center (`https://intune.microsoft.com`) with Help Desk Operator or Read Only Operator role (read-only for enrollment status)
 - Device serial number or User UPN
-- Terminal access on the affected Linux device (the user runs read-only commands; sudo is admin-only — see per-cause `### Admin Action Required`)
-- For end-user enrollment walkthrough referenced from Cause C, see [Linux Intune Portal Enrollment — Enroll your device](../end-user-guides/linux-intune-portal-enrollment.md#enroll-your-device).
+- Terminal access on the affected Linux device (the user runs read-only commands; sudo is admin-only—see per-cause `### Admin Action Required`)
+- For end-user enrollment walkthrough referenced from Cause C, see [Linux Intune Portal Enrollment—Enroll your device](../end-user-guides/linux-intune-portal-enrollment.md#enroll-your-device).
 - Portal shorthand used in this runbook:
    - **P-09** = `Devices > All devices > [device] > Overview` (device enrollment state view)
    - **P-08** = `Devices > Enrollment > Linux` (tenant-wide Linux enrollment configuration)
 
 ## How to Use This Runbook
 
-Check the cause that matches your observation. Causes are independently diagnosable — you do not need to rule out prior causes.
+Check the cause that matches your observation. Causes are independently diagnosable—you do not need to rule out prior causes.
 
-- [Cause A: Package Install Failure](#cause-a-package-install) — `apt list --installed | grep intune-portal` empty OR `dpkg -l intune-portal` shows non-`ii` status
-- [Cause B: Sign-In Failure (Microsoft Identity Broker)](#cause-b-sign-in-failure) — Identity Broker authentication did not complete; user sees sign-in prompt repeatedly or auth timeout
-- [Cause C: Enrollment Timeout (`intune-agent.timer`)](#cause-c-enrollment-timeout) — `systemctl --user list-timers intune-agent.timer` shows `-` for NEXT or last activation > 1 hour ago
+- [Cause A: Package Install Failure](#cause-a-package-install)—`apt list --installed | grep intune-portal` empty OR `dpkg -l intune-portal` shows non-`ii` status
+- [Cause B: Sign-In Failure (Microsoft Identity Broker)](#cause-b-sign-in-failure)—Identity Broker authentication did not complete; user sees sign-in prompt repeatedly or auth timeout
+- [Cause C: Enrollment Timeout (`intune-agent.timer`)](#cause-c-enrollment-timeout)—`systemctl --user list-timers intune-agent.timer` shows `-` for NEXT or last activation > 1 hour ago
 
 If none matches, proceed directly to [Escalation Criteria](#escalation-criteria).
 
@@ -65,40 +65,40 @@ Common ticket phrasings: "intune-portal won't install," "the sign-in keeps loopi
 
 See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the package definition; [/var/log/dpkg.log](../_glossary-linux.md#varlogdpkglog) for the install-event log path; [APT repository](../_glossary-linux.md#apt-repository) for the packages.microsoft.com source; [dpkg](../_glossary-linux.md#dpkg) for the package manager itself.
 
-**Entry condition:** `apt list --installed | grep intune-portal` returns empty OR `dpkg -l intune-portal` shows a status other than `ii` (e.g., `un`, `iU`, `iF`).
+**Entry condition:** `apt list --installed | grep intune-portal` returns empty OR `dpkg -l intune-portal` shows a status other than `ii` (for example, `un`, `iU`, `iF`).
 
 ### Symptom
 
 - User reports they tried to install Intune on their Linux device but the install did not complete
 - `apt list --installed | grep intune-portal` returns empty (no installed entry)
-- `dpkg -l intune-portal` shows package in non-`ii` state — typical: `un` (unknown / not installed), `iU` (install pending), `iF` (install failed during configure)
+- `dpkg -l intune-portal` shows package in non-`ii` state—typical: `un` (unknown / not installed), `iU` (install pending), `iF` (install failed during configure)
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Let me check whether the Intune client package is installed on your device. Please open Terminal and type: `apt list --installed | grep intune-portal`. Read me the output."
-2. If the output is empty, the package is not installed — ask the user to also run `cat /var/log/dpkg.log | grep intune` (or `cat /var/log/dpkg.log | tail -50` for a broader window) to surface what happened on the last install attempt.
+2. If the output is empty, the package is not installed—ask the user to also run `cat /var/log/dpkg.log | grep intune` (or `cat /var/log/dpkg.log | tail -50` for a broader window) to surface what happened on the last install attempt.
 3. If the output shows non-`ii` state, ask the user to read me the full line from `dpkg -l intune-portal`.
 4. Cross-reference [/var/log/dpkg.log](../_glossary-linux.md#varlogdpkglog) for the install-event log path; LOW-MEDIUM confidence per Phase 49 attestation.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
-- Reinstall the `intune-portal` package via `sudo apt install intune-portal` after confirming the [packages.microsoft.com](../_glossary-linux.md#packagesmicrosoftcom) APT repository is reachable from the device's network.
+- Reinstall the `intune-portal` package through `sudo apt install intune-portal` after confirming the [packages.microsoft.com](../_glossary-linux.md#packagesmicrosoftcom) APT repository is reachable from the device's network.
 - If the device is behind a proxy or firewall, verify that `https://packages.microsoft.com` is reachable.
 
 **Verify:**
 
 - After reinstall: `apt list --installed | grep intune-portal` returns a single line `intune-portal/noble,now 2.0.X amd64 [installed]` (Ubuntu 24.04) or the equivalent codename line for Ubuntu 26.04.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
 ### Escalation (within Cause A)
 
 - Reinstall succeeds but enrollment still does not complete (Cause B or C may apply next)
-- packages.microsoft.com unreachable from the device's network despite the user being on the corporate network — escalate to Network team for proxy/firewall review
+- packages.microsoft.com unreachable from the device's network despite the user being on the corporate network—escalate to Network team for proxy/firewall review
 
 ---
 
@@ -107,7 +107,7 @@ See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for t
 
 See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker) for the system-scope authentication broker; [Identity Broker](../_glossary-linux.md#identity-broker) for the broader cross-platform concept; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader.
 
-**Entry condition:** Package is installed (`dpkg -l intune-portal` shows `ii`) but the user cannot complete sign-in — the work-account prompt loops, times out, or returns an authentication error.
+**Entry condition:** Package is installed (`dpkg -l intune-portal` shows `ii`) but the user cannot complete sign-in—the work-account prompt loops, times out, or returns an authentication error.
 
 ### Symptom
 
@@ -118,13 +118,13 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Let me check the sign-in service that handles your Intune authentication. Please open Terminal and type: `journalctl -u microsoft-identity-broker --since \"1 hour ago\"`. Read me the last 10 lines."
-2. **NOTE:** `microsoft-identity-broker` is a system-scope service (not user-scope), so the command does NOT use `--user`. If the output is empty or "no entries," ask the user to retry with `sudo journalctl -u microsoft-identity-broker --since "1 hour ago"` — system-scope journals may require root for full visibility on some Ubuntu installs (acceptable per D-18 carve-out for root-only journals).
+2. **NOTE:** `microsoft-identity-broker` is a system-scope service (not user-scope), so the command does NOT use `--user`. If the output is empty or "no entries," ask the user to retry with `sudo journalctl -u microsoft-identity-broker --since "1 hour ago"`—system-scope journals may require root for full visibility on some Ubuntu installs (acceptable per D-18 carve-out for root-only journals).
 3. Filter the user-scope journal for sign-in references: `journalctl --user | grep -iE "broker|signin|sign-in"`. Document any failure messages or repeated authentication attempts.
-4. Confirm the system-scope service is at least running: `systemctl status microsoft-identity-broker` (no `--user`, no `sudo`). Expected: `Active: active (running)`. If `inactive` or `failed`, the service has stopped — admin action required.
+4. Confirm the system-scope service is at least running: `systemctl status microsoft-identity-broker` (no `--user`, no `sudo`). Expected: `Active: active (running)`. If `inactive` or `failed`, the service has stopped—administrator action required.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Restart the system-scope broker service: `sudo systemctl restart microsoft-identity-broker`. Wait 30 seconds, then verify `systemctl status microsoft-identity-broker` returns `active (running)`.
 - Confirm the user's account is licensed for Intune in Entra (the broker rejects accounts without a valid Intune license assignment).
@@ -135,14 +135,14 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
 - After restart: ask the user to retry sign-in from the Intune client. Check `journalctl -u microsoft-identity-broker --since "5 minutes ago"` for a successful authentication entry.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
 ### Escalation (within Cause B)
 
 - Broker service restarts cleanly but the user's sign-in still loops after retry
-- Broker journal shows no sign-in attempt despite the user reporting they retried — indicates a client-side wiring issue
+- Broker journal shows no sign-in attempt despite the user reporting they retried—indicates a client-side wiring issue
 - Multiple users on the same device model fail authentication in the same pattern
 
 ---
@@ -163,13 +163,13 @@ See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-s
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Let me check whether the Intune check-in timer is scheduled to run on your device. Please open Terminal and type: `systemctl --user list-timers intune-agent.timer`. Read me the NEXT column for that line."
-2. If the NEXT column shows `-`, the timer has no scheduled next-run — confirm by also asking the user to run `systemctl --user status intune-agent.timer` and read me the `Active:` line. Expected when healthy: `Active: active (waiting)`.
+2. If the NEXT column shows `-`, the timer has no scheduled next-run—confirm by also asking the user to run `systemctl --user status intune-agent.timer` and read me the `Active:` line. Expected when healthy: `Active: active (waiting)`.
 3. Ask the user to run `journalctl --user -u intune-agent.timer --since "1 hour ago"` and read me the last 10 lines. Look for activation entries or absence of expected check-in messages.
-4. Confirm the package is still installed: `apt list --installed | grep intune-portal`. If empty, the upstream cause is package removal — route to [Cause A](#cause-a-package-install) instead.
+4. Confirm the package is still installed: `apt list --installed | grep intune-portal`. If empty, the upstream cause is package removal—route to [Cause A](#cause-a-package-install) instead.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Restart the user-scope timer (no sudo on `--user` units): `systemctl --user start intune-agent.timer`. If the timer was in a failed state, run `systemctl --user reset-failed intune-agent.timer` first.
 - Confirm the user-scope systemd manager is running for the user (a logged-out user has no user-scope systemd; the user must be logged in for the timer to fire).
@@ -177,9 +177,9 @@ See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-s
 
 **Verify:**
 
-- After restart: `systemctl --user is-active intune-agent.timer` returns `active`. Within approximately 30 minutes the device should appear in Intune admin center > Devices > All devices with an updated last-check-in timestamp.
+- After restart: `systemctl --user is-active intune-agent.timer` returns `active`. Confirm the device appears in Intune admin center > Devices > All devices with an updated last-check-in timestamp within approximately 30 minutes.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
@@ -187,13 +187,13 @@ See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-s
 
 - Timer restarts cleanly but no check-in occurs within 60 minutes
 - Timer is `active (waiting)` but device still does not appear in Intune after 60 minutes (the timer is firing but the agent is not communicating with Intune)
-- The symptom matches Runbook 33 instead (timer is in `failed` state rather than missing-schedule) — route to [Runbook 33](33-linux-agent-service-failure.md)
+- The symptom matches Runbook 33 instead (timer is in `failed` state rather than missing-schedule)—route to [Runbook 33](33-linux-agent-service-failure.md)
 
 ---
 
 ## Escalation Criteria
 
-(Overall — applies across all three causes.)
+(Overall—applies across all three causes.)
 
 Escalate to L2 (per Phase 30 D-12 three-part escalation packet). See [Phase 52 L2 Linux Enrollment Investigation] (forthcoming).
 

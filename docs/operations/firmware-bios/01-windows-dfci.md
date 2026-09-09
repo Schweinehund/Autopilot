@@ -7,7 +7,7 @@ platform: Windows
 ---
 
 > **Platform applicability:** This guide is Windows-specific and covers the Device Firmware
-> Configuration Interface (DFCI) as its own surface — what the interface is, its prerequisites and
+> Configuration Interface (DFCI) as its own surface—what the interface is, its prerequisites and
 > disqualifiers, OEM support, Surface eligibility, the settings surface, and the irreversible
 > configuration, retire, reuse and recover sequences. For the domain overview and the routing
 > question of who holds the BIOS secret on Dell, HP and Lenovo hardware, see
@@ -30,7 +30,7 @@ settings reference names that interface without ambiguity:
 > These settings use the UEFI CSP.
 
 Reporting follows the same shape as delivery: it is per setting rather than per profile, so one
-setting can be reported noncompliant while the rest of the profile applies — the settings reference
+setting can be reported noncompliant while the rest of the profile applies—the settings reference
 documents exactly that outcome for one pair of boot settings.
 
 **Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
@@ -77,13 +77,13 @@ hedging:
 **Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
 
 Read that gate for what it actually turns on. The disqualifier is not the file format the hash
-arrived in, and it is not the tool that produced the hash — it is who vouched for the purchase. A
+arrived in, and it is not the tool that produced the hash—it is who vouched for the purchase. A
 registration performed by the OEM, or by a Microsoft CSP partner, carries external attestation of
 commercial acquisition. A registration an administrator performs from their own console does not,
 whatever tool produced the hash.
 
 **The four registration channels, classified.** This corpus teaches four ways a device reaches the
-Autopilot service — the four rows of the Import Methods table in
+Autopilot service—the four rows of the Import Methods table in
 [Hardware Hash Collection](../../lifecycle/01-hardware-hash.md). The qualifying column below is
 derived from the first-party gate quoted above, which names an OEM registration and a Microsoft CSP
 partner registration as the two that confer the external attestation DFCI requires.
@@ -106,7 +106,7 @@ available, and no Intune-side configuration change makes it available. The attes
 present at registration time; re-registering through a qualifying channel is the only route to it.
 
 **APv2 fleets have no DFCI at all.** A Windows Autopilot device preparation (APv2) fleet carries no
-Autopilot registration in the sense this gate means. The APv2 admin setup registers devices with a
+Autopilot registration in the sense this gate means. The APv2 administrator setup registers devices with a
 manufacturer, model and serial-number CSV rather than a hardware hash, in
 [Corporate Identifiers](../../admin-setup-apv2/04-corporate-identifiers.md), and the
 [APv2 Admin Setup Overview](../../admin-setup-apv2/00-overview.md) states that any existing APv1
@@ -126,7 +126,7 @@ both halves are first-party:
 For a device that must have DFCI configured during OOBE rather than afterward, the source's second
 route is an edition change made mid-provisioning: upgrade the device to the Enterprise edition of
 Windows 11, version 24H2 during OOBE onboarding, then sync the device and reboot it to get it
-enrolled in DFCI. Both routes leave the rest of the provisioning sequence alone — the Autopilot
+enrolled in DFCI. Both routes leave the rest of the provisioning sequence alone—the Autopilot
 deployment profile, the Enrollment Status Page (ESP) profile and the DFCI profile are still created
 and assigned in the usual order, and it is DFCI enrollment specifically, not device enrollment, that
 the known issue blocks.
@@ -163,7 +163,7 @@ side by side, and its DFCI column names six manufacturers:
 
 **Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
 
-Those six are a strict subset of the nine — the shorter list drops VAIO, Samsung and NEC, and adds
+Those six are a strict subset of the nine—the shorter list drops VAIO, Samsung and NEC, and adds
 nothing. The page carrying it has an `ms.date` of 2024-06-06, roughly two years older than the
 canonical list's 2025-03-25, and it is the oldest Microsoft Learn page cited anywhere in this guide.
 It is also a side-reference: the column exists to contrast DFCI against the Dell-only BIOS
@@ -171,8 +171,8 @@ configuration surface, not to enumerate DFCI's own support matrix. Treat the nin
 current and this one as stale.
 
 **The one-OEM variant.** Microsoft's DFCI Scenarios page, published in the Project Mu documentation
-set, carries a third list. Its own OEM section names a single manufacturer — Microsoft Surface,
-rendered as a logo image linking to the Surface DFCI guide rather than as a text list — and closes
+set, carries a third list. Its own OEM section names a single manufacturer—Microsoft Surface,
+rendered as a logo image linking to the Surface DFCI guide rather than as a text list—and closes
 with:
 
 > More are in the works...
@@ -187,7 +187,7 @@ that same DFCI Scenarios page under its related content. A reader following thos
 arrive at a shorter list than the one they started from, which is precisely why the count matters.
 
 **Dell, HP and Lenovo are on none of the three lists.** DFCI is unavailable on Dell, HP and Lenovo
-hardware — it is not an option an administrator declined, not a setting left switched off, and not a
+hardware—it is not an option an administrator declined, not a setting left switched off, and not a
 capability that can be turned on by licensing, firmware update or configuration. There is no DFCI
 profile to assign to those devices, because none of the three published manufacturer lists names
 them. Microsoft publishes the absence and not a reason for it, so no reason is recorded here. Those
@@ -234,18 +234,18 @@ catalog regardless of manufacturer, and a subset of it is inert on Surface hardw
 That quotation follows the Surface page's own display names, and one of them diverges from the rest
 of the product. The Intune DFCI settings reference names a setting **Boot from network adapters**,
 without the leading **Disable** the Surface page uses. This guide reads the two as one underlying
-setting under two display names, and Microsoft publishes no mapping between them — so read that as
+setting under two display names, and Microsoft publishes no mapping between them—so read that as
 this corpus's own inference, not as something either page states.
 
 The inference is worth confirming rather than assuming, because the prefix would invert what a value
 means. Read literally, the value Enabled asks for opposite things under the two names:
 Disable Boot from network adapters means switch network boot off, and
-Boot from network adapters means switch it on. This is a boot path — the one place on this page where
+Boot from network adapters means switch it on. This is a boot path—the one place on this page where
 a wrong value has an unrecoverable failure mode. Check which of the two names your own Intune tenant
 presents before you set it, and set it from the name the settings reference uses.
 
 **Model eligibility is neither uniform nor stable.** Support is gated per model and, within a
-family, per processor — a model can be excluded outright while its siblings are supported, and one
+family, per processor—a model can be excluded outright while its siblings are supported, and one
 Surface Laptop generation is listed for Intel processors only. The current eligible-device list and
 its exclusions live on the vendor page cited above; check them there against the exact SKU being
 purchased or deployed rather than against a family name.
@@ -253,7 +253,7 @@ purchased or deployed rather than against a family name.
 This guide therefore ships no eligible-model table, and no table of which DFCI settings are gated to
 which Surface models. That is deliberate rather than an omission. A model list is high-churn data
 with a short useful life: a copy of it here is wrong the first time Microsoft ships a new Surface
-generation, and wrong silently. The durable facts are the ones above — the floor, the
+generation, and wrong silently. The durable facts are the ones above—the floor, the
 self-registration rule, the inert settings and the existence of per-model and per-processor gating.
 The current values behind them belong at the vendor page.
 
@@ -262,8 +262,8 @@ The current values behind them belong at the vendor page.
 
 The Intune DFCI settings reference organizes everything a DFCI profile can reach into eight
 categories: UEFI access, Security features, Cameras, Microphones and speakers, Radios, Boot Options,
-Ports, and Wake settings. Most individual settings take one of three values — Not configured,
-Enabled or Disabled — and the exceptions matter more than the pattern. The full per-setting option
+Ports, and Wake settings. Most individual settings take one of three values—Not configured,
+Enabled or Disabled—and the exceptions matter more than the pattern. The full per-setting option
 matrix lives on that page and is deliberately not reproduced here; read it there, against the exact
 profile you are about to assign.
 
@@ -275,16 +275,16 @@ it, so on the manufacturers where the setting applies DFCI can switch platform v
 structurally cannot switch it off. That asymmetry has consequences further down this page.
 
 **Scope: the asymmetry does not reach Surface.** The Surface guide lists CPU and IO virtualization
-among the settings that do not currently apply to Surface devices — quoted, with its own source,
+among the settings that do not currently apply to Surface devices—quoted, with its own source,
 under Surface Eligibility above. On Surface hardware DFCI neither enables nor disables it, and
 nothing in the Intune console reports the non-application as an error. Read the asymmetry below as a
 description of the interface on the manufacturers where the setting does apply.
 
 **What ships here and what routes out.** This guide names a setting when it carries a durable,
-high-consequence behavior — a bricking risk, an interaction trap, or a compliance conflict — and
+high-consequence behavior—a bricking risk, an interaction trap, or a compliance conflict—and
 routes the reader out to the vendor or Microsoft page when the setting is high-churn enumerable data
 with no independent narrative value. Applying that rule honestly means ten individual setting names
-still appear in this file, across this section, the Surface section above, the retire sequence below
+still appear in this file, across this section, the Surface section, the retire sequence below
 and the callouts near the end. Count them the way this file counts them: one entry per underlying
 setting, counted once however often it appears and however the two first-party pages spell its
 display name, and excluding the eight category names listed above. The rule bounds which settings
@@ -292,11 +292,11 @@ appear, not whether any do.
 
 Routing high-churn data out to its source page is also why this guide quotes the DFCI settings
 reference directly rather than pointing past it. That reference is a Microsoft Intune policy
-reference rather than a vendor manual, and the behaviors it documents — the value sets, the
-conflicts, the recovery costs — are the durable kind this guide keeps.
+reference rather than a vendor manual, and the behaviors it documents—the value sets, the
+conflicts, the recovery costs—are the durable kind this guide keeps.
 
 **Trap: a category setting and one of its granular members never converge.** Some DFCI settings are
-categories — Microphones and speakers, or Radios (Bluetooth, Wi-Fi, NFC, etc.) — and some are
+categories—Microphones and speakers, or Radios (Bluetooth, Wi-Fi, NFC, etc.)—and some are
 granular members of those categories, such as Microphones or Wi-Fi. Configure both and the profile
 never settles. On the first sync the granular setting applies and the category setting is reported
 noncompliant; on every sync afterward Intune applies the category setting because it is
@@ -304,7 +304,7 @@ noncompliant, which makes the granular setting noncompliant, then applies the gr
 which makes the category setting noncompliant again. The loop does not time out and nothing on the
 device breaks it. Configure the category or the granular settings, never both.
 
-Microsoft's own worked example is the case administrators reach for most often — permit Wi-Fi and
+Microsoft's own worked example is the case administrators reach for most often—permit Wi-Fi and
 nothing else:
 
 1. Leave the category setting Radios (Bluetooth, Wi-Fi, NFC, etc.) at Not configured.
@@ -343,7 +343,7 @@ mistake is ever made.
 
 **Trap: a disabled radios category needs a wired connection, or the device becomes unmanageable.**
 Setting the Radios (Bluetooth, Wi-Fi, NFC, etc.) category to Disabled switches off the built-in
-radios the firmware manages — including the ones the device would otherwise use to reach Intune:
+radios the firmware manages—including the ones the device would otherwise use to reach Intune:
 
 > When you set this option to Disabled, the device requires a wired network connection. Otherwise, the device can be unmanageable.
 
@@ -354,8 +354,8 @@ that chain backward is the mistake this part of the section exists to prevent:
 
 1. The DFCI setting for CPU and IO virtualization exposes only Not configured and Enabled. On the
    manufacturers where the setting applies, DFCI can switch the platform's CPU and IO virtualization
-   capabilities on — the settings reference records that enabling it also turns on Windows
-   Virtualization Based Security and Device Guard — and it carries no value that switches them back
+   capabilities on—the settings reference records that enabling it also turns on Windows
+   Virtualization Based Security and Device Guard—and it carries no value that switches them back
    off. On Surface the setting does not apply at all, so neither direction is available there.
 2. The exposure therefore does not live in a DFCI profile at all. A device whose
    virtualization-based security is off got there through firmware settings configured outside DFCI,
@@ -412,7 +412,7 @@ wrong move, and Microsoft says so directly:
 Deleting the profile is worse than doing nothing, because it removes the only instrument that can
 still change the device. The settings stay, the UEFI menus stay locked, and Intune no longer has a
 profile through which to unlock them. To stop using DFCI on a device, update the settings in the
-existing profile — do not delete it — and release the device through the retire sequence rather than
+existing profile—do not delete it—and release the device through the retire sequence rather than
 by withdrawing the assignment.
 
 The retire sequence, the reuse sequence and the recovery path for a device already locked in the
@@ -421,13 +421,13 @@ wrong order are documented in the sections that follow, each with its own orderi
 <a id="retiring-a-device"></a>
 ## Retiring a Device
 
-Retiring is the sequence for a device that leaves the fleet permanently — sold, returned at the end
+Retiring is the sequence for a device that leaves the fleet permanently—sold, returned at the end
 of a lease, recycled, or otherwise released from management. It has three steps, and the order is
 load-bearing rather than incidental. Each step removes an instrument the previous step depended on,
 so performing them out of order does not merely delay the work; it destroys the only route back.
 
-1. **Unlock the device through the DFCI profile.** Update the existing profile — do not delete it —
-   to the UEFI (BIOS) settings you want at the exit state. Microsoft's worked example changes
+1. **Unlock the device through the DFCI profile.** Update the existing profile—do not delete it—to
+   the UEFI (BIOS) settings you want at the exit state. Microsoft's worked example changes
    Allow local user to change UEFI (BIOS) settings to Only not configured settings, sets all other
    settings to Not configured, and saves. The profile is the only instrument that can re-enable the
    UEFI menus while the device is still under management, which is why this step comes first.
@@ -468,7 +468,7 @@ difference between them is a step that is deliberately absent rather than one th
 The discriminator, stated rather than left to inference: reuse wipes the device but does **not**
 remove the Autopilot record, so the registration survives the wipe, DFCI management survives with
 the registration, and the device applies whatever profile its new group carries when it reboots into
-setup. Retiring does the opposite on both counts — it unlocks the firmware through the profile
+setup. Retiring does the opposite on both counts—it unlocks the firmware through the profile
 first and deletes the Autopilot record last, precisely because the device is not coming back.
 Reuse needs no unlock step at all, because the device never leaves management.
 
@@ -494,7 +494,7 @@ Read the second half carefully before treating recovery as a reset. It restores 
 it does not restore the settings. Everything the last profile wrote is still written, so a device
 recovered this way is an unlocked device carrying the same firmware configuration it had when it was
 locked. Refreshing management from the network is also a physical operation performed at the device,
-not a console action — which means it scales at the speed of a bench technician, one machine at a
+not a console action—which means it scales at the speed of a bench technician, one machine at a
 time.
 
 **Precondition: the refresh-from-network route can itself have been configured away.** A device whose
@@ -511,16 +511,16 @@ factory-new state. It is reproduced below because it is the concrete form of the
 recovery above. Read the warning before the steps, not after them.
 
 **Warning: this sequence deletes the Autopilot registration before the device is unlocked.** Its
-second step removes the registration and its fourth step is the unlock — the exact inverse of the
+second step removes the registration and its fourth step is the unlock—the exact inverse of the
 default retire sequence above, which unlocks through the profile, then wipes, then deletes the record
 last. That default stays the default for every DFCI fleet, Surface included. This order is
 recoverable only because Surface's own UEFI menu carries the refresh-from-network command; the other
 eight supported manufacturers have no equivalent on record, so applying this order to a non-Surface
 DFCI fleet leaves the firmware locked beyond Intune's reach with nothing left to unlock it.
 
-1. Retire the device from Intune — under Devices, All Devices, select the device and choose
+1. Retire the device from Intune—under Devices, All Devices, select the device and choose
    Retire/Wipe.
-2. Delete the Autopilot registration from Intune — under Devices, Enrollment, Windows Autopilot,
+2. Delete the Autopilot registration from Intune—under Devices, Enrollment, Windows Autopilot,
    Devices, select the device and choose Delete.
 3. Connect the device to wired Internet with a Surface-branded Ethernet adapter, restart it, and
    open the UEFI menu.
@@ -553,8 +553,8 @@ currently apply to Surface devices, quoted with its own source under Surface Eli
 Surface hardware neither direction is available and the profile reports no error either way.
 
 **Neither TPM nor Secure Boot appears among the settings DFCI enumerates.** The settings reference
-organizes the interface into eight categories — UEFI access, Security features, Cameras, Microphones
-and speakers, Radios, Boot Options, Ports, and Wake settings — and neither TPM nor Secure Boot is
+organizes the interface into eight categories—UEFI access, Security features, Cameras, Microphones
+and speakers, Radios, Boot Options, Ports, and Wake settings—and neither TPM nor Secure Boot is
 among them. State that as what it is: an enumeration fact about the published surface. Microsoft
 publishes no sentence declaring those two out of DFCI's reach, so do not write one, and do not read
 the absence as a promise about what a future version of the interface will or will not carry. For
@@ -564,7 +564,7 @@ what this domain does not own, including where TPM and Secure Boot are governed 
 **Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
 
 **No Microsoft list of DFCI manufacturers names Dell, HP or Lenovo.** All three lists this guide
-records — the canonical nine, the older six and the single-manufacturer variant — omit them.
+records—the canonical nine, the older six and the single-manufacturer variant—omit them.
 On that hardware DFCI is unavailable rather than declined: there is no profile to assign, no license
 to buy and no firmware setting to turn on. What Microsoft publishes is the absence itself and not
 its cause, and this guide states no cause either. Those fleets are governed through a different

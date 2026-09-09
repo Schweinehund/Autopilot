@@ -2,7 +2,7 @@
 
 > **WARNING: This registry lives OUTSIDE the indexed SharePoint library.**
 > See `scripts/pipeline/README.md §SC3`.
-> If this file is indexed, doc-specific queries (e.g., "What does RE-047 cover?")
+> If this file is indexed, doc-specific queries (for example, "What does RE-047 cover?")
 > return the registry row instead of the document content.
 > **Do NOT upload this file to the indexed SharePoint library.**
 
@@ -250,14 +250,15 @@
 | RE-234 | docs/operations/patch-management/06-windows-driver-firmware-updates.md | Windows Driver and Firmware Updates | Guide | Approved |
 | RE-235 | docs/operations/patch-management/07-windows-autopatch.md | Windows Autopatch | Guide | Approved |
 | RE-236 | docs/operations/patch-management/08-windows-app-updates.md | Windows Application Updates | Guide | Approved |
+| RE-237 | docs/recipes/06-walk-up-avd-kiosk-autologon.md | Walk-Up AVD Kiosk: Autologon Multi-App Assigned Access with Windows App Auto-Launch | Guide | Approved |
 
 ## Review Notes
 
-- **RE-212 (`docs/decision-trees/05-device-lifecycle.md`) — Doc Type = Reference, not Guide.**
+- **RE-212 (`docs/decision-trees/05-device-lifecycle.md`)—Doc Type = Reference, not Guide.**
   Directory precedence is categorical: `EEE-SOP-standard.md:178-179` states a document in a
   class-dedicated directory takes that directory's type regardless of topical overlap
   (`decision-trees/*` → Reference), and `EEE-SOP-standard.md:186-187` names this exact file as
-  the LOCKED worked resolution — rule-1 directory-precedence beats the `-lifecycle` filename's
+  the LOCKED worked resolution—rule-1 directory-precedence beats the `-lifecycle` filename's
   lifecycle-flavored naming (122-CONTEXT.md D-04(a), same rule that makes RE-068 a Runbook
   despite containing a converted decision tree). Recorded here so a future reviewer does not
   re-litigate the filename-vs-directory question.
@@ -265,7 +266,7 @@
 - **RE-228 through RE-236 (the nine `docs/operations/` firmware-BIOS and patch-management guides) — `Approved` without an EEE retrofit.**
   These nine documents carry no `doc_id` and are deliberately not C17-gated, per the dated owner
   ruling recorded as INT-02 (2026-08-26). They are `Approved` because the `Status: Approved` filter
-  in `scripts/pipeline/build-publish-bundle.mjs` is the publish gate — any other value silently
+  in `scripts/pipeline/build-publish-bundle.mjs` is the publish gate—any other value silently
   excludes the document from the `.docx` bundle and from the indexed library. The header note above
   describes a completed 2026-07 retrofit wave (phases 116–118) and binds nothing executable, so the
   dated ruling governs where the two read differently; the twenty legacy `docs/operations/`

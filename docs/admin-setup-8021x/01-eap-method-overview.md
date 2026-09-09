@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-Compares the three co-equal EAP methods for 802.1X network authentication on Intune-managed platforms — EAP-TLS (mutual certificate), PEAP-MSCHAPv2 (server certificate + domain credentials), and EAP-TTLS (server certificate + flexible inner method) — covering what authenticates, client requirements, trust requirements, and when to choose each, with no method ranked as a default.
+Compares the three co-equal EAP methods for 802.1X network authentication on Intune-managed platforms—EAP-TLS (mutual certificate), PEAP-MSCHAPv2 (server certificate + domain credentials), and EAP-TTLS (server certificate + flexible inner method)—covering what authenticates, client requirements, trust requirements, and when to choose each, with no method ranked as a default.
 
 > **Prerequisites:** Read the [Network Authentication Glossary](../_glossary-network.md) for [802.1X](../_glossary-network.md#8021x), [EAP](../_glossary-network.md#eap),
 
@@ -30,7 +30,7 @@ This guide compares the three EAP methods supported for 802.1X across Intune-man
 
 The exchange begins with [EAPOL](../_glossary-network.md#eapol) frames between supplicant and authenticator -- this happens before the device has an IP address. The authenticator proxies the [EAP](../_glossary-network.md#eap) payload to the RADIUS server over UDP/IP. The EAP method exchange (TLS handshake, PEAP tunnel, or TTLS tunnel) occurs inside this relay path.
 
-**LOCKED — 8 (messages)** — 3 actors (Supplicant, Authenticator, Authentication Server/RADIUS), 8 messages, independently re-derived from the pre-conversion sequence diagram (`git show 71be4ab`; corrects an earlier 10-message estimate -- the diagram carries exactly 8 message arrows plus 1 non-message annotation, folded into step 6 below). Per D-02, a sequenceDiagram converts to an ordered numbered step list, not a table.
+**LOCKED—8 (messages)**—3 actors (Supplicant, Authenticator, Authentication Server/RADIUS), 8 messages, independently re-derived from the pre-conversion sequence diagram (`git show 71be4ab`; corrects an earlier 10-message estimate -- the diagram carries exactly 8 message arrows plus 1 non-message annotation, folded into step 6). Per D-02, a sequenceDiagram converts to an ordered numbered step list, not a table.
 
 1. Supplicant -> Authenticator: EAPOL-Start
 2. Authenticator -> Supplicant: EAP-Request/Identity
@@ -53,8 +53,8 @@ Both sides authenticate by certificate. The supplicant presents a client certifi
 
 ### What the Client Requires
 
-- A client certificate installed on the device. In Intune, this is delivered via a [SCEP](../_glossary-network.md#scep) or [PKCS](../_glossary-network.md#pkcs) certificate profile.
-- A [trusted root](../_glossary-network.md#trusted-root) certificate for the CA that issued the RADIUS server's certificate, delivered via a Trusted Certificate profile.
+- A client certificate installed on the device. In Intune, this is delivered through a [SCEP](../_glossary-network.md#scep) or [PKCS](../_glossary-network.md#pkcs) certificate profile.
+- A [trusted root](../_glossary-network.md#trusted-root) certificate for the CA that issued the RADIUS server's certificate, delivered through a Trusted Certificate profile.
 - An 802.1X Wi-Fi or Wired network profile configured for EAP-TLS that references the client certificate and trusted root profiles.
 
 ### Trust Requirements
@@ -66,7 +66,7 @@ Always populate the [server-name validation](../_glossary-network.md#server-name
 ### When to Choose
 
 Choose EAP-TLS when:
-- Certificate infrastructure (SCEP/PKCS profile via NDES or Cloud PKI) is deployed or planned
+- Certificate infrastructure (SCEP/PKCS profile through NDES or Cloud PKI) is deployed or planned
 - Machine authentication without a password dependency is required
 - Mutual authentication -- both the device and the RADIUS server verify each other's certificate -- is a security requirement
 - Passwordless, certificate-only authentication is a requirement
@@ -75,11 +75,11 @@ Choose EAP-TLS when:
 
 ## PEAP-MSCHAPv2
 
-PEAP-MSCHAPv2 (Protected EAP -- Microsoft Challenge Handshake Authentication Protocol v2) uses a server certificate to establish an outer TLS tunnel. Inside the tunnel, the user authenticates with a domain username and password via MSCHAPv2. No client certificate is required.
+PEAP-MSCHAPv2 (Protected EAP -- Microsoft Challenge Handshake Authentication Protocol v2) uses a server certificate to establish an outer TLS tunnel. Inside the tunnel, the user authenticates with a domain username and password using MSCHAPv2. No client certificate is required.
 
 ### What Authenticates
 
-The RADIUS server authenticates by presenting its certificate (outer TLS). Inside the encrypted tunnel, the user authenticates with domain credentials via MSCHAPv2. The supplicant does not present a certificate.
+The RADIUS server authenticates by presenting its certificate (outer TLS). Inside the encrypted tunnel, the user authenticates with domain credentials using MSCHAPv2. The supplicant does not present a certificate.
 
 ### What the Client Requires
 
@@ -158,9 +158,9 @@ Choose EAP-TTLS when:
 | Intune support | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android | Win / macOS / iOS / Android |
 | Wired support | Win / macOS / iOS | Win / macOS / iOS | Win / macOS / iOS |
 
-\*Linux: script-based EAP-TLS only via nmcli; PEAP-MSCHAPv2 and EAP-TTLS on Linux are not documented in Microsoft Learn and are out of scope for this guide set.
+\*Linux: script-based EAP-TLS only using nmcli; PEAP-MSCHAPv2 and EAP-TTLS on Linux are not documented in Microsoft Learn and are out of scope for this guide set.
 
-**TEAP (awareness only — not a co-equal path).** Tunneled EAP (TEAP, RFC 7170) is visible in the Windows Intune wired-network profile UI and is unique to Windows wired 802.1X configuration. It is not a co-equal path in this guide set -- it is a Windows-wired-only awareness item. A one-paragraph awareness note for TEAP appears in the Windows 802.1X guide (Phase 102). For all platforms other than Windows wired, TEAP is out of scope for this guide set.
+**TEAP (awareness only—not a co-equal path).** Tunneled EAP (TEAP, RFC 7170) is visible in the Windows Intune wired-network profile UI and is unique to Windows wired 802.1X configuration. It is not a co-equal path in this guide set -- it is a Windows-wired-only awareness item. A one-paragraph awareness note for TEAP appears in the Windows 802.1X guide (Phase 102). For all platforms other than Windows wired, TEAP is out of scope for this guide set.
 
 For certificate delivery requirements -- trusted root profiles, SCEP/PKCS client certificate profiles, the deployment ordering rule, and the per-platform cert-delivery support matrix -- see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md).
 
@@ -176,5 +176,5 @@ For certificate delivery requirements -- trusted root profiles, SCEP/PKCS client
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-07-08 | Phase 122 plan 07: converted Mermaid sequenceDiagram to an ordered numbered step list per D-02 (sequence diagrams -> step list, not table), preserving all 8 messages and the actor->actor direction; removed the mermaid fence; LOCKED — 8 (messages, R1 convention — corrects the plan/RESEARCH's 10-message estimate, independently re-derived against git show 71be4ab); split 2 pre-existing over-200-char blockquote groups into 6 word-preserving paragraphs; enrolled as RE-135. | -- |
+| 2026-07-08 | Phase 122 plan 07: converted Mermaid sequenceDiagram to an ordered numbered step list per D-02 (sequence diagrams -> step list, not table), preserving all 8 messages and the actor->actor direction; removed the mermaid fence; LOCKED — 8 (messages, R1 convention — corrects the phase research's 10-message estimate, independently re-derived against git show 71be4ab); split 2 pre-existing over-200-char blockquote groups into 6 word-preserving paragraphs; enrolled as RE-135. | -- |
 | 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |

@@ -39,7 +39,7 @@ These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts 
 
 ## Hardware-Specific Known Issues
 
-The following hardware-specific TPM issues are known to cause attestation failures. When the Cause column references a hardware vendor, use this section for detail. These are not investigation procedures — see the [L2 TPM runbook](../l2-runbooks/03-tpm-attestation.md) for full investigation steps.
+The following hardware-specific TPM issues are known to cause attestation failures. When the Cause column references a hardware vendor, use this section for detail. These are not investigation procedures—see the [L2 TPM runbook](../l2-runbooks/03-tpm-attestation.md) for full investigation steps.
 
 ### Infineon SLB9672 — EK Certificate Issue (firmware 15.22)
 
@@ -47,7 +47,7 @@ Infineon SLB9672 TPM modules running firmware version 15.22 contain an EK (Endor
 
 ### ST Micro and Nuvoton RSA-3072
 
-The latest ST Micro and Nuvoton TPM models supporting RSA-3072bit keys fail TPM attestation in pre-provisioning and self-deploying mode. This issue was documented May 2025 and updated August 2025. For Lenovo devices, the issue is resolved — contact Lenovo support for the firmware update. Other OEM customers should contact their device manufacturer.
+The latest ST Micro and Nuvoton TPM models supporting RSA-3072bit keys fail TPM attestation in pre-provisioning and self-deploying mode. This issue was documented May 2025 and updated August 2025. For Lenovo devices, the issue is resolved—contact Lenovo support for the firmware update. Other OEM customers must contact their device manufacturer.
 
 ### AMD fTPM (ASP Firmware TPM)
 

@@ -7,7 +7,7 @@ platform: Windows
 ---
 
 > **Platform applicability:** This guide is Windows-specific and covers Lenovo BIOS configuration
-> through Intune — delivery surfaces, authentication and secret custody, scope of control,
+> through Intune—delivery surfaces, authentication and secret custody, scope of control,
 > prerequisites and hard blockers, offboarding and loss of the management plane, and recovery. For
 > the domain overview and the routing question of who holds the BIOS secret on Dell, HP and Lenovo
 > hardware, see [Firmware and BIOS Governance](00-overview.md).
@@ -17,7 +17,7 @@ platform: Windows
 Lenovo is the vendor with no vendor cloud connector and no customer secrets of its own to hold.
 This guide covers the Think BIOS Config Tool V2 (TBCT V2), the settings tool that reads and writes
 BIOS configuration over WMI, and the Lenovo BIOS Certificate Tool V2 (LBCT V2), the password-less
-certificate tool — the two Intune-artifact generators that reach Lenovo commercial hardware. Both
+certificate tool—the two Intune-artifact generators that reach Lenovo commercial hardware. Both
 tools build ordinary Intune objects that the customer then owns outright; neither tool nor Lenovo
 itself holds a copy of the secret afterward. For the routing question of who holds the BIOS secret
 on Dell, HP and Lenovo hardware, see
@@ -36,11 +36,11 @@ Lenovo is a two-tool vendor, and delivery splits along that line.
 
 Think BIOS Config Tool V2 (TBCT V2) is a PowerShell interface over the `Lenovo.BIOS.Config` module
 that reads and writes BIOS settings over WMI. Current as of 2026-04-06: interface v2.0.3, module
-v1.0.3. Module and tool names only — no invocation syntax.
+v1.0.3. Module and tool names only—no invocation syntax.
 
 **Source:** [Think BIOS Config Tool V2 (Lenovo CDRT)](https://docs.lenovocdrt.com/guides/tbct_v2/)
 
-It produces Intune artifacts directly — Win32 `.intunewin` packages, Remediations scripts, and
+It produces Intune artifacts directly—Win32 `.intunewin` packages, Remediations scripts, and
 direct upload to Intune over the Microsoft Graph API. It requires `IntuneWinAppUtil.exe`, the
 Microsoft Graph modules, and tenant permissions.
 
@@ -142,7 +142,7 @@ firmware setting blocks TPM attestation, see
 [TPM Attestation Failure Decision Tree](../../decision-trees/03-tpm-attestation.md).
 
 No per-setting compliance attestation path exists on a Lenovo fleet today; the delivery vehicle
-reports what it reports — a Remediation exit code or a Win32 install result — which is coarser
+reports what it reports—a Remediation exit code or a Win32 install result—which is coarser
 than per-setting reporting.
 
 <a id="prerequisites"></a>
@@ -170,7 +170,7 @@ Lenovo's own first-party pointers are bootstrap alternatives and never recovery 
 Deployment Boot Mode, and the third-party Remote SVP option Lenovo names from Absolute. The System
 Deployment Boot Mode alternative was independently re-confirmed as directly sourced on 2026-08-25;
 the Remote SVP option was not separately re-verified this session and rests on its original
-citation. They are for getting a password onto a device that has none — not for recovering one
+citation. They are for getting a password onto a device that has none—not for recovering one
 that is lost.
 
 **Source:** [Certificate-based BIOS Authentication (ThinkDeploy Blog)](https://blog.lenovocdrt.com/certificate-based-bios-authentication/) — Lenovo CDRT, updated 2025-10-31.
@@ -195,8 +195,8 @@ and Lenovo simply cannot create the password at all. See
 
 Lenovo has no vendor management plane to lose. There is no vendor cloud connector to deactivate,
 no vendor-held vault to expire, and no vendor-side countdown, because the secret never leaves the
-customer's control in the first place. What the customer can lose is their own material — the
-encrypted INI file and its passphrase, or the certificate private key — and that loss is governed
+customer's control in the first place. What the customer can lose is their own material—the
+encrypted INI file and its passphrase, or the certificate private key—and that loss is governed
 by the customer's own backup, access-control and key-rotation practice, not by a vendor's account
 lifecycle.
 
@@ -205,14 +205,14 @@ as an omission. The heading is present here because it is D-01's own justificati
 six-section shape holding across all three guides, and omitting it would break the identical shape
 Success Criterion 1 grades.
 
-The cross-vendor contrast: in Dell and HP, losing the management plane loses the secret — Dell's
+The cross-vendor contrast: in Dell and HP, losing the management plane loses the secret—Dell's
 subscription end and HP's 30-day countdown. See
 [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md) and
 [HP BIOS Configuration Through Intune](03-hp-bios-configuration.md). In Lenovo, there is no
 management plane between the customer and the secret, which is the same fact the domain routes on.
 
-Because the artifacts are ordinary Intune objects the customer owns — Win32 apps, Remediations
-scripts, a Custom OMA-URI profile — removing Lenovo's tooling from the process leaves those
+Because the artifacts are ordinary Intune objects the customer owns—Win32 apps, Remediations
+scripts, a Custom OMA-URI profile—removing Lenovo's tooling from the process leaves those
 objects in the tenant exactly as any other Intune object, and they are removed the same way. There
 is no vendor-side orphaning behavior to account for.
 
@@ -243,7 +243,7 @@ reference page documents the enrollable Supervisor and System Management certifi
 BIOS-menu reset options, with Subject and Issuer viewable locally. No page found this phase states
 whether those reset options are reachable without the key-based unlock flow, and this guide does
 not present them as a bypass. Certificate reset does not stand as an answer for the
-supervisor-password case above — a reader who arrives having lost a password must not read a path
+supervisor-password case above—a reader who arrives having lost a password must not read a path
 that does not exist for them.
 
 (b) The explicit statement of the absence, with the pages checked named here: as of 2026-08-25,
@@ -256,7 +256,7 @@ exists.
 (c) Escalate to Lenovo support, and stop.
 
 Storing the signing key in Azure Key Vault means the key inherits that service's own soft-delete
-and purge-protection model rather than living as a file on an administrator's workstation — this
+and purge-protection model rather than living as a file on an administrator's workstation—this
 is this corpus's own inference, not a Lenovo claim.
 
 No board-replacement sentence ships for this second case. Lenovo has said nothing about it, and

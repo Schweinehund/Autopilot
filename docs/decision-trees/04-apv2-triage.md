@@ -24,11 +24,11 @@ Reference decision table for Windows Autopilot Device Preparation (APv2) post-OO
 
 Start here when a user reports an issue with a device that was expected to go through [APv2 Device Preparation](../_glossary.md#apv2). This tree begins after the user has authenticated during OOBE -- it covers portal-observable symptoms for APv2 Device Preparation deployments. No network reachability gate is included because successful OOBE authentication already verifies network connectivity. If the user cannot reach any website or sign in at all, use the [APv1 initial triage tree](00-initial-triage.md) network gates instead (those network checks apply regardless of deployment framework).
 
-Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific L1 runbook or to an L2 escalation point with data collection instructions.
+Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree routes you to a specific L1 runbook or to an L2 escalation point with data collection instructions.
 
 ## Decision Tree
 
-**LOCKED — 23 (nodes + labeled edges)** — 14 nodes + 9 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped below into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges — no row collapses more than one incoming edge.
+**LOCKED — 23 (nodes + labeled edges)** — 14 nodes + 9 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges — no row collapses more than one incoming edge.
 
 ### Stage 1: ESP / Device Preparation Screen Gate (APD1 → APD2)
 

@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-This guide is the index for the complete APv1 (Windows Autopilot classic) admin configuration sequence, spanning hardware hash upload through deployment profile, ESP policy, dynamic groups, deployment mode selection, connector installation, and the configuration-failures reverse-lookup reference. It is intended for Intune administrators standing up or auditing an APv1 deployment from scratch, and each linked stage must be completed in order since later steps depend on earlier ones being correctly configured.
+This guide is the index for the complete APv1 (Windows Autopilot classic) administrator configuration sequence, spanning hardware hash upload through deployment profile, ESP policy, dynamic groups, deployment mode selection, connector installation, and the configuration-failures reverse-lookup reference. It is intended for Intune administrators standing up or auditing an APv1 deployment from scratch, and each linked stage must be completed in order since later steps depend on earlier ones being correctly configured.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
@@ -35,7 +35,7 @@ This guide walks Intune administrators through configuring a complete Windows Au
 
 Complete these steps in order. Each guide includes a verification checklist and a "What breaks if misconfigured" callout for every configurable setting.
 
-(LOCKED — 8 nodes + labeled edges: chained sequence, no diamonds)
+(LOCKED—8 nodes + labeled edges: chained sequence, no diamonds)
 
 1. Hardware Hash Upload
 2. Deployment Profile
@@ -48,7 +48,7 @@ Complete these steps in order. Each guide includes a verification checklist and 
 
 Full detail for each stage:
 
-1. **[Hardware Hash Upload](01-hardware-hash-upload.md)** -- Register devices by uploading hardware hashes via OEM delivery, CSV bulk import, or PowerShell script. This must be complete before any profile can be assigned.
+1. **[Hardware Hash Upload](01-hardware-hash-upload.md)** -- Register devices by uploading hardware hashes through OEM delivery, CSV bulk import, or PowerShell script. This must be complete before any profile can be assigned.
 
 2. **[Deployment Profile](02-deployment-profile.md)** -- Create and configure the Autopilot deployment profile with OOBE settings, join type, and user account type.
 

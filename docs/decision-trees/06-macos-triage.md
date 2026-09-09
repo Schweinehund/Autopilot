@@ -16,19 +16,19 @@ platform: macOS
 
 ## Summary
 
-Reference decision table for macOS ADE triage via Intune, gating first on whether Setup Assistant completed, then routing by primary symptom to an L1 runbook or L2 escalation within 3 decision steps. Includes a nested Platform SSO sub-decision (registration prompt, Secure Enclave key loss, Kerberos TGT) reached from the primary-symptom gate.
+Reference decision table for macOS ADE triage through Intune, gating first on whether Setup Assistant completed, then routing by primary symptom to an L1 runbook or L2 escalation within 3 decision steps. Includes a nested Platform SSO sub-decision (registration prompt, Secure Enclave key loss, Kerberos TGT) reached from the primary-symptom gate.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
 
 ## How to Use This Tree
 
-Start here when a user reports an issue with a Mac enrolled (or expected to enroll) via [ADE](../_glossary-macos.md#ade). Follow each decision point using observations from the device screen and Intune admin center. The tree routes to an L1 runbook or L2 escalation within 3 decision steps from the root.
+Start here when a user reports an issue with a Mac enrolled (or expected to enroll) through [ADE](../_glossary-macos.md#ade). Follow each decision point using observations from the device screen and Intune admin center. The tree routes to an L1 runbook or L2 escalation within 3 decision steps from the root.
 
 No network reachability gate is included at the root because Setup Assistant completion already confirms basic network and Apple connectivity. If the device cannot reach any network at all and Setup Assistant never appeared, use the [Device Not Appearing in Intune runbook](../l1-runbooks/10-macos-device-not-appearing.md) directly.
 
 ## Decision Tree
 
-**LOCKED — 31 (nodes + labeled edges)** — 16 nodes + 15 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 4 diamonds are represented, including the nested `MACSSO` diamond (the Platform SSO sub-decision reached from `MAC3`) -- its 3 outgoing labeled edges are enumerated as their own explicit rows below, not flattened into the parent symptom row.
+**LOCKED—31 (nodes + labeled edges)**—16 nodes + 15 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 4 diamonds are represented, including the nested `MACSSO` diamond (the Platform SSO sub-decision reached from `MAC3`) -- its 3 outgoing labeled edges are enumerated as their own explicit rows, not flattened into the parent symptom row.
 
 ## Routing Verification
 

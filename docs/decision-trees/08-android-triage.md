@@ -18,13 +18,13 @@ platform: Android
 
 Reference decision table for Android enrollment and compliance triage across all Intune-managed Android modes (BYOD Work Profile, COBO, Dedicated/COSU, corporate Zero-Touch, and AOSP specialty hardware). Identifies the enrollment mode first, then routes by symptom to the matching L1 runbook or an L2 escalation, preserving both corpus-heaviest reconvergence merges from the original decision graph.
 
-> **Platform gate:** This guide covers Android Enterprise troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+> **Platform gate:** This guide covers Android Enterprise troubleshooting through Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
 
 > For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md).
 
 ## How to Use This Tree
 
-Start here when a user reports an issue with an Android device enrolled (or expected to enroll) in Intune. Identify the enrollment mode first, then follow the symptom branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Android failure root causes differ fundamentally by mode — asking mode before symptom eliminates false-negative triage (Phase 40 D-01).
+Start here when a user reports an issue with an Android device enrolled (or expected to enroll) in Intune. Identify the enrollment mode first, then follow the symptom branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Android failure root causes differ fundamentally by mode—asking mode before symptom eliminates false-negative triage (Phase 40 D-01).
 
 No network reachability gate is included at the root (Phase 30 D-03): mode-specific runbooks handle connectivity prerequisites within their own L1 Triage Steps.
 
@@ -32,7 +32,7 @@ No network reachability gate is included at the root (Phase 30 D-03): mode-speci
 
 All terminal nodes are within 2 decision steps of the root node (AND1), well under the SC #1 5-node budget (Phase 40 D-05).
 
-**LOCKED — 39 (nodes + labeled edges)** — 14 nodes + 25 labeled edges, independently re-derived from the pre-conversion decision graph. Both 4-way reconvergence merges (into ANDR25 and ANDE3) are preserved below as explicit per-mode rows — no row collapses more than one incoming edge.
+**LOCKED—39 (nodes + labeled edges)**—14 nodes + 25 labeled edges, independently re-derived from the pre-conversion decision graph. Both 4-way reconvergence merges (into ANDR25 and ANDE3) are preserved as explicit per-mode rows—no row collapses more than one incoming edge.
 
 | Path | Step 1 (mode) | Step 2 (symptom) | Destination |
 |------|---------------|------------------|-------------|
@@ -80,21 +80,21 @@ Collect this information before routing to L2.
 
 ## Related Resources
 
-- [Android L1 Runbooks Index](../l1-runbooks/00-index.md#android-l1-runbooks) — All 6 Android L1 runbooks (22-27)
-- [Android Glossary](../_glossary-android.md) — Canonical Android Enterprise terminology
-- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) — Mode-ownership axes explained
-- [Android Admin Setup Overview](../admin-setup-android/00-overview.md) — Tri-portal admin surface
-- [AOSP Stub](../admin-setup-android/06-aosp-stub.md) — AOSP scope context
-- [L1 Runbook 29: AOSP Enrollment Failed](../l1-runbooks/29-android-aosp-enrollment-failed.md) — AOSP failure routing
-- [Initial Triage Decision Tree](00-initial-triage.md) — Windows Autopilot entry point
-- [macOS ADE Triage](06-macos-triage.md) — macOS ADE failure routing
-- [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
+- [Android L1 Runbooks Index](../l1-runbooks/00-index.md#android-l1-runbooks)—All 6 Android L1 runbooks (22-27)
+- [Android Glossary](../_glossary-android.md)—Canonical Android Enterprise terminology
+- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md)—Mode-ownership axes explained
+- [Android Admin Setup Overview](../admin-setup-android/00-overview.md)—Tri-portal administrator surface
+- [AOSP Stub](../admin-setup-android/06-aosp-stub.md)—AOSP scope context
+- [L1 Runbook 29: AOSP Enrollment Failed](../l1-runbooks/29-android-aosp-enrollment-failed.md)—AOSP failure routing
+- [Initial Triage Decision Tree](00-initial-triage.md)—Windows Autopilot entry point
+- [macOS ADE Triage](06-macos-triage.md)—macOS ADE failure routing
+- [iOS Triage](07-ios-triage.md)—iOS/iPadOS failure routing
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
-| 2026-04-25 | Phase 45 AEAOSPFULL-09: Mermaid AOSP edge now routes to ANDR29 single click target (preserves Phase 40 D-05 LOCK + ROADMAP SC#4 verbatim "single click target"); legacy AOSP-out-of-scope escalation node retired across the diagram's color-class styling, Routing Verification table, and Escalation Data table per D-19 (in-runbook OEM-id step now lives inside Runbook 29 per D-20); Related Resources cross-link to Runbook 29 added. | -- |
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: Mermaid AOSP edge now routes to ANDR29 single click target (preserves Phase 40 D-05 LOCK + phase success criterion #4 verbatim "single click target"); legacy AOSP-out-of-scope escalation node retired across the diagram's color-class styling, Routing Verification table, and Escalation Data table per D-19 (in-runbook OEM-id step now lives inside Runbook 29 per D-20); Related Resources cross-link to Runbook 29 added. | -- |
 | 2026-07-08 | Phase 122 plan 02: converted Mermaid decision graph to a C17-compliant text-equivalent decision table (LOCKED — 39, nodes + labeled edges); removed the Legend section and the mermaid fence; both 4-way reconvergence merges (into ANDR25 and ANDE3) preserved as explicit per-mode rows; split the >200-char Platform gate blockquote into two groups. | -- |
 | 2026-04-23 | Initial version (Phase 40 — Android L1 triage tree) | -- |

@@ -26,8 +26,8 @@ This is the cross-platform symptom-based triage router for provisioning failures
 
 - [Windows Autopilot Issues](#windows-autopilot-issues) -- Windows device provisioning failures (APv1 and APv2)
 - [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios) -- macOS enrollment and management failures
-- [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios) -- iOS/iPadOS enrollment and management failures via Intune
-- [Android Enterprise Failure Scenarios](#android-enterprise-failure-scenarios) -- Android enrollment and management failures via Intune
+- [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios) -- iOS/iPadOS enrollment and management failures through Intune
+- [Android Enterprise Failure Scenarios](#android-enterprise-failure-scenarios) -- Android enrollment and management failures through Intune
 
 ---
 
@@ -52,7 +52,7 @@ Symptom-based index routing to the appropriate L1 and L2 runbooks.
 Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) portal after [OOBE](_glossary.md#oobe).
 
 - **L1:** [Device Not Registered](l1-runbooks/01-device-not-registered.md)
-- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md) — select runbook based on escalation checklist
+- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md)—select runbook based on escalation checklist
 
 ### Enrollment Status Page (ESP) Failures
 
@@ -70,13 +70,13 @@ Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) po
 Device goes through manual setup instead of Autopilot, or wrong profile assigned.
 
 - **L1:** [Profile Not Assigned](l1-runbooks/03-profile-not-assigned.md)
-- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md) — L2 selects runbook based on symptom
+- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md)—L2 selects runbook based on symptom
 
 ### TPM Attestation Failures
 
 TPM attestation fails during pre-provisioning or self-deploying mode.
 
-- **L1:** [L1 Runbook Index](l1-runbooks/00-index.md#tpm-attestation-note) — no L1 runbook; escalate to L2
+- **L1:** [L1 Runbook Index](l1-runbooks/00-index.md#tpm-attestation-note)—no L1 runbook; escalate to L2
 - **L2:** [TPM Attestation Investigation](l2-runbooks/03-tpm-attestation.md)
 
 ### Network Connectivity Issues
@@ -92,21 +92,21 @@ Device cannot reach required Autopilot endpoints; timeouts during enrollment.
 
 Reboot loops, autologon failures, or ESP hangs caused by conflicting policies.
 
-- **L1:** [ESP Stuck or Failed](l1-runbooks/02-esp-stuck-or-failed.md) — policy conflicts manifest as ESP failures at L1
+- **L1:** [ESP Stuck or Failed](l1-runbooks/02-esp-stuck-or-failed.md)—policy conflicts manifest as ESP failures at L1
 - **L2:** [Policy Conflict Analysis](l2-runbooks/05-policy-conflicts.md)
 
 ### Hybrid Join Failures
 
 Device not appearing in both on-premises AD and Azure AD after Autopilot provisioning.
 
-- **L1:** [L1 Runbook Index](l1-runbooks/00-index.md) — escalate to L2 with domain details
+- **L1:** [L1 Runbook Index](l1-runbooks/00-index.md)—escalate to L2 with domain details
 - **L2:** [Hybrid Join Investigation](l2-runbooks/04-hybrid-join.md)
 
 ### Device Renamed but Old Name Persists
 
 Old device name shows in Intune or Azure AD after Autopilot rename.
 
-> **Tip:** This is typically a sync delay — allow up to 24 hours for the name to propagate through Azure AD Connect and Intune.
+> **Tip:** This is typically a sync delay—allow up to 24 hours for the name to propagate through Azure AD Connect and Intune.
 
 > If the naming template in the Autopilot profile is correct and 24 hours have passed, force a device sync from the Intune portal.
 
@@ -148,17 +148,17 @@ Device Preparation deployment started but timed out before all apps and scripts 
 
 Device won't reset, retire action failed, or re-provisioning not working as expected.
 
-- **L1:** [Device Operations Overview](device-operations/00-overview.md) — find the correct procedure
-- **Decision Tree:** [Device Lifecycle Decision Tree](decision-trees/05-device-lifecycle.md) — "What do you want to preserve?"
-- **L2:** [Autopilot Reset Guide](device-operations/01-autopilot-reset.md) — local vs remote reset procedures
+- **L1:** [Device Operations Overview](device-operations/00-overview.md)—find the correct procedure
+- **Decision Tree:** [Device Lifecycle Decision Tree](decision-trees/05-device-lifecycle.md)—"What do you want to preserve?"
+- **L2:** [Autopilot Reset Guide](device-operations/01-autopilot-reset.md)—local vs remote reset procedures
 
 ### Migration Issues
 
 Problems during APv1-to-APv2 migration, imaging-to-Autopilot transition, or GPO-to-Intune policy migration.
 
-- **Admin:** [APv1-to-APv2 Migration](reference/apv1-apv2-migration.md) — coexistence playbook
-- **Admin:** [Imaging to Autopilot](reference/imaging-to-autopilot.md) — MDT/SCCM replacement
-- **Admin:** [GPO to Intune](reference/gpo-to-intune.md) — Group Policy Analytics workflow
+- **Admin:** [APv1-to-APv2 Migration](reference/apv1-apv2-migration.md)—coexistence playbook
+- **Admin:** [Imaging to Autopilot](reference/imaging-to-autopilot.md)—MDT/SCCM replacement
+- **Admin:** [GPO to Intune](reference/gpo-to-intune.md)—Group Policy Analytics workflow
 
 ### Security and Enrollment Issues
 
@@ -168,15 +168,15 @@ Problems during APv1-to-APv2 migration, imaging-to-Autopilot transition, or GPO-
 
 Conditional Access blocking enrollment, compliance not evaluating, or security baseline conflicts.
 
-- **Admin:** [CA Enrollment Timing](reference/ca-enrollment-timing.md) — the compliance chicken-and-egg problem
-- **Admin:** [Compliance Policy Timing](reference/compliance-timing.md) — "Not evaluated" vs "Non-compliant"
-- **Admin:** [Security Baseline Conflicts](reference/security-baseline-conflicts.md) — BitLocker, WDAC, reboot conflicts
+- **Admin:** [CA Enrollment Timing](reference/ca-enrollment-timing.md)—the compliance chicken-and-egg problem
+- **Admin:** [Compliance Policy Timing](reference/compliance-timing.md)—"Not evaluated" vs "Non-compliant"
+- **Admin:** [Security Baseline Conflicts](reference/security-baseline-conflicts.md)—BitLocker, WDAC, reboot conflicts
 
 ### 802.1X Network Authentication Failure
 
 Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
 
-- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md)—start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
 - **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## macOS ADE Failure Scenarios
@@ -239,44 +239,44 @@ Company Portal not available, sign-in failing, or Entra registration incomplete.
 
 Platform SSO "Registration Required" notification never appeared despite Intune reporting Succeeded, or Platform SSO sign-in is failing after registration.
 
-- **L1:** [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) — four root causes: old Company Portal, Error 10002 legacy conflict, mistyped registration token, dismissed notification
+- **L1:** [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md)—four root causes: old Company Portal, Error 10002 legacy conflict, mistyped registration token, dismissed notification
 - **L2:** [Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)
 
 ### Kerberos SSO Extension Failure
 
 Kerberos TGT not acquired, realm or KDC unreachable, or `usePlatformSSOTGT` PSSO-TGT integration failing.
 
-- **L1:** No L1 runbook — escalate to L2
+- **L1:** No L1 runbook—escalate to L2
 - **L2:** [Kerberos SSO Investigation](l2-runbooks/28-macos-kerberos-sso-investigation.md)
 
 ### MDM Migration Failure (Kandji/Iru → Intune)
 
 Device stuck on a non-dismissible full-screen migration prompt at or after the ABM deadline, or migration completed but Intune shows the device as not enrolled, or configuration profiles are not delivered.
 
-- **L1:** No L1 runbook — escalate to L2
+- **L1:** No L1 runbook—escalate to L2
 - **L2:** [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md)
 
 ### Platform SSO Re-Registration Failure (Post-Migration)
 
-Platform SSO "Registration Required" notification has not appeared after MDM migration, or registration was initiated but is not completing. PSSO re-registration is always required after MDM migration — MDM unenrollment = IdP unregistration; the Secure Enclave key is re-created on re-enrollment.
+Platform SSO "Registration Required" notification has not appeared after MDM migration, or registration was initiated but is not completing. PSSO re-registration is always required after MDM migration—MDM unenrollment = IdP unregistration; the Secure Enclave key is re-created on re-enrollment.
 
-- **L1:** No L1 runbook — escalate to L2
+- **L1:** No L1 runbook—escalate to L2
 - **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)
-- **L2:** [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) — Track C: PSSO re-registration stuck
+- **L2:** [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md)—Track C: PSSO re-registration stuck
 
 ### macOS Local Password: User Locked Out
 
-User cannot log in to their Mac — local password is unknown or forgotten. Recover access using the escrowed FileVault recovery key, the macOS LAPS managed admin account, or Apple ID (where org policy allows). Note: SSPR resets the Entra password only and does not reset the independent local password on Secure Enclave Platform SSO devices. For technical background, see [Platform SSO Setup Guide — Local password lifecycle and rotation](admin-setup-macos/07-platform-sso-setup.md#local-password-lifecycle-and-rotation).
+User cannot log in to their Mac—local password is unknown or forgotten. Recover access using the escrowed FileVault recovery key, the macOS LAPS managed administrator account, or Apple ID (where org policy allows). Note: SSPR resets the Entra password only and does not reset the independent local password on Secure Enclave Platform SSO devices. For technical background, see [Platform SSO Setup Guide—Local password lifecycle and rotation](admin-setup-macos/07-platform-sso-setup.md#local-password-lifecycle-and-rotation).
 
 - **L1:** [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md)
-- **L1:** [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) — mandatory PSSO re-registration after password recovery (the reset invalidates the Secure Enclave key)
-- **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) — if PSSO re-registration fails after recovering access
+- **L1:** [Platform SSO—Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md)—mandatory PSSO re-registration after password recovery (the reset invalidates the Secure Enclave key)
+- **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)—if PSSO re-registration fails after recovering access
 
 ### 802.1X Network Authentication Failure
 
 Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
 
-- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md)—start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
 - **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## iOS/iPadOS Failure Scenarios
@@ -291,7 +291,7 @@ Symptom-based index routing to the appropriate iOS L1 and L2 runbooks. Start wit
 
 ### iOS: Device Not Appearing in Intune
 
-iOS/iPadOS device not visible in Intune admin center after enrollment attempt. Could be caused by: APNs certificate expired (cross-platform blast radius), ADE enrollment not starting, user license invalid, or device enrollment cap reached. Start with the triage decision tree to disambiguate.
+iOS/iPadOS device not visible in Intune admin center after enrollment attempt. Could be caused by: APNs certificate expired (cross-platform scope), ADE enrollment not starting, user license invalid, or device enrollment cap reached. Start with the triage decision tree to disambiguate.
 
 - **L1:** [APNs Certificate Expired](l1-runbooks/16-ios-apns-expired.md) | [ADE Not Starting](l1-runbooks/17-ios-ade-not-starting.md) | [License Invalid](l1-runbooks/19-ios-license-invalid.md)
 - **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md) + [ADE Token & Profile Investigation](l2-runbooks/15-ios-ade-token-profile.md)
@@ -307,12 +307,12 @@ ADE-enrolled device stuck in Setup Assistant, authentication failure, or Await C
 
 Device enrollment halted by an Intune enrollment restriction (platform, ownership, count) or configuration profile conflict before the device appears as enrolled.
 
-- **L1:** [Enrollment Restriction Blocking](l1-runbooks/18-ios-enrollment-restriction-blocking.md) | [Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md) (reciprocal disambiguation — see both if cause unclear)
+- **L1:** [Enrollment Restriction Blocking](l1-runbooks/18-ios-enrollment-restriction-blocking.md) | [Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md) (reciprocal disambiguation—see both if cause unclear)
 - **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md)
 
 ### iOS: User License Not Present
 
-Enrollment fails or blocks with "user license invalid" — user lacks an Intune license OR an ABM license sync discrepancy.
+Enrollment fails or blocks with "user license invalid"—user lacks an Intune license OR an ABM license sync discrepancy.
 
 - **L1:** [License Invalid](l1-runbooks/19-ios-license-invalid.md)
 - **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md)
@@ -322,7 +322,7 @@ Enrollment fails or blocks with "user license invalid" — user lacks an Intune 
 User's per-user or per-group device cap in Intune blocks enrollment of an additional iOS/iPadOS device.
 
 - **L1:** [Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md)
-- **L2:** (none — cap adjustments are admin-center actions)
+- **L2:** (none—cap adjustments are admin-center actions)
 
 ### iOS: Compliance / Access Blocked
 
@@ -343,7 +343,7 @@ Device shows compliant in Intune but Conditional Access still blocks Microsoft 3
 
 Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
 
-- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md)—start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
 - **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## Android Enterprise Failure Scenarios
@@ -358,7 +358,7 @@ Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollm
 
 > **Not sure which Android scenario?** Start with the [Android Triage Decision Tree](decision-trees/08-android-triage.md)
 
-> — it disambiguates by enrollment mode (BYOD / COBO / Dedicated / ZTE / Knox / AOSP) and symptom in 2-3 steps.
+>—it disambiguates by enrollment mode (BYOD / COBO / Dedicated / ZTE / Knox / AOSP) and symptom in 2-3 steps.
 
 ### Android: Enrollment Blocked
 
@@ -378,7 +378,7 @@ BYOD enrollment completed but the work profile container (briefcase badge) was n
 
 Device never appeared in Intune after enrollment attempt and there is no enrollment-restriction error visible to the user. Could overlap with Enrollment Blocked (silent restriction) or ZTE Enrollment Failed (Zero-Touch portal serial assignment problem).
 
-- **L1:** [Device Not Enrolled](l1-runbooks/24-android-device-not-enrolled.md) | [Enrollment Blocked](l1-runbooks/22-android-enrollment-blocked.md) | [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) (reciprocal disambiguation — see all if no enrollment-restriction error visible)
+- **L1:** [Device Not Enrolled](l1-runbooks/24-android-device-not-enrolled.md) | [Enrollment Blocked](l1-runbooks/22-android-enrollment-blocked.md) | [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) (reciprocal disambiguation—see all if no enrollment-restriction error visible)
 - **L2:** [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) + [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md)
 
 ### Android: Compliance Blocked
@@ -401,9 +401,9 @@ Managed Google Play app assigned to user/device but never delivered. Applies to 
 
 ### Android: ZTE Enrollment Failed
 
-Zero-Touch Enrollment did not initiate or stalled. Samsung KME (Knox Mobile Enrollment) provisioning often co-exists with ZTE — check both portals when triaging.
+Zero-Touch Enrollment did not initiate or stalled. Samsung KME (Knox Mobile Enrollment) provisioning often co-exists with ZTE—check both portals when triaging.
 
-- **L1:** [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) | [Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md) (reciprocal disambiguation — Samsung KME provisioning often co-exists with ZTE; check both portals)
+- **L1:** [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) | [Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md) (reciprocal disambiguation—Samsung KME provisioning often co-exists with ZTE; check both portals)
 - **L2:** [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md) + [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md)
 
 ### Android: Knox Enrollment Failed
@@ -424,12 +424,12 @@ AOSP enrollment did not initiate or stalled across the 5 supported OEMs (RealWea
 
 Android Enterprise device cannot connect to a 802.1X-protected Wi-Fi network after enrollment. Note: Android Enterprise has no native Intune wired-network profile type; this scenario covers Wi-Fi 802.1X only.
 
-- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md)—start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
 - **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## Apple Business Governance Failure Scenarios
 
-> **Apple Business:** For Apple Business permission errors and Shared iPad issues, use the runbooks below.
+> **Apple Business:** For Apple Business permission errors and Shared iPad issues, use the following runbooks.
 
 > For L1 quick reference, see [Apple Business Quick Reference](quick-ref-l1.md#apple-business-quick-reference).
 
@@ -437,29 +437,29 @@ Android Enterprise device cannot connect to a 802.1X-protected Wi-Fi network aft
 
 Shared iPad passcode locked or inaccessible.
 
-- **L1:** [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) — Path A (Apple Business UI); L1-delegatable
-- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — Paths B/C or permission failures
+- **L1:** [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md)—Path A (Apple Business UI); L1-delegatable
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—Paths B/C or permission failures
 
 ### Apple Business Permission Denied
 
 Apple Business portal returns permission error.
 
 - **L1:** Route to L2 directly (no L1 self-service resolution for permission errors)
-- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf Mermaid triage tree
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—7-leaf Mermaid triage tree
 
 ### Managed Apple Account Provisioning Failure
 
 Managed Apple Account not created, sync delayed, or federation state error.
 
 - **L1:** Route to L2 directly (federation/SCIM state changes require L2 access)
-- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — federation-state leaf routes to Managed Apple Account Runbook
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—federation-state leaf routes to Managed Apple Account Runbook
 
 ### Cross-OU Boundary Violation
 
-Sub-org admin action fails with permission error due to OU scope mismatch.
+Sub-org administrator action fails with permission error due to OU scope mismatch.
 
-- **L1:** Route to L2 directly (OU-boundary investigation requires admin portal access)
-- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — OU-boundary leaf routes to OUs Architecture + pool owner lookup
+- **L1:** Route to L2 directly (OU-boundary investigation requires administrator portal access)
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—OU-boundary leaf routes to OUs Architecture + pool owner lookup
 
 ## Version History
 

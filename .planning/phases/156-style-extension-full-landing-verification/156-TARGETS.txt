@@ -1,0 +1,13 @@
+docs/operations/firmware-bios/00-overview.md
+docs/operations/firmware-bios/01-windows-dfci.md
+docs/operations/firmware-bios/02-dell-bios-configuration.md
+docs/operations/firmware-bios/03-hp-bios-configuration.md
+docs/operations/firmware-bios/04-lenovo-bios-configuration.md
+docs/operations/patch-management/07-windows-autopatch.md
+docs/operations/patch-management/08-windows-app-updates.md
+docs/recipes/05-enterprise-update-plan.md
+docs/recipes/06-walk-up-avd-kiosk-autologon.md
+docs/recipes/01-shared-windows-avd-client.md
+docs/recipes/03-windows-11-multi-app-kiosk.md
+docs/reference/firmware-oem-matrix.md
+docs/reference/licensing-matrix.md

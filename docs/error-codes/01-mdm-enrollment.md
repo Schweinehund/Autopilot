@@ -37,7 +37,7 @@ These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts 
 | <a id="0x80180020"></a>0x80180020 | 1 | MDMDisabled (Tenant) | [OOBE](../lifecycle/03-oobe.md) | All | MDM auto-enrollment scope set to None in Microsoft Entra ID; enrollment is globally disabled | **Escalate** — collect: serial, error code, mode, timestamp; tenant-wide MDM scope change requires admin action | Entra admin center: Mobility (MDM and MAM) > Microsoft Intune > MDM user scope > change from None to All or targeted group |
 | <a id="0x80180022"></a>0x80180022 | 1 | UnsupportedEdition (MDM) | [OOBE](../lifecycle/03-oobe.md) | All | Device running Windows Home edition; Intune MDM enrollment requires Pro or higher | Confirm edition via Settings > System > About; **Escalate** — collect: serial, error code, mode, timestamp, Windows edition | Upgrade device to Windows Pro or Enterprise; re-register if needed; Windows Home cannot be enrolled in Intune |
 | <a id="0x80180026"></a>0x80180026 | 1 | ConflictClient (MDM) | [OOBE](../lifecycle/03-oobe.md) | UD | Intune PC software agent installed AND MDM auto-enrollment both active; enrollment conflict | **Escalate** — collect: serial, error code, mode, timestamp; dual-agent conflict requires L2 to remove legacy agent | Uninstall Intune PC software agent before MDM enrollment; only one management path supported at a time |
-| <a id="0x8018002b"></a>0x8018002b | 1 | UPNNonRoutable (MDM) | [OOBE](../lifecycle/03-oobe.md) | All | User UPN contains unverified or non-routable domain suffix (e.g., .local, .internal) | Verify user UPN in Microsoft 365 admin center > Active users; confirm domain suffix is verified in Entra ID (no retry until UPN corrected) | Update user UPN to use a verified routable domain; add and verify the domain in Entra admin center > Custom domain names first |
+| <a id="0x8018002b"></a>0x8018002b | 1 | UPNNonRoutable (MDM) | [OOBE](../lifecycle/03-oobe.md) | All | User UPN contains unverified or non-routable domain suffix (for example, .local, .internal) | Verify user UPN in Microsoft 365 admin center > Active users; confirm domain suffix is verified in Entra ID (no retry until UPN corrected) | Update user UPN to use a verified routable domain; add and verify the domain in Entra admin center > Custom domain names first |
 
 ---
 
@@ -47,7 +47,7 @@ Prev: [Error Code Index](00-index.md) | Next: [TPM Attestation Errors](02-tpm-at
 
 > For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-> - **0x80180018** — Licensing check behavior is the same in APv2 Device Preparation; a valid Intune license is required regardless of framework.
+> - **0x80180018**—Licensing check behavior is the same in APv2 Device Preparation; a valid Intune license is required regardless of framework.
 
 > All other 0x8018xxxx errors in this file apply to classic Autopilot (APv1) flows.
 

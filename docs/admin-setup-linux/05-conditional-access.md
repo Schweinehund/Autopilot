@@ -16,11 +16,11 @@ platform: Linux
 
 ## Summary
 
-This guide covers Conditional Access configuration for Linux devices in Microsoft Intune (Ubuntu 24.04 LTS and 26.04 LTS), where the only supported enforcement path is web-app Conditional Access via Microsoft Edge for Linux 102.x or later. It is intended for Intune and Entra ID administrators configuring Conditional Access policies. Linux does not support device-level Conditional Access grant controls such as requiring a compliant device or Hybrid Entra join.
+This guide covers Conditional Access configuration for Linux devices in Microsoft Intune (Ubuntu 24.04 LTS and 26.04 LTS), where the only supported enforcement path is web-app Conditional Access through Microsoft Edge for Linux 102.x or later. It is intended for Intune and Entra ID administrators configuring Conditional Access policies. Linux does not support device-level Conditional Access grant controls such as requiring a compliant device or Hybrid Entra join.
 
 > **Platform gate:** This guide covers Conditional Access (CA) configuration for Linux devices in Intune (Ubuntu 24.04/26.04 LTS).
 
-> Linux supports web-app CA via Microsoft Edge for Linux 102.x+ ONLY — there is no device-level CA grant on Linux.
+> Linux supports web-app CA through Microsoft Edge for Linux 102.x+ ONLY—there is no device-level CA grant on Linux.
 
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
@@ -28,11 +28,11 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 
 > ⚠️ **Architecture: Web-app CA only.** Linux does NOT support device-level Conditional Access. The CA grant control `Require device to be marked as compliant` is not available on Linux.
 
-> The only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+ (the user signs into Edge with their org account;
+> The only CA enforcement path on Linux is web-app CA through Microsoft Edge for Linux 102.x+ (the user signs into Edge with their org account;
 
 > Edge surfaces the CA challenge; the org's CA policies enforce the grant or block based on user, session, and risk context).
 
-> For cross-platform CA architectural reference, see [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
+> For cross-platform CA architectural reference, see [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
 
 ## Prerequisites
 
@@ -40,19 +40,19 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 - Microsoft Entra ID P1 license (P2 required if risk-based Conditional Access is used)
 - Microsoft Edge for Linux 102.x+ installed on the target device (see [01-intune-linux-agent.md](01-intune-linux-agent.md) for related package install patterns)
 - Linux device enrolled in Intune (see [02-enrollment-profile.md](02-enrollment-profile.md))
-- Understanding that Conditional Access on Linux is web-app-only (see architecture callout above)
+- Understanding that Conditional Access on Linux is web-app-only (see architecture callout)
 
 ## How Web-App CA Works on Linux
 
-**The problem (architectural):** Linux's Intune integration does not surface device-state-attestation to Conditional Access in the way Windows, macOS, iOS, and Android do. The `Require device to be marked as compliant` grant control is not part of the Linux CA evaluation surface. This means a Linux device reporting `compliant` via an Intune compliance policy does NOT unlock CA grants.
+**The problem (architectural):** Linux's Intune integration does not surface device-state-attestation to Conditional Access in the way Windows, macOS, iOS, and Android do. The `Require device to be marked as compliant` grant control is not part of the Linux CA evaluation surface. This means a Linux device reporting `compliant` through an Intune compliance policy does NOT unlock CA grants.
 
-**The supported pattern:** Web-app CA via Microsoft Edge for Linux 102.x+. Edge presents the CA challenge as part of org-app sign-in. CA policies evaluate based on user, session, and risk context — but NOT on Linux device compliance state.
+**The supported pattern:** Web-app CA through Microsoft Edge for Linux 102.x+. Edge presents the CA challenge as part of org-app sign-in. CA policies evaluate based on user, session, and risk context—but NOT on Linux device compliance state.
 
 **What this means in practice:**
 
-- Compliance policy on Linux is **detect-only** — admins can monitor compliance verdicts; the verdict does not drive a CA block or grant
-- Web-app access (Outlook web, Teams web, SharePoint Online, etc.) via Edge IS protected by CA policies that target user, session, and risk context
-- Native Linux apps that connect to org resources are NOT protected by Linux device CA — orgs must ensure such apps use web-app CA flows or are otherwise scoped out of sensitive resource access
+- Compliance policy on Linux is **detect-only**—administrators can monitor compliance verdicts; the verdict does not drive a CA block or grant
+- Web-app access (Outlook web, Teams web, SharePoint Online, etc.) through Edge IS protected by CA policies that target user, session, and risk context
+- Native Linux apps that connect to org resources are NOT protected by Linux device CA—orgs must ensure such apps use web-app CA flows or are otherwise scoped out of sensitive resource access
 - Linux devices cannot use the `Require device to be marked as compliant` grant control, `Require Hybrid Azure AD joined device` grant, or any device-attestation-based grant control
 
 **Comparison with other platforms:**
@@ -69,8 +69,8 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 
 #### On device
 
-1. Run: `microsoft-edge --version` — confirm version 102.x or higher
-2. If Edge is not installed or is below 102.x, deploy it via Intune Shell script (see [04-app-delivery.md](04-app-delivery.md) for the Bash script delivery pattern)
+1. Run: `microsoft-edge --version`—confirm version 102.x or higher
+2. If Edge is not installed or is earlier than 102.x, deploy it through Intune Shell script (see [04-app-delivery.md](04-app-delivery.md) for the Bash script delivery pattern)
 
 #### In Intune admin center
 
@@ -82,14 +82,14 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 #### In Entra portal
 
 1. Navigate to **Protection > Conditional Access > Policies > New policy**
-2. Name the policy (e.g., `Linux-Web-App-CA`)
-3. **Assignments — Users:** Target the user group that includes Linux device users
-4. **Target resources:** Select the applicable cloud apps (e.g., Office 365, SharePoint, Teams)
+2. Name the policy (for example, `Linux-Web-App-CA`)
+3. **Assignments—Users:** Target the user group that includes Linux device users
+4. **Target resources:** Select the applicable cloud apps (for example, Office 365, SharePoint, Teams)
 5. **Conditions > Device platforms:** Include **Linux** in the device platform scope
 6. **Grant:** Select grant controls compatible with browser-based access:
-   - **Require multifactor authentication** — supported on Linux
-   - **Require compliant browser** (e.g., Edge with org sign-in) — supported on Linux
-   - **Avoid** `Require device to be marked as compliant` for any policy scoped to Linux — that grant is not available on Linux and will block all Linux users if applied
+   - **Require multifactor authentication**—supported on Linux
+   - **Require compliant browser** (for example, Edge with org sign-in)—supported on Linux
+   - **Avoid** `Require device to be marked as compliant` for any policy scoped to Linux—that grant is not available on Linux and blocks all Linux users if applied
 7. Review and enable the policy in report-only mode first; graduate to On after validating no unexpected blocks
 
 ### Step 3: Test the CA Policy
@@ -97,7 +97,7 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 #### On Linux device
 
 1. Open Microsoft Edge for Linux (102.x+) and sign in with the org account
-2. Navigate to an org resource covered by the CA policy (e.g., SharePoint site, Outlook web)
+2. Navigate to an org resource covered by the CA policy (for example, SharePoint site, Outlook web)
 3. Verify the CA challenge surfaces correctly (MFA prompt or compliant-browser check)
 4. Confirm access is granted after satisfying the CA challenge
 5. If access is unexpectedly blocked: check the Entra sign-in logs for the CA policy evaluation result and the specific grant that blocked access
@@ -113,10 +113,10 @@ This guide covers Conditional Access configuration for Linux devices in Microsof
 
 ## See Also
 
-- [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access) — anchor-stability contract for Phase 51 runbook 32 per CDI-Phase50-04
-- [Compliance Policy](03-compliance-policy.md) — PITFALL-2 architectural callout (compliance is detect-only on Linux; does not drive CA grants)
+- [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access)—anchor-stability contract for Phase 51 runbook 32 per CDI-Phase50-04
+- [Compliance Policy](03-compliance-policy.md)—PITFALL-2 architectural callout (compliance is detect-only on Linux; does not drive CA grants)
 - [Enrollment Profile](02-enrollment-profile.md)
-- [Linux Glossary — web-app CA](../_glossary-linux.md#web-app-ca)
+- [Linux Glossary—web-app CA](../_glossary-linux.md#web-app-ca)
 - (Phase 51 runbook) [32-linux-ca-blocking-web-access.md](../l1-runbooks/32-linux-ca-blocking-web-access.md)
 
 ---

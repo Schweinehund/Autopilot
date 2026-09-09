@@ -16,21 +16,21 @@ platform: iOS
 
 ## Summary
 
-This guide covers iOS/iPadOS app deployment through Intune, spanning VPP device-licensed and user-licensed purchasing, LOB (.ipa) sideloading, and Store apps deployed without VPP for devices enrolled via Automated Device Enrollment (ADE). Deploying VPP content requires the Intune Administrator role plus a VPP token purchased through Apple Business Manager under a Content Manager or Administrator role. Device-licensed VPP and silent LOB installs additionally require supervised mode; user-licensed VPP works on unsupervised devices but needs a personal Apple Account sign-in to accept the invitation.
+This guide covers iOS/iPadOS app deployment through Intune, spanning VPP device-licensed and user-licensed purchasing, LOB (.ipa) sideloading, and Store apps deployed without VPP for devices enrolled through Automated Device Enrollment (ADE). Deploying VPP content requires the Intune Administrator role plus a VPP token purchased through Apple Business Manager under a Content Manager or Administrator role. Device-licensed VPP and silent LOB installs additionally require supervised mode; user-licensed VPP works on unsupervised devices but needs a personal Apple Account sign-in to accept the invitation.
 
-> **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
+> **Platform gate:** This guide covers iOS/iPadOS ADE configuration through Apple Business Manager and Intune.
 
 > For macOS app deployment, see [macOS App Deployment](../admin-setup-macos/04-app-deployment.md). For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
 
-Intune supports four distinct iOS/iPadOS app deployment types: VPP device-licensed, VPP user-licensed, LOB (.ipa), and Store apps without VPP. The VPP device-licensed vs user-licensed distinction is the single most common source of admin confusion — these two license types differ fundamentally in how they relate to Apple Accounts, supervision requirements, and silent install capability. Managed apps (deployed through Intune) can be verified through the Intune admin center using three distinct views. Unmanaged apps (user-installed from the App Store without Intune intermediation) have no install status tracking in Intune.
+Intune supports four distinct iOS/iPadOS app deployment types: VPP device-licensed, VPP user-licensed, LOB (.ipa), and Store apps without VPP. The VPP device-licensed vs user-licensed distinction is the single most common source of administrator confusion—these two license types differ fundamentally in how they relate to Apple Accounts, supervision requirements, and silent install capability. Managed apps (deployed through Intune) can be verified through the Intune admin center using three distinct views. Unmanaged apps (user-installed from the App Store without Intune intermediation) have no install status tracking in Intune.
 
 ## Key Concepts Before You Begin
 
 ### Managed vs Unmanaged Apps
 
-A managed app is any app deployed through Intune — VPP (device or user-licensed), LOB, or Store apps deployed as Required or Available through Intune. An unmanaged app is an app installed directly by the user from the App Store without Intune intermediation; Intune has no install-status record for unmanaged apps and cannot remove them via selective wipe. A VPP Available assignment transitions from "Available" tracking to "Managed" only after the user initiates the install from Company Portal — before that, the app is tracked as Available but is not yet managed.
+A managed app is any app deployed through Intune—VPP (device or user-licensed), LOB, or Store apps deployed as Required or Available through Intune. An unmanaged app is an app installed directly by the user from the App Store without Intune intermediation; Intune has no install-status record for unmanaged apps and cannot remove them through selective wipe. A VPP Available assignment transitions from "Available" tracking to "Managed" only after the user initiates the install from Company Portal—before that, the app is tracked as Available but is not yet managed.
 
 ### VPP Device-Licensed vs User-Licensed
 
@@ -38,7 +38,7 @@ Device-licensed VPP assigns one license per device (tied to serial number) and r
 
 Device licensing is strongly recommended for corporate-owned devices because it eliminates the Apple Account dependency. User licensing is required for User Enrollment (BYOD) and for apps that include Books content.
 
-> **What breaks if misconfigured:** Deploying a VPP app as user-licensed to a device that has "Block App Store" in its device restrictions breaks the VPP invitation flow —
+> **What breaks if misconfigured:** Deploying a VPP app as user-licensed to a device that has "Block App Store" in its device restrictions breaks the VPP invitation flow—
 
 > the user cannot accept the invitation because the invitation requires App Store access.
 
@@ -46,7 +46,7 @@ Device licensing is strongly recommended for corporate-owned devices because it 
 
 ### Silent Install Boundary
 
-Whether iOS prompts the user during app installation depends on four axes: supervision state (supervised or unsupervised), licensing type (device or user), enrollment type (ADE, Device Enrollment, User Enrollment, BYOD), and Apple Account presence. The authoritative Microsoft-documented behavior is summarized below.
+Whether iOS prompts the user during app installation depends on four axes: supervision state (supervised or unsupervised), licensing type (device or user), enrollment type (ADE, Device Enrollment, User Enrollment, BYOD), and Apple Account presence. The authoritative Microsoft-documented behavior is summarized in the following table.
 
 | # | Scenario | Apple Account prompt | Install prompt |
 |---|----------|:---------------------:|:----------------:|
@@ -65,7 +65,7 @@ Whether iOS prompts the user during app installation depends on four axes: super
 
 ## App Type Comparison Table
 
-The table below summarizes the four deployment types against the attributes that most commonly affect deployment decisions. Use this as the starting point when choosing a deployment method for a specific app.
+The following table summarizes the four deployment types against the attributes that most commonly affect deployment decisions. Use this as the starting point when choosing a deployment method for a specific app.
 
 | Attribute | VPP Device-Licensed | VPP User-Licensed | LOB (.ipa) | Store Apps (without VPP) |
 |-----------|---------------------|-------------------|------------|--------------------------|
@@ -88,14 +88,14 @@ The table below summarizes the four deployment types against the attributes that
 
 - Apple Business Manager account with at least one active Content Manager role
 - Content token (formerly VPP location token; still labeled "Apple VPP token" in Intune) uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
-- App licenses purchased in ABM (Apps and Books page) — select Device or User licensing at purchase time (Device = recommended default)
-- Annual token renewal configured (see Renewal / Maintenance below)
+- App licenses purchased in ABM (Apps and Books page)—select Device or User licensing at purchase time (Device = recommended default)
+- Annual token renewal configured (see Renewal / Maintenance)
 
 ### LOB (.ipa) Prerequisites
 
 - Apple Developer Enterprise Program membership
 - `.ipa` file signed with the organizational Distribution certificate
-- `.mobileprovision` provisioning profile uploaded via **Apps** > **iOS/iPadOS** > **iOS app provisioning profiles** (separate object from the app itself)
+- `.mobileprovision` provisioning profile uploaded through **Apps** > **iOS/iPadOS** > **iOS app provisioning profiles** (separate object from the app itself)
 - Unique `CFBundleVersion` and `CFBundleShortVersionString` in `Info.plist` for each uploaded version
 - `.ipa` file size ≤ 2 GB (hard limit)
 
@@ -118,13 +118,13 @@ The table below summarizes the four deployment types against the attributes that
 3. Select the app > **Properties** > **Assignments** > **Add group**. Use **Required** to device groups or user groups.
 4. Under **App information**, confirm **License type: Device**.
 
-> 🔒 **Supervised only:** Silent install of VPP device-licensed apps — the user sees no prompt of any kind on install — requires supervised mode.
+> 🔒 **Supervised only:** Silent install of VPP device-licensed apps—the user sees no prompt of any kind on install—requires supervised mode.
 
 > On unsupervised devices, device-licensed apps install without an Apple Account prompt but the user sees a one-time install confirmation.
 
 > See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
-> **What breaks if misconfigured:** Assigning VPP device-licensed apps as Available (rather than Required) to device groups does not work — Available for device groups applies only to Required intent.
+> **What breaks if misconfigured:** Assigning VPP device-licensed apps as Available (rather than Required) to device groups does not work—Available for device groups applies only to Required intent.
 
 > Use Required for device groups; Available requires user groups. Symptom appears in: Intune admin center (assignment succeeds) but device (Company Portal does not list the app).
 
@@ -138,15 +138,15 @@ The table below summarizes the four deployment types against the attributes that
 
 1. The app appears under **Apps** > **iOS/iPadOS** after VPP sync.
 2. Select the app > **Properties** > **App information** > confirm **License type: User**.
-3. Assign to user groups (Required or Available for enrolled — device group assignment is not available for user-licensed VPP).
+3. Assign to user groups (Required or Available for enrolled—device group assignment is not available for user-licensed VPP).
 
 First-time users receive a VPP invitation requiring App Store sign-in with a personal Apple Account (or Managed Apple Account for User Enrollment). Only after acceptance does the app install.
 
-> 🔒 **Supervised only:** Silent install is NOT available for VPP user-licensed apps regardless of supervision state — the user always sees an Apple Account prompt for the VPP invitation.
+> 🔒 **Supervised only:** Silent install is NOT available for VPP user-licensed apps regardless of supervision state—the user always sees an Apple Account prompt for the VPP invitation.
 
 > For silent install, switch to VPP device licensing, which is the fully silent option on supervised devices. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
-> **What breaks if misconfigured:** Assigning VPP user-licensed apps on devices that have "Block App Store" in device restrictions breaks the VPP invitation flow —
+> **What breaks if misconfigured:** Assigning VPP user-licensed apps on devices that have "Block App Store" in device restrictions breaks the VPP invitation flow—
 
 > the user cannot accept the invitation (invitation requires App Store access).
 
@@ -159,10 +159,10 @@ First-time users receive a VPP invitation requiring App Store sign-in with a per
 1. Navigate to **Apps** > **iOS/iPadOS** > **Add** > **Line-of-business app**.
 2. Select the signed `.ipa` file (≤ 2 GB).
 3. Configure app information (name, description, publisher, category, minimum OS version).
-4. Upload the `.mobileprovision` provisioning profile separately via **Apps** > **iOS app provisioning profiles** (Distribution certificate expires after 3 years; provisioning profile expires after 1 year).
+4. Upload the `.mobileprovision` provisioning profile separately through **Apps** > **iOS app provisioning profiles** (Distribution certificate expires after 3 years; provisioning profile expires after 1 year).
 5. Assign: Required, Available for enrolled devices, Available with or without enrollment (unique to LOB), or Uninstall.
 
-LOB apps can install silently on both supervised and unsupervised devices because Apple trusts the enterprise signature — no Apple Account required. No 🔒 callout applies to LOB silent install because it is signature-gated, not supervision-gated.
+LOB apps can install silently on both supervised and unsupervised devices because Apple trusts the enterprise signature—no Apple Account required. No 🔒 callout applies to LOB silent install because it is signature-gated, not supervision-gated.
 
 > **What breaks if misconfigured:** Distribution certificate or provisioning profile expiring (Distribution = 3 years; provisioning profile = 1 year)
 
@@ -179,12 +179,12 @@ LOB apps can install silently on both supervised and unsupervised devices becaus
 #### In Intune admin center
 
 1. Navigate to **Apps** > **iOS/iPadOS** > **Add** > **iOS store app**.
-2. Search the App Store for the app (by name or App Store URL) — select the bundle ID to add it.
+2. Search the App Store for the app (by name or App Store URL)—select the bundle ID to add it.
 3. Assign: Required (forces Company Portal download), Available for enrolled devices, or Uninstall.
 
-Store apps without VPP require the user to have an Apple Account signed in on the device. Intune cannot assign licenses for these apps — it only tells the device "install this bundle ID from the App Store." Paid apps require the user to already own the app via their personal Apple Account; for paid corporate apps, use VPP instead.
+Store apps without VPP require the user to have an Apple Account signed in on the device. Intune cannot assign licenses for these apps—it only tells the device "install this bundle ID from the App Store." Paid apps require the user to already own the app through their personal Apple Account; for paid corporate apps, use VPP instead.
 
-> **What breaks if misconfigured:** Deploying a paid Store app without VPP to corporate devices requires each user to have purchased the app personally — creates licensing and audit problems.
+> **What breaks if misconfigured:** Deploying a paid Store app without VPP to corporate devices requires each user to have purchased the app personally—creates licensing and audit problems.
 
 > Use VPP for all paid corporate apps. Symptom appears in: device (App Store shows "Buy" prompt rather than silent install).
 
@@ -206,9 +206,9 @@ Navigate to **Devices** > **All devices** > [select device] > **Managed Apps**. 
 
 ### 3. Troubleshooting view
 
-Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Managed Apps** pane. User-centric per-app history across all of the user's devices — use when a single user reports an install problem across multiple devices.
+Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Managed Apps** pane. User-centric per-app history across all of the user's devices—use when a single user reports an install problem across multiple devices.
 
-**Managed vs unmanaged distinction:** Managed apps = apps deployed via Intune (VPP, LOB, Store-as-Required/Available). Unmanaged apps = apps installed directly by the user from App Store with no Intune assignment record. Unmanaged apps do not appear in any of the three views above.
+**Managed vs unmanaged distinction:** Managed apps = apps deployed through Intune (VPP, LOB, Store-as-Required/Available). Unmanaged apps = apps installed directly by the user from App Store with no Intune assignment record. Unmanaged apps do not appear in any of the preceding three views.
 
 **Verification checklist:**
 
@@ -250,15 +250,15 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 
 ## See Also
 
-- [Configuration Profiles](04-configuration-profiles.md) — Wi-Fi/VPN/Certificates delivery (prerequisite for enterprise app infrastructure)
+- [Configuration Profiles](04-configuration-profiles.md)—Wi-Fi/VPN/Certificates delivery (prerequisite for enterprise app infrastructure)
 - [Compliance Policies](06-compliance-policy.md)
-- [ADE Enrollment Profile](03-ade-enrollment-profile.md) — supervised mode requirement for silent install
-- [ABM/ADE Token](02-abm-token.md) — VPP token is administered in the same ABM account
+- [ADE Enrollment Profile](03-ade-enrollment-profile.md)—supervised mode requirement for silent install
+- [ABM/ADE Token](02-abm-token.md)—VPP token is administered in the same ABM account
 - [APNs Certificate](01-apns-certificate.md)
 - [iOS/iPadOS Admin Setup Overview](00-overview.md)
 - [iOS/iPadOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md)
-- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md) — supervision concept anchor
-- [macOS App Deployment](../admin-setup-macos/04-app-deployment.md) — parallel macOS guide
+- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md)—supervision concept anchor
+- [macOS App Deployment](../admin-setup-macos/04-app-deployment.md)—parallel macOS guide
 - [Apple Provisioning Glossary](../_glossary-macos.md)
 
 ---
@@ -270,7 +270,7 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS app deployment guide with Key Concepts section (managed vs unmanaged, VPP device vs user licensing, silent install boundary table), 4-column deployment type comparison, per-type sections with supervised-only silent install callouts, managed app status verification in three admin-center locations, configuration-caused failures, and VPP/LOB renewal cadences | -- |
-| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP (Apps and Books) location token" to "content token" per Apple 2026-04-14 rebrand (L71, L201); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |
+| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP (Apps and Books) location token" to "content token" per Apple 2026-04-14 rebrand (L71, L201); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; pitfall register CI-2 closure | -- |
 
 ## Version History
 

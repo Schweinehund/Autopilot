@@ -1,0 +1,219 @@
+{
+  "phase_baseline": {
+    "sha": "fa8c3302b5844ad91a44273fdd29d248c51cd579",
+    "sha_short": "fa8c3302",
+    "branch": "v1.22/154-style-landing",
+    "measured_at": "2026-09-03T03:36:32Z",
+    "path_note": "Phase 156, Phase 158 and Phase 159 must RESOLVE this artifact's path rather than hardcode it -- .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close.",
+    "structural_gate": {
+      "c17-eee-contract": {
+        "script": "scripts/validation/c17-eee-contract.mjs",
+        "invocation": "node scripts/validation/c17-eee-contract.mjs",
+        "exitCode": 0,
+        "filesChecked": 237,
+        "totalViolations": 0,
+        "perAssertionViolations": {
+          "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0,
+          "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0
+        },
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check-nav-hub-links": {
+        "script": "scripts/validation/check-nav-hub-links.mjs",
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "check-phase-135": {
+        "script": "scripts/validation/check-phase-135.mjs",
+        "invocation": "node scripts/validation/check-phase-135.mjs",
+        "exitCode": 0,
+        "pass": 7,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 7 PASS, 0 FAIL, 0 SKIPPED"
+      },
+      "check-phase-54": {
+        "script": "scripts/validation/check-phase-54.mjs",
+        "invocation": "node scripts/validation/check-phase-54.mjs",
+        "exitCode": 0,
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0,
+        "tallyLine": "Summary: 32 passed, 0 failed, 0 skipped"
+      },
+      "check-phase-153": {
+        "script": "scripts/validation/check-phase-153.mjs",
+        "invocation": "node scripts/validation/check-phase-153.mjs (CHECK_PHASE_NESTED unset)",
+        "nested": false,
+        "exitCode": 0,
+        "pass": 111,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+      }
+    },
+    "conflict_marker_sweep": {
+      "invocation": "git grep -nE '^(<{7}|={7}|>{7})' -- docs/",
+      "exitCode": 1,
+      "note": "exit 1 with no output means no matches (git grep convention: 1 = no match found). Paired with C17 in every plan this phase, never a substitute for it -- C17 is measurably blind to live conflict markers (Phase 154 proved 237/0 on a tree carrying three live marker blocks)."
+    },
+    "counts_this_phase_changes": {
+      "registry_row_count": {
+        "invocation": "grep -c '^| RE-' docs/_registry/RE-index.md",
+        "value": 236
+      },
+      "filename_map_row_count": {
+        "invocation": "grep -c '^| RE-' scripts/pipeline/filename-map.md",
+        "value": 236
+      },
+      "canary_build_publish_bundle": {
+        "invocation": "grep -n \"236\" scripts/pipeline/build-publish-bundle.mjs",
+        "occurrences": 5,
+        "lines": [8, 515, 522, 525, 525],
+        "note": "line 525 carries two occurrences ('rows.length === 236' string appears once, but the assertion text repeats '236 rows' -- 5 total across 4 distinct line numbers"
+      },
+      "canary_build_filename_map": {
+        "invocation": "grep -n \"236\" scripts/pipeline/build-filename-map.mjs",
+        "occurrences": 3,
+        "lines": [274, 284, 285]
+      },
+      "re224_line_count": {
+        "invocation": "grep -c '' docs/recipes/03-windows-11-multi-app-kiosk.md",
+        "value": 328
+      },
+      "re222_line_count": {
+        "invocation": "grep -c '' docs/recipes/01-shared-windows-avd-client.md",
+        "value": 273
+      },
+      "re237_line_count": {
+        "invocation": "grep -c '' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "value": 292
+      },
+      "docs_index_line_count": {
+        "invocation": "grep -c '' docs/index.md",
+        "value": 408
+      },
+      "licensing_matrix": {
+        "invocation": "grep -c '' docs/reference/licensing-matrix.md ; wc -c < docs/reference/licensing-matrix.md ; tail -c 1 docs/reference/licensing-matrix.md | xxd",
+        "lines": 93,
+        "bytes": 5650,
+        "lastByteIsHexPipeNoTrailingNewline": true,
+        "lastByteHex": "7c"
+      }
+    },
+    "style_residual": {
+      "note": "Vacuity trap: passing sweep3.py a single FILE path always reports 0 files/0 edits. Defused by walking docs/ as a directory for the full-corpus reading, and by copying each of the four phase-edited documents into its own scratch DIRECTORY (mirroring the docs/... relative path) for the per-document readings.",
+      "full_corpus": {
+        "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+        "mode": "dry-run (unconditional default -- sweep3.py has no --dry-run flag and never received --apply)",
+        "exitCode": 0,
+        "filesTouched": 5,
+        "pinsLoaded": 562,
+        "perTokenEdits": {
+          "admin": 6, "admins": 1, "sign-in-to": 1, "desired": 1, "vs": 0, "config": 0
+        },
+        "totalEdits": 9,
+        "protected": {
+          "table row": 6530,
+          "cited verbatim quotation": 384,
+          "heading line": 123,
+          "agent speech script": 92,
+          "validator-pinned string": 31,
+          "UI label line": 29,
+          "blockquote would exceed C17 #12 200-char cap": 1
+        },
+        "tallyLine": "DRY RUN -- 5 files, 562 pins loaded / 9 TOTAL edits"
+      },
+      "per_document_scratch_directory": {
+        "instrument_note": "sweep3.py's own printed '%d files' figure is len(touched) -- files that had at least one non-protected edit -- NOT a count of files scanned/loaded by rglob. This disagrees with this plan's own CONTEXT.md/action-text assumption that a zero-edit document would still print '1 file'. The measured value wins per this plan's own instruction; the disagreement is recorded here and repeated in the SUMMARY. Non-vacuity (proof the scratch-directory instrument actually found and read the file, as opposed to the single-file-path bug where rglob finds nothing) is independently established two ways below: (a) a direct filesystem count of the .md file present under the scratch root, and (b) sweep3.py's own non-zero 'protected' counts, which are only possible if it read and tokenized lines from the file.",
+        "documents": {
+          "docs/recipes/01-shared-windows-avd-client.md (RE-222)": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch>/re222 scripts/docs-style/_CONTENT-PINS.txt",
+            "filesPresentInScratchRoot": 1,
+            "filesPresentInvocation": "find <scratch>/re222 -name '*.md' | wc -l",
+            "sweep3ReportedTouchedFiles": 0,
+            "totalEdits": 0,
+            "protected": {"table row": 38, "validator-pinned string": 4},
+            "nonVacuityProof": "protected counts (38 + 4 = 42 lines skipped-and-explained) are only emitted when sweep3.py actually read and tokenized the file's lines; a genuinely vacuous run (file not found by rglob) emits zero protected counts as well as zero edits.",
+            "tallyLine": "DRY RUN -- 0 files, 562 pins loaded / 0 TOTAL edits"
+          },
+          "docs/recipes/03-windows-11-multi-app-kiosk.md (RE-224)": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch>/re224 scripts/docs-style/_CONTENT-PINS.txt",
+            "filesPresentInScratchRoot": 1,
+            "filesPresentInvocation": "find <scratch>/re224 -name '*.md' | wc -l",
+            "sweep3ReportedTouchedFiles": 0,
+            "totalEdits": 0,
+            "protected": {"table row": 64, "validator-pinned string": 1},
+            "nonVacuityProof": "protected counts (64 + 1 = 65) prove the file was read and tokenized.",
+            "tallyLine": "DRY RUN -- 0 files, 562 pins loaded / 0 TOTAL edits"
+          },
+          "docs/reference/licensing-matrix.md": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch>/lic scripts/docs-style/_CONTENT-PINS.txt",
+            "filesPresentInScratchRoot": 1,
+            "filesPresentInvocation": "find <scratch>/lic -name '*.md' | wc -l",
+            "sweep3ReportedTouchedFiles": 0,
+            "totalEdits": 0,
+            "protected": {"table row": 28},
+            "nonVacuityProof": "protected count (28) proves the file was read and tokenized.",
+            "tallyLine": "DRY RUN -- 0 files, 562 pins loaded / 0 TOTAL edits"
+          },
+          "docs/recipes/06-walk-up-avd-kiosk-autologon.md (RE-237)": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch>/re237 scripts/docs-style/_CONTENT-PINS.txt",
+            "filesPresentInScratchRoot": 1,
+            "filesPresentInvocation": "find <scratch>/re237 -name '*.md' | wc -l",
+            "sweep3ReportedTouchedFiles": 1,
+            "totalEdits": 1,
+            "editedToken": "sign-in-to",
+            "protected": {"table row": 42, "validator-pinned string": 4},
+            "scopeNote": "This one `sign-in-to` occurrence at RE-237:19 belongs to Phase 156's batch-10 STYLE-02 scope and is NOT fixed in this phase.",
+            "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 1 TOTAL edits"
+          }
+        }
+      }
+    },
+    "pin_residency": {
+      "tool": "none -- set-membership assertion (independent Python one-liner: for each of the 562 pin lines, check verbatim containment in the concatenation of every docs/**/*.md file)",
+      "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+      "pinCount": 562,
+      "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+      "found": 562,
+      "lost": 0,
+      "tallyLine": "562 pins / 562 found / 0 lost",
+      "perFileResidentCounts": {
+        "docs/recipes/01-shared-windows-avd-client.md (RE-222)": 15,
+        "docs/recipes/03-windows-11-multi-app-kiosk.md (RE-224)": 15,
+        "docs/recipes/06-walk-up-avd-kiosk-autologon.md (RE-237)": 15,
+        "docs/reference/licensing-matrix.md": 9,
+        "docs/index.md": 72,
+        "docs/_registry/RE-index.md": 161
+      }
+    },
+    "line_endings": {
+      "crlfFilesConfirmed": [
+        "docs/recipes/01-shared-windows-avd-client.md",
+        "docs/recipes/03-windows-11-multi-app-kiosk.md",
+        "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "docs/reference/licensing-matrix.md",
+        "docs/index.md",
+        "docs/_registry/RE-index.md",
+        ".planning/REQUIREMENTS.md",
+        ".planning/ROADMAP.md",
+        ".planning/STATE.md",
+        "scripts/validation/check-phase-135.mjs"
+      ],
+      "coreAutocrlf": {
+        "invocation": "git config --get core.autocrlf",
+        "value": "true"
+      },
+      "gitattributes": {
+        "invocation": "cat .gitattributes",
+        "content": "scripts/pipeline/reference.docx binary",
+        "ruleCount": 1
+      },
+      "note": "D-35 leaves .gitattributes unchanged. This reading is recorded so a later executor does not 'fix' a line ending and produce a whole-file diff. Git's core.autocrlf=true means the working-tree copy is CRLF while the git object blob is normalized LF; Write-tool edits to these files in this phase will trigger git's own 'LF will be replaced by CRLF' notice on add/commit, which is expected and not an error."
+    }
+  }
+}

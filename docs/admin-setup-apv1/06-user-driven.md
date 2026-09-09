@@ -30,7 +30,7 @@ User-driven is the most common APv1 deployment mode. The end user authenticates 
 - Deployment profile created with Deployment mode = **User-Driven** (see [Deployment Profile](02-deployment-profile.md))
 - ESP policy configured and assigned (see [ESP Policy](03-esp-policy.md))
 - Dynamic device group configured and verified (see [Dynamic Groups](04-dynamic-groups.md))
-- For Entra join: no additional prerequisites beyond the above
+- For Entra join: no additional prerequisites beyond those already listed
 - For hybrid Entra join: Intune Connector for Active Directory installed and active (see [Intune Connector](09-intune-connector-ad.md))
 
 ## Steps

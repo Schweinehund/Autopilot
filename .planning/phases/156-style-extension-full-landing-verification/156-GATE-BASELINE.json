@@ -1,0 +1,2697 @@
+{
+  "phase_baseline": {
+    "sha": "655654f2a03336413a02f5425f0ff385be7c9afb",
+    "sha_short": "655654f2",
+    "branch": "v1.22/154-style-landing",
+    "measured_at": "2026-09-05T02:30:17Z",
+    "path_note": "Phase 158 and Phase 159 must RESOLVE this artifact's path rather than hardcode it -- .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close.",
+    "pin_coverage": {
+      "note": "D-08's discretionary choice, recorded explicitly: scripts/docs-style/_CONTENT-PINS.txt stays at 562 pins, byte-unchanged. The live-corpus pin list below is added BESIDE it as a separate differ input over the LIVE docs/ corpus (which post-dates the scratch corpus _CONTENT-PINS.txt was generated against), not a replacement for it.",
+      "contentPinsCount": 562,
+      "contentPinsRegenerated": false,
+      "contentPinsInvocation": "test \"$(grep -c '' scripts/docs-style/_CONTENT-PINS.txt)\" = \"562\" && git diff --exit-code -- scripts/docs-style/_CONTENT-PINS.txt  (shell: Git Bash / POSIX sh via the Bash tool)",
+      "liveCorpusPinCount": 685,
+      "liveCorpusPinFile": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-before.txt",
+      "liveCorpusPinInvocation": "python scripts/docs-style/pins2.py scripts/validation docs > 156-LIVE-PINS-before.txt  (stderr: \"4590 literals scanned, 685 pinned\"; shell: Git Bash / POSIX sh via the Bash tool)",
+      "liveCorpusReproducibilityNote": "The as-shipped pins2.py built its de-dup set as a bare Python set(); iterating a set of str objects in a fresh process is order-randomized per-process (str hash randomization), so two back-to-back runs over the identical corpus emitted the same 685 literals in a DIFFERENT tie order for equal-length strings -- a live non-determinism bug, not a line-ending or content difference (both outputs were confirmed CRLF, UTF-8). Fixed under Rule 1 (auto-fix bugs) by changing the internal lits collection from set() to an insertion-ordered dict, which makes iteration order deterministic (file-processing order is already sorted, and literal-scan order within a file is left-to-right). literals(), MIN, and the sorted(key=len, reverse=True) call itself are unchanged, per the plan's explicit instruction. Reproducibility re-confirmed after the fix: two fresh `python scripts/docs-style/pins2.py scripts/validation docs` runs, zero seconds apart, diff -q clean.",
+      "literalsPresentIn13": 117,
+      "pinnedInContentPins": 39,
+      "notPinned": 78,
+      "arithmeticCheck": "117 == 39 + 78",
+      "perValidatorUnpinned": {
+        "check-phase-149.mjs": 22,
+        "check-phase-148.mjs": 20,
+        "check-phase-150.mjs": 19,
+        "check-phase-151.mjs": 8,
+        "check-phase-152.mjs": 4,
+        "check-phase-147.mjs": 1,
+        "check-phase-67.mjs": 1,
+        "v1.15-milestone-audit.mjs": 1,
+        "v1.18-milestone-audit.mjs": 1,
+        "v1.19-milestone-audit.mjs": 1
+      },
+      "perValidatorUnpinnedMethod": "For each of the 78 unpinned-but-present literals, scanned every scripts/validation/*.mjs file with pins2.py's own literals() function (imported by source-extraction, not retyped) and attributed the literal to the alphabetically-first file whose exact-quoted-literal set contains it. One literal ('03-windows-11-multi-app-kiosk.md') has two owners (v1.19-milestone-audit.mjs and v1.20-milestone-audit.mjs); it is counted once, under the alphabetically-first owner. Sum of the table above is 78, matching notPinned exactly.",
+      "prediction": {
+        "source": "156-CONTEXT.md D-08",
+        "literalsPresentIn13": 117,
+        "pinnedInContentPins": 39,
+        "notPinned": 78,
+        "perValidatorUnpinned": {
+          "check-phase-149": 23,
+          "check-phase-148": 22,
+          "check-phase-150": 19,
+          "check-phase-151": 8,
+          "check-phase-152": 4,
+          "check-phase-135": 4,
+          "check-phase-136": 3,
+          "check-phase-50": 3,
+          "check-phase-147": 2,
+          "check-phase-67": 2,
+          "check-phase-146": 1,
+          "check-nav-hub-links": 1
+        },
+        "agreement": "Totals match exactly (117 present / 39 pinned / 78 unpinned). Per-validator attribution differs: CONTEXT.md names check-phase-135/-136/-50/-146 and check-nav-hub-links owning several literals each; this plan's measurement instead attributes those same slots to check-phase-67/-147 (lower counts) plus four v1.15/v1.18/v1.19-milestone-audit.mjs files (1 literal each) that CONTEXT.md's prediction did not name. Recording both per this task's instruction: 'Record what this plan measures, not what CONTEXT.md predicts, and if the two disagree record both with the command that produced yours.' The measured breakdown above is the one this plan asserts as current at 655654f2."
+      },
+      "invocation": "One-off Python script (not committed -- ad hoc measurement) reading 156-TARGETS.txt, 156-LIVE-PINS-before.txt, scripts/docs-style/_CONTENT-PINS.txt and the 13 target documents at HEAD (655654f2); ran in Git Bash (POSIX sh) via the Bash tool.",
+      "structurally_invisible": "A pin differ, including this coverage measurement, detects a LOST literal -- one present in the pin file that stops appearing verbatim in the corpus after an edit. It structurally cannot detect an INTRODUCED problem, such as a phrase a validator asserts must be ABSENT newly appearing in edited prose. V-149-BARREDPHRASINGS (scripts/validation/check-phase-149.mjs, asserting 'the six' and 'most business OEMs' are absent from 00-overview.md and 01-windows-dfci.md) is the live counterexample: no pin list entry could ever catch batch 10 introducing either phrase. This is why guards.negative_assertions (Task 3) re-runs those checks directly rather than relying on pin coverage to stand in for them."
+    },
+    "guards": {
+      "sure_admin": {
+        "perturbAndRestore": {
+          "method": "Copied docs/operations/firmware-bios/03-hp-bios-configuration.md and scripts/docs-style/subs-admin-batch9.tsv into a scratch directory outside the repository (Windows-form path under the Temp scratchpad root, per D-13); made a second TSV with the (?<!Sure ) lookbehind element stripped from the second data row; ran sweep3.py against the scratch directory with each TSV in turn, no --apply (dry run is the unconditional default).",
+          "shell": "Git Bash (POSIX sh) via the Bash tool",
+          "shippedRow": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch> scripts/docs-style/_CONTENT-PINS.txt --subs <scratch>/subs-shipped.tsv",
+            "filesTouched": 0,
+            "totalEdits": 0,
+            "tallyLine": "DRY RUN -- 0 files, 562 pins loaded / 0 TOTAL edits"
+          },
+          "perturbedRow": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch> scripts/docs-style/_CONTENT-PINS.txt --subs <scratch>/subs-perturbed.tsv",
+            "filesTouched": 1,
+            "totalEdits": 20,
+            "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 20 TOTAL edits"
+          },
+          "predictionSource": "156-CONTEXT.md D-06",
+          "predictedPerturbedEdits": 20,
+          "measuredPerturbedEdits": 20,
+          "agreement": "measured matches prediction exactly",
+          "postProofCheck": "git status --porcelain -- docs/ (empty, confirmed) -- both runs stayed dry, scratch directory deleted afterward, no repository leak"
+        },
+        "vacuousDetectorDemonstration": {
+          "invocation": "grep -c \"Sure Administrator\" docs/",
+          "stdout": "0",
+          "stderr": "grep: docs/: Is a directory",
+          "exitCode": 2,
+          "note": "Errors because grep without -r refuses a directory argument; the printed 0 and non-zero exit together mean this form can never distinguish a real zero from a broken invocation -- it is vacuous as a guard."
+        },
+        "correctedDetector": "grep -rc \"Sure Administrator\" docs/ --include='*.md' | awk -F: '{s+=$2} END{print s+0}'",
+        "correctedDetectorValue": 0,
+        "occurrenceCounts": {
+          "method": "grep -oE \"Sure Admin(istrator)?\" <path> | wc -l  (occurrences, not matching-line counts, per this task's instruction)",
+          "corpusWide": 35,
+          "hpBiosDocument": 25
+        },
+        "glossaryOwnership": {
+          "file": "docs/_glossary.md",
+          "headingLine": 193,
+          "heading": "### Sure Admin",
+          "anchor": "#sure-admin",
+          "note": "docs/_glossary.md owns the 'Sure Admin' term heading and the anchor other documents' Alphabetical Index links point at (confirmed present in the same file's index line). This guard's strongest limb is therefore link breakage (an edited heading would move the anchor and break every inbound link), not a spelling typo -- 'Sure Administrator' does not occur anywhere in the corpus (0), so the admin-expansion rule's Sure-exemption exists purely to protect this compound term from the corpus-wide admin->administrator rewrite."
+        }
+      },
+      "pilot_label": {
+        "invocation": "grep -c '\\[PILOT\\]' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "measuredCount": 28,
+        "measuredAtSha": "655654f2a03336413a02f5425f0ff385be7c9afb",
+        "crossCheck": "grep -o '\\[PILOT\\]' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l  (occurrence count, also 28 -- one marker per matching line, confirms grep -c did not undercount a multi-marker line)",
+        "note": "Measured fresh at HEAD in this task per D-07; NOT carried forward from Phase 155's SUMMARY, which is exactly the inheritance D-07 forbids.",
+        "mechanically_enforced": false,
+        "mechanicallyEnforcedNote": "No validator and no check.py rule references '[PILOT]' or 'PILOT' (grep -rn 'PILOT' scripts/validation/*.mjs returns nothing naming this label). The only place the label is governed is a prose paragraph in .claude/skills/google-style-verify/SKILL.md's protected-signal list (line 119), which documents the marker's meaning but enforces nothing mechanically."
+      },
+      "armed_literals": {
+        "note": "D-09's armed instances: verbatim sentences required by a named validator, present in editable batch-10 prose, and unpinned -- so a batch-10 rewrite of either sentence trips its validator with no pin-differ warning beforehand.",
+        "entries": [
+          {
+            "literal": "Four of the nine mechanisms below have no rollback path at all",
+            "owningValidator": "scripts/validation/check-phase-151.mjs",
+            "presentInValidator": true,
+            "presentInDocument": true,
+            "document": "docs/recipes/05-enterprise-update-plan.md",
+            "pinned": false,
+            "directionalToken": "below",
+            "recheckCommand": "grep -c 'Four of the nine mechanisms below have no rollback path at all' scripts/validation/check-phase-151.mjs docs/recipes/05-enterprise-update-plan.md scripts/docs-style/_CONTENT-PINS.txt"
+          },
+          {
+            "literal": "Dell wants a virgin BIOS; Lenovo needs a provisioned one",
+            "owningValidator": "scripts/validation/check-phase-150.mjs",
+            "presentInValidator": true,
+            "presentInDocument": true,
+            "document": "docs/operations/firmware-bios/00-overview.md",
+            "pinned": false,
+            "note": "spot-verified sibling of the same shape, per this task's instruction",
+            "recheckCommand": "grep -c 'Dell wants a virgin BIOS; Lenovo needs a provisioned one' scripts/validation/check-phase-150.mjs docs/operations/firmware-bios/00-overview.md scripts/docs-style/_CONTENT-PINS.txt"
+          }
+        ]
+      },
+      "negative_assertions": {
+        "note": "D-10's negative assertions: a pin differ can never see these, because a pin detects a LOST literal and never an INTRODUCED one. The remedy is the bare apex check-phase-153.mjs (no CHECK_PHASE_NESTED), which chains 145-152 as hard members and is the named per-commit gate every corpus commit in plans 156-03/04/05 must pass.",
+        "checks": [
+          {
+            "id": "V-149-BARREDPHRASINGS",
+            "file": "scripts/validation/check-phase-149.mjs",
+            "asserts": "'the six' (standalone, not the permitted 'six-OEM' compound) and 'most business OEMs' are ABSENT from docs/operations/firmware-bios/00-overview.md and docs/operations/firmware-bios/01-windows-dfci.md",
+            "preBatchState": "PASS -- both phrases confirmed absent from both files at 655654f2 (grep -inE \"\\bthe six(?!-)\\b\" and grep -in \"most business OEMs\" over both files, empty output)"
+          },
+          {
+            "id": "V-151-ROLLBACK",
+            "file": "scripts/validation/check-phase-151.mjs",
+            "asserts": "## Rollback/Recovery heading present with its true-count opening sentence intact, and the default-channel absence needles present, in docs/recipes/05-enterprise-update-plan.md"
+          },
+          {
+            "id": "V-148-LIMITATIONS",
+            "file": "scripts/validation/check-phase-148.mjs",
+            "asserts": "count of named EAM limitations is DERIVED from the document's own bold lead-ins in the callouts region, not hardcoded -- currently must equal 8"
+          },
+          {
+            "id": "V-150-MATRIX",
+            "file": "scripts/validation/check-phase-150.mjs",
+            "asserts": "the firmware-oem-matrix's own row set, shared six-H2 column structure, and its silence-cell / documentation-silences count relationship, all read from the document itself"
+          }
+        ],
+        "remedy": "node scripts/validation/check-phase-153.mjs (bare, CHECK_PHASE_NESTED unset)",
+        "remedyResultAt655654f2": "111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+      },
+      "v135_content_assertions": {
+        "note": "D-11's six surviving V-135-* content assertions (V-135-SELF is a chain-membership meta-check, not a content assertion, and is excluded from this count of six).",
+        "invocation": "node scripts/validation/check-phase-135.mjs",
+        "resultAt655654f2": "7 PASS, 0 FAIL, 0 SKIPPED (6 content checks + V-135-SELF)",
+        "checks": {
+          "RECIPE": "docs/recipes/03-windows-11-multi-app-kiosk.md exists, non-empty, verbatim H1, AssignedAccess Configuration node present -- PASS",
+          "ROLLBACKORDER": "## Rollback/Recovery sits between ## Verification and ## Configuration-Caused Failures -- PASS",
+          "RECIPE01ZEROEDIT": "docs/recipes/01-shared-windows-avd-client.md Step 5a/5b headings unchanged (zero-edit tripwire) -- PASS",
+          "XMLFENCE": "exactly one column-0 ```xml fence present -- PASS",
+          "NAMESPACETABLE": "3-row namespace/version-floor table, measured row count = 3 (2017 root / v4: / v5:) -- PASS",
+          "ANTIFEATURE": "anti-feature table row count, measured = 12 -- PASS"
+        }
+      },
+      "frontmatter_vector": {
+        "note": "D-12's frontmatter vector, measured over all 13 targets in 156-TARGETS.txt.",
+        "audienceAdminCount": {
+          "invocation": "grep -cE '^audience:\\s*admin\\s*$' <each of the 13>",
+          "value": 13
+        },
+        "ownerIntuneAdminLeadCount": {
+          "invocation": "grep -cE '^owner:\\s*Intune Admin Lead\\s*$' <each of the 13>",
+          "value": 6
+        },
+        "leadingHtmlCommentCount": {
+          "invocation": "head -1 <each of the 13> | grep -c '^<!--'",
+          "value": 0
+        },
+        "htmlCommentBlindSpot": "CHECKED and NOT LIVE here: this measurement confirms none of the 13 currently open with a leading HTML comment, but no validator asserts this property going forward, so it is a one-time reading, not a standing guard."
+      },
+      "negative_walkers": {
+        "note": "D-36's corpus-wide negative walkers, all asserting zero bare occurrences of the '> **Platform:**' token (as opposed to the permitted '> **Platform applicability:**' form) across both docs/ and .planning/. All three are apex-chain members, so a trip in any one takes check-phase-153.mjs's bare-apex count to a failing total and breaks this phase's own after-measurement.",
+        "walkers": [
+          {
+            "id": "V-54-27",
+            "file": "scripts/validation/check-phase-54.mjs",
+            "preBatchState": "PASS (32 passed, 0 failed, 0 skipped)"
+          },
+          {
+            "id": "V-55-27",
+            "file": "scripts/validation/check-phase-55.mjs",
+            "preBatchState": "PASS (32 passed, 0 failed, 0 skipped)"
+          },
+          {
+            "id": "V-56-28",
+            "file": "scripts/validation/check-phase-56.mjs",
+            "preBatchState": "PASS (32 passed, 0 failed, 0 skipped)"
+          }
+        ],
+        "guardrail": "Any quotation of the '> **Platform:**' token in a Phase 156 artifact must sit inside a fence or backticks, because V-54-27 (and its two siblings) strip fenced code blocks and inline code before scanning -- an unfenced quotation would trip the walker.",
+        "amendmentSensitive": {
+          "id": "V-54-21",
+          "file": "scripts/validation/check-phase-54.mjs",
+          "asserts": "REQUIREMENTS.md + ROADMAP.md contain ZERO '05-compliance-policy.md' literal references",
+          "preBatchState": "PASS -- part of the same 32/0/0 check-phase-54.mjs run above",
+          "note": "An amendment to REQUIREMENTS.md or ROADMAP.md in a later Phase 156 plan could reintroduce this literal; this is the one D-36 assertion an ordinary content amendment (not a corpus prose edit) could trip."
+        },
+        "extensionScopeNote": "156-GATE-BASELINE.json carries a .json extension and is therefore never walked by any of the three .md-only walkers."
+      }
+    },
+    "before": {
+      "sha": "0425921be489ce2a71d42a60c93faea27481d36c",
+      "sha_short": "0425921b",
+      "branch": "v1.22/154-style-landing",
+      "measured_at": "2026-09-05T02:43:51Z",
+      "shell_note": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation.",
+      "structural_gate": {
+        "c17": {
+          "script": "scripts/validation/c17-eee-contract.mjs",
+          "invocation": "node scripts/validation/c17-eee-contract.mjs",
+          "exitCode": 0,
+          "filesChecked": 237,
+          "totalViolations": 0,
+          "perAssertionViolations": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+        },
+        "check-phase-153": {
+          "script": "scripts/validation/check-phase-153.mjs",
+          "invocation": "node scripts/validation/check-phase-153.mjs",
+          "nested": false,
+          "exitCode": 0,
+          "pass": 111,
+          "fail": 0,
+          "skipped": 0,
+          "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+        },
+        "check-nav-hub-links": {
+          "script": "scripts/validation/check-nav-hub-links.mjs",
+          "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+          "exitCode": 0,
+          "hubPresenceFailures": 0,
+          "corpusLinkFailures": 0,
+          "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+        },
+        "verify2": {
+          "script": "scripts/docs-style/verify2.py",
+          "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+          "base": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+          "baseSource": "read from the resolved Phase 154 artifact's components.verify2.base value, not retyped as a hex string, per D-30",
+          "walkRoot": "docs",
+          "exitCode": 0,
+          "changedLines": 6070,
+          "explainedByFourRules": 3462,
+          "unexplained": 2608,
+          "lineCountDiffersFiles": [
+            "docs/_registry/RE-index.md",
+            "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md",
+            "docs/index.md",
+            "docs/recipes/01-shared-windows-avd-client.md",
+            "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+            "docs/reference/licensing-matrix.md"
+          ],
+          "resolvedOk": {
+            "baseline": 6271,
+            "after": 6304
+          },
+          "missingFile": {
+            "baseline": 27,
+            "after": 27
+          },
+          "missingAnchor": {
+            "baseline": 454,
+            "after": 454
+          },
+          "introducedBySweep": 0,
+          "incidentallyFixed": 0,
+          "broad_drift_claim_dropped": "The claim that the merge and Phase 155 introduced zero structural drift is DROPPED, per D-31. Part A moved against Phase 154's recorded figures (6070/3462/2608 measured here vs 6119/3493/2626 recorded at Phase 154's own before-half) and Part B's resolvedOk count moved (6271 -> 6304, six new LINE COUNT DIFFERS entries from Phase 155 content work). The only assertion this phase makes on this component is the narrow INTRODUCED 0 (link/anchor health is not worse after Phase 154+155 than before) -- the broad zero-structural-drift claim is not asserted.",
+          "tallyLine": "  INTRODUCED by the sweep: 0"
+        },
+        "pin_differ": {
+          "tallyLine": "562 pins / 562 found / 0 lost",
+          "legacy": {
+            "tool": "ad hoc grep -F membership check, one invocation per pin line (per D-31's Phase-154 precedent: pins2.py must not be substituted for this assertion)",
+            "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+            "pinCount": 562,
+            "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+            "found": 562,
+            "lost": 0,
+            "tallyLine": "562 pins / 562 found / 0 lost"
+          },
+          "liveCorpus": {
+            "file": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-before.txt",
+            "count": 685,
+            "countMethod": "grep -c '' .planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-before.txt",
+            "note": "Produced by plan 156-01. Plan 156-06 diffs the after-half live-corpus pin list against this file; not diffed here because this plan makes no corpus edit."
+          }
+        }
+      },
+      "mechanical_residual": {
+        "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+        "mode": "dry-run (unconditional default -- sweep3.py has no --dry-run flag; it parses only --subs and --apply and silently discards everything else)",
+        "exitCode": 0,
+        "filesLoaded": 5,
+        "pinsLoaded": 562,
+        "perTokenEdits": {
+          "admin": 7,
+          "admins": 1,
+          "vs": 0,
+          "config": 0,
+          "sign-in-to": 1,
+          "desired": 1
+        },
+        "totalEdits": 10,
+        "protected": {
+          "table row": 6534,
+          "cited verbatim quotation": 384,
+          "heading line": 123,
+          "agent speech script": 92,
+          "validator-pinned string": 31,
+          "UI label line": 29,
+          "blockquote would exceed C17 #12 200-char cap": 1
+        },
+        "tallyLine": "DRY RUN -- 5 files, 562 pins loaded / 10 TOTAL edits",
+        "sites": [
+          {
+            "file": "docs/operations/firmware-bios/01-windows-dfci.md",
+            "line": 109,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/operations/firmware-bios/02-dell-bios-configuration.md",
+            "line": 85,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/operations/patch-management/08-windows-app-updates.md",
+            "line": 266,
+            "token": "desired",
+            "disposition": "CITATION-BLOCKED, PERMANENT -- this line sits inside a verbatim Microsoft quotation (\"the desired state of the development environment on your Windows machine\") that quoted_lines() cannot protect because it recognizes only blockquotes, not inline quoted vendor prose. All three escapes are blocked: editing it fabricates a citation (the exact defect class VERIFY-02 exists to catch); pinning it moves the pin count 562 -> 563, a changed before/after value; and a KEEP_LINE entry would contradict the sweep3.py-unchanged assertion (D-26). Left unedited by design -- not scheduled for the batch-10 edit pass and expected to still appear in the after-half measurement in plan 156-06."
+          },
+          {
+            "file": "docs/recipes/05-enterprise-update-plan.md",
+            "line": 158,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/05-enterprise-update-plan.md",
+            "line": 182,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/05-enterprise-update-plan.md",
+            "line": 189,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/05-enterprise-update-plan.md",
+            "line": 232,
+            "token": "admins",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/05-enterprise-update-plan.md",
+            "line": 254,
+            "token": "admin",
+            "disposition": "PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+            "line": 19,
+            "token": "sign-in-to",
+            "disposition": "PENDING -- batch-10 admin-expansion edit (sign into -> sign in to); scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05), not a permanent residual."
+          },
+          {
+            "file": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+            "line": 81,
+            "token": "admin",
+            "disposition": "PENDING, THE NEW SITE (D-33) -- entered via a Phase 155 verification-gap-closure commit (9ce464a9) landed AFTER 43df3d63 'docs(phase-155): complete phase execution'; not RCP content prose. Scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05)."
+          }
+        ],
+        "why_remeasured": "D-33: this residual moved 9 -> 10 after Phase 155 reported complete, because a verification-gap-closure commit (9ce464a9) landed after 43df3d63 'docs(phase-155): complete phase execution' and introduced one new wanted edit at docs/recipes/06-walk-up-avd-kiosk-autologon.md:81 (admin), not from RCP content prose -- Phase 155's own content plans held RE-237 at exactly the predecessor's 1-edit reading. The transferable lesson: a phase's own remediation commits can move a mechanical residual after the phase itself reports complete, which is why this plan re-measures fresh at the current commit rather than inheriting Phase 154/155's recorded counts.",
+        "predictedByContext": {
+          "source": "156-CONTEXT.md D-32/D-33",
+          "totalEdits": 10,
+          "sites": 10,
+          "agreement": "measured matches prediction exactly, all 10 site file:line:token triples match D-32's enumerated list"
+        }
+      }
+    },
+    "resolver": {
+      "candidates": [
+        ".planning/phases/154-*/154-GATE-BASELINE.json",
+        ".planning/milestones/v1.22-phases/154-*/154-GATE-BASELINE.json"
+      ],
+      "order": "live phase directory first, then the archived milestone directory (D-29)",
+      "on_zero": "loud failure -- SystemExit naming both glob patterns and 'refusing to resolve to null'; never returns None or an empty string",
+      "on_many": "loud failure -- SystemExit naming the match count and the full candidate list, 'refusing to pick one silently'; never picks the first match arbitrarily",
+      "exercised_at": "Phase 156's runtime, only the live-phase-directory candidate exists (.planning/milestones/v1.22-phases/ does not exist yet -- confirmed by `ls .planning/milestones/v1.22-phases` returning 'No such file or directory' at measurement time). The archived arm, the ambiguous case and the absent case were therefore exercised DELIBERATELY against three scratch roots created under the OS temp directory (outside the repository, via Python tempfile.mkdtemp), never inside .planning/, and each scratch root was deleted (shutil.rmtree) immediately after its proof ran.",
+      "proofs": [
+        {
+          "case": "archived_arm_alone",
+          "setup": "scratch_root/.planning/milestones/v1.22-phases/154-style-landing-merge-the-verified-google-style-pass/154-GATE-BASELINE.json present; scratch_root/.planning/phases/ absent",
+          "observed": "resolved",
+          "resolved_relpath": ".planning/milestones/v1.22-phases/154-style-landing-merge-the-verified-google-style-pass/154-GATE-BASELINE.json"
+        },
+        {
+          "case": "both_arms_present",
+          "setup": "both candidate paths present under the same scratch root",
+          "observed": "loud_failure",
+          "message": "154-GATE-BASELINE.json resolver: AMBIGUOUS -- 2 matches found across both candidates: [<scratch-root>\\.planning/phases\\154-style-landing-merge-the-verified-google-style-pass\\154-GATE-BASELINE.json, <scratch-root>\\.planning/milestones/v1.22-phases\\154-style-landing-merge-the-verified-google-style-pass\\154-GATE-BASELINE.json] -- refusing to pick one silently."
+        },
+        {
+          "case": "neither_arm_present",
+          "setup": "scratch_root/.planning/ exists but neither candidate glob matches anything under it",
+          "observed": "loud_failure",
+          "message": "154-GATE-BASELINE.json resolver: ZERO matches across both candidates ('.planning/phases/154-*/154-GATE-BASELINE.json', '.planning/milestones/v1.22-phases/154-*/154-GATE-BASELINE.json') -- refusing to resolve to null."
+        }
+      ],
+      "post_proof_leak_check": "git status --porcelain named no new path under the repository after all three scratch roots were deleted (identical untracked-file set before and after)",
+      "reuse_note": "Plans 156-06, and later Phases 158 and 159 (after .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close), reuse this recorded resolver rather than re-deriving it."
+    },
+    "embedded_154": {
+      "source_sha": "8de413aae65387a6b381fd34f70f65128592f65d",
+      "source_sha_note": "Taken from the resolved artifact's gate_baseline.sha at read time (8de413aa, the ANNOTATE-AND-SUPERSEDE-corrected value), not assumed.",
+      "source_content_hash": "78b95f3c72886c8d377c74985190fce5c988bf9556ae3b37c2f5ceb783648902",
+      "hash_method": "python3 -c \"import glob,json,hashlib; c=sorted(glob.glob('.planning/phases/154-*/154-GATE-BASELINE.json'))+sorted(glob.glob('.planning/milestones/v1.22-phases/154-*/154-GATE-BASELINE.json')); assert len(c)==1; gb=json.load(open(c[0],encoding='utf-8'))['gate_baseline']; v={'components':gb['components'],'mechanical_residual':gb['mechanical_residual']}; print(hashlib.sha256(json.dumps(v,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest())\"",
+      "rederivation": "1) Resolve 154-GATE-BASELINE.json with the two-candidate glob recorded in phase_baseline.resolver.candidates (exactly one match expected). 2) Load it as JSON and take values = {'components': gate_baseline.components, 'mechanical_residual': gate_baseline.mechanical_residual}. 3) Serialize with json.dumps(values, sort_keys=True, ensure_ascii=False) and take sha256 of the UTF-8 encoding. 4) Compare the resulting hex digest to embedded_154.source_content_hash -- equal means the embed has not gone stale relative to the resolved artifact; unequal means Phase 154's artifact changed since this embed was made and the embedded copy is now stale.",
+      "base_note": "The verify2.py BASE this artifact cites (embedded_154.values.components.verify2.base = 789a348a8696e5b29e677a7e8b847dbc7c300a26) is cited by the JSON path components.verify2.base, not retyped as a bare hex string, per D-30. Phase 154's own gate_baseline.sha now reads 8de413aa (re-pointed by an ANNOTATE-AND-SUPERSEDE correction after its components were measured -- see gate_baseline.anchor_note in the resolved artifact) -- a planner reading only that anchor_note would be tempted to 'correct' the verify2 BASE to match the new top-level sha. That would be wrong: 789a348a is the SHA Phase 154 actually ran verify2.py against in both its baseline and landing invocations, and 789a348a^{tree}:docs == 8de413aa^{tree}:docs (same tree object, confirmed in Phase 154's own anchor_note), so citing the path rather than a bare string keeps this artifact correct even if 154's top-level sha is corrected again in the future.",
+      "values": {
+        "components": {
+          "c17": {
+            "script": "scripts/validation/c17-eee-contract.mjs",
+            "invocation": "node scripts/validation/c17-eee-contract.mjs",
+            "exitCode": 0,
+            "filesChecked": 237,
+            "totalViolations": 0,
+            "perAssertionViolations": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0,
+              "10": 0,
+              "11": 0,
+              "12": 0,
+              "13": 0
+            },
+            "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+          },
+          "check-phase-153": {
+            "script": "scripts/validation/check-phase-153.mjs",
+            "invocation": "node scripts/validation/check-phase-153.mjs",
+            "nested": false,
+            "exitCode": 0,
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0,
+            "wallClockMs": 50069,
+            "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+          },
+          "check-nav-hub-links": {
+            "script": "scripts/validation/check-nav-hub-links.mjs",
+            "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+            "exitCode": 0,
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0,
+            "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+          },
+          "verify2": {
+            "script": "scripts/docs-style/verify2.py",
+            "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+            "base": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+            "walkRoot": "docs",
+            "exitCode": 0,
+            "changedLines": 0,
+            "explainedByFourRules": 0,
+            "unexplained": 0,
+            "resolvedOk": {
+              "baseline": 6271,
+              "after": 6271
+            },
+            "missingFile": {
+              "baseline": 27,
+              "after": 27
+            },
+            "missingAnchor": {
+              "baseline": 454,
+              "after": 454
+            },
+            "introducedBySweep": 0,
+            "incidentallyFixed": 0,
+            "tallyLine": "changed lines 0; explained by the 4 rules 0; UNEXPLAINED 0"
+          },
+          "pin_differ": {
+            "tool": "none -- set-membership assertion per D-31 (pins2.py must not be run)",
+            "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+            "pinCount": 562,
+            "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+            "found": 562,
+            "lost": 0,
+            "tallyLine": "562 pins / 562 found / 0 lost"
+          }
+        },
+        "mechanical_residual": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+          "mode": "dry-run (unconditional default -- sweep3.py has no --dry-run flag; it silently discards unknown argv tokens)",
+          "exitCode": 0,
+          "filesLoaded": 193,
+          "pinsLoaded": 562,
+          "perTokenEdits": {
+            "admin": 765,
+            "admins": 148,
+            "vs": 22,
+            "config": 20,
+            "sign-in-to": 7,
+            "desired": 7
+          },
+          "totalEdits": 969,
+          "protected": {
+            "table row": 6530,
+            "cited verbatim quotation": 384,
+            "heading line": 123,
+            "agent speech script": 92,
+            "validator-pinned string": 31,
+            "UI label line": 30,
+            "blockquote would exceed C17 #12 200-char cap": 1
+          },
+          "tallyLine": "DRY RUN -- 193 files, 562 pins loaded / 969 TOTAL edits"
+        }
+      },
+      "rederivation_checked_at": "2026-09-05T06:17:59Z"
+    },
+    "corrections": {
+      "no_headings_ownership": "--no-headings belongs to .claude/skills/google-style/check.py (confirmed at check.py's docstring and its main() argv handling, which pops --no-headings and skips the 'headings' check class), not to sweep3.py. sweep3.py's argv parse (`root, pinsfile = sys.argv[1], sys.argv[2]`; `apply = '--apply' in sys.argv`; `if '--subs' in sys.argv: ...`) recognises only --subs and --apply and silently discards every other token, including --no-headings. sweep3.py also skips heading lines unconditionally regardless of any flag (`if HEADING.match(ln): ... continue`), so passing --no-headings to sweep3.py would be a no-op Phase 154 already convicted (D-25/D-35) and recorded in its own landing.style_04_05.style04_correction.note, which this correction follows as precedent.",
+      "milestone_wide_constraint_reading": "SC#1's --no-headings and _CONTENT-PINS.txt are two milestone-wide constraints owned by STYLE-04 and STYLE-06 respectively (REQUIREMENTS.md), named in one breath as the rest of the milestone names them -- not one tool's argv. Therefore no amendment to .planning/REQUIREMENTS.md or .planning/ROADMAP.md is required by this phase for this looseness; it is recorded here as a correction note inside the gate artifact instead, per the Phase 154 style04_correction precedent (a recorded correction inside the gate artifact, not an amendment to a planning document).",
+      "verify04_one_commit_per_side": "VERIFY-04's 'before and after ... at the same commit on both sides' wording cannot mean one commit shared by both halves without contradicting itself in the same sentence (a single commit cannot be both the corpus's pre-batch-10 state and its post-batch-10 state). The coherent reading, per D-34, is all five components measured at one commit PER SIDE on a clean tree -- Phase 154 did this for the pristine pre-merge state, this plan (156-02) does it for the pre-batch-10 state, and plan 156-06 will do it for the post-batch-10 state. The five components are C17, the bare apex, the nav-hub link checker, the verify2.py link differ and the pin differ. The mechanical residual is NOT among these five components, so D-32's non-zero (10-site) residual raises no VERIFY-04 question -- VERIFY-04 governs the five structural-gate components, not the mechanical residual.",
+      "no_amendment_conclusion": "Conclusion: no amendment is required to .planning/REQUIREMENTS.md or .planning/ROADMAP.md by this phase for either the --no-headings/`_CONTENT-PINS.txt` looseness or the VERIFY-04 wording. Both are recorded as correction notes inside this gate artifact instead."
+    },
+    "verdict_record_decision": {
+      "shape": "sibling",
+      "path": "scripts/docs-style/_JUDGE-VERDICTS-batch10.json",
+      "decided_on": "2026-09-04",
+      "owner_ruled": true,
+      "rationale": "Owner selected Option A (sibling) over Option B (single file) for D-20's reserved close call. Three reasons carried the decision: (1) the existing top-level `baseline` value (`c97d322`) in `_JUDGE-VERDICTS.json` is wrong for batch-10 rows; (2) the 406 existing `file` keys are scratch-root-relative while batch-10's are `docs/`-prefixed, so the two key spaces are structurally incompatible in one file; (3) under the sibling shape, '`_JUDGE-VERDICTS.json` is byte-unchanged' becomes a git fact provable by `git diff --exit-code -- scripts/docs-style/_JUDGE-VERDICTS.json`, rather than an argued structural claim -- and this phase exists to correct exactly the failure mode where an argued claim substitutes for a run command.",
+      "accepted_cost": "SC#2's 'verdict-record key count = 406 + batch-10 hunk count' is now a sum across two files (`_JUDGE-VERDICTS.json`'s 406 pre-existing entries plus `_JUDGE-VERDICTS-batch10.json`'s batch-10 hunk count) and needs this explicit interpretive note rather than being a single record's key count. This note is that interpretive note -- the two-file sum is not left implicit.",
+      "downstream_constraint": "Plan 156-05 MUST write its batch-10 verdict rows to `scripts/docs-style/_JUDGE-VERDICTS-batch10.json` (a new sibling file, not an append into `_JUDGE-VERDICTS.json`) and MUST assert `git diff --exit-code -- scripts/docs-style/_JUDGE-VERDICTS.json` exits 0 as an acceptance criterion. Plan 156-05 reads this field and does not re-open the question."
+    },
+    "judge_base": {
+      "sha": "987770f8a93e4c4e53f2d6a31b7c69b6aef659f5",
+      "sha_short": "987770f8",
+      "supersedes": "Task 1's precondition literally read 'git rev-parse HEAD equals phase_baseline.before.sha' (0425921be489ce2a71d42a60c93faea27481d36c, the tip of plan 156-01). That equality is unsatisfiable by construction: plan 156-02 recorded 0425921b at its own start, then its own GSD close-out commits (156-02-SUMMARY.md, STATE.md, ROADMAP.md) necessarily advanced HEAD past it to 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 -- a plan's own completion commits always move HEAD after any in-plan measurement, so a literal HEAD==before.sha precondition can never hold once a plan closes out. phase_baseline.before.sha stays 0425921b unchanged as the honest historical record of where the before-half was measured; this field supersedes only Task 1's literal precondition reading, not the before-half measurement itself. Owner-ruled Option A (annotate-and-supersede) over amending history.",
+      "d17_reading": "D-17 defines the judge BASE as 'the SHA immediately before the first batch-10 document commit' -- the structural mechanism that keeps the previously-judged 406 hunks out of range. 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 is that SHA: it is the parent of this plan's first batch-10 document commit (the mechanical-sweep commit carrying this same judge_base annotation, per the CRITICAL ordering constraint below). This is the definitional reading of D-17, not a convenience substitution for the unsatisfiable before.sha equality.",
+      "docs_identity_proof": {
+        "command": "git diff --stat 0425921be489ce2a71d42a60c93faea27481d36c 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 -- docs/",
+        "output": "(empty -- zero paths under docs/ differ between the two SHAs)",
+        "note": "Zero docs/ paths changed between phase_baseline.before.sha (0425921b) and judge_base.sha (987770f8) -- the only diff between the two commits is four .planning/ paths from plan 156-02's own close-out (ROADMAP.md, STATE.md, 156-02-SUMMARY.md, 156-GATE-BASELINE.json), confirmed by `git diff --name-only 0425921b 987770f8` returning exactly those four paths. This identity is why the before-half mechanical/structural measurements captured at 0425921b remain valid and reusable at the superseding judge_base -- the corpus tree the measurements describe is byte-identical at both commits."
+      },
+      "owner_ruled": true,
+      "shell": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation.",
+      "ordering_constraint": "This annotation is written and committed in the SAME commit as Task 1's mechanical-sweep document edits (docs/recipes/05-enterprise-update-plan.md + scripts/docs-style/subs-batch10.tsv), not as a standalone commit -- committing it alone would advance HEAD past 987770f8 and falsify the very parent relationship this field asserts. Verified: `git rev-parse HEAD` read 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 immediately before staging this commit; `git rev-parse HEAD~1` reads the same value immediately after committing."
+    },
+    "batch10": {
+      "tracer": {
+        "document": "docs/recipes/05-enterprise-update-plan.md",
+        "target_list_file": ".planning/phases/156-style-extension-full-landing-verification/scratch/target-list.txt",
+        "shell": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation.",
+        "apply_then_restore_mechanism": "sweep3.py takes a directory root (docs) and cannot be scoped to a file set by argument. After every apply invocation: `git diff --name-only -- docs/` lists changed paths, each path is compared against the target list by a fixed-string whole-line match (grep -qxF), any path NOT in the target list is restored with `git checkout -- <path>`, and the remaining `git diff --name-only -- docs/` is asserted to be a subset of (here, exactly) the target list before proceeding.",
+        "sequential_sets": [
+          {
+            "tsv": "scripts/docs-style/subs-admin-batch9.tsv",
+            "edits": 12
+          },
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "edits": 6
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-batch8.tsv",
+            "edits": 7
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-l2b.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-operations.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-reference.tsv",
+            "edits": 6
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-reference2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-operations.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-adminsetup.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-batch8.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-operations.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-reference.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-reference.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-reference2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-sense.tsv",
+            "edits": 3
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-operations.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-reference.tsv",
+            "edits": 0
+          }
+        ],
+        "sequentialSetsCount": 34,
+        "sequentialTotal": 62,
+        "sequentialTotalNote": "62 is the sum of each set's own 'TOTAL edits' reading as it ran in sequence with --apply over the full docs/ root (state carried forward from the previous set), NOT the isolated-per-set sum re-run from a clean tree each time. The isolated-per-set sum double-counts, per D-01's identical finding at the whole-batch level -- an edit one set makes can remove the trigger condition for a later set (or vice versa create one), so summing isolated dry-runs over-or-under-states what a real sequential --apply run actually changes. Of the 62, only 13 landed inside docs/recipes/05-enterprise-update-plan.md (see the tracer document's own diff); the remainder landed in other docs/ files and were restored away by the apply-then-restore gate, recorded individually in restored_paths below.",
+        "base_subs_dry_run": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+          "before_step_a": {
+            "tallyLine": "DRY RUN -- 5 files, 562 pins loaded / 10 TOTAL edits",
+            "perTokenEdits": {
+              "admin": 7,
+              "admins": 1,
+              "sign-in-to": 1,
+              "desired": 1,
+              "vs": 0,
+              "config": 0
+            }
+          },
+          "after_step_a": {
+            "tallyLine": "DRY RUN -- 5 files, 562 pins loaded / 10 TOTAL edits",
+            "perTokenEdits": {
+              "admin": 7,
+              "admins": 1,
+              "sign-in-to": 1,
+              "desired": 1,
+              "vs": 0,
+              "config": 0
+            },
+            "note": "Unchanged from before_step_a -- none of the 34 existing --subs rule sets touch the six base-substitution-set tokens (they carry disjoint word classes), so the base reading is identical before and after Step A by construction, not by coincidence."
+          },
+          "never_applied": true,
+          "never_applied_reason": "D-32: the base substitution set (sweep3.py with no --subs) is never invoked with --apply in this phase, because its 'desired' row sits on a verbatim Microsoft quotation at docs/operations/patch-management/08-windows-app-updates.md:266 that editing would fabricate a citation -- the exact defect class VERIFY-02 exists to catch. This document does not contain that site, but the rule is established here and inherited by plan 156-04."
+        },
+        "restored_paths": [
+          {
+            "tsv": "scripts/docs-style/subs-admin-batch9.tsv",
+            "path": "docs/reference/firmware-oem-matrix.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional.tsv",
+            "path": "docs/end-user-guides/android-work-profile-setup.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "path": "docs/end-user-guides/android-work-profile-setup.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "path": "docs/operations/co-management/02-windows-workload-sliders.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "path": "docs/operations/firmware-bios/01-windows-dfci.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-batch8.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-batch8.tsv",
+            "path": "docs/reference/firmware-oem-matrix.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-operations.tsv",
+            "path": "docs/operations/patch-management/07-windows-autopatch.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-reference.tsv",
+            "path": "docs/reference/firmware-oem-matrix.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-sense.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-batch10.tsv",
+            "path": "docs/operations/firmware-bios/01-windows-dfci.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-batch10.tsv",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "scripts/docs-style/subs-batch10.tsv",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/_glossary.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/_registry/RE-index.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/_standards/EEE-SOP-standard.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/_templates/admin-template-android.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/08-cope-full-admin.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/09-aosp-realwear.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/10-aosp-zebra.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/11-aosp-pico.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/12-aosp-htc-vive-focus.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/admin-setup-android/13-aosp-meta-quest.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/end-user-guides/android-work-profile-setup.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/l1-runbooks/01-device-not-registered.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/00-index.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/firmware-bios/00-overview.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/firmware-bios/01-windows-dfci.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/firmware-bios/03-hp-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/firmware-bios/04-lenovo-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/patch-management/07-windows-autopatch.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/operations/patch-management/08-windows-app-updates.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/recipes/01-shared-windows-avd-client.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/recipes/02-shared-ipad-full-provisioning.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (first apply)",
+            "path": "docs/reference/firmware-oem-matrix.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/_glossary.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/_registry/RE-index.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/_standards/EEE-SOP-standard.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/_templates/admin-template-android.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/08-cope-full-admin.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/09-aosp-realwear.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/10-aosp-zebra.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/11-aosp-pico.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/12-aosp-htc-vive-focus.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/admin-setup-android/13-aosp-meta-quest.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/end-user-guides/android-work-profile-setup.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/l1-runbooks/01-device-not-registered.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/00-index.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/firmware-bios/00-overview.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/firmware-bios/01-windows-dfci.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/firmware-bios/02-dell-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/firmware-bios/03-hp-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/firmware-bios/04-lenovo-bios-configuration.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/patch-management/07-windows-autopatch.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/operations/patch-management/08-windows-app-updates.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/recipes/01-shared-windows-avd-client.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/recipes/02-shared-ipad-full-provisioning.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md"
+          },
+          {
+            "tsv": "subs-emdash-batch10.tsv (re-tighten pass after reflow)",
+            "path": "docs/reference/firmware-oem-matrix.md"
+          }
+        ],
+        "restored_paths_finding": "26 restore events across 8 distinct non-tracer files. This is a finding, not noise: 5 of these 8 files ARE among the 13 batch-10 targets in 156-TARGETS.txt (docs/reference/firmware-oem-matrix.md, docs/operations/firmware-bios/01-windows-dfci.md, docs/operations/firmware-bios/02-dell-bios-configuration.md, docs/operations/patch-management/07-windows-autopatch.md, docs/recipes/06-walk-up-avd-kiosk-autologon.md) and 3 are NOT among the 13 (docs/linux-lifecycle/00-enrollment-overview.md, docs/end-user-guides/android-work-profile-setup.md, docs/operations/co-management/02-windows-workload-sliders.md) -- meaning the 34 existing rule sets are not idempotent by scope even over already-styled Phase 154 corpus files outside this batch: the corpus is not idempotent under its own shipped rule sets when run against the full docs/ root. Per D-27 this is deferred, not fixed here: the directional/via/admin/decision-tree tokens these restores represent, in files outside the tracer document, are the responsibility of plan 156-04 (for the 12 remaining batch-10 targets) or the Phase 157/backlog handoff (for the 3 non-batch-10 files this measurement surfaced).",
+        "dash_handoff": {
+          "document": "docs/recipes/05-enterprise-update-plan.md",
+          "en_dash_count": 6,
+          "en_dash_command": "grep -coP '\\x{2013}' docs/recipes/05-enterprise-update-plan.md",
+          "ascii_double_hyphen_spaced_count": 0,
+          "ascii_double_hyphen_command": "grep -coP '(?<=\\s)--(?=\\s)' docs/recipes/05-enterprise-update-plan.md",
+          "handoff_target": "Phase 157 or the backlog, per D-27 -- neither form is in this pass's scope and neither is visible to check.py's spaced-em-dash rule; the dash reference (dashes.md) bars the en dash outright (\"Don't use.\")."
+        },
+        "emdash_pass": {
+          "tsv": "scripts/docs-style/subs-emdash-batch10.tsv",
+          "rows": 3,
+          "loader_proof": "sweep3.py --subs scripts/docs-style/subs-emdash-batch10.tsv loaded and ran without exiting on any of the three --subs loader guards (trailing-space-without-matching-replacement, backslash-in-replacement, two-letter case class) -- all three rows use only lookaround quantifiers, satisfying the literal-space endswith(' ') load-time check.",
+          "dry_run_scoped_to_tracer_doc": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch-copy-of-tracer-doc-only> scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv",
+            "first_pass": {
+              "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 90 TOTAL edits",
+              "perRow": {
+                "spaced_both_sides": 90,
+                "leading_whitespace_only": 0,
+                "trailing_whitespace_only": 0
+              }
+            }
+          },
+          "apply_and_restore": "Applied over docs/ root, restore-and-subset gate run twice (first apply, then a second apply after the manual reflow fix below); final `git diff --name-only -- docs/` after both passes lists exactly docs/recipes/05-enterprise-update-plan.md.",
+          "d25_shape_check_first_pass": {
+            "boundary_check": "grep -cE '(^[[:space:]]*—|—[[:space:]]*$)' docs/recipes/05-enterprise-update-plan.md",
+            "result": 5,
+            "finding": "FINDING: the first apply left 5 lines with an em dash at the line boundary (lines 150, 472, 489, 683, 809 in the pre-reflow numbering), all pre-existing in the document before this task (confirmed byte-identical to phase_baseline.before.sha via `git show 0425921b:docs/recipes/05-enterprise-update-plan.md`). These are D-25's soft-line-break class (a spaced em dash sitting at the very start or end of a hand-wrapped source line, where CommonMark's paragraph-join renders it as if it were mid-sentence, but the per-line checker and the per-line TSV substitution can only see one line at a time). The guards correctly DECLINED to tighten these (guard 1's positive lookbehind cannot match when there is no preceding character at all, i.e. at line-start), which is the guard doing exactly its job -- but it left the pre-existing spaced boundary dash in place rather than resolving it, and the plan's own <verify> block requires this count to be 0. The TSV mechanism alone cannot fix this class: it requires moving the LINE WRAP position (a whitespace-only reflow, no wording change), which is not a regex substitution problem."
+          },
+          "reflow_fix": {
+            "description": "Manually reflowed the 5 affected paragraphs at their existing wrap points -- moved each line break a few words earlier or later so the em dash sits fully inside one line with a real word (or protected span) on both sides, with ZERO wording change (verified by confirming the full paragraph text, once joined, is unchanged; only which line each word sits on changed). This is not a TSV rule and not a revert of any rule-caused edit, so D-05's rule-deletion-in-the-same-commit requirement does not apply to it.",
+            "lines_reflowed": [
+              149,
+              472,
+              488,
+              683,
+              808
+            ],
+            "second_apply": "Re-ran subs-emdash-batch10.tsv (dry-run then apply, restore-and-subset gate) over the reflowed tree; 3 of the 5 newly-mid-line dashes tightened (lines 350, 488, 683, 808 area -- note line 350 was an unrelated pre-existing mid-line dash that also tightened in this pass), 2 remained spaced.",
+            "why_2_remained_spaced": "FINDING: lines 149 and 472 remained spaced after the reflow + re-tighten pass. Root cause is a segment-boundary blind spot in sweep3.py's transform(): PROTECT masks the corpus's markdown link syntax (`](url)`) and, separately, my own guard 1 treats an immediately preceding '*' (bold-close marker) as unsafe. transform() splits each line into alternating protected/plain segments via PROTECT.finditer() and runs every substitution independently on each PLAIN segment string -- so a lookbehind/lookahead in my TSV rows can never see past a segment boundary. Line 149's dash sits in the plain segment immediately AFTER a protected markdown link ('...licensing) — and has **VBS**'); from the isolated plain-segment string's own perspective the dash is at position 0, so guard 1's positive lookbehind fails exactly as it would at true line-start, even though the full line has a real preceding character ')'. Line 472's dash is preceded directly by '**' (a bold-close marker in ordinary prose, not a bullet-list run-in label), which guard 1 excludes by design per the plan's own instruction ('neither whitespace nor an asterisk') -- a conservative choice that also blocks legitimate non-list bold-lead-in prose, not only the true run-in-description-list shape the automated check (`^[[:space:]]*[-*+] +\\*\\*[^*]+\\*\\*—`) targets. Both are guard behavior working exactly as specified, not a bug in the authored TSV; they are recorded here as an architectural finding for plan 156-04 and Phase 157, not fixed by widening the guard in this tracer, because the plan's own text prescribes this exact guard shape."
+          },
+          "d25_shape_check_final": {
+            "boundary_check_command": "grep -cE '(^[[:space:]]*—|—[[:space:]]*$)' docs/recipes/05-enterprise-update-plan.md",
+            "boundary_check_result": 0,
+            "run_in_list_check_command": "grep -cE '^[[:space:]]*[-*+] +\\*\\*[^*]+\\*\\*—' docs/recipes/05-enterprise-update-plan.md",
+            "run_in_list_check_result": 0,
+            "both_zero": true
+          },
+          "em_dash_total_preserved": {
+            "command": "grep -coP '\\x{2014}' docs/recipes/05-enterprise-update-plan.md",
+            "before_step_c": 112,
+            "after_step_c": 112,
+            "note": "Total U+2014 count unchanged -- this pass only changes spacing (removes surrounding whitespace) and never adds or deletes an em dash, confirmed by an equal count before and after."
+          },
+          "d09_sentence_intact_after_step_c": true
+        },
+        "judge_layer": {
+          "base_used": "987770f8a93e4c4e53f2d6a31b7c69b6aef659f5",
+          "base_used_note": "phase_baseline.judge_base.sha, per the owner ruling -- NOT phase_baseline.before.sha. Both judge-packets.py and verify-meaning.py were invoked with this BASE.",
+          "deterministic_verifier": {
+            "invocation": "python scripts/docs-style/verify-meaning.py 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 --dispositions scripts/docs-style/_DISPOSITIONS-batch10.tsv",
+            "exit_code": 0,
+            "changed_md_files": 1,
+            "findings_live": 0,
+            "findings_dispositioned": 0,
+            "docs_prefixed_undispositioned_findings": 0,
+            "non_docs_findings": [],
+            "non_docs_findings_note": "Zero non-docs findings at this commit -- the diff range (BASE=judge_base) contains exactly one changed file, docs/recipes/05-enterprise-update-plan.md, because judge_base IS the parent of this plan's own first document commit (no .planning/ close-out commits are in range yet at Task 2's point in the plan). D-21's falsified no-planning-file-in-range assumption is NOT re-adopted here as a general claim -- it simply happens not to bind at this specific measurement point, and plan 156-04/later measurements must re-check rather than assume this holds again.",
+            "raw_judge_worklist_hunks": 9,
+            "raw_judge_worklist_note": "verify-meaning.py's OWN judge_worklist() is deliberately over-inclusive: it emits every changed baseline line containing a modal regardless of whether the modal survived (docstring, judge-packets.py:4-8). All 9 raw hunks here contain a pre-existing 'must' that the em-dash tightening pass left unchanged in wording -- confirmed by judge-packets.py's own modal-bag alignment (below) dropping all 9.",
+            "dispositions_file": "scripts/docs-style/_DISPOSITIONS-batch10.tsv",
+            "dispositions_file_created_empty": true
+          },
+          "style_checker_no_headings_reading": {
+            "invocation": "python .claude/skills/google-style/check.py --no-headings docs/recipes/05-enterprise-update-plan.md",
+            "candidate_count": 258,
+            "note": "SC#1's deterministic-verifier disposition reading for this document -- a recorded number, never a pass/fail input, per D-35 (--no-headings belongs to check.py, not sweep3.py) and per the plan's own instruction that the em-dash rule alone counts protected instances that can never reach zero."
+          },
+          "packet_generation": {
+            "invocation": "python scripts/docs-style/judge-packets.py 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 docs --chunk-file .planning/phases/156-style-extension-full-landing-verification/packets/chunk --chunks 10",
+            "summary_line_verbatim": "judge-packets: 0 hunks, 0 files, 10 bins requested, 0 bins non-empty",
+            "hunk_count": 0,
+            "file_count": 0,
+            "non_empty_bin_count": 0,
+            "chunk_files_written": 0,
+            "chunks_value_used": 10,
+            "chunks_value_justification": "10 is the skill's own committed literal in SKILL.md section 3's command block (`--chunks 10`); VERIFY-02 requires the same section-3 decision procedure, so it is used unchanged rather than re-derived, per D-18.",
+            "empty_bin_guard_proof": "0 chunk*.json files exist under the packets/ directory after this invocation -- the plan-156-01 empty-bin fix (D-16) correctly wrote no packet file for any of the 10 requested bins, all of which were empty, rather than writing 10 empty chunk files.",
+            "zero_hunks_is_legitimate": "Confirmed via the raw (non-chunked) invocation `python scripts/docs-style/judge-packets.py 987770f8... docs` returning `[]` (0 hunks) before the --chunk-file run, and by manual review: all 9 of verify-meaning.py's raw modal-containing changed lines have their modal(s) intact in the aligned after-line (the mechanical classes applied by this tracer -- admin/admins expansion and em-dash tightening -- do not touch modal words), so judge-packets.py's modal-bag comparison correctly drops all 9."
+          },
+          "dispatch_mechanism_smoke_test": {
+            "purpose": "The tracer document itself required zero real dispatches (0 non-empty packets). Per the plan's own instruction to 'carry the tracer's judge-layer proof on the packet generation and dispatch mechanics instead of on a verdict count' when the hunk count is zero, this smoke test proves the D-14/D-15/D-19 dispatch mechanism end-to-end using one hand-assembled packet built from REAL tracer-document content (not a fabricated fixture), so plan 156-05's full-batch dispatch inherits a proven mechanism rather than an unproven one.",
+            "packet_source": "Constructed from docs/recipes/05-enterprise-update-plan.md baseline_line 42 (one of the 9 raw verify-meaning.py worklist hunks that judge-packets.py's own modal-bag filter correctly excluded from the real worklist, because both 'must' instances survived) -- exact judge-packets.py packet dict shape (file, baseline_line, new_line, risk, lost, before, after, context_after), hand-aligned with the same difflib.SequenceMatcher opcode logic judge-packets.py itself uses.",
+            "dispatch_command": "timeout 180 claude -p \"$(cat .planning/phases/156-style-extension-full-landing-verification/156-JUDGE-PROMPT.md)\n\n## Packet JSON\n\n$(cat <packet-file>.json)\" --output-format text </dev/null",
+            "dispatch_command_shell": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used.",
+            "prompt_bytes_source": "Read from the committed .planning/phases/156-style-extension-full-landing-verification/156-JUDGE-PROMPT.md via command substitution (cat), never retyped -- the binding D-19 requires between the committed artifact and the actual dispatch.",
+            "process_exit_code": 0,
+            "process_output_verdict": "PRESERVED",
+            "process_output_reason_verbatim": "The only change is em-dash spacing (' — ' to '—'); every modal is intact — both `must` instances, the parenthetical clause, and the 28-day check-in condition are byte-identical in wording. No hedge was promoted, no expectation flattened; surrounding context confirms this is a hard prerequisite list ('are required before Windows Autopatch can be enabled'), so the pre-existing `must` is supported.",
+            "process_output_subject_verb_agreement_breaks": [],
+            "verdict_correctness_check": "Manually confirmed: the smoke-test packet's before/after text differs ONLY in em-dash spacing (git diff shows no wording change at this line); the judge's independent PRESERVED verdict and its stated reasoning are correct.",
+            "excluded_from_official_counts": true,
+            "excluded_from_official_counts_reason": "This dispatch was made against a hand-assembled packet, not one judge-packets.py's own --chunk-file pipeline emitted (which emitted zero files for this document). Counting it would misrepresent the official judged/judges/counts/verdicts tally in scripts/docs-style/_JUDGE-VERDICTS-batch10.json, which must reflect only the real pipeline's output."
+          },
+          "d09_sentence_intact_after_task2": true
+        },
+        "closure": {
+          "judge_fix_step": {
+            "verdicts_from_task2": 0,
+            "note": "Task 2 produced 0 real verdicts (judged=0, judges=0 in scripts/docs-style/_JUDGE-VERDICTS-batch10.json) -- there is no non-PRESERVED verdict to apply and no rule-row deletion to make. This is a recorded no-op, not a silently skipped step: no verdict exists because judge-packets.py emitted 0 non-empty packets for this document, which was itself proven legitimate (all raw modal-containing worklist lines kept their modal intact).",
+            "action_taken": "none -- explicit no-op per the plan's own instruction ('If Task 2 produced zero verdicts, this step is a recorded no-op with an explicit statement, not a silently skipped step')"
+          },
+          "emdash_count_guard": {
+            "applicable": false,
+            "note": "D-26's per-hunk em-dash count guard applies while APPLYING judge fixes. Since 0 judge fixes were applied (see judge_fix_step above), there is nothing for this guard to check. Recorded as inapplicable, not skipped."
+          },
+          "row_deletions": [],
+          "row_deletions_note": "Empty list, explicit: no verdict overturned a mechanical edit (0 verdicts existed to overturn anything), so no shipped or authored TSV row was deleted or narrowed.",
+          "idempotency_per_set": {
+            "subs-admin-batch9.tsv": 0,
+            "subs-decisiontrees.tsv": 0,
+            "subs-directional.tsv": 0,
+            "subs-directional2.tsv": 0,
+            "subs-directional-adminsetup.tsv": 0,
+            "subs-directional-batch8.tsv": 0,
+            "subs-directional-crossplatform.tsv": 0,
+            "subs-directional-l2.tsv": 0,
+            "subs-directional-l2b.tsv": 0,
+            "subs-directional-operations.tsv": 0,
+            "subs-directional-reference.tsv": 0,
+            "subs-directional-reference2.tsv": 0,
+            "subs-should.tsv": 0,
+            "subs-should-crossplatform.tsv": 0,
+            "subs-should-l2.tsv": 0,
+            "subs-should-operations.tsv": 0,
+            "subs-tense.tsv": 0,
+            "subs-tense-adminsetup.tsv": 0,
+            "subs-tense-batch8.tsv": 0,
+            "subs-tense-crossplatform.tsv": 0,
+            "subs-tense-l2.tsv": 0,
+            "subs-tense-operations.tsv": 0,
+            "subs-tense-reference.tsv": 0,
+            "subs-via-adminsetup.tsv": 0,
+            "subs-via-batch8.tsv": 0,
+            "subs-via-crossplatform.tsv": 0,
+            "subs-via-operations.tsv": 0,
+            "subs-via-operations2.tsv": 0,
+            "subs-via-reference.tsv": 0,
+            "subs-via-reference2.tsv": 0,
+            "subs-via-sense.tsv": 0,
+            "subs-wordlist-l2.tsv": 0,
+            "subs-wordlist-operations.tsv": 0,
+            "subs-wordlist-reference.tsv": 0,
+            "subs-batch10.tsv": 0,
+            "subs-emdash-batch10.tsv": 0
+          },
+          "idempotency_per_set_count": 36,
+          "idempotency_scoping_finding": "FINDING on the plan's own <verify> block: the literal commands `python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv` (and the equivalent for subs-batch10.tsv), run against the shared `docs` root, do NOT report 0 at this point in the phase: the em-dash TSV reports 261 TOTAL edits corpus-wide (measured), because the other 12 batch-10 documents still carry their own legitimate, correctly-guarded spaced em dashes that this tracer plan's scope explicitly excludes (only docs/recipes/05-enterprise-update-plan.md is this task's target). This is consistent with the plan's OWN objective text acknowledging 'a zero-leftovers reading over the 13 is only true after the last file, so it cannot be the per-commit gate' (D-04) -- the corpus-wide idempotency check is legitimately the phase's SC#4 measurement (plan 156-06), not a per-tracer-task one. The semantically correct reading -- 'every rule set reports 0 wanted edits ON THE TRACER DOCUMENT' (the plan's own <action> wording) -- was measured by scoping sweep3's root argument to a scratch directory containing ONLY a copy of the tracer document (the same technique already used throughout Task 1 to verify per-document effects), and every one of the 36 sets (34 shipped + subs-batch10.tsv + subs-emdash-batch10.tsv) reports exactly 0 there. Both readings are recorded: the literal full-docs-root command's actual result (261, for the em-dash TSV; not re-run for every one of the 34 shipped sets since the corpus-wide reading is explicitly out of this task's scope) and the tracer-scoped 0/0/.../0 result this section's idempotency_per_set records.",
+          "idempotency_literal_full_docs_root_reading": {
+            "subs-emdash-batch10.tsv": {
+              "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv",
+              "total_edits": 261,
+              "files": 24,
+              "note": "Corpus-wide (all of docs/), not tracer-document-scoped -- see idempotency_scoping_finding."
+            },
+            "subs-batch10.tsv": {
+              "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-batch10.tsv",
+              "total_edits": 3,
+              "files": 3,
+              "note": "Corpus-wide (all of docs/), not tracer-document-scoped. The 3 wanted edits are the admin/admins sites in the other 12 batch-10 documents that Task 1's apply-then-restore gate deliberately restored to their original, un-rewritten state (docs/operations/firmware-bios/01-windows-dfci.md:109, docs/operations/firmware-bios/02-dell-bios-configuration.md:85, docs/recipes/06-walk-up-avd-kiosk-autologon.md:81 -- the same three sites D-32's before-half residual already enumerates as PENDING for plan 156-04). Zero of these 3 are in the tracer document; see idempotency_scoping_finding."
+            }
+          },
+          "base_set_residual": {
+            "invocation": "python scripts/docs-style/sweep3.py <scratch-copy-of-tracer-doc-only> scripts/docs-style/_CONTENT-PINS.txt",
+            "tracer_document_result": {
+              "totalEdits": 0,
+              "sites": []
+            },
+            "note": "The tracer document's own base-substitution-set residual is 0 (empty enumerated list), not merely undispositioned-but-nonzero. This is a legitimate, GOOD outcome, not a contradiction of D-32: D-32's non-zero enumerated residual (10 sites) is a WHOLE-13-DOCUMENT corpus measurement, of which 5 sites lived in this exact tracer document (lines 158, 182, 189, 232, 254 -- all admin/admins) and were fully closed by this plan's Step B (subs-batch10.tsv). None of the corpus's other 5 residual sites -- including the one CITATION-blocked 'desired' site -- live in this document, so achieving 0 here does not touch or contradict that citation-blocked site's disposition, which remains untouched and unaddressed (correctly) for plan 156-04. The residual target being 'an enumerated dispositioned list rather than a bare zero' is the WHOLE-CORPUS framing D-32 states; for a single fully-processed document it can legitimately BE zero, and 0 IS the enumerated list here (an empty one), each of the document's original 5 sites individually resolved and cross-referenced to phase_baseline.before.mechanical_residual.sites (all 5 carry the 'PENDING -- batch-10 admin-expansion edit; scheduled for the STYLE-02 corpus-edit pass in a later plan (156-03/04/05)' disposition, and this plan (156-03) is the one that discharged it for this document)."
+          },
+          "gate": {
+            "invocation_order": [
+              "check-phase-153.mjs (bare)",
+              "c17-eee-contract.mjs",
+              "check-nav-hub-links.mjs",
+              "D-09 fixed-string re-check"
+            ],
+            "check_phase_153": "111 PASS, 0 FAIL, 0 SKIPPED",
+            "c17": "237 files checked, 0 with violations, 0 total violations",
+            "check_nav_hub_links": "0 hub-presence failure(s), 0 corpus-link failure(s), 0 total",
+            "d09_sentence": "intact (grep -qF match confirmed)"
+          }
+        }
+      },
+      "sweep": {
+        "target_list": "the 12 lines of 156-TARGETS.txt other than the tracer document (docs/recipes/05-enterprise-update-plan.md, fully processed by plan 156-03)",
+        "shell": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation. Per-TSV apply-then-restore driven by a one-off Python subprocess script (not committed) mirroring the tracer's exact apply/diff/restore/assert sequence.",
+        "apply_then_restore_mechanism": "Unchanged from the tracer (156-03): after every --apply invocation, `git diff --name-only -- docs/` lists changed paths; any path not in the 12-line target list is restored immediately with `git checkout -- <path>` before the next TSV runs; the final `git diff --name-only -- docs/` is asserted to be a subset of the target list.",
+        "sequential_sets": [
+          {
+            "tsv": "scripts/docs-style/subs-admin-batch9.tsv",
+            "edits": 2
+          },
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "edits": 5
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "edits": 4
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-batch8.tsv",
+            "edits": 7
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-l2b.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-operations.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-reference.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-reference2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-should-operations.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-adminsetup.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-batch8.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-crossplatform.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-operations.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-tense-reference.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "edits": 1
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-reference.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-reference2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-sense.tsv",
+            "edits": 3
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-l2.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-operations.tsv",
+            "edits": 0
+          },
+          {
+            "tsv": "scripts/docs-style/subs-wordlist-reference.tsv",
+            "edits": 0
+          }
+        ],
+        "sequentialSetsCount": 34,
+        "sequentialTotal": 27,
+        "sequentialTotalNote": "27 is the sum of each set's own 'TOTAL edits' reading as it ran in sequence with --apply over the full docs/ root (state carried forward from the previous set), landing entirely inside 5 of the 12 target documents (docs/reference/firmware-oem-matrix.md, docs/operations/firmware-bios/01-windows-dfci.md, docs/operations/firmware-bios/02-dell-bios-configuration.md, docs/operations/patch-management/07-windows-autopatch.md, docs/recipes/06-walk-up-avd-kiosk-autologon.md -- the same 5 in-batch files WINDOWS.md row 13 names). The isolated-per-set sum, re-run from a clean copy of the 12 target documents before every set (never from a clean tree that includes files outside the 12), is 40 -- per D-01's identical finding at the tracer's whole-corpus level, the isolated sum double-counts because an edit one set makes can remove the trigger condition for a later set (or vice versa create one); per-set deltas (isolated vs sequential) confirm both directions occur: subs-decisiontrees.tsv (4 isolated -> 5 sequential, sequential HIGHER), subs-directional-adminsetup.tsv (1 isolated -> 4 sequential, sequential HIGHER), subs-directional-reference.tsv (6 isolated -> 0 sequential, sequential LOWER -- independently confirmed by re-running this exact set against the post-sequential tree, which reports 0 files / 0 edits), and the four subs-via-*.tsv sets (4 isolated each -> 1 sequential each, sequential LOWER for all four). The exact upstream set responsible for each removed/created trigger was not traced line-by-line; only the net isolated-vs-sequential delta per set is measured and recorded here.",
+        "isolatedSum": 40,
+        "isolatedSumMethod": "Each of the 34 shipped TSVs dry-run individually (no --apply) against a scratch copy containing ONLY the 12 target documents at their pre-Step-A HEAD content (git show HEAD:<path> per file, written under the scratch root), never against the live docs/ root and never against a post-Step-A tree -- both would misstate the comparison.",
+        "sets_the_tracer_already_consumed": "The tracer (plan 156-03) ran all 34 shipped sets plus subs-batch10.tsv (2 rows at the time) plus subs-emdash-batch10.tsv against docs/recipes/05-enterprise-update-plan.md only, landing 13 of its own 62-edit sequential total in that document. This task's sequential_sets counts above are a SEPARATE, independent run scoped to the 12 non-tracer documents and must not be summed with or confused for the tracer's own 62/13 figures.",
+        "post_deletion_state_note": "0 of the tracer's judge verdicts overturned a mechanical edit or deleted a shipped-TSV row (156-03-SUMMARY.md's judge_fix_step recorded judged=0, row_deletions=[]), so every one of the 34 shipped sets ran here in its unmodified, as-shipped state -- there is no post-deletion state to apply.",
+        "step_b_subs_batch10": {
+          "extension_made": "Added a third data row to scripts/docs-style/subs-batch10.tsv: (?<![\\w-])sign into(?![\\w-]) -> sign in to, verbatim sweep3.py's own built-in regex, to close the one sign-in-to residue site the tracer document did not carry (docs/recipes/06-walk-up-avd-kiosk-autologon.md:19). The two admin/admins rows are unchanged from the tracer's authoring.",
+          "worklist_derivation": "Derived from `python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt` (dry-run, no --subs) run AFTER Step A landed -- never from a prose worklist generator -- which reported 3 admin sites (all inside the 12 targets) still residual plus the 1 permanently-excluded desired site. D-02's correction confirmed: the admin-center exemption already built into sweep3's own regex meant the actionable count (3) was well under half of a raw grep -c admin token count across the same 12 documents, which returns dozens of hits including admin-setup-* path segments, admin-center UI labels and Tenant-admin-labelled lines the KEEP_LINE/lookahead guards correctly exclude.",
+          "dry_run_before_apply": {
+            "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-batch10.tsv",
+            "tallyLine": "DRY RUN -- 3 files, 562 pins loaded / 4 TOTAL edits",
+            "perRow": {
+              "admin": 3,
+              "admins": 0,
+              "sign-in-to": 1
+            }
+          },
+          "apply_result": {
+            "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-batch10.tsv --apply",
+            "tallyLine": "APPLIED -- 3 files, 562 pins loaded / 4 TOTAL edits",
+            "new_files_outside_step_a_touched_set": [],
+            "note": "All 4 edits landed inside files Step A had already touched (01-windows-dfci.md, 02-dell-bios-configuration.md, 06-walk-up-avd-kiosk-autologon.md); no new path appeared in git diff --name-only -- docs/, so no restore was needed for this step."
+          },
+          "base_substitution_residual_after_step_ab": {
+            "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+            "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 1 TOTAL edits (desired: 1, all else 0)",
+            "sites_remaining": [
+              {
+                "file": "docs/operations/patch-management/08-windows-app-updates.md",
+                "line": 266,
+                "token": "desired",
+                "disposition": "CITATION-BLOCKED, PERMANENT -- unchanged from phase_baseline.before.mechanical_residual.sites; still expected to appear in plan 156-06's after-half measurement."
+              }
+            ],
+            "note": "The corpus-wide base-substitution residual moved from 5 sites (post-tracer) to 1 site (post-Step-A+B) -- all 4 non-citation sites (3 admin, 1 sign-in-to) closed by this task; the citation-blocked site is untouched by design."
+          }
+        },
+        "citation_guard": {
+          "dry_run_reading": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-batch10.tsv (dry-run, pre-apply) reports 0 edits on docs/operations/patch-management/08-windows-app-updates.md:266 -- confirmed directly by isolating that line and re-running sweep3.transform() against it with the extended TSV's SUBS list loaded: changed=False, all three row counters read 0.",
+          "line_266_text": "this guide: its own page states it is for setting up \"the desired state of the development environment on your Windows machine\"",
+          "three_blocked_escapes": [
+            "Editing the site fabricates a citation -- the exact defect class VERIFY-02 exists to catch.",
+            "Pinning the site moves scripts/docs-style/_CONTENT-PINS.txt's pin count from 562, a changed before/after value the phase's own gate asserts must not move.",
+            "A KEEP_LINE entry would contradict the sweep3.py-unchanged assertion (D-26) -- sweep3.py is not modified in this phase."
+          ],
+          "why_the_extended_tsv_cannot_reach_it_by_construction": "The site's only base-list token is 'desired'; the extended subs-batch10.tsv contains no 'desired' row (only admin, admins, sign-in-to), so no pattern in the TSV can match a line whose sole matchable token is 'desired'."
+        },
+        "phase155_pins": {
+          "note": "All three Phase 155 live pins measured before Task 1's edits (pre-Step-A, at the same commit as check-phase-153's 111/0/0 pre-batch reading) and after Task 1's commit (post-Step-A+B). Each command is the plan's own <verify> command.",
+          "licensing_matrix_trailing_byte": {
+            "invocation": "tail -c 1 docs/reference/licensing-matrix.md | xxd -p",
+            "before": "7c",
+            "after": "7c",
+            "unchanged": true
+          },
+          "re222_headings": {
+            "invocation": "grep -c '^### Step 5a: Kiosk configuration$' / '^### Step 5b: Shared PC configuration$' / '^### Step 4: Deploy Windows App (device-context)$' docs/recipes/01-shared-windows-avd-client.md",
+            "before": {
+              "step_5a": 1,
+              "step_5b": 1,
+              "step_4": 1
+            },
+            "after": {
+              "step_5a": 1,
+              "step_5b": 1,
+              "step_4": 1
+            },
+            "unchanged": true,
+            "note": "docs/recipes/01-shared-windows-avd-client.md is one of the 12 targets but this task's edits (admin/sign-in-to expansion, directional/via/decisiontree rule sets) did not land in it -- confirmed by its absence from the final changed-path list."
+          },
+          "re224_heading_and_anchor": {
+            "invocation": "grep -c '^### Step 6: Deliver the configuration through a custom OMA-URI profile$' docs/recipes/03-windows-11-multi-app-kiosk.md; grep -qF 'shared-windows-avd-client.md#step-5a-kiosk-configuration' docs/recipes/03-windows-11-multi-app-kiosk.md",
+            "before": {
+              "heading_count": 1,
+              "anchor_present": true
+            },
+            "after": {
+              "heading_count": 1,
+              "anchor_present": true
+            },
+            "unchanged": true,
+            "note": "docs/recipes/03-windows-11-multi-app-kiosk.md is also a target that received no edits in this task."
+          },
+          "registry_row_count": {
+            "invocation": "grep -c '^| RE-' docs/_registry/RE-index.md",
+            "before": 237,
+            "after": 237,
+            "unchanged": true,
+            "note": "docs/_registry/RE-index.md is not a batch-10 target and received no edit in this task; git diff --exit-code confirms byte-identical."
+          },
+          "re224_h1_and_namespace_table": {
+            "invocation": "grep -m1 '^# ' docs/recipes/03-windows-11-multi-app-kiosk.md; namespace table at lines ~208-212",
+            "before": {
+              "h1": "# Windows 11 Multi-App Kiosk: Assigned Access Provisioning",
+              "namespace_table_rows": 3
+            },
+            "after": {
+              "h1": "# Windows 11 Multi-App Kiosk: Assigned Access Provisioning",
+              "namespace_table_rows": 3
+            },
+            "unchanged": true
+          }
+        },
+        "armed_sentences_after_commit": "ARMED-SENTENCES-INTACT (both grep -qF matches confirmed after the commit)",
+        "gate": {
+          "invocation_order": [
+            "check-phase-153.mjs (bare)",
+            "c17-eee-contract.mjs",
+            "check-nav-hub-links.mjs",
+            "check-phase-149.mjs",
+            "3 Phase 155 pin re-checks",
+            "armed-sentence re-checks",
+            "protected-files diff"
+          ],
+          "check_phase_153": "111 PASS, 0 FAIL, 0 SKIPPED",
+          "c17": "237 files checked, 0 with violations, 0 total violations",
+          "check_nav_hub_links": "0 hub-presence failure(s), 0 corpus-link failure(s), 0 total",
+          "check_phase_149": "9 PASS, 0 FAIL, 0 SKIPPED",
+          "protected_files_unchanged": "git diff --exit-code -- sweep3.py _CONTENT-PINS.txt _EMDASH-PINS.txt _DISPOSITIONS-docs.tsv _JUDGE-VERDICTS.json exits 0"
+        },
+        "restored_paths": [
+          {
+            "tsv": "scripts/docs-style/subs-decisiontrees.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional.tsv",
+            "path": "docs/end-user-guides/android-work-profile-setup.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "path": "docs/end-user-guides/android-work-profile-setup.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-directional-adminsetup.tsv",
+            "path": "docs/operations/co-management/02-windows-workload-sliders.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-adminsetup.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-batch8.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-crossplatform.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md",
+            "in_batch10_targets": false
+          },
+          {
+            "tsv": "scripts/docs-style/subs-via-operations.tsv",
+            "path": "docs/linux-lifecycle/00-enrollment-overview.md",
+            "in_batch10_targets": false
+          }
+        ],
+        "restored_paths_finding": "8 restore events across 3 distinct non-target files, all outside the 13 batch-10 documents entirely (docs/linux-lifecycle/00-enrollment-overview.md x4, docs/end-user-guides/android-work-profile-setup.md x2, docs/operations/co-management/02-windows-workload-sliders.md x1) -- this is the 3-out-of-batch remainder WINDOWS.md row 13 flags as a Phase 157/backlog handoff; the 5 in-batch files that same row names were NOT restored here because they ARE in this task's own 12-document target list, so their edits were kept, not restored away."
+      },
+      "emdash": {
+        "target_list": "the same 12 lines used in Task 1 (156-TARGETS.txt minus the tracer document)",
+        "tsv_byte_unchanged": "git diff --exit-code -- scripts/docs-style/subs-emdash-batch10.tsv exits 0 -- applied verbatim, no pattern edit made",
+        "dry_run_before_apply": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv",
+          "tallyLine": "DRY RUN -- 24 files, 562 pins loaded / 261 TOTAL edits",
+          "note": "Corpus-wide reading (all of docs/), confirming the residual is not scoped to the 12 targets; the restore step is what bounds it."
+        },
+        "first_apply_and_restore": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv --apply",
+          "tallyLine": "APPLIED -- 24 files, 562 pins loaded / 261 TOTAL edits",
+          "files_touched_corpus_wide": 24,
+          "files_kept_in_targets": 10,
+          "files_with_zero_edits_in_targets": [
+            "docs/recipes/03-windows-11-multi-app-kiosk.md",
+            "docs/reference/licensing-matrix.md"
+          ],
+          "restored_paths": [
+            "docs/_glossary.md",
+            "docs/_registry/RE-index.md",
+            "docs/_standards/EEE-SOP-standard.md",
+            "docs/_templates/admin-template-android.md",
+            "docs/admin-setup-android/08-cope-full-admin.md",
+            "docs/admin-setup-android/09-aosp-realwear.md",
+            "docs/admin-setup-android/10-aosp-zebra.md",
+            "docs/admin-setup-android/11-aosp-pico.md",
+            "docs/admin-setup-android/12-aosp-htc-vive-focus.md",
+            "docs/admin-setup-android/13-aosp-meta-quest.md",
+            "docs/end-user-guides/android-work-profile-setup.md",
+            "docs/l1-runbooks/01-device-not-registered.md",
+            "docs/operations/00-index.md",
+            "docs/recipes/02-shared-ipad-full-provisioning.md"
+          ],
+          "restored_count": 14
+        },
+        "d25_shape_check_first_pass": {
+          "boundary_check_command": "cat 156-TARGETS.txt | xargs grep -cE '(^[[:space:]]*—|—[[:space:]]*$)' | awk -F: '{s+=$2} END{print s+0}'",
+          "boundary_check_result": 14,
+          "finding": "FINDING: 14 pre-existing line-boundary spaced em dashes across 6 of the 13 documents (docs/operations/firmware-bios/00-overview.md:23,251,256; 01-windows-dfci.md:429; 02-dell-bios-configuration.md:19,29,268,277; 03-hp-bios-configuration.md:54,131,386; 04-lenovo-bios-configuration.md:300; patch-management/07-windows-autopatch.md:276; reference/firmware-oem-matrix.md:178), all pre-existing in the documents before this task (confirmed byte-identical to the pre-Task-2 commit for the surrounding text via git diff -- these lines were untouched by Task 2's first apply). This is WINDOWS.md row 12's soft-line-break class (D-25) recurring at 12-document scope, exactly as row 12 predicted watching for."
+        },
+        "reflow_fix": {
+          "description": "Manually reflowed 8 of the 14 boundary lines at their existing wrap points (whitespace-only line-wrap change, zero wording change -- verified per-file by normalizing all whitespace runs to a single space and asserting the joined text is byte-identical before and after each edit) across 6 files, moving each affected em dash fully onto one line with a real word on both sides.",
+          "files_and_counts": {
+            "docs/operations/firmware-bios/00-overview.md": 1,
+            "docs/operations/firmware-bios/01-windows-dfci.md": 1,
+            "docs/operations/firmware-bios/02-dell-bios-configuration.md": 2,
+            "docs/operations/firmware-bios/03-hp-bios-configuration.md": 2,
+            "docs/operations/patch-management/07-windows-autopatch.md": 1,
+            "docs/reference/firmware-oem-matrix.md": 1
+          },
+          "total_reflowed": 8,
+          "remaining_6_diagnosis": "The other 6 boundary lines are a DIFFERENT sub-case from the tracer's soft-line-break class: a spaced em dash sitting alone on its own hanging-indent continuation line, immediately after a markdown link '](url)' on the PRIOR source line (e.g. '- [Windows Driver and Firmware Updates](url)\\n  -- firmware update delivery...'). Empirically proven unfixable by reflow: reconstructing the reflowed form as a single test line ('...updates.md) -- firmware') and running it through sweep3.transform() directly still returns unchanged (changed=False) -- sweep3 processes one line at a time, and the PROTECT-masked link creates a plain-segment boundary immediately before the dash's leading whitespace, so guard 1's positive lookbehind (?<=[^\\s*]) has no real character to match within that isolated plain segment, identically to the architectural blind spot WINDOWS.md row 12 already recorded on the tracer document. Not attempted as a further reflow because the diagnostic proves reflow cannot help this class; recorded as WINDOWS.md row 14 (new entry) rather than left as a silent gap.",
+          "remaining_6_sites": [
+            {
+              "file": "docs/operations/firmware-bios/00-overview.md",
+              "line": 251
+            },
+            {
+              "file": "docs/operations/firmware-bios/00-overview.md",
+              "line": 256
+            },
+            {
+              "file": "docs/operations/firmware-bios/02-dell-bios-configuration.md",
+              "line": 268
+            },
+            {
+              "file": "docs/operations/firmware-bios/02-dell-bios-configuration.md",
+              "line": 277
+            },
+            {
+              "file": "docs/operations/firmware-bios/03-hp-bios-configuration.md",
+              "line": 386
+            },
+            {
+              "file": "docs/operations/firmware-bios/04-lenovo-bios-configuration.md",
+              "line": 300
+            }
+          ]
+        },
+        "second_apply_and_restore": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs scripts/docs-style/subs-emdash-batch10.tsv --apply (re-run after the reflow fix)",
+          "tallyLine": "APPLIED -- 20 files, 562 pins loaded / 36 TOTAL edits",
+          "restored_paths": [
+            "docs/_glossary.md",
+            "docs/_registry/RE-index.md",
+            "docs/_standards/EEE-SOP-standard.md",
+            "docs/_templates/admin-template-android.md",
+            "docs/admin-setup-android/08-cope-full-admin.md",
+            "docs/admin-setup-android/09-aosp-realwear.md",
+            "docs/admin-setup-android/10-aosp-zebra.md",
+            "docs/admin-setup-android/11-aosp-pico.md",
+            "docs/admin-setup-android/12-aosp-htc-vive-focus.md",
+            "docs/admin-setup-android/13-aosp-meta-quest.md",
+            "docs/end-user-guides/android-work-profile-setup.md",
+            "docs/l1-runbooks/01-device-not-registered.md",
+            "docs/operations/00-index.md",
+            "docs/recipes/02-shared-ipad-full-provisioning.md"
+          ],
+          "restored_count": 14,
+          "note": "Corpus-wide re-run touches the same 14 always-restored non-target files again (they were reset to their un-tightened state by the first restore) plus the 8 newly-reflowed target lines; all 14 non-target paths restored again, final changed-path list confirmed a subset of the 12 targets."
+        },
+        "d25_shape_check_final": {
+          "boundary_check_result": 6,
+          "run_in_list_check_command": "cat 156-TARGETS.txt | xargs grep -cE '^[[:space:]]*[-*+] +\\*\\*[^*]+\\*\\*—' | awk -F: '{s+=$2} END{print s+0}'",
+          "run_in_list_check_result": 4,
+          "run_in_list_finding": "FINDING (literal-vs-semantic mismatch, same pattern as 156-03-SUMMARY.md's Task 3 finding): the literal <verify> command counts 4 run-in-description-list matches across the 13 (docs/recipes/01-shared-windows-avd-client.md:32 and docs/recipes/03-windows-11-multi-app-kiosk.md:32,33,39), all confirmed PRE-EXISTING and untouched by this task (git diff shows no hunk touching any of these 4 lines; docs/recipes/03-windows-11-multi-app-kiosk.md received 0 em-dash edits in this task entirely). These are an authoring-standard (colon-vs-dash description-list) concern for Phase 157/STD-04 per the plan's own prohibitions list ('No hygiene fix, authoring-standard change... is performed'), not a defect this task's TSV or guards introduced -- the guard correctly declined to touch an already-tight run-in dash (nothing to tighten). Recorded, not fixed.",
+          "both_checks_non_zero_by_design": "6 (boundary) and 4 (run-in-list) are the honest final readings, not 0 -- both are pre-existing/architectural, not introduced by this task's edit; see reflow_fix.remaining_6_diagnosis and run_in_list_finding above for the per-class disposition."
+        },
+        "em_dash_total_preserved": {
+          "command": "grep -coP '\\x{2014}' <each of the 12>, before (HEAD, post-Task-1) vs after (final)",
+          "result": "identical for all 12 documents (00-overview 32/32, 01-windows-dfci 40/40, 02-dell 34/34, 03-hp 49/49, 04-lenovo 25/25, 07-windows-autopatch 18/18, 08-windows-app-updates 43/43, 06-walk-up 45/45, 01-shared-windows-avd-client 39/39, 03-windows-11-multi-app-kiosk 63/63, firmware-oem-matrix 37/37, licensing-matrix 5/5)",
+          "note": "This pass only changes spacing (removes surrounding whitespace where the guards allow); it never adds or deletes an em dash."
+        },
+        "perDocumentEdits": {
+          "docs/operations/firmware-bios/00-overview.md": 19,
+          "docs/operations/firmware-bios/01-windows-dfci.md": 40,
+          "docs/operations/firmware-bios/02-dell-bios-configuration.md": 26,
+          "docs/operations/firmware-bios/03-hp-bios-configuration.md": 43,
+          "docs/operations/firmware-bios/04-lenovo-bios-configuration.md": 14,
+          "docs/operations/patch-management/07-windows-autopatch.md": 13,
+          "docs/operations/patch-management/08-windows-app-updates.md": 24,
+          "docs/recipes/06-walk-up-avd-kiosk-autologon.md": 44,
+          "docs/recipes/01-shared-windows-avd-client.md": 2,
+          "docs/recipes/03-windows-11-multi-app-kiosk.md": 0,
+          "docs/reference/firmware-oem-matrix.md": 16,
+          "docs/reference/licensing-matrix.md": 0
+        },
+        "perDocumentEditsMethod": "Reimplemented sweep3.sweep()'s exact per-line skip/transform/pin/bq_len logic in a one-off script (not committed) that counts wanted edits for a single file without touching the working tree, run against the pre-Task-2 (post-Task-1 commit) snapshot of each of the 12 targets -- yielding 233 across 10 files (2 files at 0: docs/recipes/03-windows-11-multi-app-kiosk.md, docs/reference/licensing-matrix.md) -- plus the 8 reflow-enabled tightenings recorded above, for a final total of 241. Independently confirmed: re-running the same per-file counter against the FINAL (post-commit) tree reports 0 for all 12 files, proving no further tightenable spaced dash remains (the 6 architecturally-blocked sites correctly report 0 too, since sweep3.transform() returns the line unchanged for them by design, not merely skipped).",
+        "protected": {
+          "note": "Corpus-wide protected-category counts from the tool's own APPLIED output (first-apply run, 24 files): table row 6534, cited verbatim quotation 384, heading line 123, agent speech script 92, UI label line 29, validator-pinned string 4. The lone N/A placeholder table cells in docs/reference/licensing-matrix.md and docs/operations/patch-management/08-windows-app-updates.md are inside the 6534 table-row-protected count and were not moved -- content-matched by eleven milestone-audit validators per D-23.",
+          "table_row": 6534,
+          "cited_verbatim_quotation": 384,
+          "heading_line": 123,
+          "agent_speech_script": 92,
+          "ui_label_line": 29,
+          "validator_pinned_string": 4
+        },
+        "restored_paths": [
+          "docs/_glossary.md",
+          "docs/_registry/RE-index.md",
+          "docs/_standards/EEE-SOP-standard.md",
+          "docs/_templates/admin-template-android.md",
+          "docs/admin-setup-android/08-cope-full-admin.md",
+          "docs/admin-setup-android/09-aosp-realwear.md",
+          "docs/admin-setup-android/10-aosp-zebra.md",
+          "docs/admin-setup-android/11-aosp-pico.md",
+          "docs/admin-setup-android/12-aosp-htc-vive-focus.md",
+          "docs/admin-setup-android/13-aosp-meta-quest.md",
+          "docs/end-user-guides/android-work-profile-setup.md",
+          "docs/l1-runbooks/01-device-not-registered.md",
+          "docs/operations/00-index.md",
+          "docs/recipes/02-shared-ipad-full-provisioning.md"
+        ],
+        "restored_paths_note": "14 distinct non-target paths restored twice (once per apply pass, 28 restore events total), all outside the 13 batch-10 documents entirely -- part of D-22's 43-spaced-dash/16-file corpus-wide measurement and D-27's Phase 157/backlog handoff. Recorded as the deferred measurement per this task's own instruction.",
+        "dash_handoff": {
+          "note": "U+2013 en dash and spaced ASCII double-hyphen counts across all thirteen batch-10 documents, counted but not touched -- both are Phase 157/backlog handoffs per D-27.",
+          "per_document": {
+            "docs/operations/firmware-bios/00-overview.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/firmware-bios/01-windows-dfci.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/firmware-bios/02-dell-bios-configuration.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/firmware-bios/03-hp-bios-configuration.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/firmware-bios/04-lenovo-bios-configuration.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/patch-management/07-windows-autopatch.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/operations/patch-management/08-windows-app-updates.md": {
+              "en_dash": 1,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/recipes/06-walk-up-avd-kiosk-autologon.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/recipes/01-shared-windows-avd-client.md": {
+              "en_dash": 2,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/recipes/03-windows-11-multi-app-kiosk.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/reference/firmware-oem-matrix.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 1
+            },
+            "docs/reference/licensing-matrix.md": {
+              "en_dash": 0,
+              "spaced_ascii_double_hyphen": 0
+            },
+            "docs/recipes/05-enterprise-update-plan.md": {
+              "en_dash": 6,
+              "spaced_ascii_double_hyphen": 0
+            }
+          },
+          "en_dash_total": 9,
+          "spaced_ascii_double_hyphen_total": 1,
+          "command": "grep -coP '\\x{2013}' <path> for en dash; grep -coP '(?<=\\s)--(?=\\s)' <path> for spaced ASCII double-hyphen"
+        },
+        "windows_ledger_entry": "WINDOWS.md row 14 (new, phase 156, kind deviation) records the confirmed cross-document recurrence of row 12's finding; row 12 itself is left open and unedited (append-only ledger, no update verb).",
+        "gate": {
+          "invocation_order": [
+            "check-phase-153.mjs (bare)",
+            "c17-eee-contract.mjs",
+            "check-nav-hub-links.mjs",
+            "3 Phase 155 pin re-checks",
+            "armed-sentence re-checks",
+            "TSV byte-unchanged check"
+          ],
+          "check_phase_153": "111 PASS, 0 FAIL, 0 SKIPPED",
+          "c17": "237 files checked, 0 with violations, 0 total violations",
+          "licensing_matrix_trailing_byte": "7c (unchanged)",
+          "armed_sentences": "ARMED-SENTENCES-INTACT",
+          "subset_check": "git diff --name-only -- docs/ is a subset of the 12 targets (0 files outside)"
+        }
+      },
+      "audits": {
+        "frontmatter_drift": {
+          "base": "phase_baseline.before.sha (0425921be489ce2a71d42a60c93faea27481d36c)",
+          "method": "For each of the 13 batch-10 documents, extracted the frontmatter block (--- ... ---) from `git show <before.sha>:<path>` and from the current working file, compared byte-for-byte.",
+          "changed": 0,
+          "of": 13,
+          "vector_checked": {
+            "audience_admin_count": {
+              "invocation": "cat 156-TARGETS.txt | xargs grep -c '^audience: administrator$' | awk -F: '{s+=$2} END{print s+0}'",
+              "value": 0
+            },
+            "note": "Confirms the admin rule family did not rewrite the controlled-vocabulary audience: admin frontmatter value in any of the 13 -- the exact bug the record shows shipping twice (20 reference docs, then 5 _templates/ files)."
+          }
+        },
+        "htmlcomment_span": {
+          "leading_html_comment_count": {
+            "invocation": "cat 156-TARGETS.txt | xargs -I{} head -1 {} | grep -c '^<!--'",
+            "value": 0
+          },
+          "comment_span_changed_count": {
+            "base": "phase_baseline.before.sha",
+            "method": "Extracted every <!-- ... --> span (DOTALL) from before.sha and from the current working file per document, compared the ordered list of spans.",
+            "changed": 0,
+            "of": 13
+          },
+          "status": "CHECKED and NOT LIVE -- confirmed none of the 13 opens with a leading HTML comment and no comment span in any of the 13 changed; the blind spot this guard protects against (eight _templates/ files opening with an authoring-comment block) is real elsewhere in the corpus but does not apply to this file set."
+        },
+        "inline_quotation": {
+          "base": "phase_baseline.judge_base (987770f8a93e4c4e53f2d6a31b7c69b6aef659f5)",
+          "method": "Extracted every `\"[^\"\\n]{1,400}\"` span (PROTECT's own straight-double-quote arm) from judge_base and from the current working file per document, compared the ordered list of spans and reported any removed/added span.",
+          "changed_spans_found": 0,
+          "of": 13,
+          "note": "0 inline double-quoted spans changed across the batch; scripts/docs-style/_DISPOSITIONS-batch10.tsv remains empty (no finding requires a disposition). Cross-checked against verify-meaning.py's own raw output at the same BASE: the tool reports 4 undispositioned findings, but all 4 are in .planning/REQUIREMENTS.md, .planning/STATE.md (x2) and .planning/WINDOWS.md -- ZERO are docs/-prefixed. This is the same root-cause class WINDOWS.md rows 9-11 and 156-03-SUMMARY.md's judge_layer section already diagnosed: verify-meaning.py's changed_files() has no path scope, so ordinary GSD close-out commits landed between judge_base and this measurement (156-03's own close-out plus this plan's Task 1/Task 2 commits) put .planning/ files in range. Per 156-03-SUMMARY.md's own caveat, this is re-checked here rather than assumed -- and it is confirmed to NOT bind for docs/ content at this measurement point either."
+        },
+        "mechanical_residual": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+          "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 1 TOTAL edits (desired: 1, all else 0)",
+          "reconciliation": [
+            {
+              "file": "docs/operations/firmware-bios/01-windows-dfci.md",
+              "line": 109,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by this plan's Task 1"
+            },
+            {
+              "file": "docs/operations/firmware-bios/02-dell-bios-configuration.md",
+              "line": 85,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by this plan's Task 1"
+            },
+            {
+              "file": "docs/operations/patch-management/08-windows-app-updates.md",
+              "line": 266,
+              "token": "desired",
+              "before_status": "CITATION-BLOCKED, PERMANENT",
+              "after_status": "STILL PRESENT, unchanged, still dispositioned -- confirmed verbatim at its (line-shifted) current line 266"
+            },
+            {
+              "file": "docs/recipes/05-enterprise-update-plan.md",
+              "line": 158,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by plan 156-03 (tracer)"
+            },
+            {
+              "file": "docs/recipes/05-enterprise-update-plan.md",
+              "line": 182,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by plan 156-03 (tracer)"
+            },
+            {
+              "file": "docs/recipes/05-enterprise-update-plan.md",
+              "line": 189,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by plan 156-03 (tracer)"
+            },
+            {
+              "file": "docs/recipes/05-enterprise-update-plan.md",
+              "line": 232,
+              "token": "admins",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by plan 156-03 (tracer)"
+            },
+            {
+              "file": "docs/recipes/05-enterprise-update-plan.md",
+              "line": 254,
+              "token": "admin",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by plan 156-03 (tracer)"
+            },
+            {
+              "file": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+              "line": 19,
+              "token": "sign-in-to",
+              "before_status": "PENDING",
+              "after_status": "CLOSED by this plan's Task 1"
+            },
+            {
+              "file": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+              "line": 81,
+              "token": "admin",
+              "before_status": "PENDING, THE NEW SITE (D-33)",
+              "after_status": "CLOSED by this plan's Task 1"
+            }
+          ],
+          "sites_closed": 9,
+          "sites_remaining": 1,
+          "citation_blocked_site_present_and_dispositioned": true,
+          "agreement_with_d32": "Matches D-32's expectation exactly: the residual is an enumerated dispositioned list (not a bare zero), now down to its single permanent, by-design member."
+        },
+        "content_assertions": {
+          "re224_v135_six_assertions": {
+            "invocation": "node scripts/validation/check-phase-135.mjs",
+            "result": "7 PASS, 0 FAIL, 0 SKIPPED (6 content checks + V-135-SELF)",
+            "checks": {
+              "RECIPE": "docs/recipes/03-windows-11-multi-app-kiosk.md exists, non-empty, verbatim H1, AssignedAccess Configuration node present -- PASS",
+              "ROLLBACKORDER": "## Rollback/Recovery sits between ## Verification and ## Configuration-Caused Failures -- PASS",
+              "RECIPE01ZEROEDIT": "docs/recipes/01-shared-windows-avd-client.md Step 5a/5b headings unchanged (zero-edit tripwire) -- PASS",
+              "XMLFENCE": "exactly one column-0 ```xml fence present -- PASS",
+              "NAMESPACETABLE": "3-row namespace/version-floor table, row count = 3 (2017 root / v4: / v5:) -- PASS (exact-count equality)",
+              "ANTIFEATURE": "anti-feature table row count = 12 -- PASS (exact-count equality)"
+            }
+          },
+          "phase149_barred_phrasings": {
+            "invocation": "node scripts/validation/check-phase-149.mjs",
+            "result": "9 PASS, 0 FAIL, 0 SKIPPED",
+            "assertion": "'the six' (standalone) and 'most business OEMs' absent from docs/operations/firmware-bios/00-overview.md and docs/operations/firmware-bios/01-windows-dfci.md -- PASS (negative assertion, no pin differ can see this)"
+          },
+          "phase151_default_channel_absence": {
+            "invocation": "node scripts/validation/check-phase-151.mjs",
+            "result": "7 PASS, 0 FAIL, 0 SKIPPED",
+            "assertion": "## Rollback/Recovery present with true-count opening sentence and default-channel absence in docs/recipes/05-enterprise-update-plan.md -- PASS"
+          },
+          "phase148_derived_limitations_count": {
+            "invocation": "node scripts/validation/check-phase-148.mjs",
+            "result": "9 PASS, 0 FAIL, 0 SKIPPED",
+            "assertion": "eight named EAM limitations, count DERIVED from the document's own bold lead-ins in the callouts region (not hardcoded) -- PASS, current value 8"
+          },
+          "phase150_silence_cell_relationship": {
+            "invocation": "node scripts/validation/check-phase-150.mjs",
+            "result": "17 PASS, 0 FAIL, 0 SKIPPED",
+            "assertion": "firmware-oem-matrix's own row set, shared six-H2 column structure, and its silence-cell / documentation-silences count relationship, all read from the document itself -- PASS"
+          }
+        },
+        "out_of_scope_findings": [],
+        "out_of_scope_findings_note": "Empty for Task 3's own audits (frontmatter/comment/quotation/residual reconciliation) -- no NEW defect outside the 13 was discovered while running these four audits. The 3 out-of-batch files (docs/linux-lifecycle/00-enrollment-overview.md, docs/end-user-guides/android-work-profile-setup.md, docs/operations/co-management/02-windows-workload-sliders.md) surfaced by Task 1's restore step are already recorded in WINDOWS.md row 13 (from plan 156-03) and are not duplicated here; they remain a Phase 157/backlog handoff per D-27.",
+        "gate": {
+          "invocation_order": [
+            "check-phase-135.mjs",
+            "check-phase-149.mjs",
+            "check-phase-153.mjs (bare)"
+          ],
+          "check_phase_135": "7 PASS, 0 FAIL, 0 SKIPPED",
+          "check_phase_149": "9 PASS, 0 FAIL, 0 SKIPPED",
+          "check_phase_153": "111 PASS, 0 FAIL, 0 SKIPPED"
+        }
+      },
+      "judge": {
+        "base": "987770f8a93e4c4e53f2d6a31b7c69b6aef659f5",
+        "base_note": "phase_baseline.judge_base.sha, per D-17/the owner ruling -- NOT phase_baseline.before.sha.",
+        "verify_meaning": {
+          "invocation": "python scripts/docs-style/verify-meaning.py 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 --dispositions scripts/docs-style/_DISPOSITIONS-batch10.tsv  (shell: Git Bash / POSIX sh via the Bash tool)",
+          "exitCode": 1,
+          "exitCodeNote": "Non-zero is expected and correct here -- the acceptance criterion is NOT exit 0 (WINDOWS.md row 10 class, D-21). It is zero undispositioned findings on docs-prefixed paths.",
+          "totalChangedMdFiles": 19,
+          "rawFindings": 4,
+          "undispositionedDocsFindings": 0,
+          "nonDocsFindings": [
+            {
+              "id": "a4edfb444a34",
+              "kind": "label-drift",
+              "file": ".planning/REQUIREMENTS.md",
+              "evidence": "Pending",
+              "attributedCommit": "dc2a7584",
+              "attributedCommitSubject": "docs(156-03): complete tracer document plan",
+              "note": "First (and only) commit touching .planning/REQUIREMENTS.md since judge_base; an ordinary GSD close-out requirement-status edit, same root-cause class as WINDOWS.md rows 9-11."
+            },
+            {
+              "id": "f42aa84a0bff",
+              "kind": "frontmatter",
+              "file": ".planning/STATE.md",
+              "evidence": "",
+              "attributedCommit": "dc2a7584",
+              "attributedCommitSubject": "docs(156-03): complete tracer document plan",
+              "note": "First commit touching .planning/STATE.md since judge_base (a later commit, 3e4ef6b2, also touches STATE.md frontmatter timestamp; attributed to the first commit that put the file in the diff range, per this task's instruction to attribute to the commit that put it in range)."
+            },
+            {
+              "id": "ce7e2c6b6ea5",
+              "kind": "quotation",
+              "file": ".planning/STATE.md",
+              "evidence": "\"2026-09-05T03:52:31.312Z\"",
+              "attributedCommit": "dc2a7584",
+              "attributedCommitSubject": "docs(156-03): complete tracer document plan",
+              "note": "verify-meaning.py's quotation check fires on a changed quoted span; here it is STATE.md's own last_updated ISO timestamp string, a metadata field never a vendor citation -- same root-cause class as WINDOWS.md rows 9-11, not a corpus-meaning defect."
+            },
+            {
+              "id": "664e24c01344",
+              "kind": "frontmatter",
+              "file": ".planning/WINDOWS.md",
+              "evidence": "",
+              "attributedCommit": "dc2a7584",
+              "attributedCommitSubject": "docs(156-03): complete tracer document plan",
+              "note": "First commit touching .planning/WINDOWS.md since judge_base (a later commit, 6b379da0, appends WINDOWS row 14; attributed to the first commit that put the file in range)."
+            }
+          ],
+          "rootCauseClass": "verify-meaning.py's changed_files() has no path scoping (confirmed by reading its source: git diff --name-only base with no pathspec, filtered only by .md extension). Ordinary GSD close-out commits between judge_base and HEAD put .planning/ files in the diff range. Same class as WINDOWS.md rows 9, 10 and 11 from Phase 154.",
+          "zeroDocsFindingsConfirmed": true
+        },
+        "checkpy_candidates": {
+          "invocation": "python .claude/skills/google-style/check.py --no-headings <all 13 targets, one invocation>  (shell: Git Bash / POSIX sh via the Bash tool)",
+          "note": "A recorded number, never a pass/fail input, per D-35 -- the em-dash rule alone counts protected instances that can never reach zero.",
+          "perDocument": {
+            "docs/operations/firmware-bios/00-overview.md": 53,
+            "docs/operations/firmware-bios/01-windows-dfci.md": 102,
+            "docs/operations/firmware-bios/02-dell-bios-configuration.md": 62,
+            "docs/operations/firmware-bios/03-hp-bios-configuration.md": 84,
+            "docs/operations/firmware-bios/04-lenovo-bios-configuration.md": 45,
+            "docs/operations/patch-management/07-windows-autopatch.md": 47,
+            "docs/operations/patch-management/08-windows-app-updates.md": 99,
+            "docs/recipes/05-enterprise-update-plan.md": 258,
+            "docs/recipes/06-walk-up-avd-kiosk-autologon.md": 86,
+            "docs/recipes/01-shared-windows-avd-client.md": 50,
+            "docs/recipes/03-windows-11-multi-app-kiosk.md": 91,
+            "docs/reference/firmware-oem-matrix.md": 51,
+            "docs/reference/licensing-matrix.md": 20
+          },
+          "total": 1048
+        },
+        "packets": {
+          "invocation": "python scripts/docs-style/judge-packets.py 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5 docs --chunk-file .planning/phases/156-style-extension-full-landing-verification/packets/chunk --chunks 10  (shell: Git Bash / POSIX sh via the Bash tool)",
+          "summaryLine": "judge-packets: 0 hunks, 0 files, 10 bins requested, 0 bins non-empty",
+          "hunks": 0,
+          "files": 0,
+          "requestedBins": 10,
+          "nonEmptyBins": 0,
+          "committedPacketFiles": 0,
+          "tracerPacketFilesDeleted": "N/A -- the tracer (plan 156-03) itself produced 0 packet files, so there was nothing to delete; the packets/ directory was created fresh by this task.",
+          "noPacketOutsideThirteen": true,
+          "noPacketOutsideCorpusTree": true,
+          "zero_explanation": {
+            "reason": "judge-packets.py's raw judge_worklist over the full corpus (from verify-meaning.py --json) contains 24 hunks across the 13 target documents where a changed line contained a modal word. Every one of the 24 is dropped by judge-packets.py's own modal-bag comparison (the packets() function's difflib-aligned before/after line pair) because the modal survived intact in the aligned after-line -- none of the mechanical rule classes this phase applied (the 34 shipped sets, subs-batch10.tsv, subs-emdash-batch10.tsv) removes a modal word.",
+            "measuredRuleSetsCapableOfRemovingAModal": {
+              "subs-should.tsv": 0,
+              "subs-should-crossplatform.tsv": 0,
+              "subs-should-l2.tsv": 0,
+              "subs-should-operations.tsv": 0,
+              "subs-tense.tsv": 0,
+              "subs-tense-adminsetup.tsv": 0,
+              "subs-tense-batch8.tsv": 0,
+              "subs-tense-crossplatform.tsv": 0,
+              "subs-tense-l2.tsv": 0,
+              "subs-tense-operations.tsv": 0,
+              "subs-tense-reference.tsv": 0
+            },
+            "note": "All 11 modal/tense-adjacent rule sets measured 0 edits across all 13 batch-10 documents (both the tracer's sequential_sets reading in plan 156-03 and plan 156-04's sweep.sequential_sets reading for the remaining 12). subs-batch10.tsv (admin/admins/sign-in-to) and subs-emdash-batch10.tsv touch neither modal words nor sentence structure that could drop one. This is the same measured-zero outcome the plan's own objective section predicted: the shipped tense and modal rule sets were measured at zero edits over this document set."
+          },
+          "rawWorklistBeforeFilter": {
+            "note": "verify-meaning.py's own judge_worklist (deliberately over-inclusive, no modal-survival filter) over the full corpus vs judge_base reports 26 raw hunks; 2 of those are in .planning/ files (out of judge-packets.py's docs/ walk-root scope), leaving 24 in-scope raw candidates across the 13 targets -- all 24 dropped by the modal-bag filter described above.",
+            "totalRaw": 26,
+            "inPlanningNotInScope": 2,
+            "inDocsScope": 24,
+            "allDroppedByModalBagFilter": 24
+          }
+        },
+        "dispatch": {
+          "command": "timeout 180 claude -p \"$(cat .planning/phases/156-style-extension-full-landing-verification/156-JUDGE-PROMPT.md)\\n\\n## Packet JSON\\n\\n$(cat <packet-file>.json)\" --output-format text </dev/null",
+          "commandNote": "The proven dispatch shape from plan 156-03's tracer, inherited unchanged. Prompt bytes read from the committed 156-JUDGE-PROMPT.md via command substitution, packet JSON appended inline via a second command substitution; no repository access given to the judge process.",
+          "processCount": 0,
+          "processCountNote": "Equals the non-empty bin count (0) from Task 1's full-batch packet regeneration. No claude -p process was dispatched -- D-16: a packet generator that produces an empty bin does not get a judge dispatched on it, and here every one of the 10 requested bins was empty.",
+          "nonEmptyBinCount": 0
+        },
+        "sc2_arithmetic": {
+          "previouslyJudged": 406,
+          "batch10Judged": 0,
+          "sum": 406,
+          "previousRecordUnchangedProofCommand": "git diff --exit-code -- scripts/docs-style/_JUDGE-VERDICTS.json",
+          "previousRecordUnchangedProof": true,
+          "note": "Under the owner-ruled sibling shape (phase_baseline.verdict_record_decision), 'the previously judged record is byte-unchanged' is a git fact provable by exit status, not an interpretive argument about a single file's key count -- this is the proof that exit-status assertion rests on, re-confirmed at this plan's HEAD."
+        },
+        "out_of_task_findings": {
+          "file": ".planning/phases/156-style-extension-full-landing-verification/156-JUDGE-FINDINGS.md",
+          "result": "none reported",
+          "reason": "0 judge processes dispatched (0 non-empty packets); the findings file states this in one sentence per the plan's own must_haves truth for the whole-batch-empty case.",
+          "handoffOutsideThirteen": []
+        }
+      },
+      "closure": {
+        "row_deletions": [],
+        "row_deletions_note": "Empty list, stated explicitly per the plan's own instruction ('If Task 2 produced no non-PRESERVED verdicts, this step is a recorded no-op with an explicit statement, not a silently skipped step.'). Task 2's full-batch judge dispatch produced 0 verdicts (0 non-empty packets, 0 processes dispatched), so no mechanical edit was overturned and no substitution row required deletion or narrowing.",
+        "emdash_count_guard": {
+          "applied": false,
+          "note": "No fix was applied (0 non-PRESERVED verdicts from Task 2), so there is no per-hunk em-dash count to guard. The em-dash canon-reversion class this guard exists to catch (T-156-21) cannot occur when zero replacement lines were written.",
+          "beforeAfterCounts": []
+        },
+        "idempotency_per_set": {
+          "scripts/docs-style/subs-admin-batch9.tsv": 0,
+          "scripts/docs-style/subs-decisiontrees.tsv": 0,
+          "scripts/docs-style/subs-directional.tsv": 0,
+          "scripts/docs-style/subs-directional2.tsv": 0,
+          "scripts/docs-style/subs-directional-adminsetup.tsv": 0,
+          "scripts/docs-style/subs-directional-batch8.tsv": 0,
+          "scripts/docs-style/subs-directional-crossplatform.tsv": 0,
+          "scripts/docs-style/subs-directional-l2.tsv": 0,
+          "scripts/docs-style/subs-directional-l2b.tsv": 0,
+          "scripts/docs-style/subs-directional-operations.tsv": 0,
+          "scripts/docs-style/subs-directional-reference.tsv": 0,
+          "scripts/docs-style/subs-directional-reference2.tsv": 0,
+          "scripts/docs-style/subs-should.tsv": 0,
+          "scripts/docs-style/subs-should-crossplatform.tsv": 0,
+          "scripts/docs-style/subs-should-l2.tsv": 0,
+          "scripts/docs-style/subs-should-operations.tsv": 0,
+          "scripts/docs-style/subs-tense.tsv": 0,
+          "scripts/docs-style/subs-tense-adminsetup.tsv": 0,
+          "scripts/docs-style/subs-tense-batch8.tsv": 0,
+          "scripts/docs-style/subs-tense-crossplatform.tsv": 0,
+          "scripts/docs-style/subs-tense-l2.tsv": 0,
+          "scripts/docs-style/subs-tense-operations.tsv": 0,
+          "scripts/docs-style/subs-tense-reference.tsv": 0,
+          "scripts/docs-style/subs-via-adminsetup.tsv": 0,
+          "scripts/docs-style/subs-via-batch8.tsv": 0,
+          "scripts/docs-style/subs-via-crossplatform.tsv": 0,
+          "scripts/docs-style/subs-via-operations.tsv": 0,
+          "scripts/docs-style/subs-via-operations2.tsv": 0,
+          "scripts/docs-style/subs-via-reference.tsv": 0,
+          "scripts/docs-style/subs-via-reference2.tsv": 0,
+          "scripts/docs-style/subs-via-sense.tsv": 0,
+          "scripts/docs-style/subs-wordlist-l2.tsv": 0,
+          "scripts/docs-style/subs-wordlist-operations.tsv": 0,
+          "scripts/docs-style/subs-wordlist-reference.tsv": 0,
+          "scripts/docs-style/subs-batch10.tsv": 0,
+          "scripts/docs-style/subs-emdash-batch10.tsv": 0
+        },
+        "idempotency_scoping_method": "Copied all 13 batch-10 target documents (156-TARGETS.txt) into a scratch directory outside the repository (Windows-form path under the Temp scratchpad root, per D-13), preserving each file's docs/-relative subpath, then ran sweep3.py against that scratch directory with each of the 36 rule sets in turn (dry run, the unconditional default). Every one reports 0 -- confirmed idempotent across the thirteen, per the plan's own scoping instruction ('Every one must report zero wanted edits across the thirteen').",
+        "idempotency_full_root_reading": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt --subs <tsv>  (unscoped, whole docs/ root; shell: Git Bash / POSIX sh via the Bash tool)",
+          "nonZeroSets": {
+            "scripts/docs-style/subs-decisiontrees.tsv": 1,
+            "scripts/docs-style/subs-directional.tsv": 1,
+            "scripts/docs-style/subs-directional-adminsetup.tsv": 3,
+            "scripts/docs-style/subs-via-adminsetup.tsv": 1,
+            "scripts/docs-style/subs-via-batch8.tsv": 1,
+            "scripts/docs-style/subs-via-crossplatform.tsv": 1,
+            "scripts/docs-style/subs-via-operations.tsv": 1,
+            "scripts/docs-style/subs-emdash-batch10.tsv": 28
+          },
+          "note": "The literal unscoped full-docs/-root reading is non-zero for 8 of the 36 sets. File-level inspection (sweep3.sweep() called directly, touched-file list printed) confirms every wanted edit in every one of these 8 sets lands OUTSIDE the 13 batch-10 targets: the 3 already-deferred out-of-batch files named in WINDOWS.md row 13 and this plan's own settled decisions (docs/linux-lifecycle/00-enrollment-overview.md, docs/end-user-guides/android-work-profile-setup.md, docs/operations/co-management/02-windows-workload-sliders.md), plus a further set of pre-existing corpus files entirely outside batch-10's scope that this phase has never touched (docs/_glossary.md, docs/_registry/RE-index.md, docs/_standards/EEE-SOP-standard.md, docs/_templates/admin-template-android.md, docs/admin-setup-android/08-13, docs/l1-runbooks/01-device-not-registered.md, docs/operations/00-index.md, docs/recipes/02-shared-ipad-full-provisioning.md). Zero of these 8 sets' wanted edits land in any of the 13 batch-10 targets -- confirmed by the scoped-to-13 reading above, which is 0 for every one of the same 36 sets including these 8. This is the same root-cause class WINDOWS.md row 13 already recorded (34 shipped rule sets are not idempotent-by-scope over the full docs/ root) and is out of this phase's scope by the settled decisions -- not a defect this task introduced or is responsible for closing."
+        },
+        "base_set_residual": {
+          "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt  (no --subs, base substitution set, dry run; shell: Git Bash / POSIX sh via the Bash tool)",
+          "tallyLine": "DRY RUN -- 1 files, 562 pins loaded / 1 TOTAL edits",
+          "site": {
+            "file": "docs/operations/patch-management/08-windows-app-updates.md",
+            "line": 266,
+            "token": "desired"
+          },
+          "citation_site_present": true,
+          "reconciliation": {
+            "before_half_residual_count": 10,
+            "before_half_sites": [
+              "docs/operations/firmware-bios/01-windows-dfci.md:109 (admin)",
+              "docs/operations/firmware-bios/02-dell-bios-configuration.md:85 (admin)",
+              "docs/operations/patch-management/08-windows-app-updates.md:266 (desired, PERMANENT)",
+              "docs/recipes/05-enterprise-update-plan.md:158 (admin)",
+              "docs/recipes/05-enterprise-update-plan.md:182 (admin)",
+              "docs/recipes/05-enterprise-update-plan.md:189 (admin)",
+              "docs/recipes/05-enterprise-update-plan.md:232 (admins)",
+              "docs/recipes/05-enterprise-update-plan.md:254 (admin)",
+              "docs/recipes/06-walk-up-avd-kiosk-autologon.md:19 (sign-in-to)",
+              "docs/recipes/06-walk-up-avd-kiosk-autologon.md:81 (admin)"
+            ],
+            "post_tracer_residual_count": 5,
+            "post_batch_audit_residual_count": 1,
+            "post_plan_156_05_residual_count": 1,
+            "sites_this_batch_closed": "9 of 10 -- all 5 admin sites plus admins and sign-in-to, closed by subs-batch10.tsv across plans 156-03/156-04. Reconciled site-by-site against the before-half list above: every site except the citation-blocked 08-windows-app-updates.md:266 is now absent from a base-substitution-set dry run.",
+            "site_this_task_legitimately_closed": "None -- plan 156-05 applied no new mechanical fixes (0 non-PRESERVED verdicts); the 9-of-10 closure happened in plans 156-03/04 and is unchanged by this plan.",
+            "no_requirement_asks_for_zero": "Per D-32, this reading is the enumerated dispositioned residual, not a pass/fail input -- no requirement in this phase asks for the base substitution set to reach zero. The single remaining site is a permanent, by-design residual: editing it fabricates a citation (the exact defect class VERIFY-02 exists to catch), pinning it moves the pin count 562 -> 563 (a changed before/after value), and a KEEP_LINE entry would contradict the sweep3.py-unchanged assertion (D-26). All three escapes are recorded as blocked in phase_baseline.before.mechanical_residual.sites."
+          }
+        },
+        "gate": {
+          "check-phase-153": {
+            "invocation": "node scripts/validation/check-phase-153.mjs",
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0
+          },
+          "c17-eee-contract": {
+            "invocation": "node scripts/validation/c17-eee-contract.mjs",
+            "filesChecked": 237,
+            "totalViolations": 0
+          },
+          "check-nav-hub-links": {
+            "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0
+          },
+          "armed_sentences": {
+            "invocation": "grep -qF 'Four of the nine mechanisms below have no rollback path at all' docs/recipes/05-enterprise-update-plan.md && grep -qF 'Dell wants a virgin BIOS; Lenovo needs a provisioned one' docs/operations/firmware-bios/00-overview.md",
+            "result": "ARMED-SENTENCES-INTACT"
+          },
+          "phase155_pins": {
+            "invocation": "tail -c 1 docs/reference/licensing-matrix.md (0x7c '|') + Step 5a heading count (1) + Step 6 heading count (1)",
+            "result": "PHASE155-PINS-INTACT"
+          },
+          "changed_path_subset_check": {
+            "note": "This task made no corpus edit at all (0 non-PRESERVED verdicts from Task 2), so git diff --name-only HEAD~1 -- docs/ is empty for this task's own commit -- trivially a subset of the thirteen.",
+            "dirtyDocsWorkingTree": false
+          }
+        }
+      }
+    },
+    "after": {
+      "sha": "090ca859acf841d9c856df04635c184a7b7fa428",
+      "sha_short": "090ca859",
+      "branch": "v1.22/154-style-landing",
+      "measured_at": "2026-09-05T06:12:28Z",
+      "shell_note": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation.",
+      "structural_gate": {
+        "c17": {
+          "script": "scripts/validation/c17-eee-contract.mjs",
+          "invocation": "node scripts/validation/c17-eee-contract.mjs",
+          "exitCode": 0,
+          "filesChecked": 237,
+          "totalViolations": 0,
+          "perAssertionViolations": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+          },
+          "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+        },
+        "check-phase-153": {
+          "script": "scripts/validation/check-phase-153.mjs",
+          "invocation": "node scripts/validation/check-phase-153.mjs",
+          "nested": false,
+          "exitCode": 0,
+          "pass": 111,
+          "fail": 0,
+          "skipped": 0,
+          "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+        },
+        "check-nav-hub-links": {
+          "script": "scripts/validation/check-nav-hub-links.mjs",
+          "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+          "exitCode": 0,
+          "hubPresenceFailures": 0,
+          "corpusLinkFailures": 0,
+          "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+        },
+        "verify2": {
+          "script": "scripts/docs-style/verify2.py",
+          "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+          "base": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+          "baseSource": "read from the resolved Phase 154 artifact's components.verify2.base value via the phase_baseline.resolver candidates (exactly one match: .planning/phases/154-*/154-GATE-BASELINE.json), not retyped as a hex string, per D-30 -- resolved fresh in this task, not copied from phase_baseline.before.structural_gate.verify2.baseSource",
+          "walkRoot": "docs",
+          "exitCode": 0,
+          "changedLines": 6382,
+          "explainedByFourRules": 3713,
+          "unexplained": 2669,
+          "lineCountDiffersFiles": [
+            "docs/_registry/RE-index.md",
+            "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md",
+            "docs/index.md",
+            "docs/recipes/01-shared-windows-avd-client.md",
+            "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+            "docs/reference/licensing-matrix.md"
+          ],
+          "resolvedOk": {
+            "baseline": 6271,
+            "after": 6304
+          },
+          "missingFile": {
+            "baseline": 27,
+            "after": 27
+          },
+          "missingAnchor": {
+            "baseline": 454,
+            "after": 454
+          },
+          "introducedBySweep": 0,
+          "incidentallyFixed": 0,
+          "broad_drift_claim_dropped": "Unchanged conclusion from the before half, per D-31: Part A's raw changed/explained/unexplained counts (6382/3713/2669) moved again against both Phase 154's own recorded before-half figures (6119/3493/2626) and this phase's own before-half figures (6070/3462/2608), because verify2.py always diffs against the single ancient pre-merge BASE (789a348a) rather than incrementally, so every commit since the merge -- Phase 155's RCP prose and this phase's batch-10 edits alike -- adds to the raw counts. The lineCountDiffersFiles list is IDENTICAL to the before half (same 6 files, same resolvedOk 6271->6304) -- batch-10 introduced zero additional Part B drift. The only assertion this after half makes on this component is the narrow INTRODUCED 0 (link/anchor health is not worse after batch-10 than before it) -- the broad zero-structural-drift claim stays dropped, exactly as the before half recorded it.",
+          "tallyLine": "  INTRODUCED by the sweep: 0"
+        },
+        "pin_differ": {
+          "tallyLine": "562 pins / 562 found / 0 lost (legacy); 685 live-corpus pins / 0 lost / 0 added (live-corpus)",
+          "legacy": {
+            "tool": "ad hoc grep -F membership check, one invocation per pin line (per D-31's Phase-154 precedent: pins2.py must not be substituted for this assertion)",
+            "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+            "pinCount": 562,
+            "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+            "found": 562,
+            "lost": 0,
+            "byteUnchanged": true,
+            "byteUnchangedInvocation": "test \"$(grep -c '' scripts/docs-style/_CONTENT-PINS.txt)\" = \"562\" && git diff --exit-code -- scripts/docs-style/_CONTENT-PINS.txt  (shell: Git Bash / POSIX sh via the Bash tool)",
+            "tallyLine": "562 pins / 562 found / 0 lost"
+          },
+          "liveCorpus": {
+            "beforeFile": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-before.txt",
+            "afterFile": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-after.txt",
+            "regenerationInvocation": "python scripts/docs-style/pins2.py scripts/validation docs > 156-LIVE-PINS-after.txt  (stderr: \"4590 literals scanned, 685 pinned\"; shell: Git Bash / POSIX sh via the Bash tool)",
+            "beforeCount": 685,
+            "afterCount": 685,
+            "lostCount": 0,
+            "lostInvocation": "grep -vxFf 156-LIVE-PINS-after.txt 156-LIVE-PINS-before.txt | grep -c ''  -- 0",
+            "addedCount": 0,
+            "addedInvocation": "grep -vxFf 156-LIVE-PINS-before.txt 156-LIVE-PINS-after.txt | grep -c ''  -- 0",
+            "note": "0 lost and 0 added: the batch-10 mechanical/em-dash/reflow edits did not remove or introduce any of the 685 live validator literals present in the corpus at either measurement point. This is the D-08 detector actually needed -- the legacy 562-pin differ alone could not have caught a loss among the 78 present-but-unpinned literals this phase's before half measured."
+          }
+        }
+      }
+    },
+    "comparison": {
+      "components": {
+        "c17": {
+          "phase154": {
+            "filesChecked": 237,
+            "totalViolations": 0
+          },
+          "before": {
+            "filesChecked": 237,
+            "totalViolations": 0
+          },
+          "after": {
+            "filesChecked": 237,
+            "totalViolations": 0
+          },
+          "differs": false,
+          "explanation": "Identical across all three columns -- 237 files checked, 0 violations. No document count or violation count moved at any point in the phase."
+        },
+        "check-phase-153": {
+          "phase154": {
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0
+          },
+          "before": {
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0
+          },
+          "after": {
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0
+          },
+          "differs": false,
+          "explanation": "Identical across all three columns -- 111 PASS, 0 FAIL, 0 SKIPPED, always run bare (nested=false)."
+        },
+        "check-nav-hub-links": {
+          "phase154": {
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0
+          },
+          "before": {
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0
+          },
+          "after": {
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0
+          },
+          "differs": false,
+          "explanation": "Identical across all three columns -- 0 hub-presence failures, 0 corpus-link failures."
+        },
+        "verify2": {
+          "phase154": {
+            "changedLines": 0,
+            "explainedByFourRules": 0,
+            "unexplained": 0,
+            "resolvedOk": {
+              "baseline": 6271,
+              "after": 6271
+            },
+            "missingFile": {
+              "baseline": 27,
+              "after": 27
+            },
+            "missingAnchor": {
+              "baseline": 454,
+              "after": 454
+            },
+            "introducedBySweep": 0,
+            "incidentallyFixed": 0
+          },
+          "before": {
+            "changedLines": 6070,
+            "explainedByFourRules": 3462,
+            "unexplained": 2608,
+            "resolvedOk": {
+              "baseline": 6271,
+              "after": 6304
+            },
+            "missingFile": {
+              "baseline": 27,
+              "after": 27
+            },
+            "missingAnchor": {
+              "baseline": 454,
+              "after": 454
+            },
+            "introducedBySweep": 0,
+            "incidentallyFixed": 0
+          },
+          "after": {
+            "changedLines": 6382,
+            "explainedByFourRules": 3713,
+            "unexplained": 2669,
+            "resolvedOk": {
+              "baseline": 6271,
+              "after": 6304
+            },
+            "missingFile": {
+              "baseline": 27,
+              "after": 27
+            },
+            "missingAnchor": {
+              "baseline": 454,
+              "after": 454
+            },
+            "introducedBySweep": 0,
+            "incidentallyFixed": 0
+          },
+          "differs": true,
+          "explanation": "Part A's raw changed/explained/unexplained counts move at every column (0/0/0 at Phase 154's own landing commit -> 6070/3462/2608 at this phase's before-half -> 6382/3713/2669 at this phase's after-half) because verify2.py always diffs the CURRENT working tree against the single fixed ancient pre-merge BASE (789a348a), never incrementally against the previous measurement -- every commit landed since the merge adds to the raw counts, whether or not it touched styled prose. The phase154->before movement (0 -> 6070/3462/2608) is attributed to Phase 155's RCP content commits landing between Phase 154's merge and this phase's before-half measurement, NOT to this phase's own work (this phase had not yet edited anything when the before half was taken). The before->after movement (6070/3462/2608 -> 6382/3713/2669) is attributed to this phase's own batch-10 mechanical-sweep, batch-10-residue and em-dash edits, which is the expected and intended effect of STYLE-02 -- editing 13 documents necessarily changes lines relative to the pre-merge BASE. Part B's resolvedOk count also moved once, between phase154 and before (6271 -> 6304, six new LINE COUNT DIFFERS entries), and did NOT move again between before and after (6304 -> 6304, identical six-file list) -- that movement belongs to Phase 155 and the merge, not to batch 10. missingFile (27/27/27) and missingAnchor (454/454/454) are identical across all three columns. introducedBySweep is 0 in all three columns -- per D-31, this is the ONLY claim this phase makes on this component: link/anchor health is not worse after the merge, Phase 155 and batch 10 combined than it was at the pristine pre-merge baseline. The broad claim that the merge and Phase 155 introduced zero structural drift stays dropped, exactly as the before half recorded it -- the measured counter-evidence (the moved Part A counts and the six LINE COUNT DIFFERS files) is recorded here, not suppressed."
+        },
+        "pin_differ": {
+          "phase154": {
+            "legacy": {
+              "pinCount": 562,
+              "found": 562,
+              "lost": 0
+            },
+            "liveCorpus": "not applicable -- pins2.py was not run in Phase 154; D-31 (Phase 154's own context) barred running it in that phase, and the live-corpus differ is a Phase 156 addition (D-08) that did not exist as a detector at Phase 154's landing commit."
+          },
+          "before": {
+            "legacy": {
+              "pinCount": 562,
+              "found": 562,
+              "lost": 0
+            },
+            "liveCorpus": {
+              "count": 685,
+              "lost": "not diffed at this measurement point -- this is the FIRST live-corpus reading, produced by plan 156-01; there is no still-earlier live-corpus list to diff against."
+            }
+          },
+          "after": {
+            "legacy": {
+              "pinCount": 562,
+              "found": 562,
+              "lost": 0
+            },
+            "liveCorpus": {
+              "count": 685,
+              "lost": 0,
+              "added": 0
+            }
+          },
+          "differs": false,
+          "explanation": "Legacy sub-component is identical across all three columns -- 562/562/0 lost, and scripts/docs-style/_CONTENT-PINS.txt is confirmed byte-unchanged from Phase 154 through this phase's after-half. Live-corpus sub-component is a Phase 156 addition (D-08) with no Phase 154 reading to compare against; between this phase's own before and after measurements the count is identical (685 -> 685) with 0 lost and 0 added -- the batch-10 edits did not remove or introduce any of the 685 live validator literals present in the corpus."
+        }
+      },
+      "unexplainedRegressions": 0,
+      "unexplainedRegressionsNote": "This is zero UNEXPLAINED regressions, not zero differences -- the verify2 component legitimately differs across all three columns and carries a full named explanation above; c17, check-phase-153, check-nav-hub-links and the pin_differ's legacy sub-component are genuinely identical across all three columns and are recorded as such (with all three columns present) rather than omitted.",
+      "discharge": {
+        "sc1": {
+          "documents": [
+            {
+              "document": "docs/operations/firmware-bios/00-overview.md",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 19,
+              "styleCheckerCandidateCount": 53,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/firmware-bios/01-windows-dfci.md",
+              "sequentialRuleSetEdits": "part of the 12-doc sweep's 27-edit sequential total (156-04)",
+              "batch10ResidueEdits": 1,
+              "emDashEdits": 40,
+              "styleCheckerCandidateCount": 102,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/firmware-bios/02-dell-bios-configuration.md",
+              "sequentialRuleSetEdits": "part of the 12-doc sweep's 27-edit sequential total (156-04)",
+              "batch10ResidueEdits": 1,
+              "emDashEdits": 26,
+              "styleCheckerCandidateCount": 62,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/firmware-bios/03-hp-bios-configuration.md",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 43,
+              "styleCheckerCandidateCount": 84,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/firmware-bios/04-lenovo-bios-configuration.md",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 14,
+              "styleCheckerCandidateCount": 45,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/patch-management/07-windows-autopatch.md",
+              "sequentialRuleSetEdits": "part of the 12-doc sweep's 27-edit sequential total (156-04)",
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 13,
+              "styleCheckerCandidateCount": 47,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/operations/patch-management/08-windows-app-updates.md",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 24,
+              "styleCheckerCandidateCount": 99,
+              "dispositionedResidualSites": [
+                "line 266, token 'desired', CITATION-BLOCKED, PERMANENT -- see phase_baseline.batch10.closure.base_set_residual"
+              ]
+            },
+            {
+              "document": "docs/recipes/05-enterprise-update-plan.md",
+              "note": "the tracer document (plan 156-03) -- went through all 34 sequential sets plus subs-batch10.tsv (2 rows at the time) plus subs-emdash-batch10.tsv directly, landing 13 of its own 62-edit sequential total in itself; see phase_baseline.batch10.tracer for the full multi-pass breakdown.",
+              "sequentialRuleSetEdits": 13,
+              "batch10ResidueEdits": 5,
+              "emDashEdits": "90 (first-pass reading before the reflow fix); see phase_baseline.batch10.tracer.emdash for the full multi-pass sequence",
+              "styleCheckerCandidateCount": 258,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+              "sequentialRuleSetEdits": "part of the 12-doc sweep's 27-edit sequential total (156-04)",
+              "batch10ResidueEdits": 2,
+              "emDashEdits": 44,
+              "styleCheckerCandidateCount": 86,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/recipes/01-shared-windows-avd-client.md",
+              "note": "RE-222 -- already-styled document Phase 155 wrote new prose into; SC#1's three-document extra set.",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 2,
+              "styleCheckerCandidateCount": 50,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/recipes/03-windows-11-multi-app-kiosk.md",
+              "note": "RE-224 -- already-styled document Phase 155 wrote new prose into; SC#1's three-document extra set.",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 0,
+              "styleCheckerCandidateCount": 91,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/reference/firmware-oem-matrix.md",
+              "sequentialRuleSetEdits": "part of the 12-doc sweep's 27-edit sequential total (156-04)",
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 16,
+              "styleCheckerCandidateCount": 51,
+              "dispositionedResidualSites": []
+            },
+            {
+              "document": "docs/reference/licensing-matrix.md",
+              "note": "already-styled document Phase 155 wrote new prose into; SC#1's three-document extra set.",
+              "sequentialRuleSetEdits": 0,
+              "batch10ResidueEdits": 0,
+              "emDashEdits": 0,
+              "styleCheckerCandidateCount": 20,
+              "dispositionedResidualSites": []
+            }
+          ],
+          "documentCount": 13,
+          "judgmentSliceHandoffFromPhase154": "2 candidates on the landed set (the Admin pair in docs/_glossary.md), per D-17 / REQUIREMENTS.md's SUCCESS-CRITERION AMENDMENT -- not 7.",
+          "noDoubleCountingRule": "docs/recipes/01-shared-windows-avd-client.md (RE-222) belongs to this criterion's own 13-document set (the 'already-styled documents Phase 155 wrote new prose into' group) and must NOT also be counted as part of the 2-candidate judgment-slice handoff -- the handoff and this criterion's set are disjoint accounting buckets."
+        },
+        "sc2": {
+          "previouslyJudgedCount": 406,
+          "batch10JudgedCount": 0,
+          "sum": 406,
+          "arithmeticCheck": "406 + 0 == 406",
+          "byteUnchangedProof": "git diff --exit-code -- scripts/docs-style/_JUDGE-VERDICTS.json  -- exit 0, per plan 156-05's Task 2 commit (69520007)",
+          "reference": "156-05-SUMMARY.md coverage D3; phase_baseline.batch10.judge.sc2_arithmetic"
+        },
+        "sc3": {
+          "judgePromptPath": ".planning/phases/156-style-extension-full-landing-verification/156-JUDGE-PROMPT.md",
+          "findingsFilePath": ".planning/phases/156-style-extension-full-landing-verification/156-JUDGE-FINDINGS.md",
+          "findingsListState": "explicitly empty -- 156-JUDGE-FINDINGS.md states 'None were reported' for the full batch, with the reason (0 non-empty packets, 0 judge processes dispatched), not omitted or silently blank."
+        },
+        "sc4": {
+          "componentsNamed": [
+            "c17",
+            "check-phase-153 (the apex check-phase-NNN)",
+            "check-nav-hub-links",
+            "verify2 (the link differ)",
+            "pin_differ"
+          ],
+          "mechanicalResidualStatement": "The mechanical residual (phase_baseline.before.mechanical_residual / phase_baseline.batch10.closure.base_set_residual) is NOT among the five VERIFY-04 components named above, so its trajectory (10 sites at phase start -> 1 permanent citation-blocked site at phase close) raises no VERIFY-04 question. See phase_baseline.batch10.closure.base_set_residual for the full reconciliation rather than duplicating its numbers here.",
+          "zeroUnexplainedRegressions": true
+        }
+      }
+    },
+    "handoffs": [
+      {
+        "item": "Editable spaced em dashes outside the thirteen batch-10 documents",
+        "measured": "14 distinct non-target files restored during the 12-doc em-dash apply-then-restore gate (28 restore events, once per apply pass); D-22's original corpus-wide classifier reading was 43 editable-prose spaced em dashes across 16 files outside the 13, against 4,373 tight corpus-wide (91% of the corpus's editable spaced dashes live inside the 13).",
+        "invocation": "phase_baseline.batch10.emdash.restored_paths (the 14-file list from this phase's own em-dash apply-then-restore gate); D-22 in 156-CONTEXT.md for the original 43/16 classifier reading",
+        "destination": "Phase 157 or the backlog, per D-27 -- neither the 14 re-confirmed files nor the wider 43/16 D-22 reading is in this phase's scope."
+      },
+      {
+        "item": "En dashes (U+2013) inside the thirteen batch-10 documents",
+        "measured": "9 en dashes total across the 13, concentrated in docs/operations/patch-management/08-windows-app-updates.md (1), docs/recipes/01-shared-windows-avd-client.md (2) and docs/recipes/05-enterprise-update-plan.md (6); the remaining 10 documents carry 0.",
+        "invocation": "grep -coP '\\x{2013}' <path> per document, summed; see phase_baseline.batch10.emdash.dash_handoff.per_document",
+        "destination": "Phase 157 or the backlog, per D-27 -- references/dashes.md bars the en dash outright ('Don't use.'), and check.py's spaced-em-dash rule (\\s—|—\\s) cannot see an en dash at all, so no existing gate will ever catch these."
+      },
+      {
+        "item": "Spaced ASCII double-hyphen inside the thirteen batch-10 documents",
+        "measured": "1 occurrence total across the 13, in docs/reference/firmware-oem-matrix.md; the remaining 12 documents carry 0.",
+        "invocation": "grep -coP '(?<=\\s)--(?=\\s)' <path> per document, summed; see phase_baseline.batch10.emdash.dash_handoff.per_document",
+        "destination": "Phase 157 or the backlog, per D-27 -- not visible to check.py's spaced-em-dash rule, which matches only U+2014."
+      },
+      {
+        "item": "Citation-blocked base-substitution residual site (the permanent, by-design non-zero)",
+        "measured": "1 site remains: docs/operations/patch-management/08-windows-app-updates.md:266, token 'desired', inside a verbatim Microsoft quotation ('the desired state of the development environment on your Windows machine'). All three escapes are blocked: editing it fabricates a citation (the exact defect class VERIFY-02 exists to catch); pinning it moves scripts/docs-style/_CONTENT-PINS.txt's pin count from 562 to 563, a changed before/after value the phase's own gate asserts must not move; and a KEEP_LINE entry would contradict the sweep3.py-unchanged assertion (D-26).",
+        "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt (dry-run, no --subs) -- DRY RUN -- 1 files, 562 pins loaded / 1 TOTAL edits; see phase_baseline.batch10.closure.base_set_residual",
+        "destination": "Phase 157's gate scoping. Standing exposure, not a residual to close: a future run of the base substitution set with --apply, by any phase, would fabricate this citation unless the site is explicitly excluded from scope first."
+      },
+      {
+        "item": "D-33 transferable lesson -- a phase's own remediation commits can move the mechanical residual after the phase itself reports complete",
+        "measured": "The base-substitution residual moved 9 -> 10 sites between Phase 155's own completion and this phase's before-half measurement, because a verification-gap-closure commit (9ce464a9) landed AFTER 43df3d63 'docs(phase-155): complete phase execution' and introduced one new wanted edit at docs/recipes/06-walk-up-avd-kiosk-autologon.md:81 (admin) -- not from RCP content prose, since Phase 155's own content plans held RE-237 at exactly the predecessor's 1-edit reading.",
+        "invocation": "phase_baseline.before.mechanical_residual.why_remeasured (156-02); phase_baseline.batch10.closure.base_set_residual.reconciliation (this plan)",
+        "destination": "Every future phase that inherits a prior phase's recorded residual count: re-measure fresh at the current commit rather than trusting a prior phase's own recorded number, because that number can move after the prior phase closes."
+      },
+      {
+        "item": "D-37 idempotency closure -- the structural gate cannot see prose the judge/em-dash passes write after the mechanical pass",
+        "measured": "The mandatory re-sweep proof: all 34 shipped subs-*.tsv rule sets plus subs-batch10.tsv and subs-emdash-batch10.tsv (36 total), scoped to a scratch copy of exactly the 13 batch-10 targets, each report 0 wanted edits -- the recorded zero across all 36 rule sets is the evidence that judge fixes and the em-dash pass did not leave new tightenable prose behind (0 non-PRESERVED judge verdicts meant no fixes were even applied in this phase's own full-batch pass, so the closure is trivially satisfied here, but the mechanism itself -- re-sweep after every prose-writing pass -- is what a future phase with non-zero judge fixes must repeat).",
+        "invocation": "phase_baseline.batch10.closure.idempotency_per_set (36 sets, all 0), scoped-to-13-targets scratch-copy technique; see 156-05-SUMMARY.md Task 3",
+        "destination": "Phase 158 SC#3 (the symmetric obligation for Phase 157's HYG pillar) -- the same re-sweep-after-prose-writing-pass discipline applies there."
+      },
+      {
+        "item": "D-08 pin-coverage exposure -- the committed 562-pin file protects a minority of the live validator literals present in the corpus",
+        "measured": "117 validator literals are present verbatim in the 13 batch-10 documents; only 39 are pinned in scripts/docs-style/_CONTENT-PINS.txt (78 are not, owned mostly by check-phase-149/-148/-150/-151). The committed pins file was generated by pins2.py against a scratch corpus (D:/claude/docs-google-style-test) that predates the 9 post-fork documents, so RESUME's standing audit #2 (regenerate from the scratch corpus and compare to itself) is structurally vacuous in this repository -- it reports 0 lost whatever happens to the live docs/ corpus. This phase's live-corpus pin differ (685 literals, regenerated fresh in plans 156-01/156-06) is the working detector added beside the legacy one.",
+        "invocation": "phase_baseline.pin_coverage (156-01); phase_baseline.after.structural_gate.pin_differ.liveCorpus (this plan)",
+        "destination": "Phase 157, as a standing exposure to carry forward: do not trust the legacy 562-pin differ alone to protect newly-authored or newly-styled documents; the live-corpus differ (or its successor) must run alongside it."
+      },
+      {
+        "item": "The 3 out-of-batch files surfaced by the sweep's own non-idempotency (WINDOWS.md row 13), still needing their own pass",
+        "measured": "docs/linux-lifecycle/00-enrollment-overview.md, docs/end-user-guides/android-work-profile-setup.md and docs/operations/co-management/02-windows-workload-sliders.md each show wanted edits from one or more of the 34 shipped subs-*.tsv rule sets when the sweep is run unscoped over the full docs/ root; none of the 3 was in this phase's target set (156-TARGETS.txt), so none was touched, and their own idempotency status is unmeasured beyond 'currently non-zero against the shipped rule sets'.",
+        "invocation": "phase_baseline.batch10.closure.idempotency_full_root_reading.nonZeroSets; WINDOWS.md row 13",
+        "destination": "Phase 157 or the backlog, per D-27 -- unchanged and untouched by this phase, exactly as the settled decisions require."
+      },
+      {
+        "item": "Out-of-scope findings collected across plans 156-04 and 156-05 (new-defect audits, distinct from the WINDOWS row 13 sweep-scope class above)",
+        "measured": "Empty set. 156-04's four standing post-batch audits (frontmatter drift, HTML-comment span, inline quotation, mechanical residual) recorded 0 new out-of-scope findings. 156-05's full-batch judge dispatch recorded 0 out-of-task findings landing outside the thirteen (handoffOutsideThirteen: []), because 0 judge processes were dispatched. Recorded as empty explicitly, not omitted.",
+        "invocation": "phase_baseline.batch10.audits.out_of_scope_findings (156-04, []); phase_baseline.batch10.judge.out_of_task_findings.handoffOutsideThirteen (156-05, [])",
+        "destination": "None -- nothing to hand off from this source. Recorded for completeness so a later phase does not wonder whether this check ran."
+      },
+      {
+        "item": "WINDOWS.md row 10 -- VERIFY-01/D-28's no-planning-file-in-range assumption, still open",
+        "measured": "verify-meaning.py's changed_files() has no path scoping, so ordinary GSD close-out commits put .planning/ files (STATE.md, WINDOWS.md, REQUIREMENTS.md) into the judge_base..HEAD diff range alongside genuine docs/ changes. This phase did not close the deviation; it worked within it by asserting zero undispositioned findings on docs-prefixed paths only, and by attributing every non-docs finding to the commit that put it in range (confirmed in plans 156-02 and 156-05).",
+        "invocation": "WINDOWS.md row 10; phase_baseline.batch10.judge.verify_meaning (156-05)",
+        "destination": "Carried forward unchanged, not closed -- status remains open in WINDOWS.md."
+      }
+    ]
+  }
+}

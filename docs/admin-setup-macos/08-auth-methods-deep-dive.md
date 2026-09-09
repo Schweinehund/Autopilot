@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-This guide helps architects and senior Intune administrators choose among the three macOS Platform SSO authentication methods — Secure Enclave key, Password sync, and Smart Card — covering FileVault interaction, Touch ID biometric policy, and New User At Login Window settings. Deploying any method requires the Intune Policy and Profile Manager role, an Apple Business Manager-issued ADE enrollment for device targeting, and macOS 13+ (macOS 14+ required for Smart Card).
+This guide helps architects and senior Intune administrators choose among the three macOS Platform SSO authentication methods—Secure Enclave key, Password sync, and Smart Card—covering FileVault interaction, Touch ID biometric policy, and New User At Login Window settings. Deploying any method requires the Intune Policy and Profile Manager role, an Apple Business Manager-issued ADE enrollment for device targeting, and macOS 13+ (macOS 14+ required for Smart Card).
 
 > **Platform gate:** This guide covers macOS Platform SSO authentication methods in depth.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
@@ -27,7 +27,7 @@ This guide helps architects and senior Intune administrators choose the right [P
 
 ## Auth Method Comparison
 
-Choose your authentication method using the four dimensions below. Secure Enclave key is Microsoft's recommended method for most deployments.
+Choose your authentication method using the following four dimensions. Secure Enclave key is Microsoft's recommended method for most deployments.
 
 | | Secure Enclave Key | Password Sync | Smart Card |
 |--|-------------------|---------------|-----------|
@@ -39,7 +39,7 @@ Choose your authentication method using the four dimensions below. Secure Enclav
 
 **Selection guidance:**
 
-- **Secure Enclave key** -- Best for most organizations. Passwordless, phishing-resistant, hardware-bound, and drives device-wide SSO via a Primary Refresh Token. Requires T2 Intel or Apple Silicon hardware; pre-2018 non-T2 Intel Macs WILL fail to provision and should fall back to Password sync.
+- **Secure Enclave key** -- Best for most organizations. Passwordless, phishing-resistant, hardware-bound, and drives device-wide SSO through a Primary Refresh Token. Requires T2 Intel or Apple Silicon hardware; pre-2018 non-T2 Intel Macs CANNOT provision and should fall back to Password sync.
 - **Password sync** -- Use for legacy hardware that lacks a T2 chip or Apple Silicon, or for organizations not yet ready for full passwordless. The local macOS password is kept equal to the Entra password.
 - **Smart card** -- Use only when your organization already operates a PKI and has Entra Certificate-Based Authentication fully configured. Requires macOS 14+. Not available during Setup Assistant.
 
@@ -51,7 +51,7 @@ The [Secure Enclave](../_glossary-macos.md#secure-enclave) key method stores the
 
 ### What the Secure Enclave Key Is and Is Not
 
-Six non-negotiable facts that govern every admin and helpdesk decision for this method:
+Six non-negotiable facts that govern every administrator and helpdesk decision for this method:
 
 1. **The private key never leaves the Secure Enclave.** It cannot be exported, backed up, transferred to another device, or read by software. No key material is ever exposed outside the hardware boundary.
 
@@ -61,15 +61,15 @@ Six non-negotiable facts that govern every admin and helpdesk decision for this 
 
 4. **From August 2025, new Entra device registrations store the WPJ key in the Secure Enclave** (not the Login Keychain). `security find-certificate` returns false negatives for SE-stored keys. Use `app-sso platform -s` to verify registration state.
 
-5. **FileVault does NOT use the Secure Enclave key.** See [FileVault and the Secure Enclave Key](#filevault-and-the-secure-enclave-key) below -- this is a frequently misunderstood interaction.
+5. **FileVault does NOT use the Secure Enclave key.** See [FileVault and the Secure Enclave Key](#filevault-and-the-secure-enclave-key) -- this is a frequently misunderstood interaction.
 
-6. **MDM-driven or FileVault-recovery password reset destroys the Secure Enclave key.** See [SE Key Destruction Warning](#se-key-destruction-warning) below.
+6. **MDM-driven or FileVault-recovery password reset destroys the Secure Enclave key.** See [SE Key Destruction Warning](#se-key-destruction-warning).
 
 **Hardware scope -- which Macs support the Secure Enclave key method:**
 
 - All Apple Silicon Macs (M1, M2, M3, M4+, 2020 and later)
 - Intel Macs with Apple T2 Security Chip: MacBook Pro 2018--2020, MacBook Air 2018--2020, Mac mini 2018, iMac 2020, Mac Pro 2019
-- Pre-2018 Intel Macs WITHOUT T2: **Secure Enclave auth method WILL FAIL to provision.** Recommend fallback to Password sync for these devices.
+- Pre-2018 Intel Macs WITHOUT T2: **Secure Enclave auth method FAILS to provision.** Recommend fallback to Password sync for these devices.
 
 **Settings Catalog key values:**
 
@@ -112,7 +112,7 @@ interactive password-change flow. When the password is reset by external means, 
 severed and the key becomes inaccessible.
 
 **Resolution:** The user must complete a fresh PSSO registration after the password reset. Helpdesk
-should inform users that Platform SSO will prompt for re-registration following any MDM-driven
+must inform users that Platform SSO prompts for re-registration following any MDM-driven
 password reset or FileVault recovery key use.
 
 ### Touch ID Biometric Policy
@@ -121,7 +121,7 @@ password reset or FileVault recovery key use.
 
 > _High-drift content: Company Portal 2504 and macOS 14.6 version floor -- re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
 
-The Touch ID biometric policy allows Secure Enclave key authentication to use Touch ID biometrics at the macOS login window. It is configured via an Extension Data key in the existing Platform SSO Settings Catalog policy.
+The Touch ID biometric policy allows Secure Enclave key authentication to use Touch ID biometrics at the macOS login window. It is configured using an Extension Data key in the existing Platform SSO Settings Catalog policy.
 
 **Configuration:**
 
@@ -143,7 +143,7 @@ to Microsoft Entra ID if they don't have Touch ID biometrics available."
 
 Before enabling this policy, confirm that **all target devices** have functioning Touch ID hardware.
 Devices with broken Touch ID sensors, external keyboards without Touch ID, or models without
-Touch ID will have NO authentication path to Entra ID via Platform SSO once this policy is active.
+Touch ID have NO authentication path to Entra ID through Platform SSO once this policy is active.
 
 See [Common Misconceptions](#common-misconceptions) for the "Touch ID means no password is ever
 needed" myth and [FileVault and the Secure Enclave Key](#filevault-and-the-secure-enclave-key)
@@ -153,15 +153,15 @@ for cold-boot behavior.
 
 "If this feature is enabled after PSSO registration is completed, all users will need to undergo a full PSSO re-registration process for the policy to take effect. This re-registration process must be admin-driven, as users won't see a re-registration prompt."
 
-Plan a staged rollout: enable the policy for a pilot group, verify Touch ID authentication works, then expand to the full fleet. Orchestrate re-registration proactively -- users will not be prompted automatically.
+Plan a staged rollout: enable the policy for a pilot group, verify Touch ID authentication works, then expand to the full fleet. Orchestrate re-registration proactively -- users are not prompted automatically.
 
 ### Passkey / FIDO2 from the Platform Credential
 
-The Secure Enclave Platform Credential can be used as a passkey (WebAuthn/FIDO2) in supported browsers via WebAuthn APIs. This extends the Secure Enclave key's phishing-resistant authentication to web applications that support passkeys.
+The Secure Enclave Platform Credential can be used as a passkey (WebAuthn/FIDO2) in supported browsers using WebAuthn APIs. This extends the Secure Enclave key's phishing-resistant authentication to web applications that support passkeys.
 
 **How it works:** The PRT key stored in the Secure Enclave is exposed to supported browsers as a WebAuthn authenticator. Users can register and authenticate with web applications using the Platform Credential as a passkey without any additional hardware token.
 
-**Entra authentication-methods enablement (admin prerequisite):** FIDO2 (passkey) must be enabled in Entra ID Authentication Methods > FIDO2 security key for the Platform Credential passkey to function. This is a separate Entra admin task.
+**Entra authentication-methods enablement (administrator prerequisite):** FIDO2 (passkey) must be enabled in Entra ID Authentication Methods > FIDO2 security key for the Platform Credential passkey to function. This is a separate Entra administrator task.
 
 **AAGUID (conditional -- required only when FIDO2 key restrictions apply):**
 
@@ -197,7 +197,7 @@ For the FileVault cold-boot behavior, see [FileVault and the Secure Enclave Key]
 
 > _Sync timing provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`._
 
-> _The ~4-hour sync window is MEDIUM confidence (consistent with PITFALLS.md and SUMMARY.md research; not confirmed verbatim from the fetched Intune/Entra docs in this session)._
+> _The ~4-hour sync window is MEDIUM confidence (consistent with pitfall register and research summary; not confirmed verbatim from the fetched Intune/Entra docs in this session)._
 
 > _Confirm current timing against the Microsoft Learn Platform SSO troubleshooting guide at each 90-day review._
 
@@ -219,14 +219,14 @@ For the FileVault cold-boot behavior, see [FileVault and the Secure Enclave Key]
 
 Smart Card Platform SSO **silently fails** if Entra Certificate-Based Authentication (CBA) is not
 pre-configured in the Entra tenant. Deploying the `SmartCard` Settings Catalog value without
-completing the Entra CBA configuration produces no actionable error -- registration simply fails.
+completing the Entra CBA configuration produces no error you can act on -- registration fails.
 
-Entra CBA is a separate multi-step Entra admin task that requires the **Privileged Authentication
+Entra CBA is a separate multi-step Entra administrator task that requires the **Privileged Authentication
 Administrator** role (to upload CA certificates) and the **Authentication Policy Administrator**
 role (to configure authentication and username-binding policies). Allow multiple days for PKI
 certificate upload and policy propagation before deploying the PSSO Smart Card profile.
 
-Complete the Entra CBA configuration and verify it works (Step 5 below) before deploying any
+Complete the Entra CBA configuration and verify it works (Step 5) before deploying any
 Smart Card PSSO Settings Catalog policy.
 
 Authoritative guide: [Entra ID Certificate-Based Authentication configuration](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-certificate-based-authentication)
@@ -252,21 +252,21 @@ These five steps must be complete before deploying the Smart Card PSSO profile:
 
 **Step 4 -- Configure username binding policy (X.509 attribute to Entra user attribute):**
 - Default mapping: `PrincipalName` (certificate SAN) → `userPrincipalName` (Entra user object)
-- Custom mappings also supported (e.g., `RFC822Name` → `userPrincipalName`)
-- For orgs syncing from on-premises AD, alternative security IDs (AltSecId) can be synced via Entra Connect
+- Custom mappings also supported (for example, `RFC822Name` → `userPrincipalName`)
+- For orgs syncing from on-premises AD, alternative security IDs (AltSecId) can be synced through Entra Connect
 
 **Step 5 -- Verify CBA works before deploying the PSSO profile:**
 - Test by signing in to MyApps portal (myapps.microsoft.com) with the smart card certificate on a test device
 - Confirm certificate picker appears and authentication succeeds
-- Only after CBA is confirmed working should the Smart Card PSSO Settings Catalog profile be deployed
+- Deploy the Smart Card PSSO Settings Catalog profile only after CBA is confirmed working
 
 ### Smart Card Settings Catalog Configuration
 
 **Settings Catalog key value:** `Platform SSO > Authentication Method` = `SmartCard` (macOS 14+ only)
 
-**macOS 14+ required:** Smart Card method is NOT supported on macOS 13. The deprecated `Authentication Method (Deprecated)` field does NOT accept `SmartCard` -- only the macOS 14+ `Platform SSO > Authentication Method` field accepts it. Do NOT deploy the SmartCard value to a mixed 13/14 fleet without filtering; macOS 13 devices will fail.
+**macOS 14+ required:** Smart Card method is NOT supported on macOS 13. The deprecated `Authentication Method (Deprecated)` field does NOT accept `SmartCard` -- only the macOS 14+ `Platform SSO > Authentication Method` field accepts it. Do NOT deploy the SmartCard value to a mixed 13/14 fleet without filtering; macOS 13 devices fail.
 
-**sc_auth pairing prerequisite:** Smart card certificates must be paired with the local macOS user account before PSSO Smart Card registration. This is accomplished via the macOS `sc_auth` command.
+**sc_auth pairing prerequisite:** Smart card certificates must be paired with the local macOS user account before PSSO Smart Card registration. This is accomplished through the macOS `sc_auth` command.
 
 > _sc_auth provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`._
 
@@ -299,15 +299,15 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 | User Authorization Mode | `UserAuthorizationMode` | String | `Standard`, `Admin`, `Groups` | Persistent: re-applied at each subsequent PSSO sign-in |
 
 **Notes:**
-- `Temporary` is a valid value in the Apple schema for `NewUserAuthorizationMode` only. It is **not surfaced in the Intune Settings Catalog UI** — to use it, deploy via a custom profile or direct plist.
-- `UserAuthorizationMode` does NOT accept `Temporary` — the allowed values are Standard / Admin / Groups only.
-- **Behavioral asymmetry example:** Setting `NewUserAuthorizationMode: Admin` + `UserAuthorizationMode: Standard` grants admin rights at first login, then reverts to standard at every subsequent PSSO sign-in. The admin promotion is overwritten on the second sign-in.
+- `Temporary` is a valid value in the Apple schema for `NewUserAuthorizationMode` only. It is **not surfaced in the Intune Settings Catalog UI**—to use it, deploy through a custom profile or direct plist.
+- `UserAuthorizationMode` does NOT accept `Temporary`—the allowed values are Standard / Admin / Groups only.
+- **Behavioral asymmetry example:** Setting `NewUserAuthorizationMode: Admin` + `UserAuthorizationMode: Standard` grants administrator rights at first login, then reverts to standard at every subsequent PSSO sign-in. The administrator promotion is overwritten on the second sign-in.
 
 ---
 
 ## Common Misconceptions
 
-**Platform SSO Myth vs. Fact**
+**Platform SSO Myth versus Fact**
 
 The following table addresses the most dangerous misconceptions about Platform SSO. Each of the three
 named dangers has a canonical description in the relevant method section -- this table cross-references

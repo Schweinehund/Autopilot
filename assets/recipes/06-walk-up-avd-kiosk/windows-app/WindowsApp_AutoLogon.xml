@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Provenance (v1.22 Phase 155, RCP-09): source https://github.com/Azure/WindowsAppKiosk, path source/WindowsApp/AssignedAccess/ShellLauncher/WindowsApp_AutoLogon.xml, pinned commit 17e1c09b4883ea2062bef801ae24bbc9722861d7, retrieved 2026-09-03. Vendored verbatim below. -->
+<ShellLauncherConfiguration xmlns="http://schemas.microsoft.com/ShellLauncher/2018/Configuration" xmlns:V2="http://schemas.microsoft.com/ShellLauncher/2019/Configuration">
+    <Profiles>
+        <DefaultProfile>
+            <Shell Shell="%systemroot%\explorer.exe">
+                <DefaultAction Action="RestartShell"/>
+            </Shell>
+        </DefaultProfile>
+        <Profile Id="{814B6409-8C51-4EE2-95F8-DB39B70F5F90}">
+            <Shell Shell="MicrosoftCorporationII.Windows365_8wekyb3d8bbwe!Windows365" V2:AppType="UWP">
+                <DefaultAction Action="RestartShell"/>
+            </Shell>
+        </Profile>
+    </Profiles>
+    <Configs>
+        <Config>
+            <AutoLogonAccount/>
+            <Profile Id="{814B6409-8C51-4EE2-95F8-DB39B70F5F90}"/>
+        </Config>
+    </Configs>
+</ShellLauncherConfiguration>

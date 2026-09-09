@@ -16,9 +16,9 @@ platform: iOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers supervised corporate ADE iOS/iPadOS devices that do not reach Intune after factory reset, stall in Setup Assistant, or never present the Microsoft sign-in screen — three failure signatures tied to token expiry, enrollment profile configuration, or legacy authentication method. The sole L1 write-action exception is a manual ADE token sync, which retries ABM-to-Intune device syncing without modifying any configuration.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers supervised corporate ADE iOS/iPadOS devices that do not reach Intune after factory reset, stall in Setup Assistant, or never present the Microsoft sign-in screen—three failure signatures tied to token expiry, enrollment profile configuration, or legacy authentication method. The sole L1 write-action exception is a manual ADE token sync, which retries ABM-to-Intune device syncing without modifying any configuration.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting through Intune.
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
@@ -49,19 +49,19 @@ Routed here from the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.
 
 3. Navigate to **Devices > Device onboarding > Enrollment > Apple** (tab) **> Enrollment program tokens** (P-02). For the active iOS token, record: **Status** (Active / Expired / Expiring soon), the token Apple ID, and the list of profiles assigned to the token.
 
-4. If token **Status** is "Expired" or "Expiring soon": proceed directly to [Admin Action Required](#admin-action-required) — token renewal required. Do not perform the manual sync (step 7) until the token is renewed; a sync on an expired token will not surface devices.
+4. If token **Status** is "Expired" or "Expiring soon": proceed directly to [Admin Action Required](#admin-action-required)—token renewal required. Do not perform the manual sync (step 7) until the token is renewed; a sync on an expired token does not surface devices.
 
 5. On the token, confirm an enrollment profile is assigned as Default (or is targeted to this device's assignment group). Record the profile name.
 
-6. If no enrollment profile is assigned: proceed to [Admin Action Required](#admin-action-required) — profile assignment required.
+6. If no enrollment profile is assigned: proceed to [Admin Action Required](#admin-action-required)—profile assignment required.
 
-7. If token Status is Active and an enrollment profile is assigned but the device does **not** appear in Intune (Signature a): perform the **manual ADE token sync** — the single L1 write-action exception documented for this runbook. Navigate to **Devices > Device onboarding > Enrollment > Apple** (tab) **> Enrollment program tokens > [token] > Sync** (P-03). Wait 5 minutes. Re-search by serial in Devices > All devices > iOS/iPadOS.
+7. If token Status is Active and an enrollment profile is assigned but the device does **not** appear in Intune (Signature a): perform the **manual ADE token sync**—the single L1 write-action exception documented for this runbook. Navigate to **Devices > Device onboarding > Enrollment > Apple** (tab) **> Enrollment program tokens > [token] > Sync** (P-03). Wait 5 minutes. Re-search by serial in Devices > All devices > iOS/iPadOS.
 
-   > **Note:** This sync is a READ retry — it re-triggers ABM-to-Intune device syncing using the existing,
+   > **Note:** This sync is a READ retry—it re-triggers ABM-to-Intune device syncing using the existing,
    > unchanged token configuration rather than creating or modifying any configuration.
    > This is a safe read-retry matched to macOS runbook 10 step 10 precedent.
 
-8. If the manual sync does not surface the device after 5 minutes: navigate to Apple Business Manager (`business.apple.com` > Devices). Search by device serial number. If the device is not found in ABM: the device is not enrolled in the ABM program (procurement issue) — proceed to [Escalation Criteria](#escalation-criteria) with "not found in ABM" noted.
+8. If the manual sync does not surface the device after 5 minutes: navigate to Apple Business Manager (`business.apple.com` > Devices). Search by device serial number. If the device is not found in ABM: the device is not enrolled in the ABM program (procurement issue)—proceed to [Escalation Criteria](#escalation-criteria) with "not found in ABM" noted.
 
 9. If the device is found in ABM: check the **MDM Server** field in the ABM device record.
    If the MDM Server field is blank or shows a different organization MDM server: proceed to [Escalation Criteria](#escalation-criteria) with the inter-org-release data documented.
@@ -70,23 +70,23 @@ Routed here from the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.
 
 ## Admin Action Required
 
-L1 documents and hands this packet to the Intune admin. L1 does not execute.
+L1 documents and hands this packet to the Intune administrator. L1 does not execute.
 
-**Ask the admin to (select based on L1 triage finding):**
+**Ask the administrator to (select based on L1 triage finding):**
 
-*Signature (a) — ABM token expired:*
+*Signature (a)—ABM token expired:*
 - Renew the ABM/ADE token per [ABM/ADE Token Guide § Renewal / Maintenance](../admin-setup-ios/02-abm-token.md#renewal--maintenance). Token renewal requires the Managed Apple ID associated with the original token creation. A personal Apple ID cannot be substituted; token renewal with a different Apple ID creates a new token and requires enrollment profile reassignment.
 
-*Signature (a) — no enrollment profile assigned:*
+*Signature (a)—no enrollment profile assigned:*
 - Create or assign an enrollment profile to the token per [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md). Assign as Default for the token or scope it to the device's assignment group. Profile assignment is over-the-air and does not require the device to be present or powered on.
 
-*Signature (b) — Await-final-configuration stuck or pending configuration-profile delivery errors:*
+*Signature (b)—Await-final-configuration stuck or pending configuration-profile delivery errors:*
 - Review the Await-final-configuration setting and any pending configuration-profile delivery errors on the enrollment profile per [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md). Await-final-configuration holds the device in Setup Assistant until all device-configuration policies are delivered; if a required policy fails delivery (missing assignment, scope issue, or policy error), the device remains at this screen indefinitely. Check Intune > Devices > [device] > Device configuration for delivery errors.
 - A factory reset of the device may be required if the configuration-delivery deadlock cannot be resolved from the portal.
 
-*Signature (c) — legacy authentication method blocking modern CA:*
-- Change the enrollment profile's Authentication method to **Setup Assistant with modern authentication** (not "Setup Assistant (legacy)") per [ADE Enrollment Profile Guide § Authentication Methods](../admin-setup-ios/03-ade-enrollment-profile.md#authentication-methods). The legacy method is incompatible with modern Conditional Access policies and MFA — Microsoft Learn documents this as the primary cause of ADE enrollment stuck at the Microsoft sign-in step.
-- Note: The device must be factory-reset and re-enrolled after the profile authentication method is changed — the method is applied only at first enrollment.
+*Signature (c)—legacy authentication method blocking modern CA:*
+- Change the enrollment profile's Authentication method to **Setup Assistant with modern authentication** (not "Setup Assistant (legacy)") per [ADE Enrollment Profile Guide § Authentication Methods](../admin-setup-ios/03-ade-enrollment-profile.md#authentication-methods). The legacy method is incompatible with modern Conditional Access policies and MFA—Microsoft Learn documents this as the primary cause of ADE enrollment stuck at the Microsoft sign-in step.
+- Note: The device must be factory-reset and re-enrolled after the profile authentication method is changed—the method is applied only at first enrollment.
 
 **Verify:**
 - Signature (a) token renewal: token Status returns to Active in the Enrollment program tokens pane (P-02) and newly-reset devices appear in Devices > All devices > iOS/iPadOS within 15 minutes of a manual sync.
@@ -94,29 +94,29 @@ L1 documents and hands this packet to the Intune admin. L1 does not execute.
 - Signature (b): device advances past the Remote Management / Setup Assistant stuck screen and reaches "Your iPhone is set up by [organization]".
 - Signature (c): user retries enrollment after the profile authentication method is updated; the Microsoft sign-in screen appears after the Apple sign-in screen.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
-> **Note for L1:** If the admin is unavailable, document the triage findings (token status, profile assignment, signature matched) in the ticket and set status to Pending Admin Action.
+> **Note for L1:** If the administrator is unavailable, document the triage findings (token status, profile assignment, signature matched) in the ticket and set status to Pending Admin Action.
 
 ## Escalation Criteria
 
-Escalate to L2 (or to the Intune admin directly if not already notified) if:
+Escalate to L2 (or to the Intune administrator directly if not already notified) if:
 
-- ABM/ADE token expired AND the admin does not have access to the Managed Apple ID used for original token creation
+- ABM/ADE token expired AND the administrator does not have access to the Managed Apple ID used for original token creation
 - Device appears in ABM but is assigned to a different MDM server (inter-organization device release required)
 - All portal checks pass and manual sync was performed but the device still does not appear after 30 minutes
-- Admin already performed renewal and sync but the device still does not appear
+- Administrator already performed renewal and sync but the device still does not appear
 - Signature (c) persists after the authentication method is confirmed as modern authentication (deeper Conditional Access or MFA configuration investigation required)
 
-> **Tip:** Collect all data listed below before contacting L2 or the admin. Providing complete data reduces round-trips and speeds resolution.
+> **Tip:** Collect the following data before contacting L2 or the administrator. Providing complete data reduces round-trips and speeds resolution.
 
 L1 collects this data before the handoff to ensure escalation is actioned without follow-up requests.
 
 **Before escalating, collect:**
 
 - Device serial number
-- Device make and model (iPhone or iPad variant, e.g., iPhone 15 Pro, iPad 10th generation)
+- Device make and model (iPhone or iPad variant, for example, iPhone 15 Pro, iPad 10th generation)
 - ABM device record screenshot (or note "not found in ABM")
 - Enrollment token Status screenshot from the Enrollment program tokens pane (P-02)
 - Enrollment profile name and key settings screenshot (User affinity, Authentication method, Await final configuration)
@@ -124,13 +124,13 @@ L1 collects this data before the handoff to ensure escalation is actioned withou
 - Which signature (a/b/c) most closely matches the observed failure
 
 See [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for advanced ADE investigation.
-For admin configuration references:
+For administrator configuration references:
 - [ABM/ADE Token Guide](../admin-setup-ios/02-abm-token.md)
 - [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md)
-- [iOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md) — 7-stage enrollment pipeline
+- [iOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md)—7-stage enrollment pipeline
 - [ADE token sync mechanics](../admin-setup-ios/02-abm-token.md#token-sync-mechanics) -- manual sync rate limits and delta sync interval
 - [iOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) -- enrollment path taxonomy (ADE, Device Enrollment, User Enrollment, MAM)
-- [iOS/iPadOS Admin Setup Overview](../admin-setup-ios/00-overview.md) -- portal navigation and admin prerequisites
+- [iOS/iPadOS Admin Setup Overview](../admin-setup-ios/00-overview.md) -- portal navigation and administrator prerequisites
 
 ---
 

@@ -16,15 +16,15 @@ audience: admin
 
 ## Summary
 
-Routes Intune administrators to the correct Windows Autopilot (classic) hardware-hash upload path — OEM Delivery (hashes pre-registered by an authorized OEM), CSV Bulk Import (manual export and import via the Autopilot device list), or the PowerShell script `Get-WindowsAutopilotInfo` (local capture or direct online upload) — by mapping the acquisition source and device count to the correct destination path and its prerequisites.
+Routes Intune administrators to the correct Windows Autopilot (classic) hardware-hash upload path—OEM Delivery (hashes pre-registered by an authorized OEM), CSV Bulk Import (manual export and import through the Autopilot device list), or the PowerShell script `Get-WindowsAutopilotInfo` (local capture or direct online upload)—by mapping the acquisition source and device count to the correct destination path and its prerequisites.
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-Every Windows Autopilot (classic) deployment begins with registering devices by uploading their hardware hashes to your Intune tenant. The hash uniquely identifies each device and is required before any deployment profile can be assigned. Use the decision table below to determine which upload path applies to your scenario.
+Every Windows Autopilot (classic) deployment begins with registering devices by uploading their hardware hashes to your Intune tenant. The hash uniquely identifies each device and is required before any deployment profile can be assigned. Use the following decision table to determine which upload path applies to your scenario.
 
-**LOCKED — 10 (nodes + labeled edges)** — 6 nodes (START, OEM, OEMPATH, BATCH, CSVPATH, PSPATH) + 4 labeled edges (OEM→OEMPATH "Yes", OEM→BATCH "No", BATCH→CSVPATH "Bulk: >10 devices", BATCH→PSPATH "Few devices or one-at-a-time"), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). Both decision points (`OEM`, `BATCH`) are preserved as table rows below.
+**LOCKED—10 (nodes + labeled edges)**—6 nodes (START, OEM, OEMPATH, BATCH, CSVPATH, PSPATH) + 4 labeled edges (OEM→OEMPATH "Yes", OEM→BATCH "No", BATCH→CSVPATH "Bulk: >10 devices", BATCH→PSPATH "Few devices or one-at-a-time"), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). Both decision points (`OEM`, `BATCH`) are preserved as table rows that follow.
 
 | Path | Step 1: Purchased from authorized OEM with Autopilot registration? | Step 2: How many devices to register? | Destination |
 |------|------|------|------|
@@ -70,7 +70,7 @@ Required columns (case-sensitive): `Device Serial Number,Windows Product ID,Hard
 Optional columns: `Group Tag,Assigned User`
 
 Rules:
-- No extra columns beyond the five above
+- No extra columns beyond the preceding five
 - No quotation marks around values
 - Maximum 500 devices per CSV file
 - One header row followed by one row per device
@@ -125,7 +125,7 @@ Install-Script -Name Get-WindowsAutopilotInfo
 Get-WindowsAutopilotInfo -OutputFile AutopilotHWID.csv
 ```
 
-Output: `C:\HWID\AutopilotHWID.csv` -- upload this file using the CSV Import path above.
+Output: `C:\HWID\AutopilotHWID.csv` -- upload this file using the preceding CSV Import path.
 
 ### Option B: Direct Upload to Intune
 
@@ -144,7 +144,7 @@ When prompted, sign in with an Intune Administrator account. Agree to the NuGet 
 
 > **What breaks if misconfigured:** Execution policy blocks script. Admin sees red error text: "running scripts is disabled on this system."
 
-> Fix: the `Set-ExecutionPolicy -Scope Process` command above is process-scoped only (no machine-wide impact). Run it before `Install-Script`.
+> Fix: the `Set-ExecutionPolicy -Scope Process` command is process-scoped only (no machine-wide effect). Run it before `Install-Script`.
 
 > See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
 
@@ -164,7 +164,7 @@ When prompted, sign in with an Intune Administrator account. Agree to the NuGet 
 
 ## Verification
 
-After uploading via any path, confirm registration:
+After uploading through any path, confirm registration:
 
 - [ ] Device appears in **Intune admin center** > **Devices** > **Windows** > **Enrollment** > **Windows Autopilot** > **Devices**
 - [ ] ZTDID column is populated

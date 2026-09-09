@@ -17,21 +17,21 @@ platform: Windows
 ## Summary
 
 This reference document is a capability matrix comparing Microsoft Intune BIOS configuration and
-management across three OEMs — Dell, HP and Lenovo — organized capability-first, with the three
+management across three OEMs—Dell, HP and Lenovo—organized capability-first, with the three
 manufacturers as rows inside each table. It transposes the same six capability dimensions used by
 [Dell BIOS Configuration Through Intune](../operations/firmware-bios/02-dell-bios-configuration.md),
 [HP BIOS Configuration Through Intune](../operations/firmware-bios/03-hp-bios-configuration.md), and
 [Lenovo BIOS Configuration Through Intune](../operations/firmware-bios/04-lenovo-bios-configuration.md),
 reading the same facts across vendors instead of down one guide. The routing spine that runs through
 every table below is **who holds the BIOS secret** — Intune itself, a vendor-hosted cloud vault, or
-the customer's own key material — not which command-line tool a vendor ships. For the domain overview
+the customer's own key material—not which command-line tool a vendor ships. For the domain overview
 and the routing narrative in prose, see
 [Firmware and BIOS Governance](../operations/firmware-bios/00-overview.md).
 
 <a id="delivery"></a>
 ## Delivery
 
-The table below compares the Intune object each vendor uses, the vendor tool that authors or
+The following table compares the Intune object each vendor uses, the vendor tool that authors or
 delivers it, and whether a per-device agent is installed.
 
 | OEM | Intune object | Vendor tool | Per-device agent |
@@ -46,7 +46,7 @@ delivers it, and whether a per-device agent is installed.
 <a id="authentication"></a>
 ## Authentication
 
-The table below compares each vendor's authentication model, who holds the resulting secret, and
+The following table compares each vendor's authentication model, who holds the resulting secret, and
 whether that secret ever leaves the customer's own tenant.
 
 | OEM | Authentication model | Who holds the secret | Secret leaves your tenant |
@@ -61,7 +61,7 @@ whether that secret ever leaves the customer's own tenant.
 <a id="scope"></a>
 ## Scope
 
-The table below compares what each vendor's surface configures, whether it reports compliance
+The following table compares what each vendor's surface configures, whether it reports compliance
 per setting, and which later OS features the configured settings silently gate.
 
 | OEM | What it configures | Per-setting reporting | OS features gated by this setting |
@@ -71,7 +71,7 @@ per setting, and which later OS features the configured settings silently gate.
 | Lenovo | BIOS settings written over WMI (Think BIOS Config Tool V2) or signed WMI commands (Lenovo BIOS Certificate Tool V2) | No | Platform virtualization gates Virtualization-Based Security, which gates Hotpatch and Credential Guard; Secure Boot gates attestation; the TPM gates Autopilot attestation |
 
 > **Table summary:** None of the three OEMs reports compliance per setting; all three gate the same
-> chain — virtualization to VBS, Secure Boot to attestation, TPM to Autopilot attestation.
+> chain—virtualization to VBS, Secure Boot to attestation, TPM to Autopilot attestation.
 
 For the failure path when a firmware setting blocks TPM attestation, see
 [TPM Attestation Failure Decision Tree](../decision-trees/03-tpm-attestation.md).
@@ -79,7 +79,7 @@ For the failure path when a firmware setting blocks TPM attestation, see
 <a id="prerequisites"></a>
 ## Prerequisites
 
-The table below compares the hardware floor, the pre-existing BIOS password requirement, and the
+The following table compares the hardware floor, the pre-existing BIOS password requirement, and the
 license or consent floor for each vendor.
 
 | OEM | Hardware floor | Pre-existing BIOS password | License or consent floor |
@@ -89,7 +89,7 @@ license or consent floor for each vendor.
 | Lenovo | Certificate tool (Lenovo BIOS Certificate Tool V2): ThinkPad 2022 and later, ThinkCentre 2020 and later, ThinkStation 2020 and later | Must already be set — Think BIOS Config Tool V2 cannot bootstrap an initial supervisor password remotely | The `Lenovo.BIOS.Config` module, `IntuneWinAppUtil.exe`, the Microsoft Graph modules and tenant permissions — no vendor-side consent grant |
 
 > **Table summary:** HP's password cell is a sourced retry-to-lockout behavior, not an empty or
-> `n/a` cell; Dell's and Lenovo's password requirements are opposite states — see the sub-table below.
+> `n/a` cell; Dell's and Lenovo's password requirements are opposite states—see the sub-table below.
 
 The prerequisite states invert between Dell and Lenovo, and the grid below states the inversion as a
 decision point rather than as two disconnected facts.
@@ -99,13 +99,13 @@ decision point rather than as two disconnected facts.
 | No BIOS password set | Required starting state — the native template needs a virgin BIOS | Cannot bootstrap one remotely — a password must already exist |
 | BIOS password already set | Hard blocker — the native template refuses outright | Required starting state — Think BIOS Config Tool V2 needs a password already in place |
 
-> **Table summary:** Dell and Lenovo require opposite BIOS-password starting states — a device ready
+> **Table summary:** Dell and Lenovo require opposite BIOS-password starting states—a device ready
 > for one vendor's tooling is not ready for the other's. Survey the fleet before choosing a path.
 
 <a id="offboarding"></a>
 ## Offboarding and Loss of the Management Plane
 
-The table below compares what is lost, any countdown or deadline, and the documented
+The following table compares what is lost, any countdown or deadline, and the documented
 de-provisioning order for each vendor.
 
 | OEM | What is lost | Countdown or deadline | De-provisioning order |
@@ -114,13 +114,13 @@ de-provisioning order for each vendor.
 | HP | Passwords and Sure Admin private keys, stored in HP Connect's cloud vault | 30-day countdown after HP Connect account deactivation | Fleet-first — de-provision the fleet, then deactivate the HP Connect account |
 | Lenovo | No vendor management plane exists to lose — the secret never leaves customer control | n/a | n/a |
 
-> **Table summary:** Dell has no deactivation clock — what ends is retrieval, with the
-> subscription; Lenovo's `n/a` cells have a different cause again — no vendor plane exists to lose.
+> **Table summary:** Dell has no deactivation clock—what ends is retrieval, with the
+> subscription; Lenovo's `n/a` cells have a different cause again—no vendor plane exists to lose.
 
 <a id="recovery"></a>
 ## Recovery
 
-The table below compares recovery paths, key-or-certificate-loss paths, and the escalation
+The following table compares recovery paths, key-or-certificate-loss paths, and the escalation
 destination for each vendor.
 
 | OEM | Lost password | Lost key or certificate | Escalation |
@@ -139,9 +139,9 @@ destination for each vendor.
 
 - No per-setting compliance attestation exists on any of the three fleets; every policy reports only
   whether its configuration applied, never per individual setting.
-- DFCI is unavailable on all three vendors — none of Dell, HP or Lenovo appears on the DFCI
+- DFCI is unavailable on all three vendors—none of Dell, HP or Lenovo appears on the DFCI
   manufacturer list this corpus tracks.
-- No single Lenovo tool covers a mixed ThinkPad and ThinkCentre fleet — Think BIOS Config Tool V2
+- No single Lenovo tool covers a mixed ThinkPad and ThinkCentre fleet—Think BIOS Config Tool V2
   excludes ThinkCentre by its own stated limitation.
 - There is no way to apply Dell's native BIOS configuration template to a device that already has a
   BIOS password.
@@ -159,7 +159,7 @@ capability absence:
 - Dell does not document a de-provisioning order. Re-confirmed 2026-08-25 against Dell KB 000356434.
 
 Filing a documented silence into the capability-absences list above would convert an undocumented
-answer into a false claim about the vendor's actual capability — a conversion invisible to every
+answer into a false claim about the vendor's actual capability—a conversion invisible to every
 validator in this repository, and the reason this section is two enumerations rather than one.
 
 <a id="source-attribution"></a>
@@ -170,22 +170,23 @@ outside the tables so cells stay literal strings (D-06, D-19).
 
 - Dell: `[DIRECT]` Dell Command \| Configure, DCECMI and Dell Management Portal KB articles, the
   Microsoft Learn BIOS configuration profiles page, Dell BIOS Password Help KB, and Dell Client
-  Products Unauthorized BIOS Password Reset Tools KB — last_verified 2026-08-25.
+  Products Unauthorized BIOS Password Reset Tools KB—last_verified 2026-08-25.
 - HP: `[DIRECT]` HP Connect for Microsoft Endpoint Manager User Guide v1.2.0, the HP Developer
   Portal's Secure BIOS with HP Sure Admin and CMSL page, and the Microsoft Intune Blog partner-portal
-  post — last_verified 2026-08-25.
+  post—last_verified 2026-08-25.
 - Lenovo: `[DIRECT]` the Lenovo CDRT Think BIOS Config Tool V2 guide, the Certificate-based BIOS
-  Authentication reference and ThinkDeploy Blog post, and Lenovo Support KB ht036206 —
-  last_verified 2026-08-25.
+  Authentication reference and ThinkDeploy Blog post, and Lenovo Support KB ht036206—last_verified
+  2026-08-25.
 
 Evidence for the two documented-silence cells, naming the exact pages checked and the date checked:
 
-- HP, lost Endorsement Key: `[DIRECT]` checked HP's developer-portal pages Secure BIOS with HP Sure
-  Admin and CMSL, HP Secure Platform Management and HP Client Management Script Library, and HP Sure
-  Admin step-by-step — none documents a recovery path for a lost Endorsement Key, as of 2026-08-25.
+- HP, lost Endorsement Key: `[DIRECT]` checked HP's developer-portal pages Secure BIOS with
+  HP Sure Admin and CMSL, HP Secure Platform Management and HP Client Management Script
+  Library, and HP Sure Admin step-by-step—none documents a recovery path for a lost
+  Endorsement Key, as of 2026-08-25.
 - Lenovo, lost certificate private key: `[DIRECT]` checked Lenovo's certificate-based BIOS
   authentication reference, the Lenovo BIOS Certificate Tool getting-started guide, and the full
-  certificate-module cmdlet reference — none documents recovery, reset or bypass for a lost private
+  certificate-module cmdlet reference—none documents recovery, reset or bypass for a lost private
   key, as of 2026-08-25.
 
 ## See Also

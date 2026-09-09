@@ -80,6 +80,7 @@
 ## Path B
 ## Path C
 ## Prerequisites
+## Prose Style Authoring Standard
 ## Rebrand Mapping Table
 ## Required Role & Permission
 ## Ring Terminology H2 missing

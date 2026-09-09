@@ -16,16 +16,16 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook performs change-controlled TPM remediation actions — including Clear-Tpm via Reset-TPMForAutopilot (requires device reboot) and coordinating OEM firmware reset — all actions require L2 approval. It covers hardware-specific TPM attestation failure investigation for pre-provisioning and self-deploying mode, identifying the chipset and routing to the appropriate firmware-update scenario.
+This L2 investigation runbook performs change-controlled TPM remediation actions—including Clear-Tpm using Reset-TPMForAutopilot (requires device reboot) and coordinating OEM firmware reset—all actions require L2 approval. It covers hardware-specific TPM attestation failure investigation for pre-provisioning and self-deploying mode, identifying the chipset and routing to the appropriate firmware-update scenario.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
-[TPM](../_glossary.md#tpm) attestation failures occur during [pre-provisioning](../_glossary.md#pre-provisioning) and [self-deploying mode](../_glossary.md#self-deploying-mode) where device identity is verified via TPM before provisioning can proceed. These are the most hardware-dependent Autopilot failures — every branch requires identifying the specific TPM chipset and error code before a resolution path becomes clear. [OOBE](../_glossary.md#oobe)-stage failures with codes in the 0x80070xxx, 0x80190xxx, or 0x8103xxxx ranges are the typical presentation.
+[TPM](../_glossary.md#tpm) attestation failures occur during [pre-provisioning](../_glossary.md#pre-provisioning) and [self-deploying mode](../_glossary.md#self-deploying-mode) where device identity is verified through TPM before provisioning can proceed. These are the most hardware-dependent Autopilot failures—every branch requires identifying the specific TPM chipset and error code before a resolution path becomes clear. [OOBE](../_glossary.md#oobe)-stage failures with codes in the 0x80070xxx, 0x80190xxx, or 0x8103xxxx ranges are the typical presentation.
 
-Because TPM attestation depends on chipset firmware, L2 investigation identifies the chipset and error code, then routes to the appropriate OEM for firmware updates. L2 does not perform the firmware update — that is the vendor boundary (see Escalation Ceiling).
+Because TPM attestation depends on chipset firmware, L2 investigation identifies the chipset and error code, then routes to the appropriate OEM for firmware updates. L2 does not perform the firmware update—that is the vendor boundary (see Escalation Ceiling).
 
 ## Triage
 
@@ -53,7 +53,7 @@ $tpm | Format-List
 
 See [Get-TPMStatus](../reference/powershell-ref.md#get-tpmstatus) for return value definitions.
 
-If `TpmPresent` is `False`, the device has no hardware TPM — it cannot be used with pre-provisioning or self-deploying mode. If `TpmReady` is `False` with other values `True`, proceed to manufacturer identification before attempting remediation.
+If `TpmPresent` is `False`, the device has no hardware TPM—it cannot be used with pre-provisioning or self-deploying mode. If `TpmReady` is `False` with other values `True`, proceed to manufacturer identification before attempting remediation.
 
 ### Step 3: Identify TPM manufacturer and version
 
@@ -74,7 +74,7 @@ Get-CimInstance -Namespace "root\cimv2\security\microsofttpm" -ClassName Win32_T
 | `1096043852` (`AMD `) | AMD fTPM | Scenario A |
 | `1229870163` (`INTL`) | Intel | Scenario E |
 
-Note `SpecVersion` — a value starting with `1.2` rather than `2.0` means the device is running TPM 1.2 firmware (see Scenario G).
+Note `SpecVersion`—a value starting with `1.2` rather than `2.0` means the device is running TPM 1.2 firmware (see Scenario G).
 
 ### Step 4: Check Autopilot registration state
 
@@ -88,7 +88,7 @@ If this key is absent, the device is not registered. Re-registration must be com
 
 ### Step 5: Cross-reference error code
 
-If an error code was captured during the failure, look up the code in [TPM Attestation Error Codes](../error-codes/02-tpm-attestation.md). Do not reproduce the error code table here — the error codes file is the source of truth and includes hardware-specific notes per chipset.
+If an error code was captured during the failure, look up the code in [TPM Attestation Error Codes](../error-codes/02-tpm-attestation.md). Do not reproduce the error code table here—the error codes file is the source of truth and includes hardware-specific notes per chipset.
 
 Key codes and their expected scenario:
 
@@ -105,31 +105,31 @@ Key codes and their expected scenario:
 
 ### Scenario A: AMD fTPM (0x80070490)
 
-Investigation confirms AMD fTPM via `ManufacturerId`. The AMD ASP firmware-based TPM fails attestation on affected platforms; the fix is a firmware update from the OEM.
+Investigation confirms AMD fTPM from `ManufacturerId`. The AMD ASP firmware-based TPM fails attestation on affected platforms; the fix is a firmware update from the OEM.
 
-**Action:** Contact OEM support and reference the AMD fTPM attestation failure. Request the specific BIOS/firmware update version that resolves the AMD ASP fTPM attestation issue. Escalate per Escalation Ceiling below — this is a firmware update and is outside L2 scope.
+**Action:** Contact OEM support and reference the AMD fTPM attestation failure. Request the specific BIOS/firmware update version that resolves the AMD ASP fTPM attestation issue. Escalate per the Escalation Ceiling section—this is a firmware update and is outside L2 scope.
 
 ### Scenario B: ST Micro RSA cert expiry
 
-Investigation confirms ST Micro chipset via `ManufacturerId`. The ST Micro RSA certificate expired December 2024; affected devices fail TPM attestation in pre-provisioning and self-deploying mode.
+Investigation confirms ST Micro chipset from `ManufacturerId`. The ST Micro RSA certificate expired December 2024; affected devices fail TPM attestation in pre-provisioning and self-deploying mode.
 
-**Action:** Contact OEM support for the ST Micro firmware update. For Lenovo devices, Lenovo has released the fix — contact Lenovo support directly. For other OEMs, reference the ST Micro RSA-3072 attestation failure. Escalate per Escalation Ceiling.
+**Action:** Contact OEM support for the ST Micro firmware update. For Lenovo devices, Lenovo has released the fix—contact Lenovo support directly. For other OEMs, reference the ST Micro RSA-3072 attestation failure. Escalate per Escalation Ceiling.
 
 ### Scenario C: Nuvoton RSA-3072 key length
 
-Investigation confirms Nuvoton chipset via `ManufacturerId`. The latest Nuvoton models supporting RSA-3072bit keys fail TPM attestation in pre-provisioning and self-deploying mode.
+Investigation confirms Nuvoton chipset from `ManufacturerId`. The latest Nuvoton models supporting RSA-3072bit keys fail TPM attestation in pre-provisioning and self-deploying mode.
 
-**Action:** Contact OEM support for a firmware update that corrects the RSA-3072 key length handling. For Lenovo devices, the fix is available — contact Lenovo support. For other OEMs, reference the Nuvoton RSA-3072 attestation failure. Escalate per Escalation Ceiling.
+**Action:** Contact OEM support for a firmware update that corrects the RSA-3072 key length handling. For Lenovo devices, the fix is available—contact Lenovo support. For other OEMs, reference the Nuvoton RSA-3072 attestation failure. Escalate per Escalation Ceiling.
 
 ### Scenario D: Infineon SLB9670 / SLB9672
 
-Investigation confirms Infineon chipset via `ManufacturerId`. Infineon SLB9672 modules running firmware 15.22 have an EK (Endorsement Key) certificate issue that causes attestation timeout.
+Investigation confirms Infineon chipset from `ManufacturerId`. Infineon SLB9672 modules running firmware 15.22 have an EK (Endorsement Key) certificate issue that causes attestation timeout.
 
 **Action:** Check the exact firmware version from `ManufacturerVersion`. If running Infineon firmware 15.22, contact the OEM for the firmware update resolving the EK certificate issue. Reference the Infineon SLB9672 attestation failure documented June 2023. Escalate per Escalation Ceiling.
 
 ### Scenario E: Intel Tiger Lake platform
 
-Investigation identifies Intel Tiger Lake platform via `ManufacturerId` combined with device model information (Tiger Lake = 11th Gen Intel Core, 2020–2021 platforms).
+Investigation identifies Intel Tiger Lake platform from `ManufacturerId` combined with device model information (Tiger Lake = 11th Gen Intel Core, 2020–2021 platforms).
 
 **Action:** Verify Windows build. Tiger Lake requires KB5007253 (November 2021) or a later cumulative update for TPM attestation to succeed on Windows 10 21H2. Apply the required update. If update alone does not resolve the issue, contact OEM for platform firmware update. Escalate per Escalation Ceiling if firmware update is needed.
 
@@ -137,7 +137,7 @@ Investigation identifies Intel Tiger Lake platform via `ManufacturerId` combined
 
 Use this scenario when no hardware-specific chipset issue is identified and the TPM is in a bad ownership state. Applicable when `TpmOwned` is `True` but `TpmReady` is `False`, or after a failed provisioning attempt left partial TPM state.
 
-> **Warning:** This function clears TPM ownership. The device will reboot. Confirm with the user or technician before executing.
+> **Warning:** This function clears TPM ownership. The device reboots. Confirm with the user or technician before executing.
 
 ```powershell
 # Dry run first — confirm what will happen
@@ -151,13 +151,13 @@ After reboot, retry provisioning. See [Reset-TPMForAutopilot](../reference/power
 
 ### Scenario G: TPM version 1.2 (TPE2)
 
-`SpecVersion` shows `1.2`, or error code is 0x801c03ea with no hardware-specific chipset issue. The device TPM is running 1.2 firmware mode — not supported for pre-provisioning or self-deploying mode.
+`SpecVersion` shows `1.2`, or error code is 0x801c03ea with no hardware-specific chipset issue. The device TPM is running 1.2 firmware mode—not supported for pre-provisioning or self-deploying mode.
 
-**Action:** Determine if the device has a firmware upgrade path from TPM 1.2 to TPM 2.0 (some OEMs provide this via BIOS update). If no upgrade path exists, the device cannot be used with pre-provisioning or self-deploying mode. Contact OEM for BIOS update options. Escalate per Escalation Ceiling.
+**Action:** Determine if the device has a firmware upgrade path from TPM 1.2 to TPM 2.0 (some OEMs provide this through BIOS update). If no upgrade path exists, the device cannot be used with pre-provisioning or self-deploying mode. Contact OEM for BIOS update options. Escalate per Escalation Ceiling.
 
 ### Scenario H: Retry limit exceeded (0x81039001)
 
-Error code 0x81039001 indicates an intermittent TPM attestation retry limit failure. This is not a hardware defect — it is typically a transient service-side issue.
+Error code 0x81039001 indicates an intermittent TPM attestation retry limit failure. This is not a hardware defect—it is typically a transient service-side issue.
 
 **Action:** Retry provisioning. Allow 15 minutes between attempts. Maximum 2 retry attempts before escalating. If persistent across multiple sessions, investigate network connectivity to TPM attestation endpoints, then escalate.
 
@@ -168,17 +168,17 @@ Escalate when a firmware update is needed. L2 identifies the chipset and error c
 **Escalate when:**
 - Chipset identified as AMD fTPM, ST Micro, Nuvoton, Infineon, or Intel and firmware update is the required fix
 - TPM 1.2 device has no firmware upgrade path
-- Three retry attempts fail for 0x81039001 (possible service-side issue — open a Microsoft support case)
+- Three retry attempts fail for 0x81039001 (possible service-side issue—open a Microsoft support case)
 
 **Collect before escalating:** serial number, device make and model, BIOS version, `ManufacturerId` value, `ManufacturerVersion` value, `SpecVersion`, error code, deployment mode, timestamp, screenshot of failure screen, log package from Step 1.
 
 ## Tool References
 
-- [Get-TPMStatus](../reference/powershell-ref.md#get-tpmstatus) — TPM readiness check; returns TpmPresent, TpmReady, TpmEnabled, TpmActivated, TpmOwned
-- [Reset-TPMForAutopilot](../reference/powershell-ref.md#reset-tpmforautopilot) — TPM clearing for re-attestation (requires reboot; use -WhatIf first)
-- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus) — comprehensive device state snapshot including TPM status
-- [Registry Paths](../reference/registry-paths.md) — Autopilot registration state paths
-- [TPM Attestation Error Codes](../error-codes/02-tpm-attestation.md) — error code lookup with hardware-specific notes
+- [Get-TPMStatus](../reference/powershell-ref.md#get-tpmstatus)—TPM readiness check; returns TpmPresent, TpmReady, TpmEnabled, TpmActivated, TpmOwned
+- [Reset-TPMForAutopilot](../reference/powershell-ref.md#reset-tpmforautopilot)—TPM clearing for re-attestation (requires reboot; use -WhatIf first)
+- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus)—comprehensive device state snapshot including TPM status
+- [Registry Paths](../reference/registry-paths.md)—Autopilot registration state paths
+- [TPM Attestation Error Codes](../error-codes/02-tpm-attestation.md)—error code lookup with hardware-specific notes
 
 ---
 

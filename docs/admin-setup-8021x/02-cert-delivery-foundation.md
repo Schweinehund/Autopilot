@@ -23,8 +23,8 @@ This guide establishes the shared certificate-delivery foundation for 802.1X net
 
 ## Canonical Scope Callout
 
-> **Scope — Intune client-side configuration only.** These guides cover configuring managed
-> devices via Intune. The following are OUT OF SCOPE for this guide set:
+> **Scope—Intune client-side configuration only.** These guides cover configuring managed
+> devices through Intune. The following are OUT OF SCOPE for this guide set:
 
 > - RADIUS/NPS server configuration (connection-request policies, network policies, server certificates)
 > - PKI/CA infrastructure build-out (ADCS installation, NDES configuration, CA hierarchy design)
@@ -40,7 +40,7 @@ This guide establishes the shared certificate-delivery foundation for 802.1X net
 > **Assumed:** A RADIUS/NPS server already exists and is reachable from managed devices before
 > any Intune 802.1X profile configuration begins.
 
-The following one-line banner template is for per-platform guides (Phases 102--106) to place at the top of each guide, linking back to the canonical exclusion list above:
+The following one-line banner template is for per-platform guides (Phases 102--106) to place at the top of each guide, linking back to the canonical exclusion list:
 
 ```markdown
 > **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
@@ -48,7 +48,7 @@ The following one-line banner template is for per-platform guides (Phases 102--1
 
 ## The Deployment Ordering Rule
 
-> **CRITICAL — Deployment ordering:** Always assign profiles in this sequence and confirm
+> **CRITICAL—Deployment ordering:** Always assign profiles in this sequence and confirm
 > each reaches "Succeeded" across target devices before assigning the next:
 
 > 1. **Trusted Root Certificate profile** (RADIUS server CA) → wait for "Succeeded"
@@ -65,14 +65,14 @@ A [Trusted Certificate](../_glossary-network.md#trusted-root) profile in Intune 
 
 - **Purpose:** Install the RADIUS server CA root certificate on managed devices
 - **Required on:** Windows, macOS, iOS/iPadOS, Android Enterprise
-- **Not available on:** Linux (no Intune cert profiles for Linux -- see the per-platform cert matrix below)
+- **Not available on:** Linux (no Intune cert profiles for Linux -- see the following per-platform cert matrix)
 - **Create as:** Configuration profile → Templates > Trusted certificate
 - **Assignment:** Must cover the same device/user groups as the SCEP/PKCS and 802.1X network profiles
 - **Ordering:** Must reach "Succeeded" on target devices before the SCEP/PKCS client cert profile is assigned
 
 ## SCEP Certificate Profile
 
-A [SCEP](../_glossary-network.md#scep) certificate profile delivers per-device client identity certificates automatically from a CA via the Network Device Enrollment Service (NDES) or Intune Cloud PKI.
+A [SCEP](../_glossary-network.md#scep) certificate profile delivers per-device client identity certificates automatically from a CA through the Network Device Enrollment Service (NDES) or Intune Cloud PKI.
 
 - **Purpose:** Deliver per-device client certificates for 802.1X EAP-TLS authentication
 - **Required EKU:** Client Authentication (OID 1.3.6.1.5.5.7.3.2) -- must be set explicitly in the profile's Extended Key Usage section
@@ -83,7 +83,7 @@ A [SCEP](../_glossary-network.md#scep) certificate profile delivers per-device c
 
 ## PKCS Certificate Profile
 
-A [PKCS](../_glossary-network.md#pkcs) certificate profile delivers CA-issued certificates in PKCS #12 (PFX) format via the Intune Certificate Connector.
+A [PKCS](../_glossary-network.md#pkcs) certificate profile delivers CA-issued certificates in PKCS #12 (PFX) format through the Intune Certificate Connector.
 
 - **Purpose:** Deliver CA-issued client certificates for 802.1X authentication without NDES
 - **Supported for 802.1X client certs:**
@@ -125,7 +125,7 @@ Always configure [server-name validation](../_glossary-network.md#server-name-va
 Microsoft Intune Suite includes Cloud PKI as a managed, cloud-hosted CA alternative to on-premises ADCS/NDES.
 
 - **What it is:** A managed CA-in-the-cloud service that issues SCEP-based client certificates without requiring an on-premises NDES server
-- **Relevance:** Cloud PKI can fulfill the SCEP certificate delivery role described in the SCEP Certificate Profile section above -- the Intune 802.1X profile configuration is identical whether certificates come from Cloud PKI or on-premises NDES
+- **Relevance:** Cloud PKI can fulfill the SCEP certificate delivery role described in the SCEP Certificate Profile section -- the Intune 802.1X profile configuration is identical whether certificates come from Cloud PKI or on-premises NDES
 - **Scope:** Full Cloud PKI setup and configuration is out of scope for this guide set -- see Microsoft Learn for Cloud PKI deployment guidance
 - **Note:** Cloud PKI does not change the deployment ordering rule or the EKU requirement; all other guidance in this file applies regardless of the CA backend
 
@@ -151,7 +151,7 @@ This matrix is the single canonical home for cert-delivery support across platfo
 
 - macOS/iOS wired = SCEP-only; PKCS is **NOT supported** for wired profiles on macOS or iOS/iPadOS
 - Windows wired adds PFX Import (PKCS Imported) -- unique to the Windows wired profile UI
-- Linux = no Intune cert delivery of any kind; certificate delivery must be managed via script or out-of-band tooling
+- Linux = no Intune cert delivery of any kind; certificate delivery must be managed using a script or out-of-band tooling
 
 > **Boundary:** This matrix shows which cert delivery methods Intune supports per platform at
 > the foundation level.

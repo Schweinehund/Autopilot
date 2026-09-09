@@ -16,9 +16,9 @@ platform: macOS
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS ADE MDM profile delivery failures — stalled pushes, certificate renewal errors, and enrollment profile re-sync — using Intune admin center reads, Profiles pane inspection, and on-device MDM log review.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers macOS ADE MDM profile delivery failures—stalled pushes, certificate renewal errors, and enrollment profile re-sync—using Intune admin center reads, Profiles pane inspection, and on-device MDM log review.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 ## Triage
 
@@ -28,7 +28,7 @@ This L2 investigation runbook is entered from an L1 escalation and operates unde
 
 ## Context
 
-Configuration profiles on macOS are delivered via the **Apple MDM channel** (APNs push followed by device check-in). This is fundamentally different from Windows, which uses CSP and SyncML. Do NOT apply Windows ESP or CSP diagnostic patterns to macOS profile delivery failures — those concepts do not exist on macOS.
+Configuration profiles on macOS are delivered through the **Apple MDM channel** (APNs push followed by device check-in). This is fundamentally different from Windows, which uses CSP and SyncML. Do NOT apply Windows ESP or CSP diagnostic patterns to macOS profile delivery failures—those concepts do not exist on macOS.
 
 When a profile fails to deliver, the investigation traces the Apple MDM command pipeline: APNs push → device check-in → profile payload validation → profile installation.
 
@@ -55,7 +55,7 @@ MDM enrollment: Yes (User Approved)
 MDM server: https://*.manage.microsoft.com/...
 ```
 
-Check: `Enrolled via DEP: Yes` and `MDM enrollment: Yes`. If MDM enrollment shows `No` or is absent, the device has lost its management relationship — the MDM channel is broken and profiles cannot be delivered. Escalate immediately.
+Check: `Enrolled via DEP: Yes` and `MDM enrollment: Yes`. If MDM enrollment shows `No` or is absent, the device has lost its management relationship—the MDM channel is broken and profiles cannot be delivered. Escalate immediately.
 
 For full output interpretation, see [macOS Terminal Commands Reference](../reference/macos-commands.md).
 
@@ -82,8 +82,8 @@ log show --predicate 'subsystem == "com.apple.ManagedClient"' --info --last 1h
 ```
 
 Look for:
-- `Profile install request received` — device received the MDM command
-- `Profile installed successfully` — delivery completed
+- `Profile install request received`—device received the MDM command
+- `Profile installed successfully`—delivery completed
 - Error messages indicating payload rejection or validation failure
 
 Adjust `--last` window as needed based on when the failure occurred. For events older than a few hours, the IntuneMacODC zip contains a system log excerpt captured at collection time.
@@ -94,7 +94,7 @@ For ADE and Setup Assistant-specific delivery events:
 log show --predicate 'subsystem contains "cloudconfigurationd"' --info --last 30m
 ```
 
-See [macOS Terminal Commands Reference — log show](../reference/macos-commands.md) for filter syntax.
+See [macOS Terminal Commands Reference—log show](../reference/macos-commands.md) for filter syntax.
 
 ### Step 5: Check for profile conflicts
 
@@ -104,7 +104,7 @@ system_profiler SPConfigurationProfileDataType
 
 Compare the installed profile list against the expected profiles shown in Intune admin center (Devices > macOS > [device] > Configuration profiles). Identify any profile with **Error** or **Conflict** status in the Intune view.
 
-Multiple profiles setting the same key create a conflict — the last-applied profile wins, and Intune marks conflicting profiles with a Conflict status.
+Multiple profiles setting the same key create a conflict—the last-applied profile wins, and Intune marks conflicting profiles with a Conflict status.
 
 ### Step 6: Verify Intune-side assignment and delivery status
 
@@ -143,7 +143,7 @@ Cross-reference the Intune error detail against these known failure scenarios (s
 
 ## Resolution Scenarios
 
-**Scenario 1: Profile pending — device not checking in**
+**Scenario 1: Profile pending—device not checking in**
 
 Trigger Sync from Intune portal, wait 15 minutes, recheck. If still Pending after two Sync attempts, verify the device has active network connectivity and that APNs endpoints are reachable (see [Network Endpoints Reference](../reference/endpoints.md)).
 
@@ -153,7 +153,7 @@ Identify the two profiles assigning conflicting settings. Either remove the dupl
 
 **Scenario 3: SSID case mismatch**
 
-Correct the SSID case in the Intune Wi-Fi profile (must match the actual network broadcast SSID exactly), save and redeploy. Device will receive the corrected profile on next check-in.
+Correct the SSID case in the Intune Wi-Fi profile (must match the actual network broadcast SSID exactly), save and redeploy. The device receives the corrected profile on the next check-in.
 
 **Scenario 4: Firewall blocking MDM check-ins**
 
@@ -161,7 +161,7 @@ Add MDM server exceptions to the firewall profile. The required APNs and Intune 
 
 **Scenario 5: Certificate chain incomplete for 802.1X**
 
-Deploy root CA and intermediate CA certificate profiles before — or in the same assignment as — the 802.1X Wi-Fi profile. Profile assignment order matters: the certificate must be present on the device before the Wi-Fi profile applies.
+Deploy root CA and intermediate CA certificate profiles before—or in the same assignment as—the 802.1X Wi-Fi profile. Profile assignment order matters: the certificate must be present on the device before the Wi-Fi profile applies.
 
 ---
 
@@ -169,7 +169,7 @@ Deploy root CA and intermediate CA certificate profiles before — or in the sam
 
 Open a Microsoft support case if:
 
-- Profile shows **Error** status with no actionable detail in the Intune error field
+- Profile shows **Error** status with no detail you can act on in the Intune error field
 - MDM enrollment is lost with no user-initiated action and device cannot re-enroll
 - Profile installs successfully but is removed automatically within minutes of delivery
 - Unified log shows profile receipt but no installation event, with no validation error
@@ -185,12 +185,12 @@ Open a Microsoft support case if:
 
 ## Related Resources
 
-- [macOS Log Collection Guide](10-macos-log-collection.md) — Prerequisite diagnostic package collection
-- [macOS Terminal Commands Reference](../reference/macos-commands.md) — Full command reference
-- [macOS Log Paths Reference](../reference/macos-log-paths.md) — Log file locations
-- [Configuration Profile Failures](../admin-setup-macos/06-config-failures.md) — Admin-side failure reverse-lookup table
-- [macOS App Install Failure Diagnosis](12-macos-app-install.md) — For app install issues (separate from profile delivery)
-- [macOS Compliance Evaluation Investigation](13-macos-compliance.md) — For compliance-related issues
+- [macOS Log Collection Guide](10-macos-log-collection.md)—Prerequisite diagnostic package collection
+- [macOS Terminal Commands Reference](../reference/macos-commands.md)—Full command reference
+- [macOS Log Paths Reference](../reference/macos-log-paths.md)—Log file locations
+- [Configuration Profile Failures](../admin-setup-macos/06-config-failures.md)—Admin-side failure reverse-lookup table
+- [macOS App Install Failure Diagnosis](12-macos-app-install.md)—For app install issues (separate from profile delivery)
+- [macOS Compliance Evaluation Investigation](13-macos-compliance.md)—For compliance-related issues
 
 ---
 

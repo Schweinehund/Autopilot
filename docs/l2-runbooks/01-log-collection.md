@@ -16,14 +16,14 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv1 Windows Autopilot L2 investigations: MDM diagnostic cab, four event log exports, registry snapshot, and artifact naming convention.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv1 Windows Autopilot L2 investigations: MDM diagnostic cab, four event log exports, registry snapshot, and artifact naming convention.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
-This guide is the prerequisite for all L2 investigation runbooks. Before starting any [ESP](../_glossary.md#esp), [TPM attestation](../_glossary.md#tpm-attestation), hybrid join, or policy conflict investigation, collect a complete diagnostic package using the steps below.
+This guide is the prerequisite for all L2 investigation runbooks. Before starting any [ESP](../_glossary.md#esp), [TPM attestation](../_glossary.md#tpm-attestation), hybrid join, or policy conflict investigation, collect a complete diagnostic package using the following steps.
 
 The principle is **gather everything first, then investigate**. Collecting all artifacts upfront prevents having to return to the device mid-investigation when a log file is needed. The `.cab` file from `mdmdiagnosticstool.exe` is also the artifact Microsoft Premier Support requests for assisted troubleshooting.
 
@@ -33,15 +33,15 @@ All other L2 runbooks open with: "Before starting: collect a diagnostic package 
 
 ## Section 1: Diagnostic Package (mdmdiagnosticstool.exe)
 
-Run this command first. It produces a `.cab` archive containing [MDM](../_glossary.md#mdm) logs, policy snapshots, and device state — the single most useful artifact for Autopilot investigations.
+Run this command first. It produces a `.cab` archive containing [MDM](../_glossary.md#mdm) logs, policy snapshots, and device state—the single most useful artifact for Autopilot investigations.
 
 ```powershell
 mdmdiagnosticstool.exe -area Autopilot -cab -out C:\Temp\AutopilotDiag
 ```
 
-The `-cab` flag produces a compressed archive file in addition to the folder output. The `.cab` file is the critical artifact for Microsoft Premier Support sharing — retain it even if you do not share the folder contents.
+The `-cab` flag produces a compressed archive file in addition to the folder output. The `.cab` file is the critical artifact for Microsoft Premier Support sharing—retain it even if you do not share the folder contents.
 
-> **Note:** Run this command in an elevated PowerShell session. The output folder `C:\Temp\AutopilotDiag` will be created if it does not exist.
+> **Note:** Run this command in an elevated PowerShell session. The output folder `C:\Temp\AutopilotDiag` is created if it does not exist.
 
 ---
 
@@ -53,7 +53,7 @@ If the `AutopilotDiagnostics.psm1` module is available on the device, `Get-Autop
 $logPath = Get-AutopilotLogs -OutputPath "C:\Temp\AutopilotDiag\$env:COMPUTERNAME"
 ```
 
-See [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs) for full parameter reference. When using this function, still run `mdmdiagnosticstool.exe -area Autopilot -cab` separately — the function produces an HTML diagnostic report and `.evtx` exports but does not produce the `.cab` file.
+See [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs) for full parameter reference. When using this function, still run `mdmdiagnosticstool.exe -area Autopilot -cab` separately—the function produces an HTML diagnostic report and `.evtx` exports but does not produce the `.cab` file.
 
 ---
 
@@ -132,9 +132,9 @@ if ($cabSource) {
 
 ## Tool References
 
-- [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs) — one-command collection of MDM diagnostic report and four event log exports
-- [Registry Paths](../reference/registry-paths.md) — ESP tracking keys (`EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`) and enrollment state paths
-- [Network Endpoints](../reference/endpoints.md) — for connectivity verification if endpoints are unreachable during diagnostic collection
+- [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs)—one-command collection of MDM diagnostic report and four event log exports
+- [Registry Paths](../reference/registry-paths.md)—ESP tracking keys (`EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`) and enrollment state paths
+- [Network Endpoints](../reference/endpoints.md)—for connectivity verification if endpoints are unreachable during diagnostic collection
 
 ## Version History
 

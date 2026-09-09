@@ -31,7 +31,7 @@ Field guide to the 12 exported functions in the Autopilot diagnostic and remedia
 ### Get-AutopilotDeviceStatus
 
 **Module:** `AutopilotDiagnostics.psm1`
-**Synopsis:** Gets the current Autopilot device registration status — a comprehensive snapshot combining hardware hash, registration state, profile assignment, TPM status, and network connectivity.
+**Synopsis:** Gets the current Autopilot device registration status—a comprehensive snapshot combining hardware hash, registration state, profile assignment, TPM status, and network connectivity.
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ $status.TPMStatus.TpmReady
 ### Get-AutopilotHardwareHash
 
 **Module:** `AutopilotDiagnostics.psm1`
-**Synopsis:** Retrieves the device hardware hash via CIM from the `MDM_DevDetail_Ext01` class.
+**Synopsis:** Retrieves the device hardware hash using CIM from the `MDM_DevDetail_Ext01` class.
 
 **Parameters:**
 
@@ -122,7 +122,7 @@ if ($null -eq $profile) { Write-Warning "No Autopilot profile assigned" }
 ### Get-TPMStatus
 
 **Module:** `AutopilotDiagnostics.psm1`
-**Synopsis:** Checks TPM status and attestation capability via `Get-Tpm`.
+**Synopsis:** Checks TPM status and attestation capability using `Get-Tpm`.
 
 **Parameters:**
 
@@ -166,7 +166,7 @@ $results.GetEnumerator() | Where-Object { $_.Value -like "Failed*" }
 ### Get-AutopilotLogs
 
 **Module:** `AutopilotDiagnostics.psm1`
-**Synopsis:** Collects all Autopilot-related logs for analysis — MDM diagnostics HTML report plus four event log `.evtx` exports.
+**Synopsis:** Collects all Autopilot-related logs for analysis—MDM diagnostics HTML report plus four event log `.evtx` exports.
 
 **Parameters:**
 
@@ -174,7 +174,7 @@ $results.GetEnumerator() | Where-Object { $_.Value -like "Failed*" }
 |-----------|------|----------|-------------|
 | `-OutputPath` | String | No | Directory to write logs. Default: `$env:TEMP\AutopilotLogs` |
 
-**Returns:** String — the resolved output path where logs were written.
+**Returns:** String—the resolved output path where logs were written.
 
 **Example:**
 ```powershell
@@ -189,9 +189,9 @@ $logPath = Get-AutopilotLogs -OutputPath "\\fileserver\autopilot-logs\$env:COMPU
 
 ## Remediation Functions (AutopilotRemediation.psm1)
 
-> **Safety note:** Four of the five remediation functions support `-WhatIf` via `SupportsShouldProcess`.
+> **Safety note:** Four of the five remediation functions support `-WhatIf` through `SupportsShouldProcess`.
 
-> Always test in a non-production environment first. `Repair-AutopilotConnectivity` is the exception — see its entry.
+> Always test in a non-production environment first. `Repair-AutopilotConnectivity` is the exception—see its entry.
 
 ---
 
@@ -208,7 +208,7 @@ $logPath = Get-AutopilotLogs -OutputPath "\\fileserver\autopilot-logs\$env:COMPU
 |-----------|------|----------|-------------|
 | `-Force` | Switch | No | Bypasses confirmation prompt in non-interactive sessions |
 
-**ShouldProcess:** Yes — supports `-WhatIf` and `-Confirm`
+**ShouldProcess:** Yes—supports `-WhatIf` and `-Confirm`
 
 **Removes:** `HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot` and `HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings`
 
@@ -229,7 +229,7 @@ Reset-AutopilotRegistration -Force
 ### Reset-TPMForAutopilot
 
 **Module:** `AutopilotRemediation.psm1`
-**Synopsis:** Clears TPM and prepares for re-attestation via `Clear-Tpm -Force`.
+**Synopsis:** Clears TPM and prepares for re-attestation using `Clear-Tpm -Force`.
 
 > **Warning:** This function modifies device state. Test in non-production first. Supports `-WhatIf` for dry run.
 
@@ -239,7 +239,7 @@ Reset-AutopilotRegistration -Force
 |-----------|------|----------|-------------|
 | *(none)* | — | — | No parameters |
 
-**ShouldProcess:** Yes — supports `-WhatIf` and `-Confirm`
+**ShouldProcess:** Yes—supports `-WhatIf` and `-Confirm`
 
 **Example:**
 ```powershell
@@ -265,12 +265,12 @@ Reset-TPMForAutopilot
 |-----------|------|----------|-------------|
 | *(none)* | — | — | No parameters |
 
-**ShouldProcess:** No — changes are applied immediately without confirmation
+**ShouldProcess:** No—changes are applied immediately without confirmation
 
 **Operations performed:**
-1. `netsh winhttp reset proxy` — clears machine-level WinHTTP proxy
-2. `ipconfig /flushdns` — flushes DNS resolver cache
-3. `netsh winsock reset` — resets Winsock catalog (requires reboot to take full effect)
+1. `netsh winhttp reset proxy`—clears machine-level WinHTTP proxy
+2. `ipconfig /flushdns`—flushes DNS resolver cache
+3. `netsh winsock reset`—resets Winsock catalog (requires reboot to take full effect)
 4. Calls `Test-AutopilotConnectivity` to verify results
 
 **Example:**
@@ -294,7 +294,7 @@ Repair-AutopilotConnectivity
 |-----------|------|----------|-------------|
 | *(none)* | — | — | No parameters |
 
-**ShouldProcess:** Yes — supports `-WhatIf` and `-Confirm`
+**ShouldProcess:** Yes—supports `-WhatIf` and `-Confirm`
 
 **Operations performed:**
 1. Stops `EnrollmentUX` process
@@ -315,7 +315,7 @@ Restart-EnrollmentStatusPage
 ### Remove-AutopilotDevice
 
 **Module:** `AutopilotRemediation.psm1`
-**Synopsis:** Removes device from Autopilot completely — intended for re-imaging scenarios.
+**Synopsis:** Removes device from Autopilot completely—intended for re-imaging scenarios.
 
 > **Warning:** This function modifies device state. Test in non-production first. Supports `-WhatIf` for dry run.
 
@@ -325,7 +325,7 @@ Restart-EnrollmentStatusPage
 |-----------|------|----------|-------------|
 | `-IncludeMDM` | Switch | No | **Critical decision point:** when specified, ALL enrollment keys under `HKLM:\SOFTWARE\Microsoft\Enrollments` are deleted in addition to Autopilot registration keys. Without this switch, MDM enrollment remains intact and the device can re-enroll without re-imaging. With this switch, the device is fully stripped — a clean reboot is required before re-enrollment. |
 
-**ShouldProcess:** Yes — supports `-WhatIf` and `-Confirm`
+**ShouldProcess:** Yes—supports `-WhatIf` and `-Confirm`
 
 **Operations performed:**
 1. Calls `Reset-AutopilotRegistration -Force` (clears Autopilot registry keys)

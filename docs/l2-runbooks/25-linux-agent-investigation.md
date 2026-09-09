@@ -16,9 +16,9 @@ platform: Linux
 
 ## Summary
 
-L2 investigation guide for Linux Intune client (`intune-portal`) agent failures across four trap families: kernel-track divergence (GA vs HWE), delivery-path confusion (snap vs deb), user-scope vs system-scope service mechanics, and Identity Broker re-enrollment signals. All traps documented here require L2 authorization — do not share investigation commands with end users or L1 technicians. Used after log collection via Runbook 24.
+L2 investigation guide for Linux Intune client (`intune-portal`) agent failures across four trap families: kernel-track divergence (GA vs HWE), delivery-path confusion (snap vs deb), user-scope vs system-scope service mechanics, and Identity Broker re-enrollment signals. All traps documented here require L2 authorization—do not share investigation commands with end users or L1 technicians. Used after log collection through Runbook 24.
 
-> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation through Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 > For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
@@ -26,9 +26,9 @@ L2 investigation guide for Linux Intune client (`intune-portal`) agent failures 
 
 ## Context
 
-This runbook is the L2 trap-by-trap investigation guide for Linux Intune client (`intune-portal`) failures on Ubuntu 24.04/26.04 LTS. It is consumed AFTER log collection — start with [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) to gather `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before opening this runbook.
+This runbook is the L2 trap-by-trap investigation guide for Linux Intune client (`intune-portal`) failures on Ubuntu 24.04/26.04 LTS. It is consumed AFTER log collection—start with [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) to gather `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before opening this runbook.
 
-The four trap families documented below are cross-tier-distinct from Phase 51 L1 cause topology (Anti-Pattern 1 mitigation per CDI-Phase52-03). L1 causes describe user-facing symptoms (package install / sign-in / enrollment timeout / agent service failure); L2 traps describe investigation tools and techniques (kernel-track verification, snap-vs-deb delivery path detection, user-scope vs system-scope service mechanics, Identity Broker re-enrollment signals).
+The four trap families documented here are cross-tier-distinct from Phase 51 L1 cause topology (Anti-Pattern 1 mitigation per CDI-Phase52-03). L1 causes describe user-facing symptoms (package install / sign-in / enrollment timeout / agent service failure); L2 traps describe investigation tools and techniques (kernel-track verification, snap-vs-deb delivery path detection, user-scope vs system-scope service mechanics, Identity Broker re-enrollment signals).
 
 **From L1 escalation?** One of the Phase 51 Linux L1 runbooks has routed here. L1 collected the escalation packet: serial number, user UPN, distro+kernel version (`lsb_release -a` and `uname -r` output), `dpkg -l intune-portal` output, and device-side symptom description.
 
@@ -41,7 +41,7 @@ The four trap families documented below are cross-tier-distinct from Phase 51 L1
 
 ## How to Use This Runbook
 
-Check the trap that matches your observation. Traps are independently diagnosable — you do not need to rule out prior traps. Each trap has its own Entry condition, Symptom, Investigation Steps, Resolution, and Verification subsections; choose the trap matching the L1 escalation packet (or the symptom you observed) and follow that trap's Investigation Steps.
+Check the trap that matches your observation. Traps are independently diagnosable—you do not need to rule out prior traps. Each trap has its own Entry condition, Symptom, Investigation Steps, Resolution, and Verification subsections; choose the trap matching the L1 escalation packet (or the symptom you observed) and follow that trap's Investigation Steps.
 
 - [Trap A: Ubuntu HWE vs GA Kernel Mismatch](#trap-a-kernel-track)
 - [Trap B: Snap-vs-Deb Delivery Path Confusion](#trap-b-delivery-path)
@@ -89,11 +89,11 @@ See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-
 
 > **Note:** Microsoft Learn does not document specific HWE-kernel-related failure signatures for `intune-portal`.
 
-> HWE kernel divergence is a known risk; the L2-actionable signal is the `uname -r` output cross-referenced against the version-track matrix above.
+> HWE kernel divergence is a known risk; the signal L2 can act on is the `uname -r` output cross-referenced against the preceding version-track matrix.
 
 ### Resolution
 
-If the user is on HWE kernel for a supported Ubuntu LTS release and the `intune-portal` deb install is failing, pin to GA kernel via:
+If the user is on HWE kernel for a supported Ubuntu LTS release and the `intune-portal` deb install is failing, pin to GA kernel through:
 
 ```bash
 sudo apt install linux-image-generic
@@ -123,7 +123,7 @@ Expected: `uname -r` matches GA or HWE band per the version-track matrix; `dpkg 
 
 **Entry condition:** L1 escalation packet shows enrollment failed at package-install stage AND `dpkg -l intune-portal` returns no rows OR shows an unexpected version. The user may have followed deprecated preview-era instructions referencing a snap installation path.
 
-See [deb (package format)](../_glossary-linux.md#deb-package-format) for delivery-path context. `intune-portal` is delivered EXCLUSIVELY as a deb from `packages.microsoft.com` per Phase 49 D-04 — there is no GA snap distribution; snap is a deprecated preview path only.
+See [deb (package format)](../_glossary-linux.md#deb-package-format) for delivery-path context. `intune-portal` is delivered EXCLUSIVELY as a deb from `packages.microsoft.com` per Phase 49 D-04—there is no GA snap distribution; snap is a deprecated preview path only.
 
 ### Symptom
 
@@ -199,13 +199,13 @@ See [systemd](../_glossary-linux.md#systemd) and [intune-agent.timer](../_glossa
 
 ### Investigation Steps
 
-1. Confirm the system-scope query L1 may have used (this is the SC#1 ROADMAP literal):
+1. Confirm the system-scope query L1 may have used (this is the phase success criterion #1 literal):
 
    ```bash
    systemctl status intune-agent
    ```
 
-   This may report "Unit not found" — that's expected because the canonical user-scope unit is `intune-agent.timer`.
+   This may report "Unit not found"—that's expected because the canonical user-scope unit is `intune-agent.timer`.
 
 2. Query the correct user-scope timer (no sudo per DPO-Phase52-01):
 
@@ -240,7 +240,7 @@ See [systemd](../_glossary-linux.md#systemd) and [intune-agent.timer](../_glossa
 
 ### Resolution
 
-If the timer is inactive and not enabled, re-enable it (no sudo for `--user` scope — this is the SC#2 ROADMAP literal):
+If the timer is inactive and not enabled, re-enable it (no sudo for `--user` scope—this is the phase success criterion #2 literal):
 
 ```bash
 systemctl enable --user --now intune-agent.timer
@@ -253,7 +253,7 @@ systemctl --user daemon-reload
 systemctl --user restart intune-agent.timer
 ```
 
-If the system-scope agent is genuinely failed (rare — it is typically a wrapper service), restart it explicitly (sudo permitted only for system-scope state-changing operations):
+If the system-scope agent is genuinely failed (rare—it is typically a wrapper service), restart it explicitly (sudo permitted only for system-scope state-changing operations):
 
 ```bash
 sudo systemctl restart intune-agent
@@ -272,7 +272,7 @@ Expected: `is-active` returns `active`; `list-timers` shows a non-empty NEXT col
 <a id="trap-d-identity-broker"></a>
 ## Trap D: Identity Broker v2.0.2+ Re-enrollment
 
-**Entry condition:** Admin reports CA assignment drift, Intune filter regression, or Entra group membership not applying for a previously-working Linux endpoint, AND `dpkg -l microsoft-identity-broker` shows version 2.0.2 or later. The Identity Broker v2.0.2+ architecture automatically re-registers and re-enrolls devices, creating new Intune device IDs and new Microsoft Entra device IDs — silently — when the broker package crosses the v2.0.2 threshold.
+**Entry condition:** Administrator reports CA assignment drift, Intune filter regression, or Entra group membership not applying for a previously-working Linux endpoint, AND `dpkg -l microsoft-identity-broker` shows version 2.0.2 or later. The Identity Broker v2.0.2+ architecture automatically re-registers and re-enrolls devices, creating new Intune device IDs and new Microsoft Entra device IDs—silently—when the broker package crosses the v2.0.2 threshold.
 
 See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker) for broker context. This trap consumes Phase 50 LIN-05 admin-side pitfall callout (`docs/admin-setup-linux/01-intune-linux-agent.md`) by reference per CD-07.
 
@@ -280,7 +280,7 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
 - A Linux endpoint that was previously compliant suddenly shows up as non-compliant or unassigned in the Intune admin center
 - The endpoint's Intune device ID has changed since the last L1 escalation packet
-- Existing CA assignments scoped to the old device ID stop applying after a broker package update — affected users see policy not enforced or filters not matching the new device IDs
+- Existing CA assignments scoped to the old device ID stop applying after a broker package update—affected users see policy not enforced or filters not matching the new device IDs
 
 ### Investigation Steps
 
@@ -293,13 +293,13 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
    Look for version `2.0.2` or later in either package.
 
-2. Check current device state via the dsreg tool:
+2. Check current device state through the dsreg tool:
 
    ```bash
    dsreg --status
    ```
 
-   Capture the output `Device ID` field. Compare against the L1 escalation packet's recorded device ID — if they differ, re-enrollment occurred.
+   Capture the output `Device ID` field. Compare against the L1 escalation packet's recorded device ID—if they differ, re-enrollment occurred.
 
 3. Check user-scope broker for re-enrollment events:
 
@@ -317,24 +317,24 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
 > **Note:** Microsoft Learn does not document specific journal log message text for re-enrollment events.
 
-> The `grep -iE "register|enroll|device.id"` pattern above is an inferred broad signal; the definitive check is `dsreg --status` device ID comparison.
+> The `grep -iE "register|enroll|device.id"` preceding pattern is an inferred broad signal; the definitive check is `dsreg --status` device ID comparison.
 
 ### Resolution
 
-This trap does NOT have a device-side fix — it is an after-the-fact admin investigation. The remediation is admin-side:
+This trap does NOT have a device-side fix—it is an after-the-fact administrator investigation. The remediation is admin-side:
 
 - Update CA assignments / Intune filters / Entra group memberships to scope to the NEW device ID (or to a dynamic membership rule that survives device ID changes)
 - Document the re-enrollment event in the ticket history
-- Cross-link to Phase 50 LIN-05 admin-side pitfall callout for re-enrollment-aware admin workflows
+- Cross-link to Phase 50 LIN-05 admin-side pitfall callout for re-enrollment-aware administrator workflows
 
-If the device-side cleanup is required (e.g., to force a full re-enrollment to a clean state), the dsreg cleanup workflow is:
+If the device-side cleanup is required (for example, to force a full re-enrollment to a clean state), the dsreg cleanup workflow is:
 
 ```bash
 sudo dsreg --tenant-id <tenant-id> --unregister
 dsreg --cleanup
 ```
 
-(Then the user re-signs in via the Intune Portal app to trigger fresh enrollment.)
+(Then the user re-signs in through the Intune Portal app to trigger fresh enrollment.)
 
 ### Verification
 
@@ -348,15 +348,15 @@ Expected: `dsreg --status` reports a stable device ID; broker package shows `ii`
 
 ## Related Resources
 
-- [L2 Runbook Index — Linux L2 Runbooks](00-index.md#linux-l2-runbooks) — Linux L2 runbook set
-- [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) — prerequisite for this runbook; Section 1 journalctl output is consumed by all 4 traps
-- [Linux Provisioning Glossary](../_glossary-linux.md) — `microsoft-identity-broker`, `intune-agent.timer`, `systemd`, `journalctl`, `hwe-kernel`, `ga-kernel`, `deb-repository`, `snap`
-- [Linux L1 Triage Decision Tree](../decision-trees/09-linux-triage.md) — Phase 51 L1 routing surface
-- [Linux Capability Matrix — Supported Management Surface](../reference/linux-capability-matrix.md) — Ubuntu 24.04/26.04 LTS scope and version-track context for Trap A
-- [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md) — L1 escalation source; Cause A (package install) → Trap A or Trap B; Cause B (sign-in) → Trap D; Cause C (timeout) → Trap C
-- [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) — L1 escalation source (custom-compliance Bash via Runbook 24 Section 2)
-- [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) — L1 escalation source (primary route to Trap C)
-- [Phase 50 LIN-05 Identity Broker callout](../admin-setup-linux/01-intune-linux-agent.md) — admin-side pitfall context for Trap D
+- [L2 Runbook Index—Linux L2 Runbooks](00-index.md#linux-l2-runbooks)—Linux L2 runbook set
+- [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md)—prerequisite for this runbook; Section 1 journalctl output is consumed by all 4 traps
+- [Linux Provisioning Glossary](../_glossary-linux.md)—`microsoft-identity-broker`, `intune-agent.timer`, `systemd`, `journalctl`, `hwe-kernel`, `ga-kernel`, `deb-repository`, `snap`
+- [Linux L1 Triage Decision Tree](../decision-trees/09-linux-triage.md)—Phase 51 L1 routing surface
+- [Linux Capability Matrix—Supported Management Surface](../reference/linux-capability-matrix.md)—Ubuntu 24.04/26.04 LTS scope and version-track context for Trap A
+- [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)—L1 escalation source; Cause A (package install) → Trap A or Trap B; Cause B (sign-in) → Trap D; Cause C (timeout) → Trap C
+- [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md)—L1 escalation source (custom-compliance Bash through Runbook 24 Section 2)
+- [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md)—L1 escalation source (primary route to Trap C)
+- [Phase 50 LIN-05 Identity Broker callout](../admin-setup-linux/01-intune-linux-agent.md)—admin-side pitfall context for Trap D
 
 ## Version History
 

@@ -22,17 +22,17 @@ This checklist covers the prerequisites that must be satisfied before deploying 
 
 > For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-ALL prerequisites below must be met before attempting an APv2 Device Preparation deployment. If any prerequisite is missing, the deployment will fail silently or produce unclear errors that are difficult to diagnose after the fact. Work through this checklist in order — prerequisite 0 is the most critical and must be completed first.
+ALL of the following prerequisites must be met before attempting an APv2 Device Preparation deployment. If any prerequisite is missing, the deployment fails silently or produces unclear errors that are difficult to diagnose after the fact. Work through this checklist in order—prerequisite 0 is the most critical and must be completed first.
 
-> **Warning:** If the device is registered as a Windows Autopilot device, the APv1 profile will take
-> precedence over this APv2 policy — silently. Complete prerequisite 0 before any other step.
+> **Warning:** If the device is registered as a Windows Autopilot device, the APv1 profile takes
+> precedence over this APv2 policy—silently. Complete prerequisite 0 before any other step.
 
 ## Checklist
 
 - [ ] **0. Deregister device from Windows Autopilot (APv1)**
   - **Where to check:** Intune admin center > Devices > Windows > Windows enrollment > Devices
   - **What to do:** Search by serial number. If the device appears in the list, it is registered with APv1. Select the device > Delete.
-  - **What happens if skipped:** Device deploys via APv1 ESP instead of APv2 — no error shown. The APv1 profile silently takes precedence over the APv2 Device Preparation policy. The admin sees ESP behavior and assumes APv2 is broken, when in fact APv1 is running.
+  - **What happens if skipped:** Device deploys through APv1 ESP instead of APv2—no error shown. The APv1 profile silently takes precedence over the APv2 Device Preparation policy. The administrator sees ESP behavior and assumes APv2 is broken, when in fact APv1 is running.
 
 - [ ] **1. Windows 11 OS version gate**
   - **Where to check:** Device spec sheet or `winver` command on the device
@@ -42,7 +42,7 @@ ALL prerequisites below must be met before attempting an APv2 Device Preparation
     - Windows 11 22H2 with KB5035942 or later
     - April 2024 or later OEM media includes the required KB
   - **Supported editions:** Pro, Pro Education, Pro for Workstations, Enterprise, Education, Enterprise LTSC
-  - **What happens if missing:** APv2 Device Preparation policy is ignored. The device enrolls in Intune without APv2 configuration — no error is displayed during OOBE. Windows 10 is NOT supported for APv2.
+  - **What happens if missing:** APv2 Device Preparation policy is ignored. The device enrolls in Intune without APv2 configuration—no error is displayed during OOBE. Windows 10 is NOT supported for APv2.
 
 - [ ] **2. Microsoft Entra automatic enrollment configured**
   - **Where to check:** Entra admin center > Mobility (MDM and WIP) > Microsoft Intune > MDM user scope
@@ -64,7 +64,7 @@ ALL prerequisites below must be met before attempting an APv2 Device Preparation
     - Enterprise Mobility + Security E3 or E5
     - Intune for Education
     - Microsoft Entra ID P1/P2 + Microsoft Intune subscription
-  - **What happens if missing:** Intune enrollment may succeed but the APv2 Device Preparation policy may not apply. Behavior is inconsistent — some deployments appear to work while others fail without clear error messages.
+  - **What happens if missing:** Intune enrollment may succeed but the APv2 Device Preparation policy may not apply. Behavior is inconsistent—some deployments appear to work while others fail without clear error messages.
 
 - [ ] **5. Network connectivity**
   - **Where to check:** Network/firewall configuration
@@ -86,7 +86,7 @@ ALL prerequisites below must be met before attempting an APv2 Device Preparation
     - Managed apps: Read
     - Mobile apps: Read
     - Organization: Read
-  - **What happens if missing:** Admin cannot create or assign Device Preparation policies. The "Enrollment time device membership assignment" permission is specifically required for ETG — without it, the admin can create a policy but the device will not be added to the security group at enrollment time. The failure is silent from the device side.
+  - **What happens if missing:** Administrator cannot create or assign Device Preparation policies. The "Enrollment time device membership assignment" permission is specifically required for ETG—without it, the administrator can create a policy but the device is not added to the security group at enrollment time. The failure is silent from the device side.
 
 ## See Also
 

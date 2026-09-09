@@ -19,6 +19,9 @@
      - No Terminal/CLI steps -- iOS has no command-line access; all admin actions are portal-based
      - Include Renewal/Maintenance section ONLY when the guide's subject has a
        renewable component (e.g., ADE token, APNs certificate). Omit otherwise.
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: iOS Platform Lead (role, not person name)
 -->
@@ -39,9 +42,9 @@ audience: admin
 
 ## Summary
 
-[2–3 sentences describing the scope, target audience, and any safety or version constraints for this iOS/iPadOS admin setup guide. Minimum 30 words. State which enrollment method or feature this guide covers (e.g., ADE, supervised enrollment, APNs), the Apple Business Manager and Intune admin roles required, and any supervised-device prerequisites.]
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this iOS/iPadOS administrator setup guide. Minimum 30 words. State which enrollment method or feature this guide covers (for example, ADE, supervised enrollment, APNs), the Apple Business Manager and Intune administrator roles required, and any supervised-device prerequisites.]
 
-> **Platform gate:** This guide covers iOS/iPadOS configuration via Apple Business Manager and Intune.
+> **Platform gate:** This guide covers iOS/iPadOS configuration through Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](../admin-setup-ios/00-overview.md#portal-navigation-note) for details.
@@ -69,8 +72,8 @@ audience: admin
 
 ## Prerequisites
 
-- [Required admin role -- e.g., Intune Administrator, ABM Device Manager]
-- [Required license or subscription -- e.g., Microsoft Intune Plan 1, Apple Business Manager account]
+- [Required administrator role -- for example, Intune Administrator, ABM Device Manager]
+- [Required license or subscription -- for example, Microsoft Intune Plan 1, Apple Business Manager account]
 - [Prior configuration that must be completed first -- link to that guide]
 - [Required portal access -- specify both ABM and Intune admin center if applicable]
 
@@ -119,13 +122,13 @@ audience: admin
 
 | Component | Renewal Period | Consequence of Lapse | Renewal Steps |
 |-----------|---------------|---------------------|---------------|
-| [e.g., APNs certificate] | [e.g., 365 days] | [What stops working] | [Brief steps or link to renewal procedure] |
+| [for example, APNs certificate] | [for example, 365 days] | [What stops working] | [Brief steps or link to renewal procedure] |
 
 <!-- Runbook links should point to the appropriate iOS L1 runbook in docs/l1-runbooks/ (Phase 30 range) once available. -->
 
 ## See Also
 
-- [Related iOS admin guide](link)
+- [Related iOS administrator guide](link)
 - [iOS/iPadOS ADE Lifecycle Overview](../ios-lifecycle/01-ade-lifecycle.md)
 - [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md)
 - [Apple Provisioning Glossary](../_glossary-macos.md)

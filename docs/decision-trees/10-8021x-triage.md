@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-Reference decision table for 802.1X Wi-Fi and wired network authentication-failure triage spanning all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). Gates on a single primary failure symptom — certificate profile error, server trust failure, EAP negotiation mismatch, RADIUS reject, or unknown — and routes to the matching L1 runbook or an L2 escalation with per-platform data to collect, all within 2 decision steps of the root.
+Reference decision table for 802.1X Wi-Fi and wired network authentication-failure triage spanning all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). Gates on a single primary failure symptom—certificate profile error, server trust failure, EAP negotiation mismatch, RADIUS reject, or unknown—and routes to the matching L1 runbook or an L2 escalation with per-platform data to collect, all within 2 decision steps of the root.
 
 > **Platform gate:** This guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
@@ -24,11 +24,11 @@ Reference decision table for 802.1X Wi-Fi and wired network authentication-failu
 
 ## How to Use This Tree
 
-Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root. This tree uses a flat symptom-primary shape — per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.
+Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root. This tree uses a flat symptom-primary shape—per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.
 
 ## Decision Tree
 
-**LOCKED — 11 (nodes + labeled edges)** — 6 nodes + 5 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The single diamond (`EAP1`) is represented below; the Routing Verification table already carries one row per labeled edge, upgraded here from the older 5-leaf-count convention to the R1 nodes-plus-labeled-edges convention.
+**LOCKED—11 (nodes + labeled edges)**—6 nodes + 5 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The single diamond (`EAP1`) is represented in the Routing Verification table, which already carries one row per labeled edge, upgraded here from the older 5-leaf-count convention to the R1 nodes-plus-labeled-edges convention.
 
 ## Routing Verification
 
@@ -51,7 +51,7 @@ Use these questions to identify which symptom branch applies before routing.
 | Does Intune show a cert profile as Error or Pending? | Open Intune admin center > **Devices** > [platform] > select device > **Device configuration**. If the Trusted Certificate profile OR the SCEP/PKCS client-certificate profile shows "Error," "Pending," or "Not applicable," the symptom is cert profile failure → Runbook 38. |
 | Is there a trust prompt, or is the Trusted Certificate profile for the RADIUS root CA missing or failed? | On Windows, the user may see an intermittent dialog "Do you want to connect?" or "Trust this certificate?" On managed macOS/iOS the failure is silent (no prompt). Check Intune: if the Trusted Certificate profile for the RADIUS server CA shows "Error" or is not assigned, or the Wi-Fi profile `Certificate server names` field is empty → Runbook 40. |
 | Do all cert profiles show Succeeded, but auth still fails with no trust prompt? | If Trusted Certificate, SCEP/PKCS, and the Wi-Fi/Wired network profiles all show "Succeeded" in Intune, yet the device is rejected by RADIUS with no trust dialog and no cert-error event → Runbook 39. |
-| Is the failure EAP-method or inner-auth specific (e.g., iOS fails on an SSID where Windows/macOS succeed)? | Ask: "Does this affect only one device type or platform?" iOS PEAP with PAP inner-auth is a common example — iOS PEAP mandates MS-CHAPv2, so PAP causes an immediate EAP-NAK; other platforms succeed on the same SSID. An EAP method or inner-auth mismatch → Runbook 41. |
+| Is the failure EAP-method or inner-auth specific (for example, iOS fails on an SSID where Windows/macOS succeed)? | Ask: "Does this affect only one device type or platform?" iOS PEAP with PAP inner-auth is a common example — iOS PEAP mandates MS-CHAPv2, so PAP causes an immediate EAP-NAK; other platforms succeed on the same SSID. An EAP method or inner-auth mismatch → Runbook 41. |
 
 ## Escalation Data
 
@@ -63,14 +63,14 @@ Collect this information before routing to L2.
 
 ## Related Resources
 
-- [802.1X Certificate Failure (L1 Runbook 38)](../l1-runbooks/38-8021x-certificate-failure.md) — Intune cert profile Error/Pending; cert not deployed
-- [802.1X RADIUS Reject (L1 Runbook 39)](../l1-runbooks/39-8021x-radius-reject.md) — Cert profiles Succeeded; RADIUS rejects auth
-- [802.1X Server Trust Failure (L1 Runbook 40)](../l1-runbooks/40-8021x-server-trust-failure.md) — Trust prompt / RADIUS root CA not trusted on device
-- [802.1X EAP Negotiation Failure (L1 Runbook 41)](../l1-runbooks/41-8021x-eap-negotiation-failure.md) — EAP method or inner-auth mismatch
-- [Network Authentication Glossary](../_glossary-network.md) — 802.1X, EAP, EAPOL, RADIUS, supplicant, server-name-validation
-- [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md) — EAP-TLS, PEAP-MSCHAPv2, EAP-TTLS comparison
-- [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md) — Cert-ordering rule, EKU, server-name validation
-- [Initial Triage Decision Tree](00-initial-triage.md) — Entry point for all Intune device issues
+- [802.1X Certificate Failure (L1 Runbook 38)](../l1-runbooks/38-8021x-certificate-failure.md)—Intune cert profile Error/Pending; cert not deployed
+- [802.1X RADIUS Reject (L1 Runbook 39)](../l1-runbooks/39-8021x-radius-reject.md)—Cert profiles Succeeded; RADIUS rejects auth
+- [802.1X Server Trust Failure (L1 Runbook 40)](../l1-runbooks/40-8021x-server-trust-failure.md)—Trust prompt / RADIUS root CA not trusted on device
+- [802.1X EAP Negotiation Failure (L1 Runbook 41)](../l1-runbooks/41-8021x-eap-negotiation-failure.md)—EAP method or inner-auth mismatch
+- [Network Authentication Glossary](../_glossary-network.md)—802.1X, EAP, EAPOL, RADIUS, supplicant, server-name-validation
+- [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md)—EAP-TLS, PEAP-MSCHAPv2, EAP-TTLS comparison
+- [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md)—Cert-ordering rule, EKU, server-name validation
+- [Initial Triage Decision Tree](00-initial-triage.md)—Entry point for all Intune device issues
 
 ## Version History
 

@@ -26,7 +26,7 @@ This is a symptom-based failure-lookup reference for Windows Autopilot Device Pr
 
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-This is a symptom-based failure catalog for Windows Autopilot Device Preparation (APv2) deployments. Failures are organized by the deployment phase in which they occur, following the [10-step deployment flow](../lifecycle-apv2/02-deployment-flow.md). Each entry uses the Symptom-Cause-Action format: **Symptom** (what the admin observes), **Probable Cause** (why it happens), **Quick Check** (portal-only verification steps), and **Runbook** (forward reference to the L1 or L2 guide that covers resolution). This file does not contain inline resolution steps -- those are in the L1/L2 runbooks referenced in each entry.
+This is a symptom-based failure catalog for Windows Autopilot Device Preparation (APv2) deployments. Failures are organized by the deployment phase in which they occur, following the [10-step deployment flow](../lifecycle-apv2/02-deployment-flow.md). Each entry uses the Symptom-Cause-Action format: **Symptom** (what the administrator observes), **Probable Cause** (why it happens), **Quick Check** (portal-only verification steps), and **Runbook** (forward reference to the L1 or L2 guide that covers resolution). This file does not contain inline resolution steps -- those are in the L1/L2 runbooks referenced in each entry.
 
 For the complete deployment flow and step numbers referenced here, see [APv2 Deployment Flow (10-Step Process)](../lifecycle-apv2/02-deployment-flow.md).
 
@@ -42,7 +42,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Probable Cause:** One or more of the following conditions prevented the Device Preparation policy from activating, in order of commonality:
 
-1. OS version below minimum requirement -- Windows 11 22H2 without KB5035942, or Windows 10. The device enrolls in Intune without APv2 configuration; no error is shown.
+1. OS version earlier than minimum requirement -- Windows 11 22H2 without KB5035942, or Windows 10. The device enrolls in Intune without APv2 configuration; no error is shown.
 2. Windows automatic Intune enrollment (MDM scope) not configured in Microsoft Entra ID.
 3. The user signing in during OOBE is not a member of the user group specified in the Device Preparation policy.
 4. No device group is selected in the Device Preparation policy (policy saved without a device group).
@@ -61,7 +61,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 > **Silent failure:** This is not an error. The device silently ran APv1 instead of APv2.
 
-> No error message is displayed. The admin may assume APv2 is broken, but the device simply matched an APv1 profile instead.
+> No error message is displayed. The administrator may assume APv2 is broken, but the device matched an APv1 profile instead.
 
 **Probable Cause:** The device is registered as a Windows Autopilot device (APv1) -- it appears in the Intune admin center Windows Autopilot devices list -- or a Windows Autopilot deployment profile is assigned to the device. APv1 profiles always take precedence over APv2 Device Preparation policies. This is expected behavior; APv1 deregistration is a prerequisite for APv2 deployment.
 
@@ -146,7 +146,7 @@ These scenarios occur during the app installation phases of the deployment. LOB 
 
 1. App packaging error, detection rule error, or Microsoft Store connectivity issue.
 2. App is configured to install in User context instead of System context (must be SYSTEM during OOBE).
-3. App shows "Skipped" because it is not assigned to the ETG device group (same as LOB/M365 scenario above).
+3. App shows "Skipped" because it is not assigned to the ETG device group (same as the preceding LOB/M365 scenario).
 4. App shows "Skipped" because a Managed Installer policy was active for the tenant -- this was a known issue resolved in April 2026. Before the fix, Win32/Store/EAC apps were skipped during OOBE and installed post-desktop instead. A technician seeing "Skipped" must check both root causes: app-not-in-ETG-group AND Managed Installer policy status.
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments > select device > Apps tab -- review app status. For Skipped apps: first verify app is assigned to the ETG device group (Intune admin center > Apps > select app > Assignments). If ETG assignment is correct and status is still Skipped: Intune admin center > Endpoint security > App control for business -- check whether a Managed Installer policy is active for the tenant.
@@ -204,7 +204,7 @@ These scenarios occur after the user reaches the desktop -- the APv2 deployment 
 **Probable Cause:** One or more of the following conditions produced unexpected post-deployment configuration:
 
 1. Local administrator setting conflict -- a known active issue (as of April 2026) between the Device Preparation policy "User account type" setting and the Entra ID "Local administrator settings" configuration. Not all combinations are supported; refer to the known-issues page for valid combinations.
-2. Apps assigned to the ETG device group but NOT selected in the Device Preparation policy install after the user reaches the desktop (background sync), not during OOBE. This is expected APv2 behavior, not a failure -- apps in the ETG group sync via normal Intune policy, not the OOBE deployment flow.
+2. Apps assigned to the ETG device group but NOT selected in the Device Preparation policy install after the user reaches the desktop (background sync), not during OOBE. This is expected APv2 behavior, not a failure -- apps in the ETG group sync through normal Intune policy, not the OOBE deployment flow.
 3. MDM policy conflicts from policies assigned to the ETG device group causing unexpected settings to apply, or policies taking longer than expected to reach the device.
 4. Multiple Device Preparation policies targeting the same user group -- the wrong priority policy won during enrollment.
 

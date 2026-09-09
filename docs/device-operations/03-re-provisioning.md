@@ -14,17 +14,17 @@ Re-provisioning covers the process of reassigning a device from one user to anot
 
 ## Prerequisites Checklist
 
-Before beginning re-provisioning, verify all items below. Missing any of these is the most common cause of re-provisioning failure.
+Before beginning re-provisioning, verify all of the following items. Missing any of these is the most common cause of re-provisioning failure.
 
 - [ ] Old user's Entra account is no longer the primary user on the device (Intune admin center > Devices > All devices > device > Properties > Primary user)
 - [ ] Device removed from old user's group membership, if the user's group was used for Autopilot profile targeting (Entra ID > Groups > group > Members)
 - [ ] Autopilot profile assigned to the correct group for the new user's context (Intune admin center > Devices > Enrollment > Windows Autopilot > Autopilot deployment profiles)
-- [ ] Device limit per user not exceeded for the new user (Entra ID > Devices > Device settings — check "Maximum number of devices per user")
-- [ ] For APv1: hardware hash is still current — no hardware changes since last import (motherboard replacement invalidates the hash)
+- [ ] Device limit per user not exceeded for the new user (Entra ID > Devices > Device settings—check "Maximum number of devices per user")
+- [ ] For APv1: hardware hash is still current—no hardware changes since last import (motherboard replacement invalidates the hash)
 - [ ] For APv2: device meets Windows 11 22H2+ requirement; APv2 policy assigned to the correct security group
 - [ ] If device was Retired (not Wiped): org data removal confirmed before handing to new user
 
-> **L1 Action:** Before re-provisioning, confirm the new user's department and location — this determines which Autopilot profile and app assignments apply. Escalate to L2 if the device is hybrid Entra joined.
+> **L1 Action:** Before re-provisioning, confirm the new user's department and location—this determines which Autopilot profile and app assignments apply. Escalate to L2 if the device is hybrid Entra joined.
 
 ---
 
@@ -38,10 +38,10 @@ Use this when a device assigned to a departing employee is being reassigned to a
 
 1. **Retire** the device (removes org data, preserves device record). See [Retire, Wipe, and Removal Actions](02-retire-wipe.md).
 
-   If a clean slate is required (no user data carryover), use **Autopilot Reset** instead of Retire — this re-applies org configuration while keeping MDM enrollment intact. See [Autopilot Reset](01-autopilot-reset.md).
+   If a clean slate is required (no user data carryover), use **Autopilot Reset** instead of Retire—this re-applies org configuration while keeping MDM enrollment intact. See [Autopilot Reset](01-autopilot-reset.md).
 
 2. In Intune admin center, navigate to **Devices** > **All devices** > select device > **Properties**.
-   - Clear the **Primary user** field — click the X next to the current user.
+   - Clear the **Primary user** field—click the X next to the current user.
 
 3. Verify the device is in the correct Entra group for the new user's Autopilot profile assignment. Add to the new group if needed.
 
@@ -52,7 +52,7 @@ Use this when a device assigned to a departing employee is being reassigned to a
 
 **Recommended path (APv2 devices):**
 
-1. **Wipe** the device (factory reset — APv2 does not support Autopilot Reset).
+1. **Wipe** the device (factory reset—APv2 does not support Autopilot Reset).
 
 2. Verify the APv2 policy is assigned to the security group that includes the new user or device.
 
@@ -72,7 +72,7 @@ Use this when replacing hardware or reinstalling a clean OS for the same user, w
 
 2. For APv1: import the hardware hash of the new device. See [APv1 hardware hash upload guide](../admin-setup-apv1/01-hardware-hash-upload.md).
 
-   For APv2: no hardware hash import required — enroll the device directly.
+   For APv2: no hardware hash import required—enroll the device directly.
 
 3. Assign the Autopilot profile (APv1) or APv2 policy to the group containing the new device.
 
@@ -98,7 +98,7 @@ After a Wipe (without enrollment state retention), the device must go through fu
 1. Device boots to OOBE.
 2. User or technician completes OOBE sign-in (APv1: sign in with corporate Entra account to trigger Autopilot profile download; APv2: sign in, profile applies automatically).
 3. ESP runs (APv1 only). Apps and policies install per the assigned profile.
-4. User arrives at desktop — enrollment is complete.
+4. User arrives at desktop—enrollment is complete.
 
 If OOBE does not trigger Autopilot:
 - Verify the hardware hash is imported (APv1) or the APv2 policy is assigned to a group containing the device or user.
@@ -120,9 +120,9 @@ If OOBE does not trigger Autopilot:
 
 ## See Also
 
-- [Autopilot Reset](01-autopilot-reset.md) — Re-provision without full wipe (APv1 only)
-- [Retire, Wipe, and Removal Actions](02-retire-wipe.md) — Wipe and retire procedures
-- [Dynamic Group Configuration](../admin-setup-apv1/04-dynamic-groups.md) — Ensure devices land in the right group for profile assignment
+- [Autopilot Reset](01-autopilot-reset.md)—Re-provision without full wipe (APv1 only)
+- [Retire, Wipe, and Removal Actions](02-retire-wipe.md)—Wipe and retire procedures
+- [Dynamic Group Configuration](../admin-setup-apv1/04-dynamic-groups.md)—Ensure devices land in the right group for profile assignment
 
 ---
 

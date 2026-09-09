@@ -1,0 +1,72 @@
+# Dispositions for verify-meaning.py, Phase 158's own sibling of _DISPOSITIONS.tsv,
+# _DISPOSITIONS-batch10.tsv and _DISPOSITIONS-docs.tsv (D-13, phase 158-05). A new
+# sibling file is required, not an append to either predecessor: _DISPOSITIONS-docs.tsv
+# is frozen at exactly 6 data rows by a Phase 154 contract, and _DISPOSITIONS-batch10.tsv
+# carries zero data rows and is Phase 156's own sibling for the batch-10 corpus. The
+# loader (load_dispositions) silently accepts a row from any file regardless of which
+# phase it belongs to -- nothing mechanical stops a wrong-file append -- so the
+# separating ground is the phase-scoped key space, a decision, not a parser constraint.
+# Neither predecessor table is touched by this file.
+#
+# BASE for this run is d0b611e8 (D-12, bare, this phase's fixed corpus-verification
+# revision). At that BASE, `python scripts/docs-style/verify-meaning.py d0b611e8`
+# (default --dispositions, i.e. none loaded) reports 14 undispositioned findings: 9 on
+# docs/ files and 5 on .planning/ files -- MEASURED live in this plan's own execution,
+# not copied from 158-CONTEXT.md's D-12 figure of "4" planning-tree findings. The fifth
+# is a live divergence from that written figure: three more plans (158-01 through 158-04)
+# landed ordinary planning-process commits after D-12 was measured, and the checker has
+# no path scoping, so it counts every one of them. All five are attributed here, not
+# given rows:
+#   - .planning/REQUIREMENTS.md (label-drift): the STD-01..04 checkbox flip from
+#     `[ ]` to `[x]` plus the `[SUPERSEDED 2026-09-05]` annotation block landed by
+#     Phase 157's own amendment mechanism, an ordinary requirements-tracking edit.
+#   - .planning/STATE.md (frontmatter): `last_updated` timestamp advances on every
+#     plan-boundary commit; routine session-continuity bookkeeping.
+#   - .planning/STATE.md (quotation): the ISO timestamp inside a quoted "..." span in
+#     the frontmatter's own dependency-graph text moved with the same timestamp advance.
+#   - .planning/WINDOWS.md (frontmatter): `open_count`/`total_count`/`last_updated`
+#     advanced when plan 158-03 appended ledger entry #16; routine ledger bookkeeping.
+#   - .planning/seeds/SEED-001-macos-psso-admin-setup-doc-accuracy.md (frontmatter):
+#     `status: planted` -> `status: closed`, Phase 157's HYG-07 seed-closure disposition.
+# None of the five is a corpus (docs/) file; all five are ordinary close-out artifacts of
+# this milestone's own planning process, which the checker sees only because it has no
+# path scoping to exclude .planning/. Padding this table with rows for them would make
+# the table's own row count meaningless and would hide that the corpus criterion (zero
+# undispositioned docs/ findings) is already met without them. The literal process exit
+# of `verify-meaning.py d0b611e8 --dispositions scripts/docs-style/_DISPOSITIONS-158.tsv`
+# therefore remains 1 (non-zero) even after this file dispositions all 9 docs/ findings,
+# exactly as a predecessor phase (156, batch-10) recorded for its own analogous 4-finding
+# planning-tree residue. This is a known, logged limitation of a checker with no path
+# scoping -- not a failure of this table, whose own criterion is "zero undispositioned
+# docs/ findings", a claim proven below, independent of the tool's literal exit code.
+#
+# The 9 docs/ findings are all `htmlcomment` (an HTML comment changed inside a
+# `<!-- ... -->` block; ABAUDIT-NN comments carry validator waivers so a restyled one
+# can silently break a suppression). Eight of the nine share one root cause -- the
+# wiring-comment class -- and the ninth shares the finding TYPE but not the cause; each
+# still gets its own row and its own reason rather than one row repeated nine times,
+# per this phase's own instruction that a repeated reason is a class rule, not a
+# disposition.
+#   Wiring-comment class (8 of 9): Phase 157's D-30 STD-03 authoring instruction
+#   ("Author this document's prose against the Prose Style Authoring Standard ...
+#   before promoting status from Draft to Approved") was inserted into each doc-class
+#   template's top-of-file HTML authoring comment, and the em-dash sweep (plan 158-03)
+#   additionally tightened a spaced em dash inside the same comment block on 7 of the 8.
+#   Both changes are authoring-instruction metadata inside a template's own comment,
+#   never corpus prose a reader sees, and never an ABAUDIT-NN validator-waiver comment.
+#   Different class (1 of 9): docs/admin-setup-android/08-cope-full-admin.md's HTML
+#   comment is a citation-provenance footer, not a template wiring comment; Phase 157's
+#   HYG-02 leak-class fix replaced the internal-process word "RESEARCH" with
+#   "phase research" inside it (a corpus-consistency terminology correction, not a
+#   restyle of the cited MS Learn source or its confidence/date fields), and the
+#   em-dash sweep separately tightened one spaced dash in the same comment on a
+#   different line further down the same file.
+88acd8cb3d44	Wiring-comment class. docs/_templates/admin-template-android.md's top-of-file authoring comment gained Phase 157's STD-03 line directing authors to the Prose Style Authoring Standard before Draft->Approved promotion, and the em-dash sweep tightened one spaced dash inside the same "What breaks if misconfigured" authoring-guidance line within the comment. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+1c45c552d862	Wiring-comment class. docs/_templates/admin-template-ios.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction and the same em-dash tightening inside its own "What breaks if misconfigured" guidance line. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+1e9dfb729bbc	Wiring-comment class. docs/_templates/admin-template-macos.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction and the same em-dash tightening inside its own "What breaks if misconfigured" guidance line. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+178d9c9fc80b	Wiring-comment class. docs/_templates/admin-template.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction and the same em-dash tightening inside its own "What breaks if misconfigured" guidance line. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+35aa7a2b6ac3	Wiring-comment class. docs/_templates/l1-template.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction directing L1 runbook authors to the Prose Style Authoring Standard before Draft->Approved promotion. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+2837768a302f	Wiring-comment class. docs/_templates/l2-template.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction directing L2 guide authors to the Prose Style Authoring Standard before Draft->Approved promotion. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+c8fecf358610	Wiring-comment class. docs/_templates/recipe-template.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction directing Device Recipe authors to the Prose Style Authoring Standard before Draft->Approved promotion. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+4ba68df050c6	Wiring-comment class. docs/_templates/reference-template.md's top-of-file authoring comment gained the identical Phase 157 STD-03 authoring instruction directing reference-doc authors to the Prose Style Authoring Standard before Draft->Approved promotion. Authoring-instruction metadata, not corpus prose; no ABAUDIT-NN waiver touched.
+0aabc0cdc0f0	Different class. docs/admin-setup-android/08-cope-full-admin.md's citation-provenance HTML comment ("HIGH confidence: MS Learn setup-corporate-work-profile.md ...") had the internal-process word "RESEARCH" replaced with "phase research" by Phase 157's HYG-02 leak-class fix (a terminology correction that does not touch the cited source, confidence level, or dates), and the em-dash sweep separately tightened one spaced dash inside a different callout line elsewhere in the same file. Not a template wiring comment and not an ABAUDIT-NN waiver.

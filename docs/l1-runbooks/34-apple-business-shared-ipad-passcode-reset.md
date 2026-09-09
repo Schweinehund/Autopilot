@@ -16,7 +16,7 @@ platform: ios+macos+shared-ipad
 
 ## Summary
 
-This runbook's L1 triage is read-only, but it documents state-changing passcode-reset paths (MDM ClearPasscode and EraseDevice) that are L2/admin actions — run only the read-only triage at L1 and escalate the reset commands per the guardrails below. It covers the Apple Business portal path (Path A — L1-executable) for routine Shared iPad partition passcode resets, with escalation pointers to MDM ClearPasscode (Path B) and MDM EraseDevice (Path C), both of which are L2-only actions.
+This runbook's L1 triage is read-only, but it documents state-changing passcode-reset paths (MDM ClearPasscode and EraseDevice) that are L2/administrator actions—run only the read-only triage at L1 and escalate the reset commands per the following guardrails. It covers the Apple Business portal path (Path A—L1-executable) for routine Shared iPad partition passcode resets, with escalation pointers to MDM ClearPasscode (Path B) and MDM EraseDevice (Path C), both of which are L2-only actions.
 
 > **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad).
 
@@ -24,29 +24,29 @@ This runbook's L1 triage is read-only, but it documents state-changing passcode-
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
-L1 runbook for Shared iPad deployments where a user cannot access their Shared iPad partition passcode. This runbook covers the Apple Business portal path (Path A — L1-executable) and escalation pointers for the MDM paths (Paths B and C — L2 only).
+L1 runbook for Shared iPad deployments where a user cannot access their Shared iPad partition passcode. This runbook covers the Apple Business portal path (Path A—L1-executable) and escalation pointers for the MDM paths (Paths B and C—L2 only).
 
-Reach this runbook directly from the Apple Business Quick Reference in [quick-ref-l1.md](../quick-ref-l1.md#apple-business-quick-reference) or via L2 escalation from [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) when Path A is confirmed available.
+Reach this runbook directly from the Apple Business Quick Reference in [quick-ref-l1.md](../quick-ref-l1.md#apple-business-quick-reference) or through L2 escalation from [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) when Path A is confirmed available.
 
 > **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
 
-> State-changing commands (MDM ClearPasscode, MDM EraseDevice) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
+> State-changing commands (MDM ClearPasscode, MDM EraseDevice) appear ONLY in the per-cause `### Admin Action Required` sections—they are not L1 actions.
 
 ## Which Admin Owns This Pool?
 
-Before attempting Path A, confirm which sub-org admin owns the Shared iPad pool that contains the affected device. Shared iPad passcode reset permissions are OU-scoped in Apple Business — an admin with permissions in OU-A cannot reset a passcode for a device assigned to OU-B. Attempting a cross-OU reset returns a permission denied error, which is a routing issue, not a system failure.
+Before attempting Path A, confirm which sub-org administrator owns the Shared iPad pool that contains the affected device. Shared iPad passcode reset permissions are OU-scoped in Apple Business—an administrator with permissions in OU-A cannot reset a passcode for a device assigned to OU-B. Attempting a cross-OU reset returns a permission denied error, which is a routing issue, not a system failure.
 
-**Lookup step:** See [05-sub-org-admin-onboarding.md#which-admin-owns-this-pool](../cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) to identify which sub-org admin holds "Reset Shared iPad passcode" for the device's OU.
+**Lookup step:** See [05-sub-org-admin-onboarding.md#which-admin-owns-this-pool](../cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) to identify which sub-org administrator holds "Reset Shared iPad passcode" for the device's OU.
 
-If the correct pool owner is not known or unavailable, escalate to L2 via [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) before proceeding.
+If the correct pool owner is not known or unavailable, escalate to L2 through [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) before proceeding.
 
 ## Prerequisites
 
 **Portal role required:**
 
-- Apple Business sub-org admin with "Reset Shared iPad passcode" permission for the target OU (People subgroup — OU-scoped, conditionally-grant).
-- The companion "View users" permission MUST also be granted; without it, the People tab shows an empty user list and the reset action cannot be targeted (OP-3 blank-UI symptom — see [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md)).
-- Do NOT use Account Holder credentials for routine passcode resets (OP-2 — see [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md#top-level-roles-4)).
+- Apple Business sub-org administrator with "Reset Shared iPad passcode" permission for the target OU (People subgroup—OU-scoped, conditionally-grant).
+- The companion "View users" permission MUST also be granted; without it, the People tab shows an empty user list and the reset action cannot be targeted (OP-3 blank-UI symptom—see [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md)).
+- Do NOT use Account Holder credentials for routine passcode resets (OP-2—see [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md#top-level-roles-4)).
 
 **Device identifiers required:**
 
@@ -71,14 +71,14 @@ For full path descriptions, anti-feature warnings (Path B), and the Path C OP-11
 
 ### L1 Triage Steps
 
-These are read-only checks to confirm that Path A is viable before the sub-org admin executes the reset.
+These are read-only checks to confirm that Path A is viable before the sub-org administrator executes the reset.
 
 1. Confirm the Apple Business portal is reachable: navigate to `business.apple.com` and verify it loads without an outage banner.
-2. Confirm the sub-org admin can sign in: verify their Managed Apple Account credentials are active and they can reach the Apple Business dashboard (not Account Holder credentials — OP-2).
-3. Confirm the target Shared iPad is visible in the OU device list: in Apple Business, go to **Locations** > [target OU name] > **Devices** and search by serial number. If the device is absent, it may be assigned to a different OU — return to the **Which Admin Owns This Pool?** lookup step.
-4. Confirm the "Reset Shared iPad passcode" permission is visible in the sub-org admin's role assignment for this OU: in Apple Business, go to **Settings** > **People** > [admin account] > **Role** and verify the People subgroup includes "Reset Shared iPad passcode" for the target OU.
+2. Confirm the sub-org administrator can sign in: verify their Managed Apple Account credentials are active and they can reach the Apple Business dashboard (not Account Holder credentials—OP-2).
+3. Confirm the target Shared iPad is visible in the OU device list: in Apple Business, go to **Locations** > [target OU name] > **Devices** and search by serial number. If the device is absent, it may be assigned to a different OU—return to the **Which Admin Owns This Pool?** lookup step.
+4. Confirm the "Reset Shared iPad passcode" permission is visible in the sub-org administrator's role assignment for this OU: in Apple Business, go to **Settings** > **People** > [administrator account] > **Role** and verify the People subgroup includes "Reset Shared iPad passcode" for the target OU.
 
-If any of these checks fail, do not proceed to the reset action — escalate using the criteria in [Escalation Criteria](#escalation-criteria).
+If any of these checks fail, do not proceed to the reset action—escalate using the criteria in [Escalation Criteria](#escalation-criteria).
 
 ### Admin Action Required
 
@@ -112,19 +112,19 @@ For the canonical admin-context Path A procedure including the federated-auth ca
 
 ## Path B — MDM ClearPasscode (L2-only, escalation pointer)
 
-Path B uses MDM ClearPasscode issued from the Intune admin center, outside the Apple Business permission surface. It is NOT an L1 action (see the L1 scope note above). Path B also carries an important anti-feature warning: MDM ClearPasscode resets the device-level screen lock passcode, NOT the per-user Shared iPad partition passcode. In most Shared iPad partition passcode scenarios, Path B does not resolve the issue.
+Path B uses MDM ClearPasscode issued from the Intune admin center, outside the Apple Business permission surface. It is NOT an L1 action (see the preceding L1 scope note). Path B also carries an important anti-feature warning: MDM ClearPasscode resets the device-level screen lock passcode, NOT the per-user Shared iPad partition passcode. In most Shared iPad partition passcode scenarios, Path B does not resolve the issue.
 
-When Path A fails or is unreachable (Apple Business portal outage confirmed), escalate to L2 via [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) and reference the full anti-feature warning and decision gate at [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md) Path B section.
+When Path A fails or is unreachable (Apple Business portal outage confirmed), escalate to L2 through [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) and reference the full anti-feature warning and decision gate at [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md) Path B section.
 
-Do not attempt Path B as an L1 action. Collect the escalation data below before handing off.
+Do not attempt Path B as an L1 action. Collect the following escalation data before handing off.
 
 ---
 
 ## Path C — MDM EraseDevice (L2-only with hard approval gate, escalation pointer)
 
-Path C is DESTRUCTIVE (full device erase — all Shared iPad user partitions and cached data are destroyed; no recovery path). It requires hard L2-approval gating per OP-11 before any execution. It is the escalation path when Path A is unavailable AND the Shared iPad partition passcode must be reset.
+Path C is DESTRUCTIVE (full device erase—all Shared iPad user partitions and cached data are destroyed; no recovery path). It requires hard L2-approval gating per OP-11 before any execution. It is the escalation path when Path A is unavailable AND the Shared iPad partition passcode must be reset.
 
-NEVER attempt Path C as an L1 action. Escalate via [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) with the escalation data below. For the full OP-11 hard gate callout and Path C procedure, see [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md) Path C section (`:129-156`).
+NEVER attempt Path C as an L1 action. Escalate through [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) with the following escalation data. For the full OP-11 hard gate callout and Path C procedure, see [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md) Path C section (`:129-156`).
 
 ---
 
@@ -132,32 +132,32 @@ NEVER attempt Path C as an L1 action. Escalate via [26: Apple Business Permissio
 
 Escalate to L2 if:
 
-- Path A: portal unreachable, sub-org admin cannot log in, target device not visible in OU device list, or permission denied in the Apple Business portal
+- Path A: portal unreachable, sub-org administrator cannot log in, target device not visible in OU device list, or permission denied in the Apple Business portal
 - Path A: reset executes but user still cannot sign in after receiving the new passcode
-- Path B or Path C required (MDM commands — always L2-only per OP-11)
-- Observation does not cleanly match Path A (cross-OU permission error, federation state issue, quota limit, Account Holder lockout — route to L2 #26 for 7-leaf triage)
+- Path B or Path C required (MDM commands—always L2-only per OP-11)
+- Observation does not cleanly match Path A (cross-OU permission error, federation state issue, quota limit, Account Holder lockout—route to L2 #26 for 7-leaf triage)
 
 **Before escalating, collect:**
 
 - Device serial number
 - Shared iPad platform version (iPadOS version)
 - User UPN for the locked account
-- Which admin pool owns the device (from the `05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` lookup)
+- Which administrator pool owns the device (from the `05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` lookup)
 - Screenshot of the error (Apple Business portal or MDM error message)
 - Path attempted (B: MDM ClearPasscode or C: MDM EraseDevice) if escalating from a failed Path A
 - Timestamp of the failed attempt
 - User actions attempted (if any) and the outcome
 
-[Escalate to L2 — Apple Business Permission Denied Investigation (#26)](../l2-runbooks/26-apple-business-permission-denied.md)
+[Escalate to L2—Apple Business Permission Denied Investigation (#26)](../l2-runbooks/26-apple-business-permission-denied.md)
 
 ---
 
 ## Cross-References
 
-- [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md) — canonical admin-context 3-path matrix (Path A full procedure; Path B anti-feature warning; Path C OP-11 hard gate)
-- [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md) — Apple Business permission catalog (People subgroup; OP-2 Account Holder DO-NOT-DELEGATE; OP-3 Edit-without-View table)
-- [05-sub-org-admin-onboarding.md#which-admin-owns-this-pool](../cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) — admin-owner lookup for OU-scoped Shared iPad pools
-- [26-apple-business-permission-denied.md](../l2-runbooks/26-apple-business-permission-denied.md) — L2 #26 7-leaf Mermaid decision tree for Apple Business permission denied investigation
+- [12-shared-ipad-passcode-reset.md](../cross-platform/apple-business/12-shared-ipad-passcode-reset.md)—canonical admin-context 3-path matrix (Path A full procedure; Path B anti-feature warning; Path C OP-11 hard gate)
+- [01-role-permission-model.md](../cross-platform/apple-business/01-role-permission-model.md)—Apple Business permission catalog (People subgroup; OP-2 Account Holder DO-NOT-DELEGATE; OP-3 Edit-without-View table)
+- [05-sub-org-admin-onboarding.md#which-admin-owns-this-pool](../cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool)—admin-owner lookup for OU-scoped Shared iPad pools
+- [26-apple-business-permission-denied.md](../l2-runbooks/26-apple-business-permission-denied.md)—L2 #26 7-leaf Mermaid decision tree for Apple Business permission denied investigation
 
 ## Version History
 

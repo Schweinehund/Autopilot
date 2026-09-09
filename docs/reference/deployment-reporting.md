@@ -18,11 +18,11 @@ platform: Windows
 
 This reference document provides guidance on Intune deployment reporting for Windows Autopilot, covering report locations and types for both APv1 and APv2, deployment status meanings, and success-rate interpretation for fleet health monitoring. It covers Windows Autopilot deployments across both frameworks. The primary audience is Intune administrators and L2 engineers tracking fleet-wide deployment outcomes.
 
-> **Version gate:** This guide covers deployment reporting for both APv1 and APv2. APv2 reports are in a different location than APv1 — using the wrong portal path shows no data.
+> **Version gate:** This guide covers deployment reporting for both APv1 and APv2. APv2 reports are in a different location than APv1—using the wrong portal path shows no data.
 
 > Always confirm which framework the device uses first. For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-Deployment reports let admins verify provisioning outcomes, investigate failures, and track fleet health over time. Autopilot provides separate report locations for APv1 and APv2 — a common mistake is checking the wrong location and concluding no data exists.
+Deployment reports let administrators verify provisioning outcomes, investigate failures, and track fleet health over time. Autopilot provides separate report locations for APv1 and APv2—a common mistake is checking the wrong location and concluding no data exists.
 
 ## Prerequisites
 
@@ -57,22 +57,22 @@ Deployment reports let admins verify provisioning outcomes, investigate failures
 3. Filter by **Status**: Failed to focus on devices requiring investigation.
 4. Click an individual device to view the deployment timeline with per-phase timestamps.
 
-   > **What breaks if misconfigured:** If you check this report for APv2 devices, you will see no data. APv2 devices report to a completely different portal location. This is a frequent source of confusion during incidents. Confirm the device framework before investigating.
+   > **What breaks if misconfigured:** If you check this report for APv2 devices, you see no data. APv2 devices report to a completely different portal location. This is a frequent source of confusion during incidents. Confirm the device framework before investigating.
 
 ### Step 2: Navigate to APv2 Deployment Report
 
 1. Navigate to **Intune admin center** > Devices > Monitor > **Windows Autopilot device preparation deployments**.
-2. Near real-time status updates (no 30-day limit concept — refreshes continuously).
+2. Near real-time status updates (no 30-day limit concept—refreshes continuously).
 3. For failed deployments: click **Download diagnostics** to retrieve the full diagnostic bundle.
 4. Review the enrollment time grouping section for APv2-specific failures.
 
-   > **What breaks if misconfigured:** Admin looks at APv1 report location for APv2 devices — sees no data. APv2 reports are in a DIFFERENT portal location. Always confirm which framework the device uses first.
+   > **What breaks if misconfigured:** Administrator looks at APv1 report location for APv2 devices—sees no data. APv2 reports are in a DIFFERENT portal location. Always confirm which framework the device uses first.
    > See: [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)
 
 ### Step 3: Check Enrollment Time Grouping Failures (APv2)
 
 1. Navigate to **Intune admin center** > Devices > Monitor > **Enrollment time grouping failures**.
-2. Updated within 20 minutes of failure — shows devices that could not join the ETG security group.
+2. Updated within 20 minutes of failure—shows devices that could not join the ETG security group.
 3. Common causes: incorrect group configuration, Entra ID processing delays, or missing ETG group assignment to the Device Preparation policy.
 
 ### Step 4: Export Report Data

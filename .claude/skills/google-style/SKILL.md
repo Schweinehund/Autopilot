@@ -125,6 +125,10 @@ Read the file, don't guess the rule.
 - Rewriting a heading into sentence case but leaving it noun-based (`Installation`)
   instead of task-based (`Install the CLI`).
 - "Fixing" passive voice inside a quoted error message or log line.
+- Converting passive to active by inventing an actor the source sentence withheld
+  on purpose. Naming an actor is the one rewrite in this set that can invent a fact;
+  default to the reader, and flag any other forced-actor choice for review instead of
+  applying it automatically. See `references/voice.md`.
 - Lowercasing a product name because the checker flagged the heading.
 - Applying the word list mechanically: `AVOID` means use with caution, `DON'T USE`
   means don't. Read the entry — many have documented exceptions.

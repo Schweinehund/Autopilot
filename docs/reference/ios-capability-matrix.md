@@ -16,13 +16,13 @@ platform: all
 
 ## Summary
 
-This reference document is a capability matrix comparing Intune management capabilities across Windows, macOS, and iOS/iPadOS spanning enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It highlights Apple-platform differences most relevant to admins coming from macOS ADE, including DDM maturity, supervision model scope, and VPP licensing behavior. The primary audience is Intune administrators and L2 engineers troubleshooting cross-platform deployments.
+This reference document is a capability matrix comparing Intune management capabilities across Windows, macOS, and iOS/iPadOS spanning enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It highlights Apple-platform differences most relevant to administrators coming from macOS ADE, including DDM maturity, supervision model scope, and VPP licensing behavior. The primary audience is Intune administrators and L2 engineers troubleshooting cross-platform deployments.
 
-This matrix compares Intune management capabilities across three platforms. Apple-platform readers (admins coming from macOS ADE) will find the iOS↔macOS comparison surfaces the most meaningful differences — DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed via the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For a side-by-side comparison of iOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
+This matrix compares Intune management capabilities across three platforms. Apple-platform readers (administrators coming from macOS ADE) find the iOS↔macOS comparison surfaces the most meaningful differences—DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed through the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For a side-by-side comparison of iOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
 
-The table below compares enrollment methods, supervision state, and Apple TV/Shared iPad support across Windows, macOS, and iOS.
+The following table compares enrollment methods, supervision state, and Apple TV/Shared iPad support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -46,7 +46,7 @@ The table below compares enrollment methods, supervision state, and Apple TV/Sha
 
 ## Configuration
 
-The table below compares configuration capabilities — DDM, restriction scope, and certificate deployment — across Windows, macOS, and iOS.
+The following table compares configuration capabilities—DDM, restriction scope, and certificate deployment—across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -65,7 +65,7 @@ The table below compares configuration capabilities — DDM, restriction scope, 
 
 ## App Deployment
 
-The table below compares app-packaging formats, install behavior, and dependency/supersedence support across Windows, macOS, and iOS.
+The following table compares app-packaging formats, install behavior, and dependency/supersedence support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -82,7 +82,7 @@ The table below compares app-packaging formats, install behavior, and dependency
 
 ## Compliance
 
-The table below compares compliance checks — OS version gate, disk encryption, jailbreak/root detection, and TPM attestation — across Windows, macOS, and iOS.
+The following table compares compliance checks—OS version gate, disk encryption, jailbreak/root detection, and TPM attestation—across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -99,7 +99,7 @@ The table below compares compliance checks — OS version gate, disk encryption,
 
 ## Software Updates
 
-The table below compares update-ring management, deferral duration, and emergency override capabilities across Windows, macOS, and iOS.
+The following table compares update-ring management, deferral duration, and emergency override capabilities across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -113,7 +113,7 @@ The table below compares update-ring management, deferral duration, and emergenc
 
 ## Conditional Access
 
-The table below compares device-based, web-app, per-app, and risk-based Conditional Access support across Windows, macOS, and iOS.
+The following table compares device-based, web-app, per-app, and risk-based Conditional Access support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -129,22 +129,22 @@ The table below compares device-based, web-app, per-app, and risk-based Conditio
 
 The most significant iOS capability gaps relative to Windows and macOS are:
 
-1. **No CLI diagnostic access** — iOS has no equivalent to Windows `mdmdiagnosticstool.exe` or macOS `profiles` / `log show` / `system_profiler`. L2 relies on MDM diagnostic report, Company Portal log upload, or Mac+cable sysdiagnose (see [iOS L2 Log Collection Guide](../l2-runbooks/14-ios-log-collection.md)).
-2. **Supervision gates a significant capability subset** — silent app install, home screen control, DDM app install, and most restriction profiles are supervised-only. Supervision is set at ADE enrollment and CANNOT be added retroactively without a full device erase.
-3. **No hybrid domain join** — iOS has no concept equivalent to Entra Hybrid Join; authentication is Entra-only.
-4. **No registry / plist-equivalent admin inspection** — unlike macOS Terminal (`profiles show`) or Windows regedit, iOS admins cannot directly inspect device state; diagnostics come through Intune admin center reports only.
-5. **No pre-provisioning / White Glove equivalent** — iOS has no staging path for IT to pre-configure devices before user delivery; ADE enrollment happens at user's first Setup Assistant.
-6. **Jailbreak detection is iOS-only** — represents a unique compliance surface; no Windows or macOS equivalent (TPM attestation addresses a different threat model).
-7. **No app dependency or install order control** — like macOS, iOS lacks Intune's Windows Win32 dependency graph feature. Complex deployments must sequence via separate compliance-gated assignments.
-8. **Account-Driven User Enrollment privacy limits** — on BYOD devices enrolled via Account-Driven UE, IT cannot see personal apps, photos, iCloud content, or device identifiers beyond the work profile. This is by design (Apple-enforced) but creates support-investigation limitations.
+1. **No CLI diagnostic access**—iOS has no equivalent to Windows `mdmdiagnosticstool.exe` or macOS `profiles` / `log show` / `system_profiler`. L2 relies on MDM diagnostic report, Company Portal log upload, or Mac+cable sysdiagnose (see [iOS L2 Log Collection Guide](../l2-runbooks/14-ios-log-collection.md)).
+2. **Supervision gates a significant capability subset**—silent app install, home screen control, DDM app install, and most restriction profiles are supervised-only. Supervision is set at ADE enrollment and CANNOT be added retroactively without a full device erase.
+3. **No hybrid domain join**—iOS has no concept equivalent to Entra Hybrid Join; authentication is Entra-only.
+4. **No registry / plist-equivalent administrator inspection**—unlike macOS Terminal (`profiles show`) or Windows regedit, iOS administrators cannot directly inspect device state; diagnostics come through Intune admin center reports only.
+5. **No pre-provisioning / White Glove equivalent**—iOS has no staging path for IT to pre-configure devices before user delivery; ADE enrollment happens at user's first Setup Assistant.
+6. **Jailbreak detection is iOS-only**—represents a unique compliance surface; no Windows or macOS equivalent (TPM attestation addresses a different threat model).
+7. **No app dependency or install order control**—like macOS, iOS lacks Intune's Windows Win32 dependency graph feature. Complex deployments must be sequenced using separate compliance-gated assignments.
+8. **Account-Driven User Enrollment privacy limits**—on BYOD devices enrolled through Account-Driven UE, IT cannot see personal apps, photos, iCloud content, or device identifiers beyond the work profile. This is by design (Apple-enforced) but creates support-investigation limitations.
 
 ## See Also
 
-- [macOS Capability Matrix](macos-capability-matrix.md) — Windows↔macOS bilateral view (sibling document)
-- [Windows vs macOS Concept Comparison](../windows-vs-macos.md) — terminology mapping across platforms
-- [iOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md) — 4-path enrollment comparison (ADE, Device, User, MAM-WE)
-- [iOS Admin Setup Overview](../admin-setup-ios/00-overview.md) — entry point for all iOS admin guides
-- [APv1 vs APv2 Comparison](../apv1-vs-apv2.md) — Windows framework comparison
+- [macOS Capability Matrix](macos-capability-matrix.md)—Windows↔macOS bilateral view (sibling document)
+- [Windows vs macOS Concept Comparison](../windows-vs-macos.md)—terminology mapping across platforms
+- [iOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md)—4-path enrollment comparison (ADE, Device, User, MAM-WE)
+- [iOS Admin Setup Overview](../admin-setup-ios/00-overview.md)—entry point for all iOS administrator guides
+- [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)—Windows framework comparison
 
 ---
 

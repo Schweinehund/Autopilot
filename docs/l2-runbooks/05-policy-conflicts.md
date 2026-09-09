@@ -16,14 +16,14 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers systematic identification and resolution of the five most common Autopilot provisioning policy conflicts: AutoAdminLogon, AppLocker CSP, DeviceLock, Security Baseline, and PreferredAadTenantDomainName.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers systematic identification and resolution of the five most common Autopilot provisioning policy conflicts: AutoAdminLogon, AppLocker CSP, DeviceLock, Security Baseline, and PreferredAadTenantDomainName.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
-Policy conflicts are a common cause of [ESP](../_glossary.md#esp) failures, [OOBE](../_glossary.md#oobe) reboot loops, and autologon failures during Autopilot provisioning. Unlike app install failures that produce a specific error code, policy conflicts typically cause "Something went wrong" messages without a hex error code — or they cause the device to stall silently mid-provisioning. This guide covers systematic identification and resolution of conflicting policies across the five most common conflict categories: AutoAdminLogon, AppLocker CSP, DeviceLock password policies, Security Baseline conflicts, and PreferredAadTenantDomainName mismatches.
+Policy conflicts are a common cause of [ESP](../_glossary.md#esp) failures, [OOBE](../_glossary.md#oobe) reboot loops, and autologon failures during Autopilot provisioning. Unlike app install failures that produce a specific error code, policy conflicts typically cause "Something went wrong" messages without a hex error code—or they cause the device to stall silently mid-provisioning. This guide covers systematic identification and resolution of conflicting policies across the five most common conflict categories: AutoAdminLogon, AppLocker CSP, DeviceLock password policies, Security Baseline conflicts, and PreferredAadTenantDomainName mismatches.
 
 Policy conflicts surface most frequently when existing security baseline or compliance policies target all devices (including Autopilot devices still in provisioning) rather than only enrolled, compliant devices.
 
@@ -66,15 +66,15 @@ See [registry-paths.md](../reference/registry-paths.md) for the `Winlogon` key r
 
 ### Step 3: Check for AppLocker CSP conflicts
 
-AppLocker CSP configured via Intune causes reboot loops during [OOBE](../_glossary.md#oobe) and [ESP](../_glossary.md#esp). The symptom is a device that repeatedly restarts without completing provisioning — typically 2 to 5 reboots before stalling.
+AppLocker CSP configured through Intune causes reboot loops during [OOBE](../_glossary.md#oobe) and [ESP](../_glossary.md#esp). The symptom is a device that repeatedly restarts without completing provisioning—typically 2 to 5 reboots before stalling.
 
 Investigation steps:
 1. In Intune admin center, navigate to **Devices > Configuration profiles**.
 2. Search for any AppLocker or Endpoint Security policies.
 3. Identify whether any AppLocker CSP profile is targeted at a group that includes Autopilot provisioning devices.
-4. Check the device's configuration profile assignment status — if an AppLocker CSP policy is listed as "succeeded" or "pending" during early provisioning, it is a candidate conflict.
+4. Check the device's configuration profile assignment status—if an AppLocker CSP policy is listed as "succeeded" or "pending" during early provisioning, it is a candidate conflict.
 
-AppLocker CSP policies should only be applied to fully enrolled and compliant devices, not to devices during initial provisioning.
+AppLocker CSP policies must be applied only to fully enrolled and compliant devices, not to devices during initial provisioning.
 
 ### Step 4: Check for DeviceLock policy conflicts
 
@@ -118,18 +118,18 @@ If `PreferredAadTenantDomainName` is set, verify that it matches the Azure AD te
 
 ### Step 6: Review Security Baseline policy assignments
 
-Microsoft 365 Security Baselines are a common source of policy conflicts because they contain settings that affect UAC, VBS, autologon, and password policies — all of which can interfere with Autopilot provisioning.
+Microsoft 365 Security Baselines are a common source of policy conflicts because they contain settings that affect UAC, VBS, autologon, and password policies—all of which can interfere with Autopilot provisioning.
 
-**Note:** Specific policy setting names should be validated against the current Microsoft 365 Security Baseline version in use. Policy names change between baseline versions. The conflict categories below are stable; individual setting names require verification at the current baseline version.
+**Note:** Validate specific policy setting names against the current Microsoft 365 Security Baseline version in use. Policy names change between baseline versions. The following conflict categories are stable; individual setting names require verification at the current baseline version.
 
 Investigation steps:
 1. In Intune admin center, navigate to **Endpoint security > Security baselines**.
 2. Identify any Security Baseline profiles assigned to groups that include the Autopilot provisioning device.
 3. Review the baseline profile for these conflict-prone categories:
-   - **VBS settings** — Virtualization-Based Security settings that may cause consent dialogs if triggered during ESP
-   - **UAC settings** — UAC elevation behavior settings that may cause unexpected prompts during device phase
-   - **DeviceLock settings** — password complexity settings that conflict with `DefaultUser0` autologon
-   - **Winlogon settings** — any settings touching `AutoAdminLogon` or the interactive logon behavior
+   - **VBS settings**—Virtualization-Based Security settings that may cause consent dialogs if triggered during ESP
+   - **UAC settings**—UAC elevation behavior settings that may cause unexpected prompts during device phase
+   - **DeviceLock settings**—password complexity settings that conflict with `DefaultUser0` autologon
+   - **Winlogon settings**—any settings touching `AutoAdminLogon` or the interactive logon behavior
 
 4. Check the device's security baseline assignment report for "failed" or "conflict" states during the provisioning window.
 
@@ -141,7 +141,7 @@ $legalNotice = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 Get-ItemProperty -Path $legalNotice -Name LegalNoticeCaption, LegalNoticeText -ErrorAction SilentlyContinue
 ```
 
-If `LegalNoticeCaption` or `LegalNoticeText` is populated, an interactive logon banner requires manual dismissal — blocking the pre-provisioning technician flow.
+If `LegalNoticeCaption` or `LegalNoticeText` is populated, an interactive logon banner requires manual dismissal—blocking the pre-provisioning technician flow.
 
 ## Resolution
 
@@ -170,7 +170,7 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVers
 
 ### Scenario B: AppLocker CSP causing reboot loop
 
-**Root cause:** An AppLocker CSP policy applied via Intune is triggering reboot loops during [OOBE](../_glossary.md#oobe) or [ESP](../_glossary.md#esp).
+**Root cause:** An AppLocker CSP policy applied through Intune is triggering reboot loops during [OOBE](../_glossary.md#oobe) or [ESP](../_glossary.md#esp).
 
 **Resolution:**
 1. In Intune admin center, navigate to the AppLocker CSP configuration profile.
@@ -212,7 +212,7 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVers
 
 Escalate when the root cause is a Microsoft-side service issue or an Intune backend bug. Indicators:
 
-- All policy assignments appear correctly scoped in Intune admin center — no policies target the Autopilot provisioning device group with conflicting settings
+- All policy assignments appear correctly scoped in Intune admin center—no policies target the Autopilot provisioning device group with conflicting settings
 - No AutoAdminLogon, AppLocker CSP, DeviceLock, Security Baseline, or PreferredAadTenantDomainName conflicts are found
 - Provisioning still fails with "Something went wrong" and no discrete error code
 - Intune service health dashboard (admin.microsoft.com > Health > Service health) shows degradation in Intune, Azure AD, or Autopilot service
@@ -221,10 +221,10 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 
 ## Tool References
 
-- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus) — comprehensive device state snapshot; use to verify registration state and profile assignment
-- [Registry Paths](../reference/registry-paths.md) — Autopilot provisioning registry paths: `Provisioning\Diagnostics\Autopilot`, `AutopilotSettings`, enrollment keys
-- [ESP Error Codes](../error-codes/03-esp-enrollment.md) — policy conflicts table with six no-code failure patterns and their L1/L2 actions
-- [ESP Deep-Dive](02-esp-deep-dive.md) — for ESP-specific registry investigation (FirstSync, ExpectedPolicies, Sidecar) when a policy conflict is confirmed and you need to correlate with app install status
+- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus)—comprehensive device state snapshot; use to verify registration state and profile assignment
+- [Registry Paths](../reference/registry-paths.md)—Autopilot provisioning registry paths: `Provisioning\Diagnostics\Autopilot`, `AutopilotSettings`, enrollment keys
+- [ESP Error Codes](../error-codes/03-esp-enrollment.md)—policy conflicts table with six no-code failure patterns and their L1/L2 actions
+- [ESP Deep-Dive](02-esp-deep-dive.md)—for ESP-specific registry investigation (FirstSync, ExpectedPolicies, Sidecar) when a policy conflict is confirmed and you need to correlate with app install status
 
 ---
 

@@ -652,3 +652,11 @@ Some anchors are broken under real GitHub slug rules but pass `check-nav-hub-lin
 because it collapses hyphen runs — e.g. `#deadlines-cutover-dates` → `### Deadlines &
 Cutover Dates` (GitHub: `deadlines--cutover-dates`), `#kme` → `### KME (Knox Mobile
 Enrollment)`. Worth its own ticket.
+
+## Standing rule (STD-03, self-contained -- does not endorse the rest of this file)
+
+Never mandate a rule set whose checker cannot report zero on work already accepted.
+`check.py` returns more than ten thousand candidates on a corpus that has already
+been fully human-audited, and one of its rules conflicts directly with this
+repository's own validators. This statement is independent of the narrative above --
+that narrative is this pass's own resume document and is not authoritative.

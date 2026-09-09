@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
-last_verified: 2026-07-30
-review_by: 2026-10-28
+last_verified: 2026-09-03
+review_by: 2026-12-02
 applies_to: Windows 11 multi-app kiosk (restricted user experience via the AssignedAccess CSP Configuration node, delivered by an Intune custom OMA-URI profile)
 audience: admin
 ---
@@ -16,9 +16,9 @@ audience: admin
 
 ## Summary
 
-Following this recipe yields a Windows 11 device locked to a restricted user experience — a bounded, multi-app allow-list and Start layout — delivered through the AssignedAccess CSP `Configuration` node via an Intune custom OMA-URI profile, with no Templates GUI path available. It covers Windows 11 22H2 or later on Pro, Enterprise, Education, or IoT Enterprise editions and requires the Intune Administrator role to author the configuration profile and assign it to a device group.
+Following this recipe yields a Windows 11 device locked to a restricted user experience—a bounded, multi-app allow-list and Start layout—delivered through the AssignedAccess CSP `Configuration` node using an Intune custom OMA-URI profile, with no Templates GUI path available. It covers Windows 11 22H2 or later on Pro, Enterprise, Education, or IoT Enterprise editions and requires the Intune Administrator role to author the configuration profile and assign it to a device group.
 
-> **Scope:** Covers the Windows 11 **restricted user experience** — a defined list of apps behind a tailored Start menu and Taskbar.
+> **Scope:** Covers the Windows 11 **restricted user experience**—a defined list of apps behind a tailored Start menu and Taskbar.
 
 > The single-app case, which Microsoft names a **kiosk experience**, is a different profile type and is not worked here.
 
@@ -26,17 +26,17 @@ Following this recipe yields a Windows 11 device locked to a restricted user exp
 
 ## Prerequisites
 
-- **This recipe is NOT:** the single-app kiosk experience (one UWP app or Microsoft Edge running full-screen — see the anti-feature table below), Shell Launcher (a shell replacement, and not supported on Pro), Shared PC mode, or Entra "Shared device mode" (SDM/Global Sign-Out is iOS/Android-only).
+- **This recipe is NOT:** the single-app kiosk experience (one UWP app or Microsoft Edge running full-screen—see the following anti-feature table), Shell Launcher (a shell replacement; Microsoft's own AssignedAccess CSP reference states the gate in edition-only terms—not supported on Pro—and no first-party page names activation status as a separate factor. **Pilot-observed, one tenant:** the node also failed with `Class is not licensed for use` on an installed Enterprise image that was reported as unactivated; that observation is not first-party-documented and is recorded here as what happened, not as why), Shared PC mode, or Entra "Shared device mode" (SDM/Global Sign-Out is iOS/Android-only).
 - **RBAC:** Intune Administrator role, or an equivalent custom role covering device configuration profiles, app assignment, and enrollment configuration.
 - **Windows edition:** Pro, Enterprise / Enterprise LTSC, Education, or IoT Enterprise / IoT Enterprise LTSC. Microsoft publishes one undifferentiated edition list for Assigned Access, so the floors are identical for both single-app and multi-app Assigned Access. Pro Education is assumed same as Pro, unconfirmed by name.
-- **Windows 11 22H2 or later** — this recipe's worked Start layout uses `v5:StartPins`, which requires 22H2 or later. Whether a 21H2 device can obtain an equivalent multi-app Start layout through the 2017 or `v4` namespace is not documented, so do not assume that dropping `v5:StartPins` buys 21H2 support.
-- **TPM 2.0 with device attestation support** — the sole self-deploying authentication mechanism; see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
+- **Windows 11 22H2 or later**—this recipe's worked Start layout uses `v5:StartPins`, which requires 22H2 or later. Whether a 21H2 device can obtain an equivalent multi-app Start layout through the 2017 or `v4` namespace is not documented, so do not assume that dropping `v5:StartPins` buys 21H2 support.
+- **TPM 2.0 with device attestation support**—the sole self-deploying authentication mechanism; see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
 - **Physical hardware, not a virtual machine.** A self-deploying deployment attempted on a device without TPM 2.0 support, or on a virtual machine, fails while verifying the device with an `0x800705B4` timeout error, and that limitation includes Hyper-V virtual TPMs. Separately, the touch keyboard is not triggered on virtual machines, so pilot a kiosk on a physical device.
-- **Wired Ethernet at the deployment location** is the zero-touch precondition: with Ethernet no user interaction is required at OOBE, while Wi-Fi still works with the user selecting the language, locale, and keyboard and making a network connection — see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
-- **Device-phase-only Enrollment Status Page (ESP)** policy configured — see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
-- **A dynamic device group** covering the kiosk fleet — see [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md).
+- **Wired Ethernet at the deployment location** is the zero-touch precondition: with Ethernet no user interaction is required at OOBE, while Wi-Fi still works with the user selecting the language, locale, and keyboard and making a network connection—see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
+- **Device-phase-only Enrollment Status Page (ESP)** policy configured—see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
+- **A dynamic device group** covering the kiosk fleet—see [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md).
 - **An Entra group containing standard users only**, whose object ID names the kiosk population inside the configuration file.
-- **Every allow-listed app already installed on the device** — device-context, Required, deployed to the device group before any kiosk account signs in. An app named in the configuration that is not deployed to the machine reports `AppNotFound` on the AssignedAccess CSP `Status` node. That is a prerequisite symptom, not a check this recipe performs: `Status` is not readable through Intune (see the anti-feature table below).
+- **Every allow-listed app already installed on the device**—device-context, Required, deployed to the device group before any kiosk account signs in. An app named in the configuration that is not deployed to the machine reports `AppNotFound` on the AssignedAccess CSP `Status` node. That is a prerequisite symptom, not a check this recipe performs: `Status` is not readable through Intune (see the following anti-feature table).
 
 ## Unsupported and Anti-Feature Callouts
 
@@ -50,7 +50,7 @@ Following this recipe yields a Windows 11 device locked to a restricted user exp
 | The legacy `KioskModeApp` node left configured alongside `Configuration` | From Windows 10 version 1803 onward `KioskModeApp` becomes a no-op once `Configuration` is set — and Add, Replace and Delete on `KioskModeApp` **still return SUCCESS** to the MDM server while having no effect on the device. Get returns the configured JSON even though it is not in effect | Configure `Configuration` only, and delete any `KioskModeApp` OMA-URI row instead of trusting its SUCCESS |
 | Layering Shared PC mode over the restricted user experience | Microsoft documents no interaction between the two in either direction, so nothing states what the combination produces. Treat them as mutually exclusive rather than as a documented failure mode | Pick one model per device |
 | `AssignedAccess/Status` as a health-monitoring row | Not deliverable as a custom OMA-URI row: `Status` supports the **Get** operation only, and Intune requires a setting to support Add, Replace and Get | Verify on the device — the observable behaviour and event-log lines in [Verification](#verification) |
-| A local autologon account instead of the Entra group (not worked here) | The tradeoff runs both ways. A least-privileged local account contains the blast radius on a public-facing device, because using an Active Directory or Microsoft Entra user might allow an attacker to gain access to domain resources reachable by any domain account. The Entra group is what makes authenticated apps work at all, which is why this recipe works that arm. Autologon also stops working under Exchange ActiveSync password restrictions, and `PreferredAadTenantDomainName` prevents automatic sign-in | If the device needs autologon into one fixed app, that is the **single-app** case, not this one — see [Step 5a: Kiosk configuration](../recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration) |
+| A local autologon account instead of the Entra group (not worked here) | This reasoning holds only where the allow-listed apps need an authenticated Windows user. A least-privileged local account contains the scope of a compromise on a public-facing device, because using an Active Directory or Microsoft Entra user might allow an attacker to gain access to domain resources reachable by any domain account. The Entra group is what makes authenticated apps work at all, which is why this recipe works that arm. Autologon also stops working under Exchange ActiveSync password restrictions, and `PreferredAadTenantDomainName` prevents automatic sign-in | Where the sole allow-listed app performs its own sign-in, autologon multi-app is the correct arm—it is the reference implementation's shipped pattern for that device class; see [Walk-Up AVD Kiosk (RE-237)](06-walk-up-avd-kiosk-autologon.md). If the device needs autologon into one fixed app, that is the **single-app** case, not this one — see [Step 5a: Kiosk configuration](../recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration) |
 | Expecting a Start pin for an app the signing-in user does not have | If an app is not installed for the user but is included in the Start layout, the app is not shown on the Start screen; pins for apps that are not installed on the target device do not appear until the apps are installed. **No error is surfaced either way** | Deploy every allow-listed app device-context and Required to the device group before the first kiosk sign-in, and include dependencies: if an app depends on another app, both must be in the allowed-apps list |
 | Managing the generated AppLocker rules in an MMC snap-in | AppLocker rules generated by the restricted user experience cannot be managed in MMC snap-ins, and hand-authored rules can conflict with them | Change the allow-list in the configuration file rather than in AppLocker |
 | Expecting a newly installed UWP app to be blocked immediately | Assigned Access does not prevent the organization or users from installing UWP apps. An app installed during an Assigned Access session is not in the deny list; it is included only after the user signs out and signs in again | Treat the deny list as sign-in-scoped and re-verify after a sign-out and sign-in cycle |
@@ -59,30 +59,30 @@ Following this recipe yields a Windows 11 device locked to a restricted user exp
 
 ### Step 1: Enroll the device with self-deploying Autopilot
 
-1. Create the dynamic device group that the deployment profile, the ESP policy, the app assignments, and the kiosk configuration profile all target — see [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md).
-2. Create a self-deploying deployment profile assigned to that group — see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
-3. Create a device-phase-only Enrollment Status Page policy assigned to the same group — see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
+1. Create the dynamic device group that the deployment profile, the ESP policy, the app assignments, and the kiosk configuration profile all target—see [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md).
+2. Create a self-deploying deployment profile assigned to that group—see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
+3. Create a device-phase-only Enrollment Status Page policy assigned to the same group—see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
 
 Self-deploying mode has no user affinity, so only the device phase of ESP runs and there is no user phase to configure.
 
-Self-deploying enrollment and an interactive Entra sign-in are compatible, and the combination already ships in this corpus. Microsoft's first documented self-deploying outcome is that the device remains at the sign-on screen, where any member of the organization can sign in by specifying their Microsoft Entra credentials — which is the account model [Step 2](#step-2-choose-the-kiosk-account-model) works.
+Self-deploying enrollment and an interactive Entra sign-in are compatible, and the combination already ships in this corpus. Microsoft's first documented self-deploying outcome is that the device remains at the sign-on screen, where any member of the organization can sign in by specifying their Microsoft Entra credentials—which is the account model [Step 2](#step-2-choose-the-kiosk-account-model) works.
 
-> **What breaks if misconfigured:** If the dynamic device group rule does not match the device, nothing in this recipe reaches it — no deployment profile, no ESP, no apps, no configuration.
+> **What breaks if misconfigured:** If the dynamic device group rule does not match the device, nothing in this recipe reaches it—no deployment profile, no ESP, no apps, no configuration.
 
 ### Step 2: Choose the kiosk account model
 
-> **Ask the admin:** Which identities sign in to this kiosk — an Entra group of named users, or a local account that signs in automatically?
+> **Ask the admin:** Which identities sign in to this kiosk—an Entra group of named users, or a local account that signs in automatically?
 
 | Option | When to choose | Consequence if wrong | Branch |
 |--------|-----------------|----------------------|--------|
 | Entra group named inside the configuration file | Any allow-listed app requires user authentication, or sign-ins must be attributable to a person | Authenticated apps cannot sign anyone in, so the kiosk cannot do the job it was built for | Worked here — continue to [Step 3](#step-3-pre-install-the-allow-listed-apps) |
 | Local account with automatic sign-in | The device is public-facing, needs no authenticated app, and needs no per-person attribution | Domain resources reachable by any domain account become reachable from an unattended public device | Not worked here — see the autologon row under [Unsupported and Anti-Feature Callouts](#unsupported-and-anti-feature-callouts) |
 
-Microsoft's recommendation for planning either a kiosk or a restricted user experience is explicit: if applications require user authentication, do not use a local or generic user account, and instead target the group of users within the Assigned Access configuration file. The competing guidance to use a local, nonadministrator account is scoped to the kiosk profile — the single-app case — and not to this profile type.
+Microsoft's recommendation for planning either a kiosk or a restricted user experience is explicit: if applications require user authentication, do not use a local or generic user account, and instead target the group of users within the Assigned Access configuration file. The competing guidance to use a local, nonadministrator account is scoped to the kiosk profile—the single-app case—and not to this profile type.
 
 > **What breaks if misconfigured:** Choosing the local autologon arm and then finding that an allow-listed app needs an authenticated user is expensive to undo.
 
-> The account model determines the anti-feature callouts, the verification lines and the recovery path — all three have to be re-authored.
+> The account model determines the anti-feature callouts, the verification lines and the recovery path—all three have to be re-authored.
 
 ### Step 3: Pre-install the allow-listed apps
 
@@ -104,14 +104,14 @@ The Enrollment Status Page tracks apps, not the custom OMA-URI profile, so nothi
 
 Two different scopes decide whether a kiosk works, and they are set in two different places:
 
-- **Policy-delivery scope** is the Intune assignment — the device group that receives the custom profile in [Step 6](#step-6-deliver-the-configuration-through-a-custom-oma-uri-profile).
+- **Policy-delivery scope** is the Intune assignment—the device group that receives the custom profile in [Step 6](#step-6-deliver-the-configuration-through-a-custom-oma-uri-profile).
 - **Effective-configuration scope** is the account or group named inside the XML, in `Configs` > `Config` > `UserGroup`, authored in [Step 5](#step-5-author-the-assignedaccessconfiguration-xml).
 
 A device can receive the policy successfully and still show no restricted experience at all, because the identity signing in is not named inside the configuration.
 
 Fill `UserGroup/@Name` with the group's **object ID**, not its display name. Find it on the group's overview page: sign in to the Microsoft Entra admin center and browse to **Identity** > **Groups** > **All groups**.
 
-Apply the restricted user experience to **standard users only** — it is not supported to associate an admin user with an Assigned Access profile. This hazard turns on who is named inside the `Config`, not on how the device enrolled, so a group holding Global Administrators or Entra Joined Device Local Administrator role holders re-creates it on a self-deploying device just the same.
+Apply the restricted user experience to **standard users only**—it is not supported to associate an administrator user with an Assigned Access profile. This hazard turns on who is named inside the `Config`, not on how the device enrolled, so a group holding Global Administrators or Entra Joined Device Local Administrator role holders re-creates it on a self-deploying device just the same.
 
 The account-availability requirement Microsoft documents for individual `Account` entries is scoped by its own following sentence to local accounts. It is the local-arm contrast, not a precondition of the group path worked here.
 
@@ -119,7 +119,7 @@ The account-availability requirement Microsoft documents for individual `Account
 
 ### Step 5: Author the AssignedAccessConfiguration XML
 
-Author the configuration file locally, in an editor, before touching Intune. The payload below is complete and working except for exactly three values you must replace: the LOB app's AUMID (in both the allow-list entry and its Start pin — the same value in both places), the Entra group's object ID, and the profile GUID (one value, in both `Profile Id` and `DefaultProfile Id`).
+Author the configuration file locally, in an editor, before touching Intune. The following payload is complete and working except for exactly three values you must replace: the LOB app's AUMID (in both the allow-list entry and its Start pin—the same value in both places), the Entra group's object ID, and the profile GUID (one value, in both `Profile Id` and `DefaultProfile Id`).
 
 Two encoded facts are easy to get wrong. The schema orders a profile's children, so `Taskbar` must follow `v5:StartPins`. And the enclosing braces on the GUID are part of the schema-required pattern, so an unbraced GUID is silently schema-invalid.
 
@@ -163,18 +163,18 @@ Two encoded facts are easy to get wrong. The schema orders a profile's children,
 
 **Critical values to verify before pasting into Intune:**
 
-- **Backslashes.** They are doubled **only** inside the `v5:StartPins` JSON string, because JSON escapes a backslash; they are **single** in every XML attribute, including `App/@DesktopAppPath`. Both forms appear in the payload above, twelve lines apart. Doubling a backslash inside an XML attribute is the inversion that genuinely breaks.
+- **Backslashes.** They are doubled **only** inside the `v5:StartPins` JSON string, because JSON escapes a backslash; they are **single** in every XML attribute, including `App/@DesktopAppPath`. Both forms appear in the preceding payload, twelve lines apart. Doubling a backslash inside an XML attribute is the inversion that genuinely breaks.
 - **Element spelling.** Microsoft's prose names the profile *type* `AllAppList`; the XSD element is `<AllAppsList>`, one letter longer. Both are correct in their own register, but the profile-type spelling written inside angle brackets produces a document the device cannot parse.
 - **JSON key casing.** Every worked Microsoft sample uses `packagedAppId`; Microsoft's key table spells it `packagedAppID`. JSON keys are case-sensitive, so the payload uses the sample casing.
-- **Desktop pins.** No published sample confirms the casing of the pin-a-desktop-app-by-AUMID key, so prefer the `.lnk`-path key `desktopAppLink` — and confirm the shortcut already exists on the device at that path.
-- **`applyOnce` is omitted.** It is supported starting with Windows 11 version 24H2 with KB5062660 and is ignored on earlier versions, so at this recipe's own 22H2 floor it is a documented no-op. No statement covers whether `v5:StartPins` honours it at all, and its absence produces the reapply-at-every-login behaviour a kiosk wants. An `Export-StartLayout` JSON taken from a 24H2 device may contain the key — drop it when you lift a pinned list from an export.
+- **Desktop pins.** No published sample confirms the casing of the pin-a-desktop-app-by-AUMID key, so prefer the `.lnk`-path key `desktopAppLink`—and confirm the shortcut already exists on the device at that path.
+- **`applyOnce` is omitted.** It is supported starting with Windows 11 version 24H2 with KB5062660 and is ignored on earlier versions, so at this recipe's own 22H2 floor it is a documented no-op. No statement covers whether `v5:StartPins` honours it at all, and its absence produces the reapply-at-every-login behaviour a kiosk wants. An `Export-StartLayout` JSON taken from a 24H2 device may contain the key—drop it when you lift a pinned list from an export.
 - **The two declared namespaces are the only two this payload needs.** Microsoft's own samples additionally declare an XML Schema namespace and an aliased duplicate of the 2017 namespace; both are unused in the instance document, so this payload omits them rather than implying they are required.
 
-Validating the payload against the published XSD is possible but awkward: the schemas are published as page text in five separate documents that import one another without resolvable locations, and the add-ons require an XSD 1.1 processor, so an author must assemble the schema set by hand. Two checks are genuinely executable instead. Before pasting, cast the file in PowerShell — `$x = [xml](Get-Content .\kiosk.xml -Raw)` throws on an unescaped `&`, an unclosed tag, a broken CDATA boundary, or a truncated copy-paste. After delivery, a malformed or schema-invalid payload surfaces device-side as a profile parse or apply error in the event log channel [Verification](#verification) uses.
+Validating the payload against the published XSD is possible but awkward: the schemas are published as page text in five separate documents that import one another without resolvable locations, and the add-ons require an XSD 1.1 processor, so an author must assemble the schema set by hand. Two checks are genuinely executable instead. Before pasting, cast the file in PowerShell—`$x = [xml](Get-Content .\kiosk.xml -Raw)` throws on an unescaped `&`, an unclosed tag, a broken CDATA boundary, or a truncated copy-paste. After delivery, a malformed or schema-invalid payload surfaces device-side as a profile parse or apply error in the event log channel [Verification](#verification) uses.
 
 #### Field decomposition
 
-The table below decomposes the payload field by field. It is **not** a schema statement — the schema fixes the order, and in the fence `Taskbar` must follow `v5:StartPins`.
+The following table decomposes the payload field by field. It is **not** a schema statement—the schema fixes the order, and in the fence `Taskbar` must follow `v5:StartPins`.
 
 | # | Field | What it is | Decision-relevant semantics |
 |---|---|---|---|
@@ -201,7 +201,7 @@ The table below decomposes the payload field by field. It is **not** a schema st
 | 21 | `UserGroup/@Type` | `LocalGroup`, `ActiveDirectoryGroup` or `AzureActiveDirectoryGroup` | A `UserGroup` `Config` can only reference a restricted-user-experience profile, never a kiosk profile. Nested groups are not supported |
 | 22 | `UserGroup/@Name` | Group identifier | For `AzureActiveDirectoryGroup` this is the **object ID**, not the display name. The device needs internet connectivity when a member of the group signs in |
 
-In short: `AllAppsList` decides what may run, `v5:StartPins` decides what the user sees, `Taskbar` is mandatory and must come last, and `Configs` decides who gets the experience — a separate question from which devices receive the policy.
+In short: `AllAppsList` decides what may run, `v5:StartPins` decides what the user sees, `Taskbar` is mandatory and must come last, and `Configs` decides who gets the experience—a separate question from which devices receive the policy.
 
 #### Namespaces and version floors
 
@@ -213,10 +213,10 @@ In short: `AllAppsList` decides what may run, `v5:StartPins` decides what the us
 
 Four things about that table:
 
-- The first column is labelled by namespace **year**, not by Windows build. Microsoft's published version table labels its rows by Windows version, which invites a Windows 11 admin to read the 2017 row as a droppable "Windows 10" row. It is not droppable: the 2017 namespace is the unprefixed root, written bare on every child element, and it is mandatory on every payload including Windows 11. The alias cell Microsoft fills with the word `default` on that row is an XSD-internal XPath prefix, and an instance document never writes it.
-- Microsoft's published table binds the alias `v5` to two different namespaces — the 2022 one and a Windows 10 one. That is a defect in the published table; the 2022 namespace is the one Windows 11 22H2 needs.
+- The first column is labelled by namespace **year**, not by Windows build. Microsoft's published version table labels its rows by Windows version, which invites a Windows 11 administrator to read the 2017 row as a droppable "Windows 10" row. It is not droppable: the 2017 namespace is the unprefixed root, written bare on every child element, and it is mandatory on every payload including Windows 11. The alias cell Microsoft fills with the word `default` on that row is an XSD-internal XPath prefix, and an instance document never writes it.
+- Microsoft's published table binds the alias `v5` to two different namespaces—the 2022 one and a Windows 10 one. That is a defect in the published table; the 2022 namespace is the one Windows 11 22H2 needs.
 - The Windows-10 start-layout element lives in the 2017 root namespace, not in `v4:`.
-- What happens when a `v5:` element reaches a device below its floor is not documented on any Microsoft page. Do not infer a specific failure from that silence, and do not assume that removing `v5:StartPins` earns 21H2 support.
+- What happens when a `v5:` element reaches a device that predates its floor is not documented on any Microsoft page. Do not infer a specific failure from that silence, and do not assume that removing `v5:StartPins` earns 21H2 support.
 
 > **What breaks if misconfigured:** An unbraced `Profile Id`, a missing `Taskbar`, or a `Taskbar` placed before `v5:StartPins` each make the payload schema-invalid.
 
@@ -228,47 +228,47 @@ There is no Templates path for this on Windows 11. Microsoft documents Intune's 
 
 1. Sign in to the Microsoft Intune admin center.
 2. Select **Devices** > **Manage devices** > **Configuration** (the Configuration blade under Devices) > **Create** > **New policy**.
-3. Set **Platform** to **Windows 10 and later** and **Profile type** to **Custom** — or select **Templates** > **Custom**.
+3. Set **Platform** to **Windows 10 and later** and **Profile type** to **Custom**—or select **Templates** > **Custom**.
 4. Select **Create**.
 5. In **Basics**, enter a **Name** and a **Description**.
 6. Select **Next**.
-7. In **Configuration settings**, add one OMA-URI row using the field values in the table below.
+7. In **Configuration settings**, add one OMA-URI row using the field values in the following table.
 8. Select **Next**.
 9. In **Scope tags**, add scope tags if you use them, then select **Next**.
 10. In **Assignments**, select the **device** group from [Step 1](#step-1-enroll-the-device-with-self-deploying-autopilot), then select **Next**.
-11. In **Review + create**, review the settings and select **Create** — the profile is saved and assigned.
+11. In **Review + create**, review the settings and select **Create**—the profile is saved and assigned.
 
 | Field | Value |
 |---|---|
 | Name | A unique name for the OMA-URI setting, for example `Assigned Access restricted user experience` |
 | OMA-URI | `./Vendor/MSFT/AssignedAccess/Configuration` — the OMA-URI field is case-sensitive |
-| Data type | `String`, with the payload pasted as text. **MEDIUM confidence:** no first-party sentence states which Intune data type this node takes. The CSP node's format is `chr` (string), and Microsoft documents `String` for another CSP node whose value is likewise the content of an XML file. `String (XML file)` is the upload-a-file variant and the plausible wrong pick, though nothing states it is unsupported |
+| Data type | `String`, with the payload pasted as raw text. **Tenant-observed:** no first-party sentence states which Intune data type this node takes, but a raw paste is confirmed working—pasting pre-escaped XML causes Intune to escape the SyncML itself, so the value arrives double-encoded and the CSP fails with `0xc00ce556` (XML invalid at root). The CSP node's format is `chr` (string), and Microsoft documents `String` for another CSP node whose value is likewise the content of an XML file. `String (XML file)` is the upload-a-file variant and the plausible wrong pick, though nothing states it is unsupported |
 | Value | The complete contents of `kiosk.xml` from [Step 5](#step-5-author-the-assignedaccessconfiguration-xml) |
 
-Assign the profile to a **device** group. `Configuration` is a device-scope node, and Microsoft's AssignedAccess instruction is to assign the policy to a group whose members are the devices you want to configure — which governs over the generic custom-profile page's "users or groups" wording. That tension is [Step 4](#step-4-separate-policy-delivery-scope-from-effective-configuration-scope)'s two-scope distinction in its most concrete form.
+Assign the profile to a **device** group. `Configuration` is a device-scope node, and Microsoft's AssignedAccess instruction is to assign the policy to a group whose members are the devices you want to configure—which governs over the generic custom-profile page's "users or groups" wording. That tension is [Step 4](#step-4-separate-policy-delivery-scope-from-effective-configuration-scope)'s two-scope distinction in its most concrete form.
 
 > **What breaks if misconfigured:** For settings created with a string, base64 or XML data type, the stored value is obscured once saved.
 
-> An admin without the **Device configurations** Create, Read and Update permissions, or the Intune Administrator role, cannot read the XML back out of the portal.
+> An administrator without the **Device configurations** Create, Read and Update permissions, or the Intune Administrator role, cannot read the XML back out of the portal.
 
-> Keep the authored file in source control — the portal is not a reliable copy of it.
+> Keep the authored file in source control—the portal is not a reliable copy of it.
 
 ## Verification
 
-**Admin at the console, before the first kiosk sign-in:**
+**Administrator at the console, before the first kiosk sign-in:**
 
-- [ ] The `AssignedAccess > Operational` channel is enabled — in Event Viewer open **Applications and Services Logs** > **Microsoft** > **Windows** > **AssignedAccess** > **Operational**, right-click **Operational**, and select **Enable Log**. It is disabled by default, so do this before the first kiosk sign-in: for some failures events are captured only once, and logging enabled after an issue occurs may not capture them.
+- [ ] The `AssignedAccess > Operational` channel is enabled—in Event Viewer open **Applications and Services Logs** > **Microsoft** > **Windows** > **AssignedAccess** > **Operational**, right-click **Operational**, and select **Enable Log**. It is disabled by default, so do this before the first kiosk sign-in: for some failures events are captured only once, and logging enabled after an issue occurs may not capture them.
 - [ ] The profile arrived on the device: the key `HKLM\Software\Microsoft\Windows\AssignedAccessCsp` is present. This is device-scope and readable without the kiosk account signing in, which is what separates *the policy never arrived* from *the policy arrived but the signing-in identity is not in the configuration's scope*.
 
 **During and after the kiosk account's first sign-in:**
 
-- [ ] The kiosk account signs in and lands in the restricted Start menu, showing only allow-listed apps. An empty or partial pin set on the very first sign-in is the [Step 3](#step-3-pre-install-the-allow-listed-apps) timing hazard, not necessarily a failure — sign out, sign back in, and re-check before treating it as one.
+- [ ] The kiosk account signs in and lands in the restricted Start menu, showing only allow-listed apps. An empty or partial pin set on the very first sign-in is the [Step 3](#step-3-pre-install-the-allow-listed-apps) timing hazard, not necessarily a failure—sign out, sign back in, and re-check before treating it as one.
 - [ ] A non-allow-listed app fails to launch, which confirms the generated AppLocker rules are in force.
-- [ ] A representative allow-listed app's **secondary** flow completes without an app-blocked error — a file picker, a print dialog, or an OAuth redirect.
+- [ ] A representative allow-listed app's **secondary** flow completes without an app-blocked error—a file picker, a print dialog, or an OAuth redirect.
 - [ ] Blocked keyboard shortcuts are blocked: `Ctrl + Shift + Esc` (Task Manager), `WIN + R` (Run), `WIN + E` (File Explorer) and `WIN + I` (Settings) all do nothing.
-- [ ] The `AssignedAccess > Operational` event log is clean — meaning no profile parse error and no profile apply error for the kiosk identity, which is what the channel records when the payload is malformed or schema-invalid.
+- [ ] The `AssignedAccess > Operational` event log is clean—meaning no profile parse error and no profile apply error for the kiosk identity, which is what the channel records when the payload is malformed or schema-invalid.
 - [ ] Check `Microsoft-Windows-AssignedAccess/Admin` for **Event ID 31000** ("Unspecified error applying assigned access for current user, signing out") and confirm it is absent.
-- [ ] **Entra account/group only:** check `Microsoft-Windows-AAD/Operational` for **Event ID 1098** carrying `AADSTS50076` (MFA) or `AADSTS50158` (Terms of Use) and confirm both are absent. Interactive Conditional Access — MFA *or* Terms of Use — hard-breaks this sign-in by design. This check has no referent on the local autologon arm.
+- [ ] **Entra account/group only:** check `Microsoft-Windows-AAD/Operational` for **Event ID 1098** carrying `AADSTS50076` (MFA) or `AADSTS50158` (Terms of Use) and confirm both are absent. Interactive Conditional Access—MFA *or* Terms of Use—hard-breaks this sign-in by design. This check has no referent on the local autologon arm.
 
 The Assigned Access configuration takes effect the next time the targeted user signs in. If that account is already signed in when the configuration applies, sign out and sign back in before validating.
 
@@ -278,7 +278,7 @@ Removing the Assigned Access configuration is not the same as returning the devi
 
 **Exiting a running session (temporary):**
 
-- Alt+F4, Alt+Tab, Alt+Shift+Tab and Ctrl+Alt+Del are not blocked for a restricted-user-experience account. Ctrl+Alt+Del is the documented way to exit the kiosk experience, and deploying the profile automatically applies the `Ctrl+Alt+Del Options` policies `Remove Logoff`, `Remove Task Manager` and `Remove Change Password`, which strip those affordances. Those three are consequences of the profile, not steps an admin performs.
+- Alt+F4, Alt+Tab, Alt+Shift+Tab and Ctrl+Alt+Del are not blocked for a restricted-user-experience account. Ctrl+Alt+Del is the documented way to exit the kiosk experience, and deploying the profile automatically applies the `Ctrl+Alt+Del Options` policies `Remove Logoff`, `Remove Task Manager` and `Remove Change Password`, which strip those affordances. Those three are consequences of the profile, not steps an administrator performs.
 - Ctrl+Alt+Del exits the **running session only**. The kiosk relaunches when the Assigned Access account signs in again, or after the sign-in-screen time-out elapses.
 - On the multi-app kiosk page Microsoft documents a 30-second sign-in-screen time-out after which the kiosk relaunches, adjustable by adding `IdleTimeOut` (DWORD, milliseconds in hexadecimal) under `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI`. `IdleTimeOut` does not apply to the Microsoft Edge kiosk mode.
 
@@ -286,7 +286,7 @@ Removing the Assigned Access configuration is not the same as returning the devi
 
 - Unassign or delete the Intune policy that carries the configuration. The device needs network connectivity to receive that change, so an offline kiosk stays locked down until it checks in.
 - Removal is channel-scoped: unassign the policy where Intune delivered it; uninstall the provisioning package where a package delivered it.
-- **Removal is not rollback.** Deleting the Assigned Access configuration removes the policy settings associated with the users, but it cannot revert all the changes — in a multi-app kiosk scenario the Start menu configuration is maintained.
+- **Removal is not rollback.** Deleting the Assigned Access configuration removes the policy settings associated with the users, but it cannot revert all the changes—in a multi-app kiosk scenario the Start menu configuration is maintained.
 - Self-service removal through **Settings** is not available once a restricted user experience is configured.
 
 **Reimaging and re-enrollment:**
@@ -298,11 +298,11 @@ Removing the Assigned Access configuration is not the same as returning the devi
 
 - The autologon account is a local standard user that Assigned Access creates and manages.
 - An Entra-group `Config` requires the device to have internet connectivity when a member of the group signs in.
-- Nothing first-party states which arm recovers more easily. Treat the two facts above as separate; the comparison between them is `[ASSUMED]`.
+- Nothing first-party states which arm recovers more easily. Treat the preceding two facts as separate; the comparison between them is `[ASSUMED]`.
 
 **One device-scope side effect worth knowing before you deploy:**
 
-- Deploying this profile applies device-level policy settings to every user of the device, administrator accounts included — not only to the kiosk identity.
+- Deploying this profile applies device-level policy settings to every user of the device, administrator accounts included—not only to the kiosk identity.
 
 ## Configuration-Caused Failures
 
@@ -320,9 +320,9 @@ Removing the Assigned Access configuration is not the same as returning the devi
 
 ## See Also
 
-- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision block instantiates
-- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) — full self-deploying field reference, TPM 2.0, and network prerequisites
-- [ESP Policy](../admin-setup-apv1/03-esp-policy.md) — device-phase-only Enrollment Status Page configuration
-- [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) — the membership-rule syntax for the kiosk device group
-- [APv1 vs APv2](../apv1-vs-apv2.md) — framework selection reference
-- [Step 5a: Kiosk configuration](../recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration) — the single-app case, which this recipe does not work
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md)—the full spec this recipe's decision block instantiates
+- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md)—full self-deploying field reference, TPM 2.0, and network prerequisites
+- [ESP Policy](../admin-setup-apv1/03-esp-policy.md)—device-phase-only Enrollment Status Page configuration
+- [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md)—the membership-rule syntax for the kiosk device group
+- [APv1 vs APv2](../apv1-vs-apv2.md)—framework selection reference
+- [Step 5a: Kiosk configuration](../recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration)—the single-app case, which this recipe does not work

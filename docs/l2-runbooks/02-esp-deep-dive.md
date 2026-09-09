@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook performs change-controlled ESP registry edits and state reset — including clearing stale FirstSync keys via Restart-EnrollmentStatusPage and modifying Intune policy assignments — all actions require L2 approval. It covers registry-level investigation of both device-phase and user-phase Enrollment Status Page failures, including Win32 app Sidecar tracking and AppWorkload.log analysis.
+This L2 investigation runbook performs change-controlled ESP registry edits and state reset—including clearing stale FirstSync keys using Restart-EnrollmentStatusPage and modifying Intune policy assignments—all actions require L2 approval. It covers registry-level investigation of both device-phase and user-phase Enrollment Status Page failures, including Win32 app Sidecar tracking and AppWorkload.log analysis.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
@@ -79,8 +79,8 @@ Get-ItemProperty -Path $espPolicies -ErrorAction SilentlyContinue
 The `ExpectedPolicies` key contains the OMA-URI list of policies the device phase is waiting to receive from Intune. If a policy in this list is never delivered (targeting error, sync delay, or policy not yet applied server-side), the device phase stalls indefinitely.
 
 **What to look for:**
-- OMA-URI values present in `ExpectedPolicies` that have not been applied — cross-reference against Intune policy assignment status for the device
-- Policies assigned to user groups (not device groups) showing up in device phase expected list — user-targeted policies should not block device phase
+- OMA-URI values present in `ExpectedPolicies` that have not been applied—cross-reference against Intune policy assignment status for the device
+- Policies assigned to user groups (not device groups) showing up in device phase expected list—user-targeted policies should not block the device phase
 - Policies in a pending or failed state in Intune admin center under the device's policy assignment page
 
 See [registry-paths.md](../reference/registry-paths.md) for the `EnrollmentStatusTracking` key documentation.
@@ -121,7 +121,7 @@ An app with a Sidecar key showing an error state or install failure is the block
 
 > **CRITICAL:** Use `AppWorkload.log` as the primary app install log.
 
-> The log path changed in August 2024 — `IntuneManagementExtension.log` is no longer the primary source (it still exists but captures a different scope of events).
+> The log path changed in August 2024—`IntuneManagementExtension.log` is no longer the primary source (it still exists but captures a different scope of events).
 
 ```powershell
 $appLog = "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\AppWorkload.log"
@@ -135,14 +135,14 @@ Get-Content $appLog | Select-String -Pattern $appName -CaseSensitive:$false | Se
 ```
 
 **Key patterns to look for in AppWorkload.log:**
-- `Installation of [app] failed with exit code [code]` — specific failure with exit code for lookup
-- `0x80070005` — access denied during install; check if another process holds a lock
-- `0x80004005` — generic failure; may indicate TrustedInstaller conflict between LOB and Win32 apps
-- `RetryCount exceeded` — app has been retried the maximum number of times and is giving up
+- `Installation of [app] failed with exit code [code]`—specific failure with exit code for lookup
+- `0x80070005`—access denied during install; check if another process holds a lock
+- `0x80004005`—generic failure; may indicate TrustedInstaller conflict between LOB and Win32 apps
+- `RetryCount exceeded`—app has been retried the maximum number of times and is giving up
 
 ### Step 6: Check for policy conflicts
 
-If investigation in Steps 3–5 reveals no app install failure and expected policies appear correct, but ESP is still stuck — especially if you see autologon failures or reboot loops — cross-reference to [Policy Conflict Analysis](05-policy-conflicts.md).
+If investigation in Steps 3–5 reveals no app install failure and expected policies appear correct, but ESP is still stuck—especially if you see autologon failures or reboot loops—cross-reference to [Policy Conflict Analysis](05-policy-conflicts.md).
 
 Policy conflicts that cause ESP failures often manifest without a discrete error code and may look like an indefinite stall during the device phase or a broken autologon transition into the user phase.
 
@@ -175,7 +175,7 @@ After running: monitor the device to confirm ESP re-enters the device phase and 
    - **Remove from ESP-required list:** If the app is blocking but not critical for device phase, remove it from the list of apps required to block ESP (Enrollment Status Page configuration > block device use until these apps are installed).
    - **Fix app packaging:** If the app consistently fails with an access denied or exit code error, re-package the app and redeploy.
 
-For mixed LOB and Win32 app assignments causing a TrustedInstaller conflict, separate the app types across assignment groups — assign LOB apps to one group and Win32 apps to another.
+For mixed LOB and Win32 app assignments causing a TrustedInstaller conflict, separate the app types across assignment groups—assign LOB apps to one group and Win32 apps to another.
 
 ### Scenario C: ESP timeout (no specific error)
 
@@ -184,7 +184,7 @@ For mixed LOB and Win32 app assignments causing a TrustedInstaller conflict, sep
 1. Check the ESP timeout configured in the Autopilot profile: Intune admin center > Devices > Windows > Windows Enrollment > Enrollment Status Page. The default is 60 minutes.
 2. Check whether the ESP "Block device use until all apps and profiles are installed" setting is enabled and whether the app or policy list is feasible within the timeout window.
 3. Check if a Conditional Access policy is blocking Store app license acquisition during ESP (device is not yet compliant when CA policy runs).
-4. If the policy list in `ExpectedPolicies` contains policies that are never delivered, investigate the policy targeting in Intune — policies assigned to user groups will not be delivered during device phase.
+4. If the policy list in `ExpectedPolicies` contains policies that are never delivered, investigate the policy targeting in Intune—policies assigned to user groups are not delivered during the device phase.
 
 ## Escalation Ceiling
 
@@ -200,11 +200,11 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 
 ## Tool References
 
-- [Restart-EnrollmentStatusPage](../reference/powershell-ref.md#restart-enrollmentstatuspage) — restarts ESP process and clears stale FirstSync keys; supports `-WhatIf` for dry run
-- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus) — comprehensive device state snapshot combining registration, TPM, and network status
-- [Registry Paths](../reference/registry-paths.md) — ESP tracking keys: `EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`, `FirstSync`
-- [ESP Error Codes](../error-codes/03-esp-enrollment.md) — coded ESP error lookup table and policy conflicts table with multi-cause handling
-- [Policy Conflict Analysis](05-policy-conflicts.md) — for policy-related ESP failures including AutoAdminLogon, AppLocker CSP, and Security Baseline conflicts
+- [Restart-EnrollmentStatusPage](../reference/powershell-ref.md#restart-enrollmentstatuspage)—restarts ESP process and clears stale FirstSync keys; supports `-WhatIf` for dry run
+- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus)—comprehensive device state snapshot combining registration, TPM, and network status
+- [Registry Paths](../reference/registry-paths.md)—ESP tracking keys: `EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`, `FirstSync`
+- [ESP Error Codes](../error-codes/03-esp-enrollment.md)—coded ESP error lookup table and policy conflicts table with multi-cause handling
+- [Policy Conflict Analysis](05-policy-conflicts.md)—for policy-related ESP failures including AutoAdminLogon, AppLocker CSP, and Security Baseline conflicts
 
 ---
 

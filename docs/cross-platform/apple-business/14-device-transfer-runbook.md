@@ -6,7 +6,7 @@ audience: admin
 platform: ios+ipados+macos+tvos
 ---
 
-> **Platform applicability:** This document covers Apple Business cross-OU device transfer —
+> **Platform applicability:** This document covers Apple Business cross-OU device transfer—
 > reassigning a device's Organizational Unit (OU) assignment within the same Apple Business
 > tenant. This is distinct from Intune device reassignment and unenrollment operations, which
 > are Intune-side operations outside the Apple Business permission surface and are not covered here.
@@ -22,7 +22,7 @@ platform: ios+ipados+macos+tvos
 
 > **Training-data notice:** Cross-OU device transfer UI labels and step sequences are authored
 > from AI training knowledge of Apple Business portal behavior as of the pre-2026-04-14
-> rebrand, cross-referenced against research/FEATURES.md §5.2 and PITFALLS.md OP-5. Steps are
+> rebrand, cross-referenced against feature research §5.2 and pitfall register OP-5. Steps are
 > marked `[CITED: training; needs live verification]` pending a live portal scrape.
 > Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
 
@@ -33,12 +33,12 @@ This runbook documents the procedure for transferring a device between Organizat
 checklist, transfer procedure, and post-transfer verification.
 
 **Read the OP-5 callout before proceeding.** Cross-OU transfer has HIGH-severity downstream
-effects on VPP app licenses. The transfer itself is a single admin click with no Apple-side
-approval workflow; the downstream impact must be planned before the click.
+effects on VPP app licenses. The transfer itself is a single administrator click with no Apple-side
+approval workflow; the downstream effects must be planned before the click.
 
 ## Required Role & Permission
 
-**Required permission:** "Reassign devices between OUs" (Devices subgroup) — tenant-wide scope.
+**Required permission:** "Reassign devices between OUs" (Devices subgroup)—tenant-wide scope.
 See [01-role-permission-model.md](01-role-permission-model.md) Devices subgroup for the full
 permission catalog. The OP-3 companion View dependency applies: "View Devices" MUST also be
 granted; without it, the Devices tab shows an empty list and the transfer action cannot be
@@ -50,8 +50,8 @@ targeted.
 | Reassign devices between OUs | tenant-wide | **DENY-by-default (OP-1)** — requires IT Administrator or Account Holder |
 
 > **OP-1:** "Reassign devices between OUs" is a tenant-wide permission, not OU-scoped. It is
-> DENY-by-default for sub-org admins. Only IT Administrators and Account Holders can perform
-> cross-OU device transfers. Sub-org admins scoped to a single OU do NOT hold this permission
+> DENY-by-default for sub-org administrators. Only IT Administrators and Account Holders can perform
+> cross-OU device transfers. Sub-org administrators scoped to a single OU do NOT hold this permission
 > and must escalate to a tenant IT administrator.
 
 > **OP-2:** Do not perform cross-OU transfer operations using Account Holder credentials for
@@ -59,7 +59,7 @@ targeted.
 
 ---
 
-> **⛔ Cross-OU Transfer — 4-cell impact matrix (OP-5)**
+> **⛔ Cross-OU Transfer—4-cell impact matrix (OP-5)**
 >
 > OU transfer has HIGH-severity downstream effects. VPP device-licensed apps **STOP WORKING**
 > immediately after transfer; licenses are tied to the source OU's content token and must be
@@ -67,10 +67,10 @@ targeted.
 >
 > | Impact Category | Survives OU Transfer? |
 > |----------------|----------------------|
-> | VPP device-licensed apps | **BREAKS** — stops working |
+> | VPP device-licensed apps | **BREAKS**—stops working |
 > | Enrollment profile | **Does NOT follow** device |
 > | Intune config profiles | **Survives** (Intune is assignment authority) |
-> | Audit entry | **Logged** — author-scope semantics (OP-14) |
+> | Audit entry | **Logged**—author-scope semantics (OP-14) |
 >
 > **Pre-transfer dependency checklist:**
 > - [ ] Identified all VPP license dependencies in source OU
@@ -79,7 +79,7 @@ targeted.
 > - [ ] Enrollment profile compatibility confirmed with target OU
 > - [ ] Device user notified
 >
-> Source: PITFALLS.md OP-5
+> Source: pitfall register OP-5
 
 ---
 
@@ -95,7 +95,7 @@ and coordinating downstream actions.
 | Intune config profiles | **Survives** (Intune is the assignment authority for config profiles; Apple Business OU transfer does not affect Intune assignments) | Review post-transfer device state; note the device will have source-OU enrollment profile + target-OU Intune configs until next factory reset |
 | Audit entry | **Logged** — "Device Location changed" with admin, serial, timestamp, source + target OU | Source-OU admin and tenant admin see it; target-OU admin may NOT see the action if scoped only to target OU (author-scope semantics, OP-14) |
 
-[CITED: PITFALLS.md OP-5 — HIGH confidence for VPP and enrollment profile; MEDIUM for Intune profile survival; FEATURES.md §5.2]
+[CITED: pitfall register OP-5—HIGH confidence for VPP and enrollment profile; MEDIUM for Intune profile survival; feature research §5.2]
 
 ## Pre-Transfer Dependency Checklist
 
@@ -106,7 +106,7 @@ app outages or enrollment-state mismatches that are difficult to recover from po
   device through the source OU's content token.
 - [ ] **VPP licenses revoked:** Revoke source-OU VPP licenses for this device. For managed
   devices, observe the 30-day grace period before forced revocation; notify the device user
-  that affected apps will stop working after transfer.
+  that affected apps stop working after transfer.
 - [ ] **Target-OU catalog replacements available:** Confirm the target OU has a valid content
   token with sufficient licenses for all apps the device requires post-transfer.
 - [ ] **Enrollment profile compatibility confirmed:** Compare source and target OU enrollment
@@ -118,8 +118,8 @@ app outages or enrollment-state mismatches that are difficult to recover from po
 ## Transfer Procedure
 
 This procedure covers transferring a device between OUs within the same Apple Business tenant.
-The transfer is a single admin click with no Apple-side approval workflow. All downstream
-impact (VPP, enrollment profile) must be planned using the pre-transfer checklist above.
+The transfer is a single administrator click with no Apple-side approval workflow. All downstream
+effects (VPP, enrollment profile) must be planned using the preceding pre-transfer checklist.
 
 | Step | Action | Who | Notes |
 |------|--------|-----|-------|
@@ -133,8 +133,8 @@ impact (VPP, enrollment profile) must be planned using the pre-transfer checklis
 | 8 | Verify the device appears in the target OU's device list | IT Administrator | See Verification section |
 | 9 | Re-assign VPP licenses from target-OU catalog | IT Administrator / Content Manager | Required if VPP apps were revoked in the pre-transfer checklist step |
 
-> **Note:** Cross-OU device transfer within Apple Business is a single admin click with no
-> built-in approval gate. The impact matrix above (OP-5) describes all downstream effects.
+> **Note:** Cross-OU device transfer within Apple Business is a single administrator click with no
+> built-in approval gate. The preceding impact matrix (OP-5) describes all downstream effects.
 > Ensure the pre-transfer dependency checklist is complete before clicking Confirm.
 > `[CITED: training; needs live verification]`
 
@@ -142,11 +142,11 @@ impact (VPP, enrollment profile) must be planned using the pre-transfer checklis
 
 Apple TV cross-OU transfers follow the same mechanics described in this runbook. The transfer
 procedure and OP-5 impact matrix apply equally to tvOS devices. Note that retail Apple TV
-devices enrolled via Apple Configurator (rather than ADE) will require Configurator
+devices enrolled through Apple Configurator (rather than ADE) require Configurator
 re-enrollment after a factory reset to land in the target OU's MDM server.
 
-For the Apple TV lifecycle — including enrollment, OU assignment, and content-token app
-deployment — see [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md). The OU transfer
+For the Apple TV lifecycle—including enrollment, OU assignment, and content-token app
+deployment—see [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md). The OU transfer
 procedure for Apple TV is identical to iOS/iPadOS/macOS transfers.
 
 ## Verification
@@ -162,9 +162,9 @@ procedure for Apple TV is identical to iOS/iPadOS/macOS transfers.
 
 ### Confirming Audit Entry (OP-14 Author-Scope)
 
-The audit entry for the transfer is scoped to the **author's OU** (the IT admin who performed
-the transfer). If a sub-org admin for the target OU attempts to view the transfer audit entry,
-they may NOT see it — target-scope admins do not see actions authored in another admin's scope.
+The audit entry for the transfer is scoped to the **author's OU** (the IT administrator who performed
+the transfer). If a sub-org administrator for the target OU attempts to view the transfer audit entry,
+they may NOT see it—target-scope administrators do not see actions authored in another administrator's scope.
 A tenant-wide IT Administrator can query the Activity log to see the full transfer history
 across all OUs.
 
@@ -173,19 +173,19 @@ For the full author-scope vs target-scope semantics, see
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — Devices
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—Devices
   subgroup; "Reassign devices between OUs" (OP-1 DENY-by-default); OP-3 Edit-without-View table
-- Device release: [13-device-release-runbook.md](13-device-release-runbook.md) — do NOT use
+- Device release: [13-device-release-runbook.md](13-device-release-runbook.md)—do NOT use
   release for intra-tenant OU transfers; release removes the ADE/DEP binding, not the OU assignment
-- MDM server reassignment: [15-mdm-server-reassign-runbook.md](15-mdm-server-reassign-runbook.md) —
+- MDM server reassignment: [15-mdm-server-reassign-runbook.md](15-mdm-server-reassign-runbook.md)—
   MDM server reassign is a separate action from OU transfer; see runbook for OS-version eligibility
-- Apple TV lifecycle: [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md) — Apple TV OU transfer
+- Apple TV lifecycle: [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md)—Apple TV OU transfer
   follows the same mechanics (same procedure, same OP-5 impact matrix)
-- OU architecture: [02-ous-architecture.md](02-ous-architecture.md) — OU scope coverage table;
+- OU architecture: [02-ous-architecture.md](02-ous-architecture.md)—OU scope coverage table;
   Devices row; OU hierarchy rules
-- Audit log scoping: [17-audit-log-scoping-runbook.md](17-audit-log-scoping-runbook.md) — author-scope
+- Audit log scoping: [17-audit-log-scoping-runbook.md](17-audit-log-scoping-runbook.md)—author-scope
   vs target-scope semantics (OP-14) relevant to transfer audit entries
-- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) —
+- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md)—
   full Apple-Business-vs-Intune responsibility table (D-02 SOT)
 
 ## Version History

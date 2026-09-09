@@ -7,7 +7,7 @@ platform: ios+macos
 ---
 
 > **Platform applicability:** This document covers Managed Apple Account provisioning on the
-> Apple Business side — how user identities are created and managed within Apple Business for
+> Apple Business side—how user identities are created and managed within Apple Business for
 > use with Apple-managed devices. Federation framing in this document describes the Apple
 > Business federated identity configuration surface, not the identity provider's internal
 > delegation model. See the
@@ -21,14 +21,14 @@ per-user app license assignments (user-licensed content), and federated sign-in 
 Each Managed Apple Account is OU-scoped: its permissions and app license assignments apply
 within the OU to which it belongs.
 
-Sub-organization admins provision and manage Managed Apple Accounts within their OU scope
-using permissions from the People subgroup in Apple Business. The provisioning method —
+Sub-organization administrators provision and manage Managed Apple Accounts within their OU scope
+using permissions from the People subgroup in Apple Business. The provisioning method—
 manual portal entry, SCIM directory sync, or OIDC federated sign-in with just-in-time account
-creation — determines how accounts are created and how user identity attributes are maintained.
+creation—determines how accounts are created and how user identity attributes are maintained.
 
 > **Training-data notice:** Managed Apple Account provisioning UI labels, SCIM endpoint
 > behavior, and OIDC federation step sequences are authored from AI training knowledge of
-> Apple Business portal behavior, cross-referenced against research/PITFALLS.md OP-8 and
+> Apple Business portal behavior, cross-referenced against pitfall register OP-8 and
 > `01-role-permission-model.md` People subgroup. Steps are marked
 > `[CITED: training; needs live verification]` pending live portal verification.
 > Re-verification target: within 60 days of 2026-05-21 (by 2026-07-20).
@@ -41,7 +41,7 @@ and operational requirements.
 1. **Manual (Apple Business web portal entry)**
    - **When:** Small OU with fewer than 50 users; no existing directory sync infrastructure;
      one-time bulk import or pilot deployment; identity provider does not support SCIM or OIDC.
-   - **Tradeoff:** Lowest setup complexity — no federation configuration required. Not scalable:
+   - **Tradeoff:** Lowest setup complexity—no federation configuration required. Not scalable:
      each Managed Apple Account is created individually in the Apple Business portal by a sub-org
      admin with `Create Managed Apple Accounts` permission. Account attributes (name, email,
      department) must be updated manually; no automated lifecycle management. Suitable for small
@@ -52,7 +52,7 @@ and operational requirements.
      connector for Apple Business. User lifecycle (create, update, deactivate) is managed in
      the identity provider and synced automatically to Apple Business via the SCIM provisioning
      endpoint. Recommended for tenants with 50+ users or frequent onboarding/offboarding cycles.
-   - **Tradeoff:** Automates account lifecycle management — attribute changes in the identity
+   - **Tradeoff:** Automates account lifecycle management—attribute changes in the identity
      provider propagate to Managed Apple Accounts without manual Apple Business portal entry.
      Requires SCIM configuration on both the identity provider side (outbound provisioning
      connector) and the Apple Business side (`Configure SCIM provisioning` permission,
@@ -61,12 +61,12 @@ and operational requirements.
      cannot configure the tenant-wide SCIM provisioning endpoint.
 
 3. **OIDC + JIT (federated sign-in with just-in-time account creation)**
-   - **When:** Organization uses federated authentication via OpenID Connect (OIDC). Users
+   - **When:** Organization uses federated authentication through OpenID Connect (OIDC). Users
      sign in to Apple Business with their federated identity source credentials; Apple Business
      creates a Managed Apple Account automatically on first sign-in (just-in-time provisioning).
      Recommended when the organization prioritizes single sign-on user experience and the
      identity source is OIDC-capable.
-   - **Tradeoff:** Best end-user experience — users authenticate with existing credentials;
+   - **Tradeoff:** Best end-user experience—users authenticate with existing credentials;
      no separate Managed Apple Account password to manage. Requires OIDC federation configuration
      in Apple Business (`Configure federated authentication` permission, tenant-wide,
      DENY-by-default — requires tenant IT administrator). JIT account creation means Managed
@@ -110,32 +110,32 @@ subgroup (lines 205-206).
 ## Operational Runbook (Phase 64 Forward Reference)
 
 This admin-setup document provides the provisioning method decision matrix and permission
-reference for sub-org admin planning. The operational procedure for Managed Apple Account
-lifecycle management — bulk creation, SCIM sync troubleshooting, OIDC federation setup, and
-account deactivation — is owned by the Phase 64 operational runbook:
+reference for sub-org administrator planning. The operational procedure for Managed Apple Account
+lifecycle management—bulk creation, SCIM sync troubleshooting, OIDC federation setup, and
+account deactivation—is owned by the Phase 64 operational runbook:
 
 The Phase 64 Managed Apple Account management runbook (`16-managed-apple-account-runbook.md`,
 forthcoming) carries the operational account-management procedures for all three provisioning
-paths. This admin-setup doc does not duplicate that procedure — refer to Phase 64 for the
+paths. This admin-setup doc does not duplicate that procedure—refer to Phase 64 for the
 operational runbook.
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — People subgroup
-  (lines 239-244); Organization Access subgroup — federated authentication + SCIM provisioning
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—People subgroup
+  (lines 239-244); Organization Access subgroup—federated authentication + SCIM provisioning
   permissions (lines 205-206)
-- OU architecture: [02-ous-architecture.md](02-ous-architecture.md) — Managed Apple Accounts
+- OU architecture: [02-ous-architecture.md](02-ous-architecture.md)—Managed Apple Accounts
   row in OU Scope Coverage table; depth ≤ 2 sub-OU cap (D-06)
-- Sub-org admin onboarding: [05-sub-org-admin-onboarding.md](05-sub-org-admin-onboarding.md) —
-  Managed Apple Account creation for the sub-org admin themselves; `#which-admin-owns-this-pool`
+- Sub-org administrator onboarding: [05-sub-org-admin-onboarding.md](05-sub-org-admin-onboarding.md)—
+  Managed Apple Account creation for the sub-org administrator themselves; `#which-admin-owns-this-pool`
   anchor
-- VPP content tokens: [07-vpp-content-token-consolidation.md](07-vpp-content-token-consolidation.md) —
+- VPP content tokens: [07-vpp-content-token-consolidation.md](07-vpp-content-token-consolidation.md)—
   user-licensed app assignment requires per-OU Managed Apple Accounts (OU-05)
-- Shared iPad lifecycle: [09-shared-ipad-lifecycle.md](09-shared-ipad-lifecycle.md) — Shared iPad
+- Shared iPad lifecycle: [09-shared-ipad-lifecycle.md](09-shared-ipad-lifecycle.md)—Shared iPad
   session user provisioning requires Managed Apple Accounts (OU-07)
 - Operational runbook: [16-managed-apple-account-runbook.md](16-managed-apple-account-runbook.md)
-  (Phase 64 deliverable, DELEG-06) — full account lifecycle operational procedure
-- Glossary: [Apple Business Governance Glossary](../../_glossary-apple-business.md) — Managed
+  (Phase 64 deliverable, DELEG-06)—full account lifecycle operational procedure
+- Glossary: [Apple Business Governance Glossary](../../_glossary-apple-business.md)—Managed
   Apple Account, federated identity, SCIM, OIDC, OU-scoped terminology canon
 
 ## Version History

@@ -16,17 +16,17 @@ platform: Android
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Samsung KME (Knox Mobile Enrollment) investigation for Android Enterprise deployments using Samsung Knox Portal read queries and Intune enrollment logs to isolate KME profile delivery, device-state sync, and enrollment failures.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers Samsung KME (Knox Mobile Enrollment) investigation for Android Enterprise deployments using Samsung Knox Portal read queries and Intune enrollment logs to isolate KME profile delivery, device-state sync, and enrollment failures.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation through Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 > For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
-This runbook covers Knox Mobile Enrollment failure investigation across Samsung KME-provisioned devices (provisions into COBO / Dedicated / WPCO modes — KME does NOT enroll devices into a separate KME mode; it provisions Samsung devices into one of the three existing Android Enterprise device-owner modes via the Knox portal handoff). AOSP enrollment is out of scope. Samsung Galaxy XR / wearable / tablet KME variants are routed to Phase 45 (per-OEM AOSP).
+This runbook covers Knox Mobile Enrollment failure investigation across Samsung KME-provisioned devices (provisions into COBO / Dedicated / WPCO modes—KME does NOT enroll devices into a separate KME mode; it provisions Samsung devices into one of the three existing Android Enterprise device-owner modes through the Knox portal handoff). AOSP enrollment is out of scope. Samsung Galaxy XR / wearable / tablet KME variants are routed to Phase 45 (per-OEM AOSP).
 
-Before starting: collect a diagnostic package per the [Android Log Collection Guide](18-android-log-collection.md) using the method appropriate for the enrollment mode (Microsoft Intune app logs preferred for KME-provisioned COBO / Dedicated / WPCO; adb logcat as last-resort tier where USB debugging is available). KME-specific admin actions reference [Knox Mobile Enrollment Admin Setup](../admin-setup-android/07-knox-mobile-enrollment.md).
+Before starting: collect a diagnostic package per the [Android Log Collection Guide](18-android-log-collection.md) using the method appropriate for the enrollment mode (Microsoft Intune app logs preferred for KME-provisioned COBO / Dedicated / WPCO; adb logcat as last-resort tier where USB debugging is available). KME-specific administrator actions reference [Knox Mobile Enrollment Admin Setup](../admin-setup-android/07-knox-mobile-enrollment.md).
 
 **From L1 escalation?** [L1 runbook 28 (Knox enrollment failed)](../l1-runbooks/28-android-knox-enrollment-failed.md) has escalated. L1 collected: serial number, KME profile name, device manufacturer = Samsung, observed Cause. Skip to the Pattern matching L1's observation:
 
@@ -39,7 +39,7 @@ Before starting: collect a diagnostic package per the [Android Log Collection Gu
 
 > **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation.
 
-> For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
+> For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone—Android Graph API deep-dive).
 
 ## Investigation — Data Collection (mode-agnostic)
 
@@ -49,37 +49,37 @@ Before starting: collect a diagnostic package per the [Android Log Collection Gu
 
 **Observables to collect:**
 
-- Is the device visible at all? A KME-targeted Samsung device that never appears in Intune was not handed off — the KME → Intune token-sync chain broke before the device reached Intune.
+- Is the device visible at all? A KME-targeted Samsung device that never appears in Intune was not handed off—the KME → Intune token-sync chain broke before the device reached Intune.
 - **Manufacturer** field: must show `Samsung` for any KME-eligible device. A non-Samsung manufacturer indicates the device was incorrectly routed to L1 28 / this runbook (KME is Samsung-only by design).
-- **Managed by** field: should show `Microsoft Intune` for a successfully enrolled KME device.
-- **Enrollment type** field: KME provisions Samsung devices into one of the three existing Android Enterprise modes. Expected values: `Android Enterprise (Fully managed)` for KME→COBO; `Android Enterprise (Dedicated)` for KME→Dedicated; `Android Enterprise (Corporate-owned work profile)` for KME→WPCO. There is no "KME enrollment type" — KME is the provisioning method, not the mode.
+- **Managed by** field: must show `Microsoft Intune` for a successfully enrolled KME device.
+- **Enrollment type** field: KME provisions Samsung devices into one of the three existing Android Enterprise modes. Expected values: `Android Enterprise (Fully managed)` for KME→COBO; `Android Enterprise (Dedicated)` for KME→Dedicated; `Android Enterprise (Corporate-owned work profile)` for KME→WPCO. There is no "KME enrollment type"—KME is the provisioning method, not the mode.
 - **Compliance state** and **Last check-in** timestamp: same expectations as the general enrollment-investigation runbook. `Not evaluated` immediately post-enrollment is normal within the first 15-30 minute window.
 
 **What a missing or wrong-mode device tells you:**
 
 - Device not registered → KME handoff broke before reaching Intune. Proceed to Step 2 (Knox Admin Portal state) to determine whether the Knox portal acknowledged the device.
-- Device registered but in wrong mode (e.g., Fully Managed when Dedicated was intended) → KME EMM profile template selected the wrong mode at profile creation; correlate with Step 3 (Knox profile + token sync state) — likely Pattern A.
-- Device registered but stuck at `Not enrolled` or "Applying configuration..." → DPC provisioning started but did not complete; collect per Step 4 — likely Pattern E (DPC JSON malformation).
+- Device registered but in wrong mode (for example, Fully Managed when Dedicated was intended) → KME EMM profile template selected the wrong mode at profile creation; correlate with Step 3 (Knox profile + token sync state)—likely Pattern A.
+- Device registered but stuck at `Not enrolled` or "Applying configuration..." → DPC provisioning started but did not complete; collect per Step 4—likely Pattern E (DPC JSON malformation).
 
 ### Step 2: Knox Admin Portal device state
 
 **Breadcrumb:** Knox Admin Portal (https://admin.samsungknox.com) > **Devices** view > search by serial number or IMEI.
 
-This step is admin-only (the L2 worker typically does not have direct Knox Admin Portal access). Coordinate with the tenant admin to capture the observables; KAP exposes the upstream-of-Intune state of the KME handoff.
+This step is admin-only (the L2 worker typically does not have direct Knox Admin Portal access). Coordinate with the tenant administrator to capture the observables; KAP exposes the upstream-of-Intune state of the KME handoff.
 
 **Observables to collect:**
 
-- Is the device's serial in the KAP **Devices** view at all? A device absent from KAP was never registered with the Knox portal — either reseller upload did not include this device's serial, or the Knox Deployment App registration failed. Likely Pattern A or reseller-upload audit.
-- **Profile** column for the device row: should be populated with the assigned KME profile name. An empty Profile column despite admin assignment attempt indicates KAP cache lag OR admin assignment never completed; correlate with Step 3.
-- **Knox eFuse status** column (if KAP exposes the field — researcher OQ-4): if the column is present and shows `Tripped`, this is a Pattern B (Knox tripped) finding. KAP-exposed eFuse status is the primary admin-side signal for Pattern B.
-- **Last sync** timestamp on the Knox profile assignment: a stale timestamp (>24 hours) with the device still failing enrollment indicates assignment did not propagate — re-trigger profile push or factory-reset and retry per [admin doc Step 4](../admin-setup-android/07-knox-mobile-enrollment.md#step-4-assign-profile).
+- Is the device's serial in the KAP **Devices** view at all? A device absent from KAP was never registered with the Knox portal—either reseller upload did not include this device's serial, or the Knox Deployment App registration failed. Likely Pattern A or reseller-upload audit.
+- **Profile** column for the device row: must be populated with the assigned KME profile name. An empty Profile column despite administrator assignment attempt indicates KAP cache lag OR administrator assignment never completed; correlate with Step 3.
+- **Knox eFuse status** column (if KAP exposes the field—researcher OQ-4): if the column is present and shows `Tripped`, this is a Pattern B (Knox tripped) finding. KAP-exposed eFuse status is the primary admin-side signal for Pattern B.
+- **Last sync** timestamp on the Knox profile assignment: a stale timestamp (>24 hours) with the device still failing enrollment indicates assignment did not propagate—re-trigger profile push or factory-reset and retry per [administrator doc Step 4](../admin-setup-android/07-knox-mobile-enrollment.md#step-4-assign-profile).
 
 **What KAP state tells you:**
 
 - Device absent from KAP Devices view → reseller-upload gap (B2B account state) or KDA registration failed → Pattern A scope (KME profile misconfiguration / B2B state).
 - Device present in KAP but Profile column empty → Pattern A (KME profile assignment).
-- Knox eFuse status `Tripped` (or admin-confirmed-tripped via Samsung support) → Pattern B (Knox tripped).
-- Device present in KAP with profile assigned but Intune Step 1 shows nothing → Step 3 (Knox profile + Intune token sync state) — likely Pattern A or Pattern E.
+- Knox eFuse status `Tripped` (or admin-confirmed-tripped through Samsung support) → Pattern B (Knox tripped).
+- Device present in KAP with profile assigned but Intune Step 1 shows nothing → Step 3 (Knox profile + Intune token sync state)—likely Pattern A or Pattern E.
 
 ### Step 3: Knox profile + Intune enrollment token sync state
 
@@ -96,45 +96,45 @@ The KME → Intune handoff has two configuration surfaces that must agree: the K
 
 **What sync-state observations tell you:**
 
-- KME profile EMM ≠ Microsoft Intune → Pattern A (KME profile misconfiguration). Resolution: re-target the EMM in KAP per [admin doc Step 2](../admin-setup-android/07-knox-mobile-enrollment.md#step-2-emm-profile).
-- Custom JSON Data unparsable / wrapper-key bearing → Pattern E (DPC JSON malformation). Resolution: replace with FLAT KME JSON per [admin doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
+- KME profile EMM ≠ Microsoft Intune → Pattern A (KME profile misconfiguration). Resolution: re-target the EMM in KAP per [administrator doc Step 2](../admin-setup-android/07-knox-mobile-enrollment.md#step-2-emm-profile).
+- Custom JSON Data unparsable / wrapper-key bearing → Pattern E (DPC JSON malformation). Resolution: replace with FLAT KME JSON per [administrator doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
 - Intune token Expired / Revoked → re-issue token, propagate substituted token to KAP Custom JSON Data, factory-reset the device, retry first boot.
 - Token mismatch (KAP-substituted token ≠ Intune-active token) → re-substitute the current Intune-active token into KAP, save profile, factory-reset, retry.
 
 ### Step 4: Device-side enrollment state (collect per runbook 18 based on mode)
 
-Collect device-side state using [Android Log Collection Guide](18-android-log-collection.md) Section 2 (Microsoft Intune app logs — preferred for KME-provisioned COBO / Dedicated / WPCO) or Section 3 (adb logcat last-resort tier — subject to device-owner USB-debug constraint on KME-provisioned devices).
+Collect device-side state using [Android Log Collection Guide](18-android-log-collection.md) Section 2 (Microsoft Intune app logs—preferred for KME-provisioned COBO / Dedicated / WPCO) or Section 3 (adb logcat last-resort tier—subject to device-owner USB-debug constraint on KME-provisioned devices).
 
 **Observables to collect:**
 
-- Microsoft Intune app log incident ID — captured via the Intune app's self-service log collection menu, OR ticket-based retrieval per runbook 18 Section 2.
+- Microsoft Intune app log incident ID—captured through the Intune app's self-service log collection menu, OR ticket-based retrieval per runbook 18 Section 2.
 - adb logcat excerpt (if USB debugging is available pre-KME-handoff): filter for `DevicePolicyManager:* CloudDPC:* IntuneManagedAgent:*` events covering the boot-to-failure window.
 - Device-side error dialogs surfaced during the KME handoff: a "Stuck Applying configuration..." screen is the canonical Pattern E indicator; cryptic-error-then-Setup-Wizard-fallback is the canonical Pattern B indicator.
 
 **Key signals to look for:**
 
 - `CloudDPC` provisioning intent received but `EXTRA_ENROLLMENT_TOKEN` parsing fails → Pattern E (DPC JSON malformation).
-- `DevicePolicyManager setDeviceOwner` call never present in logcat → KME handoff to CloudDPC did not occur; correlate with Step 3 (token sync state) — likely Pattern A or Pattern E.
+- `DevicePolicyManager setDeviceOwner` call never present in logcat → KME handoff to CloudDPC did not occur; correlate with Step 3 (token sync state)—likely Pattern A or Pattern E.
 - Knox attestation failure / hardware-backed boot attestation rejection in early-boot logs → Pattern B (Knox tripped) indicator at the device side; corroborate with Step 2 KAP eFuse status.
-- IntuneManagedAgent enrollment events present but advanced KPE policy (kiosk lockdown / advanced restrictions) absent post-enrollment → Pattern D (Knox license edge — KPE Premium activation drift).
+- IntuneManagedAgent enrollment events present but advanced KPE policy (kiosk lockdown / advanced restrictions) absent post-enrollment → Pattern D (Knox license edge—KPE Premium activation drift).
 
-After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns below.
+After completing Steps 1-4, proceed to Analysis—Match Against Known Patterns.
 
 ## Analysis — Match Against Known Patterns
 
-Match observed indicators to one of five Patterns below. Patterns are independently diagnosable. Each Pattern includes Resolution Steps and a Microsoft Support escalation packet.
+Match observed indicators to one of the five Patterns that follow. Patterns are independently diagnosable. Each Pattern includes Resolution Steps and a Microsoft Support escalation packet.
 
 <a id="pattern-a-kme-profile-misconfiguration"></a>
 
 ### Pattern A: KME Profile Misconfiguration
 
-**Typical class:** ⚙️ Config Error (KME profile EMM choice / Custom JSON Data field-name) — occasionally ⏱️ Timing (B2B approval lag)
+**Typical class:** ⚙️ Config Error (KME profile EMM choice / Custom JSON Data field-name)—occasionally ⏱️ Timing (B2B approval lag)
 
 **Symptom:** Samsung device boots to Setup Wizard or wrong-mode Intune enrollment; Knox Admin Portal shows device with profile assigned, but device never reaches the Intune DPC OR enrolls into Fully Managed when Dedicated was intended.
 
 **Known Indicators:**
 
-- Knox Admin Portal Devices view shows Samsung device with empty Profile column despite admin assignment attempt (KAP cache lag).
+- Knox Admin Portal Devices view shows Samsung device with empty Profile column despite administrator assignment attempt (KAP cache lag).
 - Knox Admin Portal Profile shows EMM = something other than "Microsoft Intune" (most-common: stale demo profile EMM = `Knox Manage` left from POC testing).
 - Custom JSON Data field is empty OR contains placeholder `enter Intune enrollment token string` not yet substituted.
 - Intune admin center > Devices > Android shows device enrolled in unexpected mode (Fully Managed when Dedicated intended → KME profile EMM template chose wrong mode at profile creation).
@@ -142,11 +142,11 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 **Resolution Steps:**
 
-1. Verify the Knox profile EMM is set to "Microsoft Intune". Cross-link to admin doc: [Step 2 — Create KME EMM profile](../admin-setup-android/07-knox-mobile-enrollment.md#step-2-emm-profile).
-2. Verify Custom JSON Data has the Intune enrollment token substituted (no literal `enter Intune enrollment token string` remains) per [admin doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
-3. Verify the Intune-side enrollment profile token is Active (not expired/revoked) via Intune admin center > **Devices** > **Android** > **Android Enterprise enrollment** > **Corporate-owned device enrollment**.
+1. Verify the Knox profile EMM is set to "Microsoft Intune". Cross-link to administrator doc: [Step 2—Create KME EMM profile](../admin-setup-android/07-knox-mobile-enrollment.md#step-2-emm-profile).
+2. Verify Custom JSON Data has the Intune enrollment token substituted (no literal `enter Intune enrollment token string` remains) per [administrator doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
+3. Verify the Intune-side enrollment profile token is Active (not expired/revoked) through Intune admin center > **Devices** > **Android** > **Android Enterprise enrollment** > **Corporate-owned device enrollment**.
 4. If profile assigned AFTER first boot: factory-reset device and retry (KME does not retro-trigger).
-5. For B2B approval lag: contact Samsung Knox B2B support per [admin doc Step 0](../admin-setup-android/07-knox-mobile-enrollment.md#step-0-b2b-approval).
+5. For B2B approval lag: contact Samsung Knox B2B support per [administrator doc Step 0](../admin-setup-android/07-knox-mobile-enrollment.md#step-0-b2b-approval).
 
 **Microsoft Support escalation packet (D-09):**
 
@@ -162,22 +162,22 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 **Typical class:** ⚙️ Config Error (firmware-state non-recoverable)
 
-**Symptom:** Samsung device fails KME enrollment with cryptic error and falls back to consumer Setup Wizard; bootloader was previously unlocked OR custom recovery / non-Samsung firmware was flashed at some point in the device's history; the Knox eFuse flag at firmware level is set ("tripped"). Pattern B is non-recoverable for KME — once tripped, the eFuse cannot be reset, the device cannot pass Strong integrity verdict, and KME cannot enroll the device.
+**Symptom:** Samsung device fails KME enrollment with cryptic error and falls back to consumer Setup Wizard; bootloader was previously unlocked OR custom recovery / non-Samsung firmware was flashed at some point in the device's history; the Knox eFuse flag at firmware level is set ("tripped"). Pattern B is non-recoverable for KME—once tripped, the eFuse cannot be reset, the device cannot pass Strong integrity verdict, and KME cannot enroll the device.
 
 **Known Indicators:**
 
 - Play Integrity verdict fails Strong integrity check (Knox attestation contributes to Strong integrity on Samsung devices; tripped efuse prevents hardware-backed attestation regardless of OS state).
-- Knox Admin Portal Devices view "Knox eFuse status" column shows `Tripped` (if KAP exposes the field — see Open Question 4).
-- Microsoft Q&A reports show admins discovering tripped status after enrollment failures (citation: learn.microsoft.com/answers/questions/2282160).
-- Device history includes prior bootloader unlock, custom recovery flash, or non-stock firmware install — even if the device has since been re-flashed with stock Samsung firmware, the eFuse remains tripped.
+- Knox Admin Portal Devices view "Knox eFuse status" column shows `Tripped` (if KAP exposes the field—see Open Question 4).
+- Microsoft Q&A reports show administrators discovering tripped status after enrollment failures (citation: learn.microsoft.com/answers/questions/2282160).
+- Device history includes prior bootloader unlock, custom recovery flash, or non-stock firmware install—even if the device has since been re-flashed with stock Samsung firmware, the eFuse remains tripped.
 - Device-side early-boot logs (Step 4) show hardware-backed boot attestation rejection consistent with TEE attestation refusal.
 
 **Resolution Steps:**
 
-1. Confirm Knox-tripped status via Knox Admin Portal Devices view eFuse column (if exposed) OR by escalating to Samsung Knox B2B support with the device serial. Knox-tripped is non-recoverable for KME.
-2. Direct admin to alternate enrollment path: Company Portal BYOD (Work Profile — does not require Strong integrity) OR non-KME COBO via `afw#setup` / QR code (note: COBO via QR/`afw#setup` may also fail on tripped devices if Play Integrity Strong gating is enforced by org-level policy; researcher OQ-4).
+1. Confirm Knox-tripped status through Knox Admin Portal Devices view eFuse column (if exposed) OR by escalating to Samsung Knox B2B support with the device serial. Knox-tripped is non-recoverable for KME.
+2. Direct administrator to alternate enrollment path: Company Portal BYOD (Work Profile—does not require Strong integrity) OR non-KME COBO through `afw#setup` / QR code (note: COBO through QR/`afw#setup` may also fail on tripped devices if Play Integrity Strong gating is enforced by org-level policy; researcher OQ-4).
 3. Document the device serial in the tenant's Knox-tripped exclusion list to prevent re-routing through KME workflows.
-4. Do NOT attempt firmware-level eFuse-clearing procedures — this is not a supported recovery path for enterprise enrollment, and references claiming such procedures are out of scope for this runbook.
+4. Do NOT attempt firmware-level eFuse-clearing procedures—this is not a supported recovery path for enterprise enrollment, and references claiming such procedures are out of scope for this runbook.
 
 **Microsoft Support escalation packet (D-09):**
 
@@ -193,27 +193,27 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 **Typical class:** ⚙️ Config Error (dual-portal misconfiguration)
 
-**Symptom:** Samsung device dual-configured in BOTH Knox Mobile Enrollment AND Zero-Touch portal; KME takes precedence at firmware level; ZT enrollment never initiates. Admin observes device enrolling via the KME pathway when ZT was the intended path (or vice versa with KME prevailing — by design, KME wins on Samsung devices when both are configured).
+**Symptom:** Samsung device dual-configured in BOTH Knox Mobile Enrollment AND Zero-Touch portal; KME takes precedence at firmware level; ZT enrollment never initiates. Administrator observes device enrolling through the KME pathway when ZT was the intended path (or vice versa with KME prevailing—by design, KME wins on Samsung devices when both are configured).
 
 **Known Indicators:**
 
 - Device serial appears in BOTH KAP Devices view AND ZT portal Devices tab.
-- Intune shows enrollment via KME pathway (KME profile applied) when ZT was the desired path.
-- Admin recently configured ZT for a Samsung fleet that already had KME enrollment in production — ZT was layered on top without removing the KME registration.
-- Reseller upload pushed device to BOTH portals (uncommon — most resellers respect the per-account upload destination, but mis-configured reseller workflows can dual-upload).
+- Intune shows enrollment through KME pathway (KME profile applied) when ZT was the intended path.
+- Administrator recently configured ZT for a Samsung fleet that already had KME enrollment in production—ZT was layered on top without removing the KME registration.
+- Reseller upload pushed device to BOTH portals (uncommon—most resellers respect the per-account upload destination, but mis-configured reseller workflows can dual-upload).
 
 **Resolution Steps:**
 
-1. Choose ONE portal as the canonical enrollment path for the affected Samsung fleet. KME and ZT are mutually exclusive for Samsung devices — there is no supported dual-portal configuration.
+1. Choose ONE portal as the canonical enrollment path for the affected Samsung fleet. KME and ZT are mutually exclusive for Samsung devices—there is no supported dual-portal configuration.
 2. Remove the device from the non-canonical portal: if KME is canonical, remove from ZT portal Devices tab; if ZT is canonical, remove from KAP Devices view.
-3. Cross-link the resolution to the admin guidance: [admin doc KME/ZT Mutual Exclusion](../admin-setup-android/07-knox-mobile-enrollment.md#kme-zt-mutual-exclusion) and [02-zero-touch-portal.md#kme-zt-mutual-exclusion](../admin-setup-android/02-zero-touch-portal.md#kme-zt-mutual-exclusion).
+3. Cross-link the resolution to the administrator guidance: [administrator doc KME/ZT Mutual Exclusion](../admin-setup-android/07-knox-mobile-enrollment.md#kme-zt-mutual-exclusion) and [02-zero-touch-portal.md#kme-zt-mutual-exclusion](../admin-setup-android/02-zero-touch-portal.md#kme-zt-mutual-exclusion).
 4. Factory-reset the device after removing it from the non-canonical portal (the device may still hold a cached precedence reference from the prior dual-configuration; factory reset clears this).
-5. Retry first-boot enrollment. If KME is canonical, the device should now reach the Knox profile handoff cleanly; if ZT is canonical, the device should enter the ZT DPC flow at first boot.
+5. Retry first-boot enrollment. Confirm the device reaches the Knox profile handoff cleanly if KME is canonical, or enters the ZT DPC flow at first boot if ZT is canonical.
 
 **Microsoft Support escalation packet (D-09):**
 
 - **Token sync status:** Intune-side staging-token Active state for the canonical portal's enrollment profile (KME profile token if KME is canonical; ZT-linked enrollment profile token if ZT is canonical).
-- **Profile assignment state:** Screenshots of BOTH portals showing the device serial — KAP Devices view AND ZT portal Devices tab. After resolution, capture the post-removal screenshot of the non-canonical portal showing the device absent.
+- **Profile assignment state:** Screenshots of BOTH portals showing the device serial—KAP Devices view AND ZT portal Devices tab. After resolution, capture the post-removal screenshot of the non-canonical portal showing the device absent.
 - **Enrollment profile GUID:** Intune admin center URL fragment for the canonical portal's enrollment profile.
 
 ---
@@ -229,14 +229,14 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 **Known Indicators:**
 
 - KPE Premium activation column in KAP Devices view empty despite Plan 1+ tenant.
-- Admin attempted to license Knox Suite or Knox Manage thinking it was required for KME (D-01 5-SKU disambiguation reinforced — Knox Suite / Knox Manage are NOT required for KME).
+- Administrator attempted to license Knox Suite or Knox Manage thinking it was required for KME (D-01 5-SKU disambiguation reinforced—Knox Suite / Knox Manage are NOT required for KME).
 - Advanced KPE policies (kiosk lockdown, advanced restrictions) post-enrollment do not take effect even though they are assigned and the device is enrolled.
-- Tenant SKU is below Intune Plan 1 — KPE Premium transparent supply requires Plan 1+ tenant entitlement.
+- Tenant SKU is lower than Intune Plan 1—KPE Premium transparent supply requires Plan 1+ tenant entitlement.
 
 **Resolution Steps:**
 
-1. Verify the tenant has Intune Plan 1 (or higher) — Plan 1+ supplies KPE Premium transparently per [admin doc 5-SKU disambiguation](../admin-setup-android/07-knox-mobile-enrollment.md#sku-disambiguation).
-2. Confirm KPE Premium has been free since the Samsung 2024-03-21 update — admins do NOT need to purchase Knox Suite, Knox Manage, or Knox Configure for KME or for KPE Premium activation.
+1. Verify the tenant has Intune Plan 1 (or higher)—Plan 1+ supplies KPE Premium transparently per [administrator doc 5-SKU disambiguation](../admin-setup-android/07-knox-mobile-enrollment.md#sku-disambiguation).
+2. Confirm KPE Premium has been free since the Samsung 2024-03-21 update—administrators do NOT need to purchase Knox Suite, Knox Manage, or Knox Configure for KME or for KPE Premium activation.
 3. If the tenant has Plan 1+ but KPE Premium does not activate on KAP-listed devices: open a Microsoft Support case AND a Samsung Knox B2B support case in parallel (the activation chain crosses both vendors' boundaries).
 4. As a temporary workaround while the activation chain is investigated, fall back to non-KPE-Premium-dependent Intune policies (basic device-restriction / configuration profiles) so the device is at least under management.
 
@@ -258,18 +258,18 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 **Known Indicators:**
 
-- Custom JSON Data contains the ZT-style nested `PROVISIONING_ADMIN_EXTRAS_BUNDLE` wrapper (admin pasted ZT JSON into KME profile by mistake — D-03 anti-paste warning was missed).
+- Custom JSON Data contains the ZT-style nested `PROVISIONING_ADMIN_EXTRAS_BUNDLE` wrapper (administrator pasted ZT JSON into KME profile by mistake—D-03 anti-paste warning was missed).
 - Custom JSON Data is structurally invalid (extra wrapper keys, missing curly brace, escaped-quote drift, line-break characters in the middle of a key).
 - Device-side logcat shows `CloudDPC` provisioning intent received but `EXTRA_ENROLLMENT_TOKEN` parsing fails immediately afterward.
-- Admin recently maintained both KME and ZT portals and the JSON-paste step was performed in the wrong portal first.
+- Administrator recently maintained both KME and ZT portals and the JSON-paste step was performed in the wrong portal first.
 
 **Resolution Steps:**
 
-1. Replace Custom JSON Data with the FLAT KME JSON: `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "<token>"}` per [admin doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
+1. Replace Custom JSON Data with the FLAT KME JSON: `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "<token>"}` per [administrator doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json).
 2. Save the profile in KAP. Re-verify the JSON parses (KAP performs a basic JSON-parse validation on save; reject indicates malformation).
-3. Factory-reset the affected device(s). KME does not retro-trigger — devices that were already past first-boot must be reset to re-attempt the enrollment with the corrected JSON.
-4. Re-attempt first-boot enrollment. The "Applying configuration..." screen should now advance to the Intune DPC handoff cleanly.
-5. To prevent recurrence, confirm both admin docs' anti-paste blockquotes (HTML-comment marker `AEKNOX-03-shared-anti-paste-block`) are present and have not drifted; the structural-contrast rule (FLAT for KME, nested-wrapper for ZT) prevents the silent-failure pattern.
+3. Factory-reset the affected device(s). KME does not retro-trigger—devices that were already past first-boot must be reset to re-attempt the enrollment with the corrected JSON.
+4. Re-attempt first-boot enrollment. Confirm the "Applying configuration..." screen advances to the Intune DPC handoff cleanly.
+5. To prevent recurrence, confirm both administrator docs' anti-paste blockquotes (HTML-comment marker `AEKNOX-03-shared-anti-paste-block`) are present and have not drifted; the structural-contrast rule (FLAT for KME, nested-wrapper for ZT) prevents the silent-failure pattern.
 
 **Microsoft Support escalation packet (D-09):**
 
@@ -281,15 +281,15 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 Knox L2 investigation references Play Integrity 3-tier verdicts ONLY:
 
-- **Basic integrity** — device hardware/OS not detected as compromised.
-- **Basic + Device integrity** — adds basic device-recognition signal (recognized device with consistent signal across the integrity check).
-- **Strong integrity** — requires hardware-backed boot attestation from device TEE; on Samsung devices, Knox attestation contributes to Strong integrity. **Pattern B (Knox tripped) fails Strong integrity** because the Knox eFuse flag at firmware level prevents hardware-backed attestation regardless of OS state.
+- **Basic integrity**—device hardware/OS not detected as compromised.
+- **Basic + Device integrity**—adds basic device-recognition signal (recognized device with consistent signal across the integrity check).
+- **Strong integrity**—requires hardware-backed boot attestation from device TEE; on Samsung devices, Knox attestation contributes to Strong integrity. **Pattern B (Knox tripped) fails Strong integrity** because the Knox eFuse flag at firmware level prevents hardware-backed attestation regardless of OS state.
 
-Use the 3-tier verdict as the canonical Knox-attribution surface — do not reference legacy attestation token formats. Strong integrity is the relevant tier for Pattern B diagnosis; Basic and Basic+Device tiers are sufficient for Patterns A / C / D / E.
+Use the 3-tier verdict as the canonical Knox-attribution surface—do not reference legacy attestation token formats. Strong integrity is the relevant tier for Pattern B diagnosis; Basic and Basic+Device tiers are sufficient for Patterns A / C / D / E.
 
 ## Resolution
 
-Each Pattern sub-section above includes Resolution Steps and a Microsoft Support escalation packet (token sync status, profile assignment state, enrollment profile GUID). This section aggregates the common Microsoft Support case framing.
+Each preceding Pattern sub-section includes Resolution Steps and a Microsoft Support escalation packet (token sync status, profile assignment state, enrollment profile GUID). This section aggregates the common Microsoft Support case framing.
 
 ### Microsoft Support escalation criteria
 
@@ -308,19 +308,19 @@ Escalate to Microsoft Support when:
 4. Intune admin center screenshots per Investigation Data Collection Step 1-3.
 5. Knox Admin Portal screenshot of device row showing assignment state + Knox eFuse status (if KAP exposes it).
 6. Knox B2B account email + KME profile name.
-7. Pattern-specific escalation packet (token sync status, profile assignment state, enrollment profile GUID — per D-09).
+7. Pattern-specific escalation packet (token sync status, profile assignment state, enrollment profile GUID—per D-09).
 8. Runbook 18 log artifact IDs (Microsoft Intune app log incident OR adb logcat excerpt).
 
 ## Related Resources
 
-- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md) — prerequisite for this runbook
+- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md)—prerequisite for this runbook
 - [L2 Runbook Index](00-index.md#android-l2-runbooks)
-- [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md) — sibling
+- [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md)—sibling
 - [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md)
-- [Glossary — Knox](../_glossary-android.md#knox)
-- [Glossary — KME](../_glossary-android.md#kme)
-- [Glossary — KPE](../_glossary-android.md#kpe)
-- [Glossary — Play Integrity](../_glossary-android.md#play-integrity)
+- [Glossary—Knox](../_glossary-android.md#knox)
+- [Glossary—KME](../_glossary-android.md#kme)
+- [Glossary—KPE](../_glossary-android.md#kpe)
+- [Glossary—Play Integrity](../_glossary-android.md#play-integrity)
 
 ## Version History
 

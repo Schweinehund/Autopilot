@@ -13,7 +13,7 @@ operational domain.
 
 ## Co-Management
 
-Windows ConfigMgr-to-Intune co-management guidance — workload slider model, migration sequence,
+Windows ConfigMgr-to-Intune co-management guidance—workload slider model, migration sequence,
 tenant attach disambiguation, and Windows Autopatch prerequisites.
 
 | Guide | Covers |
@@ -25,11 +25,11 @@ tenant attach disambiguation, and Windows Autopatch prerequisites.
 
 ## Patch & Update Management
 
-Cross-platform OS update enforcement guidance — Windows Update for Business rings, macOS managed update commands (DDM), iOS supervised vs unsupervised update lifecycle, and Android per-OEM patch delivery (Play Integrity tier impact).
+Cross-platform OS update enforcement guidance—Windows Update for Business rings, macOS managed update commands (DDM), iOS supervised vs unsupervised update lifecycle, Android per-OEM patch delivery (Play Integrity tier effects), and Linux update delivery using apt and unattended-upgrades.
 
 | Guide | Covers |
 |-------|--------|
-| [Overview: Cross-Platform Update Enforcement](patch-management/00-overview.md) | 4-platform comparison hub for update enforcement; cross-platform routing |
+| [Overview: Cross-Platform Update Enforcement](patch-management/00-overview.md) | 5-platform comparison hub for update enforcement; cross-platform routing |
 | [Windows WUfB Rings](patch-management/01-windows-wufb-rings.md) | Windows Update for Business ring topology, deferral periods, Hotpatch, dual-scan source conflict |
 | [macOS Update Enforcement](patch-management/02-macos-update-enforcement.md) | DDM Software Update Enforce Latest; deprecated MDM commands removed with Apple OS 26 |
 | [iOS Update Lifecycle](patch-management/03-ios-update-lifecycle.md) | DDM TargetOSVersion / TargetBuildVersion / TargetLocalDateTime; unsupervised iOS 17+ scope |
@@ -41,7 +41,7 @@ Cross-platform OS update enforcement guidance — Windows Update for Business ri
 
 ## App Lifecycle Automation
 
-Cross-platform app deployment at scale — Win32/MSIX packaging + supersedence, macOS .pkg/.dmg pipelines, iOS VPP device-vs-user licensing, Android Managed Google Play app lifecycle.
+Cross-platform app deployment at scale—Win32/MSIX packaging + supersedence, macOS .pkg/.dmg pipelines, iOS VPP device-vs-user licensing, Android Managed Google Play app lifecycle.
 
 | Guide | Covers |
 |-------|--------|
@@ -53,7 +53,7 @@ Cross-platform app deployment at scale — Win32/MSIX packaging + supersedence, 
 
 ## Compliance Drift Detection + Tenant Migration
 
-Cross-platform configuration drift workflows + tenant-to-tenant migration runbooks — BitLocker re-key, ABM token re-issue, Managed Google Play re-binding, cross-platform encryption-drift surface.
+Cross-platform configuration drift workflows + tenant-to-tenant migration runbooks—BitLocker re-key, ABM token re-issue, Managed Google Play re-binding, cross-platform encryption-drift surface.
 
 | Guide | Covers |
 |-------|--------|
@@ -65,7 +65,7 @@ Cross-platform configuration drift workflows + tenant-to-tenant migration runboo
 
 ## Apple Business Governance
 
-Apple Business delegated governance — sub-org admin onboarding, Shared iPad passcode reset, MDM server assignment, Managed Apple Account provisioning, VPP catalog management, and cross-org boundary operations.
+Apple Business delegated governance—sub-org administrator onboarding, Shared iPad passcode reset, MDM server assignment, Managed Apple Account provisioning, VPP catalog management, and cross-org boundary operations.
 
 | Guide | Covers |
 |-------|--------|
@@ -77,7 +77,7 @@ Apple Business delegated governance — sub-org admin onboarding, Shared iPad pa
 
 ## Firmware and BIOS Governance
 
-Windows firmware and BIOS configuration governance — custody of the BIOS secret across Dell, HP
+Windows firmware and BIOS configuration governance—custody of the BIOS secret across Dell, HP
 and Lenovo hardware, the two native Intune BIOS surfaces, per-OEM delivery and recovery paths, and
 the cross-vendor capability comparison.
 

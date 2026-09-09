@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-Reference decision table for post-enrollment Windows Autopilot (APv1/APv2) device lifecycle actions — Retire, Autopilot Reset, Tenant Migration, Fresh Start, or Wipe. Gates on which personal and organizational data must be preserved, then routes through up to four decision points to the correct action and its operational guide.
+Reference decision table for post-enrollment Windows Autopilot (APv1/APv2) device lifecycle actions—Retire, Autopilot Reset, Tenant Migration, Fresh Start, or Wipe. Gates on which personal and organizational data must be preserved, then routes through up to four decision points to the correct action and its operational guide.
 
 > **Version gate:** This decision tree applies to both Windows Autopilot (APv1) and Windows Autopilot Device Preparation (APv2). Actions marked "APv1 only" are not
 
@@ -28,7 +28,7 @@ Start here when you need to perform a device management action post-enrollment. 
 
 ## Decision Tree
 
-**LOCKED — 18 (nodes + labeled edges)** — 10 nodes + 8 labeled edges (plus 1 unlabeled entry edge, the root question routing into Q1), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 4 diamonds (Q1-Q4) are represented below; each row traces one complete path from the root question to a terminal action, and no cell collapses more than one incoming labeled edge.
+**LOCKED—18 (nodes + labeled edges)**—10 nodes + 8 labeled edges (plus 1 unlabeled entry edge, the root question routing into Q1), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 4 diamonds (Q1-Q4) are represented in the following table; each row traces one complete path from the root question to a terminal action, and no cell collapses more than one incoming labeled edge.
 
 | Path | Q1: Preserve personal data (files, photos, personal apps)? | Q2: Preserve org enrollment + settings (re-use for next user)? | Q3: Same tenant? | Q4: Keep user documents (Home folder)? | Action |
 |------|--------------------------------------------------------------|--------------------------------------------------------------------|-------------------|--------------------------------------------|--------|
@@ -51,9 +51,9 @@ Start here when you need to perform a device management action post-enrollment. 
 
 ## Already Wiped or Decommissioned?
 
-If the device has already been wiped or decommissioned and you just need to clean up the Intune record, use **Delete** (Deregister). Delete removes the Intune device record and Autopilot registration without affecting the physical device state.
+If the device has already been wiped or decommissioned and you need to clean up the Intune record, use **Delete** (Deregister). Delete removes the Intune device record and Autopilot registration without affecting the physical device state.
 
-See [Retire and Wipe](../device-operations/02-retire-wipe.md) — Step-by-Step: Delete (Deregister).
+See [Retire and Wipe](../device-operations/02-retire-wipe.md)—Step-by-Step: Delete (Deregister).
 
 ## Hybrid Entra Joined Devices
 
@@ -65,8 +65,8 @@ See [Retire and Wipe](../device-operations/02-retire-wipe.md) — Step-by-Step: 
 
 ## See Also
 
-- [Device Operations Overview](../device-operations/00-overview.md) — All post-enrollment device management guides
-- [Initial Triage Decision Tree](00-initial-triage.md) — Troubleshooting enrollment failures (not lifecycle actions)
+- [Device Operations Overview](../device-operations/00-overview.md)—All post-enrollment device management guides
+- [Initial Triage Decision Tree](00-initial-triage.md)—Troubleshooting enrollment failures (not lifecycle actions)
 
 ---
 

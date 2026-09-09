@@ -1,0 +1,47 @@
+{
+  "note": "Phase 158 judge verdict record (D-34/D-56/D-58). Every field below is transcribed verbatim from the raw judge process output captured to a file under the OS temp directory before any transcription -- none is written from a recollection of it. No hardcoded phase-directory path is carried in this file (the previous batch-10 sibling record's dispatch_command embedded one; that field shape is the named anti-pattern and is not repeated here).",
+  "prompt_sha256": "25a9b6c0606c81e64cbcdf95d75f0f655eacaf7e4ec48db21ed68aca1b281274",
+  "base": "d0b611e8f064e4aa031aaaca53da8fafe6b92798",
+  "walk_root": "docs",
+  "raw_worklist_count": 7,
+  "packet_count": 2,
+  "worklist_vs_packet_gap_note": "verify-meaning.py's JUDGE WORKLIST at this base prints 7 -- the raw, deliberately over-inclusive count of every changed baseline line that contained a modal, whether or not the modal survived. judge-packets.py's second step drops any hunk whose modal bag survived the rewrite intact; only 2 of the 7 lost their modal, so 2 packets were emitted. This is the documented modal-bag filter (D-08), not a discrepancy to reconcile.",
+  "dispatch": {
+    "cmd": "claude",
+    "args": ["-p", "--tools", "", "--output-format", "text", "--add-dir", "<OS-temp-dir>"],
+    "input_note": "The committed prompt and the single chunk-file packet (both hunks, byte-identical structure) were concatenated into one assembled file under the OS temp directory and piped to the process's standard input via shell redirection, never as a command-substitution argument.",
+    "cwd": "OS temp directory, outside the repository working tree",
+    "tool_authority": "none -- '--tools \"\"' disables every tool for the process; it has no repository access and no session history from any prior agent that had read this phase's artifacts",
+    "process_count": 1,
+    "process_count_note": "One fresh claude -p process handled both non-empty packets in a single dispatch, because judge-packets.py's --chunk-file with --chunks 1 emitted exactly one chunk file containing both hunks (byte-identical structure, different file/line) -- one judge reading one file necessarily produces one process for both packet records below."
+  },
+  "packets": [
+    {
+      "file": "docs/operations/drift-migration/02-macos-drift-detection.md",
+      "baseline_line": 116,
+      "packet_sha256": "a990f31653b98345f518f4a3de0b0b073359e8b05620b25347264e708e71a696",
+      "verdict": "PRESERVED",
+      "evidence": "Cross-reference only; Phase 56 does not\n  amend the operations index",
+      "reason": "The dropped \"will\" sat inside a parenthetical forward-reference to a different phase's future work, not an expectation the reader verifies or a hedge on advice. The retained sentence about Phase 56 not amending the index keeps its exact scope, so no modal inversion or strengthening occurred; only an aside about who adds the entry later was removed.",
+      "exit_code": 0
+    },
+    {
+      "file": "docs/operations/drift-migration/03-ios-android-drift-detection.md",
+      "baseline_line": 130,
+      "packet_sha256": "4396427a05bffea48e578527c81271145039130bfe211bca73df7ebb2745213a",
+      "verdict": "PRESERVED",
+      "evidence": "Cross-reference only; Phase 56 does not\n  amend the operations index",
+      "reason": "Identical hunk to the macOS file. The \"will\" described a planned future action by Phase 59, not a reader expectation or a recommendation, and the surviving statement about Phase 56 is unchanged in meaning. Deleting the parenthetical loses a pointer but does not flatten, strengthen, or soften anything.",
+      "exit_code": 0
+    }
+  ],
+  "subject_verb_agreement_breaks": [],
+  "counts": {
+    "PRESERVED": 2,
+    "STRENGTHENED": 0,
+    "INVERTED": 0,
+    "WEAKENED": 0
+  },
+  "corpus_fix_landed": false,
+  "corpus_fix_note": "Every verdict is PRESERVED. No corpus reword was needed or landed."
+}

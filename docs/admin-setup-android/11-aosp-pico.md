@@ -16,13 +16,13 @@ applies_to: AOSP
 
 ## Summary
 
-This guide covers AOSP (Android Open Source Project) device management for Pico 4 Enterprise and Pico Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because Pico headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing (only the Enterprise SKU line is eligible for AOSP enrollment; consumer Pico hardware is unsupported). Covers Enterprise-SKU confirmation, enrollment profile creation, QR generation, provisioning, and the optional PICO Business Suite vendor-side coexistence path.
+This guide covers AOSP (Android Open Source Project) device management for Pico 4 Enterprise and Pico Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal—Wi-Fi embedding in the enrollment QR is optional because Pico headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing (only the Enterprise SKU line is eligible for AOSP enrollment; consumer Pico hardware is unsupported). Covers Enterprise-SKU confirmation, enrollment profile creation, QR generation, provisioning, and the optional PICO Business Suite vendor-side coexistence path.
 
-> **Platform gate:** Pico AOSP device management — PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune.
+> **Platform gate:** Pico AOSP device management—PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune.
 
 > For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE)—no GMS, no FCM push, no Managed Google Play.
 
 > See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
@@ -34,9 +34,9 @@ This guide covers AOSP (Android Open Source Project) device management for Pico 
 
 ## Scope and Status
 
-PICO 4 Enterprise and PICO Neo3 Pro/Eye are supported under AOSP in Intune because they have no GMS. If GMS is present on a target device, use Android Enterprise fully managed (COBO) instead — these devices are not supported under AOSP when GMS is available. `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
+PICO 4 Enterprise and PICO Neo3 Pro/Eye are supported under AOSP in Intune because they have no GMS. If GMS is present on a target device, use Android Enterprise fully managed (COBO) instead—these devices are not supported under AOSP when GMS is available. `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
-Pico devices are AR/VR headsets positioned for training, simulation, and enterprise XR collaboration — standalone six-degree-of-freedom headsets used for skills training, remote-expert simulation, design review, and immersive frontline workflows. The Enterprise SKU lineup (PICO 4 Enterprise, PICO Neo3 Pro/Eye, and PICO 4 Ultra Enterprise) is distinct from the consumer Pico product line and is the only tier eligible for Intune AOSP enrollment.
+Pico devices are AR/VR headsets positioned for training, simulation, and enterprise XR collaboration—standalone six-degree-of-freedom headsets used for skills training, remote-expert simulation, design review, and immersive frontline workflows. The Enterprise SKU lineup (PICO 4 Enterprise, PICO Neo3 Pro/Eye, and PICO 4 Ultra Enterprise) is distinct from the consumer Pico product line and is the only tier eligible for Intune AOSP enrollment.
 
 > ⚠️ **Enterprise SKU required.** Consumer Pico 4 and consumer Neo3 are NOT supported by Intune AOSP enrollment.
 
@@ -58,15 +58,15 @@ Pico's Intune-supported Enterprise headsets are supported under AOSP because no 
 
 `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
-PICO 4 Ultra Enterprise is also enterprise-tier per `business.picoxr.com`; verify the Intune AOSP supported-devices list at deployment time for net-new hardware additions. The MS Learn AOSP supported-devices page is the authoritative gate for what Intune will accept — Pico hardware that is enterprise-positioned by Pico but not yet listed on MS Learn cannot be enrolled under AOSP. `[HIGH: MS Learn AOSP supported devices + business.picoxr.com, last_verified 2026-04-25]`
+PICO 4 Ultra Enterprise is also enterprise-tier per `business.picoxr.com`; verify the Intune AOSP supported-devices list at deployment time for net-new hardware additions. The MS Learn AOSP supported-devices page is the authoritative gate for what Intune accepts—Pico hardware that is enterprise-positioned by Pico but not yet listed on MS Learn cannot be enrolled under AOSP. `[HIGH: MS Learn AOSP supported devices + business.picoxr.com, last_verified 2026-04-25]`
 
 <a id="prerequisites"></a>
 ## Prerequisites and Licensing
 
-- **Microsoft Intune Plan 2 OR Intune Suite** — Pico AR/VR headsets fall under Microsoft's specialty-device licensing tier; Intune Plan 1 alone does not entitle the tenant to manage Pico hardware. `[HIGH: MS Learn specialty-devices-with-intune, last_verified 2026-04-25]`
-- **Microsoft Entra ID tenant** with Intune Administrator role available to the admin authoring the AOSP enrollment profile.
-- **Optional — PICO Business Suite license.** PICO Business Suite is a Pico-vendor SDK / app / kiosk-mode delivery offering that coexists in parallel with Intune AOSP enrollment. PICO Business Suite licensing changed mid-2025; community-source pricing reports SDK access at $50-$150/year/device. Verify current pricing at `business.picoxr.com`. See the [Pico Business Suite Coexistence](#pico-business-suite-coexistence) add-on H2 below for the OPTIONAL coexistence mechanics. `[MEDIUM: aliexpress.com / community sources, last_verified 2026-04-25]`
-- **Staging Wi-Fi network on-site** that the headset can join during enrollment. Pico devices have an interactive Wi-Fi setup UI in their first-boot enrollment flow, so embedding Wi-Fi credentials in the AOSP QR is OPTIONAL for Pico (it helps zero-touch staging but is not strictly required — operators can complete Wi-Fi join interactively if the QR omits the Wi-Fi block). `[MEDIUM: PICO Business + general AR/VR pattern, last_verified 2026-04-25]`
+- **Microsoft Intune Plan 2 OR Intune Suite**—Pico AR/VR headsets fall under Microsoft's specialty-device licensing tier; Intune Plan 1 alone does not entitle the tenant to manage Pico hardware. `[HIGH: MS Learn specialty-devices-with-intune, last_verified 2026-04-25]`
+- **Microsoft Entra ID tenant** with Intune Administrator role available to the administrator authoring the AOSP enrollment profile.
+- **Optional—PICO Business Suite license.** PICO Business Suite is a Pico-vendor SDK / app / kiosk-mode delivery offering that coexists in parallel with Intune AOSP enrollment. PICO Business Suite licensing changed mid-2025; community-source pricing reports SDK access at $50-$150/year/device. Verify current pricing at `business.picoxr.com`. See the [Pico Business Suite Coexistence](#pico-business-suite-coexistence) add-on H2 for the OPTIONAL coexistence mechanics. `[MEDIUM: aliexpress.com / community sources, last_verified 2026-04-25]`
+- **Staging Wi-Fi network on-site** that the headset can join during enrollment. Pico devices have an interactive Wi-Fi setup UI in their first-boot enrollment flow, so embedding Wi-Fi credentials in the AOSP QR is OPTIONAL for Pico (it helps zero-touch staging but is not strictly required—operators can complete Wi-Fi join interactively if the QR omits the Wi-Fi block). `[MEDIUM: PICO Business + general AR/VR pattern, last_verified 2026-04-25]`
 
 ## Enrollment Method
 
@@ -80,7 +80,7 @@ The Pico Enterprise headsets are supported under AOSP because no GMS; if GMS is 
 ### Step 1 — Confirm device is Enterprise SKU (PICO 4 Enterprise / PICO Neo3 Pro/Eye)
 
 1. Inspect the physical device labeling on the chassis or original packaging. Enterprise SKUs carry "Enterprise", "Pro", or "Pro/Eye" branding distinct from the consumer Pico 4 / consumer Neo3 line.
-2. Confirm the model identifier matches the MS Learn AOSP supported-devices list (PICO 4 Enterprise OR PICO Neo3 Pro/Eye). Consumer Pico 4 and consumer Neo3 are NOT on the supported list and will fail Intune AOSP enrollment.
+2. Confirm the model identifier matches the MS Learn AOSP supported-devices list (PICO 4 Enterprise OR PICO Neo3 Pro/Eye). Consumer Pico 4 and consumer Neo3 are NOT on the supported list and fail Intune AOSP enrollment.
 3. Verify the firmware version meets the minimum floor: PUI 5.6.0 for PICO 4 Enterprise, PUI 4.8.19 for PICO Neo3 Pro/Eye. Settings > About on the headset surfaces the PUI version.
 4. (For net-new procurement) Cross-reference `business.picoxr.com` to confirm the SKU is enterprise-tier; if procuring through a third-party reseller, get explicit confirmation in writing that the SKU is the Enterprise variant.
 
@@ -91,29 +91,29 @@ The Pico Enterprise headsets are supported under AOSP because no GMS; if GMS is 
 1. Sign in to the [Intune admin center](https://endpoint.microsoft.com). <!-- verify UI at execute time -->
 2. Navigate to **Devices** > **Android** > **Enrollment**. <!-- verify UI at execute time -->
 3. Choose the AOSP enrollment surface: **Corporate-owned dedicated devices (AOSP)** for shared-pool training-room headsets (userless), or **Corporate-owned, user-associated (AOSP)** for named-operator assignment. <!-- verify UI at execute time -->
-4. Select **Token**. Configure profile name (e.g., `AOSP-Pico-4-Enterprise-Training`), token expiry (userless = 90 days max; user-associated = up to 65 years), and target device-set scope.
-5. Save the profile; do NOT generate the QR yet — Step 3 decides whether to embed Wi-Fi in the QR (OPTIONAL for Pico).
-6. (Optional) If using PICO Business Suite in coexistence (see [Pico Business Suite Coexistence](#pico-business-suite-coexistence) below), no Intune-side configuration changes are required at this step — the two surfaces operate in parallel.
+4. Select **Token**. Configure profile name (for example, `AOSP-Pico-4-Enterprise-Training`), token expiry (userless = 90 days max; user-associated = up to 65 years), and target device-set scope.
+5. Save the profile; do NOT generate the QR yet—Step 3 decides whether to embed Wi-Fi in the QR (OPTIONAL for Pico).
+6. (Optional) If using PICO Business Suite in coexistence (see [Pico Business Suite Coexistence](#pico-business-suite-coexistence)), no Intune-side configuration changes are required at this step—the two surfaces operate in parallel.
 
-    > **What breaks if misconfigured:** Choosing the wrong AOSP enrollment surface (e.g., user-associated when the headsets are training-room shared pool) produces compliance and Conditional Access bindings to a phantom user, and the staging-token expiry is asymmetric — userless caps at 90 days while user-associated allows up to 65 years. Recovery: delete the profile, re-create on the correct surface; previously enrolled devices are unaffected. Symptom appears in: Intune admin center > Devices > Android (devices show wrong enrollment mode in the Owner column).
+    > **What breaks if misconfigured:** Choosing the wrong AOSP enrollment surface (e.g., user-associated when the headsets are training-room shared pool) produces compliance and Conditional Access bindings to a phantom user, and the staging-token expiry is asymmetric—userless caps at 90 days while user-associated allows up to 65 years. Recovery: delete the profile, re-create on the correct surface; previously enrolled devices are unaffected. Symptom appears in: Intune admin center > Devices > Android (devices show wrong enrollment mode in the Owner column).
 
 ### Step 3 — Generate the AOSP QR code (Wi-Fi embedding OPTIONAL for Pico)
 
 1. From the saved AOSP enrollment profile, choose **Generate QR code**. <!-- verify UI at execute time -->
 2. Decide whether to embed Wi-Fi credentials. For zero-touch staging (operator scans QR and walks away while the headset enrolls), embed the staging Wi-Fi block. For lighter-touch staging where the operator can use the Pico's interactive Wi-Fi UI at first-boot, omit the Wi-Fi block.
 3. If embedding Wi-Fi: enter SSID + auth type (typically WPA2-PSK or WPA3-Personal) + PSK. Verify against the staging access point configuration before saving.
-4. Download the QR image as PNG. Distribute via a secure channel — the QR contains the staging enrollment token (and Wi-Fi PSK if embedded); treat it as a credential.
+4. Download the QR image as PNG. Distribute through a secure channel—the QR contains the staging enrollment token (and Wi-Fi PSK if embedded); treat it as a credential.
 
-    > **What breaks if misconfigured:** QR shared via insecure channel (mass email, public chat) leaks the staging token (and Wi-Fi PSK if embedded). Recovery: regenerate the staging token in Intune (invalidates the leaked QR), rotate the staging Wi-Fi PSK if embedded, redistribute the new QR via a secure channel. Symptom appears in: unexpected enrollments from out-of-policy devices, staging-Wi-Fi unauthorized client list.
+    > **What breaks if misconfigured:** QR shared through insecure channel (mass email, public chat) leaks the staging token (and Wi-Fi PSK if embedded). Recovery: regenerate the staging token in Intune (invalidates the leaked QR), rotate the staging Wi-Fi PSK if embedded, redistribute the new QR through a secure channel. Symptom appears in: unexpected enrollments from out-of-policy devices, staging-Wi-Fi unauthorized client list.
 
 ### Step 4 — Provision the device by scanning the QR (one device per QR)
 
 1. Power on the Pico headset out-of-box (factory-reset state). The headset boots to its first-time setup flow; navigate to the QR-scan / device-management entry point per the model's setup guide (PICO 4 Enterprise and Neo3 Pro/Eye expose the AOSP enrollment QR scanner during initial provisioning).
 2. Position the QR image so the headset's front camera can capture it. The headset confirms the scan with an on-display acknowledgment.
-3. If Wi-Fi was NOT embedded in the QR, complete Wi-Fi join via the headset's interactive Wi-Fi UI when prompted.
+3. If Wi-Fi was NOT embedded in the QR, complete Wi-Fi join using the headset's interactive Wi-Fi UI when prompted.
 4. Wait for the AOSP enrollment handshake with Intune. Typical enrollment window is **~15 minutes** from scan to "Enrolled" status in Intune admin center.
 5. The headset boots into the configured AOSP mode (user-associated or userless). For user-associated mode, the assigned operator signs in at first use.
-6. Repeat per device — AOSP enrollment is one-device-per-QR-scan; bulk enrollment is not supported under AOSP.
+6. Repeat per device—AOSP enrollment is one-device-per-QR-scan; bulk enrollment is not supported under AOSP.
 
     > **What breaks if misconfigured:** Device shows "Connecting to Intune" past the ~15-minute window with no progression → typically token (Step 2 expiry / wrong-mode), Wi-Fi (Step 3) misconfiguration, or consumer-SKU mistake (Step 1); less commonly an Intune service-side outage. Recovery: factory-reset the headset, verify token validity in Intune admin center, re-confirm Enterprise SKU per Step 1, regenerate the QR if needed, re-scan. Symptom appears in: device-side "Connecting to Intune" stall (no progression past handshake screen).
 
@@ -146,14 +146,14 @@ PICO Business Suite is for vendor-side SDK + app delivery + Pico-specific config
 1. Sign in to the [Intune admin center](https://endpoint.microsoft.com). <!-- verify UI at execute time -->
 2. Navigate to **Devices** > **All devices**, filter by **Platform = Android**, and search by serial number (the Pico serial is on the chassis label and in Settings > About on the headset). <!-- verify UI at execute time -->
 3. Confirm the headset row shows **Enrolled** status with the expected AOSP mode in the Owner column (user-associated or dedicated/userless).
-4. Confirm the AOSP enrollment profile from Step 2 is applied — Intune admin center > Devices > select Pico headset > Device configuration shows the profile assignment status.
+4. Confirm the AOSP enrollment profile from Step 2 is applied—Intune admin center > Devices > select Pico headset > Device configuration shows the profile assignment status.
 5. Wait up to ~15 minutes from first boot for the initial compliance state to populate; confirm the **Compliance** column reports the expected verdict per your tenant's compliance policy.
-6. (If PICO Business Suite is in coexistence) Sign in to the PICO Business Suite admin console and confirm the device also appears there with the same serial number — Intune and PICO Business Suite coexist; the device is visible in both surfaces. <!-- verify UI at execute time -->
+6. (If PICO Business Suite is in coexistence) Sign in to the PICO Business Suite administrator console and confirm the device also appears there with the same serial number—Intune and PICO Business Suite coexist; the device is visible in both surfaces. <!-- verify UI at execute time -->
 
 <a id="common-failures"></a>
 ## Common Failures
 
-Pico Enterprise headsets are supported under AOSP because no GMS; if GMS is present, use Android Enterprise fully managed instead. The failure modes below are scoped to the AOSP enrollment + optional PICO Business Suite coexistence surface for Pico Enterprise hardware.
+Pico Enterprise headsets are supported under AOSP because no GMS; if GMS is present, use Android Enterprise fully managed instead. The following failure modes are scoped to the AOSP enrollment + optional PICO Business Suite coexistence surface for Pico Enterprise hardware.
 
 | Symptom | Likely Cause | Recovery | Severity |
 |---|---|---|---|
@@ -191,11 +191,11 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 ## See Also
 
-- [AOSP Stub](06-aosp-stub.md) — AOSP scope context
-- [AOSP OEM Matrix](../reference/aosp-oem-matrix.md) — cross-OEM AOSP capability mapping
-- [Android Capability Matrix](../reference/android-capability-matrix.md) — overall Android mode capability landscape
-- [Android Glossary](../_glossary-android.md) — AOSP / OEMConfig / GMS terminology
-- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md#aosp) — placement of AOSP within the Android enrollment lifecycle
+- [AOSP Stub](06-aosp-stub.md)—AOSP scope context
+- [AOSP OEM Matrix](../reference/aosp-oem-matrix.md)—cross-OEM AOSP capability mapping
+- [Android Capability Matrix](../reference/android-capability-matrix.md)—overall Android mode capability landscape
+- [Android Glossary](../_glossary-android.md)—AOSP / OEMConfig / GMS terminology
+- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md#aosp)—placement of AOSP within the Android enrollment lifecycle
 
 ## Changelog
 
@@ -205,7 +205,7 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 ---
 
-*Wave 3 runbook 29 (Cause C) and L2 runbook 23 (Pattern C) cross-link landing targets: [`#common-failures`](#common-failures) and [`#pico-business-suite-coexistence`](#pico-business-suite-coexistence) anchors above are stable per D-05 anchor-scaffolding contract.*
+*Wave 3 runbook 29 (Cause C) and L2 runbook 23 (Pattern C) cross-link landing targets: [`#common-failures`](#common-failures) and [`#pico-business-suite-coexistence`](#pico-business-suite-coexistence) anchors are stable per D-05 anchor-scaffolding contract.*
 
 *Wave 2 `aosp-oem-matrix.md` consumes the Pico column data shipped here: PICO 4 Enterprise / PICO Neo3 Pro/Eye + PUI 5.6.0 / PUI 4.8.19 firmware floors (Hardware Scope row); QR-only AOSP + Wi-Fi OPTIONAL (Enrollment Method and Wi-Fi Embedding row); PICO Business Suite OPTIONAL coexistence + Plan 2 OR Suite (Vendor Portals and Licensing row); BOTH user-associated AND userless supported (Intune AOSP Mode row).*
 

@@ -21,7 +21,7 @@ This reference document provides an end-to-end operational workflow for onboardi
 > **Version gate:** This workflow applies to both APv1 and APv2 device onboarding. Framework-specific differences are noted inline.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-When a new batch of devices arrives, there is a specific sequence of steps that must be completed in order. Skipping or reordering stages — particularly powering on devices before group membership is confirmed — results in devices going through standard Windows OOBE instead of the Autopilot experience.
+When a new batch of devices arrives, there is a specific sequence of steps that must be completed in order. Skipping or reordering stages—particularly powering on devices before group membership is confirmed—results in devices going through standard Windows OOBE instead of the Autopilot experience.
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ When a new batch of devices arrives, there is a specific sequence of steps that 
 
 > **Critical sequence note:** Do NOT power on devices (Stage 6) before Profile Assignment is confirmed (Stage 4).
 
-> A device that reaches OOBE before the profile is assigned will go through standard Windows setup instead of Autopilot. If this happens, the device must be reset before Autopilot can run.
+> A device that reaches OOBE before the profile is assigned goes through standard Windows setup instead of Autopilot. If this happens, the device must be reset before Autopilot can run.
 
 ## Pre-Batch Checklist
 
@@ -66,7 +66,7 @@ Complete all items before ordering or receiving a new batch:
 
 After all devices in the batch are provisioned:
 
-1. Check the deployment report: success rate should be above 95% (see [Deployment Reporting](deployment-reporting.md)).
+1. Check the deployment report: confirm the success rate is above 95% (see [Deployment Reporting](deployment-reporting.md)).
 2. Verify all devices show "Assigned" profile status (see [Drift Detection](drift-detection.md)).
 3. Verify compliance status for all batch devices (allow 30 minutes post-deployment before checking).
 4. Document any failures with error codes for process improvement.

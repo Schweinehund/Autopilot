@@ -16,13 +16,13 @@ platform: macOS
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS ADE diagnostic log collection using IntuneMacODC, Terminal, and mdmdiagnosticstool.exe; provides the baseline diagnostic package required before any macOS L2 investigation (profile delivery, app install, or compliance).
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers macOS ADE diagnostic log collection using IntuneMacODC, Terminal, and mdmdiagnosticstool.exe; provides the baseline diagnostic package required before any macOS L2 investigation (profile delivery, app install, or compliance).
 
-> **Platform gate:** This guide covers macOS ADE log collection via Intune. For Windows Autopilot, see [Windows Log Collection Guide](01-log-collection.md).
+> **Platform gate:** This guide covers macOS ADE log collection through Intune. For Windows Autopilot, see [Windows Log Collection Guide](01-log-collection.md).
 
 ## Context
 
-This guide is the prerequisite for all macOS L2 investigation runbooks. Before starting any profile delivery, app install, or compliance evaluation investigation, collect a complete diagnostic package using the steps below.
+This guide is the prerequisite for all macOS L2 investigation runbooks. Before starting any profile delivery, app install, or compliance evaluation investigation, collect a complete diagnostic package using the following steps.
 
 The principle is **gather everything first, then investigate**. Collecting all artifacts upfront prevents having to return to the device mid-investigation when a log file is needed. The IntuneMacODC zip is also the artifact Microsoft Support requests for assisted troubleshooting.
 
@@ -32,7 +32,7 @@ All other macOS L2 runbooks open with: "Before starting: collect a diagnostic pa
 
 ## Section 1: IntuneMacODC Comprehensive Collection
 
-IntuneMacODC is a Microsoft-provided bash script — not a Windows tool adapted for Mac — that collects all Intune agent logs, system profiler output, installed profiles, process lists, and network configuration in a single zip archive. It is the primary comprehensive log collection tool for macOS Intune investigations.
+IntuneMacODC is a Microsoft-provided bash script—not a Windows tool adapted for Mac—that collects all Intune agent logs, system profiler output, installed profiles, process lists, and network configuration in a single zip archive. It is the primary comprehensive log collection tool for macOS Intune investigations.
 
 Run this first. It produces a single `IntuneMacODC.zip` archive that covers the vast majority of investigation scenarios.
 
@@ -77,7 +77,7 @@ Run this first. It produces a single `IntuneMacODC.zip` archive that covers the 
 
 ## Section 2: Terminal-Based Targeted Collection
 
-Use this section when IntuneMacODC cannot be downloaded (network restrictions, firewall blocking `aka.ms` — common on devices under investigation) or when you need to collect specific artifacts not included in IntuneMacODC.
+Use this section when IntuneMacODC cannot be downloaded (network restrictions, firewall blocking `aka.ms`—common on devices under investigation) or when you need to collect specific artifacts not included in IntuneMacODC.
 
 ### 2a. Enrollment status verification
 
@@ -87,7 +87,7 @@ profiles status -type enrollment
 
 Expected output interpretation: `Enrolled via DEP: Yes` confirms ADE enrollment. `MDM enrollment: Yes (User Approved)` confirms MDM authority and user-approved management scope. If MDM enrollment shows `No` or is missing, the device lost its management relationship.
 
-See [macOS Terminal Commands Reference — profiles status](../reference/macos-commands.md) for full parameter reference.
+See [macOS Terminal Commands Reference—profiles status](../reference/macos-commands.md) for full parameter reference.
 
 ### 2b. Installed profiles dump
 
@@ -103,7 +103,7 @@ system_profiler SPConfigurationProfileDataType
 
 Outputs all installed profiles in plist format. Useful for programmatic parsing or when `profiles show` output is insufficient.
 
-See [macOS Terminal Commands Reference — profiles show](../reference/macos-commands.md) and [macOS Terminal Commands Reference — system_profiler](../reference/macos-commands.md).
+See [macOS Terminal Commands Reference—profiles show](../reference/macos-commands.md) and [macOS Terminal Commands Reference—system_profiler](../reference/macos-commands.md).
 
 ### 2c. MDM and profile event log query
 
@@ -119,9 +119,9 @@ For ADE and Setup Assistant enrollment events:
 log show --predicate 'subsystem contains "cloudconfigurationd"' --info --last 30m
 ```
 
-The unified log is the authoritative source for profile installation events, MDM command processing, and ADE enrollment stages on macOS 10.12 and later. It does not produce persistent log files — query it live or use IntuneMacODC which captures an excerpt automatically.
+The unified log is the authoritative source for profile installation events, MDM command processing, and ADE enrollment stages on macOS 10.12 and later. It does not produce persistent log files—query it live or use IntuneMacODC which captures an excerpt automatically.
 
-See [macOS Terminal Commands Reference — log show](../reference/macos-commands.md) for filter syntax and additional parameters.
+See [macOS Terminal Commands Reference—log show](../reference/macos-commands.md) for filter syntax and additional parameters.
 
 ### 2d. Intune agent process check
 
@@ -129,9 +129,9 @@ See [macOS Terminal Commands Reference — log show](../reference/macos-commands
 pgrep -il "^IntuneMdm"
 ```
 
-Expected output: `IntuneMdmDaemon` and `IntuneMdmAgent` processes listed. If `IntuneMdmDaemon` is absent, the Intune management extension is not active — the device may have lost its MDM relationship or the management extension was removed.
+Expected output: `IntuneMdmDaemon` and `IntuneMdmAgent` processes listed. If `IntuneMdmDaemon` is absent, the Intune management extension is not active—the device may have lost its MDM relationship or the management extension was removed.
 
-See [macOS Terminal Commands Reference — pgrep](../reference/macos-commands.md) for expected process names and roles.
+See [macOS Terminal Commands Reference—pgrep](../reference/macos-commands.md) for expected process names and roles.
 
 ---
 
@@ -158,10 +158,10 @@ For the complete log path reference with configuration profile filesystem locati
 
 ## Related Resources
 
-- [macOS Terminal Commands Reference](../reference/macos-commands.md) — Full command reference for all diagnostic commands
-- [macOS Log Paths Reference](../reference/macos-log-paths.md) — Complete log path reference with macOS version annotations
-- [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md) — 7-stage ADE pipeline context
-- [Windows Log Collection Guide](01-log-collection.md) — Windows Autopilot equivalent
+- [macOS Terminal Commands Reference](../reference/macos-commands.md)—Full command reference for all diagnostic commands
+- [macOS Log Paths Reference](../reference/macos-log-paths.md)—Complete log path reference with macOS version annotations
+- [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md)—7-stage ADE pipeline context
+- [Windows Log Collection Guide](01-log-collection.md)—Windows Autopilot equivalent
 
 ---
 

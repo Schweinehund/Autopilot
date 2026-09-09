@@ -75,7 +75,7 @@ Microsoft-Windows-User Device Registration/Admin
 
 ## Investigation Runbooks
 
-- [Log Collection Guide](l2-runbooks/01-log-collection.md) — prerequisite for all investigations
+- [Log Collection Guide](l2-runbooks/01-log-collection.md)—prerequisite for all investigations
 - [ESP Deep-Dive](l2-runbooks/02-esp-deep-dive.md)
 - [TPM Attestation Investigation](l2-runbooks/03-tpm-attestation.md)
 - [Hybrid Join Investigation](l2-runbooks/04-hybrid-join.md)
@@ -83,9 +83,9 @@ Microsoft-Windows-User Device Registration/Admin
 - [Full PowerShell Reference](reference/powershell-ref.md)
 - [Full Registry Paths Reference](reference/registry-paths.md)
 - [Network Endpoints](reference/endpoints.md)
-- [802.1X Log Collection Guide](l2-runbooks/31-8021x-log-collection.md) — prerequisite for all 802.1X L2 investigations; per-platform log sources (Windows WLAN-AutoConfig/Dot3Svc, macOS Console.app/wifi.log, iOS Intune portal, Android adb logcat, Linux journalctl)
-- [802.1X Certificate Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) — per-platform cert chain validation, SCEP profile status, EKU/SAN/expiry
-- [802.1X RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) — RADIUS team request checklist; per-platform EAP mismatch + server-name validation diagnosis
+- [802.1X Log Collection Guide](l2-runbooks/31-8021x-log-collection.md)—prerequisite for all 802.1X L2 investigations; per-platform log sources (Windows WLAN-AutoConfig/Dot3Svc, macOS Console.app/wifi.log, iOS Intune portal, Android adb logcat, Linux journalctl)
+- [802.1X Certificate Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md)—per-platform cert chain validation, SCEP profile status, EKU/SAN/expiry
+- [802.1X RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)—RADIUS team request checklist; per-platform EAP mismatch + server-name validation diagnosis
 
 ---
 
@@ -93,7 +93,7 @@ Microsoft-Windows-User Device Registration/Admin
 
 **Framework:** APv2 (Device Preparation)
 
-> **Important:** APv2 does NOT use `mdmdiagnosticstool.exe` for log collection. Use the BootstrapperAgent event log and IME log folder below.
+> **Important:** APv2 does NOT use `mdmdiagnosticstool.exe` for log collection. Use the BootstrapperAgent event log and IME log folder.
 
 ### APv2 Log Collection
 
@@ -118,7 +118,7 @@ Intune admin center > Devices > Monitor > Device preparation deployments
 Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin
 ```
 
-> **Note:** This is the same log path as APv1, but APv2 events use different event ID ranges (see below).
+> **Note:** This is the same log path as APv1, but APv2 events use different event ID ranges (see the following section).
 
 ### APv2 Key Event ID Ranges
 
@@ -201,7 +201,7 @@ Verify PSSO registration state -- run on the affected Mac:
 app-sso platform -s
 ```
 
-Expected healthy output includes both `Device Registration: REGISTERED` and `User Registration: REGISTERED` with SSO tokens listed. See [07-platform-sso-setup.md — Verification](admin-setup-macos/07-platform-sso-setup.md) for the full expected output format.
+Expected healthy output includes both `Device Registration: REGISTERED` and `User Registration: REGISTERED` with SSO tokens listed. See [07-platform-sso-setup.md—Verification](admin-setup-macos/07-platform-sso-setup.md) for the full expected output format.
 
 #### Kerberos SSO Diagnostics
 
@@ -211,7 +211,7 @@ Verify Kerberos ticket cache -- run on the affected Mac:
 klist
 ```
 
-Healthy output shows a TGT with a future expiry for the configured realm. An empty cache or "No credentials cache found" indicates TGT acquisition failure. For PSSO-TGT integration context (`tgt_ad` on-prem vs `tgt_cloud` Entra), see the [Platform SSO Attestation Command](#platform-sso-attestation-command) block above.
+Healthy output shows a TGT with a future expiry for the configured realm. An empty cache or "No credentials cache found" indicates TGT acquisition failure. For PSSO-TGT integration context (`tgt_ad` on-prem vs `tgt_cloud` Entra), see the [Platform SSO Attestation Command](#platform-sso-attestation-command) block.
 
 #### MDM Migration Diagnostics
 
@@ -226,8 +226,8 @@ sw_vers -productVersion
 ```
 
 For enrollment status, cross-reference:
-- [`profiles status -type enrollment`](#key-terminal-commands) — already in Key Terminal Commands above; checks MDM enrollment state and stale Kandji/Iru MDM certificates
-- [`app-sso platform -s`](#platform-sso-attestation-command) — already in Platform SSO Attestation Command above; verifies PSSO re-registration state post-migration
+- [`profiles status -type enrollment`](#key-terminal-commands)—already in Key Terminal Commands; checks MDM enrollment state and stale Kandji/Iru MDM certificates
+- [`app-sso platform -s`](#platform-sso-attestation-command)—already in Platform SSO Attestation Command; verifies PSSO re-registration state post-migration
 
 See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) for Track A/B/C investigation steps.
 
@@ -251,7 +251,7 @@ See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-fail
 
 > No equivalent to `mdmdiagnosticstool.exe` (Windows) or `profiles` / `log show` / `system_profiler` (macOS).
 
-> Diagnostic data is fragmented across three tiered methods — see below.
+> Diagnostic data is fragmented across three tiered methods—see the following section.
 
 ### iOS Diagnostic Data Collection (3 methods)
 
@@ -261,7 +261,7 @@ See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-fail
 | Company Portal log upload | User (on device) | Microsoft Support ticket (indirect — support uploads logs to case on L2's behalf) | Tier 2 -- when Tier 1 is insufficient and no Mac+cable is available |
 | Mac+cable sysdiagnose | L2 + user (physical) | Direct `.tar.gz` extraction via macOS Console.app | Tier 3 -- when profile-delivery verbosity is required (ADE token / MDM channel investigation) |
 
-*(Full method details and scope distinctions: [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) is the authoritative source — MAM scope of the Intune "Collect diagnostics" remote action is documented at `14-ios-log-collection.md:29` and §1b:58. Verify portal paths per Phase 30 D-32 / Phase 31 D-31 research flags at execution time — Intune admin center UI can shift since last plan-time verification 2026-04-17.)*
+*(Full method details and scope distinctions: [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) is the authoritative source—MAM scope of the Intune "Collect diagnostics" remote action is documented at `14-ios-log-collection.md:29` and §1b:58. Verify portal paths per Phase 30 D-32 / Phase 31 D-31 research flags at execution time—Intune admin center UI can shift since last plan-time verification 2026-04-17.)*
 
 ### Key Intune Portal Paths (iOS L2)
 
@@ -273,11 +273,11 @@ See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-fail
 | Apps > iOS/iPadOS apps | Managed app status, VPP licensing state (device-licensed vs user-licensed), per-device install state |
 | Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, and non-compliant settings |
 
-*(Verified 2026-04-18 against Microsoft Learn: paths updated to reflect the "Device onboarding" section reorg under Devices. Intune admin center reorganizes without deprecation notice — re-verify before content lock-in.)*
+*(Verified 2026-04-18 against Microsoft Learn: paths updated to reflect the "Device onboarding" section reorg under Devices. Intune admin center reorganizes without deprecation notice—re-verify before content lock-in.)*
 
 ### Sysdiagnose Trigger Reference (iOS/iPadOS)
 
-Per Apple's canonical platform support guide, sysdiagnose is triggered via **AssistiveTouch > Analytics** — a uniform procedure that works across all iPhone/iPad models and iOS/iPadOS versions. The legacy physical-button combos (volume + Side/Top) are no longer the Apple-recommended method.
+Per Apple's canonical platform support guide, sysdiagnose is triggered through **AssistiveTouch > Analytics**—a uniform procedure that works across all iPhone/iPad models and iOS/iPadOS versions. The legacy physical-button combos (volume + Side/Top) are no longer the Apple-recommended method.
 
 **5-step AssistiveTouch sysdiagnose procedure (all current iPhones and iPads):**
 
@@ -285,7 +285,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > Customize Top Level Menu > tap **Custom** > select **Analytics**.
 3. **Trigger sysdiagnose:** tap the on-screen AssistiveTouch button > **Analytics**. Device begins background sysdiagnose generation (~10 minutes; no haptic feedback on iPad).
 4. **Locate output file:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. Scroll to the `sysdiagnose_` prefixed entry matching today's date/time.
-5. **Export from device:** tap the sysdiagnose file > tap the share button (top-right) > send via AirDrop, Email, iCloud, Files.app, or any installed share extension. (For bundles >25 MB, prefer AirDrop or iCloud over Mail.)
+5. **Export from device:** tap the sysdiagnose file > tap the share button (top-right) > send through AirDrop, Email, iCloud, Files.app, or any installed share extension. (For bundles >25 MB, prefer AirDrop or iCloud over Mail.)
 
 > **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices.
 
@@ -293,7 +293,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 
 > This is the recommended trigger for managed-fleet troubleshooting.
 
-*(Full procedure with Mac+cable alternative: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-sysdiagnose-trigger-and-file-export). Authoritative source: Apple Support — [Use Diagnostics to research device issues](https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web). Verified 2026-04-18 per UAT Test 15 resolution; replaces prior Phase 31 D-30 physical-button research-flag marker.)*
+*(Full procedure with Mac+cable alternative: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-sysdiagnose-trigger-and-file-export). Authoritative source: Apple Support—[Use Diagnostics to research device issues](https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web). Verified 2026-04-18 per UAT Test 15 resolution; replaces prior Phase 31 D-30 physical-button research-flag marker.)*
 
 ### iOS Investigation Runbooks
 
@@ -308,9 +308,9 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 
 > **Important:** Android L2 diagnostic data collection is mode-dependent.
 
-> AMAPI April 2025 changed the primary log mechanism for managed-Android modes — see the table below for the per-mode primary tool.
+> AMAPI April 2025 changed the primary log mechanism for managed-Android modes—see the following table for the per-mode primary tool.
 
-> Play Integrity verdict interpretation lives at the Phase 54 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+> Play Integrity verdict interpretation lives at the Phase 54 SSoT—this H2 carries pointer-only references (PITFALL-7 firewall).
 
 ### Android Diagnostic Data Collection (3 methods)
 
@@ -332,7 +332,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 | Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, non-compliant settings (incl. Play Integrity verdict) |
 | Reports > Endpoint analytics (Android subset) | Per-mode device telemetry rollup; supplemental for compliance-trend correlation |
 
-*(Verified 2026-04-30 against Microsoft Learn. Intune admin center reorganizes without deprecation notice — re-verify before content lock-in. Note: Knox Mobile Enrollment portal and Android Zero-Touch portal are EXTERNAL admin portals, not Intune admin center paths — surfaced in L1 quick-ref escalation triggers, not in this Intune-portal table.)*
+*(Verified 2026-04-30 against Microsoft Learn. Intune admin center reorganizes without deprecation notice—re-verify before content lock-in. Note: Knox Mobile Enrollment portal and Android Zero-Touch portal are EXTERNAL administrator portals, not Intune admin center paths—surfaced in L1 quick-ref escalation triggers, not in this Intune-portal table.)*
 
 ### Play Integrity Verdict Reference
 
@@ -342,9 +342,9 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 | MEETS_DEVICE_INTEGRITY | Device passed integrity + has Google Play Services (a recognized app-distribution surface) | [Phase 54 SSoT](operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
 | MEETS_STRONG_INTEGRITY | Device passed integrity + has Google Play Services + has hardware-backed key attestation + meets the Android security patch age requirement | [Phase 54 SSoT](operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
 
-⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
+⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT—Android Patch Delivery—Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
 
-Full cascade timeline and remediation playbook: see [Android Patch Delivery — Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
+Full cascade timeline and remediation playbook: see [Android Patch Delivery—Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
 
 ### Android Investigation Runbooks
 
@@ -352,7 +352,7 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 - [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md) -- GMS modes (BYOD / COBO / Dedicated / ZTE); Pattern A-E failure analysis; AOSP excluded -- see #23
 - [Android App Install Investigation](l2-runbooks/20-android-app-install-investigation.md) -- MGP / LOB three-class disambiguation across all GMS modes
 - [Android Compliance Investigation](l2-runbooks/21-android-compliance-investigation.md) -- Cause A (Play Integrity) / B (OS version) / C (CA timing) / D (passcode / encryption); cross-link to Phase 54 Play Integrity SSoT
-- [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md) -- mode-specific (Samsung KME provisioning into COBO / Dedicated / WPCO via Knox portal); reciprocal with #19 when Knox-provisioned device fails GMS-side enrollment
+- [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md) -- mode-specific (Samsung KME provisioning into COBO / Dedicated / WPCO through Knox portal); reciprocal with #19 when Knox-provisioned device fails GMS-side enrollment
 - [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md) -- mode-specific (5 OEMs: RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest); GMS-bearing devices route to #19 instead
 
 ---
@@ -363,7 +363,7 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 
 > **Important:** Linux L2 diagnostic data collection follows a 3-tier methodology (journalctl primary / file-based paths secondary / package-state queries supplemental) per the Phase 52 Decision Matrix.
 
-> Compliance category configuration content lives at the Phase 50 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+> Compliance category configuration content lives at the Phase 50 SSoT—this H2 carries pointer-only references (PITFALL-7 firewall).
 
 ### Linux Diagnostic Data Collection (3 methods)
 
@@ -395,9 +395,9 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 | Device Encryption | dm-crypt + LUKS full-disk encryption signal as compliance prerequisite (encryption-compliance triple analog: BitLocker / FileVault / dm-crypt) | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-4-configure-device-encryption-dm-crypt--luks) |
 | Password Policy | Minimum length / complexity rules; enforced via PAM `pwquality` configuration on enrolled devices | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-5-configure-password-policy) |
 
-⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](admin-setup-linux/03-compliance-policy.md).**
+⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT—Linux Compliance Policy](admin-setup-linux/03-compliance-policy.md).**
 
-Full configuration details and per-category remediation: see the [Linux Compliance Policy admin guide](admin-setup-linux/03-compliance-policy.md).
+Full configuration details and per-category remediation: see the [Linux Compliance Policy administrator guide](admin-setup-linux/03-compliance-policy.md).
 
 ### Linux Investigation Runbooks
 
@@ -406,25 +406,25 @@ Full configuration details and per-category remediation: see the [Linux Complian
 
 ## Apple Business Quick Reference
 
-**Platform:** Apple Business (Shared iPad + sub-org admin delegated governance)
+**Platform:** Apple Business (Shared iPad + sub-org administrator delegated governance)
 
 ### Apple Business Portal Navigation
 
-- **Permission catalog:** Apple Business > Settings > Roles (sub-org admin view)
+- **Permission catalog:** Apple Business > Settings > Roles (sub-org administrator view)
 - **OU device list:** Apple Business > Locations > [OU name] > Devices
 - **Activity log:** Apple Business > Activity (audit log for permission events; no public retention SLA per DELEG-07)
 
 ### Apple Business Permission Investigation
 
-1. Confirm user role in Apple Business portal — Settings > People > [user] > Role
-2. Check OU scope of the role assignment — compare against the failing action's OU
+1. Confirm user role in Apple Business portal—Settings > People > [user] > Role
+2. Check OU scope of the role assignment—compare against the failing action's OU
 3. Check Edit-without-View table in [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md) for OP-3 companion-view dependencies
-4. Federation state check: Settings > Accounts (SCIM/OIDC sync status) — see [16-managed-apple-account-runbook.md](cross-platform/apple-business/16-managed-apple-account-runbook.md)
+4. Federation state check: Settings > Accounts (SCIM/OIDC sync status)—see [16-managed-apple-account-runbook.md](cross-platform/apple-business/16-managed-apple-account-runbook.md)
 
 ### Investigation Runbooks
 
-- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf Mermaid tree; role / OU / scope / federation / quota / lockout
-- [12: Shared iPad Passcode Reset](cross-platform/apple-business/12-shared-ipad-passcode-reset.md) — 3-path matrix (Path A UI / Path B MDM ClearPasscode / Path C MDM EraseDevice + OP-11)
+- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—7-leaf Mermaid tree; role / OU / scope / federation / quota / lockout
+- [12: Shared iPad Passcode Reset](cross-platform/apple-business/12-shared-ipad-passcode-reset.md)—3-path matrix (Path A UI / Path B MDM ClearPasscode / Path C MDM EraseDevice + OP-11)
 
 ## Version History
 

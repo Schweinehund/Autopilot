@@ -15,7 +15,7 @@ confidence: MEDIUM
 > **macOS:** See [macOS Drift Detection](02-macos-drift-detection.md).
 > **iOS/Android:** See [iOS + Android Drift Detection](03-ios-android-drift-detection.md).
 
-> ⚠️ **MEDIUM confidence** — Tenant migration is not a formally supported Intune scenario.
+> ⚠️ **MEDIUM confidence**—Tenant migration is not a formally supported Intune scenario.
 > Microsoft does not provide automated tooling for tenant-to-tenant device migration. Test the
 > process in a non-production environment before executing at scale.
 
@@ -23,7 +23,7 @@ confidence: MEDIUM
 
 This runbook covers tenant-to-tenant migration across Windows / macOS / iOS / Android, plus a
 folded cross-platform encryption-drift section. Tenant migration is **not a formally supported
-Intune scenario** — Microsoft does not provide automated tooling for tenant-to-tenant device
+Intune scenario**—Microsoft does not provide automated tooling for tenant-to-tenant device
 migration. The procedures documented here are best-effort, drawn from Microsoft support guidance,
 Apple/Google admin-portal documentation, and community-validated patterns.
 
@@ -35,8 +35,8 @@ Apple/Google admin-portal documentation, and community-validated patterns.
 > [Tenant-to-Tenant Device Migration](../../device-operations/04-tenant-migration.md)
 > (v1.2 SSoT preserved; Windows-only scope).
 
-The runbook is organized as four platform H2 sections in document order — Windows,
-macOS / iOS, Android — followed by a cross-platform encryption-drift fold section (DRIFT-07).
+The runbook is organized as four platform H2 sections in document order—Windows,
+macOS / iOS, Android—followed by a cross-platform encryption-drift fold section (DRIFT-07).
 
 ---
 
@@ -51,31 +51,31 @@ SSoT; Windows-only).
 
 ### Migration sequence
 
-1. **Pre-migration inventory** — Collect serial numbers; collect hardware hashes if not
+1. **Pre-migration inventory**—Collect serial numbers; collect hardware hashes if not
    already on file (required for re-registration in target tenant; see v1.2 SSoT for hash
    collection commands and batch-size limits).
-2. **Autopilot deregistration in the source tenant** — Remove device from Tenant A Autopilot
+2. **Autopilot deregistration in the source tenant**—Remove device from Tenant A Autopilot
    device list (Intune admin center → Devices → Windows → Enrollment → Windows Autopilot
    devices → Delete). Also delete the Intune enrollment record. This deregistration step
-   is a hard prerequisite — a device cannot be re-registered in Tenant B while still
-   registered in Tenant A. Cross-reference the v1.2 doc above for exact sequencing with
+   is a hard prerequisite—a device cannot be re-registered in Tenant B while still
+   registered in Tenant A. Cross-reference the preceding v1.2 doc for exact sequencing with
    deregistration + timing constraints.
-3. **BitLocker re-key** — Choose ONE of three approaches enumerated below. The choice is
+3. **BitLocker re-key**—Choose ONE of three approaches that follow. The choice is
    made based on tenant-side data-risk tolerance, third-party tooling budget, and PowerShell
-   scripting capacity. All three options are enumerated neutrally — no Microsoft preference.
-4. **Autopilot re-registration in the target tenant** — Import hardware hashes into Tenant B
+   scripting capacity. All three options are enumerated neutrally—no Microsoft preference.
+4. **Autopilot re-registration in the target tenant**—Import hardware hashes into Tenant B
    (Intune admin center → Devices → Windows → Enrollment → Windows Autopilot devices →
    Import). Assign the Autopilot profile and verify profile assignment. See v1.2 SSoT for
    batch-import limits and profile-assignment timing guidance.
-5. **Post-migration BitLocker recovery key escrow validation** — Verify that BitLocker
+5. **Post-migration BitLocker recovery key escrow validation**—Verify that BitLocker
    recovery keys are present in the target Microsoft Entra ID before retiring the source
-   tenant admin access. See the escrow validation section below.
+   tenant administrator access. See the escrow validation section.
 
 ---
 
 ### BitLocker re-key: three approaches (neutral enumeration)
 
-The three BitLocker re-key approaches are enumerated below WITHOUT Microsoft preference.
+The three BitLocker re-key approaches are enumerated here WITHOUT Microsoft preference.
 REQ DRIFT-04 explicitly requires neutrality on tooling/approach choice.
 
 #### Option (a): Source-tenant escrow → target Entra via PowerShell scheduled task
@@ -83,7 +83,7 @@ REQ DRIFT-04 explicitly requires neutrality on tooling/approach choice.
 This approach uses source-tenant escrow data to seed the target Entra ID: a PowerShell
 scheduled task post-migration calls `BackupToAAD-BitLockerKeyProtector` to escrow the existing
 recovery key from the workstation to the target Microsoft Entra ID.
-This approach preserves device encryption continuity — there is no decrypt window, and the
+This approach preserves device encryption continuity—there is no decrypt window, and the
 device remains encrypted throughout migration. It is the canonical PowerShell-driven path used
 by community tooling for cross-tenant BitLocker key migration.
 
@@ -92,11 +92,11 @@ Win32 app package) that is published to the target Intune tenant post-device-mig
 triggering at user logon. The script identifies all BitLocker-protected volumes, then calls
 `BackupToAAD-BitLockerKeyProtector` for each to escrow the recovery key to the target Entra.
 
-**Prerequisite caveat (CRITICAL — silent-failure pattern):**
+**Prerequisite caveat (CRITICAL—silent-failure pattern):**
 `BackupToAAD-BitLockerKeyProtector` only escrows the existing `RecoveryPassword` key protector
 IF a new key protector is created AND encryption is re-triggered (or if the existing protector
 has never been escrowed during the device's lifetime). On devices that had their BitLocker
-recovery key previously escrowed to the source tenant, simply calling
+recovery key previously escrowed to the source tenant, calling
 `BackupToAAD-BitLockerKeyProtector` on the existing protector may appear to succeed (no error
 returned) but no escrow occurs in the target Entra tenant. To ensure a new escrow, create a
 new key protector first:
@@ -119,23 +119,23 @@ BackupToAAD-BitLockerKeyProtector -MountPoint "C:" -KeyProtectorId $newProtector
 
 After running, confirm that a new recovery key entry appears in the target Microsoft Entra
 admin center (Devices → select device → BitLocker keys tab). Test this prerequisite caveat
-against a pilot device before fleet-wide deployment — the silent-failure pattern has caught
+against a pilot device before fleet-wide deployment—the silent-failure pattern has caught
 administrators off-guard in production migrations.
 
 ---
 
 #### Option (b): Decrypt source-tenant BitLocker → re-encrypt under target tenant
 
-Decrypt each device using `manage-bde -off C:` (or via an Intune disk encryption policy
+Decrypt each device using `manage-bde -off C:` (or through an Intune disk encryption policy
 assigned to a target-migration group that sets encryption to "Not configured"), complete the
 tenant migration, then re-encrypt under the target tenant's Intune disk encryption policy and
 escrow the new recovery key to the target Entra ID.
 
 This approach is operationally simpler than option (a) for fleets that can tolerate a decrypt
-window — no custom PowerShell scripting or scheduled-task packaging required. The trade-off
-is the data-risk window described below.
+window—no custom PowerShell scripting or scheduled-task packaging required. The trade-off
+is the data-risk window described in the following section.
 
-> ⚠️ **Data-risk window** — Option (b) leaves devices unencrypted between the decrypt step
+> ⚠️ **Data-risk window**—Option (b) leaves devices unencrypted between the decrypt step
 > and the re-encrypt step. The duration of this window depends on disk size, migration cadence,
 > and whether decryption is performed concurrently across the fleet or in waves. For regulated
 > workloads (HIPAA, FedRAMP, PCI-DSS), remote / unsupervised devices, or any device that may
@@ -170,11 +170,11 @@ support SLA, compatibility with your Entra ID tier) are outside the documentatio
 
 After completing the chosen BitLocker re-key approach and the Autopilot re-registration in the
 target tenant, perform escrow validation to confirm BitLocker recovery keys are present in the
-target Entra before decommissioning source tenant admin access:
+target Entra before decommissioning source tenant administrator access:
 
 1. In the Microsoft Entra admin center (target tenant), navigate to **Devices** → select the
    device by serial number or device name → **BitLocker keys** tab.
-2. Confirm that one or more recovery key entries are listed. The `KeyProtectorId` shown should
+2. Confirm that one or more recovery key entries are listed. The `KeyProtectorId` shown must
    match the protector escrowed by the chosen approach.
 3. For fleet-level validation, use the Microsoft Entra Devices export (Devices → Download)
    to cross-reference against the hardware serial-number inventory from the pre-migration
@@ -182,17 +182,17 @@ target Entra before decommissioning source tenant admin access:
 
 If the recovery key is absent or stale (protector ID from the source tenant only), re-run
 the chosen re-key approach and re-validate. Devices missing recovery keys post-migration are
-a known-and-recoverable condition — re-running is idempotent and safe.
+a known-and-recoverable condition—re-running is idempotent and safe.
 
 ---
 
 ## macOS / iOS tenant migration
 
-> 📌 **OS 26+ device migration** — Apple has introduced new ABM device-migration APIs in OS 26
+> 📌 **OS 26+ device migration**—Apple has introduced new ABM device-migration APIs in OS 26
 > (iOS 26 / iPadOS 26 / macOS 26) that materially change the cross-MDM migration surface:
 > no wipe required; user data is preserved; enrollment deadlines are enforced automatically.
 > Devices on OS 26+ may use the new path. Devices on OS 25 and earlier use the legacy path
-> documented below as the BASELINE. Apple's documentation owns the OS 26 procedure detail —
+> documented in the following section as the BASELINE. Apple's documentation owns the OS 26 procedure detail—
 > see [Apple's Migrate managed devices guide](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web)
 > for current 2026 OS 26 mechanics. The legacy path remains canonical for mixed fleets and
 > as a fallback.
@@ -201,26 +201,26 @@ a known-and-recoverable condition — re-running is idempotent and safe.
 
 macOS and iOS tenant migration follows a four-step sequence on the legacy path:
 
-1. **ABM token re-issue** — In Apple Business Manager (or Apple School Manager), navigate
+1. **ABM token re-issue**—In Apple Business Manager (or Apple School Manager), navigate
    to the MDM server settings for the source tenant and `release` each device (or device
    group) from the source MDM server. Then `re-assign` each device to the MDM server in the
    target tenant's ABM. The `ABM token` for the target tenant's MDM server must be uploaded
    to the target Intune enrollment configuration **before** re-assignment; otherwise the
    target MDM server is not available in the ABM portal to receive device assignments.
 
-   Note: MDM server assignment **cannot** be transferred between tenants — devices must be
+   Note: MDM server assignment **cannot** be transferred between tenants—devices must be
    explicitly released from Tenant A's MDM server first, then assigned to Tenant B's MDM
    server in a separate step. There is no "move" operation in ABM that preserves enrollment
    state cross-tenant.
 
-2. **In-use device handling** — Devices that are currently enrolled and actively in use
+2. **In-use device handling**—Devices that are currently enrolled and actively in use
    require a `wipe` followed by `re-enrollment` against the target tenant. Cross-tenant
    enrollment-state preservation is not supported on the legacy path: the enrolled MDM
    profile, configuration profiles, and managed apps from Tenant A cannot be transferred.
    The wipe + re-enrollment sequence is the only Apple-supported path for in-use devices on
    the legacy path.
 
-3. **ADE Await-Configuration behavior** — Devices enrolled via Apple Automated Device
+3. **ADE Await-Configuration behavior**—Devices enrolled through Apple Automated Device
    Enrollment (ADE, previously DEP) wait at the Setup Assistant `Await-Configuration` screen
    for the new MDM server check-in to complete. The target tenant's ADE enrollment profile
    must be assigned and pushed to the ABM MDM server configuration **before** the device
@@ -228,12 +228,12 @@ macOS and iOS tenant migration follows a four-step sequence on the legacy path:
    indefinitely for the new MDM server. Confirm that the target tenant's ADE profile is
    active and assigned to the device group in ABM before initiating the wipe.
 
-4. **Re-enrollment validation** — After re-enrollment completes, validate device compliance
+4. **Re-enrollment validation**—After re-enrollment completes, validate device compliance
    state in the target tenant's Intune compliance reports (Devices → Monitor → Device
    compliance). FileVault recovery key escrow (a separate concern from device configuration;
-   see the cross-platform encryption-drift section below) does **not** auto-update
-   post-re-enrollment — the re-enrolled device generates a new FileVault personal recovery
-   key that must be escrowed to the target tenant via the Intune FileVault escrow workflow.
+   see the cross-platform encryption-drift section) does **not** auto-update
+   post-re-enrollment—the re-enrolled device generates a new FileVault personal recovery
+   key that must be escrowed to the target tenant through the Intune FileVault escrow workflow.
    Plan a follow-up escrow validation step as part of the migration checklist.
 
 ### OS 26+ alternative path
@@ -243,11 +243,11 @@ allow device assignment transfer between MDM servers without a wipe + re-enrollm
 
 - In the ABM/ASM portal, use the OS 26 device-migration API to transfer device assignment
   between MDM servers. The UI surface in ABM for OS 26 migration differs from the legacy
-  "release + re-assign" flow — refer to Apple's current admin documentation for the 2026 UI
+  "release + re-assign" flow—refer to Apple's current administrator documentation for the 2026 UI
   path.
 - Set an enrollment deadline during the transfer; devices that do not re-enroll by the
   deadline are automatically locked until enrollment completes.
-- Personal user data is preserved across the migration on the OS 26 path — no wipe is
+- Personal user data is preserved across the migration on the OS 26 path—no wipe is
   required for OS 26+ devices. Managed apps and configuration profiles are re-applied by
   the target MDM server post-migration.
 
@@ -272,33 +272,33 @@ re-binding and per-ownership-mode device re-provisioning.
 The MGP re-binding sequence must be completed in order. Each step is a hard prerequisite for
 the next.
 
-1. **`disconnect` from source MGP** — In the Intune admin center (source tenant), navigate
+1. **`disconnect` from source MGP**—In the Intune admin center (source tenant), navigate
    to **Tenant administration** → **Connectors and tokens** → **Managed Google Play** →
    **Disconnect**. Confirm the disconnect action.
 
    > ⚠️ **Fleet-affecting operation:** Disconnecting Managed Google Play from the source
    > Intune tenant retires and deletes ALL enrolled Android devices in that tenant per
    > Microsoft's documented behavior. Plan the disconnect timing to coincide with the device
-   > re-provisioning wave — devices will lose MDM management immediately upon disconnect.
+   > re-provisioning wave—devices lose MDM management immediately upon disconnect.
    > Ensure device-recovery readiness (wipe procedure + target tenant enrollment flow tested
    > on pilot devices) before executing at fleet scale.
 
-2. **`bind new` MGP account to target Intune tenant** — In the target Intune tenant, navigate
+2. **`bind new` MGP account to target Intune tenant**—In the target Intune tenant, navigate
    to **Tenant administration** → **Connectors and tokens** → **Managed Google Play** →
    **I agree** (to grant Intune access to the MGP account). Use an Entra-linked Managed Google
    Domain account (the recommended "new way" introduced August 2024; replaces personal-Gmail-
    based bindings). Personal-Gmail-based bindings continue to work for existing tenants but
    Entra-linked accounts are recommended for new bindings in 2026.
 
-3. **`re-approve` all apps** in the target Managed Google Play console — The existing app
+3. **`re-approve` all apps** in the target Managed Google Play console—The existing app
    catalog from the source tenant does **not** survive the disconnect/rebind. After binding
    the new MGP account, navigate to the target Intune admin center → Apps → Android apps →
    Managed Google Play app and re-approve every application that was approved in the source
-   tenant's MGP catalog. This is a known-and-documented requirement that catches admins off-
+   tenant's MGP catalog. This is a known-and-documented requirement that catches administrators off-
    guard; budget significant time to re-approve every app in the source catalog, especially
    for large app catalogs (50+ apps).
 
-4. **`re-provision` devices** per ownership mode — See the per-ownership-mode section below.
+4. **`re-provision` devices** per ownership mode—See the per-ownership-mode section.
 
 ### Per-ownership-mode re-provisioning
 
@@ -306,13 +306,13 @@ Android device re-provisioning depends on the device ownership model:
 
 - **Corporate-owned (fully managed / dedicated / COBO):** Perform a `factory reset` on each
   device (Intune Wipe action or Settings → General management → Reset → Factory data reset
-  on the device). After factory reset, `re-enrollment` occurs via the target tenant's Device
+  on the device). After factory reset, `re-enrollment` occurs through the target tenant's Device
   Policy Controller (DPC). For Android Enterprise fully managed, enrollment is triggered by
   scanning the target tenant's enrollment QR code or entering the enrollment token at OOBE.
 
-- **BYOD (work profile):** Perform `work profile re-creation` — the user removes the existing
-  work profile from Tenant A via Settings → Accounts → Work account → Remove, then re-enrolls
-  the work profile via the target tenant's Company Portal app. The user's personal data and
+- **BYOD (work profile):** Perform `work profile re-creation`—the user removes the existing
+  work profile from Tenant A through Settings → Accounts → Work account → Remove, then re-enrolls
+  the work profile through the target tenant's Company Portal app. The user's personal data and
   personal apps are not affected by work profile removal or re-creation. The Company Portal
   app version installed from the personal profile (non-managed Play Store) is used to initiate
   work profile enrollment against the target tenant.
@@ -336,7 +336,7 @@ After re-provisioning:
 - Validate device enrollment state in the target tenant's Intune Devices view (All devices →
   filter by OS: Android).
 - Verify the work profile (BYOD) or fully-managed surface (corporate-owned) is bound to the
-  target tenant: Settings → Accounts → Work account → Account info should show the target
+  target tenant: Settings → Accounts → Work account → Account info must show the target
   tenant UPN.
 - Re-validate Play Integrity verdict if Play-Integrity-based compliance policies are enabled
   in the target tenant. Freshly re-enrolled devices may require 24-48 hours for Play Integrity
@@ -350,11 +350,11 @@ After re-provisioning:
 ## Cross-platform encryption drift
 
 Tenant migration interacts with platform-level encryption surfaces differently across Windows,
-macOS, iOS, and Android. This section is **educational and comparative** — it documents the
+macOS, iOS, and Android. This section is **educational and comparative**—it documents the
 encryption surfaces, drift risks, and MDM management boundaries for each platform WITHOUT
 recommending specific encryption-key-recovery tools. The MEDIUM-confidence framing of this
 runbook extends to encryption-drift characterization; per-OEM variation and platform-specific
-implementation details may differ from the descriptions below.
+implementation details may differ from the following descriptions.
 
 ### Per-platform encryption surfaces
 
@@ -363,7 +363,7 @@ implementation details may differ from the descriptions below.
 | **Windows** | `BitLocker` (full-disk encryption; AES-XTS 256-bit by default on Entra-joined devices; recovery key escrowed to Microsoft Entra ID) | **Key escrow targeting risk:** The BitLocker recovery key is escrowed to the source Entra. Tenant migration leaves the recovery key orphaned in Tenant A unless a re-escrow workflow runs against the target Entra (see Windows tenant migration section above). Devices continue to function normally; the risk is that the recovery key is inaccessible to Tenant B admins in the event of a recovery event. | YES — Intune disk encryption policy drives BitLocker enablement; `BackupToAAD-BitLockerKeyProtector` escrows recovery key to Entra; recovery key visible in Entra admin center per-device BitLocker keys tab. |
 | **macOS** | `FileVault` (full-disk encryption; XTS-AES-128; recovery key is a personal recovery key escrowed to MDM or an institutional recovery key held by IT) | **Escrow not updated post-re-enrollment:** Re-enrolling a macOS device in the target tenant generates a new FileVault personal recovery key, but the old key (escrowed to the source tenant) is no longer accessible by Tenant B admins. The re-enrolled device generates a new personal recovery key that must be actively escrowed to the target Intune tenant via the Intune FileVault escrow workflow. This does NOT happen automatically — admin action is required. | YES — Intune FileVault policy with personal recovery key or institutional recovery key options; escrow action is triggered by the Intune agent after policy application; admin verifies escrow via Devices → Recovery keys in the Intune admin center. |
 | **iOS** | `iOS device-level` encryption (hardware-backed; AES-256; derived from device UID fused at manufacturing and user passcode; applies to all data at rest automatically) | **None — encryption is not tenant-bound:** iOS device encryption is hardware-enforced and passcode-derived. It is independent of MDM enrollment and tenant identity. Tenant migration does not affect iOS encryption state. There is no recovery key escrow surface for iOS encryption. | **NO MDM management beyond compliance check** — MDM cannot read or write the iOS encryption key. The only MDM-surfaced signal is the device compliance check (Compliance policy: "Require device encryption" checks the `isEncrypted` device property returned by the Intune MDM channel; passcode complexity policy governs the strength of the passcode-derived key indirectly). |
-| **Android** | `dm-crypt` (used in Android < 10 for full-disk encryption; Android 10+ uses file-based encryption [FBE] with per-file keys; per-OEM implementation variance — Pixel, Samsung Knox, Zebra DataWedge each implement FBE differently at the firmware level; LUKS is a Linux-only volume manager and is **not** available on Android) | **None — encryption is not tenant-bound:** Android encryption (dm-crypt or FBE) is handled at the OS + firmware level and is independent of MDM enrollment. Factory reset (required for corporate re-provisioning) re-generates the per-file encryption keys automatically. There is no recovery key escrow surface on Android for Intune to manage. | **NO MDM management beyond compliance check** — Intune cannot read or rotate Android encryption keys. Compliance policy checks the `storageEncrypted` property (reported by the Android Enterprise DPC). Per-OEM variance is noted: some OEMs expose additional encryption status fields via proprietary APIs (e.g., Samsung Knox Attestation); these are out of scope for standard Intune compliance policy. |
+| **Android** | `dm-crypt` (used in Android < 10 for full-disk encryption; Android 10+ uses file-based encryption [FBE] with per-file keys; per-OEM implementation variance — Pixel, Samsung Knox, Zebra DataWedge each implement FBE differently at the firmware level; LUKS is a Linux-only volume manager and is **not** available on Android) | **None — encryption is not tenant-bound:** Android encryption (dm-crypt or FBE) is handled at the OS + firmware level and is independent of MDM enrollment. Factory reset (required for corporate re-provisioning) re-generates the per-file encryption keys automatically. There is no recovery key escrow surface on Android for Intune to manage. | **NO MDM management beyond compliance check** — Intune cannot read or rotate Android encryption keys. Compliance policy checks the `storageEncrypted` property (reported by the Android Enterprise DPC). Per-OEM variance is noted: some OEMs expose additional encryption status fields via proprietary APIs (for example, Samsung Knox Attestation); these are out of scope for standard Intune compliance policy. |
 
 ### Editorial boundaries
 
@@ -376,51 +376,51 @@ This section intentionally:
 - **Does not name commercial recovery products** beyond the single mention of Quest On Demand
   Migration in the Windows tenant migration section (scoped to the BitLocker option (c)
   narrative; not applicable to this encryption-drift section).
-- **Frames iOS as "no MDM management beyond compliance check"** — admins migrating iOS fleets
+- **Frames iOS as "no MDM management beyond compliance check"**—administrators migrating iOS fleets
   should not expect any iOS-side encryption-key handling. The compliance signal (`isEncrypted`)
   is a read-only attestation, not a management surface.
-- **Frames Android as "per-OEM variance"** — admins should validate per-OEM encryption
+- **Frames Android as "per-OEM variance"**—validate per-OEM encryption
   behavior on a per-fleet basis. Zebra devices on Android 12 GMS, Samsung Galaxy on Android 14
   Knox, and Pixel devices on Android 15 may report encryption state differently in Intune
   compliance reports. Test compliance policy behavior with each OEM model in use.
-- **Excludes LUKS** — LUKS (Linux Unified Key Setup) is a Linux-only disk encryption standard.
+- **Excludes LUKS**—LUKS (Linux Unified Key Setup) is a Linux-only disk encryption standard.
   It is not present in Android. Any documentation implying Android uses LUKS is incorrect.
 
-For BitLocker re-key approaches (Windows) and FileVault re-escrow planning (macOS), see the
-Windows and macOS / iOS tenant migration sections above. The cross-platform encryption-drift
+For BitLocker re-key approaches (Windows) and FileVault re-escrow planning (macOS), see the preceding
+Windows and macOS / iOS tenant migration sections. The cross-platform encryption-drift
 content in this section is comparative, not procedural.
 
 ---
 
 ## Related Resources
 
-- [Drift Detection Overview](00-overview.md) — Cross-platform compliance drift signals hub
-- [Windows Drift Detection](01-windows-drift-detection.md) — Intune Remediations + canonical
+- [Drift Detection Overview](00-overview.md)—Cross-platform compliance drift signals hub
+- [Windows Drift Detection](01-windows-drift-detection.md)—Intune Remediations + canonical
   script-authoring pattern
-- [macOS Drift Detection](02-macos-drift-detection.md) — Profile-revocation + DDM compliance
+- [macOS Drift Detection](02-macos-drift-detection.md)—Profile-revocation + DDM compliance
   signals
-- [iOS + Android Drift Detection](03-ios-android-drift-detection.md) — Jailbreak / OS downgrade
+- [iOS + Android Drift Detection](03-ios-android-drift-detection.md)—Jailbreak / OS downgrade
   / Play Integrity verdict signals
-- [Tenant-to-Tenant Device Migration](../../device-operations/04-tenant-migration.md) — v1.2
-  SSoT — Windows tenant migration with hardware-hash deregistration step-by-step procedure,
+- [Tenant-to-Tenant Device Migration](../../device-operations/04-tenant-migration.md)—v1.2
+  SSoT—Windows tenant migration with hardware-hash deregistration step-by-step procedure,
   batch-size limits, and Autopilot profile assignment (scope-overlapping; Windows-only)
-- [Patch & Update Management Overview](../patch-management/00-overview.md) — Sibling
+- [Patch & Update Management Overview](../patch-management/00-overview.md)—Sibling
   ops-domain (Phase 54)
-- [App Lifecycle Automation Overview](../app-lifecycle/00-overview.md) — Sibling ops-domain
+- [App Lifecycle Automation Overview](../app-lifecycle/00-overview.md)—Sibling ops-domain
   (Phase 55)
-- [Operations Documentation Index](../00-index.md) — Cross-reference only
+- [Operations Documentation Index](../00-index.md)—Cross-reference only
 
 ---
 
 ## External References
 
-- [BitLocker Recovery Key Migration Practical Guide (Microsoft TechCommunity)](https://techcommunity.microsoft.com/blog/coreinfrastructureandsecurityblog/migrating-bitlocker-recovery-key-management-from-configmgr-to-intune-a-practical/4414948) — Option (a) PowerShell pattern background (community-verified)
-- [Migrate BitLocker Recovery Keys to Azure AD with Proactive Remediation (osdsune.com)](https://www.osdsune.com/home/blog/microsoft-intune/migrate-bitlocker-recovery-key-s-to-azure-ad-with-proactive-remediation) — Prerequisite caveat for new key protector and silent-failure avoidance
-- [Apple: Migrate managed devices to another device management service (Apple Support)](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web) — ABM cross-MDM transfer guidance (legacy path + OS 26 path)
-- [Apple OS 26 Device Migration to Microsoft Intune (Microsoft TechCommunity)](https://techcommunity.microsoft.com/blog/intunecustomersuccess/apple-making-device-migration-to-microsoft-intune-easy-with-upcoming-os-26-relea/4439895) — Apple OS 26 ABM API path and Intune integration notes
-- [Disconnect Managed Google Play from Intune (Microsoft Q&A)](https://learn.microsoft.com/en-us/answers/questions/1338223/disconnect-managed-google-play-from-intune-(all-an)) — Disconnect retires and deletes all Android devices behavior
-- [Connect Intune Account to Managed Google Play Account (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-enrollment/android/connect-managed-google-play) — MGP binding flow (Entra-linked Managed Google Domain account)
-- [Zero Touch Enrollment (Google)](https://support.google.com/work/android/answer/7514005) — Google Zero-Touch portal documentation for ZT portal re-upload procedure
+- [BitLocker Recovery Key Migration Practical Guide (Microsoft TechCommunity)](https://techcommunity.microsoft.com/blog/coreinfrastructureandsecurityblog/migrating-bitlocker-recovery-key-management-from-configmgr-to-intune-a-practical/4414948)—Option (a) PowerShell pattern background (community-verified)
+- [Migrate BitLocker Recovery Keys to Azure AD with Proactive Remediation (osdsune.com)](https://www.osdsune.com/home/blog/microsoft-intune/migrate-bitlocker-recovery-key-s-to-azure-ad-with-proactive-remediation)—Prerequisite caveat for new key protector and silent-failure avoidance
+- [Apple: Migrate managed devices to another device management service (Apple Support)](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web)—ABM cross-MDM transfer guidance (legacy path + OS 26 path)
+- [Apple OS 26 Device Migration to Microsoft Intune (Microsoft TechCommunity)](https://techcommunity.microsoft.com/blog/intunecustomersuccess/apple-making-device-migration-to-microsoft-intune-easy-with-upcoming-os-26-relea/4439895)—Apple OS 26 ABM API path and Intune integration notes
+- [Disconnect Managed Google Play from Intune (Microsoft Q&A)](https://learn.microsoft.com/en-us/answers/questions/1338223/disconnect-managed-google-play-from-intune-(all-an))—Disconnect retires and deletes all Android devices behavior
+- [Connect Intune Account to Managed Google Play Account (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-enrollment/android/connect-managed-google-play)—MGP binding flow (Entra-linked Managed Google Domain account)
+- [Zero Touch Enrollment (Google)](https://support.google.com/work/android/answer/7514005)—Google Zero-Touch portal documentation for ZT portal re-upload procedure
 
 ---
 

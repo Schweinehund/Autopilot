@@ -17,15 +17,15 @@ review_by: 2026-10-02
 This document defines the EEE SOP standard governing format, metadata, and normalization rules
 for the Copilot Studio / SharePoint grounded knowledge base. It is the canonical reference for
 the D1 platform-normalization map, the D-05 visible header block format, the Doc Type taxonomy,
-and the Phase-115 C17 enforcement needle-spec. Downstream deliverables — templates (Plan 03),
-the Doc ID registry (Plan 04), and Phases 116–118 corpus retrofit — all conform to this standard.
+and the Phase-115 C17 enforcement needle-spec. Downstream deliverables—templates (Plan 03),
+the Doc ID registry (Plan 04), and Phases 116–118 corpus retrofit—all conform to this standard.
 
 ## Purpose and Scope
 
 The EEE SOP standard exists to make the documentation knowledge base reliably queryable by
 Microsoft Copilot Studio. Copilot grounds answers in the SharePoint-indexed `.docx` versions of
 operator runbooks and reference docs, returning clickable document-level citations. For that to
-work, each document must carry structured metadata — Doc ID, Platform, Doc Type, Status — as
+work, each document must carry structured metadata—Doc ID, Platform, Doc Type, Status—as
 **visible body text** so it survives the Pandoc `MD→.docx` conversion and is indexed by the
 SharePoint connector.
 
@@ -73,7 +73,7 @@ close (`---`) and before the document H1 title. This is the retrieval-necessary 
 
 Pandoc 3.7.0.2 promotes all non-standard YAML frontmatter keys to invisible Word custom document
 properties (`docProps/custom.xml`). These custom properties are **not indexed** by the SharePoint
-connector or Copilot's semantic index — they are invisible at query time. The visible body-text
+connector or Copilot's semantic index—they are invisible at query time. The visible body-text
 block is the only mechanism that makes Doc ID, Platform, Doc Type, and Status queryable. This is
 the load-bearing EEE thesis, empirically confirmed in PIPE-02 Q2 and Q4. (OQ4)
 
@@ -84,7 +84,7 @@ the load-bearing EEE thesis, empirically confirmed in PIPE-02 Q2 and Q4. (OQ4)
 ```
 
 Rules:
-- **Field order:** Platform first, Doc Type second, Doc ID third, Status fourth — exactly four fields.
+- **Field order:** Platform first, Doc Type second, Doc ID third, Status fourth—exactly four fields.
 - **Separator:** `·` (U+00B7 middle-dot). This is the PIPE-02-validated separator. Do NOT use `|`
   (GFM-table collision risk) or `-` or any other character.
 - **Single inline paragraph:** NOT a markdown table, NOT a block-quote, NOT a YAML code fence.
@@ -92,12 +92,12 @@ Rules:
   identical whether labels are bold or plain. Bolding the label is the project convention.
 - **`owner` is NOT in the block (D-01):** Owner is a frontmatter-only field. Including it in the
   block would inject a person name into the lead retrieval chunk for zero citation gain (Copilot
-  citations are filename-driven — OQ1), while creating answer-attribution noise and PII surface.
+  citations are filename-driven—OQ1), while creating answer-attribution noise and PII surface.
   C17 asserts `owner` presence in frontmatter; it never evaluates `owner` against the block.
 - **`Last Reviewed` is NOT in the block (D-05):** Rendering `last_verified` in the block would
   inject a potentially stale-looking date into the lead chunk for no retrieval gain. The D2
-  verbatim-carry rule (see D2 Last Reviewed Semantics) satisfies META-04 via frontmatter and the
-  Version-History row — not via block rendering.
+  verbatim-carry rule (see D2 Last Reviewed Semantics) satisfies META-04 through frontmatter and the
+  Version-History row—not through block rendering.
 
 ### Structure invariant
 
@@ -139,12 +139,12 @@ The controlled vocabulary for `doc_type` contains exactly four values:
   classify as Reference regardless of audience.
 - **End-user guides** (`end-user-guides/`) → `Guide`. These are audience-facing procedural docs;
   they share the Guide classification with admin-setup guides. `doc_type` is **audience-agnostic
-  by design** — the admin-vs-end-user audience distinction is discriminated by `platform`, the H1
+  by design**—the admin-vs-end-user audience distinction is discriminated by `platform`, the H1
   title, and the `## Summary` content, not by `doc_type`.
 - **Glossary documents** (`docs/_glossary*.md`) → `Reference` (v1.16 D-07). A glossary is a
-  paradigm lookup case — alphabetical term definitions with no procedural walkthrough.
+  paradigm lookup case—alphabetical term definitions with no procedural walkthrough.
 - **Decision-tree documents** (`docs/decision-trees/*`) → `Reference` (v1.16 D-07). This extends
-  the "lookup and decision-support material" language above to name decision trees explicitly:
+  the "lookup and decision-support material" language to name decision trees explicitly:
   a decision tree enumerates resolution paths for a reader to look up, it does not walk an
   operator through a single linear procedure, so the "no procedural walkthrough" phrasing in the
   `Reference` row is not in tension with a branching decision structure.
@@ -156,11 +156,11 @@ The controlled vocabulary for `doc_type` contains exactly four values:
   be definitionally wrong for content whose entire structure is a procedure.
 - **Device Recipe documents** (`docs/recipes/*`) → `Guide` (v1.18 STD-05). Recipes are
   end-to-end procedural provisioning walkthroughs, the same directory-precedence logic as
-  lifecycle docs; see the Admin Decision-Point Block Format (STD-05) section below for the full
-  admin decision-point block spec these recipes must follow.
+  lifecycle docs; see the Admin Decision-Point Block Format (STD-05) section for the full
+  administrator decision-point block spec these recipes must follow.
 
 The five structural classes newly mapped in v1.16 (D-05) are summarized here for reference; this
-table is illustrative only and does not add a `doc_type` value to the four-value taxonomy above:
+table is illustrative only and does not add a `doc_type` value to the preceding four-value taxonomy:
 
 | Class | Doc Type | Note |
 |---|---|---|
@@ -172,10 +172,10 @@ table is illustrative only and does not add a `doc_type` value to the four-value
 
 #### Non-MECE precedence rule (D-08)
 
-The five structural classes above are not a clean partition — a document can plausibly belong to
+The preceding five structural classes are not a clean partition—a document can plausibly belong to
 more than one class (for example, `decision-trees/05-device-lifecycle.md` is both a decision-tree
 and a lifecycle document; `quick-ref-l1.md` is both a navigation hub and arguably procedural in
-places). C17 assertion #9 cannot catch a *wrong* `doc_type` value — it only asserts the block and
+places). C17 assertion #9 cannot catch a *wrong* `doc_type` value—it only asserts the block and
 frontmatter agree with each other, not that either is correct. This is an authoring-time
 precedence rule, enforced by registry review, not by the harness:
 
@@ -200,7 +200,7 @@ is deferred to v1.16.
 ## D2 Last Reviewed Semantics
 
 **Rule (META-04):** On Phase-1 retrofit, `last_verified` is carried **verbatim** from the
-existing frontmatter — the staleness clock is **not** reset. The value present in the
+existing frontmatter—the staleness clock is **not** reset. The value present in the
 pre-retrofit frontmatter becomes the value in the post-retrofit frontmatter. This reflects the
 fact that v1.15 is a reformat-only reshape: the EEE block, structure, and metadata keys are
 added, but the content is not re-reviewed. Content accuracy review remains the normal 90-day
@@ -218,7 +218,7 @@ where `YYYY-MM-DD` is the date the retrofit commit was authored. This row:
 - Documents that the document received the EEE format reshape
 - Explicitly states that the content was **not** re-reviewed (distinguishing it from a normal
   review cycle)
-- Does NOT update `last_verified` — the frontmatter date remains verbatim
+- Does NOT update `last_verified`—the frontmatter date remains verbatim
 
 If a document does not yet have a `## Version History` section, one is created with this row as
 its first entry plus the document's original creation row if known.
@@ -242,7 +242,7 @@ When a document is superseded:
 2. The new replacement doc carries `status: Approved` (or `Draft` if not yet approved) and
    includes "Supersedes RE-NNN" in its `## Version History` table.
 3. Remove the superseded doc from the indexed SharePoint library (archive-scope-exclusion is
-   the primary control — do not rely on the `Superseded` body-text label as a retrieval gate).
+   the primary control—do not rely on the `Superseded` body-text label as a retrieval gate).
 
 ### Status vocabulary is final for Phase-1
 
@@ -261,7 +261,7 @@ Pandoc 3.7.0.2 promotes all non-standard YAML frontmatter keys to invisible Word
 properties (`docProps/custom.xml`). **These properties are not indexed by the SharePoint
 connector.** The SharePoint / Copilot semantic index reads only the `.docx` body text. As a
 result:
-- `doc_id`, `status`, `owner`, `doc_type`, `platform`, `last_verified`, `review_by` — all land
+- `doc_id`, `status`, `owner`, `doc_type`, `platform`, `last_verified`, `review_by`—all land
   in invisible custom properties and are **not queryable** by Copilot.
 - The visible body-text header block (`**Platform:** ... · **Doc Type:** ... · **Doc ID:** ...
   · **Status:** ...`) is the **sole retrieval mechanism** for these metadata fields. Without the
@@ -272,8 +272,8 @@ Last Reviewed in block), and the entire EEE format.
 
 ### Document-level-only citations (OQ1 / SC4)
 
-Copilot Studio citations are **filename-driven** — every citation title in PIPE-02 testing
-rendered as the raw `.docx` filename (e.g., `01-device-not-registered.docx`) with the `.docx`
+Copilot Studio citations are **filename-driven**—every citation title in PIPE-02 testing
+rendered as the raw `.docx` filename (for example, `01-device-not-registered.docx`) with the `.docx`
 extension visible, not the H1 heading, not a SharePoint Title column value, and not the Doc ID.
 Citations are **document-level** (whole-file `.docx` references; no section or page anchors).
 
@@ -285,16 +285,16 @@ Implications:
 
 ### Draft status is a label, not an index gate (OQ2)
 
-**Status: Draft is a label, not an index gate — exclude Draft/superseded docs by library
+**Status: Draft is a label, not an index gate—exclude Draft/superseded docs by library
 scoping (or SharePoint content-approval), never by relying on the body-text label.**
 
 PIPE-02 Q5 confirmed that a doc with `Status: Draft` in the body-text block was indexed and
-retrieved by Copilot without restriction — the Draft label appeared in the Copilot response
+retrieved by Copilot without restriction—the Draft label appeared in the Copilot response
 verbatim from body text, but did not prevent retrieval. Draft exclusion from the production
 library must be achieved by:
 - **Library scoping:** deploy only Approved docs to the indexed SharePoint library (operator
   responsibility, documented in `scripts/pipeline/README.md §SC3`).
-- **SharePoint content-approval** (tenant/ops config, deferred to deployment as a hardening
+- **SharePoint content-approval** (tenant/ops configuration, deferred to deployment as a hardening
   lever if provable Draft un-retrievability is required).
 
 Never design a workflow that relies on the `Status: Draft` body-text label to block retrieval.
@@ -313,22 +313,22 @@ upload scripts.
 
 Phase-1 EEE retrofit covers exactly three named doc classes:
 
-1. **L1/L2 runbooks** — `docs/l1-runbooks/` and `docs/l2-runbooks/` (~75 documents). Retrofitted
+1. **L1/L2 runbooks**—`docs/l1-runbooks/` and `docs/l2-runbooks/` (~75 documents). Retrofitted
    in Phase 116.
-2. **Admin-setup guides** — `docs/admin-setup-*/` (APv1, APv2, Android, iOS, macOS, Linux,
+2. **Admin-setup guides**—`docs/admin-setup-*/` (APv1, APv2, Android, iOS, macOS, Linux,
    802.1X; ~66 documents). Retrofitted in Phase 117.
-3. **Reference class** — `docs/reference/`, `docs/error-codes/`, `docs/end-user-guides/`,
+3. **Reference class**—`docs/reference/`, `docs/error-codes/`, `docs/end-user-guides/`,
    `docs/apv1-vs-apv2.md`, `docs/windows-vs-macos.md` (~37 documents). Retrofitted in Phase 118.
 
 Total Phase-1 scope: ~178 documents. All receive RE-NNN Doc IDs assigned in `docs/_registry/RE-index.md`.
 
 ### Out of scope (D-04 — deferred to v1.16)
 
-The following directories are **outside Phase-1** and remain deferred to a **future whole-class enrollment milestone (v1.17+)** — enrolled by directory, never cherry-picked by filename. *(2026-07-07 correction: v1.16 was owner-narrowed to the six structural doc classes below and does NOT enroll these directories; a `-lifecycle` filename inside one of them — e.g. `operations/app-lifecycle/`, `cross-platform/apple-business/*-lifecycle.md` — does not confer lifecycle-class membership, per D-08 directory precedence.)*
+The following directories are **outside Phase-1** and remain deferred to a **future whole-class enrollment milestone (v1.17+)**—enrolled by directory, never cherry-picked by filename. *(2026-07-07 correction: v1.16 was owner-narrowed to the following six structural doc classes and does NOT enroll these directories; a `-lifecycle` filename inside one of them—for example `operations/app-lifecycle/`, `cross-platform/apple-business/*-lifecycle.md`—does not confer lifecycle-class membership, per D-08 directory precedence.)*
 
-- `docs/operations/` (~20 documents) — owner-confirmed 2026-07-04
-- `docs/device-operations/` (~5 documents) — owner-confirmed 2026-07-04
-- `docs/cross-platform/apple-business/` (~20 documents) — owner-confirmed 2026-07-04
+- `docs/operations/` (~20 documents)—owner-confirmed 2026-07-04
+- `docs/device-operations/` (~5 documents)—owner-confirmed 2026-07-04
+- `docs/cross-platform/apple-business/` (~20 documents)—owner-confirmed 2026-07-04
 
 Also deferred to v1.16: glossaries (`docs/_glossary-*.md`), decision trees
 (`docs/decision-trees/`), navigation hubs (`docs/index.md`, `docs/quick-ref-*.md`), lifecycle
@@ -372,19 +372,19 @@ authors the map as the authoritative specification.
 
 > **An unmapped `platform:` value is a HARD FAILURE. There is NO silent fallback.**
 
-If a file carries a `platform:` value not in the table above, C17 FAILs that file. The
+If a file carries a `platform:` value not in the preceding table, C17 FAILs that file. The
 harness does not produce a default label, a warning-only result, or a partial pass. This
 rule applies to all corpus files and templates in C17's scope.
 
-This ensures that every new platform variant — including future Apple compound platforms or
-new OS families — must be explicitly added to this map before any document using it can pass
+This ensures that every new platform variant—including future Apple compound platforms or
+new OS families—must be explicitly added to this map before any document using it can pass
 the gate. Undeclared variants surface immediately rather than silently reaching the indexed
 library with an incorrect or missing label.
 
 ### Notes on "All Platforms" entries
 
 Both `all` and `windows+macos+ios+android+linux` map to the clean label `All Platforms`.
-They are semantically identical — both indicate a doc covering all supported platforms. The
+They are semantically identical—both indicate a doc covering all supported platforms. The
 raw frontmatter value is preserved in YAML (so tooling can distinguish them if needed), but
 the body-text block renders the same label. C17 does not require these two raw values to
 produce different block text.
@@ -402,7 +402,7 @@ D1 map would pollute the normalization authority with authoring-instruction stri
 ## Mermaid-in-Enrolled-Classes Policy (STD-04)
 
 This section resolves the Mermaid-vs-C17-#1 collision surfaced by the v1.16 structural retrofit
-(decision-trees, carved-mermaid admin-setup files) via `/adversarial-review`. It governs every
+(decision-trees, carved-mermaid admin-setup files) through `/adversarial-review`. It governs every
 enrolled Mermaid diagram going forward.
 
 ### D-01: Text-equivalent conversion, not a carve-out
@@ -410,16 +410,16 @@ enrolled Mermaid diagram going forward.
 Every enrolled Mermaid diagram is **converted to a C17-compliant text equivalent**. This is a
 conversion rule, not a permitted-exception carve-out for C17 assertion #1. The decisive rationale
 is grounding, not stylistic preference: the sole indexed surface for Copilot Studio / SharePoint
-retrieval is the Pandoc `MD→.docx` body text (see Grounding Notes above); Mermaid does not render
+retrieval is the Pandoc `MD→.docx` body text (see Grounding Notes); Mermaid does not render
 in that body text. A raw ` ```mermaid ` fence — its `graph TD` / `sequenceDiagram` opener,
-`classDef` styling lines, and edge-only branch logic — lands verbatim as garbage in the citation
+`classDef` styling lines, and edge-only branch logic—lands verbatim as garbage in the citation
 body, and for a flowchart the decision-relevant branch logic lives *only* on the edges, so the
 single most decision-relevant content becomes the least prose-like, least retrievable text in the
 document. A carve-out would poison the exact surface this program exists to clean. Converting
 also leaves C17 assertion #1 byte-unchanged (see D-02), avoiding any mid-milestone edit to the
 indivisible validator atom. `docs/l2-runbooks/26-apple-business-permission-denied.md` (RE-068)
 already converted its decision tree to a `Scenario | Leaf | Resolution` table under this same
-reasoning — this policy ratifies that shipped precedent as corpus law.
+reasoning—this policy ratifies that shipped precedent as corpus law.
 
 ### D-02: C17 assertion #1 stays unchanged
 
@@ -440,7 +440,7 @@ that is optional; `--self-test` must still exit 0 after any such change.
   in the same sequence the diagram encoded.
 - Any legend, node-shape glossary, `classDef` color explanation, or "click the leaf to navigate"
   prose that described the removed diagram must be removed or rewritten to describe the
-  replacement table or list instead — stale diagram-referencing prose left behind after a
+  replacement table or list instead—stale diagram-referencing prose left behind after a
   conversion is a defect, not an acceptable residue.
 
 ### D-04: Honesty caveat — green C17 does not attest leaf-completeness
@@ -448,7 +448,7 @@ that is optional; `--self-test` must still exit 0 after any such change.
 C17 assertion #1 is an opener-regex with no diagram parser. It guarantees that a Mermaid fence is
 *absent* from an enrolled file; it cannot verify that the replacement table or list preserved
 every node, leaf, and labeled edge from the original diagram. Leaf-completeness after conversion
-is a human authoring-and-review obligation, checked at the point of conversion — it is not
+is a human authoring-and-review obligation, checked at the point of conversion—it is not
 something a green C17 run attests, and it is not something the harness can catch after the fact.
 
 ---
@@ -456,11 +456,11 @@ something a green C17 run attests, and it is not something the harness can catch
 ## Admin Decision-Point Block Format (STD-05)
 
 This section defines the composite decision-point block format for the new Device Recipe doc
-class (`docs/recipes/*`, v1.18) and any future document that needs to prompt an admin for a
-choice mid-procedure. It was resolved via `/adversarial-review` against two hard mechanical
+class (`docs/recipes/*`, v1.18) and any future document that needs to prompt an administrator for a
+choice mid-procedure. It was resolved through `/adversarial-review` against two hard mechanical
 constraints: C17 assertion #12 (contiguous top-level blockquote runs capped at 200 characters)
 and the standing no-key-info-in-code-fences rule (fenced content **is** indexed, but as non-prose
-runs that retrieve poorly — see Grounding Notes above). The composite documents a
+runs that retrieve poorly—see Grounding Notes). The composite documents a
 combination of already-shipped corpus patterns, not a novel construct: the decision-table shape
 (`docs/l2-runbooks/26-apple-business-permission-denied.md`) and the short blockquote callout
 shape (`docs/admin-setup-apv1/04-dynamic-groups.md`) are both already production-proven.
@@ -468,23 +468,23 @@ shape (`docs/admin-setup-apv1/04-dynamic-groups.md`) are both already production
 ### D-01: The three-case composite block
 
 Every decision point opens with a **one-sentence** `> **Ask the admin:**` blockquote lead-in
-carrying the prompt ONLY. Options and their consequences never go inside the blockquote — a
+carrying the prompt ONLY. Options and their consequences never go inside the blockquote—a
 faithful options-plus-consequence blockquote measures roughly 228 characters and hard-fails C17
 #12's 200-character contiguous top-level blockquote cap. What follows the lead-in depends on the
 decision's case:
 
-- **Case 1 — branching decision** (each option is a fully-worked downstream path): lead-in, then
+- **Case 1—branching decision** (each option is a fully-worked downstream path): lead-in, then
   a `| Option | When to choose | Consequence if wrong | Branch |` table, with each `Branch` cell
   linking to the corresponding branch section.
-- **Case 2 — enumerable-value decision** (pick one of a fixed set, no procedure fork): lead-in,
+- **Case 2—enumerable-value decision** (pick one of a fixed set, no procedure fork): lead-in,
   then a `| Option | When to choose | Recorded as |` table.
-- **Case 3 — free-value prompt** (an open value, e.g. a naming prefix): lead-in alone, no table —
+- **Case 3—free-value prompt** (an open value, for example a naming prefix): lead-in alone, no table—
   a one-row table would tabulate nothing.
 
 ### D-02: Mandatory blank line before a table
 
 A blank line between the lead-in blockquote and any following table is **mandatory**. Without it,
-GFM lazy continuation absorbs the pipe row into the blockquote — this silently destroys the table
+GFM lazy continuation absorbs the pipe row into the blockquote—this silently destroys the table
 in the rendered `.docx` body (it becomes blockquote text, not a table), removing the decision
 table from the indexed retrieval surface. This is not a style preference; it is a required line
 between the lead-in and the table in every Case 1 and Case 2 decision block.
@@ -493,11 +493,11 @@ between the lead-in and the table in every Case 1 and Case 2 decision block.
 
 Use a table only when the decision has more than one dimension to convey per option (what to
 choose, why, and either a consequence/branch or a recorded value); a Case 3 free-value prompt
-never gets a table. Decision content is never placed inside a code fence in a live recipe — fenced
+never gets a table. Decision content is never placed inside a code fence in a live recipe—fenced
 content **is** indexed, but as non-prose runs that retrieve poorly (see Grounding Notes), so
 putting the prompt, options, or consequences in a fence leaves the decision retrievable only as
 non-prose, rather than as body-text prose Copilot can ground on. The one exception is this
-standard's own fenced worked example below (D-07), which is a spec sample in an index-excluded
+standard's own fenced worked example (D-07), which is a spec sample in an index-excluded
 meta-document, not live decision content in an indexed recipe.
 
 ### D-04: The three-rule normative branch floor
@@ -505,7 +505,7 @@ meta-document, not live decision content in an indexed recipe.
 MUST/NORMATIVE language in this section is reserved exclusively for these three rules:
 
 1. Decision blocks use the D-01 composite shape; code fences are never used for decision content.
-2. Branch bodies are prose step sequences — never tables-as-procedure, never fenced
+2. Branch bodies are prose step sequences—never tables-as-procedure, never fenced
    pseudo-config.
 3. Branch headings live at H2 or H3 only, never deeper. Boolean decisions (for example, a Shared
    iPad guest-sessions on/off toggle) may skip branch headings entirely and instead use an
@@ -517,25 +517,25 @@ The RECOMMENDED (not normative) branch idiom is the shape already shipped in
 `docs/macos-lifecycle/01-psso-provisioning-walkthrough.md`: a shared provisioning spine leads into
 a decision block, which routes into sibling H3 branch sections (`### Branch A — …` /
 `### Branch B — …`), each opening with a bold pseudo-heading and a plain routing sentence. This
-spec does not mandate a rejoin point — non-converging forks are explicitly permitted, mirroring
+spec does not mandate a rejoin point—non-converging forks are explicitly permitted, mirroring
 the PSSO walkthrough's own "no reconvergence" precedent at line ~65. Authors are free to reconverge
 branches when the underlying procedure naturally does so, but nothing in this section requires it.
 
 ### D-06: Recipe Summary end-state statement
 
-Every recipe's `## Summary` opens with a one-line concrete end-state statement — REQUIRED;
+Every recipe's `## Summary` opens with a one-line concrete end-state statement—REQUIRED;
 enforced by registry review, not by the harness (mirroring the D-08 Non-MECE precedence rule's
-own enforcement posture above). The opening sentence names the specific, concrete device
+own enforcement posture). The opening sentence names the specific, concrete device
 configuration the recipe produces (for example, "Following this recipe yields a self-deploying
 Entra-joined shared Windows AVD-client device, provisioned end-to-end from zero through Intune"),
 so a reader can confirm applicability before starting the procedure.
 
 ### D-07: Worked example
 
-The composite shape below is a compact, fenced spec sample — the same house style STD-04 D-03
+The following composite shape is a compact, fenced spec sample—the same house style STD-04 D-03
 uses to describe a live-content shape in prose backed by a small illustrative block. A fenced spec
 sample in this Approved, index-excluded standard is NOT the same as fenced decision content in a
-live indexed recipe, which remains banned under D-03 above; the inCodeFence mask exempts this
+live indexed recipe, which remains banned under D-03; the inCodeFence mask exempts this
 sample from C17 assertions #11/#12 on this document, but the same fence in an enrolled recipe
 would leave the decision indexed only as non-prose runs that retrieve poorly.
 
@@ -550,8 +550,8 @@ would leave the decision indexed only as non-prose runs that retrieve poorly.
 
 ### D-08: Device Recipe class widened to admit a fleet or tenant configuration plan
 
-**[AMENDED 2026-08-26]** `[OWNER-RULED]` The Device Recipe doc class — defined for `docs/recipes/*`
-as an end-to-end, step-by-step provisioning walkthrough with embedded admin decision points — is
+**[AMENDED 2026-08-26]** `[OWNER-RULED]` The Device Recipe doc class—defined for `docs/recipes/*`
+as an end-to-end, step-by-step provisioning walkthrough with embedded administrator decision points—is
 **widened** to admit a second admissible form: a **fleet or tenant configuration plan**, a
 prescriptive document whose end-state is a configured fleet rather than a configured device. Both
 forms are Device Recipes. Both use the D-01 composite decision block, the D-02 blank-line rule and
@@ -561,21 +561,20 @@ the whole of it.
 **D-06's REQUIRED Summary end-state rule is correspondingly widened.** The opening sentence names a
 concrete **device** end-state for a provisioning walkthrough, or a concrete **fleet** end-state for
 a fleet or tenant configuration plan. In both forms the sentence must still let a reader confirm
-applicability before starting the procedure — that is D-06's stated purpose and this amendment does
+applicability before starting the procedure—that is D-06's stated purpose and this amendment does
 not touch it. A Summary that names unresolved variables in place of a concrete end-state satisfies
 neither form.
 
 **Ground.** `docs/recipes/05-enterprise-update-plan.md` is tenant-scoped: it configures an update
 posture across a whole fleet and produces no single device. Without this widening both its filename
-— which breaks the four-of-four device-end-state naming convention the shipped recipes carry — and
+— which breaks the four-of-four device-end-state naming convention the shipped recipes carry—and
 its H1 would be unjustified divergences from a standard that every future recipe reads. The
 alternative considered and rejected was a second doc class alongside the still-narrow original: that
 would have left the filename, the H1 and the Summary end-state rule permanently indefensible rather
 than legitimising them once, and would have split a class that shares every other rule in this
 section.
 
-This amendment is owner-ruled, dated 2026-08-26, and recorded as **D-04** in
-`.planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md`. It is purely additive:
+This amendment is owner-ruled, dated 2026-08-26, and recorded as **D-04** in the Phase 151 context. It is purely additive:
 D-01 through D-07 above are unchanged in wording and in force.
 
 ---
@@ -584,7 +583,7 @@ D-01 through D-07 above are unchanged in wording and in force.
 
 C17 is the machine-checkable harness check that enforces this standard across the corpus. It
 is authored as **one indivisible validator atom** in Phase 115. Phase 114 produces this
-needle-spec ONLY — no validator is wired into `scripts/validation/` in this phase.
+needle-spec ONLY—no validator is wired into `scripts/validation/` in this phase.
 
 ### C17 Assertion List (13 assertions)
 
@@ -621,7 +620,7 @@ Templates (`docs/_templates/*`) carry placeholder values: `doc_id: RE-[FILL-IN]`
 `owner: [FILL-IN]`, and `status: Draft`. On templates, C17 asserts:
 - Key **presence** for all five required frontmatter keys
 - `platform:` value **resolves in the D1 map** (templates must carry a valid mapped value, not
-  a pipe-list placeholder — D-07 ensures this)
+  a pipe-list placeholder—D-07 ensures this)
 - **Structural rules** (H1, block format, single inline paragraph, `## Summary` first H2)
 
 C17 does NOT assert frontmatter-value-to-block-field equality on template placeholder text
@@ -638,6 +637,32 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 
 ---
 
+## Prose Style Authoring Standard
+
+This section is the standing authoring standard for prose quality across the documentation corpus. It records two rewrite hazards a nine-batch, ten-judge verification pass measured on this corpus, states the rule that keeps the mechanical style checker from becoming an unenforceable want list, and resolves a scope question the rest of this document leaves open.
+
+### D-01: The non-gate rule
+
+Never mandate a rule set whose checker cannot report zero on work already accepted. `check.py`, the mechanical style checker this standard pairs with, returns more than ten thousand candidates against a corpus that has already been fully human-audited, and one of its rules -- the no-space em dash rule -- conflicts directly with this repository's own validators, which content-match a spaced em dash used deliberately as a table N/A placeholder. Enforcing that rule set wholesale would fail every file on day one. Without this rule written down, a later milestone re-litigates those candidates as a backlog rather than treating the gap as a permanent, reasoned exclusion. The full exclusion record, with counts and the mechanism for each excluded class, lives in `scripts/validation/check-prose-style.py`'s header comment.
+
+### D-02: The mandate-promotion hazard
+
+A ten-judge pass over 406 rewrite hunks found that promoting a hedge to a mandate -- turning a `should` or a `may` into a `must` -- happened 26 times, more often than flattening an expectation into a bare assertion, which happened 19 times; 360 hunks were preserved correctly and one was weakened. This inverts the intuitive assumption that a stronger rule is always the safer rewrite: a promoted mandate can contradict a sentence two lines away that names an exception, or convert a single-tenant observation into a documented requirement. The verifier skill that judges bulk rewrites had itself recommended the same promotion before the clause that caused it was removed.
+
+### D-03: The passive-to-active hazard
+
+Converting a passive-voice sentence to active requires naming an actor, and it is the only rewrite rule in this set that can invent a fact: a source sentence written in the passive voice may have withheld the actor deliberately, because the actor was unknown, irrelevant, or intentionally left out. The ruled default names the reader as the actor; any other forced-actor choice is flagged for review rather than applied automatically.
+
+### D-04: Corpus scope
+
+This section governs the whole tracked documentation corpus the mechanical gate scans -- currently 294 tracked Markdown files -- not only the narrower set enrolled under the preceding EEE structural sections (237 files). That is a deliberate difference, not an oversight: EEE enrollment governs SharePoint-indexed retrieval metadata, so it is properly limited to the Phase-1 in-scope classes and the templates that seed them, while prose quality is a property every authored document should have regardless of indexing status. The remaining 57 tracked files -- including the entire `docs/operations/` directory, which carries no `doc_id` and sits outside EEE scope -- are still governed by this section.
+
+### D-05: Tooling pairing and its risks
+
+An author creating a new corpus document invokes the `google-style` skill. Any bulk prose rewrite across existing documents pairs that skill with `google-style-verify`, which judges whether a rewrite preserved meaning. The `google-style` skill exists in two copies -- a user-level copy outside the repository and this tracked project copy -- which have already diverged; `google-style-verify` exists only as the tracked project copy, so a session that loads only the user-level copies has the rewriter without the verifier. Separately, this corpus resolves a vendor citation date from a cited page's own rendered publish-date metadata, never from a build or fetch timestamp -- the convention confirmed when a Learn page carrying two divergent date fields was checked directly against its rendered bytes.
+
+---
+
 ## Version History
 
 | Date | Change |
@@ -646,4 +671,6 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 | 2026-07-07 | v1.16 STD-04 — added Mermaid-in-Enrolled-Classes Policy (D-01..D-04: text-equivalent conversion, C17 #1 unchanged, conversion shapes, honesty caveat); added 4 new D-02 Edge-case rulings (glossary, decision-tree, nav-hub, lifecycle) and the D-08 Non-MECE precedence rule; Doc Type Taxonomy 4-value table unchanged |
 | 2026-07-17 | v1.18 STD-05 — added Admin Decision-Point Block Format (D-01..D-07: 3-case composite block, mandatory blank line, case-boundary rule, 3-rule branch floor + RECOMMENDED PSSO-idiom, REQUIRED recipe-Summary end-state rule, fenced worked example + index-excluded-standard carve-out); added Device Recipe documents D-02 Edge-case ruling row (`docs/recipes/*` → `Guide`) |
 | 2026-07-30 | v1.19 HYG-05 — corrected the fenced-content rationale at three sites (STD-05 section intro, D-03 case-boundary rule, D-07 worked-example preamble): the prior claim that fenced content is invisible to retrieval was empirically false; fenced content is indexed but reaches Copilot only as non-prose runs that retrieve poorly. The normative D-03/D-04 rules are unchanged in force, and the Grounding Notes pointers are retained and now cite a correct proposition |
-| 2026-08-26 | v1.21 RCP-01 STD-05 — added D-08, widening the Device Recipe doc class to admit a fleet or tenant configuration plan alongside the provisioning walkthrough, and correspondingly widening D-06's REQUIRED Summary end-state rule to accept a concrete fleet end-state. Purely additive: D-01 through D-07 are unchanged in wording and in force. Ground: `docs/recipes/05-enterprise-update-plan.md` is tenant-scoped. Owner-ruled, recorded as D-04 in `.planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md` |
+| 2026-08-26 | v1.21 RCP-01 STD-05 — added D-08, widening the Device Recipe doc class to admit a fleet or tenant configuration plan alongside the provisioning walkthrough, and correspondingly widening D-06's REQUIRED Summary end-state rule to accept a concrete fleet end-state. Purely additive: D-01 through D-07 are unchanged in wording and in force. Ground: `docs/recipes/05-enterprise-update-plan.md` is tenant-scoped. Owner-ruled, recorded as D-04 in the Phase 151 context |
+| 2026-09-05 | v1.22 STD-01..STD-04 -- added Prose Style Authoring Standard (D-01..D-05: the non-gate report-zero rule; the mandate-promotion hazard measured 26 STRENGTHENED against 19 INVERTED across 406 judged hunks; the passive-to-active actor-invention hazard; the corpus-scope resolution covering all 294 tracked files, not only the 237 EEE-enrolled; and the tooling-pairing / two-copy divergence risk). `last_verified` and `review_by` deliberately NOT advanced -- a review date records when the file's review cycle last completed, not when its newest section was written, matching how neither the v1.18 nor the v1.21 amendment advanced them either. |
+| 2026-09-08 | v1.22 Phase 158 -- corrected D-05's falsified point-in-time identity claim for the two skill copies: a fresh check found the `google-style` skill's user-level copy and this tracked project copy have already diverged, and that `google-style-verify` exists only as the tracked project copy, so a session loading only the user-level copies has the rewriter without the verifier. The claim is removed rather than re-measured. This correction does not restart this document's review cycle, matching how neither the v1.18 nor the v1.21 amendment restarted it either. |

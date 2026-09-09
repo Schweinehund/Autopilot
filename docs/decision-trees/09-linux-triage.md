@@ -16,23 +16,23 @@ platform: Linux
 
 ## Summary
 
-Reference decision table for Linux Intune client triage (Ubuntu 24.04/26.04 LTS), gating on a flat set of symptoms — enrollment failure, non-compliance, web-app conditional access blocking behind an Edge-for-Linux disambiguation node, agent service failure, or unknown — and routing each to the matching L1 runbook or an L2 escalation, all within 2 decision steps of the root.
+Reference decision table for Linux Intune client triage (Ubuntu 24.04/26.04 LTS), gating on a flat set of symptoms—enrollment failure, non-compliance, web-app conditional access blocking behind an Edge-for-Linux disambiguation node, agent service failure, or unknown—and routing each to the matching L1 runbook or an L2 escalation, all within 2 decision steps of the root.
 
 > **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS). For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
 
 > RHEL 9/10 are also listed as supported by Microsoft's supported-platforms reference.
 
-> Intune's custom-settings-for-Linux page still names RHEL 8 — an intra-Microsoft conflict, reproduced here rather than flattened. This tree covers only the Ubuntu triage path.
+> Intune's custom-settings-for-Linux page still names RHEL 8—an intra-Microsoft conflict, reproduced here rather than flattened. This tree covers only the Ubuntu triage path.
 
 > For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md). For Android, see [Android Triage](08-android-triage.md).
 
 ## How to Use This Tree
 
-Start here when a user reports an issue with a Linux device enrolled (or expected to enroll) in Intune. Identify the failure symptom, then follow the matching branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Per Phase 51 D-01 + PITFALL-1 mitigation, this tree uses a flat-symptom shape (no enrollment-mode pre-gate) — Linux Intune supports a single management mode (Ubuntu 24.04/26.04 LTS via packages.microsoft.com), so the mode-axis question that gates Android does not apply.
+Start here when a user reports an issue with a Linux device enrolled (or expected to enroll) in Intune. Identify the failure symptom, then follow the matching branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Per Phase 51 D-01 + PITFALL-1 mitigation, this tree uses a flat-symptom shape (no enrollment-mode pre-gate)—Linux Intune supports a single management mode (Ubuntu 24.04/26.04 LTS from packages.microsoft.com), so the mode-axis question that gates Android does not apply.
 
 ## Decision Tree
 
-**LOCKED — 12 (nodes + labeled edges)** — 7 nodes + 5 labeled edges (plus 1 unlabeled continuation edge from `LINCA` to `LINR32`), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). Both diamonds (`LIN1`, `LINCA`) are represented in the Routing Verification table below; the CA-disambiguation row folds the `LINCA` -> `LINR32` continuation edge into its own Step 2 cell so no incoming edge is collapsed or dropped.
+**LOCKED—12 (nodes + labeled edges)**—7 nodes + 5 labeled edges (plus 1 unlabeled continuation edge from `LINCA` to `LINR32`), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). Both diamonds (`LIN1`, `LINCA`) are represented in the Routing Verification table; the CA-disambiguation row folds the `LINCA` -> `LINR32` continuation edge into its own Step 2 cell so no incoming edge is collapsed or dropped.
 
 ## Routing Verification
 
@@ -67,15 +67,15 @@ Collect this information before routing to L2.
 
 ## Related Resources
 
-- [Linux L1 Runbooks Index](../l1-runbooks/00-index.md#linux-l1-runbooks) — All 4 Linux L1 runbooks (30-33)
-- [Linux Provisioning Glossary](../_glossary-linux.md) — Canonical Linux Intune terminology
-- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md) — Supported management surface
-- [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md) — Admin configuration entry point
-- [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access) — Architectural detail for PITFALL-2
-- [Initial Triage Decision Tree](00-initial-triage.md) — Windows Autopilot entry point
-- [macOS ADE Triage](06-macos-triage.md) — macOS ADE failure routing
-- [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
-- [Android Triage](08-android-triage.md) — Android enrollment/compliance failure routing
+- [Linux L1 Runbooks Index](../l1-runbooks/00-index.md#linux-l1-runbooks)—All 4 Linux L1 runbooks (30-33)
+- [Linux Provisioning Glossary](../_glossary-linux.md)—Canonical Linux Intune terminology
+- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md)—Supported management surface
+- [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md)—Administrator configuration entry point
+- [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access)—Architectural detail for PITFALL-2
+- [Initial Triage Decision Tree](00-initial-triage.md)—Windows Autopilot entry point
+- [macOS ADE Triage](06-macos-triage.md)—macOS ADE failure routing
+- [iOS Triage](07-ios-triage.md)—iOS/iPadOS failure routing
+- [Android Triage](08-android-triage.md)—Android enrollment/compliance failure routing
 
 ## Version History
 

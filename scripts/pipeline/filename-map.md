@@ -245,3 +245,4 @@
 | RE-234 | docs/operations/patch-management/06-windows-driver-firmware-updates.md | windows-driver-and-firmware-updates.docx |
 | RE-235 | docs/operations/patch-management/07-windows-autopatch.md | windows-autopatch.docx |
 | RE-236 | docs/operations/patch-management/08-windows-app-updates.md | windows-application-updates.docx |
+| RE-237 | docs/recipes/06-walk-up-avd-kiosk-autologon.md | walk-up-avd-kiosk-autologon-multi-app-assigned-access-with-windows-app-auto-launch.docx |

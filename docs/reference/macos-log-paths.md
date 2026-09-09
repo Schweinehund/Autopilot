@@ -52,7 +52,7 @@ The Intune agent logs use a pipe-delimited format with 6 columns:
 | Process | `IntuneMdmDaemon` (system) or `IntuneMdmAgent` (user) |
 | Level | `INFO`, `WARN`, or `ERROR` |
 | PID | Process ID |
-| Task | Operation category (e.g., `PolicySync`, `AppInstall`, `ScriptExec`) |
+| Task | Operation category (for example, `PolicySync`, `AppInstall`, `ScriptExec`) |
 | Detail | Human-readable description of the event |
 
 ### Unified Log Quick Reference

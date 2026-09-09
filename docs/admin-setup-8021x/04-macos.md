@@ -16,7 +16,7 @@ platform: macos
 
 ## Summary
 
-This guide covers macOS 802.1X Wi-Fi and wired network profile configuration via Intune, including the immutable deployment-channel selection, EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS settings, and the wired SCEP-only certificate constraint. It requires an Intune administrator role with macOS configuration profile permissions and assumes a currently supported macOS release managed via Apple Business Manager enrollment.
+This guide covers macOS 802.1X Wi-Fi and wired network profile configuration through Intune, including the immutable deployment-channel selection, EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS settings, and the wired SCEP-only certificate constraint. It requires an Intune administrator role with macOS configuration profile permissions and assumes a currently supported macOS release managed through Apple Business Manager enrollment.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
@@ -44,7 +44,7 @@ certificate) increases security risk and causes authentication failures. When au
 certificates are up for renewal, recheck the deployment channel in existing profiles to
 confirm the correct channel is still selected.
 
-macOS does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles. Windows-trained admins who expect this setting will not find it on macOS. The Deployment channel (User vs Device keychain) is macOS's analog to the credential-context decision: user certificate + User channel authenticates as the current user; device certificate + Device channel authenticates as the device. Machine-level pre-logon authentication (Group Policy dependency, pre-logon domain connectivity) is not available through Intune macOS 802.1X profiles.
+macOS does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles. Windows-trained administrators who expect this setting do not find it on macOS. The Deployment channel (User vs Device keychain) is macOS's analog to the credential-context decision: user certificate + User channel authenticates as the current user; device certificate + Device channel authenticates as the device. Machine-level pre-logon authentication (Group Policy dependency, pre-logon domain connectivity) is not available through Intune macOS 802.1X profiles.
 
 ### Server Validation
 
@@ -62,7 +62,7 @@ Populate the **Identity privacy (outer identity)** field in every macOS 802.1X p
 - **PEAP-MSCHAPv2:** The domain username is sent as the outer EAP identity before the PEAP tunnel opens. Set Identity privacy to `anonymous` or `anonymous@contoso.com` so the username is not visible in cleartext.
 - **EAP-TTLS:** The username is sent as the outer EAP identity before the TTLS tunnel opens. Set Identity privacy to `anonymous` or `anonymous@contoso.com`.
 
-The domain suffix in the anonymous identity (e.g., `anonymous@contoso.com`) helps RADIUS servers route the anonymous request to the correct realm when multiple realms share infrastructure. Use a suffix that your RADIUS policy accepts; `anonymous` with no suffix is valid if realm routing is not required.
+The domain suffix in the anonymous identity (for example, `anonymous@contoso.com`) helps RADIUS servers route the anonymous request to the correct realm when multiple realms share infrastructure. Use a suffix that your RADIUS policy accepts; `anonymous` with no suffix is valid if realm routing is not required.
 
 ---
 
@@ -79,7 +79,7 @@ Select **Wi-Fi type: Enterprise** to access EAP authentication settings. The fol
 | Setting | EAP-TLS | PEAP-MSCHAPv2 | EAP-TTLS |
 |---|---|---|---|
 | EAP type field value | EAP-TLS | PEAP | EAP-TTLS |
-| Certificate server names | RADIUS FQDN or CN suffix (wildcard suffix supported, e.g. `*.contoso.com`) | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
+| Certificate server names | RADIUS FQDN or CN suffix (wildcard suffix supported, for example `*.contoso.com`) | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
 | Root certificate for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
 | Client authentication | Certificates: SCEP or PKCS profile (see note) | Username and Password | Username and Password |
 | Inner method (Non-EAP method / inner identity) | -- (cert-only; no inner method) | -- (PEAP tunnels MSCHAPv2; inner not separately selectable) | PAP / CHAP / MS-CHAP / MS-CHAP v2 |

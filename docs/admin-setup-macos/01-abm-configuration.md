@@ -18,7 +18,7 @@ platform: macOS
 
 This guide covers configuring Automated Device Enrollment (ADE) for macOS by linking an Apple Business Manager MDM server token to Microsoft Intune. It requires the Intune Administrator role plus Apple Business Manager Device Manager or Administrator access, and applies to all ADE-eligible Mac hardware with no specific macOS version floor.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration with Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
@@ -55,7 +55,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Grant permission for Microsoft to send user and device information to Apple.
 4. Select **Download your public key** to save the .pem certificate file locally.
 
-> **What breaks if misconfigured:** If this step is skipped or an expired public key is used, the server token downloaded from ABM will fail validation when uploaded back to Intune.
+> **What breaks if misconfigured:** If this step is skipped or an expired public key is used, the server token downloaded from ABM fails validation when uploaded back to Intune.
 
 > Symptom appears in: Intune admin center (token upload error). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
@@ -66,7 +66,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 <!-- ABAUDIT-01: Apple-side sign-in instruction; Managed Apple ID is an Apple portal concept here, not an Intune delegation pattern (C15 false-positive exemption per AEAUDIT-04 precedent) -->
 1. Sign in to [Apple Business Manager](https://business.apple.com) with a **Managed Apple ID**.
 2. Navigate to account profile > **Preferences** > **MDM Server Assignments**.
-3. Select **Add MDM Server**. Enter a descriptive name (e.g., "Intune Production" -- name is for identification only).
+3. Select **Add MDM Server**. Enter a descriptive name (for example, "Intune Production" -- name is for identification only).
 4. Upload the Intune public key (.pem) downloaded in Step 1.
 5. Select **Save**, then **Download Server Token** to save the .p7m file.
 
@@ -86,7 +86,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Upload the server token (.p7m) file downloaded from ABM.
 4. Select **Create**.
 
-> **What breaks if misconfigured:** If the wrong .p7m file is uploaded (e.g., from a different ABM MDM server), devices assigned to the intended MDM server will not appear in Intune.
+> **What breaks if misconfigured:** If the wrong .p7m file is uploaded (for example, from a different ABM MDM server), devices assigned to the intended MDM server do not appear in Intune.
 
 > Symptom appears in: Intune admin center (devices list empty after sync). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
@@ -126,7 +126,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 1. Navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens**.
 2. Select the token created in Step 3.
 3. Under **Default profile**, assign the enrollment profile (configured in [Enrollment Profile Guide](02-enrollment-profile.md)).
-4. All devices synced via this token automatically receive the default profile.
+4. All devices synced through this token automatically receive the default profile.
 
 > **What breaks if misconfigured:** If no enrollment profile is assigned before device first power-on, device boots through standard (non-managed) Setup Assistant. Requires wipe to fix.
 
@@ -147,7 +147,7 @@ Up to 3,000 ADE tokens supported per Intune tenant; each token corresponds to on
 ## Verification
 
 - [ ] ADE token shows "Active" status in Intune admin center > Devices > Enrollment > Apple > Enrollment program tokens
-- [ ] Token expiration date is visible (should be ~365 days from creation)
+- [ ] Token expiration date is visible (expect ~365 days from creation)
 - [ ] Assigned Apple ID matches the Managed Apple ID used in ABM
 - [ ] At least one device appears after sync (if devices were assigned in ABM)
 - [ ] Default enrollment profile is assigned to the token

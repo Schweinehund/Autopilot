@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-This guide covers Stage 5 of the Windows Autopilot classic lifecycle: post-enrollment verification. It walks through the admin checklist that confirms a device reached the desktop in a healthy, compliant, fully-managed state, and explains the compliance-evaluation and Intune-sync delays that can make a freshly enrolled device look unhealthy when it is not.
+This guide covers Stage 5 of the Windows Autopilot classic lifecycle: post-enrollment verification. It walks through the administrator checklist that confirms a device reached the desktop in a healthy, compliant, fully-managed state, and explains the compliance-evaluation and Intune-sync delays that can make a freshly enrolled device look unhealthy when it is not.
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
 
@@ -24,7 +24,7 @@ This guide covers Stage 5 of the Windows Autopilot classic lifecycle: post-enrol
 
 ## Context
 
-Stage 5 of 5. The final stage of the Autopilot lifecycle. The user has reached the Windows desktop and the deployment is complete from the device's perspective. This stage covers the admin verification process that confirms the deployment succeeded end-to-end and the device is in a healthy, managed state.
+Stage 5 of 5. The final stage of the Autopilot lifecycle. The user has reached the Windows desktop and the deployment is complete from the device's perspective. This stage covers the administrator verification process that confirms the deployment succeeded end-to-end and the device is in a healthy, managed state.
 
 **Depends on:** ESP (Stage 4)
 **Feeds into:** Ongoing device management (outside lifecycle scope)
@@ -49,9 +49,9 @@ Locally on the device, PowerShell functions from the AutopilotDiagnostics module
 
 ## What Happens
 
-1. User arrives at the Windows desktop — from the device's perspective, deployment is complete. The [ESP](../_glossary.md#esp) has cleared and all required apps and policies that were tracked during provisioning are installed.
+1. User arrives at the Windows desktop—from the device's perspective, deployment is complete. The [ESP](../_glossary.md#esp) has cleared and all required apps and policies that were tracked during provisioning are installed.
 
-2. Admin verifies deployment through the checklist below. This confirms that both the device-side and the cloud-side state are consistent. Not all verification steps require portal access; PowerShell functions can confirm local state quickly.
+2. Administrator verifies deployment through the following checklist. This confirms that both the device-side and the cloud-side state are consistent. Not all verification steps require portal access; PowerShell functions can confirm local state quickly.
 
 3. Device is handed off for productive use. If all checklist items pass, no further provisioning action is needed. Outstanding items become support tickets, not provisioning blockers.
 
@@ -74,7 +74,7 @@ Locally on the device, PowerShell functions from the AutopilotDiagnostics module
 
 > - **Compliance evaluation timing:** After enrollment, the device must complete a compliance policy evaluation cycle before the portal reflects "Compliant". This typically takes 15–30 minutes.
 
-> A device that has not yet evaluated shows "Not evaluated" rather than "Non-compliant" — these are different states with different remediation paths.
+> A device that has not yet evaluated shows "Not evaluated" rather than "Non-compliant"—these are different states with different remediation paths.
 
 > - **Graph API device state sync:** The Intune portal reads device state from the Microsoft Graph API.
 
@@ -86,7 +86,7 @@ Locally on the device, PowerShell functions from the AutopilotDiagnostics module
 
 > App installation status and hardware inventory reported in the portal may not reflect the device's current state until after the next sync cycle completes.
 
-> - **ZTDID verification:** The [ZTDID](../_glossary.md#ztdid) embedded in the device's registry should match the Autopilot registration record in Graph.
+> - **ZTDID verification:** Confirm the [ZTDID](../_glossary.md#ztdid) embedded in the device's registry matches the Autopilot registration record in Graph.
 
 > Mismatches indicate re-imaging without cleanup. `Get-AutopilotRegistrationState` surfaces this value locally.
 
@@ -97,14 +97,14 @@ Locally on the device, PowerShell functions from the AutopilotDiagnostics module
 - All verification checklist items pass
 - Device shows Compliant in Intune compliance view
 - All required apps show "Installed" in Intune app status
-- Autopilot profile shows "Assigned" — not "Not assigned" or "Error"
+- Autopilot profile shows "Assigned"—not "Not assigned" or "Error"
 - No critical or error-level events in the MDM and Provisioning event log channels
 
 ---
 
 ## Failure Indicators
 
-- Device shows Non-compliant (distinct from "Not evaluated" — see Watch Out For)
+- Device shows Non-compliant (distinct from "Not evaluated"—see Watch Out For)
 - Required apps show "Failed" or "Not installed" in Intune app status
 - Autopilot profile status shows "Not assigned" or "Error" after profile sync window
 - Critical events present in `Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin` or `Microsoft-Windows-Provisioning-Diagnostics-Provider/Admin`
@@ -126,33 +126,33 @@ Rushing the checklist before the compliance evaluation window closes leads to fa
 
 ## Watch Out For
 
-- **Compliance policy evaluation delay:** A device that just completed enrollment will show "Not evaluated" for compliance — this is not a failure. The device needs time to complete its first compliance check cycle. Treat "Not evaluated" as a waiting state, not a problem state. If it persists beyond 1 hour, investigate the MDM check-in cycle.
+- **Compliance policy evaluation delay:** A device that just completed enrollment shows "Not evaluated" for compliance—this is not a failure. The device needs time to complete its first compliance check cycle. Treat "Not evaluated" as a waiting state, not a problem state. If it persists beyond 1 hour, investigate the MDM check-in cycle.
 
 - **App installation state lag in the Intune portal:** The portal's app status view is refreshed on the device's sync schedule, not in real time. A device may have apps fully installed locally while the portal still shows "Pending" or "Not installed". Run `Get-AutopilotDeviceStatus` on the device to get current local state before escalating based on portal data alone.
 
-- **Serial number mismatch after re-imaging:** If a device was re-imaged or reset without removing it from the Autopilot service first, the new enrollment creates a second device record. The serial number in the Autopilot registration will match the hardware, but the ZTDID and enrollment GUID from the old record will differ from the new enrollment. Clean up stale Autopilot records in the Microsoft 365 admin portal to prevent duplicate device confusion.
+- **Serial number mismatch after re-imaging:** If a device was re-imaged or reset without removing it from the Autopilot service first, the new enrollment creates a second device record. The serial number in the Autopilot registration matches the hardware, but the ZTDID and enrollment GUID from the old record differ from the new enrollment. Clean up stale Autopilot records in the Microsoft 365 administrator portal to prevent duplicate device confusion.
 
 ---
 
 ## Tool References
 
-- [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus) — captures a comprehensive device state snapshot including registration state, enrolled profile, and compliance-relevant fields in a single output object
-- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate) — surfaces the [ZTDID](../_glossary.md#ztdid) and tenant verification state from the local registry, useful for confirming the device matches its Autopilot record
-- [`Get-AutopilotProfileAssignment`](../reference/powershell-ref.md#get-autopilotprofileassignment) — retrieves the assigned profile name and settings from the local AutopilotSettings registry, confirming profile delivery without portal access
+- [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus)—captures a comprehensive device state snapshot including registration state, enrolled profile, and compliance-relevant fields in a single output object
+- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate)—surfaces the [ZTDID](../_glossary.md#ztdid) and tenant verification state from the local registry, useful for confirming the device matches its Autopilot record
+- [`Get-AutopilotProfileAssignment`](../reference/powershell-ref.md#get-autopilotprofileassignment)—retrieves the assigned profile name and settings from the local AutopilotSettings registry, confirming profile delivery without portal access
 
 **Further Reading:**
 
-- [Microsoft Learn — Monitor Autopilot deployments](https://learn.microsoft.com/en-us/mem/intune/enrollment/enrollment-autopilot)
-- [Microsoft Learn — Check device compliance in Intune](https://learn.microsoft.com/en-us/mem/intune/protect/compliance-policy-monitor)
-- [Microsoft Learn — Troubleshoot Windows device enrollment in Intune](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-windows-enrollment-errors)
+- [Microsoft Learn—Monitor Autopilot deployments](https://learn.microsoft.com/en-us/mem/intune/enrollment/enrollment-autopilot)
+- [Microsoft Learn—Check device compliance in Intune](https://learn.microsoft.com/en-us/mem/intune/protect/compliance-policy-monitor)
+- [Microsoft Learn—Troubleshoot Windows device enrollment in Intune](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-windows-enrollment-errors)
 
 ---
 
 ## See Also
 
-- [Device Operations](../device-operations/00-overview.md) — Post-enrollment device management: reset, retire, wipe, re-provisioning, and tenant migration
-- [Autopilot Reset Guide](../device-operations/01-autopilot-reset.md) — Return a device to business-ready state without re-imaging
-- [Retire, Wipe, and Removal Actions](../device-operations/02-retire-wipe.md) — Choose the right action based on what you want to preserve
+- [Device Operations](../device-operations/00-overview.md)—Post-enrollment device management: reset, retire, wipe, re-provisioning, and tenant migration
+- [Autopilot Reset Guide](../device-operations/01-autopilot-reset.md)—Return a device to business-ready state without re-imaging
+- [Retire, Wipe, and Removal Actions](../device-operations/02-retire-wipe.md)—Choose the right action based on what you want to preserve
 
 ---
 

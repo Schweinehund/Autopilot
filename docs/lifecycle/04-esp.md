@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-This guide covers Stage 4 of the Windows Autopilot (classic) deployment lifecycle — the Enrollment Status Page, which runs two sequential phases (device phase before any user logs in, then user phase after authentication) to track and block on required policy and app installation before releasing the desktop.
+This guide covers Stage 4 of the Windows Autopilot (classic) deployment lifecycle—the Enrollment Status Page, which runs two sequential phases (device phase before any user logs in, then user phase after authentication) to track and block on required policy and app installation before releasing the desktop.
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
 
@@ -37,7 +37,7 @@ The ESP has two sequential phases: the [device phase](../_glossary.md#device-pha
 
 The ESP displays a progress screen with three labeled sections: "Identifying...", "Device setup", and "Account setup". Each section shows a progress indicator that advances as the corresponding work completes.
 
-During **Device setup**, the screen is visible but the user cannot interact with it — no login prompt appears until device-phase work finishes. During **Account setup**, the user has already authenticated and sees progress on user-targeted app and policy installation before the desktop is released.
+During **Device setup**, the screen is visible but the user cannot interact with it—no login prompt appears until device-phase work finishes. During **Account setup**, the user has already authenticated and sees progress on user-targeted app and policy installation before the desktop is released.
 
 In self-deploying mode, the user phase display does not appear because there is no user to authenticate. The device moves directly from device-phase completion to a usable state (for kiosk or shared scenarios).
 
@@ -49,9 +49,9 @@ In self-deploying mode, the user phase display does not appear because there is 
 
 Runs before user login. The device processes all device-targeted configuration assigned to it.
 
-1. [MDM](../_glossary.md#mdm) enrollment completes — device receives its enrollment [GUID](../_glossary.md#ztdid) and begins receiving policy assignments.
+1. [MDM](../_glossary.md#mdm) enrollment completes—device receives its enrollment [GUID](../_glossary.md#ztdid) and begins receiving policy assignments.
 2. Device-targeted configuration profiles and compliance policies are applied.
-3. Device-targeted apps install — Win32 apps via the Intune Management Extension (IME/sidecar) and LOB/MSI apps via the MDM pipeline.
+3. Device-targeted apps install—Win32 apps through the Intune Management Extension (IME/sidecar) and LOB/MSI apps through the MDM pipeline.
 4. SCEP and PKCS certificate profiles are applied to the device certificate store.
 5. Device-context PowerShell scripts run to completion.
 6. The `FirstSync\IsServerProvisioningDone` registry value is set to `true`, signaling device-phase completion.
@@ -62,7 +62,7 @@ Runs after the user enters credentials on the ESP login screen.
 
 1. User enters Azure AD credentials on the ESP login prompt.
 2. User-targeted configuration profiles and compliance policies are applied.
-3. User-targeted apps install via the same IME pipeline.
+3. User-targeted apps install through the same IME pipeline.
 4. User-targeted scripts and certificates are applied.
 5. Desktop is unlocked and the user reaches the Windows shell.
 
@@ -85,7 +85,7 @@ Not all app types block the ESP. The following table shows which app types are t
 
 ### Process Flow (LOCKED — 8 (8 nodes + 0 labeled edges))
 
-The process flow is partitioned into two sequential phases — Device Phase runs to completion before User Phase begins.
+The process flow is partitioned into two sequential phases—Device Phase runs to completion before User Phase begins.
 
 **Device Phase**
 
@@ -101,7 +101,7 @@ The process flow is partitioned into two sequential phases — Device Phase runs
 3. User apps
 4. Desktop unlocked
 
-**Transition:** Device phase completes before user phase begins — Device phase complete → User logs in.
+**Transition:** Device phase completes before user phase begins—Device phase complete → User logs in.
 
 ---
 
@@ -113,7 +113,7 @@ The process flow is partitioned into two sequential phases — Device Phase runs
 
 > - When `IsServerProvisioningDone` becomes `true`, the device phase is considered complete. See [registry paths reference](../reference/registry-paths.md) for full path details.
 
-> - **ESP tracking root:** `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking` is the root key where the ESP tracks expected vs. received policies and apps.
+> - **ESP tracking root:** `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking` is the root key where the ESP tracks expected versus received policies and apps.
 
 > - Subkeys like `ExpectedPolicies` and `Sidecar` contain diagnostic data. See [registry paths reference](../reference/registry-paths.md).
 
@@ -142,7 +142,7 @@ The process flow is partitioned into two sequential phases — Device Phase runs
 ## Failure Indicators
 
 - ESP stuck at a percentage (common: "46%" or "86%" during app installs)
-- Timeout error after 60 minutes — default limit exceeded
+- Timeout error after 60 minutes—default limit exceeded
 - App installation failure with error code displayed on ESP screen
 - Policy application error with partial completion
 - "Something went wrong" message with error code
@@ -164,9 +164,9 @@ Timeline variability increases significantly with large Win32 app counts or slow
 
 ## Watch Out For
 
-- **Too many required apps causing timeout:** If device-phase app installation exceeds 60 minutes, the ESP times out and may leave the device in a partially provisioned state. Review which apps are assigned as required vs. available, and consider increasing the timeout in the ESP profile (maximum 120 minutes).
+- **Too many required apps causing timeout:** If device-phase app installation exceeds 60 minutes, the ESP times out and may leave the device in a partially provisioned state. Review which apps are assigned as required versus available, and consider increasing the timeout in the ESP profile (maximum 120 minutes).
 
-- **Available apps misconfigured as required:** Apps set to required assignment but not strictly needed during provisioning will block the ESP unnecessarily. Audit app assignments against the app type tracking table above before deployment.
+- **Available apps misconfigured as required:** Apps set to required assignment but not strictly needed during provisioning block the ESP unnecessarily. Audit app assignments against the preceding app type tracking table before deployment.
 
 - **Co-management differences:** If the device is enrolled in both Intune and Configuration Manager (co-management), app tracking behavior differs. Configuration Manager-delivered apps are not tracked by the Intune ESP. Stalls attributed to app installs may actually be waiting on ConfigMgr workloads. A brief co-management workload audit is warranted when standard ESP troubleshooting does not resolve the issue.
 
@@ -176,15 +176,15 @@ Timeline variability increases significantly with large Win32 app counts or slow
 
 ## Tool References
 
-- [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus) — captures a comprehensive device state snapshot including ESP tracking state and enrollment GUID
-- [`Restart-EnrollmentStatusPage`](../reference/powershell-ref.md#restart-enrollmentstatuspage) — remediation function that restarts the ESP process and clears ESP state; see [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md) for usage guidance
-- [`Get-AutopilotLogs`](../reference/powershell-ref.md#get-autopilotlogs) — collects MDM diagnostic logs and Event Viewer channels relevant to ESP failures
+- [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus)—captures a comprehensive device state snapshot including ESP tracking state and enrollment GUID
+- [`Restart-EnrollmentStatusPage`](../reference/powershell-ref.md#restart-enrollmentstatuspage)—remediation function that restarts the ESP process and clears ESP state; see [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md) for usage guidance
+- [`Get-AutopilotLogs`](../reference/powershell-ref.md#get-autopilotlogs)—collects MDM diagnostic logs and Event Viewer channels relevant to ESP failures
 
 **Further Reading:**
 
-- [Microsoft Learn — Enrollment Status Page overview](https://learn.microsoft.com/en-us/mem/intune/enrollment/windows-enrollment-status)
-- [Microsoft Learn — Troubleshoot the Enrollment Status Page](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/understand-troubleshoot-esp)
-- [Microsoft Learn — Intune Management Extension overview](https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension)
+- [Microsoft Learn—Enrollment Status Page overview](https://learn.microsoft.com/en-us/mem/intune/enrollment/windows-enrollment-status)
+- [Microsoft Learn—Troubleshoot the Enrollment Status Page](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/understand-troubleshoot-esp)
+- [Microsoft Learn—Intune Management Extension overview](https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension)
 
 ---
 

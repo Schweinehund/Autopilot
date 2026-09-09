@@ -17,14 +17,14 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 ### Local Autopilot Reset
 
 - WinRE (Windows Recovery Environment) enabled on the device
-- `DisableAutomaticReDeploymentCredentials` policy set to **0** (Allow) in Intune or Group Policy — required to show the local admin trigger on the lock screen
+- `DisableAutomaticReDeploymentCredentials` policy set to **0** (Allow) in Intune or Group Policy—required to show the local administrator trigger on the lock screen
 - Local administrator account available on the device
 
 ### Remote Autopilot Reset
 
-- Device is Microsoft Entra joined (not hybrid joined — see below)
+- Device is Microsoft Entra joined (not hybrid joined—see the following section)
 - Device is MDM-managed (enrolled in Intune)
-- Intune Service Administrator role (or higher) assigned to the initiating admin account
+- Intune Service Administrator role (or higher) assigned to the initiating administrator account
 
 > **What breaks if misconfigured:** If WinRE is disabled, the local reset trigger appears on the lock screen but the reset fails silently after the CTRL+WIN+R key combination. The device reboots normally with no changes applied. Verify WinRE status before instructing a user to attempt local reset.
 
@@ -42,7 +42,7 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 
 3. Sign in with a **local administrator account** when prompted.
 
-   > **L1 Action:** If the user does not know the local admin credentials, do NOT proceed. Escalate to L2. Local admin credentials are required — a domain or Entra account does NOT satisfy this prompt.
+   > **L1 Action:** If the user does not know the local administrator credentials, do NOT proceed. Escalate to L2. Local administrator credentials are required—a domain or Entra account does NOT satisfy this prompt.
 
 4. Confirm the reset. The device reboots and begins the reset process.
 
@@ -56,7 +56,7 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 - [ ] Personal files and user-installed apps removed
 - [ ] Wi-Fi credentials preserved (user does not need to re-enter)
 - [ ] Device still appears enrolled in Intune (Intune admin center > Devices > All devices)
-- [ ] Primary user in Intune still shows the previous user — local reset does NOT update primary user automatically
+- [ ] Primary user in Intune still shows the previous user—local reset does NOT update primary user automatically
 
 ---
 
@@ -72,7 +72,7 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 
 4. Confirm the action when prompted.
 
-   > **L1 Action:** Confirm with the user that the device is plugged in and connected to the network before initiating remote reset. Remote reset fires at the next Intune check-in — instruct the user to leave the device powered on. Check-in typically occurs within 15 minutes if the device is online.
+   > **L1 Action:** Confirm with the user that the device is plugged in and connected to the network before initiating remote reset. Remote reset fires at the next Intune check-in—instruct the user to leave the device powered on. Check-in typically occurs within 15 minutes if the device is online.
 
 5. The device resets at the next Intune check-in. The process takes 20–40 minutes after check-in.
 
@@ -82,7 +82,7 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 
 - [ ] Device reset status shows as succeeded in Intune device action history (Devices > All devices > device > Device action status)
 - [ ] Device still appears enrolled in Intune after reset
-- [ ] Primary user and Entra device owner are cleared — next sign-in sets the new primary user
+- [ ] Primary user and Entra device owner are cleared—next sign-in sets the new primary user
 - [ ] Wi-Fi credentials preserved
 
 ---
@@ -107,13 +107,13 @@ Autopilot Reset returns a device to a business-ready state without requiring a f
 
 ## Unsupported Scenarios
 
-> **Autopilot Reset is NOT supported for Microsoft Entra hybrid joined devices or Surface Hub devices.** A full Wipe is required for hybrid devices. If you attempt Autopilot Reset on a hybrid joined device, the action will be available in the portal but will fail on the device.
+> **Autopilot Reset is NOT supported for Microsoft Entra hybrid joined devices or Surface Hub devices.** A full Wipe is required for hybrid devices. If you attempt Autopilot Reset on a hybrid joined device, the action is available in the portal but fails on the device.
 
 Autopilot Reset is also not available for:
-- Devices enrolled via APv2 (Device Preparation)
-- Devices managed only via co-management (no direct Intune MDM enrollment)
+- Devices enrolled through APv2 (Device Preparation)
+- Devices managed only through co-management (no direct Intune MDM enrollment)
 
-For any of the above, use Wipe. See [Retire, Wipe, and Removal Actions](02-retire-wipe.md).
+For any of these, use Wipe. See [Retire, Wipe, and Removal Actions](02-retire-wipe.md).
 
 ---
 
@@ -143,10 +143,10 @@ Remote reset does **not** happen immediately. The device must check in with Intu
 
 ## See Also
 
-- [Retire, Wipe, and Removal Actions](02-retire-wipe.md) — All five device removal/reset actions with comparison table
-- [Device Lifecycle Decision Tree](../decision-trees/05-device-lifecycle.md) — Choose the correct action based on what you want to preserve
-- [Stage 4: ESP](../lifecycle/04-esp.md) — If re-provisioning fails at ESP after reset
-- [APv1 vs APv2](../apv1-vs-apv2.md) — Framework comparison; Autopilot Reset is APv1-only
+- [Retire, Wipe, and Removal Actions](02-retire-wipe.md)—All five device removal/reset actions with comparison table
+- [Device Lifecycle Decision Tree](../decision-trees/05-device-lifecycle.md)—Choose the correct action based on what you want to preserve
+- [Stage 4: ESP](../lifecycle/04-esp.md)—If re-provisioning fails at ESP after reset
+- [APv1 vs APv2](../apv1-vs-apv2.md)—Framework comparison; Autopilot Reset is APv1-only
 
 ---
 

@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses APv2 deployments where an active APv1 Autopilot registration caused the Enrollment Status Page to appear instead of the Device Preparation screen. Agents confirm the APv1 registration in the portal and escalate to the admin team for deregistration; L1 does not perform device deregistration.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses APv2 deployments where an active APv1 Autopilot registration caused the Enrollment Status Page to appear instead of the Device Preparation screen. Agents confirm the APv1 registration in the portal and escalate to the administrator team for deregistration; L1 does not perform device deregistration.
 
 > **Version gate:** This guide covers an APv2 Device Preparation conflict scenario.
 
@@ -52,7 +52,7 @@ Use this runbook when a device expected to go through APv2 Device Preparation in
 
 Escalate to L2 if:
 
-- APv1 registration confirmed (step 4): escalate to admin team for device deregistration (L1 does not perform deregistration -- this requires admin permissions and the [APv2 prerequisites](../lifecycle-apv2/01-prerequisites.md) process)
+- APv1 registration confirmed (step 4): escalate to administrator team for device deregistration (L1 does not perform deregistration -- this requires administrator permissions and the [APv2 prerequisites](../lifecycle-apv2/01-prerequisites.md) process)
 - No APv1 registration found but ESP appeared (step 7): escalate to L2 -- this is an edge case L1 cannot resolve
 
 **Before escalating, collect:**
@@ -72,7 +72,7 @@ Escalate to L2 if:
 
 - [APv2 Prerequisites](../lifecycle-apv2/01-prerequisites.md) -- Includes APv1 deregistration as prerequisite 0
 - [APv1 vs APv2](../apv1-vs-apv2.md) -- Framework comparison and selection guidance
-- [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) -- APv1 triage if the device should remain on classic Autopilot
+- [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) -- APv1 triage if the device stays on classic Autopilot
 
 ## Version History
 

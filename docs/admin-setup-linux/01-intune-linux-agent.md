@@ -26,14 +26,14 @@ This guide covers installing and configuring the Intune Linux Agent (the `intune
 
 This guide walks Intune administrators through installing the `intune-portal` deb package from `packages.microsoft.com` and verifying the Microsoft Identity Broker systemd unit. Completing this step is a prerequisite for all Linux enrollment scenarios.
 
-⚠️ **Known admin pitfall — Identity Broker re-enrollment (intune-portal 2.0.2+):** The `intune-portal` 2.0.2 release replaced the Java-based broker with `microsoft-identity-broker` (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs. Admin action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices — old device IDs become stale and the new device IDs may not match prior assignments. See [Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints) for the full breakpoint matrix.
+⚠️ **Known administrator pitfall—Identity Broker re-enrollment (intune-portal 2.0.2+):** The `intune-portal` 2.0.2 release replaced the Java-based broker with `microsoft-identity-broker` (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs. Administrator action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices—old device IDs become stale and the new device IDs may not match prior assignments. See [Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints) for the full breakpoint matrix.
 
 Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints`
 
-**Admin action checklist:**
-1. Identify Entra ID groups scoped to Linux devices via device-based filters
+**Administrator action checklist:**
+1. Identify Entra ID groups scoped to Linux devices through device-based filters
 2. After upgrade, verify membership with the new device IDs
-3. Re-validate device-based CA policies (if any) — note Linux supports web-app CA only
+3. Re-validate device-based CA policies (if any)—note Linux supports web-app CA only
 4. Audit `microsoft-identity-broker` systemd-unit status post-upgrade: `systemctl status microsoft-identity-broker`
 
 ## Prerequisites
@@ -84,9 +84,9 @@ Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoin
    dpkg -l | grep intune-portal
    ```
 
-> 📋 **Note — deb vs Snap:** The Snap package (`snap install intune-portal`) was available during preview and is **deprecated**.
+> 📋 **Note—deb vs Snap:** The Snap package (`snap install intune-portal`) was available during preview and is **deprecated**.
 
-> Use the deb package via `packages.microsoft.com` for general-availability deployments. The Snap path will not receive Identity Broker 2.0.2+ updates.
+> Use the deb package from `packages.microsoft.com` for general-availability deployments. The Snap path does not receive Identity Broker 2.0.2+ updates.
 
 ### Step 3: Verify Microsoft Identity Broker is running
 
@@ -104,12 +104,12 @@ Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoin
    systemctl --user status intune-agent.timer
    ```
 
-   > **What breaks if misconfigured:** If `microsoft-identity-broker` is not running, `intune-portal` cannot complete Entra ID authentication and enrollment will fail at the sign-in step. Symptom appears in: `intune-portal` app (authentication error at sign-in). See: [Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)
+   > **What breaks if misconfigured:** If `microsoft-identity-broker` is not running, `intune-portal` cannot complete Entra ID authentication and enrollment fails at the sign-in step. Symptom appears in: `intune-portal` app (authentication error at sign-in). See: [Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)
 
 #### In Intune admin center
 
 1. Navigate to **Devices** > **Linux** and confirm the device appears after the user completes enrollment.
-2. Verify device status shows **Compliant** or **Not compliant** (not **Unknown** — Unknown indicates the broker is not reporting).
+2. Verify device status shows **Compliant** or **Not compliant** (not **Unknown**—Unknown indicates the broker is not reporting).
 
 ## Verification
 
@@ -122,9 +122,9 @@ Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoin
 ## See Also
 
 - [Enrollment Profile](02-enrollment-profile.md)
-- [Linux Prerequisites — Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints)
-- [Linux Glossary — intune-portal package](../_glossary-linux.md#intune-portal-package)
-- [Linux Glossary — microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
+- [Linux Prerequisites—Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints)
+- [Linux Glossary—intune-portal package](../_glossary-linux.md#intune-portal-package)
+- [Linux Glossary—microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 - [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md)
 
 ---

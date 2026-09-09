@@ -16,7 +16,7 @@ platform: linux
 
 ## Summary
 
-This guide covers Linux 802.1X EAP-TLS network authentication configuration via an OS-level nmcli / NetworkManager workaround, since Intune provides no native Wi-Fi, wired, or certificate-delivery profiles for Linux. It applies to Ubuntu 24.04 LTS and 26.04 LTS managed by Microsoft Intune and requires an Intune administrator role plus an out-of-band certificate-delivery process.
+This guide covers Linux 802.1X EAP-TLS network authentication configuration using an OS-level nmcli / NetworkManager workaround, since Intune provides no native Wi-Fi, wired, or certificate-delivery profiles for Linux. It applies to Ubuntu 24.04 LTS and 26.04 LTS managed by Microsoft Intune and requires an Intune administrator role plus an out-of-band certificate-delivery process.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
@@ -32,7 +32,7 @@ Microsoft Intune provides **no native Wi-Fi profile**, **no native wired-network
 documented in this guide is an **OS-level shell-script + nmcli (NetworkManager `802-1x.*`)
 workaround** -- not an Intune profile. Certificate delivery is handled out-of-band before the
 nmcli commands are run; see the [Certificate Prerequisites](#certificate-prerequisites-out-of-band)
-note below.
+note.
 
 ---
 
@@ -40,7 +40,7 @@ note below.
 
 All three EAP methods remain co-equal for 802.1X network authentication -- see [EAP Method Overview](01-eap-method-overview.md) for when-to-choose guidance. This guide documents EAP-TLS only because it is the sole method with verifiable nmcli/vendor documentation for Intune-managed Linux fleets -- a source-confidence / documentation-scope boundary, not a method preference.
 
-- **PEAP-MSCHAPv2:** Technically possible via nmcli but not documented in verifiable Microsoft/vendor sources for Intune-managed Linux fleets; out of scope for this guide.
+- **PEAP-MSCHAPv2:** Technically possible using nmcli but not documented in verifiable Microsoft/vendor sources for Intune-managed Linux fleets; out of scope for this guide.
 - **EAP-TTLS:** Similarly undocumented for this configuration context in verifiable Microsoft/vendor sources for Intune-managed Linux fleets; out of scope for this guide.
 
 ---
@@ -74,7 +74,7 @@ see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
 
 **Note -- Illustrative commands: validate on a test device before fleet deployment**
 
-The nmcli commands below are illustrative. Parameters (SSID, file paths, identity string) are
+The following nmcli commands are illustrative. Parameters (SSID, file paths, identity string) are
 placeholders specific to this guide. These steps are sourced from NetworkManager documentation
 and community-verified references -- not from an official Microsoft Learn Linux 802.1X guide
 (none exists). Validate on a representative test device before fleet deployment.
@@ -106,7 +106,7 @@ nmcli connection add \
 
 Instead run the command with `nmcli --ask` (NetworkManager prompts for the passphrase interactively and never echoes it), or leave the password unset with flag `0` and let NetworkManager's secret agent prompt on first activation. Where possible, deliver an unencrypted key out-of-band and use flag `4`.
 
-Note: Older NetworkManager versions may require a `file://` prefix on certificate paths (e.g., `file:///etc/certs/ca-root.pem`). Ubuntu 24.04+ (NM 1.44+) accepts bare paths.
+Note: Older NetworkManager versions may require a `file://` prefix on certificate paths (for example, `file:///etc/certs/ca-root.pem`). Ubuntu 24.04+ (NM 1.44+) accepts bare paths.
 
 **Step 2 -- Activate the connection:**
 
@@ -130,7 +130,7 @@ nmcli connection up "Corp-WiFi-EAP-TLS"
 
 Source: NetworkManager Reference Manual -- settings-802-1x (networkmanager.dev). Property values are illustrative placeholders; validate for your environment.
 
-The command examples above use nmcli's short property aliases (`wifi-sec.key-mgmt`, `ssid`); these are equivalent to the canonical setting names shown in the table (`802-11-wireless-security.key-mgmt`, `802-11-wireless.ssid`). nmcli accepts either form.
+The preceding command examples use nmcli's short property aliases (`wifi-sec.key-mgmt`, `ssid`); these are equivalent to the canonical setting names shown in the table (`802-11-wireless-security.key-mgmt`, `802-11-wireless.ssid`). nmcli accepts either form.
 
 ### Verification
 
@@ -151,7 +151,7 @@ journalctl -u NetworkManager
 
 ## Wired
 
-The same EAP-TLS workaround via nmcli applies to wired (Ethernet) 802.1X. Change `connection.type` from `wifi` to `ethernet`, specify the interface name (discoverable via `ip link show`), and keep all `802-1x.*` properties identical. Remove `wifi-sec.key-mgmt` and `802-11-wireless.ssid` -- those properties are not applicable to wired connections.
+The same EAP-TLS workaround using nmcli applies to wired (Ethernet) 802.1X. Change `connection.type` from `wifi` to `ethernet`, specify the interface name (discoverable using `ip link show`), and keep all `802-1x.*` properties identical. Remove `wifi-sec.key-mgmt` and `802-11-wireless.ssid` -- those properties are not applicable to wired connections.
 
 Intune provides no native wired-network profile for Linux. As with Wi-Fi, certificates must be pre-placed out-of-band before running these commands.
 
@@ -170,7 +170,7 @@ nmcli connection add \
   802-1x.private-key-password-flags 4
 ```
 
-Replace `<interface-name>` with the actual interface (e.g., `eth0`, `enp3s0` -- use `ip link show` to discover). Activate with `nmcli connection up "Corp-Wired-EAP-TLS"`. Verify with the same trio: `nmcli connection show`, `ip addr show`, `journalctl -u NetworkManager`.
+Replace `<interface-name>` with the actual interface (for example, `eth0`, `enp3s0` -- use `ip link show` to discover). Activate with `nmcli connection up "Corp-Wired-EAP-TLS"`. Verify with the same trio: `nmcli connection show`, `ip addr show`, `journalctl -u NetworkManager`.
 
 ---
 

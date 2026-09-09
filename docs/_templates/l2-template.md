@@ -17,6 +17,9 @@
        Do NOT define paths or function signatures inline
      - Include actual PowerShell commands and registry paths in investigation steps
      - Document multiple resolution scenarios where applicable
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: L2 Desktop Lead (role, not person name)
 -->
@@ -73,6 +76,6 @@ audience: L2
 
 ## Tool References
 
-- [PowerShell function](../reference/powershell-ref.md#function-name) — [what it does in this context]
-- [Registry path](../reference/registry-paths.md) — [which path and why]
-- [Network endpoints](../reference/endpoints.md) — [if connectivity is relevant]
+- [PowerShell function](../reference/powershell-ref.md#function-name)—[what it does in this context]
+- [Registry path](../reference/registry-paths.md)—[which path and why]
+- [Network endpoints](../reference/endpoints.md)—[if connectivity is relevant]

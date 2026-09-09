@@ -26,6 +26,8 @@ import re
 import subprocess
 import sys
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 MODALS = re.compile(r"\b(should|will|would|could|must|shall|may|might)\b", re.I)
 CONTEXT = 4
 
@@ -37,10 +39,33 @@ def git_show(root, rev, path):
     return r.stdout if r.returncode == 0 else None
 
 
-def changed_files(root, base):
-    out = subprocess.run(["git", "diff", "--name-only", base], cwd=root,
-                         capture_output=True, text=True).stdout
-    return [f for f in out.split() if f.endswith(".md")]
+def repo_root_of(root):
+    r = subprocess.run(["git", "rev-parse", "--show-toplevel"], cwd=root,
+                       capture_output=True, text=True)
+    return pathlib.Path(r.stdout.strip())
+
+
+def changed_files(root, base, repo_root=None):
+    root = pathlib.Path(root)
+    if repo_root is None:
+        repo_root = repo_root_of(root)
+    try:
+        walk_rel = root.resolve().relative_to(repo_root.resolve()).as_posix()
+    except ValueError:
+        walk_rel = "."
+    if walk_rel == "":
+        walk_rel = "."
+
+    def in_walk_root(f):
+        return walk_rel == "." or f == walk_rel or f.startswith(walk_rel + "/")
+
+    r = subprocess.run(["git", "diff", "--name-only", base], cwd=root,
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit(
+            "judge-packets: git diff failed for BASE %s: %s"
+            % (base, r.stderr.strip()))
+    return [f for f in r.stdout.split() if f.endswith(".md") and in_walk_root(f)]
 
 
 def modal_bag(s):
@@ -49,10 +74,11 @@ def modal_bag(s):
 
 def packets(root, base, context=CONTEXT):
     root = pathlib.Path(root)
+    repo_root = repo_root_of(root)
     out = []
-    for f in changed_files(root, base):
+    for f in changed_files(root, base, repo_root=repo_root):
         old = git_show(root, base, f)
-        p = root / f
+        p = repo_root / f
         if old is None or not p.exists():
             continue
         new = p.read_text(encoding="utf-8", errors="replace")
@@ -61,7 +87,13 @@ def packets(root, base, context=CONTEXT):
         sm = difflib.SequenceMatcher(None, oldL, newL, autojunk=False)
         # map every replaced baseline line index -> its aligned new index
         aligned = {}
+        # map every changed (replace/delete) baseline line -> the full opcode
+        # block it sits in, so a packet can carry the whole baseline region
+        blocks = {}
         for tag, i1, i2, j1, j2 in sm.get_opcodes():
+            if tag in ("replace", "delete"):
+                for oi in range(i1, i2):
+                    blocks[oi] = (i1, i2)
             if tag != "replace":
                 continue
             # within a replace block, pair up by best similarity, in order
@@ -80,8 +112,12 @@ def packets(root, base, context=CONTEXT):
             # the modal survived intact -> not this class
             if after is not None and modal_bag(ln) == modal_bag(after):
                 continue
-            lo = max(0, (j if j is not None else 0) - context)
-            hi = min(len(newL), (j if j is not None else 0) + context + 1)
+            # no following anchor (a pure-delete block) -> anchor the window
+            # at the change's own position, not at the top of the new file
+            anchor = j if j is not None else i
+            lo = max(0, anchor - context)
+            hi = min(len(newL), anchor + context + 1)
+            bi1, bi2 = blocks.get(i, (i, i + 1))
             out.append({
                 "file": f,
                 "baseline_line": i + 1,
@@ -91,6 +127,7 @@ def packets(root, base, context=CONTEXT):
                          if modal_bag(ln).count(m) >
                          (modal_bag(after).count(m) if after else 0)],
                 "before": ln.rstrip(),
+                "before_region": [l.rstrip() for l in oldL[bi1:bi2]],
                 "after": after.rstrip() if after is not None else "<LINE DELETED>",
                 "context_after": [l.rstrip() for l in newL[lo:hi]],
             })
@@ -118,12 +155,19 @@ def main():
         bins = [[] for _ in range(n)]
         for g in groups:                       # greedy balance on hunk count
             min(bins, key=len).extend(g)
+        non_empty = 0
         for k, b in enumerate(bins, 1):
+            if not b:               # never write a packet file for an empty bin
+                continue
+            non_empty += 1
             b.sort(key=lambda p: (p["file"], p["baseline_line"]))
             pathlib.Path(f"{prefix}{k}.json").write_text(
                 json.dumps(b, indent=1, ensure_ascii=False), encoding="utf-8")
             print(f"{prefix}{k}.json  {len(b)} hunks  "
                   f"{len({p['file'] for p in b})} files")
+        print("judge-packets: %d hunks, %d files, %d bins requested, "
+              "%d bins non-empty"
+              % (len(ps), len({p['file'] for p in ps}), n, non_empty))
         return 0
     print(json.dumps(ps, indent=1, ensure_ascii=False))
     return 0

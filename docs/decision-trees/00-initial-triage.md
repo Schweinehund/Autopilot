@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-Reference decision table for Windows Autopilot (classic APv1) initial triage — the entry point for all Windows Autopilot deployment issues. Gates on network connectivity, then deployment mode and portal registration (a 4-way reconvergence across all four modes), then routes by symptom to a scenario tree, an L1 error code, or an L2/Infrastructure escalation.
+Reference decision table for Windows Autopilot (classic APv1) initial triage—the entry point for all Windows Autopilot deployment issues. Gates on network connectivity, then deployment mode and portal registration (a 4-way reconvergence across all four modes), then routes by symptom to a scenario tree, an L1 error code, or an L2/Infrastructure escalation.
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
@@ -30,7 +30,7 @@ Reference decision table for Windows Autopilot (classic APv1) initial triage —
 
 ## How to Use These Trees
 
-Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deployment issue. Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific scenario tree or to an escalation point with data collection instructions.
+Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deployment issue. Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree routes you to a specific scenario tree or to an escalation point with data collection instructions.
 
 > **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see the [APv2 Device Preparation Triage Tree](04-apv2-triage.md).
 
@@ -38,17 +38,17 @@ Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deploym
 
 Use these links after this triage tree routes you to a specific scenario:
 
-- [ESP Failure Tree](01-esp-failure.md) — [ESP](../_glossary.md#esp) (Enrollment Status Page) stuck or showing errors
-- [Profile Assignment Tree](02-profile-assignment.md) — No profile assigned or wrong profile applied to device
-- [TPM Attestation Tree](03-tpm-attestation.md) — [TPM](../_glossary.md#tpm) errors during pre-provisioning or self-deploying mode
-- [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
-- [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
-- [Android Triage](08-android-triage.md) — Android enrollment/compliance failure routing
-- [Linux Triage](09-linux-triage.md) — Linux Intune client (Ubuntu 24.04/26.04 LTS) failure routing
+- [ESP Failure Tree](01-esp-failure.md)—[ESP](../_glossary.md#esp) (Enrollment Status Page) stuck or showing errors
+- [Profile Assignment Tree](02-profile-assignment.md)—No profile assigned or wrong profile applied to device
+- [TPM Attestation Tree](03-tpm-attestation.md)—[TPM](../_glossary.md#tpm) errors during pre-provisioning or self-deploying mode
+- [APv2 Device Preparation Triage](04-apv2-triage.md)—APv2 (Device Preparation) deployment failure routing
+- [iOS Triage](07-ios-triage.md)—iOS/iPadOS failure routing
+- [Android Triage](08-android-triage.md)—Android enrollment/compliance failure routing
+- [Linux Triage](09-linux-triage.md)—Linux Intune client (Ubuntu 24.04/26.04 LTS) failure routing
 
 ## Decision Tree
 
-**LOCKED — 36 (nodes + labeled edges)** — 18 nodes + 18 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree is grouped below into three stages that mirror the graph's own gate structure; the table `Yes`/`No`/mode answer columns are the graph's labeled edges. The 4-way reconvergence into TRD4 (all four deployment modes route to the same registration question) is preserved as four explicit rows in the Deployment Mode & Registration stage — no row collapses more than one incoming edge.
+**LOCKED—36 (nodes + labeled edges)**—18 nodes + 18 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree is grouped into three stages that mirror the graph's own gate structure; the table `Yes`/`No`/mode answer columns are the graph's labeled edges. The 4-way reconvergence into TRD4 (all four deployment modes route to the same registration question) is preserved as four explicit rows in the Deployment Mode & Registration stage—no row collapses more than one incoming edge.
 
 ### Stage 1: Connectivity Gate (TRD1 → TRD2)
 

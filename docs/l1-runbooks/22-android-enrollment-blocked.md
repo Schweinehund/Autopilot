@@ -16,31 +16,31 @@ platform: Android
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices that cannot enroll in Intune because an Enrollment Restrictions policy is blocking the device's platform or ownership type, or the user has reached the per-user device enrollment cap. L1 identifies the active restriction policy and documents the blocking condition for the administrator's configuration change.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices that cannot enroll in Intune because an Enrollment Restrictions policy is blocking the device's platform or ownership type, or the user has reached the per-user device enrollment cap. L1 identifies the active restriction policy and documents the blocking condition for the administrator's configuration change.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting through Intune.
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
-L1 runbook for Android devices that cannot enroll in Intune because the Enrollment Restrictions blade is blocking the device's platform or ownership type. Applies to all GMS modes (BYOD, COBO, Dedicated, ZTE — AOSP is out of scope in v1.4).
+L1 runbook for Android devices that cannot enroll in Intune because the Enrollment Restrictions blade is blocking the device's platform or ownership type. Applies to all GMS modes (BYOD, COBO, Dedicated, ZTE—AOSP is out of scope in v1.4).
 
 ## Symptom
 
 One or more of the following:
 
-- User reports their Android device cannot enroll; Company Portal or Microsoft Intune app shows a generic "Can't enroll," "Your organization's IT policy requires...," or "This device cannot enroll" message without a specific actionable reason shown to the user.
+- User reports their Android device cannot enroll; Company Portal or Microsoft Intune app shows a generic "Can't enroll," "Your organization's IT policy requires...," or "This device cannot enroll" message without a specific reason the user can act on.
 - Admin-visible in Intune: the enrollment failure reason indicates that the device's platform or ownership type is blocked under Enrollment Restrictions. [MEDIUM: learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment, last_verified 2026-04-23]
 - Common ticket phrasings: "my phone won't connect to work," "Company Portal says I can't enroll," "enrollment failed" without a specific error code. [MEDIUM: community ticket phrasing survey, last_verified 2026-04-23]
 
 Routed here from the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) ANDR22 branch.
 
-**Disambiguation:** If the user (or enrollment flow) did NOT see any "enrollment blocked" or restriction-specific message and the device simply never appeared in Intune, see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. If the device enrolled successfully (visible in Intune) but no work profile was created (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
+**Disambiguation:** If the user (or enrollment flow) did NOT see any "enrollment blocked" or restriction-specific message and the device never appeared in Intune, see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. If the device enrolled successfully (visible in Intune) but no work profile was created (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
 
 ## L1 Triage Steps
 
-L1 Triage Steps are read-only checks. L1 does NOT modify any enrollment restriction setting — that is an admin action (see [Admin Action Required](#admin-action-required) below).
+L1 Triage Steps are read-only checks. L1 does NOT modify any enrollment restriction setting—that is an administrator action (see [Admin Action Required](#admin-action-required)).
 
 1. > **Say to the user:** "Let me check the enrollment policy for your device. I may need to escalate this to an administrator if a policy is blocking the enrollment."
 
@@ -53,7 +53,7 @@ L1 Triage Steps are read-only checks. L1 does NOT modify any enrollment restrict
    - The **Corporate-owned** column shows "Block" (blocks COBO, Dedicated, and ZTE enrollment)
    - The user's group is in scope of a policy whose Android Enterprise type is set to "Block"
 
-5. Also check **Devices > Device onboarding > Enrollment > Device limit restriction** for the user's group. A device-cap hit presents similarly to a platform restriction block to the user. Document which blade — platform restriction or device limit — appears to be the blocking condition.
+5. Also check **Devices > Device onboarding > Enrollment > Device limit restriction** for the user's group. A device-cap hit presents similarly to a platform restriction block to the user. Document which blade—platform restriction or device limit—appears to be the blocking condition.
 
 6. Collect the following observed state for the escalation packet:
    - Name of the restriction policy assigned to the user's group
@@ -66,32 +66,32 @@ L1 Triage Steps are read-only checks. L1 does NOT modify any enrollment restrict
 
 L1 documents and hands this packet to the Intune administrator. L1 does not execute any of the following actions.
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Review the Enrollment Restrictions policy assigned to the user's group at **Devices > Device onboarding > Enrollment > Device platform restriction > Android restrictions**. Identify the policy in scope for the user.
-- If the user's Android ownership type should be allowed: set the blocked column (Personally-owned or Corporate-owned) to **Allow** in the applicable policy, OR assign the user to a policy that already allows their device type.
+- If the user's Android ownership type is meant to be allowed: set the blocked column (Personally-owned or Corporate-owned) to **Allow** in the applicable policy, OR assign the user to a policy that already allows their device type.
 - If the user is hitting the **device limit restriction** instead: review **Devices > Device onboarding > Enrollment > Device limit restriction** for the user's group, then either raise the device cap or remove an unused device from the user's Intune device inventory.
 - For BYOD enrollment restriction configuration, see [BYOD Work Profile Admin Guide](../admin-setup-android/04-byod-work-profile.md). For Fully Managed (COBO), see [Fully Managed COBO Admin Guide](../admin-setup-android/03-fully-managed-cobo.md).
 
 **Verify:**
 
-- After the admin saves the policy change, ask the user to retry enrollment from their device. On success, the Android device appears in **Intune admin center > Devices > All devices** (filter: platform = Android) within approximately 10 minutes. The device shows "Enrolled" status.
-- Optional: have the admin confirm on the enrollment restrictions blade that the policy scope and assignments now reflect the change.
+- After the administrator saves the policy change, ask the user to retry enrollment from their device. On success, the Android device appears in **Intune admin center > Devices > All devices** (filter: platform = Android) within approximately 10 minutes. The device shows "Enrolled" status.
+- Optional: have the administrator confirm on the enrollment restrictions blade that the policy scope and assignments now reflect the change.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
 ## Escalation Criteria
 
-Escalate to L2 (or to the Intune admin directly if not already done). See [Android Enrollment Investigation](../l2-runbooks/19-android-enrollment-investigation.md#pattern-e-tenant-config-universal) (Pattern E — Enrollment Restriction) and [Android Log Collection Guide](../l2-runbooks/18-android-log-collection.md).
+Escalate to L2 (or to the Intune administrator directly if not already done). See [Android Enrollment Investigation](../l2-runbooks/19-android-enrollment-investigation.md#pattern-e-tenant-config-universal) (Pattern E—Enrollment Restriction) and [Android Log Collection Guide](../l2-runbooks/18-android-log-collection.md).
 
 Escalate to L2 if:
 
 - The enrollment restrictions blade shows no "Block" for the user's device type AND the user is not at device cap, yet enrollment still fails
-- The admin has updated the policy AND the user has retried enrollment, but the device still fails to enroll after 30 minutes
-- The on-device error is a specific error code (not a generic restriction message) — this indicates a different failure class; route via L2
-- The device appears in Intune after the admin policy change but then disappears or immediately shows a compliance failure — this is a separate symptom class (see [Runbook 25: Android Compliance Blocked](25-android-compliance-blocked.md))
+- The administrator has updated the policy AND the user has retried enrollment, but the device still fails to enroll after 30 minutes
+- The on-device error is a specific error code (not a generic restriction message)—this indicates a different failure class; route through L2
+- The device appears in Intune after the administrator policy change but then disappears or immediately shows a compliance failure—this is a separate symptom class (see [Runbook 25: Android Compliance Blocked](25-android-compliance-blocked.md))
 
 **Before escalating, collect:**
 

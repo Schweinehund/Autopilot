@@ -34,7 +34,7 @@ Before enrolling, make sure you have:
 - **Android 8 or newer** (most phones from 2018 onward qualify).
 - A personal Google account signed into your phone so you can install apps from the Play Store.
 - A work email address from your organization. If you have not received one yet, contact your IT helpdesk before continuing.
-- A stable internet connection — Wi-Fi or cellular data.
+- A stable internet connection—Wi-Fi or cellular data.
 - About 10 to 15 minutes.
 
 ## Enroll your device
@@ -48,7 +48,7 @@ Follow these steps to enroll using **Company Portal** (the primary method).
 5. Enter your **work password** when prompted. If your organization uses multi-factor authentication, approve the sign-in request on your authenticator app or enter the verification code you receive.
 6. On the **Company Access Setup** screen, tap **BEGIN**.
 7. Review the on-screen privacy information. Tap **CONTINUE** or **ACCEPT** to proceed.
-8. Your phone creates a **work profile**. This may take a minute or two — you will see a progress indicator on screen.
+8. Your phone creates a **work profile**. This may take a minute or two—you will see a progress indicator on screen.
 9. When prompted, follow any remaining steps to finish setting up the work profile. You may be asked to set a PIN or screen lock specifically for the work profile.
 10. After the work profile is ready, you may be asked to install additional work apps. These install automatically inside the work profile.
 11. When you see **DONE** or **You're all set**, tap to finish. Your device is now enrolled.
@@ -85,7 +85,7 @@ Your work profile is separate from the personal side of your phone. Your IT team
 - **Personal call, SMS, and browser history** — your call log, text messages, and browser history on the personal side are not visible to IT.
 - **Your location outside the work profile** — IT cannot track where you are 24 hours a day. Your personal-side location is private.
 
-For the full technical details, see the admin guide: [Privacy boundary](../admin-setup-android/04-byod-work-profile.md#privacy-boundary).
+For the full technical details, see the administrator guide: [Privacy boundary](../admin-setup-android/04-byod-work-profile.md#privacy-boundary).
 
 ## If something goes wrong
 
@@ -125,11 +125,11 @@ Quick reference for L1 service desk staff supporting BYOD Work Profile enrollmen
 - The **Company Portal** app and **Microsoft Intune** app are assigned to the user.
 - Compliance policy scope includes the user's Entra group.
 
-For configuration settings, portal-step navigation, and policy templates, see the admin guide: [docs/admin-setup-android/04-byod-work-profile.md](../admin-setup-android/04-byod-work-profile.md).
+For configuration settings, portal-step navigation, and policy templates, see the administrator guide: [docs/admin-setup-android/04-byod-work-profile.md](../admin-setup-android/04-byod-work-profile.md).
 
-**For privacy questions:** You cannot see personal-side data on the user's phone. If a user asks what IT can see, direct them to the **What your IT team can and cannot see** section above — or to the canonical [Privacy boundary](../admin-setup-android/04-byod-work-profile.md#privacy-boundary) table in the admin guide.
+**For privacy questions:** You cannot see personal-side data on the user's phone. If a user asks what IT can see, direct them to the **What your IT team can and cannot see** section above—or to the canonical [Privacy boundary](../admin-setup-android/04-byod-work-profile.md#privacy-boundary) table in the administrator guide.
 
-**For enrollment-flow questions:** The user-facing steps in **Enroll your device** above reflect the current flow. If a user is on an older management app version or the tenant uses web enrollment only, the flow may differ — refer them to your organization's specific guidance.
+**For enrollment-flow questions:** The user-facing steps in **Enroll your device** above reflect the current flow. If a user is on an older management app version or the tenant uses web enrollment only, the flow may differ—refer them to your organization's specific guidance.
 
 If the issue is beyond L1 scope, follow your standard L2 escalation path.
 

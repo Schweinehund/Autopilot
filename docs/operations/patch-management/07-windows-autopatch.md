@@ -7,7 +7,7 @@ platform: Windows
 ---
 
 > **Platform applicability:** This guide is Windows-specific and covers the Windows Autopatch
-> service as its own surface — enrollment and service prerequisites, the Autopatch group model and
+> service as its own surface—enrollment and service prerequisites, the Autopatch group model and
 > the Test / Last deployment rings, the containment position, the update workloads and their service
 > objectives, the entitlement comparison between Autopatch and Hotpatch, and the Autopatch-specific
 > reporting surfaces. For the cross-platform overview, see
@@ -19,7 +19,7 @@ platform: Windows
 # Windows Autopatch
 
 This guide covers the Windows Autopatch service as a policy and management surface in its own
-right — what the service is, how a device becomes eligible for it, how the Autopatch group model
+right—what the service is, how a device becomes eligible for it, how the Autopatch group model
 works, how it relates to the Windows Update client policies it manages, which application-update
 workloads it covers and to what service objective, how an Autopatch entitlement compares against a
 Hotpatch entitlement, and what the service reports.
@@ -52,7 +52,7 @@ An Autopatch group is the unit that carries out that automation:
 
 Stated positively: an Autopatch group **contains** a standalone Update rings policy for Windows 10
 and later rather than existing as a separate, unrelated surface beside it. Enabling Windows
-Autopatch does not replace WUfB deployment ring topology — the resulting Autopatch group takes over
+Autopatch does not replace WUfB deployment ring topology—the resulting Autopatch group takes over
 authorship of the update-rings policy objects it contains. What a WUfB deployment ring is, how it
 differs from an Autopatch ring, and what changes about a WUfB deployment ring once an Autopatch
 group contains it, is authored in
@@ -61,7 +61,7 @@ re-author that topology; it documents the Autopatch service that sits on top of 
 
 Prerequisites for Autopatch enablement span two files, and the precedence between them is firm.
 [Migration Paths and Autopatch](../co-management/03-cocmgmt-migration-paths.md#autopatch-prerequisites)
-owns the co-management **workload-slider** chain — which workloads must be at Pilot Intune or Intune
+owns the co-management **workload-slider** chain—which workloads must be at Pilot Intune or Intune
 before Autopatch can be enabled. This guide owns the Autopatch **service** prerequisites that file
 has never carried: the Entra ID licensing floor, the corporate-owned-device requirement, the device
 check-in window, diagnostic-data levels, the Long-Term Servicing Channel restriction, app-only
@@ -109,8 +109,8 @@ Entra ID and Intune requirement above:
 > at the Required level (previously called Basic) for these features."
 
 The page names a higher recommended level per Windows version to unlock the full deployment
-protections — Optional (previously Full) diagnostic data for Windows 11 devices, and Enhanced
-diagnostic data for Windows 10 devices — rather than one fixed level across the whole fleet.
+protections—Optional (previously Full) diagnostic data for Windows 11 devices, and Enhanced
+diagnostic data for Windows 10 devices—rather than one fixed level across the whole fleet.
 
 **Source:** [Windows Autopatch prerequisites](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/prepare/windows-autopatch-prerequisites) (updated 2026-02-27)
 
@@ -134,7 +134,7 @@ cloud-attached:
 
 **App-only authentication and the Entra group-type restriction.** Both requirements are named on
 Autopatch's own group-management page rather than the prerequisites page, and both are easy to miss
-because neither is phrased in the same blocking-prerequisite voice as the items above:
+because neither is phrased in the same blocking-prerequisite voice as the preceding items:
 
 > "Make sure you have app-only auth turned on in your Windows Autopatch tenant. Otherwise, the
 > Autopatch groups functionality doesn't work properly."
@@ -188,7 +188,7 @@ refers to a third workload without ever naming it:
 
 The page does not settle its own count: it names two workloads by name in both places it lists
 them, and separately references "the three workloads" without ever naming a third. This guide
-asserts nothing about the identity of the unnamed third workload — Office and Click-to-Run each
+asserts nothing about the identity of the unnamed third workload—Office and Click-to-Run each
 occur zero times on this page, and filling the gap from general co-management documentation would
 be an invention this guide does not make.
 
@@ -213,7 +213,7 @@ rather than configurable:
 **Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2025-06-17)
 
 If no further rings are added, Test functions as the pilot cohort and Last as the production
-cohort. A tenant may add more — up to **15 deployment rings per Autopatch group** — and may run up
+cohort. A tenant may add more—up to **15 deployment rings per Autopatch group** — and may run up
 to **300 Autopatch groups** in total:
 
 > "You can set up to 15 deployment rings per Autopatch group."
@@ -237,8 +237,8 @@ groups."
 **Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2025-06-17)
 
 **The containment position, in full.** An Autopatch group is a container that includes a standalone
-Update rings policy for Windows 10 and later — alongside feature-update policies, driver update
-policies, Microsoft 365 App update policies, and Microsoft Edge update policies — among the software
+Update rings policy for Windows 10 and later—alongside feature-update policies, driver update
+policies, Microsoft 365 App update policies, and Microsoft Edge update policies—among the software
 update policies it creates and assigns. The Test / Last ring model above is the ring model for
 everything the Autopatch group contains; it is not a separate ring system layered on top of WUfB
 deployment ring topology. See [Windows WUfB Rings](01-windows-wufb-rings.md#autopatch-disambiguation)
@@ -251,7 +251,7 @@ does not restate that topology.
 Once a WUfB deployment ring policy for Windows 10 and later is contained inside an Autopatch group,
 the Autopatch group owns its ongoing authorship. An administrator who continues to edit that Update
 rings policy object directly, rather than through the Autopatch group, is editing a policy the
-Autopatch group already owns — the direct edit can be overwritten the next time the Autopatch group
+Autopatch group already owns—the direct edit can be overwritten the next time the Autopatch group
 manages that policy. The operational rule going forward is to make configuration changes for a
 contained WUfB deployment ring through the Autopatch group, not by editing the underlying policy
 object.
@@ -273,8 +273,8 @@ single blanket target across all of them.
 
 **Source:** [What is Windows Autopatch?](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-overview) (updated 2026-07-13)
 
-**Microsoft 365 Apps for enterprise.** Autopatch does not merely track a device's assigned channel —
-it steers eligible devices toward one specific channel:
+**Microsoft 365 Apps for enterprise.** Autopatch does not merely track a device's assigned channel—it
+steers eligible devices toward one specific channel:
 
 > "Windows Autopatch aims to keep at least 90% of eligible devices on a supported version of the
 > Monthly Enterprise Channel (MEC)."
@@ -351,7 +351,7 @@ direction.
 ## Reporting and Communications
 
 Windows Autopatch reporting is scoped to the workloads the service itself manages. Driver and
-firmware update reporting is a separate, disjoint surface — see
+firmware update reporting is a separate, disjoint surface—see
 [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md#driver-update-reporting).
 
 **Hotpatch quality update report.**

@@ -3,7 +3,7 @@ seed_id: SEED-002
 planted: 2026-08-31
 planted_during: "Live walk-up AVD kiosk pilot build (2026-08-27 → 2026-08-30) — one HP device, self-deploying, Entra-only, internet-only"
 trigger_when: "scoping the next Device Configuration Recipe milestone, or any milestone touching RE-222 / RE-224 / Windows kiosk content"
-status: planted
+status: closed
 ---
 
 # SEED-002: Walk-Up AVD Kiosk Recipe — Field-Validated Build, Cross-Doc Conflicts, and Asset Placement
@@ -123,3 +123,82 @@ Owner decision needed; the recipe currently names the files without a path.
   remediation packages and the Baseline; stopping rule for extending them recorded in RE-237.
 - All observed-behaviour claims in RE-237 are labelled as tenant/pilot observations, not Learn
   citations; the harness cannot validate them and the promotion review must not pretend it did.
+
+## Closure (Phase 155, plan 155-06)
+
+RE-237 is now `status: Approved` at both frontmatter sites (flip commit `6e67e647`), registered as
+registry row RE-237 (registration commit `d278a3b1`), and navigable from `docs/index.md`. This
+seed closes with its four scope sections accounted for below. Nothing above this section is
+deleted or reworded — this closure is additive.
+
+### Section A — Cross-doc conflicts / `[ASSUMED]` resolutions: DISCHARGED, all six items
+
+- RE-222 Step 5a callout routing autologon readers to RE-237 — landed at
+  `docs/recipes/01-shared-windows-avd-client.md:135`.
+- RE-222 Step 4 `[ASSUMED]` reset field names — resolved; the field-resolved values are documented
+  at `docs/recipes/01-shared-windows-avd-client.md:103`, no `[ASSUMED]` marker remains on this item.
+- RE-222 Step 5a `[ASSUMED]` offline Store license — resolved; the field-resolved negative is
+  documented at `docs/recipes/01-shared-windows-avd-client.md:137`.
+- RE-224 anti-feature row narrowed with a cross-link to RE-237 — landed at
+  `docs/recipes/03-windows-11-multi-app-kiosk.md:53`.
+- RE-224 Step 6 data-type note (tenant-observed `String`, double-encoding failure mode) — landed at
+  `docs/recipes/03-windows-11-multi-app-kiosk.md:245`.
+- RE-224 prerequisites / licensing implication — landed as the edition-only gate at
+  `docs/recipes/03-windows-11-multi-app-kiosk.md:29` (RCP-07(c)) and the reasoned remedy language at
+  `docs/reference/licensing-matrix.md:76` (RCP-08), both aligned to `155-RCP10-CLAIMS.json`
+  claim_2's UNVERIFIED-for-activation disposition — the mechanism claim was removed rather than
+  carried forward as fact.
+
+### Section B — Observed behaviours worth a runbook or reference row: CARRIES TO BACKLOG
+
+None of the four candidate items (the kiosk-account-retirement/noisy-boot runbook, the Windows App
+child-process allow-list note, the OEM/consumer bloat inventory, the Remote Help /
+Credential Guard reference-doc rows) were authored into the corpus by this phase — they remain
+candidates. File as backlog items for a future milestone scoping L2 runbooks or reference-doc
+extensions for this device class; this phase's scope was registration and promotion, not new
+runbook authorship.
+
+### Section C — Asset placement decision: DISCHARGED
+
+`assets/recipes/06-walk-up-avd-kiosk/` (a new top-level directory, outside `docs/`) was the
+decision landed by the plans that authored RE-237's asset tree — confirmed live in this repository
+and documented in RE-237's own "Asset Provenance" section, which states every committed asset
+lives under that path and that the path is reachable only from the repository itself (the
+published `.docx` bundle never walks a filesystem directory).
+
+### Section D — Deferred follow-ups from the pilot: CARRIES TO BACKLOG
+
+The licensing/hardware standard decision (MAK per-device vs. IoT Enterprise hardware), AVD
+host-pool Entra SSO (`enablerdsaadauth`), vendoring the Andrew Taylor De-Bloat script, and the
+tabled STORIS SCiX ClickOnce kiosk investigation are all out of this phase's scope and carry to
+the backlog unchanged.
+
+### Forward handoff — Phase 159 needle classes, by literal (per 155-05-SUMMARY.md D-52)
+
+**Durable (pin-eligible):** heading text — `## Asset Provenance` and every existing H2/H3 in
+RE-237 — because every style invocation this milestone passes `--no-headings` and the sweep skips
+heading lines unconditionally. Inline-code literals are durable: the CSP node path
+`./Device/Vendor/MSFT/AssignedAccess/ShellLauncher`, the registry value names
+`AutoLogoffEnable`/`AutoLogoffTimeInterval`/`AutoLogoffOnSuccessfulConnect`, the error string
+`` `Class is not licensed for use` ``, the Intune code `` `-2016281112` ``, and every filename this
+phase's plans linked (e.g. `` `Deploy-WindowsApp.ps1` ``) — the sweep never rewrites inline code.
+
+**NOT durable (must not be pinned):** every ordinary prose sentence this phase's plans authored or
+edited, including all `**[PILOT]**` label sites, the Asset Provenance section's prose, the
+activation-alignment rewrites, the Step 3 past-tense rewrite, and this plan's own F1 attribution
+split at `:176` and the four RCP-09 companion links (Step 3, Step 9). These are exactly the
+sentences Phase 156's style pass will touch; pinning them would silently block that pass's own
+acceptance criteria.
+
+### Reverse handoff — Phase 156, both directions (per 155-05-SUMMARY.md D-53)
+
+**Forward:** this phase's plans (155-04 and 155-05, plus this plan's pre-flip fix) rewrote prose in
+4 of Phase 156's 13 batch-10 documents — RE-237, RE-224, `docs/reference/licensing-matrix.md`, and
+`docs/recipes/01-shared-windows-avd-client.md` — beyond what any prior measurement recorded. Phase
+156 must re-measure each document's own baseline (blockquote count, `[PILOT]` occurrence count,
+em-dash canon) rather than inherit any pre-155 figure.
+
+**Reverse:** Phase 156's batch-10 restyle pass must leave every content assertion these plans
+landed unchanged — the `V-135-*` assertions for RE-224, the RCP-06/07/08 cross-links and the F1
+attribution split and RCP-09 companion links this plan landed in RE-237 — surviving the restyle
+pass verbatim in meaning, not merely in the literals Phase 159 pins above.

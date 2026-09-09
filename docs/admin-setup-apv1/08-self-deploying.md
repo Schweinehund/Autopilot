@@ -51,7 +51,7 @@ Self-deploying mode is a fully automated deployment requiring zero user interact
 
 Before deploying, confirm the target device meets both requirements:
 
-- **TPM 2.0** present and functional -- run `Get-Tpm` in an admin PowerShell prompt to verify TpmPresent and TpmReady are both True
+- **TPM 2.0** present and functional -- run `Get-Tpm` in an administrator PowerShell prompt to verify TpmPresent and TpmReady are both True
 - **Wired ethernet** connection available at the deployment location (recommended for zero-touch); if unavailable, built-in Wi-Fi is supported but requires manual language/locale/keyboard selection and network join at OOBE
 
 > **What breaks if misconfigured:** No TPM or TPM 1.2 means self-deploying cannot authenticate.
@@ -60,7 +60,7 @@ Before deploying, confirm the target device meets both requirements:
 
 > **Wi-Fi at OOBE:** Supported, but not zero-touch -- the user must manually pick language, locale, keyboard, and join the network before provisioning continues.
 
-> Ethernet remains recommended for unattended deployment. See Step 2 above for the full prerequisite list.
+> Ethernet remains recommended for unattended deployment. See Step 2 for the full prerequisite list.
 
 ### Step 3: Device Deployment Flow
 
@@ -78,14 +78,14 @@ What happens during a self-deploying deployment (no user interaction required):
 
 > Self-deploying devices have no primary user. Apps must be assigned to **device groups**, not user groups.
 
-> User-targeted policies will not apply during deployment. Design app and policy assignments accordingly before deploying.
+> User-targeted policies do not apply during deployment. Design app and policy assignments accordingly before deploying.
 
 ### Step 4: Post-Deployment Management
 
 - **Device management:** Treat as a shared device in Intune
-- **App deployment:** Use device-based licensing (e.g., Microsoft 365 Apps for enterprise device-based license)
-- **User policies:** Apply via conditional access or Entra group-based assignment after first user sign-in
-- **User-targeted apps:** Assign apps that should be available to all users of the device via device groups, not user groups
+- **App deployment:** Use device-based licensing (for example, Microsoft 365 Apps for enterprise device-based license)
+- **User policies:** Apply through conditional access or Entra group-based assignment after first user sign-in
+- **User-targeted apps:** Assign apps that must be available to all users of the device through device groups, not user groups
 
 > **What breaks if misconfigured:** User-targeted apps assigned to self-deploying devices are not installed during deployment because there is no user context.
 

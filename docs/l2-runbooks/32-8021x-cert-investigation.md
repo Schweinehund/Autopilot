@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-L2 certificate-chain investigation guide for 802.1X failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). All investigation steps require L2 authorization — do not share commands or certificate inspection procedures with end users or L1 technicians. Covers SCEP delivery channel verification, certificate chain validation (EKU, expiry, chain trust), revocation check failures, and RADIUS server-name validation. Used after 802.1X log collection per Runbook 31.
+L2 certificate-chain investigation guide for 802.1X failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). All investigation steps require L2 authorization—do not share commands or certificate inspection procedures with end users or L1 technicians. Covers SCEP delivery channel verification, certificate chain validation (EKU, expiry, chain trust), revocation check failures, and RADIUS server-name validation. Used after 802.1X log collection per Runbook 31.
 
 > **Platform gate:** This guide covers 802.1X certificate-chain investigation across all five
 > platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
@@ -28,16 +28,16 @@ L2 certificate-chain investigation guide for 802.1X failures across all five pla
 **Foundation references (link-not-copy):** The cert-delivery ordering rule, EKU requirement
 (Client Authentication OID `1.3.6.1.5.5.7.3.2`), and RADIUS server-name validation are
 documented in [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md).
-Do not restate that theory here — link to it.
+Do not restate that theory here—link to it.
 
 ## Context
 
 This runbook covers certificate-chain investigation for 802.1X failures under two entry conditions:
 
-- The Intune cert profile shows **Error** or **Pending** (SCEP/PKCS delivery failure — possible
+- The Intune cert profile shows **Error** or **Pending** (SCEP/PKCS delivery failure—possible
   cert-delivery ordering issue or SCEP enrollment error)
 - Profile delivery shows **Succeeded** in the portal but the device cannot authenticate (possible
-  cert expiry, EKU mismatch, or SAN mismatch — "Succeeded" in Intune reflects the last Intune
+  cert expiry, EKU mismatch, or SAN mismatch—"Succeeded" in Intune reflects the last Intune
   check-in result and does not guarantee the cert is currently present and valid on the device)
 
 Before starting: collect 802.1X logs per [#31: 802.1X Log Collection](31-8021x-log-collection.md).
@@ -45,23 +45,23 @@ Before starting: collect 802.1X logs per [#31: 802.1X Log Collection](31-8021x-l
 **From L1 escalation?** L1 runbook [#38: Certificate Failure](../l1-runbooks/38-8021x-certificate-failure.md)
 has escalated here. L1 collected: device serial number, user UPN, platform, Intune cert-profile
 status screenshot, and the per-platform diagnostic signal output from the L1 signal table.
-Route to the matching platform subsection below.
+Route to the matching platform subsection.
 
 ## Investigation Overview
 
-Validate in this order — all platforms share this sequence before diving into the per-platform
+Validate in this order—all platforms share this sequence before diving into the per-platform
 cert-store inspection:
 
-1. **Intune portal: SCEP/PKCS profile deployment status** — confirm both the Trusted Certificate
+1. **Intune portal: SCEP/PKCS profile deployment status**—confirm both the Trusted Certificate
    profile and the SCEP or PKCS client-cert profile show **Succeeded**. If either shows Error or
    Pending, the delivery failure is the root cause. For the authoritative cert-delivery ordering
    rule (trusted root first, then client cert, then network profile), see
    [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md).
-2. **Device cert store: chain, EKU, SAN, expiry** — even when the portal shows Succeeded, verify
+2. **Device cert store: chain, EKU, SAN, expiry**—even when the portal shows Succeeded, verify
    the certificate is actually installed on the device, that EKU includes Client Authentication
    (`1.3.6.1.5.5.7.3.2`), that the SAN matches the expected UPN (user cert) or device name
    (device cert), and that the cert has not expired.
-3. **CAPI2 log (Windows only)** — for chain-validation failures during active 802.1X attempts,
+3. **CAPI2 log (Windows only)**—for chain-validation failures during active 802.1X attempts,
    the `Microsoft-Windows-CAPI2/Operational` log (enabled before repro per
    [#31](31-8021x-log-collection.md)) records certificate chain building events and trust anchor
    errors timed to the authentication attempt.
@@ -99,7 +99,7 @@ For user-based 802.1X authentication (EAP-TLS with a per-user certificate):
 certutil -v -silent -user -store MY
 ```
 
-Interpret the same fields as the machine store above.
+Interpret the same fields as the machine store earlier.
 
 ### Trusted Root CA cert store
 
@@ -112,7 +112,7 @@ certutil -v -silent -store ROOT
 
 Look for the root CA that issued the RADIUS server's certificate. If that root CA is absent
 from this store, the device cannot validate the RADIUS server's certificate and the 802.1X
-handshake fails before EAP begins — a server-name validation failure. Route to
+handshake fails before EAP begins—a server-name validation failure. Route to
 [#33](33-8021x-radius-eap-investigation.md) for server-name validation diagnosis.
 
 ### Chain and revocation verification (specific cert file)
@@ -140,9 +140,9 @@ Wired-AutoConfig failure event (8003) to a specific certificate chain problem.
 
 ## macOS: Certificate Inspection
 
-**NOTE — keychain location:** Client cert location depends on the Intune SCEP profile
+**NOTE—keychain location:** Client cert location depends on the Intune SCEP profile
 deployment channel (device-based SCEP → System keychain; user-based SCEP → Login keychain).
-Verify the profile scope before inspecting the wrong keychain — see
+Verify the profile scope before inspecting the wrong keychain—see
 [macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md) for deployment channel details.
 
 ### List all certificates (all keychains)
@@ -154,7 +154,7 @@ security find-certificate -a -Z
 
 The `-Z` flag includes the SHA-256 thumbprint. Scan the output for a certificate with a CN
 or Subject matching the expected device or user identity. Note which keychain it appears in
-(System or login) — this confirms whether the deployment channel matches the Intune profile
+(System or login)—this confirms whether the deployment channel matches the Intune profile
 configuration.
 
 ### Find a specific certificate by name
@@ -176,11 +176,11 @@ openssl x509 -in /path/to/client.pem -text -noout
 
 In the `openssl x509 -text` output, check:
 
-- `Extended Key Usage` — must include `TLS Web Client Authentication` (OID `1.3.6.1.5.5.7.3.2`).
-  If Client Authentication is absent, RADIUS will reject the cert.
-- `Subject Alternative Name` — the UPN or device identifier must be present and match the
+- `Extended Key Usage`—must include `TLS Web Client Authentication` (OID `1.3.6.1.5.5.7.3.2`).
+  If Client Authentication is absent, RADIUS rejects the cert.
+- `Subject Alternative Name`—the UPN or device identifier must be present and match the
   identity expected by the RADIUS policy.
-- `Validity` → `Not After` — confirm the cert has not expired.
+- `Validity` → `Not After`—confirm the cert has not expired.
 
 ### Verify the certificate chain
 
@@ -190,7 +190,7 @@ security verify-cert -c /path/to/client.pem
 ```
 
 A successful chain verification returns `certificate verification successful`. If the root CA
-cert is not in the System keychain, chain verification fails — confirm the Trusted Certificate
+cert is not in the System keychain, chain verification fails—confirm the Trusted Certificate
 profile in Intune also shows Succeeded for macOS.
 
 ### Keychain Access GUI alternative
@@ -214,8 +214,8 @@ number > **Device configuration**.
 
 Inspect these profiles in deployment order:
 
-1. **Trusted Certificate** profile — must show **Succeeded**
-2. **SCEP** or **PKCS** client certificate profile — must show **Succeeded** after the Trusted
+1. **Trusted Certificate** profile—must show **Succeeded**
+2. **SCEP** or **PKCS** client certificate profile—must show **Succeeded** after the Trusted
    Certificate profile succeeds. Note any error codes displayed.
 
 For any profile showing Error, expand the profile entry to view the error code. Cross-reference
@@ -248,17 +248,17 @@ serial number > **Device configuration**.
 
 Inspect these profiles in deployment order:
 
-1. **Trusted Certificate** profile — must show **Succeeded**
-2. **SCEP** or **PKCS** client certificate profile — must show **Succeeded**
+1. **Trusted Certificate** profile—must show **Succeeded**
+2. **SCEP** or **PKCS** client certificate profile—must show **Succeeded**
 
-Error codes from the portal are the primary diagnostic signal for Android — device-side
-certificate visibility is limited (see below).
+Error codes from the portal are the primary diagnostic signal for Android—device-side
+certificate visibility is limited (see the following section).
 
 ### On-device read-only inspection (limited, user-assisted)
 
 Ask the user to navigate to **Settings** > **Security** > **Encryption & credentials** >
 **User certificates**. This view shows installed certificates but does not expose EKU or SAN
-details — use it only to confirm that a certificate exists; use the Intune portal and adb for
+details—use it only to confirm that a certificate exists; use the Intune portal and adb for
 detailed inspection.
 
 ### adb OMADM log (escalation-collected)
@@ -266,9 +266,9 @@ detailed inspection.
 **WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
 **USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb` in
 PATH**. Confirm all three prerequisites before attempting collection. This is an
-**L2-only collection step** — do not instruct L1 to run `adb` commands.
+**L2-only collection step**—do not instruct L1 to run `adb` commands.
 
-The OMADM log on Android contains the SCEP SyncML exchange — the certificate enrollment
+The OMADM log on Android contains the SCEP SyncML exchange—the certificate enrollment
 request and response. Collect it to determine whether enrollment was attempted, whether the
 SCEP server returned an error, or whether enrollment succeeded but the cert subsequently
 expired or was removed:
@@ -286,10 +286,10 @@ but is now expired, has the wrong EKU, or has a SAN mismatch.
 
 ## Linux: Certificate Inspection
 
-**NOTE:** On Linux, 802.1X certificates are script-deployed — not delivered via an Intune
+**NOTE:** On Linux, 802.1X certificates are script-deployed—not delivered through an Intune
 SCEP certificate profile. See [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md)
 for the certificate deployment approach used in this environment. Intune SCEP profile status
-check is N/A for Linux — inspect the certificate directly on the device.
+check is N/A for Linux—inspect the certificate directly on the device.
 
 ### Locate the certificate paths from NetworkManager
 
@@ -318,7 +318,7 @@ Using the path from `802-1x.client-cert`:
 openssl x509 -in /path/to/client.pem -text -noout
 ```
 
-Check the same fields as macOS above: EKU must include `1.3.6.1.5.5.7.3.2` (Client Authentication),
+Check the same fields as macOS earlier: EKU must include `1.3.6.1.5.5.7.3.2` (Client Authentication),
 SAN must match the identity expected by the RADIUS policy (matching the `802-1x.identity`
 value), and the cert must not be expired.
 
@@ -331,7 +331,7 @@ Using the paths from `802-1x.client-cert` and `802-1x.ca-cert`:
 openssl verify -CAfile /path/to/ca.pem /path/to/client.pem
 ```
 
-A valid chain returns `client.pem: OK`. Any error indicates a chain validation failure — either
+A valid chain returns `client.pem: OK`. Any error indicates a chain validation failure—either
 the wrong CA file is specified in the nmcli connection, or the CA cert file is missing or
 corrupt. If the CA file is absent, the Linux supplicant cannot validate the RADIUS server's
 certificate either.
@@ -356,10 +356,10 @@ In each portal view, inspect the following profiles in this deployment order (se
 [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md) for the
 ordering rule):
 
-1. **Trusted Certificate** profile — root CA delivery; must show Succeeded before the client
+1. **Trusted Certificate** profile—root CA delivery; must show Succeeded before the client
    cert profile can succeed
-2. **SCEP** or **PKCS** client certificate profile — must show Succeeded
-3. **Wi-Fi** or **Wired network** profile — 802.1X network access profile; last in the chain
+2. **SCEP** or **PKCS** client certificate profile—must show Succeeded
+3. **Wi-Fi** or **Wired network** profile—802.1X network access profile; last in the chain
 
 A profile showing Error or Pending blocks every profile that follows it in this order.
 
@@ -380,20 +380,20 @@ Authentication OID `1.3.6.1.5.5.7.3.2`) and server-name validation requirements,
 
 ## Related Resources
 
-- [802.1X Log Collection (#31)](31-8021x-log-collection.md) — per-platform 802.1X log
+- [802.1X Log Collection (#31)](31-8021x-log-collection.md)—per-platform 802.1X log
   collection; complete before starting this runbook (includes CAPI2 channel enable procedure
   for Windows chain-validation diagnosis)
-- [802.1X RADIUS/EAP Investigation (#33)](33-8021x-radius-eap-investigation.md) — RADIUS/EAP
+- [802.1X RADIUS/EAP Investigation (#33)](33-8021x-radius-eap-investigation.md)—RADIUS/EAP
   investigation for authentication failures where certificate inspection is clean
-- [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md) —
+- [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md)—
   cert-delivery ordering rule, EKU requirement, RADIUS server-name validation (link-not-copy)
-- [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) — routing entry point
+- [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md)—routing entry point
   for 802.1X failures; L1 runbook #38 escalates here
-- [macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md) — deployment channel
+- [macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md)—deployment channel
   (User vs Device keychain, irreversible at profile assignment) and other macOS profile details
-- [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md) — script-based certificate
+- [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md)—script-based certificate
   deployment approach for Linux (no Intune SCEP profile)
-- [Network Authentication Glossary](../_glossary-network.md) — 802.1X, EAP, EAPOL, RADIUS,
+- [Network Authentication Glossary](../_glossary-network.md)—802.1X, EAP, EAPOL, RADIUS,
   SCEP, server-name validation term definitions
 
 ## Version History

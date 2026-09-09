@@ -7,7 +7,7 @@ platform: Windows
 ---
 
 > **Platform applicability:** This guide is Windows-specific and covers Windows application update
-> governance as its own surface — mechanism choice, the Microsoft 365 Apps update channel model, the
+> governance as its own surface—mechanism choice, the Microsoft 365 Apps update channel model, the
 > Enterprise App Management catalog, the Microsoft Store app (new) type, and the Windows Package
 > Manager control surface. For the cross-platform overview, see
 > [Patch Management Overview](00-overview.md). For the Windows Autopatch service, see
@@ -15,7 +15,7 @@ platform: Windows
 
 # Windows Application Updates
 
-This guide documents Windows application update governance — which mechanism keeps an installed
+This guide documents Windows application update governance—which mechanism keeps an installed
 application current, on what cadence, and what each mechanism cannot do. It lives in
 `patch-management/` rather than `app-lifecycle/` deliberately: this is the update-governance view of
 applications, the sibling of the Windows OS, driver and firmware, and Autopatch guides already in this
@@ -25,7 +25,7 @@ first place. Without this sentence, a reader who already knows
 two directories is stale; neither is. The ownership split is explicit:
 [App Lifecycle Overview](../app-lifecycle/00-overview.md) and its per-platform guides own the
 **object model** — application types, packaging, supersedence graphs, dependency chains, and the
-content-preparation tooling that gets an application onto a device — and this guide owns **update
+content-preparation tooling that gets an application onto a device—and this guide owns **update
 governance** — which mechanism applies, what cadence it runs on, and what it cannot do, once that
 application is already there.
 
@@ -34,13 +34,13 @@ application is already there.
 
 Choose the update mechanism by asking which surface already holds the application, in this order:
 
-1. **The application is in the Enterprise App Catalog.** Use Enterprise App Management — a licensed
+1. **The application is in the Enterprise App Catalog.** Use Enterprise App Management—a licensed
    Intune add-on that keeps Required-assigned catalog applications current automatically, subject to
    the reachability gates and limitations in [Enterprise App Management](#enterprise-app-management).
-2. **The application is in the Microsoft Store.** Use the Microsoft Store app (new) type — included
+2. **The application is in the Microsoft Store.** Use the Microsoft Store app (new) type—included
    with Intune at no additional license, with an update model that splits by package type; see
    [Microsoft Store Apps](#microsoft-store-apps).
-3. **Neither.** Fall back to a Win32 application with supersedence — the mechanism documented in
+3. **Neither.** Fall back to a Win32 application with supersedence—the mechanism documented in
    [Windows Win32 / MSIX at Scale](../app-lifecycle/01-windows-win32-msix-scale.md#supersedence),
    covering the supersedence behavior matrix and the Required-assignment exception this guide does not
    restate. The enterprise catalog's own auto-update is not supersedence: Microsoft states it uses no
@@ -134,7 +134,7 @@ different Intune configuration profile types under two different names.
 **Source:** [Change the update channel with Microsoft Intune Administrative Templates](https://learn.microsoft.com/en-us/microsoft-365-apps/updates/change-update-channels) (updated 2026-07-18)
 
 Two operationally sharp facts follow from how the setting actually takes effect on a device. First, the
-scheduled task **Office Automatic Updates 2.0** must be enabled on client devices — it is the task that
+scheduled task **Office Automatic Updates 2.0** must be enabled on client devices—it is the task that
 applies the assigned channel, regardless of which management tool assigned it. Second, the
 verification registry key, at `Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\Configuration`
 value `UpdateChannel`, updates only when that scheduled task runs or when a user signs in to the
@@ -146,7 +146,7 @@ reflected.
 **Source:** [Set the Microsoft 365 apps update channel using the settings catalog in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/update-office) (updated 2026-04-30)
 
 The settings catalog article's own verification steps use two different administrative-template
-namespace strings across its two verification paths — the article does not explain the difference, and
+namespace strings across its two verification paths—the article does not explain the difference, and
 this guide quotes only the one namespace it names for the Update Channel step, `office16v2~Policy~`,
 rather than presenting the difference as meaningful.
 
@@ -164,7 +164,7 @@ gates apply together:
 - **Hosting and installation.** Microsoft hosts the applications "in Microsoft storage accessible
   through `*.manage.microsoft.com`," and they are installed by the Intune management extension.
 - **Cloud environments.** "Public cloud" and the sovereign clouds "U.S. Government Community Cloud
-  (GCC) High" and "U.S. Department of Defense (DoD)" — no other cloud environment is named.
+  (GCC) High" and "U.S. Department of Defense (DoD)"—no other cloud environment is named.
 - **Assignment intent.** "Auto-update applies to apps with a Required assignment." Applications
   assigned as Available for enrolled devices "continue to use the existing update workflow" rather than
   the auto-update path.
@@ -193,7 +193,7 @@ app to the Enterprise App Catalog."
 **Source:** [Enterprise App Management](https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management) (updated 2026-06-24)
 
 This is a trade-off, not a prohibition: catalog applications **can** be selected as blocking
-applications in the Enrollment Status Page (ESP) and Autopilot device preparation profiles — see
+applications in the Enrollment Status Page (ESP) and Autopilot device preparation profiles—see
 [Win32 App Packaging Reference](../../reference/win32-app-packaging.md) and
 [ESP Policy Configuration](../../admin-setup-apv1/03-esp-policy.md) for how blocking applications are
 configured in each. Only an **auto-update** catalog application cannot be a blocking application; an
@@ -223,8 +223,8 @@ Win32 Store apps are still in preview, stated twice on the page: an Important ca
 store apps are supported (in preview)," and the Win32-specific section restates it: "Win32 apps that
 are in the Microsoft Store are currently in preview. Not all Win32 apps will be available or
 searchable." The unsupported-functionality section has exactly one entry: "Any app that has an ARM64
-installer isn't supported." A paid app is also excluded — a paid app is one of the reasons an app does
-not appear when searching within Intune — and client devices must support at least two core processors
+installer isn't supported." A paid app is also excluded—a paid app is one of the reasons an app does
+not appear when searching within Intune—and client devices must support at least two core processors
 to successfully install and run Microsoft Store apps.
 
 **Source:** [Add Microsoft Store apps to Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/add-microsoft-store) (updated 2026-06-25)
@@ -240,7 +240,7 @@ assignment is the only documented lever for a Win32 Store app.
 **Source:** [Add Microsoft Store apps to Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/add-microsoft-store) (updated 2026-06-25)
 
 The Microsoft Store app type's own update cadence is a documented absence rather than a documented
-figure. The page states that apps are kept up to date and never states when — no published cadence, no
+figure. The page states that apps are kept up to date and never states when—no published cadence, no
 check interval, no schedule, and no version pinning, re-measured this plan as a zero-hit search across
 the whole page. This absence contrasts directly against Enterprise App Management's own
 published-but-non-binding objectives in [Enterprise App Management](#enterprise-app-management): EAM at
@@ -257,7 +257,7 @@ directly installed by the Intune management extension (IME)."**
 **Source:** [Enterprise App Management](https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management) (updated 2026-06-24)
 
 The name "WinGet" attaches to three genuinely different things, and none of the three is the others.
-The **Intune Microsoft Store app (new)** application type is a patching surface — it is what
+The **Intune Microsoft Store app (new)** application type is a patching surface—it is what
 [Microsoft Store Apps](#microsoft-store-apps) documents. The operating-system **App Installer**
 component and its command-line tool, `winget.exe`, is not a patching surface; Intune offers only the
 policy-shaped on-off surface documented in
@@ -265,14 +265,14 @@ policy-shaped on-off surface documented in
 **configuration feature** (`winget configure`, also called WinGet Configuration) is out of scope for
 this guide: its own page states it is for setting up "the desired state of the development environment
 on your Windows machine," never mentions Intune or device management, and documents partial success as
-designed behavior rather than a compliance guarantee — a configuration file "will continue to run,
+designed behavior rather than a compliance guarantee—a configuration file "will continue to run,
 accomplishing as many tasks as possible, even if some of the assertions or resource dependencies fail."
 
 **Source:** [WinGet Configuration](https://learn.microsoft.com/en-us/windows/package-manager/configuration/) (updated 2025-06-11)
 
 Where the Autopilot device-preparation documentation states that only Microsoft Store apps that support
 the Windows Package Manager are supported, that is a device-preparation eligibility filter on the
-Intune Microsoft Store app (new) application type — not a statement that the command-line tool is
+Intune Microsoft Store app (new) application type—not a statement that the command-line tool is
 itself an Intune-managed patching surface. This same wording appears unchanged in this corpus's own
 device-preparation and device-group pages, and a reference matrix elsewhere in the corpus states the
 same conflation using the package manager's full name; this guide does not edit any of those pages, so
@@ -282,7 +282,7 @@ Two carve-outs on the Store-apps page show why the conflation exists in the firs
 the opposite direction from a delivery claim: "The Windows Package Manager command-line tool winget.exe
 is not affected by" the **Turn off the Store application** policy, and the **Only display the private
 store within the Microsoft Store app** policy "Allows the Windows Package Manager winget command line
-interface (CLI) access to the Microsoft Store" while blocking end-user Store access — which is why it
+interface (CLI) access to the Microsoft Store" while blocking end-user Store access—which is why it
 is not the preferred lockdown choice.
 
 **Source:** [Add Microsoft Store apps to Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/add-microsoft-store) (updated 2026-06-25)
@@ -290,8 +290,8 @@ is not the preferred lockdown choice.
 <a id="controlling-winget"></a>
 ## Controlling WinGet on Managed Devices
 
-This section is about hardening — controlling whether the Windows Package Manager is available on a
-device and where it can source packages from — not about patching. Nothing here makes WinGet an
+This section is about hardening—controlling whether the Windows Package Manager is available on a
+device and where it can source packages from—not about patching. Nothing here makes WinGet an
 update-governance surface; see
 [Choosing a Windows App Update Mechanism](#choosing-an-app-update-mechanism) for what does.
 
@@ -324,7 +324,7 @@ Private WinGet REST sources are out of scope for this guide: the `EnableAddition
 into. Detection or compliance scripting against these policies reads the registry key
 `Software\Policies\Microsoft\Windows\AppInstaller`.
 
-Two of the policies Microsoft's own Store-app deployment article recommends enabling — **Enable App
+Two of the policies Microsoft's own Store-app deployment article recommends enabling—**Enable App
 Installer Microsoft Store Source policy** and **Enable App Installer policy** — are not in the settings
 catalog: both carry the Intune-column value "Not built in; use a custom configuration profile." An
 administrator hardening Windows through the settings catalog, without also reaching for a custom
@@ -362,7 +362,7 @@ duration of that processing.
 
 **Not supported as a blocking app in ESP or Autopilot device preparation.** An auto-update Enterprise
 App Catalog app specifically cannot be added as a blocking app in the Enrollment Status Page (ESP) or
-an Autopilot device preparation profile — see [Enterprise App Management](#enterprise-app-management)
+an Autopilot device preparation profile—see [Enterprise App Management](#enterprise-app-management)
 for the trade-off this limitation sits alongside.
 
 **Conflicts with other app types.** A catalog app can conflict with another app type also targeting the
@@ -372,16 +372,16 @@ resolution path.
 **Source:** [Enterprise App Management](https://learn.microsoft.com/en-us/intune/app-management/deployment/enterprise-app-management) (updated 2026-06-24)
 
 **The Microsoft Store app type publishes no update cadence.** No cadence, check interval, schedule, or
-version pinning is published for Microsoft Store apps kept current by Intune — see
+version pinning is published for Microsoft Store apps kept current by Intune—see
 [Microsoft Store Apps](#microsoft-store-apps) for the absence stated in full and contrasted against
 Enterprise App Management's own published objectives.
 
 **The package manager may not be registered in a system context.** The Windows Package Manager is a
 per-user-registered component: "WinGet will not be available until you have logged into Windows as a
 user for the first time, triggering Microsoft Store to register the Windows Package Manager as part of
-an asynchronous process." Every context in which Intune runs code with no signed-in user — Autopilot
+an asynchronous process." Every context in which Intune runs code with no signed-in user—Autopilot
 device preparation, a Win32 app or platform script running in System context, a device-context
-remediation script — is a context in which the package manager may not yet be registered and
+remediation script—is a context in which the package manager may not yet be registered and
 resolvable. Microsoft's own administrator-considerations section for the package manager covers only
 elevation and User Account Control; it says nothing about system context, service context, or
 unattended execution, which this guide records as a documented silence rather than filling the gap.

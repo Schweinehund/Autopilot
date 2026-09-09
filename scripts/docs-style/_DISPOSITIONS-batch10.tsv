@@ -1,0 +1,11 @@
+# Dispositions for verify-meaning.py, batch-10 sibling of _DISPOSITIONS.tsv and
+# _DISPOSITIONS-docs.tsv (D-20/D-21, phase 156-03). New sibling file per the plan's
+# explicit instruction -- _DISPOSITIONS-docs.tsv is frozen at exactly 6 data rows by a
+# Phase 154 contract and batch-10 findings must never be appended to it.
+#
+# At the tracer commit (judge_base = 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5),
+# `python scripts/docs-style/verify-meaning.py 987770f8a93e4c4e53f2d6a31b7c69b6aef659f5`
+# reports 0 deterministic findings (live or dispositioned) -- this file is currently
+# empty of data rows because there is nothing to disposition yet. It is created now,
+# empty, as the sibling this task's dispositions path resolves to, and plan 156-04
+# appends rows here as the remaining 12 documents surface findings.

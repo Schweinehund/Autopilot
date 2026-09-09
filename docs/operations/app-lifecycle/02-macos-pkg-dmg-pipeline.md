@@ -7,7 +7,7 @@ platform: macOS
 ---
 
 > **Platform applicability:** This guide is macOS-specific (LOB PKG / unmanaged PKG / DMG / VPP /
-> Mac App Store via ABM; community-pattern adjacency callout for Installomator and Intuneomator
+> Mac App Store through ABM; community-pattern adjacency callout for Installomator and Intuneomator
 > as non-Microsoft-supported tooling). For the cross-platform overview, see
 > [App Lifecycle Overview](00-overview.md).
 > **Windows:** See [Win32 / MSIX at Scale](01-windows-win32-msix-scale.md).
@@ -18,13 +18,13 @@ platform: macOS
 
 This guide is the macOS-specific app delivery reference covering all Microsoft-supported app
 types for Intune-managed Macs: LOB PKG (managed; Apple Developer ID Installer-signed),
-unmanaged PKG (via the Intune management agent), DMG (via the Intune management agent), VPP /
-Microsoft 365 native (volume-purchased managed apps), and Mac App Store apps via ABM
+unmanaged PKG (using the Intune management agent), DMG (using the Intune management agent), VPP /
+Microsoft 365 native (volume-purchased managed apps), and Mac App Store apps through ABM
 (Apple Business Manager).
 
 A separate community-pattern adjacency callout describes Installomator and Intuneomator as
-**community-OSS automation tooling** that admins commonly run alongside Intune. These tools are
-**NOT Microsoft-supported** and are documented here only as adjacent context — not as a
+**community-OSS automation tooling** that administrators commonly run alongside Intune. These tools are
+**NOT Microsoft-supported** and are documented here only as adjacent context—not as a
 supported delivery path.
 
 For the cross-platform overview, see [App Lifecycle Overview](00-overview.md).
@@ -32,7 +32,7 @@ For the cross-platform overview, see [App Lifecycle Overview](00-overview.md).
 ## LOB PKG (Managed)
 
 LOB PKG is the Microsoft-supported delivery method for **Apple Developer ID Installer**-signed
-PKG files distributed as managed apps via Intune. Per Microsoft Learn, the .pkg file must:
+PKG files distributed as managed apps through Intune. Per Microsoft Learn, the .pkg file must:
 
 - Be signed using an **Apple Developer ID Installer** certificate, obtained from an Apple
   Developer account.
@@ -42,7 +42,7 @@ PKG files distributed as managed apps via Intune. Per Microsoft Learn, the .pkg 
 
 **Assignment limitation:** When using the LOB PKG (managed) deployment method, the only
 assignment intent available is **Required**. Available-for-enrolled-devices and Uninstall
-intents are NOT available at the deployment-method level — only on a per-app-instance basis.
+intents are NOT available at the deployment-method level—only on a per-app-instance basis.
 
 **Uninstall behavior:** The Uninstall intent is only displayed for LOB apps created with
 **Install as managed** set to **Yes** (macOS 11+). When that flag is enabled and the package
@@ -64,11 +64,11 @@ Unmanaged PKG delivery covers the Microsoft-supported workflow for PKG files tha
 workflow cannot install or that are not signed by an Apple Developer ID Installer certificate.
 The Intune management agent for macOS is the delivery mechanism. Per Microsoft Learn:
 
-- Pre-install and post-install scripts are available for unmanaged PKG apps installed via the
+- Pre-install and post-install scripts are available for unmanaged PKG apps installed through the
   Intune agent (agent 2309.007+).
-- The Intune management agent must be installed on the device (typically delivered via the
+- The Intune management agent must be installed on the device (typically delivered through the
   enrollment workflow; agent version 2308.006+ required for unmanaged PKG).
-- Assignment intent: **Required** or **Available** (Uninstall is NOT available — Known Issue).
+- Assignment intent: **Required** or **Available** (Uninstall is NOT available—Known Issue).
 - Supported scenarios beyond managed LOB: non-flat packages, component packages, unsigned
   packages, packages without payload, packages installing outside `/Applications/`, and
   custom packages with scripts.
@@ -76,11 +76,11 @@ The Intune management agent for macOS is the delivery mechanism. Per Microsoft L
 Use unmanaged PKG when the source publisher does not provide a Developer ID Installer-signed
 PKG, or when the LOB PKG workflow rejects the package due to bundle / disk-image / `.app`
 inclusion. Note that the loss of Uninstall intent is the trade-off compared to managed LOB
-PKG — if uninstall lifecycle is required, prefer managed LOB or DMG.
+PKG—if uninstall lifecycle is required, prefer managed LOB or DMG.
 
 ## DMG (via Intune Agent)
 
-DMG delivery covers Microsoft-supported deployment of macOS disk-image apps via the Intune
+DMG delivery covers Microsoft-supported deployment of macOS disk-image apps through the Intune
 management agent. The agent mounts the DMG and copies the .app bundle inside to the
 Applications folder, supporting apps packaged as disk images containing one or more .app files.
 
@@ -101,17 +101,17 @@ DMG offers the broadest assignment-intent coverage (Required + Available + Unins
 three Intune-agent-delivered macOS app types.
 
 **Limitation to be aware of:** DMG apps are NOT automatically removed from the device on
-device retirement — they must be explicitly uninstalled via an Uninstall assignment first.
+device retirement—they must be explicitly uninstalled through an Uninstall assignment first.
 
 ## VPP (Microsoft 365 Native + Volume Purchased)
 
-**VPP** (Volume Purchase Program) covers volume-purchased apps delivered via the Apple Business
+**VPP** (Volume Purchase Program) covers volume-purchased apps delivered through the Apple Business
 Manager (**ABM**) location-token integration with Intune. For macOS, VPP includes:
 
-- **Microsoft 365 native VPP / managed apps** — Microsoft 365 macOS apps (such as Word, Excel,
-  PowerPoint, Outlook, Teams) available via Intune as managed apps, syncing per the ABM token
+- **Microsoft 365 native VPP / managed apps**—Microsoft 365 macOS apps (such as Word, Excel,
+  PowerPoint, Outlook, Teams) available through Intune as managed apps, syncing per the ABM token
   sync schedule. These deliver as native VPP-managed apps without requiring repackaging.
-- **Volume-purchased commercial apps** — Apps purchased through ABM are synced to Intune via
+- **Volume-purchased commercial apps**—Apps purchased through ABM are synced to Intune using
   the content token, allowing assignment to users (User-Licensed) or devices
   (Device-Licensed).
 
@@ -125,34 +125,34 @@ licenses for any assignment type.
 
 **macOS-specific reclamation grace period:** macOS apps with a revoked VPP license remain
 usable on the device for a **30-day grace period** before Apple removes them (per Apple
-policy). This grace-period behavior is unique to macOS — iOS does not have an equivalent
+policy). This grace-period behavior is unique to macOS—iOS does not have an equivalent
 post-revoke usability window.
 
 For the broader iOS/iPadOS VPP device-vs-user licensing comparison, full reclamation
-workflow (3-step admin process: remove assignment → change to Uninstall → Revoke license),
+workflow (3-step administrator process: remove assignment → change to Uninstall → Revoke license),
 and Microsoft Entra auto-reclaim behavior, see [iOS VPP Licensing](03-ios-vpp-licensing.md).
 Although that file is iOS-focused, the licensing-model decision support documented there
-applies cross-platform; macOS-specific deviations (the 30-day grace period above) are called
+applies cross-platform; macOS-specific deviations (the 30-day grace period noted earlier) are called
 out here.
 
 ## Mac App Store (via ABM)
 
-Mac App Store apps are delivered to Intune-managed Macs via **Apple Business Manager** (ABM —
+Mac App Store apps are delivered to Intune-managed Macs through **Apple Business Manager** (ABM—
 the cloud portal Apple provides for enterprise Apple device and content management). ABM
-allows admins to obtain app licenses and synchronize them to Intune via a VPP token, allowing
+allows administrators to obtain app licenses and synchronize them to Intune through a VPP token, allowing
 silent installation of App Store apps on Macs without requiring users to sign in with an
 Apple ID (when using device-based licensing).
 
 **Workflow:**
 
-1. Purchase the Mac App Store app via Apple Business Manager (Apps and Books area).
+1. Purchase the Mac App Store app through Apple Business Manager (Apps and Books area).
 2. Sync the ABM / content token to Intune (sync runs at scheduled intervals; manual sync
-   available via Tenant administration > Connectors and tokens > Apple VPP tokens).
+   available through Tenant administration > Connectors and tokens > Apple VPP tokens).
 3. Assign the app to users or devices in Intune; choose Required (device or user groups) or
    Available for enrolled devices (user groups only).
 4. App installs silently on supervised Macs without Apple ID prompts (when device-licensed).
 
-**ABM token expiry:** The ABM / content token has a 1-year (365-day) expiry; renew via the
+**ABM token expiry:** The ABM / content token has a 1-year (365-day) expiry; renew through the
 ABM portal before expiry to avoid sync failures. Existing installs remain functional after
 token expiry, but no new assignments or license-management actions are possible until the
 token is renewed and re-uploaded to Intune.
@@ -162,7 +162,7 @@ tenants. Up to 3,000 VPP tokens are supported per Intune tenant.
 
 ## Community Pattern: Installomator / Intuneomator
 
-> 📋 Community pattern — MEDIUM confidence
+> 📋 Community pattern—MEDIUM confidence
 >
 > **Installomator** is a community-OSS, MIT-licensed Bash command-line tool for macOS app
 > install/update automation. **Intuneomator** is a Swift-based wrapper that bridges
@@ -173,41 +173,41 @@ tenants. Up to 3,000 VPP tokens are supported per Intune tenant.
 > long tail of commercial macOS apps that lack VPP / ABM presence and that the source publisher
 > does not redistribute as Apple Developer ID Installer-signed PKGs. The community-pattern
 > attribution here acknowledges their wide deployment but **does not endorse them as a
-> supported delivery path**. Admins choosing this path should treat the tools as community OSS
-> — version-pin the tool releases, audit the application labels for trust, and assume
-> Microsoft Support will not assist with troubleshooting Installomator-driven app failures.
+> supported delivery path**. If you choose this path, treat the tools as community OSS
+>—version-pin the tool releases, audit the application labels for trust, and assume
+> Microsoft Support does not assist with troubleshooting Installomator-driven app failures.
 >
-> - **Installomator** (GitHub: Installomator/Installomator; project page: installomator.com) —
->   Bash command-line tool; runs locally as part of an admin's automation script or via
+> - **Installomator** (GitHub: Installomator/Installomator; project page: installomator.com)—
+>   Bash command-line tool; runs locally as part of an administrator's automation script or through
 >   Munki / Jamf / launchd / shell-out from Intune custom scripts.
-> - **Intuneomator** (GitHub: gilburns/Intuneomator) — Swift-based wrapper; bridges
+> - **Intuneomator** (GitHub: gilburns/Intuneomator)—Swift-based wrapper; bridges
 >   Installomator labels into Intune `.intunemac`-equivalent packaging workflows for
 >   admin-defined custom apps.
 
 This callout is a **community-pattern adjacency** acknowledgment only. The Microsoft-supported
-delivery paths for macOS apps are LOB PKG, unmanaged PKG, DMG, VPP, and Mac App Store via ABM
-(documented in the H2 sections above). Admins should default to the Microsoft-supported paths
+delivery paths for macOS apps are LOB PKG, unmanaged PKG, DMG, VPP, and Mac App Store through ABM
+(documented in the preceding H2 sections). Default to the Microsoft-supported paths
 when feasible and treat Installomator / Intuneomator as supplementary automation tooling for
 the subset of macOS apps that cannot be packaged for the supported paths. The
-non-Microsoft-supported attribution is load-bearing — Microsoft Support will not troubleshoot
+non-Microsoft-supported attribution is load-bearing—Microsoft Support does not troubleshoot
 issues stemming from Installomator-driven installs, and any Intune-side reporting on those
 installs reflects only what the wrapper script chose to report (not Apple's authoritative
 install state).
 
 ## Related Resources
 
-- [App Lifecycle Overview](00-overview.md) — Cross-platform app lifecycle hub
-- [Win32 / MSIX at Scale](01-windows-win32-msix-scale.md) — Windows sibling
-- [iOS VPP Licensing](03-ios-vpp-licensing.md) — iOS sibling (VPP device-vs-user reclamation)
-- [Android MGP Lifecycle](04-android-mgp-lifecycle.md) — Android sibling
-- [macOS App Deployment](../../admin-setup-macos/04-app-deployment.md) — v1.2 macOS app deployment admin guide
-- [macOS Update Enforcement](../patch-management/02-macos-update-enforcement.md) — Phase 54 macOS sibling
+- [App Lifecycle Overview](00-overview.md)—Cross-platform app lifecycle hub
+- [Win32 / MSIX at Scale](01-windows-win32-msix-scale.md)—Windows sibling
+- [iOS VPP Licensing](03-ios-vpp-licensing.md)—iOS sibling (VPP device-vs-user reclamation)
+- [Android MGP Lifecycle](04-android-mgp-lifecycle.md)—Android sibling
+- [macOS App Deployment](../../admin-setup-macos/04-app-deployment.md)—v1.2 macOS app deployment administrator guide
+- [macOS Update Enforcement](../patch-management/02-macos-update-enforcement.md)—Phase 54 macOS sibling
 
 ## External References
 
 - [Add macOS LOB apps (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos)
 - [Add unmanaged PKG apps (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/macos-unmanaged-pkg)
-- [Apple VPP via Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/vpp-apps-ios)
-- [Installomator (GitHub)](https://github.com/Installomator/Installomator) — Community OSS; not Microsoft-supported
-- [Intuneomator (GitHub)](https://github.com/gilburns/Intuneomator) — Community OSS; not Microsoft-supported
-- [Operations Documentation Index](../00-index.md) — Cross-reference only; Phase 55 does NOT amend the operations index per ROADMAP line 457
+- [Apple VPP through Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/vpp-apps-ios)
+- [Installomator (GitHub)](https://github.com/Installomator/Installomator)—Community OSS; not Microsoft-supported
+- [Intuneomator (GitHub)](https://github.com/gilburns/Intuneomator)—Community OSS; not Microsoft-supported
+- [Operations Documentation Index](../00-index.md)—Cross-reference only; Phase 55 does NOT amend the operations index

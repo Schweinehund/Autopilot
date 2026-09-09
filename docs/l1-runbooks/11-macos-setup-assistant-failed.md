@@ -16,9 +16,9 @@ platform: macOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS Setup Assistant failures across three scenarios — authentication failure at the sign-in screen, Await Configuration stuck on the Remote Management screen, and network or connectivity issues — using Intune admin center checks and user-guided steps before escalating to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS Setup Assistant failures across three scenarios—authentication failure at the sign-in screen, Await Configuration stuck on the Remote Management screen, and network or connectivity issues—using Intune admin center checks and user-guided steps before escalating to L2.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a Mac is visible in Intune admin center (Devices > macOS) but Setup Assistant did not complete. The device is stuck on the Apple logo, spinning globe, Remote Management screen ("Your Mac is being configured"), or an authentication sign-in screen.
 
@@ -26,7 +26,7 @@ Use this runbook when a Mac is visible in Intune admin center (Devices > macOS) 
 
 - Access to Intune admin center (https://intune.microsoft.com)
 - Device serial number
-- Knowledge of which screen the device is currently showing — ask the user to describe or share a photo
+- Knowledge of which screen the device is currently showing—ask the user to describe or share a photo
 
 ## How to Use This Runbook
 
@@ -44,15 +44,15 @@ Go directly to the section that matches the current device screen:
 
 **Entry condition:** Setup Assistant displays a sign-in screen (Microsoft or Apple ID) that returns an error or loops back to the same screen.
 
-1. > **Say to the user:** "Your Mac is at the sign-in step during setup. Some authentication issues can be resolved without a restart — let's check a few things first."
+1. > **Say to the user:** "Your Mac is at the sign-in step during setup. Some authentication issues can be resolved without a restart—let's check a few things first."
 
 2. Confirm the user is entering their corporate Microsoft account credentials (UPN format: user@domain.com), not a personal Microsoft or Apple ID. ADE with user affinity requires the corporate account.
 
 3. In Intune admin center, navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > select the active token > **Profiles**. Open the profile assigned to this device's group.
 
 4. Review the **User affinity** setting on the enrollment profile:
-   - **Enroll with user affinity** should be selected if the device requires user sign-in.
-   - **Enroll without user affinity** means no user authentication should appear — if Setup Assistant is asking for one, the profile may be misconfigured.
+   - **Enroll with user affinity** must be set if the device requires user sign-in.
+   - **Enroll without user affinity** means no user authentication appears—if Setup Assistant is asking for one, the profile may be misconfigured.
 
 5. Check the **Authentication method** field on the enrollment profile. If set to **Setup Assistant (legacy)**, this method may be blocked by Conditional Access policies requiring modern authentication. Note this as a possible cause for L2.
 
@@ -70,9 +70,9 @@ Go directly to the section that matches the current device screen:
 
 1. > **Say to the user:** "Your Mac is receiving its configuration from our management system. This normally takes 5 to 20 minutes. Since it has been over 30 minutes, let's check what is happening."
 
-2. In Intune admin center, navigate to **Devices** > **macOS** and find this device by serial number. Check the **Last check-in** time. If the device has not checked in at all, network connectivity is the likely root cause — go to [Network / Connectivity Issue](#network-connectivity).
+2. In Intune admin center, navigate to **Devices** > **macOS** and find this device by serial number. Check the **Last check-in** time. If the device has not checked in at all, network connectivity is the likely root cause—go to [Network / Connectivity Issue](#network-connectivity).
 
-3. Check the **Enrollment profile** assigned to the device in Intune: navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > profile > verify **Await device configuration** is set to **Yes** only if required. If enabled, the device will remain on the "Your Mac is being configured" screen until all required configuration profiles and apps have deployed.
+3. Check the **Enrollment profile** assigned to the device in Intune: navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > profile > verify **Await device configuration** is set to **Yes** only if required. If enabled, the device remains on the "Your Mac is being configured" screen until all required configuration profiles and apps have deployed.
 
 4. Navigate to **Devices** > **macOS** > select the device > **Configuration profiles**. Review the delivery status of all assigned profiles. If any profile shows a "Pending" or "Error" status, note the profile name.
 
@@ -92,7 +92,7 @@ Go directly to the section that matches the current device screen:
 
 1. > **Say to the user:** "Your Mac needs network access to complete setup. Let's check a few things to make sure it can connect to the right servers."
 
-2. Ask the user to confirm the device is connected to Wi-Fi: the Wi-Fi icon should appear in the Setup Assistant menu bar. If not connected, have the user select the correct network on the Setup Assistant Wi-Fi screen and enter credentials.
+2. Ask the user to confirm the device is connected to Wi-Fi: the Wi-Fi icon appears in the Setup Assistant menu bar. If not connected, have the user select the correct network on the Setup Assistant Wi-Fi screen and enter credentials.
 
 3. Ask the user: "Is this device on a corporate network that may require a proxy or has strict firewall rules?" Corporate networks with proxy servers may block apple.com and manage.microsoft.com domains required for ADE.
 
@@ -115,7 +115,7 @@ Go directly to the section that matches the current device screen:
 Escalate to L2 if:
 
 - Authentication failure persists after verifying enrollment profile user affinity and authentication method
-- Enrollment profile uses Setup Assistant (legacy) authentication — suspected CA blocking
+- Enrollment profile uses Setup Assistant (legacy) authentication—suspected CA blocking
 - Await Configuration has been running more than 45 minutes with no last check-in from the device
 - Any assigned profile shows "Error" status in the device configuration profiles view
 - Device cannot complete enrollment on any network (rules out proxy/firewall)

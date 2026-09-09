@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-This guide is the index for the complete APv2 (Autopilot Device Preparation) admin configuration sequence, spanning prerequisites and RBAC role setup, the Enrollment Time Grouping device group, the Device Preparation policy, and optional corporate identifier configuration. It is intended for Intune administrators standing up a new APv2 deployment, and requires any conflicting APv1 (classic) registrations on target devices to be deregistered first since APv1 silently takes precedence over APv2 when both exist.
+This guide is the index for the complete APv2 (Autopilot Device Preparation) administrator configuration sequence, spanning prerequisites and RBAC role setup, the Enrollment Time Grouping device group, the Device Preparation policy, and optional corporate identifier configuration. It is intended for Intune administrators standing up a new APv2 deployment, and requires any conflicting APv1 (classic) registrations on target devices to be deregistered first since APv1 silently takes precedence over APv2 when both exist.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
@@ -27,14 +27,14 @@ This guide walks Intune administrators through configuring a complete APv2 (Devi
 
 ## Before You Begin
 
-- **Device-level prerequisites** (OS version, licensing, networking, hardware): See [APv2 Prerequisites Checklist](../lifecycle-apv2/01-prerequisites.md). This guide covers admin configuration prerequisites only -- device readiness is covered separately.
+- **Device-level prerequisites** (OS version, licensing, networking, hardware): See [APv2 Prerequisites Checklist](../lifecycle-apv2/01-prerequisites.md). This guide covers administrator configuration prerequisites only -- device readiness is covered separately.
 - **APv1 deregistration:** If any target devices are currently registered with Windows Autopilot (APv1 classic), they must be deregistered before configuring APv2. APv1 silently takes precedence when both registrations exist -- the device enters the APv1 ESP flow instead of the APv2 Device Preparation experience with no error shown.
 
 ## Setup Sequence
 
 Complete these steps in order. Each guide includes a verification checklist and a "What breaks if misconfigured" callout for every configurable setting.
 
-(LOCKED — 4 nodes + labeled edges: chained sequence, no diamonds)
+(LOCKED—4 nodes + labeled edges: chained sequence, no diamonds)
 
 1. Prerequisites & RBAC
 2. ETG Device Group

@@ -16,15 +16,15 @@ audience: L1
 
 ## Summary
 
-Reference decision table for triaging Windows Autopilot Enrollment Status Page (ESP) failures — the corpus's most decision-dense tree at 8 diamonds. Routes a visible error code to a lookup table, or a stuck device with no error through phase identification (device vs. user) and a 30/60-minute timeout-and-reboot check to a Resolved or L2 escalation outcome.
+Reference decision table for triaging Windows Autopilot Enrollment Status Page (ESP) failures—the corpus's most decision-dense tree at 8 diamonds. Routes a visible error code to a lookup table, or a stuck device with no error through phase identification (device versus user) and a 30/60-minute timeout-and-reboot check to a Resolved or L2 escalation outcome.
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-Use this tree to triage failures that occur on the [ESP](../_glossary.md#esp) (Enrollment Status Page) during Windows Autopilot provisioning. It routes you through two primary scenarios: a visible error code you can look up, or a device stuck with no error — where the correct path depends on which phase of [OOBE](../_glossary.md#oobe) is shown on screen. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
+Use this tree to triage failures that occur on the [ESP](../_glossary.md#esp) (Enrollment Status Page) during Windows Autopilot provisioning. It routes you through two primary scenarios: a visible error code you can look up, or a device stuck with no error—where the correct path depends on which phase of [OOBE](../_glossary.md#oobe) is shown on screen. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
 
 ## Decision Tree
 
-**LOCKED — 43 (nodes + labeled edges)** — 24 nodes + 19 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree has no reconvergence (every branch reaches a distinct terminal outcome) but carries the most decision points (8 diamonds) in the corpus; it is grouped below into five stages mirroring the graph's own gate structure.
+**LOCKED—43 (nodes + labeled edges)**—24 nodes + 19 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree has no reconvergence (every branch reaches a distinct terminal outcome) but carries the most decision points (8 diamonds) in the corpus; it is grouped into five stages mirroring the graph's own gate structure.
 
 ### Stage 1: Entry Gate (ESD1)
 

@@ -1,0 +1,378 @@
+NOTICE — assets/recipes/06-walk-up-avd-kiosk/
+================================================
+
+This tree carries the production assets that support
+docs/recipes/06-walk-up-avd-kiosk-autologon.md (RE-237). It records, per asset,
+where the bytes came from, and — where applicable — the pinned upstream commit
+SHA and the date the bytes were retrieved.
+
+This repository carries no LICENSE file. Founding one is deliberately out of
+scope for this phase (v1.22 Phase 155); the absence below is not an oversight.
+
+Assets
+------
+
+assigned-access/production.xml
+  Origin: extracted verbatim from this repository's own tracked bytes —
+    docs/recipes/06-walk-up-avd-kiosk-autologon.md, the fenced XML block
+    between the "```xml" and "```" delimiters (the AssignedAccessConfiguration
+    payload documented in RE-237 Step 5). Extracted programmatically, not
+    retyped, so the two copies are provably byte-equal (line-ending-normalized).
+  Pinned SHA: not applicable — first-party content, not vendored.
+  Retrieval date: 2026-09-03.
+
+assigned-access/debug.xml
+  Origin: DERIVED, not owner-supplied and not the field-validated artifact used in
+    the 2026-08-27 to 2026-08-30 pilot. The owner directed this derivation (option
+    C, in lieu of supplying the original pilot debug file) because the field
+    artifact was not available to deliver. Constructed programmatically by taking
+    this tree's own production.xml byte-for-byte and adding exactly the two
+    elements RE-237:157 names in prose: an `<App DesktopAppPath=...>` entry
+    pointing at powershell.exe under AllowedApps, and a `desktopAppLink` pin to
+    the all-users PowerShell Start Menu shortcut inside the v5:StartPins CDATA
+    pinnedList. Every other byte — profile GUID, other allowed apps, namespaces,
+    AutoLogonAccount, Taskbar setting, line endings — is unchanged from
+    production.xml; confirmed by `diff` showing only the two intended hunks.
+    The `desktopAppLink` JSON key and its all-users shortcut path pattern
+    (`%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs\<name>.lnk`) were
+    verified against Microsoft's own documented example at
+    learn.microsoft.com/en-us/windows/configuration/customize-and-export-start-layout
+    (fetched as raw HTML, not summarized) before being written; the PowerShell
+    subfolder and filename (`Windows PowerShell\Windows PowerShell.lnk`) come
+    from that same document's own per-user desktopAppLink example, combined with
+    its all-users root pattern.
+  CARRIES LESS AUTHORITY than the other committed assets in this tree: it was
+    never run on the pilot device or validated in a live Assigned Access session.
+    Treat it as an unverified starting point for in-session PowerShell debugging,
+    not as field-validated material.
+  Pinned SHA: not applicable — derived, not vendored.
+  Derivation date: 2026-09-03.
+  SHA256 (as written): 2a0852f8650e02d1399d40f4b3c61832a05fca873cfdc1f7e8228d2b1a968bdd
+  Bytes: 1840.
+
+windows-app/Deploy-WindowsApp.ps1
+  Origin: vendored from Azure/WindowsAppKiosk,
+    source/WindowsApp/Apps/WindowsApp/Deploy-WindowsApp.ps1.
+  Pinned SHA: 17e1c09b4883ea2062bef801ae24bbc9722861d7
+  Retrieval date: 2026-09-03.
+  SHA256 (as written, includes the prepended provenance comment block):
+    4bd19b9a5a3d1be3c9ee29f9064cb0b2810d334658d46cf952c62bca5d8d7aa3
+  Bytes: 14448.
+
+windows-app/Detect-WindowsApp.ps1
+  Origin: vendored from Azure/WindowsAppKiosk,
+    source/WindowsApp/Apps/WindowsApp/Detect-WindowsApp.ps1.
+  Pinned SHA: 17e1c09b4883ea2062bef801ae24bbc9722861d7
+  Retrieval date: 2026-09-03.
+  SHA256 (as written, includes the prepended provenance comment block):
+    2af252e4ccbaad39051a6f22662f2842ab55c0e4423afb245a6fa029d5880190
+  Bytes: 954.
+
+windows-app/WindowsApp_AutoLogon.xml
+  Origin: vendored from Azure/WindowsAppKiosk,
+    source/WindowsApp/AssignedAccess/ShellLauncher/WindowsApp_AutoLogon.xml — the
+    Shell Launcher variant (declares the V2 namespace RE-237 Step 4 refers to),
+    not the MultiApp variant of the same filename that also exists in the
+    upstream repository.
+  Pinned SHA: 17e1c09b4883ea2062bef801ae24bbc9722861d7
+  Retrieval date: 2026-09-03.
+  SHA256 (as written, includes the inserted provenance comment node):
+    7d68ee88cfe04c8b3d8bdbdb10b1f30318c51ba2c33b2a372a59a907f83ee258
+  Bytes: 1153.
+
+windows-app/WINDOWS-APP-MSIX.md
+  Origin: authored this phase — not vendored content. Points at the Windows App
+    Microsoft Store package (product ID 9N1F85V9T8BN) referenced by the vendored
+    Deploy-WindowsApp.ps1's own header. The binary itself is not committed; see
+    that document for the download mechanism, the version to pin, and why its
+    SHA256 could not be computed in this execution environment.
+  Pinned SHA: not applicable.
+  Retrieval date: 2026-09-03.
+
+Not vendored: the `Dependencies` folder
+  Azure/WindowsAppKiosk's source/WindowsApp/Apps/WindowsApp/Dependencies/ (same
+  pinned SHA, 17e1c09b4883ea2062bef801ae24bbc9722861d7) holds two VCLibs runtime
+  .appx packages that Deploy-WindowsApp.ps1 installs alongside Windows App:
+  Microsoft.VCLibs.140.00.UWPDesktop_14.0.33728.0_Universal_X64.appx (6,757,465
+  bytes) and Microsoft.VCLibs.140.00_14.0.33519.0_Universal_X64.appx (896,581
+  bytes). Both were confirmed present at the pinned SHA and are flat files (no
+  `dist/`, `build/` or `*.ps1xml` subpaths, so no `.gitignore` collision exists
+  either way), but neither is committed: the larger file alone exceeds every
+  size precedent in this repository (largest tracked file is 1.6 MB) by more
+  than 4x, for the same reason the Windows App MSIX itself is not committed
+  (see WINDOWS-APP-MSIX.md's "Why the binary is not committed"). A packager
+  fetches this folder directly from the pinned SHA above alongside the MSIX.
+
+Plan 155-03 payload
+====================
+
+Task 1 delivery record. The owner staged all ten enumerated RCP-09 items
+outside this repository (`D:\Temp`, organized by item number, with a
+`MANIFEST.md` describing provenance, deployment status and scrub notes) and
+answered the three questions this plan's Task 1 required:
+
+  1. ConfigMgr values: of the five value classes RE-237:209 names, exactly one
+     is real in the delivered source — the Cloud Management Gateway mutual-auth
+     FQDN and the site code (both embedded in the same `$CmgPath` literal at
+     Install-ConfigMgrClient.ps1:17, plus `$SiteCode` at :18). The tenant GUID,
+     the native-client application ID GUID and the resource URI were already
+     delivered as clean angle-bracketed placeholders — never live values.
+  2. SupportsShouldProcess: neither Remove-KioskOemBloat.ps1 nor
+     Remove-KioskRunTasks.ps1 declared it as delivered. The owner confirmed
+     this plan may add the attribute and ShouldProcess gates without changing
+     behavior when the caller confirms (the default, unattended path).
+  3. Availability: all ten items were delivered. Nothing is recorded as
+     unavailable. `RemoveBloat.ps1` (Andrew Taylor's public De-Bloat,
+     RE-237:196-201) is a separate, still-open "Ask the admin" decision inside
+     RE-237 itself — not one of RCP-09's ten items, not delivered, and,
+     per this phase's own D-34, "SEED-002 §D lists vendoring De-Bloat as a
+     deferred item, not a decided one." It is not vendored by this plan; see
+     the gap row below.
+
+  Per-item disposition (all ten delivered; production XML from 155-02 shown
+  for completeness):
+
+  | # | Item | State | Committed path(s) |
+  |---|---|---|---|
+  | 1 | Production Assigned Access XML | delivered (155-02) | assigned-access/production.xml |
+  | 2 | Debug Assigned Access XML | delivered as owner-directed derivation (155-03, option C) | assigned-access/debug.xml |
+  | 3 | Windows App Win32 package source | delivered, staging path `D:\Temp\03-windows-app-win32\` | package-sources/windows-app-win32/ |
+  | 4 | Kiosk Baseline PSADT package source | delivered, staging path `D:\Temp\04-kiosk-baseline\` | package-sources/kiosk-baseline/ |
+  | 5 | ConfigMgr client wrapper package source | delivered, staging path `D:\Temp\05-configmgr-client\`, scrubbed per Ruling 1 below | package-sources/configmgr-client/ |
+  | 6 | OEM bloat detect/remediate pair | delivered, staging path `D:\Temp\08-remediation-oem-bloat\` | remediations/oem-bloat/ |
+  | 7 | Run/RunOnce and task cleanup detect/remediate pair | delivered, staging path `D:\Temp\09-remediation-run-task-cleanup\` | remediations/run-task-cleanup/ |
+  | 8 | Triage sensor | delivered, staging path `D:\Temp\10-triage-sensor\` | remediations/triage-sensor/ |
+  | 9 | Diagnostic 1 (Get-RdpCredDiag.ps1) | delivered, staging path `D:\Temp\11-12-diagnostics\` | diagnostics/Get-RdpCredDiag.ps1 |
+  | 10 | Diagnostic 2 (Trace-StorisEula.ps1) | delivered, staging path `D:\Temp\11-12-diagnostics\` | diagnostics/Trace-StorisEula.ps1 |
+
+Task 2 decision record — RULING 1 (owner-decided, 2026-09-03, verbatim from
+the executor's checkpoint prompt):
+  "origin is https://github.com/Schweinehund/Autopilot.git and I verified via
+  `gh repo view` that it is PUBLIC (\"isPrivate\":false). The manifest's
+  conditional (keep if the repo is private/internal; replace if ever shared)
+  therefore resolves to SCRUB. Of the five ConfigMgr value classes, exactly
+  one is real: the CMG mutual-auth hostname. Scrub the FQDN and the site
+  code." Applied to configmgr-client/Install-ConfigMgrClient.ps1: the
+  real internal CMG FQDN segment of the `$CmgPath` literal at
+  line 17 replaced with `<CMG-FQDN>`; the `<PS2?>` site-code placeholder at
+  line 18 replaced with `<SITE-CODE>`. The tenant GUID, application ID GUID
+  and resource URI placeholders at lines 19-21 were left exactly as delivered
+  (already clean). Chosen option: commit-scrubbed (of the two options
+  presented — commit-scrubbed or omit entirely — the owner selected
+  commit-scrubbed; the omit alternative, dropping ConfigMgr package source
+  reproducibility from the recipe's optional Step 9, was explicitly re-offered
+  and declined).
+  — One-way consequence, as stated to the owner: `origin` is a public GitHub
+    remote that HARN-06 pushes to at milestone close; a secret committed to a
+    public remote requires a history rewrite, and removal from HEAD is not
+    removal from history.
+
+Scope extension beyond Ruling 1's named location (Rule 2 — same threat
+class, T-155-03-01). Ruling 1 named Install-ConfigMgrClient.ps1 line 17-18
+specifically, but the owner's covering instruction ("the real FQDN also
+discloses the owner's employer... must not reach the index in ANY file,
+including READMEs, comments or the SUMMARY") is broader than that one
+location. A full-tree case-insensitive scan for the employer's name found
+two further occurrences, both in Publisher/AppVendor metadata fields (not the
+CMG path, not tenant-identifying by shape, but the same employer name):
+  - package-sources/windows-app-win32/New-IntuneWindowsAppKiosk.ps1:37 —
+    `[string]$Publisher = 'Microsoft / [Employer] EEE'` scrubbed to
+    `'Microsoft / <ORGANIZATION> EEE'`.
+  - package-sources/kiosk-baseline/KioskBaseline-Invoke-AppDeployToolkit-functions.ps1:19 —
+    `AppVendor = '[Employer] EEE'` scrubbed to `AppVendor = '<ORGANIZATION> EEE'`.
+  The `EEE` abbreviation itself is not scrubbed: it is already this NOTICE's
+  own established attribution convention from plan 155-02 ("+ EEE
+  Build-WindowsAppPackage.ps1..."), carries no employer name, and is used
+  identically for internal-team attribution throughout this tree.
+
+Windows App Win32 package source (`package-sources/windows-app-win32/`)
+  Build-WindowsAppPackage.ps1, New-IntuneWindowsAppKiosk.ps1, README.md — EEE-authored.
+  Deploy-WindowsApp.ps1, Detect-WindowsApp.ps1, README-upstream.md — vendored
+    verbatim from Azure/WindowsAppKiosk, source/WindowsApp/Apps/WindowsApp,
+    at the same pinned commit 155-02 confirmed via the GitHub API:
+    17e1c09b4883ea2062bef801ae24bbc9722861d7. Committed without an inserted
+    provenance comment block (unlike the `windows-app/` reference copies
+    155-02 committed) because Build-WindowsAppPackage.ps1 patches
+    Detect-WindowsApp.ps1's `$TargetVersion` line in place by regex during
+    the build, and this second copy is the functional package-assembly tree,
+    not a documentation reference — it must match what the owner actually
+    built and ran on the pilot, byte for byte.
+  Delivered 2026-09-03 (2026-08-27 to 2026-08-30 pilot build). Status per
+  the owner's manifest: deployed to the pilot as "Windows App - Kiosk (AVD)";
+  MSIX itself not included (fetched at build time, see WINDOWS-APP-MSIX.md).
+  SHA256 (as written):
+    Build-WindowsAppPackage.ps1  c6e8f085d7c86e8cc27417b1c2aad27367ae3bd5584a9ad64cc50c9cbf7c44d6
+    Deploy-WindowsApp.ps1        3a560d75ac771655dba0a02cd58772e24bf9d1af2b82c05d428f62edeac01383
+    Detect-WindowsApp.ps1        95f2de8f2a24f521c6216b2b9b05c6b768b895d3d2e9d859a15c8e3f85d0fe00
+    New-IntuneWindowsAppKiosk.ps1 7858628c364c3e7b34ac712fd6375445cb9f599d80ad3be7147d0de9d175c649
+      (scrubbed: Publisher default value, see scope-extension note above)
+    README.md                    2f945f9c984521621fd90603f6d4991e57c514449b8cc3339ac0b4a3d771b8c6
+    README-upstream.md           0e5050d672b2f8331e9eec3cda279c6f853602732cda42da56327269b60185e1
+
+package-sources/windows-app-win32/Dependencies/DEPENDENCIES.md — RULING 2
+  (owner-decided, 2026-09-03): the two VCLibs `.appx` dependency binaries
+  (6,757,465 and 896,581 bytes, both breaching this phase's 2 MB cap and
+  matching the same shape 155-02 already declined to commit for this exact
+  upstream `Dependencies/` folder) are NOT committed. Instead this document
+  pins each by exact filename, version, upstream source URL (confirmed
+  reachable at the pinned SHA via a direct HTTP HEAD request before writing,
+  `Content-Length` matching the staged file size exactly) and the SHA256
+  this plan computed directly from the owner-delivered bytes. Mirrors how
+  the Windows App MSIX is already pinned by 155-02.
+
+Kiosk Baseline PSADT package source (`package-sources/kiosk-baseline/`)
+  KioskBaseline-Invoke-AppDeployToolkit-functions.ps1, README.md — EEE-authored.
+  Delivered 2026-09-03 (2026-08-27 to 2026-08-30 pilot build; author "Josh"
+  per the delivered script's own $adtSession.AppScriptAuthor field — a first
+  name only, not scrubbed, out of this plan's tenant/employer-identifier
+  scope). Built, not yet assembled/signed/assigned per the owner's manifest;
+  acceptance test is Autopilot Reset -> quiet first boot.
+  SHA256 (as written, scrubbed per the scope-extension note above):
+    KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  fcd8329391d265321acc84d86234d0bfd935c3e4d7e7af4e62141a72053dd9a9
+    README.md                                            44e6c618b3f04b4be5b539d2f78d3398de17aea11ca3e146cad2979cbca044ab
+
+  Files/Remove-KioskOemBloat.ps1, Files/Remove-KioskRunTasks.ps1 — see the
+  "Remove-KioskOemBloat.ps1 and Remove-KioskRunTasks.ps1" entry below; these
+  are the same ShouldProcess-gated bytes committed a second time, in the
+  location this PSADT package's own Files\ folder requires so the package
+  stays self-contained and deployable on its own.
+
+ConfigMgr client wrapper package source (`package-sources/configmgr-client/`)
+  Install-ConfigMgrClient.ps1 — EEE-authored, scrubbed per Ruling 1 above.
+  Detect-ConfigMgrClient.ps1, Uninstall-ConfigMgrClient.ps1, README.md —
+    EEE-authored, delivered clean (no scrub needed; confirmed by a full read
+    and by the mechanical searches recorded in the 155-03-SUMMARY).
+  Delivered 2026-09-03 (2026-08-27 to 2026-08-30 pilot build). Win32 app
+  created in Intune per the owner's manifest; CMG ID and site code confirmed
+  live in the delivered source (both scrubbed above).
+  SHA256 (as written):
+    Install-ConfigMgrClient.ps1    709cc2e862d34c53fe660a6168f0afd9e519247e11bfaac8c866a401bfae8ca5
+    Detect-ConfigMgrClient.ps1     f6d619ade985652ea07fb321ad4dfd7ad7cb8944d46b63af4f8e465a6a9f2bef
+    Uninstall-ConfigMgrClient.ps1  1e9186759ac9fb3efe2bf7920c14b22d1cf5b4e0c5595dbe96b9f2e2eec6d44c
+    README.md                      05f43e10b72450ef8dc13a03e57732705c80b763d8f4b16d89248d0aad55564b
+
+Remove-KioskOemBloat.ps1 and Remove-KioskRunTasks.ps1 — the two shared
+removal scripts, committed to three physical deployment locations because
+each is a genuinely separate Intune deployment surface that must be
+self-contained (PSADT package Files\, and two standalone Remediations
+packages): package-sources/kiosk-baseline/Files/, remediations/oem-bloat/
+and remediations/run-task-cleanup/. Owner-authored, delivered as the single
+byte-identical source (confirmed by SHA256 across all three staged copies
+before any edit). This plan adds `[CmdletBinding(SupportsShouldProcess)]`
+plus a `$PSCmdlet.ShouldProcess` gate around every delete/remove/deprovision/
+unregister operation (CLAUDE.md's own PowerShell remediation convention;
+see 155-03-SUMMARY for the full by-file, by-line gate list) and applies the
+identical edit to all three copies so they remain byte-identical after the
+change — the recipe's own stated invariant ("Never let the copies diverge",
+RE-237:194) is preserved, not broken, by this plan.
+  Delivered 2026-09-03 (2026-08-27 to 2026-08-30 pilot build). Deployed as
+  EEE-WIN-Kiosk-OemDebloat and EEE-WIN-Kiosk-RunTaskCleanup (daily); headers
+  updated in this commit to record real pilot validation in place of the
+  prior "untested as written" note (RE-237's own header convention for
+  items 6-10).
+  SHA256 (as written, post-edit, identical across all three committed copies):
+    Remove-KioskOemBloat.ps1  c7eb70c217d3fa31f145852c6464e3bbb7c8e69ded2f9c12b5e101a596b486dd
+    Remove-KioskRunTasks.ps1  8ebd33d429c7642e8fa034b609427d9ec7cac55ddc4113b29c77001f5029e149
+      (post-vendoring correction, see below)
+
+remediations/oem-bloat/Detect-KioskOemBloat.ps1,
+remediations/run-task-cleanup/Detect-KioskRunTasks.ps1,
+remediations/triage-sensor/Detect-KioskAppBlocks-v6.ps1 — EEE-authored,
+read-only detection scripts (confirmed by a full read: no delete, remove,
+deprovision or unregister call in any of the three; no ShouldProcess gate
+added or needed). Headers updated to record real pilot validation, replacing
+the prior "untested as written" note, per RE-237's own header convention
+naming items 6-10 as the exception.
+  Delivered 2026-09-03 (2026-08-27 to 2026-08-30 pilot build). Deployed as
+  EEE-WIN-Kiosk-OemDebloat, EEE-WIN-Kiosk-RunTaskCleanup and
+  EEE-WIN-Kiosk-AppBlock-Triage (all daily) per the owner's manifest.
+  SHA256 (as written):
+    Detect-KioskOemBloat.ps1     1f7bfe7e8dc367c9312e49c2a8ae148228b027a9dd64cf94aa0e6c709b96a39f
+    Detect-KioskRunTasks.ps1     d737986d59a328da05326cdcb5328e721ba9b2dcc98e3129d1fad91795ea5a86
+      (post-vendoring correction, see below)
+    Detect-KioskAppBlocks-v6.ps1 2846b449e5f850a3dccdd371c3130b4abd0812ab84cd216a1b07e32bb7e3a457
+
+Post-vendoring correction — Remove-KioskRunTasks.ps1 and Detect-KioskRunTasks.ps1
+  (2026-09-03, applied after this NOTICE's initial hashes were recorded).
+  These are owner-authored scripts; this is a correctness fix applied by the
+  repository during its own phase-155 code review, not an upstream change.
+  The orphaned kiosk-profile block read the current kiosk account name from
+  the registry with `-ErrorAction SilentlyContinue` and used it unguarded as
+  the exclusion key for a loop that (in Remove-KioskRunTasks.ps1) permanently
+  deletes non-loaded `kioskUser*` profiles, and (in Detect-KioskRunTasks.ps1)
+  reports them as orphaned. If that registry read ever returns null or empty,
+  the unguarded comparison excluded nothing, so the loop would treat every
+  non-loaded `kioskUser*` profile — including the currently-assigned one, if
+  momentarily unloaded — as an orphan. A `-match '^kioskUser\d+$'` guard,
+  identical in form to the one this same script already applies to the
+  OneDrive-payload cleanup six lines below, now wraps both loops; when the
+  guard fails, the run is skipped and a `WARN:` line is recorded instead of
+  defaulting to "treat as orphan." Applied identically to both committed
+  copies of Remove-KioskRunTasks.ps1 (package-sources/kiosk-baseline/Files/
+  and remediations/run-task-cleanup/, re-confirmed byte-identical by SHA256
+  after the edit) and to the single copy of Detect-KioskRunTasks.ps1. The
+  hashes above reflect the corrected bytes.
+
+diagnostics/Get-RdpCredDiag.ps1, diagnostics/Trace-StorisEula.ps1 —
+EEE-authored, read-only diagnostics (confirmed by a full read: both write
+only a transcript/CSV to the operator's own working directory; no
+system-state mutation). Get-RdpCredDiag.ps1 was validated on the pilot
+device on 2026-08-28 (device identifier withheld from this NOTICE per the
+same scrub posture as Ruling 1 — it is a specific asset tag, not a documented
+placeholder); its own script header still reads "Untested as written" and is
+left unchanged, because RE-237's header-update convention (see above) names
+only items 6-10 as the pilot-validated exception, not items 9-10.
+Trace-StorisEula.ps1 is explicitly untested (the STORIS kiosk track is
+tabled) and its header is unchanged and accurate as delivered.
+  Delivered 2026-09-03.
+  SHA256 (as written):
+    Get-RdpCredDiag.ps1   c514120c80a11bc41dada7e965a8ee4bb7d17b8998fef70bee69247d7a9e5577
+    Trace-StorisEula.ps1  2d2e7514097130c77ddb3074c9e141f969d254d53dd234935cce8835d14ce8b4
+
+Not vendored: RemoveBloat.ps1 (Andrew Taylor's public De-Bloat) — GAP,
+not a shortfall. RE-237:196-201 frames this as a still-open "Ask the admin"
+decision ("Should a vendored community de-bloat script... run first, ahead
+of the EEE removal scripts?"), not a settled requirement, and this phase's
+own D-34 records that "SEED-002 §D lists vendoring De-Bloat as a deferred
+item, not a decided one." It is not one of RCP-09's ten enumerated items,
+was not part of the owner's Task 1 delivery, and D-27 prohibits fabricating
+a substitute. If the admin decision in RE-237:196-201 is later made in favor
+of vendoring, that vendoring is a future plan's scope, following the same
+pinned-SHA-plus-GitHub-API-confirmation method 155-02 used for the Windows
+App files.
+
+Mechanical scrub verification note (backstop, not the control — see Task 3's
+full read of every delivered file). A GUID-shaped pattern search over the
+entire `assets/` tree returns two distinct values, not the single expected
+Assigned Access profile identifier:
+  - `9A2A490F-10F6-4764-974A-43B19E722C23` — the expected profile identifier,
+    already present in RE-237's fenced XML and therefore in both
+    assigned-access/production.xml and assigned-access/debug.xml.
+  - `814B6409-8C51-4EE2-95F8-DB39B70F5F90` — NOT introduced by this plan.
+    It is Azure/WindowsAppKiosk's own sample Profile Id inside
+    windows-app/WindowsApp_AutoLogon.xml, committed verbatim by plan 155-02
+    (SHA256 7d68ee88cfe04c8b3d8bdbdb10b1f30318c51ba2c33b2a372a59a907f83ee258,
+    recorded above) as part of that plan's upstream-vendored, byte-pinned
+    file set. It is Microsoft's own public sample identifier in an
+    open-source repository, not a tenant identifier, and this plan does not
+    modify that file: doing so would invalidate the SHA256 155-02 already
+    recorded against it and break the "vendored verbatim" guarantee that
+    hash exists to prove. Reported here as a finding, not scrubbed.
+
+Plan 155-05 wiring
+====================
+
+Every asset this NOTICE records above is now reachable from
+docs/recipes/06-walk-up-avd-kiosk-autologon.md (RE-237) by a resolving relative
+markdown link to the individual file — never to a directory — enforced by
+scripts/validation/check-nav-hub-links.mjs. RE-237 also gained a new
+"Asset Provenance" H2 section (between Step 9 and Verification) naming this
+tree's repository path, the Azure/WindowsAppKiosk pinned commit, the MSIX
+pointer document, and the three artifacts named in the recipe but not
+committed here: the VCLibs Dependencies pair (pinned in
+package-sources/windows-app-win32/Dependencies/DEPENDENCIES.md), ccmsetup.exe
+(Microsoft's own installer, not this recipe's to redistribute), and
+RemoveBloat.ps1 (Andrew Taylor's public De-Bloat — still an open "Ask the
+admin" decision in RE-237 Step 8, not vendored). No new asset was added to
+this tree by plan 155-05; every linked path above was already committed by
+plan 155-02 or 155-03.

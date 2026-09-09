@@ -1033,32 +1033,32 @@
       "phases": {
         "154": {
           "issueKey": "RTS-824",
-          "status": "in_progress",
+          "status": "done",
           "name": "STYLE Landing — Merge the Verified Google-Style Pass"
         },
         "155": {
           "issueKey": "RTS-825",
-          "status": "todo",
+          "status": "done",
           "name": "RCP — Walk-Up AVD Kiosk Recipe Formalization"
         },
         "156": {
           "issueKey": "RTS-826",
-          "status": "todo",
+          "status": "done",
           "name": "STYLE Extension & Full-Landing Verification"
         },
         "157": {
           "issueKey": "RTS-827",
-          "status": "todo",
+          "status": "done",
           "name": "STD + HYG — Authoring Standard & Corpus Hygiene"
         },
         "158": {
           "issueKey": "RTS-828",
-          "status": "todo",
+          "status": "done",
           "name": "Final Corpus Verification & Publish Bundle"
         },
         "159": {
           "issueKey": "RTS-829",
-          "status": "todo",
+          "status": "in_progress",
           "name": "HARN — Harness Close"
         }
       }

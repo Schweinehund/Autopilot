@@ -16,7 +16,7 @@ platform: windows
 
 ## Summary
 
-This guide covers Windows 802.1X Wi-Fi and wired network authentication configuration via Intune, including EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS profile settings, the dot3svc Wired AutoConfig service dependency, enforcement staging, and Hybrid Entra Joined strong certificate mapping. It requires an Intune administrator role with device configuration profile permissions.
+This guide covers Windows 802.1X Wi-Fi and wired network authentication configuration through Intune, including EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS profile settings, the dot3svc Wired AutoConfig service dependency, enforcement staging, and Hybrid Entra Joined strong certificate mapping. It requires an Intune administrator role with device configuration profile permissions.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
@@ -29,7 +29,7 @@ This section covers settings that apply to both Wi-Fi and wired 802.1X profiles 
 
 ### Authentication Mode
 
-Windows exposes an **authentication mode** setting that is not prominently surfaced in the Intune UI -- admin teams frequently miss it and leave it at the default "User" setting, causing pre-logon domain connectivity failures on Hybrid Entra Joined devices (pitfall B-03). Choose the mode based on device join type and connectivity requirements:
+Windows exposes an **authentication mode** setting that is not prominently surfaced in the Intune UI -- administrator teams frequently miss it and leave it at the default "User" setting, causing pre-logon domain connectivity failures on Hybrid Entra Joined devices (pitfall B-03). Choose the mode based on device join type and connectivity requirements:
 
 | Mode | Device credentials used | User credentials used | When to use |
 |---|---|---|---|
@@ -48,7 +48,7 @@ The default Windows EAP XML skeleton ships with server validation disabled -- th
 
 The wired profile exposes two additional server-validation hardening settings not present in the Wi-Fi profile:
 
-- **Disable user prompts for server validation:** Set to **Yes** -- suppresses interactive certificate-trust dialogs that users could click through without understanding the risk.
+- **Disable user prompts for server validation:** Set to **Yes** -- suppresses interactive certificate-trust dialogs that users can click through without understanding the risk.
 - **Require cryptographic binding:** Available for PEAP only; adds cryptographic binding between the outer TLS tunnel and the inner MSCHAPv2 exchange to defend against certain MITM attacks.
 
 ### Anonymous Outer Identity (Identity Privacy)
@@ -59,7 +59,7 @@ Populate the **Identity privacy** field in every Windows 802.1X profile to preve
 - **PEAP-MSCHAPv2:** The domain username is sent as the outer EAP identity before the PEAP tunnel opens. Set Identity privacy to `anonymous` or `anonymous@contoso.com` so the username is not visible in cleartext.
 - **EAP-TTLS:** The username is sent as the outer EAP identity before the TTLS tunnel opens. Set Identity privacy to `anonymous` or `anonymous@contoso.com`.
 
-The domain suffix in the anonymous identity (e.g., `anonymous@contoso.com`) helps RADIUS servers route the anonymous request to the correct realm when multiple realms share infrastructure. Use a suffix that your RADIUS policy accepts; `anonymous` with no suffix is valid if realm routing is not required.
+The domain suffix in the anonymous identity (for example, `anonymous@contoso.com`) helps RADIUS servers route the anonymous request to the correct realm when multiple realms share infrastructure. Use a suffix that your RADIUS policy accepts; `anonymous` with no suffix is valid if realm routing is not required.
 
 ---
 
@@ -108,7 +108,7 @@ For SCEP and PKCS certificate profile configuration, and the deployment ordering
 
 Navigation: **Devices** > **Configuration** > **New policy** > **Windows 10 and later** > **Templates** > **Wired network**
 
-The wired profile uses the WiredNetwork CSP. Before configuring the 802.1X settings, address the two high-consequence wired-only prerequisites below.
+The wired profile uses the WiredNetwork CSP. Before configuring the 802.1X settings, address the following two high-consequence wired-only prerequisites.
 
 ### dot3svc Service Dependency
 
@@ -127,7 +127,7 @@ Start-Service -Name dot3svc
 
 **Detection pattern for Intune Remediations:** Exit non-zero (issue detected) when `(Get-Service dot3svc).StartType -ne 'Automatic'` OR `(Get-Service dot3svc).Status -ne 'Running'`. Remediation action: run `Set-Service -Name dot3svc -StartupType Automatic` then `Start-Service dot3svc`.
 
-**Deploy via Intune Remediations:** **Devices** > **Remediations** > **+ Create** -- Platform: Windows 10 and later. Supply a detection script (exits 1 when the condition is detected) and a remediation script. Assign to the same device groups receiving the wired 802.1X profile. Run on a schedule (e.g., every hour) to catch service resets after Windows updates.
+**Deploy through Intune Remediations:** **Devices** > **Remediations** > **+ Create** -- Platform: Windows 10 and later. Supply a detection script (exits 1 when the condition is detected) and a remediation script. Assign to the same device groups receiving the wired 802.1X profile. Run on a schedule (for example, every hour) to catch service resets after Windows updates.
 
 ### 802.1X Enforcement Staging
 
@@ -174,7 +174,7 @@ PFX Import is not available in the Windows Wi-Fi profile UI. See the [per-platfo
 
 ### TEAP (Tunneled EAP -- Awareness Note)
 
-TEAP (Tunneled EAP, RFC 7170) appears in the Windows wired-network profile UI as a fourth EAP type alongside EAP-TLS, PEAP, and EAP-TTLS. It is unique to Windows wired 802.1X -- no other platform surfaces TEAP via Intune. TEAP chains machine and user credentials in a single authentication exchange using Primary EAP and Secondary EAP method selections, eliminating the need for separate machine-then-user re-authentication sequences. TEAP is not a co-equal configuration path in this guide set; for organizations evaluating TEAP, consult your RADIUS/NPS team to confirm NPS TEAP support before deployment.
+TEAP (Tunneled EAP, RFC 7170) appears in the Windows wired-network profile UI as a fourth EAP type alongside EAP-TLS, PEAP, and EAP-TTLS. It is unique to Windows wired 802.1X -- no other platform surfaces TEAP through Intune. TEAP chains machine and user credentials in a single authentication exchange using Primary EAP and Secondary EAP method selections, eliminating the need for separate machine-then-user re-authentication sequences. TEAP is not a co-equal configuration path in this guide set; for organizations evaluating TEAP, consult your RADIUS/NPS team to confirm NPS TEAP support before deployment.
 
 ---
 

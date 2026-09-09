@@ -16,27 +16,27 @@ platform: macOS
 
 ## Summary
 
-This guide covers macOS MDM configuration profiles delivered via the Settings Catalog -- Wi-Fi, VPN, Email, Restrictions, Local Password Policy, FileVault disk encryption, Firewall, Gatekeeper, Privacy Preferences, and Extensible/Platform SSO. It requires the Intune Administrator role and an Apple Business Manager-enrolled ADE device; FileVault Setup Assistant enforcement additionally requires macOS 14+ (14.4+ for Standard-role primary accounts).
+This guide covers macOS MDM configuration profiles delivered through the Settings Catalog -- Wi-Fi, VPN, Email, Restrictions, Local Password Policy, FileVault disk encryption, Firewall, Gatekeeper, Privacy Preferences, and Extensible/Platform SSO. It requires the Intune Administrator role and an Apple Business Manager-enrolled ADE device; FileVault Setup Assistant enforcement additionally requires macOS 14+ (14.4+ for Standard-role primary accounts).
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration with Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
-> **Settings Catalog required:** All new macOS configuration profiles should be created via the Settings Catalog in Intune
+> **Settings Catalog required:** All new macOS configuration profiles must be created through the Settings Catalog in Intune
 
 > (Devices > Manage devices > Configuration > Create > New policy > Settings catalog).
 
-> The older Endpoint protection template is deprecated for new policies -- do not create new profiles via Templates > Endpoint protection.
+> The older Endpoint protection template is deprecated for new policies -- do not create new profiles through Templates > Endpoint protection.
 
 ## Prerequisites
 
 - Intune Administrator role
-- Devices enrolled via ADE (see [ABM Configuration](01-abm-configuration.md) and [Enrollment Profile](02-enrollment-profile.md))
+- Devices enrolled through ADE (see [ABM Configuration](01-abm-configuration.md) and [Enrollment Profile](02-enrollment-profile.md))
 - Understanding of the difference between configuration profiles (enforce settings) and compliance policies (detect non-compliance) -- see [Compliance Policies](05-compliance-policy.md)
 
 ## Profile Delivery Channel
 
-Configuration profiles are delivered via the **MDM channel (APNs)**, NOT the Intune Management Extension agent. If a profile fails to deliver, troubleshoot APNs connectivity, not the IME agent. See [Network Endpoints](../reference/endpoints.md#macos-ade-endpoints) for APNs endpoint list.
+Configuration profiles are delivered through the **MDM channel (APNs)**, NOT the Intune Management Extension agent. If a profile fails to deliver, troubleshoot APNs connectivity, not the IME agent. See [Network Endpoints](../reference/endpoints.md#macos-ade-endpoints) for APNs endpoint list.
 
 ## Wi-Fi
 
@@ -111,7 +111,7 @@ Key settings to configure per organizational policy:
 - **Password modification:** Allow or block password changes
 - **Content caching:** Allow or block local content caching
 
-> **What breaks if misconfigured:** Overly restrictive settings may block legitimate business workflows. Insufficient restrictions may allow data exfiltration via AirDrop or Screen capture.
+> **What breaks if misconfigured:** Overly restrictive settings may block legitimate business workflows. Insufficient restrictions may allow data exfiltration through AirDrop or Screen capture.
 
 > Symptom appears in: device (feature unavailable) or Intune admin center (compliance policy detects unrestricted setting). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
@@ -119,7 +119,7 @@ Key settings to configure per organizational policy:
 
 #### In Intune admin center
 
-Navigation: **Settings catalog > Passcode** (or **Device restrictions > Password**). This policy governs the **local macOS account password** — the credential used at the login / lock screen. It is distinct from the Entra password and from the managed LAPS admin password.
+Navigation: **Settings catalog > Passcode** (or **Device restrictions > Password**). This policy governs the **local macOS account password**—the credential used at the login / lock screen. It is distinct from the Entra password and from the managed LAPS administrator password.
 
 > **Applies to the local account, not Entra.**
 
@@ -127,21 +127,21 @@ Navigation: **Settings catalog > Passcode** (or **Device restrictions > Password
 
 > (see [Platform SSO → End-User Sign-In Experience](07-platform-sso-setup.md#end-user-sign-in-experience-secure-enclave)).
 
-> With the **Password** PSSO method the local password is synced from Entra — in that case manage expiration in **Entra**, not here, to avoid conflicts.
+> With the **Password** PSSO method the local password is synced from Entra—in that case manage expiration in **Entra**, not here, to avoid conflicts.
 
 Key settings:
 
 | Setting | What it does | Recommendation |
 |---------|--------------|----------------|
-| Minimum password length | Minimum characters | Set a solid floor (e.g. 12+); encourage passphrases |
+| Minimum password length | Minimum characters | Set a solid floor (for example 12+); encourage passphrases |
 | Block simple passwords | Prevents `1234`, `0000`, etc. | **Yes** |
-| Prevent reuse of previous passwords (1–24) | Blocks recent reuse | e.g. 5 |
-| Maximum allowed sign-in attempts (2–11) | Locks the device after N wrong tries | e.g. 5 (avoid very low values — normal typos lock users out) |
+| Prevent reuse of previous passwords (1–24) | Blocks recent reuse | for example 5 |
+| Maximum allowed sign-in attempts (2–11) | Locks the device after N wrong tries | for example 5 (avoid very low values — normal typos lock users out) |
 | **Password expiration (days)** (1–65535) | Forces the user to change the password after N days | **Leave Not configured** (best practice) — see below |
 
-**Best practice — do not force periodic expiration.** NIST and Microsoft recommend against periodic password rotation; it produces weaker, predictable passwords for no security benefit. Enforce strength (length, block-simple, prevent-reuse) once and leave **Password expiration = Not configured**. Put security on MFA + Conditional Access + Entra Password Protection (and, here, Secure Enclave's phishing-resistance). *(Sources: [Microsoft password-policy recommendations](https://learn.microsoft.com/microsoft-365/admin/misc/password-policy-recommendations); [Entra Zero Trust — protect identities](https://learn.microsoft.com/entra/fundamentals/zero-trust-protect-identities).)*
+**Best practice—do not force periodic expiration.** NIST and Microsoft recommend against periodic password rotation; it produces weaker, predictable passwords for no security benefit. Enforce strength (length, block-simple, prevent-reuse) once and leave **Password expiration = Not configured**. Put security on MFA + Conditional Access + Entra Password Protection (and, here, Secure Enclave's phishing-resistance). *(Sources: [Microsoft password-policy recommendations](https://learn.microsoft.com/microsoft-365/admin/misc/password-policy-recommendations); [Entra Zero Trust—protect identities](https://learn.microsoft.com/entra/fundamentals/zero-trust-protect-identities).)*
 
-**If a compliance regime requires expiration:** set **Password expiration (days) = 90** (or your mandated interval). The user is prompted to create a new password when it expires. *(Microsoft: "enter 90 to expire the password after 90 days… users are prompted to create a new password" — [Apple device restriction settings](https://learn.microsoft.com/intune/device-configuration/templates/ref-device-restrictions-apple#password).)* This is **user-driven expiration**, not silent rotation like the LAPS admin account.
+**If a compliance regime requires expiration:** set **Password expiration (days) = 90** (or your mandated interval). The user is prompted to create a new password when it expires. *(Microsoft: "enter 90 to expire the password after 90 days… users are prompted to create a new password"—[Apple device restriction settings](https://learn.microsoft.com/intune/device-configuration/templates/ref-device-restrictions-apple#password).)* This is **user-driven expiration**, not silent rotation like the LAPS administrator account.
 
 > **What breaks if misconfigured:** Forcing periodic expiration on a Secure Enclave fleet adds password friction (undermining the Touch ID / passwordless UX) and tends to weaken passwords.
 
@@ -170,7 +170,7 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 | Defer Force At User Login Max Bypass Attempts | `-1` / `0` / `N` | How many times the user may skip enabling FileVault at login before it is forced. **`-1`** = never force (always allow deferral); **`0`** = force at the first login (strictest); **`N`** = allow N bypasses, then force. Use to tune enforcement strictness. |
 | Recovery Key Rotation In Months | Not configured / **1–12** | Periodically rotates the **personal recovery key** every 1–12 months and re-escrows the new key to Intune. (This is periodic — *not* "after each use.") Use for higher-security postures; users retrieve the rotated key from Company Portal. |
 
-**FileVault Options sub-payload** (enforcement / hardening — Apple `FDEFileVaultOptions`):
+**FileVault Options sub-payload** (enforcement / hardening—Apple `FDEFileVaultOptions`):
 
 | Setting | Apple key | When / why |
 |---------|-----------|------------|
@@ -182,14 +182,14 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 
 | Setting | Values | When / why |
 |---------|--------|------------|
-| Location | Free-text string | A description shown to users explaining **where/how to retrieve** their personal recovery key (e.g. "Sign in to the Company Portal website > Devices > Get recovery key"). Configure this whenever you enable FileVault so users have self-service guidance, especially when rotation is on. |
+| Location | Free-text string | A description shown to users explaining **where/how to retrieve** their personal recovery key (for example "Sign in to the Company Portal website > Devices > Get recovery key"). Configure this whenever you enable FileVault so users have self-service guidance, especially when rotation is on. |
 
 **How escrow actually works (accuracy notes):**
 
-- The personal recovery key is **escrowed to Intune automatically** when an Intune policy encrypts the device (or when a user uploads the key for a device they encrypted manually). There is no separate "escrow = on/off" toggle — escrow is a property of Intune-driven encryption.
-- Admins can **view and rotate** recovery keys for devices marked **Corporate only** — **not** for **Personal/BYOD** devices (user privacy). Requires an Intune RBAC role with **Remote tasks > Rotate FileVault key**.
+- The personal recovery key is **escrowed to Intune automatically** when an Intune policy encrypts the device (or when a user uploads the key for a device they encrypted manually). There is no separate "escrow = on/off" toggle—escrow is a property of Intune-driven encryption.
+- Administrators can **view and rotate** recovery keys for devices marked **Corporate only**—**not** for **Personal/BYOD** devices (user privacy). Requires an Intune RBAC role with **Remote tasks > Rotate FileVault key**.
 - Retrieval locations: **Company Portal website** (primary/most reliable) and the iOS/Android/Intune apps → device → **Get recovery key**.
-- The other Recovery Key Escrow fields (`DeviceKey` / `EncryptCertPayloadUUID`) are for **institutional** recovery-key escrow via certificate (FileVault master keychain / third-party escrow) and are **not used** with Intune's built-in personal-key escrow.
+- The other Recovery Key Escrow fields (`DeviceKey` / `EncryptCertPayloadUUID`) are for **institutional** recovery-key escrow using a certificate (FileVault master keychain / third-party escrow) and are **not used** with Intune's built-in personal-key escrow.
 
 **Recommended baseline (standard corporate ADE fleet):**
 
@@ -198,32 +198,32 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 - **FileVault Recovery Key Escrow:** Location = a clear, plain-language retrieval message.
 - Pair with the **compliance** "Require encryption of data storage" check (see [Compliance Policies](05-compliance-policy.md)).
 
-> **Assignment target — devices, not users (for corporate Macs).**
+> **Assignment target—devices, not users (for corporate Macs).**
 
 > Unlike the [Platform SSO policy](07-platform-sso-setup.md), which **must** target user groups, FileVault is a **device-level** encryption setting.
 
 > Assign the Settings Catalog FileVault policy to **device groups** (or All Devices) for company-owned Macs; use **user groups** only for BYOD scenarios.
 
-> Setup Assistant enforcement specifically targets **devices** via a filter on the `EnrollmentProfileName` attribute.
+> Setup Assistant enforcement specifically targets **devices** through a filter on the `EnrollmentProfileName` attribute.
 
-> Note: admin recovery-key visibility depends on device **ownership type** (Corporate vs Personal), *not* on whether you assigned to a user or device group.
+> Note: administrator recovery-key visibility depends on device **ownership type** (Corporate vs Personal), *not* on whether you assigned to a user or device group.
 
-**Setup Assistant enforcement (macOS 14+, optional):** To force FileVault enablement *during device setup* (instead of at the first user sign-out), configure the additional Setup-Assistant FileVault settings and meet the prerequisites: macOS 14+, ABM/ASM enrollment, **Await final configuration = Yes** in the [enrollment profile](02-enrollment-profile.md), and target via a device filter on the `EnrollmentProfileName` attribute. **Pre-macOS 14.4 caveat:** the account created interactively during Setup Assistant must have the **Administrator** role — relevant if you set the primary account to **Standard** (see [Enrollment Profile → Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts)). macOS 14.4+ removes this restriction.
+**Setup Assistant enforcement (macOS 14+, optional):** To force FileVault enablement *during device setup* (instead of at the first user sign-out), configure the additional Setup-Assistant FileVault settings and meet the prerequisites: macOS 14+, ABM/ASM enrollment, **Await final configuration = Yes** in the [enrollment profile](02-enrollment-profile.md), and target through a device filter on the `EnrollmentProfileName` attribute. **Pre-macOS 14.4 caveat:** the account created interactively during Setup Assistant must have the **Administrator** role—relevant if you set the primary account to **Standard** (see [Enrollment Profile → Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts)). macOS 14.4+ removes this restriction.
 
 **Verifying the recovery key is escrowed to Intune:**
 
 *Admin (Intune):*
-1. **Encryption report** — **Devices** > **Monitor** > **Device Encryption status**; confirm the device shows **Encrypted** and a recovery key is available.
-2. **Per-device** — **Devices** > **All devices** > [device] > **Monitor** > **Recovery keys** > **Show Recovery Key** (Corporate devices only; generates a Microsoft Entra audit-log entry). A displayed key confirms escrow succeeded. Requires an RBAC role with **Remote tasks > Rotate FileVault key = Yes** (built-in: Help Desk Operator or Endpoint Security Administrator).
+1. **Encryption report**—**Devices** > **Monitor** > **Device Encryption status**; confirm the device shows **Encrypted** and a recovery key is available.
+2. **Per-device**—**Devices** > **All devices** > [device] > **Monitor** > **Recovery keys** > **Show Recovery Key** (Corporate devices only; generates a Microsoft Entra audit-log entry). A displayed key confirms escrow succeeded. Requires an RBAC role with **Remote tasks > Rotate FileVault key = Yes** (built-in: Help Desk Operator or Endpoint Security Administrator).
 
 *End user (self-service):* Company Portal website (`portal.manage.microsoft.com`) > **Devices** > the Mac > **Get recovery key** (primary/most reliable; also the iOS/Android/Intune apps).
 
 *On the device (Terminal):*
-- `fdesetup status` — FileVault On/Off + encryption progress.
-- `sudo fdesetup haspersonalrecoverykey` — returns `true` when a personal recovery key exists (the key that gets escrowed).
-- `sudo fdesetup list` — lists FileVault-enabled users.
+- `fdesetup status`—FileVault On/Off + encryption progress.
+- `sudo fdesetup haspersonalrecoverykey`—returns `true` when a personal recovery key exists (the key that gets escrowed).
+- `sudo fdesetup list`—lists FileVault-enabled users.
 
-*If escrow hasn't happened:* escrow runs in two stages (key-escrow preparation → encryption). Check device network connectivity and the encryption report's escrow status. Error `-2016341107` / `0x87d1138d` means the user hasn't accepted the FileVault enablement prompt — educate the user, or use Setup Assistant enforcement to avoid the prompt.
+*If escrow hasn't happened:* escrow runs in two stages (key-escrow preparation → encryption). Check device network connectivity and the encryption report's escrow status. Error `-2016341107` / `0x87d1138d` means the user hasn't accepted the FileVault enablement prompt—educate the user, or use Setup Assistant enforcement to avoid the prompt.
 
 > **What breaks if misconfigured:** Enabling FileVault **without `Defer = Enabled`** often causes the profile to fail to apply (encryption never starts).
 
@@ -237,11 +237,11 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 
 > The separate **Platform SSO > FileVault Policy** setting (`AttemptAuthentication`, etc.) in [Platform SSO Setup](07-platform-sso-setup.md)
 
-> controls whether PSSO **verifies the Entra password at the FileVault unlock screen** (macOS 15+, Password method) —
+> controls whether PSSO **verifies the Entra password at the FileVault unlock screen** (macOS 15+, Password method)—
 
 > a different surface entirely.
 
-**Critical:** FileVault has TWO surfaces -- a configuration profile (enforce via Settings Catalog) AND a compliance policy (verify enabled in [Compliance Policies](05-compliance-policy.md)). Always deploy both together.
+**Critical:** FileVault has TWO surfaces -- a configuration profile (enforce through Settings Catalog) AND a compliance policy (verify enabled in [Compliance Policies](05-compliance-policy.md)). Always deploy both together.
 
 ## Firewall
 
@@ -267,7 +267,7 @@ Key settings:
 
 Navigation: **Devices** > **Manage devices** > **Configuration** > **Create** > **New policy** > **Settings catalog** > **System Policy** > **System Policy Control** (Allow Identified Developer: True, Enable Assessment: True) + **System Policy Managed** (Disable Override: True)
 
-> **What breaks if misconfigured:** If Gatekeeper is not enforced via configuration profile, users can change the setting to allow apps from "Anywhere."
+> **What breaks if misconfigured:** If Gatekeeper is not enforced through configuration profile, users can change the setting to allow apps from "Anywhere."
 
 > Compliance policy detects the change but does not prevent it.
 
@@ -288,7 +288,7 @@ Common use cases:
 
 > **What breaks if misconfigured:** Without PPPC profiles, security tools prompt the user for permissions on first run.
 
-> If the user denies, the tool cannot function until the admin deploys a PPPC profile and the user re-approves.
+> If the user denies, the tool cannot function until the administrator deploys a PPPC profile and the user re-approves.
 
 > Symptom appears in: device (security agent reports reduced functionality) and security dashboard (gaps in endpoint coverage). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
@@ -301,7 +301,7 @@ Navigation: **Devices** > **Manage devices** > **Configuration** > **Create** > 
 Enterprise SSO plug-in or Platform SSO (macOS 13+, macOS 14 recommended) for single sign-on across apps and web. Two configuration approaches:
 
 - **SSO app extension (Redirect type):** For Microsoft Enterprise SSO plug-in -- enables SSO across Safari and apps using Microsoft identity
-- **Platform SSO (macOS 13+; macOS 14 recommended; Smart Card requires macOS 14+):** Registers the Mac with Entra ID and provides device-wide SSO. Three mutually exclusive authentication methods configured in Settings Catalog: Secure Enclave key/Platform Credential (recommended — local password unchanged), Password sync (Entra ID password replaces local password), and Smart Card (macOS 14+ only)
+- **Platform SSO (macOS 13+; macOS 14 recommended; Smart Card requires macOS 14+):** Registers the Mac with Entra ID and provides device-wide SSO. Three mutually exclusive authentication methods configured in Settings Catalog: Secure Enclave key/Platform Credential (recommended—local password unchanged), Password sync (Entra ID password replaces local password), and Smart Card (macOS 14+ only)
 
 Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-setup.md).
 
@@ -309,12 +309,12 @@ Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-s
 
 - [ ] Each configuration profile shows "Succeeded" status in Intune admin center > Devices > Configuration > [profile] > Device status
 - [ ] Profile delivery confirmed on target devices (System Settings > Profiles on macOS)
-- [ ] FileVault policy assigned to **device groups** (company-owned) or **user groups** (BYOD only) — not the PSSO "user groups only" rule
+- [ ] FileVault policy assigned to **device groups** (company-owned) or **user groups** (BYOD only)—not the PSSO "user groups only" rule
 - [ ] FileVault `Defer = Enabled` set (required for the profile to apply)
-- [ ] FileVault Options `Dont Allow FDE Disable = True` set (prevents users disabling encryption) — corporate fleets
-- [ ] Recovery-key escrow confirmed via **Devices > Monitor > Device Encryption status** (and on-device `sudo fdesetup haspersonalrecoverykey` returns `true`)
+- [ ] FileVault Options `Dont Allow FDE Disable = True` set (prevents users disabling encryption)—corporate fleets
+- [ ] Recovery-key escrow confirmed through **Devices > Monitor > Device Encryption status** (and on-device `sudo fdesetup haspersonalrecoverykey` returns `true`)
 - [ ] FileVault personal recovery key visible in Intune admin center for encrypted **Corporate** devices (Personal/BYOD keys are not admin-visible by design)
-- [ ] Firewall and Gatekeeper settings enforced (verify via `defaults read` commands in [macOS Commands Reference](../reference/macos-commands.md))
+- [ ] Firewall and Gatekeeper settings enforced (verify using `defaults read` commands in [macOS Commands Reference](../reference/macos-commands.md))
 
 ## Configuration-Caused Failures
 

@@ -20,7 +20,7 @@ This is an error-code lookup reference for Enrollment Status Page (ESP) and enro
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-These errors occur during the [Enrollment Status Page](../_glossary.md#esp) (ESP) phase when apps install, policies apply, and certificates provision. They correspond to Stage 4 of the [Autopilot lifecycle](../lifecycle/04-esp.md). Some failures produce no error code and appear only as a generic "Something went wrong" message; those patterns are documented in the Policy Conflicts section below.
+These errors occur during the [Enrollment Status Page](../_glossary.md#esp) (ESP) phase when apps install, policies apply, and certificates provision. They correspond to Stage 4 of the [Autopilot lifecycle](../lifecycle/04-esp.md). Some failures produce no error code and appear only as a generic "Something went wrong" message; those patterns are documented in the Policy Conflicts section.
 
 **Phase:** Reg=Registration · OOBE=Out-of-Box Experience · ESP=Enrollment Status Page · Post=Post-enrollment
 **Mode:** UD=User-Driven · PP=Pre-Provisioning · SD=Self-Deploying · All=All modes
@@ -50,11 +50,11 @@ The following policy configurations cause ESP failures that display as "Somethin
 
 The following scenarios cause ESP to time out without generating a discrete error code. The ESP screen shows the timeout or "Something went wrong" message.
 
-**App count exceeds ESP timeout value.** When the number of required apps assigned to the device exceeds what can install within the configured ESP timeout window, the ESP fails. L1 action: note the number and names of required apps visible on ESP; **Escalate** — collect serial, mode, timestamp, list of apps shown. L2 fix: increase ESP timeout in the Autopilot profile (Devices > Windows > Enrollment > Enrollment Status Page), or reduce required app assignments.
+**App count exceeds ESP timeout value.** When the number of required apps assigned to the device exceeds what can install within the configured ESP timeout window, the ESP fails. L1 action: note the number and names of required apps visible on ESP; **Escalate**—collect serial, mode, timestamp, list of apps shown. L2 fix: increase ESP timeout in the Autopilot profile (Devices > Windows > Enrollment > Enrollment Status Page), or reduce required app assignments.
 
-**LOB and Win32 TrustedInstaller conflict.** Mixing line-of-business (LOB) and Win32 app types in the same required app set can produce a TrustedInstaller lock conflict that stalls the install queue. L1 action: note if both LOB and Win32 app types are assigned; **Escalate** — collect serial, mode, timestamp, app types visible. L2 fix: check app type assignments and separate LOB and Win32 apps across assignment groups where possible.
+**LOB and Win32 TrustedInstaller conflict.** Mixing line-of-business (LOB) and Win32 app types in the same required app set can produce a TrustedInstaller lock conflict that stalls the install queue. L1 action: note if both LOB and Win32 app types are assigned; **Escalate**—collect serial, mode, timestamp, app types visible. L2 fix: check app type assignments and separate LOB and Win32 apps across assignment groups where possible.
 
-**Conditional Access blocking Store app license.** If a Conditional Access policy requires device compliance before granting access, Store app license acquisition fails during ESP before the device has established compliance. L1 action: note if any Conditional Access policies target the tenant; **Escalate** — collect serial, mode, timestamp. L2 fix: create a Conditional Access exclusion for the enrollment period, or target the CA policy only at compliant devices once enrollment is complete.
+**Conditional Access blocking Store app license.** If a Conditional Access policy requires device compliance before granting access, Store app license acquisition fails during ESP before the device has established compliance. L1 action: note if any Conditional Access policies target the tenant; **Escalate**—collect serial, mode, timestamp. L2 fix: create a Conditional Access exclusion for the enrollment period, or target the CA policy only at compliant devices once enrollment is complete.
 
 ---
 

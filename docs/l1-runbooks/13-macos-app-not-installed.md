@@ -16,11 +16,11 @@ platform: macOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS application deployment failures after enrollment, covering DMG/PKG managed packages, VPP App Store apps, and apps showing a Failed installation status in Intune, with device sync steps and escalation criteria for persistent failures.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS application deployment failures after enrollment, covering DMG/PKG managed packages, VPP App Store apps, and apps showing a Failed installation status in Intune, with device sync steps and escalation criteria for persistent failures.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
-Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected application is not installed. This includes apps deployed as managed packages (DMG or PKG), apps from the App Store via VPP (Volume Purchase Program / Apps and Books), and apps that show a "Failed" status in Intune.
+Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected application is not installed. This includes apps deployed as managed packages (DMG or PKG), apps from the App Store through VPP (Volume Purchase Program / Apps and Books), and apps that show a "Failed" status in Intune.
 
 ## Prerequisites
 
@@ -32,8 +32,8 @@ Use this runbook when Setup Assistant completed and the user is at the macOS des
 
 Go directly to the section that matches the situation:
 
-- [DMG or PKG App Missing](#dmg-pkg-missing) -- A managed app deployed via DMG or PKG package is not present on the device
-- [VPP App Missing](#vpp-missing) -- An App Store app (distributed via Apps and Books / VPP) is not visible in Company Portal or not installed
+- [DMG or PKG App Missing](#dmg-pkg-missing) -- A managed app deployed through DMG or PKG package is not present on the device
+- [VPP App Missing](#vpp-missing) -- An App Store app (distributed through Apps and Books / VPP) is not visible in Company Portal or not installed
 - [App Install Failed](#app-install-failed) -- The app appears in Intune with a "Failed" installation status
 
 ---
@@ -50,13 +50,13 @@ Go directly to the section that matches the situation:
 
 3. Select **Device install status** and find this device by serial number. Note the installation status shown.
 
-4. If the status is **Installed**: the app is already on the device. Ask the user to check the Applications folder in Finder. Some apps install to subdirectories (e.g., `/Applications/Microsoft Office/`) rather than the top level.
+4. If the status is **Installed**: the app is already on the device. Ask the user to check the Applications folder in Finder. Some apps install to subdirectories (for example, `/Applications/Microsoft Office/`) rather than the top level.
 
 5. If the status is **Pending**: the app deployment has not yet reached the device. Select **Devices** > **macOS** > [device] > **Sync** to force an immediate check-in. Wait 5 minutes and refresh the device install status page.
 
-6. If the status is **Not applicable**: check the app assignment. Navigate to **Apps** > **macOS** > [app] > **Properties** > **Assignments**. Confirm the device or its group is listed in the **Required** assignment (not just **Available**). Only "Required" assignments install automatically.
+6. If the status is **Not applicable**: check the app assignment. Navigate to **Apps** > **macOS** > [app] > **Properties** > **Assignments**. Confirm the device or its group is listed in the **Required** assignment (not only **Available**). Only "Required" assignments install automatically.
 
-7. If the assignment is "Available" instead of "Required": the app will only appear in Company Portal for the user to install manually, not install automatically. Inform the user how to install it from Company Portal.
+7. If the assignment is "Available" instead of "Required": the app appears only in Company Portal for the user to install manually, not install automatically. Inform the user how to install it from Company Portal.
 
 8. If status is **Failed**: go to [App Install Failed](#app-install-failed).
 
@@ -66,11 +66,11 @@ Go directly to the section that matches the situation:
 
 ## VPP App Missing
 
-**Entry condition:** An App Store app distributed via Apps and Books (VPP) is not visible in Company Portal or is not installed.
+**Entry condition:** An App Store app distributed through Apps and Books (VPP) is not visible in Company Portal or is not installed.
 
 1. In Intune admin center, navigate to **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens**. Check the token **Status** column.
 
-2. If the token shows **Expired**: the VPP license connection is broken. All VPP app deployments from this token will fail until renewed. Proceed to [Escalation Criteria](#escalation-criteria) — token renewal requires admin action.
+2. If the token shows **Expired**: the VPP license connection is broken. All VPP app deployments from this token fail until renewed. Proceed to [Escalation Criteria](#escalation-criteria)—token renewal requires administrator action.
 
 3. If the token is active, navigate to **Apps** > **macOS** > search for the app. Open the record and select **Device install status**. Find this device and note the status.
 
@@ -107,7 +107,7 @@ Go directly to the section that matches the situation:
 Escalate to L2 if:
 
 - App shows persistent "Failed" status after a manual sync
-- VPP token is expired (requires admin renewal)
+- VPP token is expired (requires administrator renewal)
 - VPP license count is exhausted
 - App assignment is correct (Required) but the app does not appear after sync
 - User reports app installs and then uninstalls itself repeatedly (possible detection rule loop with a PKG)

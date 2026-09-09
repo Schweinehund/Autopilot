@@ -21,7 +21,7 @@ Required-assignment exception), Win32 dependency graphs (max 100 dependencies pe
 sub-dependency evaluation; circular-dependency detection), and Win32ContentPrepTool packaging
 into the `.intunewin` format with 4 detection rule types (MSI / File / Registry / custom PowerShell).
 
-MSIX is in scope as a routing-only sub-section under packaging — MSIX does NOT support
+MSIX is in scope as a routing-only sub-section under packaging—MSIX does NOT support
 supersedence; use version replacement in the same app entry instead. For the cross-platform
 overview, see [App Lifecycle Overview](00-overview.md). For detection-rule priority and the
 broader Win32 packaging reference, see
@@ -30,7 +30,7 @@ broader Win32 packaging reference, see
 <a id="supersedence"></a>
 ## Supersedence
 
-Win32 app supersedence chains let an admin replace an installed Win32 app with a different Win32
+Win32 app supersedence chains let an administrator replace an installed Win32 app with a different Win32
 app while preserving install context. This section covers the supersedence behavior matrix, the
 auto-update limits, and the **Required-assignment exception** (PITFALL-10) that makes
 supersedence behave differently for required-assigned vs available-assigned apps.
@@ -38,7 +38,7 @@ supersedence behave differently for required-assigned vs available-assigned apps
 **Limits and constraints (verified at Microsoft Learn April 2026):**
 
 - A Win32 app can have a maximum of 10 superseding apps per app (auto-update limit).
-- There can only be a maximum of 11 nodes in a single supersedence graph — the superseding app
+- There can only be a maximum of 11 nodes in a single supersedence graph—the superseding app
   plus the superseded apps and any subsequent related apps.
 - Superseding apps don't get automatic targeting. Each app must have explicit targeting to
   take effect.
@@ -47,15 +47,15 @@ supersedence behave differently for required-assigned vs available-assigned apps
 
 **Replace vs Update option semantics:**
 
-- **Replace** mode — `Uninstall previous version` toggle is **enabled**. The superseded app is
+- **Replace** mode—`Uninstall previous version` toggle is **enabled**. The superseded app is
   uninstalled before the superseding app installs.
-- **Update** mode — `Uninstall previous version` toggle is **disabled**. Per Microsoft Learn:
-  "App update means that admin chose not to uninstall the superseded app during the
+- **Update** mode—`Uninstall previous version` toggle is **disabled**. Per Microsoft Learn:
+  "App update means that administrator chose not to uninstall the superseded app during the
   configuration stage."
 
 ### Supersedence behavior matrix
 
-The matrix below encodes how the source assignment intent (Available vs Required) interacts
+The following matrix encodes how the source assignment intent (Available vs Required) interacts
 with the supersedence action (Uninstall vs Replace):
 
 | Source assignment          | Uninstall (Update mode)                                        | Replace (Replace mode)                                    |
@@ -65,8 +65,8 @@ with the supersedence action (Uninstall vs Replace):
 
 > ⚠️ **Required-assignment exception:** Supersedence auto-update only applies to apps assigned
 > with **Available for enrolled devices** intent. Devices that received the superseded app
-> through a **Required** assignment will NOT receive the superseding app via the supersedence
-> chain. To replace a Required-assigned app, the admin must (a) re-target the new app as
+> through a **Required** assignment do NOT receive the superseding app through the supersedence
+> chain. To replace a Required-assigned app, the administrator must (a) re-target the new app as
 > Required to the same group, OR (b) change the existing Required assignment to Uninstall, then
 > re-create the assignment with the superseding app. The Required-assignment behavior is
 > documented under "Auto-update limitations" in the
@@ -81,7 +81,7 @@ re-targeting workflow.
 <a id="dependency-graphs"></a>
 ## Dependency Graphs
 
-Win32 app dependencies let an admin declare that App B requires App A, so Intune Management
+Win32 app dependencies let an administrator declare that App B requires App A, so Intune Management
 Extension (IME) installs App A before App B. Dependencies are processed before the main app,
 regardless of assignment order in Intune. This section covers the max-100 dependency limit,
 recursive sub-dependency evaluation, and the **combined supersedence+dependency subgraph**
@@ -98,7 +98,7 @@ illustration showing both relationship types in a single visual.
   main dependency.
 - **Circular dependency detection IS implemented by Intune at configuration time.** If you
   configure a circular relationship (App A → App B → App A), Intune surfaces an explicit error
-  message at config time and blocks the assignment. The circular case is detected and reported
+  message at configuration time and blocks the assignment. The circular case is detected and reported
   in the Intune admin center UI; you cannot save a circular configuration. (Note: this corrects
   a prior project-doc claim. The reference doc at
   [Win32 App Packaging Reference](../../reference/win32-app-packaging.md) is updated in the
@@ -113,7 +113,7 @@ illustration showing both relationship types in a single visual.
 ### Combined supersedence + dependency subgraph
 
 The following ASCII art illustrates a combined supersedence + dependency relationship subgraph
-with 10 nodes (5 supersedence chain + 5 dependency tree). This shows how an admin can reason
+with 10 nodes (5 supersedence chain + 5 dependency tree). This shows how an administrator can reason
 about both relationship types in a single design. Each node is an app:
 
 ```
@@ -146,8 +146,8 @@ Edges: 4 supersedence + 3 dependency = 7 relationships visualized
 
 This combined subgraph illustrates that App-Current can simultaneously be the head of a
 supersedence chain (replacing App-Old-v2 and App-Old-v1) and the head of a dependency tree
-(requiring Runtime-A which has its own recursive sub-dependencies). When admins design Win32
-app rollouts at scale, both subgraphs must be reasoned about together — the supersedence chain
+(requiring Runtime-A which has its own recursive sub-dependencies). When administrators design Win32
+app rollouts at scale, both subgraphs must be reasoned about together—the supersedence chain
 determines what install replaces what; the dependency tree determines what installs first.
 
 For detection rule priority and the broader Win32 dependency-chain behavior reference, see
@@ -156,7 +156,7 @@ For detection rule priority and the broader Win32 dependency-chain behavior refe
 <a id="contentpreptool-packaging"></a>
 ## ContentPrepTool Packaging
 
-Win32 app delivery via Intune requires the source application to be packaged into the
+Win32 app delivery through Intune requires the source application to be packaged into the
 `.intunewin` format using **Win32ContentPrepTool**. This section covers the current GA version,
 the `.intunewin` format conversion workflow, and the 4 detection rule types Intune supports for
 Win32 apps. MSIX is included as a routing-only sub-section because MSIX does NOT support
@@ -193,30 +193,30 @@ For the detection-rule priority order and conflict resolution between multiple r
 
 ### MSIX scope (routing only)
 
-MSIX is a separate Windows app packaging format. MSIX apps are deployed via Intune but follow a
+MSIX is a separate Windows app packaging format. MSIX apps are deployed through Intune but follow a
 different lifecycle model than Win32 apps:
 
 - **MSIX does NOT support supersedence.** Use version replacement in the same app entry instead
   (per [Microsoft Learn supersedence prerequisites](https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence):
   "App supersedence can only be applied to Win32 apps.").
-- All MSIX packages must be signed (Developer ID certificate); unsigned MSIX will not install
-  even via MDM enrollment.
+- All MSIX packages must be signed (Developer ID certificate); unsigned MSIX does not install
+  even through MDM enrollment.
 - For MSIX-specific lifecycle guidance, see the
   [Microsoft Learn MSIX deployment documentation](https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-windows-10-app-deploy).
 
 The `## ContentPrepTool Packaging` H2 is the canonical location for the MSIX scope disclaimer
-because the disclaimer references packaging-format constraints that admins reach by way of the
+because the disclaimer references packaging-format constraints that administrators reach by way of the
 ContentPrepTool workflow.
 
 ## Related Resources
 
-- [App Lifecycle Overview](00-overview.md) — Cross-platform app lifecycle hub
-- [macOS PKG / DMG Pipeline](02-macos-pkg-dmg-pipeline.md) — macOS sibling
-- [iOS VPP Licensing](03-ios-vpp-licensing.md) — iOS sibling
-- [Android MGP Lifecycle](04-android-mgp-lifecycle.md) — Android sibling
-- [Win32 App Packaging Reference](../../reference/win32-app-packaging.md) — Detection-rule
+- [App Lifecycle Overview](00-overview.md)—Cross-platform app lifecycle hub
+- [macOS PKG / DMG Pipeline](02-macos-pkg-dmg-pipeline.md)—macOS sibling
+- [iOS VPP Licensing](03-ios-vpp-licensing.md)—iOS sibling
+- [Android MGP Lifecycle](04-android-mgp-lifecycle.md)—Android sibling
+- [Win32 App Packaging Reference](../../reference/win32-app-packaging.md)—Detection-rule
   priority + dependency-chain depth + anti-pattern warnings
-- [Patch & Update Management Overview](../patch-management/00-overview.md) — Sibling ops-domain
+- [Patch & Update Management Overview](../patch-management/00-overview.md)—Sibling ops-domain
   overview (Phase 54)
 
 ## External References
@@ -224,4 +224,4 @@ ContentPrepTool workflow.
 - [Win32 supersedence (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence)
 - [Add and assign Win32 apps (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-add)
 - [Win32 Content Prep Tool releases (GitHub)](https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases)
-- [Operations Documentation Index](../00-index.md) — Cross-reference only; Phase 55 does not amend the operations index
+- [Operations Documentation Index](../00-index.md)—Cross-reference only; Phase 55 does not amend the operations index

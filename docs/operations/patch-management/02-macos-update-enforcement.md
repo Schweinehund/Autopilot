@@ -17,14 +17,14 @@ platform: macOS
 
 This guide is the macOS-specific patch and update enforcement reference. It covers the
 **Declarative Device Management (DDM)** "Software Update Enforce Latest" enforcement primitive
-configured via Intune Settings Catalog — the only forward-compatible enforcement path for macOS
+configured through Intune Settings Catalog—the only forward-compatible enforcement path for macOS
 update enforcement post-Apple-OS-26 release. Legacy MDM commands and configuration profile
 payloads (`forceDelayedSoftwareUpdates`, `com.apple.SoftwareUpdate`, `ScheduleOSUpdate`) are
 deprecated with the Apple OS 26 releases and become non-functional in all Apple OS 27.0 operating
-systems — a two-stage cutover this guide previously collapsed into a single "deprecated and
+systems—a two-stage cutover this guide previously collapsed into a single "deprecated and
 removed with Apple OS 26" event.
 
-**Source:** [Apple: device management updates](https://support.apple.com/guide/deployment/device-management-updates-depd638aa061/web) (published 2026-06-08) and [Deprecated MDM policies for macOS](https://learn.microsoft.com/en-us/intune/intune-service/protect/deprecated-mdm-policies-macos) (updated 2026-06-22) — the Intune article's own deprecation banner gives no removal date; that absence is stated here, not filled.
+**Source:** [Apple: device management updates](https://support.apple.com/guide/deployment/device-management-updates-depd638aa061/web) (published 2026-06-08) and [Deprecated MDM policies for macOS](https://learn.microsoft.com/en-us/intune/intune-service/protect/deprecated-mdm-policies-macos) (updated 2026-06-22)—the Intune article's own deprecation banner gives no removal date; that absence is stated here, not filled.
 
 For the cross-platform comparison, see [Patch Management Overview](00-overview.md).
 
@@ -33,10 +33,10 @@ For the cross-platform comparison, see [Patch Management Overview](00-overview.m
 
 DDM "**Software Update Enforce Latest**" (configured in **Intune Settings Catalog** under macOS
 configuration profiles) is the **DDM** declarative-management primitive for macOS update
-enforcement. This is the only **forward-compatible** enforcement path post-Apple-OS-26 — Apple
+enforcement. This is the only **forward-compatible** enforcement path post-Apple-OS-26—Apple
 deprecates the legacy MDM-command-based enforcement primitives with Apple OS 26, and they become
 non-functional in all Apple OS 27.0 operating systems (see
-[Deadlines & Cutover Dates](#deadlines-cutover-dates) below).
+[Deadlines & Cutover Dates](#deadlines-cutover-dates).
 
 **Configuration path (Intune Settings Catalog):**
 
@@ -53,7 +53,7 @@ restart, and user notification per the declared assertion. This differs from leg
 sending where the server pushed an explicit command to install.
 
 **Eligibility:** macOS 14.0+ supports the DDM software update assertion. macOS 13 and earlier
-must use legacy MDM commands [HARD-DEADLINE — see Deadlines H2] until upgrading to macOS 14+ —
+must use legacy MDM commands [HARD-DEADLINE—see Deadlines H2] until upgrading to macOS 14+—
 this is a forced-migration window: any macOS 13 fleet not yet on macOS 14+ at Apple OS 26 release
 loses MDM-driven update enforcement entirely.
 
@@ -61,18 +61,18 @@ loses MDM-driven update enforcement entirely.
 
 macOS update tooling has historically conflated two distinct primitives:
 
-- **Deferral** — Tenant-side delay before user can install an update. Configured via the legacy
-  MDM restriction `forceDelayedSoftwareUpdates` [HARD-DEADLINE — see Deadlines H2] (set in
+- **Deferral**—Tenant-side delay before user can install an update. Configured through the legacy
+  MDM restriction `forceDelayedSoftwareUpdates` [HARD-DEADLINE—see Deadlines H2] (set in
   configuration profile payload). Pre-Apple-OS-26 this restriction still functions: tenants can
   defer minor updates 1-90 days. Apple OS 26 deprecates this restriction; it becomes non-functional
   once a device is running Apple OS 27.0.
-- **Enforcement** — Tenant-side hard requirement that OS install update by deadline.
-  Pre-Apple-OS-26 enforcement was via the `ScheduleOSUpdate` MDM command. Post-Apple-OS-26
-  enforcement is via DDM "Software Update Enforce Latest" only.
+- **Enforcement**—Tenant-side hard requirement that OS install update by deadline.
+  Pre-Apple-OS-26 enforcement was through the `ScheduleOSUpdate` MDM command. Post-Apple-OS-26
+  enforcement is through DDM "Software Update Enforce Latest" only.
 
 The DDM model collapses both primitives: the declarative "enforce latest by date Z" assertion
 implies both deferral (until date Z) and enforcement (by date Z). Tenants migrating from legacy
-MDM commands to DDM should plan to retire the deferral-as-restriction pattern and adopt the
+MDM commands to DDM must plan to retire the deferral-as-restriction pattern and adopt the
 DDM-as-declarative-deadline pattern.
 
 **Practical implication:** Pre-Apple-OS-26 a tenant could combine `forceDelayedSoftwareUpdates`
@@ -109,7 +109,7 @@ before Apple OS 26 ships.
   "Software Update Enforce Latest" available on macOS 14.0+. Tenants run dual-path during the
   transition.
 - **Apple OS 26 GA (target window):** Legacy commands are deprecated at this release but remain
-  functional — Apple has published no separate removal date for this stage. Treat this window as
+  functional—Apple has published no separate removal date for this stage. Treat this window as
   the deadline to complete migration to DDM Settings Catalog assertions.
 - **Apple OS 27.0 (all releases):** Legacy commands become non-functional. Any remaining
   `forceDelayedSoftwareUpdates` / `com.apple.SoftwareUpdate` / `ScheduleOSUpdate` configuration
@@ -121,49 +121,49 @@ before Apple OS 26 ships.
 Tenants currently using legacy MDM update primitives must migrate to DDM before Apple OS 26.
 Migration plan:
 
-**Step 1 — Inventory legacy command usage.** The legacy `forceDelayedSoftwareUpdates`
-[HARD-DEADLINE — see Deadlines H2] MDM restriction configured in current macOS configuration
+**Step 1—Inventory legacy command usage.** The legacy `forceDelayedSoftwareUpdates`
+[HARD-DEADLINE—see Deadlines H2] MDM restriction configured in current macOS configuration
 profiles needs to be identified and inventoried. Use Intune > Devices > Configuration profiles >
 filter by macOS to find all profiles using the deferral restriction.
 
-**Step 2 — Inventory `com.apple.SoftwareUpdate` payload usage.** Configuration profiles deploying
-the `com.apple.SoftwareUpdate` payload [HARD-DEADLINE — see Deadlines H2] must be migrated to DDM
+**Step 2—Inventory `com.apple.SoftwareUpdate` payload usage.** Configuration profiles deploying
+the `com.apple.SoftwareUpdate` payload [HARD-DEADLINE—see Deadlines H2] must be migrated to DDM
 Settings Catalog assertions. Profiles using this payload typically configure update server URLs
 or update catalog sources.
 
-**Step 3 — Inventory `ScheduleOSUpdate` MDM command usage.** The `ScheduleOSUpdate` MDM command
-[HARD-DEADLINE — see Deadlines H2] previously used by Intune to push install commands no longer
+**Step 3—Inventory `ScheduleOSUpdate` MDM command usage.** The `ScheduleOSUpdate` MDM command
+[HARD-DEADLINE—see Deadlines H2] previously used by Intune to push install commands no longer
 functions once a device is running Apple OS 27.0 (Apple OS 26 deprecates it but leaves it
 functional). Replace with DDM "Software Update Enforce Latest" assertion.
 
-**Step 4 — Author DDM assertions.** Create new Intune Settings Catalog profiles with DDM Software
-Update assertions targeting the desired macOS version + deadline. Pilot on a test ring before
+**Step 4—Author DDM assertions.** Create new Intune Settings Catalog profiles with DDM Software
+Update assertions targeting the intended macOS version + deadline. Pilot on a test ring before
 rolling out to production. The DDM assertion encodes target version, grace period, and deadline
-behavior in a single declarative payload — the OS enforces the target without server-side command
+behavior in a single declarative payload—the OS enforces the target without server-side command
 delivery.
 
-**Step 5 — Decommission legacy profiles.** After DDM profiles are deployed and reporting healthy,
+**Step 5—Decommission legacy profiles.** After DDM profiles are deployed and reporting healthy,
 decommission the legacy `forceDelayedSoftwareUpdates` / `com.apple.SoftwareUpdate` /
 `ScheduleOSUpdate` profiles. Apple OS 26 release is the recommended completion target; Apple OS
 27.0 is the hard deadline, since that is when the legacy primitives stop functioning.
 
 **Critical scheduling note:** Migration MUST complete before Apple OS 27.0 ships. Devices
-upgrading to Apple OS 27.0 with legacy command profiles still attached will silently lose update
-enforcement (the legacy commands no-op once the device is on Apple OS 27.0 — Apple OS 26
-deprecates them but leaves them functional). The failure mode is silent — Intune will continue
+upgrading to Apple OS 27.0 with legacy command profiles still attached silently lose update
+enforcement (the legacy commands no-op once the device is on Apple OS 27.0—Apple OS 26
+deprecates them but leaves them functional). The failure mode is silent—Intune continues
 showing the policy as "deployed" because Intune cannot detect that the MDM command was ignored by
 the OS.
 
 ## Validation & Reporting
 
-After deploying DDM Settings Catalog profiles, validate enforcement via:
+After deploying DDM Settings Catalog profiles, validate enforcement using:
 
-- **Intune > Devices > Monitor > Configuration profiles** — confirm assignment + applicability
+- **Intune > Devices > Monitor > Configuration profiles**—confirm assignment + applicability
   status for each macOS device. The DDM assertion shows as a configuration profile in the
   monitor view.
-- **macOS device** — `softwareupdate --list-full-installers` and `system_profiler
+- **macOS device**—`softwareupdate --list-full-installers` and `system_profiler
   SPConfigurationProfileDataType` confirm the DDM assertion is delivered and active locally.
-- **Apple Business Manager / Apple School Manager** — confirm device is enrolled in DDM-eligible
+- **Apple Business Manager / Apple School Manager**—confirm device is enrolled in DDM-eligible
   state (macOS 14.0+, MDM-enrolled, network reachable).
 
 **What breaks if migration is incomplete by Apple OS 27.0:** Devices on Apple OS 27.0 with legacy
@@ -171,18 +171,18 @@ After deploying DDM Settings Catalog profiles, validate enforcement via:
 lose update-enforcement behavior (Apple OS 26 deprecates these primitives but does not yet disable
 them). Intune compliance dashboards continue to show the profiles as deployed (because the
 assignment still succeeds), but the OS no longer honors the underlying primitives. Tenants
-discover the gap only when devices fall behind on updates without admin intervention.
+discover the gap only when devices fall behind on updates without administrator intervention.
 
 ## Related Resources
 
-- [Patch Management Overview](00-overview.md) — Cross-platform comparison + Ring Terminology hub
-- [Windows WUfB Rings](01-windows-wufb-rings.md) — Windows forward path
-- [iOS Update Lifecycle](03-ios-update-lifecycle.md) — iOS DDM (related Apple platform)
-- [Android Patch Delivery](04-android-patch-delivery.md) — Android attestation gate
+- [Patch Management Overview](00-overview.md)—Cross-platform comparison + Ring Terminology hub
+- [Windows WUfB Rings](01-windows-wufb-rings.md)—Windows forward path
+- [iOS Update Lifecycle](03-ios-update-lifecycle.md)—iOS DDM (related Apple platform)
+- [Android Patch Delivery](04-android-patch-delivery.md)—Android attestation gate
 
 ## External References
 
 - [Software Updates Guide for macOS (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/protect/software-updates-guide-macos)
 - [Deprecated MDM Policies for macOS (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/protect/deprecated-mdm-policies-macos)
 - [DDM Software Update (Apple Developer)](https://developer.apple.com/documentation/devicemanagement/softwareupdateenforcement)
-- [Apple Platform Deployment — Software Update](https://support.apple.com/guide/deployment/software-update-management-depc4c80847a/web)
+- [Apple Platform Deployment—Software Update](https://support.apple.com/guide/deployment/software-update-management-depc4c80847a/web)

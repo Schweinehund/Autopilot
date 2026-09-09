@@ -22,7 +22,7 @@ This reference documents Win32 app packaging best practices for reliable Enrollm
 
 > For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
 
-The most common cause of ESP timeouts and hung provisioning is poorly packaged Win32 apps — wrong detection rules, missing dependency declarations, or mixed app types. This guide documents the detection rule priority order, ESP tracking requirements, dependency chain configuration, and anti-patterns that cause ESP failures.
+The most common cause of ESP timeouts and hung provisioning is poorly packaged Win32 apps—wrong detection rules, missing dependency declarations, or mixed app types. This guide documents the detection rule priority order, ESP tracking requirements, dependency chain configuration, and anti-patterns that cause ESP failures.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Choose the most deterministic detection method available. Work down this list un
 
 **Use when:** App is distributed as an MSI installer.
 
-Intune auto-detects the MSI product code during `.intunewin` upload — look for it in the install command field after upload. If the product code is pre-populated, use it as-is.
+Intune auto-detects the MSI product code during `.intunewin` upload—look for it in the install command field after upload. If the product code is pre-populated, use it as-is.
 
 **How to configure:** Detection rules > Rule type = MSI. Product code is auto-filled.
 
@@ -50,7 +50,7 @@ Intune auto-detects the MSI product code during `.intunewin` upload — look for
 
 **Use when:** App is a non-MSI installer that writes a versioned executable.
 
-Specify: exact file path (e.g., `C:\Program Files\MyApp\myapp.exe`), version number, and comparison operator. Always use `>=` (greater than or equal to) rather than `=` (equals) so future updates don't break detection.
+Specify: exact file path (for example, `C:\Program Files\MyApp\myapp.exe`), version number, and comparison operator. Always use `>=` (greater than or equal to) rather than `=` (equals) so future updates don't break detection.
 
 **How to configure:** Detection rules > Rule type = File. Enter path, file or folder, detection method = Version, operator = Greater than or equal to, version string.
 
@@ -78,9 +78,9 @@ Specify: exact file path (e.g., `C:\Program Files\MyApp\myapp.exe`), version num
 
 Script must exit with code `0` to indicate detection (app is installed) and exit code `1` to indicate not detected.
 
-**Performance note:** Each PowerShell detection script adds 5-15 seconds to the detection cycle. Multiply by number of tracked apps — large app catalogs with PowerShell detection add significant time to ESP.
+**Performance note:** Each PowerShell detection script adds 5-15 seconds to the detection cycle. Multiply by number of tracked apps—large app catalogs with PowerShell detection add significant time to ESP.
 
-> **What breaks if misconfigured:** Script exits with non-zero code unexpectedly (e.g., a command not found on a specific Windows version).
+> **What breaks if misconfigured:** Script exits with non-zero code unexpectedly (for example, a command not found on a specific Windows version).
 
 > Intune treats non-zero exit as "not installed." App re-installs on every sync check, causing repeated ESP invocations and potential conflicts with running processes.
 
@@ -96,7 +96,7 @@ ESP only tracks apps with specific assignment types. Assignment type determines 
 
 **"Selected" mode:** Up to 100 apps can be added to the ESP blocking list. Recommended for large app catalogs.
 
-**"All" mode:** Every Required app assignment blocks desktop access. Use with caution — any new Required assignment immediately becomes a blocker.
+**"All" mode:** Every Required app assignment blocks desktop access. Use with caution—any new Required assignment immediately becomes a blocker.
 
 > **What breaks if misconfigured:** App assigned as "Available" instead of "Required" = app is never tracked by ESP, never blocks desktop.
 
@@ -120,7 +120,7 @@ Win32 apps support dependency declarations in Intune. Use them to enforce instal
 
 ### Circular Dependency Detection
 
-Intune detects circular dependencies at configuration time and surfaces an explicit error message. If you misconfigure a circular dependency (App A requires App B, App B requires App A), Intune blocks the assignment with an error message identifying the cycle. (Behavior verified at Microsoft Learn April 2026; this section was previously documented as "not detected" — the prior claim is retracted as of Phase 55 publication on 2026-04-28.)
+Intune detects circular dependencies at configuration time and surfaces an explicit error message. If you misconfigure a circular dependency (App A requires App B, App B requires App A), Intune blocks the assignment with an error message identifying the cycle. (Behavior verified at Microsoft Learn April 2026; this section was previously documented as "not detected"—the prior claim is retracted as of Phase 55 publication on 2026-04-28.)
 
 **How to diagnose:** Check IME logs for conflict errors:
 ```
@@ -129,9 +129,9 @@ C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\IntuneManagementExtensio
 
 Search for: `Circular dependency detected` or `dependency failed`.
 
-> **What breaks if sequenced incorrectly:** App B depends on App A's runtime (e.g., .NET Framework). If App A is not declared as a dependency, install order is non-deterministic.
+> **What breaks if sequenced incorrectly:** App B depends on App A's runtime (for example, .NET Framework). If App A is not declared as a dependency, install order is non-deterministic.
 
-> Intune may install App B first — App B fails at launch because its runtime is missing.
+> Intune may install App B first—App B fails at launch because its runtime is missing.
 
 > ESP retries App B, which fails again. ESP eventually times out waiting for App B to succeed.
 
@@ -140,7 +140,7 @@ Search for: `Circular dependency detected` or `dependency failed`.
 > [!WARNING]
 > **Do NOT mix Win32 (.intunewin) and LOB (MSI) as Required in the same ESP deployment.**
 
-> The TrustedInstaller service cannot handle both installer types simultaneously — ESP hangs at app installation with IME logs showing "Another installation is in progress."
+> The TrustedInstaller service cannot handle both installer types simultaneously—ESP hangs at app installation with IME logs showing "Another installation is in progress."
 
 > Convert all apps to Win32 format, or use APv2 which supports mixed app types. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) for details.
 
@@ -163,8 +163,8 @@ Search for: `Circular dependency detected` or `dependency failed`.
 
 ## See Also
 
-- [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) — ESP settings, blocking app list, app type compatibility
-- [ESP Timeout Tuning](esp-timeout-tuning.md) — Scenario-based timeout recommendations
+- [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md)—ESP settings, blocking app list, app type compatibility
+- [ESP Timeout Tuning](esp-timeout-tuning.md)—Scenario-based timeout recommendations
 - [ESP Lifecycle Stage](../lifecycle/04-esp.md)
 
 ## Version History

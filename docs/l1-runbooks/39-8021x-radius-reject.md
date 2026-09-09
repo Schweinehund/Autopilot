@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X failures where all certificate profiles show Succeeded in Intune but the RADIUS server returns a clean Access-Reject, across all five platforms, with per-platform diagnostic signal collection for L2 escalation.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X failures where all certificate profiles show Succeeded in Intune but the RADIUS server returns a clean Access-Reject, across all five platforms, with per-platform diagnostic signal collection for L2 escalation.
 
 > **Platform gate:** This guide covers 802.1X RADIUS-reject triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
@@ -24,7 +24,7 @@ This runbook covers read-only L1 diagnostic steps only — no registry edits, no
 
 > **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
 
-> State-changing actions (modifying RADIUS policy, re-configuring the Intune Wi-Fi/Wired profile, reprovisioning certificates) appear ONLY in L2 runbooks — they are not L1 actions.
+> State-changing actions (modifying RADIUS policy, re-configuring the Intune Wi-Fi/Wired profile, reprovisioning certificates) appear ONLY in L2 runbooks—they are not L1 actions.
 
 ## Symptom
 
@@ -34,21 +34,21 @@ All 802.1X certificate profiles (**Trusted Certificate** and **SCEP/PKCS** clien
 - No certificate error is visible in Intune
 - No cert profile shows Error or Pending
 
-The failure is a clean **Access-Reject** from the RADIUS server — the connection attempt reaches the server and the server rejects it. The RADIUS server is reachable; this is not a network-connectivity or firewall issue.
+The failure is a clean **Access-Reject** from the RADIUS server—the connection attempt reaches the server and the server rejects it. The RADIUS server is reachable; this is not a network-connectivity or firewall issue.
 
 Differential:
 
 - If a Trusted Certificate or SCEP/PKCS cert profile shows Error or Pending → see [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md)
 - If the device shows a trust prompt or "untrusted certificate" indicator → see [#40: 802.1X Server Trust Failure](40-8021x-server-trust-failure.md)
-- If there is evidence of an EAP method or inner-auth mismatch (e.g., iOS fails on an SSID where other platforms succeed) → see [#41: 802.1X EAP Negotiation Failure](41-8021x-eap-negotiation-failure.md)
+- If there is evidence of an EAP method or inner-auth mismatch (for example, iOS fails on an SSID where other platforms succeed) → see [#41: 802.1X EAP Negotiation Failure](41-8021x-eap-negotiation-failure.md)
 
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com)
-- Access to Microsoft Entra admin center (https://entra.microsoft.com) — read-only is sufficient
+- Access to Microsoft Entra admin center (https://entra.microsoft.com)—read-only is sufficient
 - Device serial number
 - User's UPN (email address)
-- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux) — required to use the per-platform diagnostic table below
+- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux)—required to use the following per-platform diagnostic table
 
 ## First Checks (All Platforms)
 
@@ -59,9 +59,9 @@ Perform these checks **before** collecting platform-specific logs. They rule out
    - SCEP or PKCS client certificate profile
    - Wi-Fi or Wired network profile
 
-   If any cert profile is not Succeeded, this is a certificate deployment failure — route to [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md) instead.
+   If any cert profile is not Succeeded, this is a certificate deployment failure—route to [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md) instead.
 
-2. Open the Wi-Fi or Wired network profile in Intune (**Devices** > **Configuration** > [profile]) and confirm the **RADIUS server name** field (Certificate server names) is populated. An empty server-name field with server validation nominally enabled is a misconfiguration that can appear as a silent failure — if the field is empty or missing, route to [#40: 802.1X Server Trust Failure](40-8021x-server-trust-failure.md) for the server-trust investigation.
+2. Open the Wi-Fi or Wired network profile in Intune (**Devices** > **Configuration** > [profile]) and confirm the **RADIUS server name** field (Certificate server names) is populated. An empty server-name field with server validation nominally enabled is a misconfiguration that can appear as a silent failure—if the field is empty or missing, route to [#40: 802.1X Server Trust Failure](40-8021x-server-trust-failure.md) for the server-trust investigation.
 
 3. Note the **EAP type** configured in the Wi-Fi or Wired profile (EAP-TLS, PEAP-MSCHAPv2, or EAP-TTLS). Record this for the escalation note.
 
@@ -69,11 +69,11 @@ Perform these checks **before** collecting platform-specific logs. They rule out
 
 > **NOTE:** RADIUS-reject failures (this runbook) are distinct from certificate delivery failures (#38) and server trust failures (#40).
 
-> This runbook applies when Intune shows all profiles as Succeeded and the device is actively being rejected by the RADIUS server — not when cert deployment is incomplete.
+> This runbook applies when Intune shows all profiles as Succeeded and the device is actively being rejected by the RADIUS server—not when cert deployment is incomplete.
 
 ## Per-Platform Diagnostic Signal
 
-Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries — copy the complete output and provide it to L2.
+Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries—copy the complete output and provide it to L2.
 
 | Platform | Signal / Channel | L1 Action |
 |----------|-----------------|-----------|
@@ -84,19 +84,19 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 | **Android** | Intune portal — device configuration profile status | **L1 action: check Intune portal only.** Navigate to Intune admin center > **Devices** > [Android Enterprise] > device > **Device configuration** and confirm all profile statuses. Note the signal `adb logcat -s "wpa_supplicant"` for escalation — do **not** attempt to run it at L1; it requires USB debugging and a tethered PC and is an escalation-collected signal for L2 use only. |
 | **Linux** | NetworkManager journal (primary); wpa_supplicant journal (supplement) | Ask the user to run: `journalctl -u NetworkManager`. If the NetworkManager output is insufficient, supplement with `journalctl -u wpa_supplicant`. Copy the **complete output**; do not interpret. |
 
-**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
+**NOTE—macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence—sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
 
 ## Per-Platform Escalation Notes
 
 ### Windows
 
-A RADIUS reject (Access-Reject) in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel typically appears as event 8003 (authentication failed / disconnected) **without** a preceding event referencing a certificate chain or certificate-not-found error. This pattern distinguishes a RADIUS reject from a certificate failure (#38). Do not interpret individual events — collect the complete log output and provide it to L2.
+A RADIUS reject (Access-Reject) in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel typically appears as event 8003 (authentication failed / disconnected) **without** a preceding event referencing a certificate chain or certificate-not-found error. This pattern distinguishes a RADIUS reject from a certificate failure (#38). Do not interpret individual events—collect the complete log output and provide it to L2.
 
-For wired connections, also note whether the Wired AutoConfig service (dot3svc) is confirmed running. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
+For wired connections, also note whether the Wired AutoConfig service (dot3svc) is confirmed running. See [Windows 802.1X Admin Setup—Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 
-On macOS, a RADIUS reject appears in the eapolclient unified log as an EAPOL rejection **after** the TLS tunnel is established — meaning the TLS handshake succeeded (certificates were accepted by both sides) but the RADIUS server rejected the authentication at the EAP-Request/EAP-Response layer. This is distinct from a TLS handshake failure seen in certificate failures (#38). Collect the complete `log show` output; do not interpret.
+On macOS, a RADIUS reject appears in the eapolclient unified log as an EAPOL rejection **after** the TLS tunnel is established—meaning the TLS handshake succeeded (certificates were accepted by both sides) but the RADIUS server rejected the authentication at the EAP-Request/EAP-Response layer. This is distinct from a TLS handshake failure seen in certificate failures (#38). Collect the complete `log show` output; do not interpret.
 
 ### iOS/iPadOS
 
@@ -104,11 +104,11 @@ No device-side log command is available for iOS/iPadOS. L1 is limited to Intune 
 
 ### Android
 
-The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only — they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. L1 action is Intune portal profile status inspection only.
+The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only—they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. L1 action is Intune portal profile status inspection only.
 
 ### Linux
 
-The `journalctl -u NetworkManager` command is the primary L1 signal on Linux. A RADIUS reject surfaces as a wpa_supplicant EAP failure message within the NM journal. Supplement with `journalctl -u wpa_supplicant` if the NM journal output is truncated. Do not interpret — collect the complete output and provide it to L2.
+The `journalctl -u NetworkManager` command is the primary L1 signal on Linux. A RADIUS reject surfaces as a wpa_supplicant EAP failure message within the NM journal. Supplement with `journalctl -u wpa_supplicant` if the NM journal output is truncated. Do not interpret—collect the complete output and provide it to L2.
 
 ## Escalation Criteria
 
@@ -132,7 +132,7 @@ Escalate to L2 if:
 - For Linux: complete output of `journalctl -u NetworkManager`
 - For iOS/iPadOS: Intune portal profile status screenshot (no device log available)
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
-- Results of the First Checks steps above, including confirmed RADIUS server-name field status and EAP method
+- Results of the First Checks steps, including confirmed RADIUS server-name field status and EAP method
 
 See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
 log sources, then [L2 RADIUS/EAP Investigation (#33)](../l2-runbooks/33-8021x-radius-eap-investigation.md)

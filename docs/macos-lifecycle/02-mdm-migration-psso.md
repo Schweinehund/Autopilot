@@ -35,27 +35,27 @@ This is a single-file operator walkthrough threading a Mac through MDM migration
 | **B1 — macOS 26 in-place** | macOS 26 or later (hard gate) | Wipe-free in-place; genuine unenroll + reenroll via profile-based enrollment | Always required — MDM unenrollment = IdP unregistration; new Secure Enclave key created | Target devices confirmed running macOS 26+; wipe is operationally unacceptable |
 | **B2 — Pre-macOS-26 wipe** | macOS 25 or earlier | Retire/wipe/re-enroll; fresh ADE enrollment via Intune | Fresh PSSO provisioning from scratch (link to guide 01) | Target devices running macOS 25 or earlier; B1 in-place path not available |
 
-> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created.
+> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration—no WPJ key is written and no Secure Enclave entry is created.
 
 > This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
 
 ### Prerequisites
 
-All prerequisites must be met before Stage 1. The ADE pipeline prerequisites (ABM account, ADE token, APNs certificate, Intune licenses, network endpoints) are covered in [macOS ADE Lifecycle — Prerequisites](00-ade-lifecycle.md).
+All prerequisites must be met before Stage 1. The ADE pipeline prerequisites (ABM account, ADE token, APNs certificate, Intune licenses, network endpoints) are covered in [macOS ADE Lifecycle—Prerequisites](00-ade-lifecycle.md).
 
 **Common prerequisites (B1 and B2):**
 
 - [ ] Apple Business Manager account configured and ADE token uploaded to Intune
 - [ ] Kandji/Iru source MDM has devices enrolled and managed (migration out of source MDM)
-- [ ] Intune ADE enrollment policy configured with: User Affinity — Enroll with User Affinity; Authentication — Setup Assistant with modern authentication; Await Configuration: Yes; Locked Enrollment: Yes
+- [ ] Intune ADE enrollment policy configured with: User Affinity—Enroll with User Affinity; Authentication—Setup Assistant with modern authentication; Await Configuration: Yes; Locked Enrollment: Yes
 - [ ] Platform SSO Settings Catalog policy created and assigned to target user groups (see [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) for field-level detail)
 - [ ] Network connectivity verified to required Intune and Apple ADE endpoints (see [macOS ADE Lifecycle](00-ade-lifecycle.md) for endpoint list)
-- [ ] FileVault recovery keys retrieved from Kandji/Iru console BEFORE any device migration (permanently destroyed on Delete Device Record — see Stage 2)
-- [ ] Activation Lock bypass codes retrieved from Kandji/Iru console BEFORE any device migration (permanently destroyed on Delete Device Record — see Stage 2)
+- [ ] FileVault recovery keys retrieved from Kandji/Iru console BEFORE any device migration (permanently destroyed on Delete Device Record—see Stage 2)
+- [ ] Activation Lock bypass codes retrieved from Kandji/Iru console BEFORE any device migration (permanently destroyed on Delete Device Record—see Stage 2)
 
 **B1-only prerequisites (macOS 26+ in-place path):**
 
-- [ ] macOS 26 or later confirmed on all target devices (hard gate — B1 in-place path not available on earlier macOS; route those devices to B2)
+- [ ] macOS 26 or later confirmed on all target devices (hard gate—B1 in-place path not available on earlier macOS; route those devices to B2)
 - [ ] Intune ADE enrollment policy assigned to target device serial numbers in ABM, or set as the default for the ADE token, BEFORE triggering ABM "Assign Device Management"
 - [ ] PSSO Settings Catalog policy assigned to target user groups and confirmed ready to deliver at re-enrollment
 - [ ] CA exclusions and TLS inspection exemptions in place for Intune and Apple endpoints
@@ -66,7 +66,7 @@ All prerequisites must be met before Stage 1. The ADE pipeline prerequisites (AB
 
 ## The MDM Migration Pipeline
 
-**LOCKED — 17 (nodes + labeled edges)** — 15 nodes (2 shared pre-flight stages, the Gate decision, 7 B1 stages, and 5 B2 stages) + 2 labeled edges, independently re-derived from the pre-conversion pipeline diagram (`git show 71be4ab`). The single diamond (`Gate`) is represented below; the two branches are confirmed dual non-reconverging pipelines -- B1's 7-stage in-place track and B2's 5-stage retire/wipe/re-enroll track never merge back together.
+**LOCKED—17 (nodes + labeled edges)**—15 nodes (2 shared pre-flight stages, the Gate decision, 7 B1 stages, and 5 B2 stages) + 2 labeled edges, independently re-derived from the pre-conversion pipeline diagram (`git show 71be4ab`). The single diamond (`Gate`) is represented in the following table; the two branches are confirmed dual non-reconverging pipelines -- B1's 7-stage in-place track and B2's 5-stage retire/wipe/re-enroll track never merge back together.
 
 | Path | Pre-flight (shared) | Gate: macOS 26+? | Pipeline stages | Terminal |
 |------|----------------------|---------------------|-------------------|----------|
@@ -124,15 +124,15 @@ In the **Intune admin center**, navigate to **Devices > macOS > All Devices** to
 
 ### Behind the Scenes
 
-- The macOS 26 OS gate is a hard gate enforced by Apple. The ABM "Assign Device Management" migration workflow only triggers the non-dismissible full-screen enrollment prompt on macOS 26 or later. Devices on macOS 25 or earlier will not receive the in-place migration prompt regardless of ABM assignment.
-- Devices on macOS 25 or earlier that are assigned to Intune in ABM will receive the enrollment profile during their next Setup Assistant (after wipe) — not via the in-place migration flow.
+- The macOS 26 OS gate is a hard gate enforced by Apple. The ABM "Assign Device Management" migration workflow only triggers the non-dismissible full-screen enrollment prompt on macOS 26 or later. Devices on macOS 25 or earlier do not receive the in-place migration prompt regardless of ABM assignment.
+- Devices on macOS 25 or earlier that are assigned to Intune in ABM receive the enrollment profile during their next Setup Assistant (after wipe)—not through the in-place migration flow.
 
 ### Watch Out For
 
-- **Setting a B1 deadline before confirming OS version.** If a device is running macOS 25 or earlier and receives the deadline, the device will display the non-dismissible lock screen at the deadline but cannot complete the in-place enrollment. The only recovery is ABM admin cancellation of the migration (see L2 #30 Track A).
+- **Setting a B1 deadline before confirming OS version.** If a device is running macOS 25 or earlier and receives the deadline, the device displays the non-dismissible lock screen at the deadline but cannot complete the in-place enrollment. The only recovery is ABM administrator cancellation of the migration (see L2 #30 Track A).
 - **Devices enrolled into ABM while running macOS <26 (MEDIUM confidence).** If your fleet devices were added to ABM while running macOS 25 or earlier and have since been upgraded to macOS 26, the first migration attempt may require a one-time wipe-and-re-enroll through Setup Assistant before subsequent wipe-free migrations become available for those devices. Verify with a pilot device before fleet migration.
 
-  > **Note:** This behavior (one-time wipe for devices ABM-enrolled on pre-26 macOS) is based on community experience (MEDIUM confidence) — verify on a pilot device before fleet migration.
+  > **Note:** This behavior (one-time wipe for devices ABM-enrolled on pre-26 macOS) is based on community experience (MEDIUM confidence)—verify on a pilot device before fleet migration.
 
 ---
 
@@ -148,7 +148,7 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
 > FileVault recovery keys and Activation Lock bypass codes are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
 
-> Activation Lock bypass codes are only available within 30 days of the device being supervised — do not delay retrieval.
+> Activation Lock bypass codes are only available within 30 days of the device being supervised—do not delay retrieval.
 
 ### What Happens
 
@@ -158,17 +158,17 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
    - PSSO Settings Catalog policy is created and assigned to the target user groups (not device groups). The policy must be ready to deliver at the moment the device re-enrolls.
    - CA exclusions and TLS inspection exemptions are in place for Intune and Apple ADE endpoints.
 
-2. **VPP/Apps and Books token sequencing (if applicable).** If your organization is also migrating app licenses from Kandji/Iru to Intune: revoke app licenses in Kandji/Iru **first**, then remove the VPP token from Kandji/Iru, then upload the token to Intune. Do NOT use the "Take control of token" shortcut — this causes stale license conflicts.
+2. **VPP/Apps and Books token sequencing (if applicable).** If your organization is also migrating app licenses from Kandji/Iru to Intune: revoke app licenses in Kandji/Iru **first**, then remove the VPP token from Kandji/Iru, then upload the token to Intune. Do NOT use the "Take control of token" shortcut—this causes stale license conflicts.
 
    > **Note:** After assigning the device to Intune in ABM (Stage 3), allow up to 24 hours for automatic ABM-to-Intune sync, or trigger a manual sync (rate-limited to once per 15 minutes; 7-day full cooldown between full syncs).
 
-3. **FileVault recovery key retrieval.** In the Kandji/Iru console, navigate to the device record and retrieve the FileVault recovery key. Record it securely — this key is permanently destroyed when the device record is deleted. **Portal URLs (verify which resolves on your authoring day):** `support.kandji.io` hosts Iru-branded KB articles (verified 2026-06-26: HTTP 200, displays "Kandji is now Iru" branding); `support.iru.io` resolves but is a login-gated SPA (verified 2026-06-26: HTTP 200, no publicly accessible content); `docs.iru.com` is the new authoritative Iru documentation domain (verified 2026-06-26: publicly accessible). The conceptual retrieval action is the same regardless of which URL you use.
+3. **FileVault recovery key retrieval.** In the Kandji/Iru console, navigate to the device record and retrieve the FileVault recovery key. Record it securely—this key is permanently destroyed when the device record is deleted. **Portal URLs (verify which resolves on your authoring day):** `support.kandji.io` hosts Iru-branded KB articles (verified 2026-06-26: HTTP 200, displays "Kandji is now Iru" branding); `support.iru.io` resolves but is a login-gated SPA (verified 2026-06-26: HTTP 200, no publicly accessible content); `docs.iru.com` is the new authoritative Iru documentation domain (verified 2026-06-26: publicly accessible). The conceptual retrieval action is the same regardless of which URL you use.
 
 4. **Activation Lock bypass code retrieval.** In the Kandji/Iru console, retrieve the Activation Lock bypass code for the device. This code is only available within 30 days of the device being supervised, and is permanently destroyed on Delete Device Record.
 
-   > **Note:** As of 2026-06-26 verification: `support.kandji.io` now displays Iru branding ("Kandji is now Iru") and remains fully accessible. `docs.iru.com` is the new authoritative Iru public docs domain where the device-deletion UI path is confirmed accessible. `support.iru.io` resolves but is a login-gated SPA — console navigation there is not verifiable without operator login credentials. The conceptual action is the same regardless of which portal you access: navigate to the device record, open the Device Action Menu, and access the secret-retrieval options before any deletion step. Verify current console labels on your own authoring day — both Kandji and Iru names may appear depending on the portal and rebranding progress.
+   > **Note:** As of 2026-06-26 verification: `support.kandji.io` now displays Iru branding ("Kandji is now Iru") and remains fully accessible. `docs.iru.com` is the new authoritative Iru public docs domain where the device-deletion UI path is confirmed accessible. `support.iru.io` resolves but is a login-gated SPA—console navigation there is not verifiable without operator login credentials. The conceptual action is the same regardless of which portal you access: navigate to the device record, open the Device Action Menu, and access the secret-retrieval options before any deletion step. Verify current console labels on your own authoring day—both Kandji and Iru names may appear depending on the portal and rebranding progress.
 
-5. **Source-side release — Delete Device Record.** After all secrets are retrieved and Intune readiness is confirmed, perform the Delete Device Record action in the Kandji/Iru console for each device being migrated in this wave. The UI path below is confirmed from `docs.iru.com` (publicly accessible, verified 2026-06-26) and consistent with `support.kandji.io` (Iru-branded KB, verified 2026-06-26). Verify exact labels in the current console on your authoring day — `support.iru.io` resolves but is login-gated; confirm via `docs.iru.com` if labels differ:
+5. **Source-side release—Delete Device Record.** After all secrets are retrieved and Intune readiness is confirmed, perform the Delete Device Record action in the Kandji/Iru console for each device being migrated in this wave. The following UI path is confirmed from `docs.iru.com` (publicly accessible, verified 2026-06-26) and consistent with `support.kandji.io` (Iru-branded KB, verified 2026-06-26). Verify exact labels in the current console on your authoring day—`support.iru.io` resolves but is login-gated; confirm through `docs.iru.com` if labels differ:
    - Navigate to **Devices**.
    - Click the target device.
    - Click the **Device Action Menu** (top right of device record).
@@ -176,9 +176,9 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
    - In the confirmation popup, type **DELETE** in the text field.
    - Click **Delete Device Record** to confirm.
 
-   > **Permanently destroyed on Delete Device Record (no recovery path):** Device lock PIN code, Recovery password, FileVault Recovery Key, Activation Lock Bypass Code. Note: the vendor's own documentation (`docs.iru.com`, `support.kandji.io`) does NOT include a "retrieve secrets first" pre-flight instruction — steps 3 and 4 above fill this gap. Complete steps 3 and 4 before this step.
+   > **Permanently destroyed on Delete Device Record (no recovery path):** Device lock PIN code, Recovery password, FileVault Recovery Key, Activation Lock Bypass Code. Note: the vendor's own documentation (`docs.iru.com`, `support.kandji.io`) does NOT include a "retrieve secrets first" pre-flight instruction—steps 3 and 4 fill this gap. Complete steps 3 and 4 before this step.
 
-   > **Stage 2 verification note (2026-06-26):** `docs.iru.com` deletion article confirmed publicly accessible (HTTP 200); UI path above confirmed identical to `support.kandji.io` KB content. `support.iru.io` resolves (HTTP 200) but serves a login-gated SPA — the deletion console path at `support.iru.io` is not verifiable without operator login credentials. Verify portal URLs resolve on your own authoring day before fleet migration.
+   > **Stage 2 verification note (2026-06-26):** `docs.iru.com` deletion article confirmed publicly accessible (HTTP 200); preceding UI path confirmed identical to `support.kandji.io` KB content. `support.iru.io` resolves (HTTP 200) but serves a login-gated SPA—the deletion console path at `support.iru.io` is not verifiable without operator login credentials. Verify portal URLs resolve on your own authoring day before fleet migration.
 
    After deletion: the Kandji/Iru agent receives notification at its next check-in (~15 minutes) and automatically uninstalls itself, removing all installed profiles. Allow approximately 15 minutes before proceeding to avoid profile conflicts.
 
@@ -186,14 +186,14 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
 - FileVault recovery keys are MDM-held cryptographic keys that allow decryption of the device's FileVault-encrypted startup disk. When the Kandji/Iru device record is deleted, the source MDM's copy of the key is destroyed. After migration, Intune's FileVault escrow policy generates a new recovery key (Stage 8).
 - Activation Lock bypass codes are device-specific codes that allow an administrator to bypass Activation Lock if the supervising MDM is removed. These codes are generated when the device is supervised and are only available within 30 days of supervision.
-- After Delete Device Record, the Kandji/Iru agent (`/Library/Kandji/Kandji Agent.app` and associated LaunchDaemons) will receive an uninstall command at the next MDM check-in and remove itself. Until this occurs, the agent may attempt to contact the Kandji/Iru servers — this is expected and resolves at the 15-minute check-in.
+- After Delete Device Record, the Kandji/Iru agent (`/Library/Kandji/Kandji Agent.app` and associated LaunchDaemons) receives an uninstall command at the next MDM check-in and removes itself. Until this occurs, the agent may attempt to contact the Kandji/Iru servers—this is expected and resolves at the 15-minute check-in.
 
 ### Watch Out For
 
 - **Deleting the device record before retrieving secrets.** This is the most critical sequencing error in the migration workflow. Both FileVault recovery keys and Activation Lock bypass codes are permanently destroyed on Delete Device Record. No Apple or Kandji/Iru recovery path exists after deletion.
-- **Triggering ABM migration before Intune ADE enrollment policy is assigned.** If the ADE enrollment policy is not assigned to the device serial number in Intune before the device attempts re-enrollment, the device will proceed to the deadline enforcement screen (Stage 6) with no enrollment policy to receive. ABM admin must cancel the migration to recover (see L2 #30 Track A).
+- **Triggering ABM migration before Intune ADE enrollment policy is assigned.** If the ADE enrollment policy is not assigned to the device serial number in Intune before the device attempts re-enrollment, the device proceeds to the deadline enforcement screen (Stage 6) with no enrollment policy to receive. ABM administrator must cancel the migration to recover (see L2 #30 Track A).
 - **VPP token "Take control" shortcut.** If your organization migrates VPP app licenses using the "Take control" option without first revoking licenses in Kandji/Iru, stale license conflicts may cause app delivery failures post-migration.
-- **Kandji/Iru agent residue.** If the Delete Device Record action is not completed or the 15-minute check-in does not occur before migration proceeds, the Kandji/Iru agent may still be present on the device post-migration. This can block Intune enrollment. Verify agent removal via `ls /Library/Kandji/` on the device before proceeding.
+- **Kandji/Iru agent residue.** If the Delete Device Record action is not completed or the 15-minute check-in does not occur before migration proceeds, the Kandji/Iru agent may still be present on the device post-migration. This can block Intune enrollment. Verify agent removal through `ls /Library/Kandji/` on the device before proceeding.
 
 ---
 
@@ -203,7 +203,7 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
 ### What the Admin Sees
 
-In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the target device by serial number. Select the device, open the action menu (typically an ellipsis or "More" button), and select **"Assign Device Management"** (the action may be labeled "Re-assign Device Management" depending on the device's current assignment state — verify in the current ABM portal).
+In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the target device by serial number. Select the device, open the action menu (typically an ellipsis or "More" button), and select **"Assign Device Management"** (the action may be labeled "Re-assign Device Management" depending on the device's current assignment state—verify in the current ABM portal).
 
 > **Note:** The ABM button label may read "Assign Device Management" or "Re-assign Device Management" depending on whether the device was previously assigned to another MDM server.
 
@@ -212,7 +212,7 @@ In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the targ
 ### What Happens
 
 1. **ABM device assignment.** In ABM, select the target device serial number(s) and assign them to the Intune MDM server. This triggers the MDM migration workflow on the device. After assignment:
-   - The device appears in the Intune enrollment device list after the next ABM sync (up to 24 hours for automatic sync; trigger manual sync via Intune admin center if needed, rate-limited to once per 15 minutes).
+   - The device appears in the Intune enrollment device list after the next ABM sync (up to 24 hours for automatic sync; trigger manual sync through Intune admin center if needed, rate-limited to once per 15 minutes).
    - The migration deadline workflow becomes available for the device in ABM.
 
 2. **Confirm device in Intune.** After sync, navigate to **Intune admin center > Devices > Enrollment > Apple > Enrollment program tokens > [your token] > Devices** and confirm the device serial number is listed with an enrollment policy assigned.
@@ -224,13 +224,13 @@ In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the targ
 ### Behind the Scenes
 
 - ABM "Assign Device Management" updates the device's MDM assignment record at Apple's servers. The device receives this assignment update when it next contacts Apple's device enrollment endpoints (which occurs periodically and can also be triggered by the user or an MDM command).
-- The migration does not occur immediately at ABM assignment — the device must still reach ABM during the next MDM check-in or at deadline enforcement.
-- From Intune's perspective, the migrated device re-enrolls as a fresh enrollment using the existing ADE enrollment policy. No separate "profile-based enrollment" configuration is required in Intune beyond having the ADE enrollment policy assigned to the device serial number. (Source-verified via Microsoft Learn — see Stage 7 "Behind the Scenes" for full citations.)
+- The migration does not occur immediately at ABM assignment—the device must still reach ABM during the next MDM check-in or at deadline enforcement.
+- From Intune's perspective, the migrated device re-enrolls as a fresh enrollment using the existing ADE enrollment policy. No separate "profile-based enrollment" configuration is required in Intune beyond having the ADE enrollment policy assigned to the device serial number. (Source-verified through Microsoft Learn—see Stage 7 "Behind the Scenes" for full citations.)
 
 ### Watch Out For
 
 - **Assigning to Intune before deleting the device record in Kandji/Iru.** If the Kandji/Iru device record is still active when the device contacts ABM, the Kandji/Iru agent may interfere with the Intune enrollment. Complete Stage 2 (Delete Device Record + allow ~15 min agent removal) before triggering ABM assignment.
-- **No enrollment policy assigned.** If ABM "Assign Device Management" is completed but the Intune ADE enrollment policy is not assigned to the device serial (or set as the token default), the device will hit the deadline enforcement screen with nowhere to enroll. This is the primary cause of Track A lockout scenarios in L2 #30.
+- **No enrollment policy assigned.** If ABM "Assign Device Management" is completed but the Intune ADE enrollment policy is not assigned to the device serial (or set as the token default), the device hits the deadline enforcement screen with nowhere to enroll. This is the primary cause of Track A lockout scenarios in L2 #30.
 - **Sync lag.** Allow up to 24 hours for the device to appear in Intune's enrollment list after ABM assignment. Trigger a manual sync in the Intune admin center for time-sensitive migrations.
 
 ---
@@ -260,8 +260,8 @@ In **Apple Business Manager (ABM)**, navigate to the device record or the pendin
 
 ### Behind the Scenes
 
-- The ABM deadline mechanism is part of Apple's managed device migration feature (macOS 26+). The deadline is held at Apple's ABM servers and enforced on the device via MDM commands.
-- The deadline can be modified or removed via ABM before enforcement ("Change Deadline" → remove or extend deadline). Once the device is in the non-dismissible lockout state at deadline, the recovery options change significantly (see Stage 6 and L2 #30 Track A).
+- The ABM deadline mechanism is part of Apple's managed device migration feature (macOS 26+). The deadline is held at Apple's ABM servers and enforced on the device through MDM commands.
+- The deadline can be modified or removed through ABM before enforcement ("Change Deadline" → remove or extend deadline). Once the device is in the non-dismissible lockout state at deadline, the recovery options change significantly (see Stage 6 and L2 #30 Track A).
 
 ### Watch Out For
 
@@ -284,20 +284,20 @@ After the deadline is set in ABM, the device begins displaying migration notific
    - **Hourly** in the last 24 hours before the deadline.
    - **Every 60, 30, 10, and 1 minute(s)** in the last hour before the deadline.
 
-2. **User-initiated enrollment.** The user can tap "Start Enrollment" on any notification to begin the migration process before the deadline. Early adoption is encouraged — the notification prompt gives users an opportunity to migrate at a convenient time rather than being forced at the deadline.
+2. **User-initiated enrollment.** The user can tap "Start Enrollment" on any notification to begin the migration process before the deadline. Early adoption is encouraged—the notification prompt gives users an opportunity to migrate at a convenient time rather than being forced at the deadline.
 
 3. **Deadline approaches.** If the user takes no action, the notification cadence intensifies. No enrollment action from the user results in deadline enforcement at Stage 6.
 
 ### Behind the Scenes
 
 - The notification cadence is fixed by Apple and cannot be customized. The notifications are presented in Notification Center on the device.
-- The user can dismiss individual notifications without initiating enrollment. All dismissals are non-permanent — the next notification in the cadence will appear at the scheduled time.
+- The user can dismiss individual notifications without initiating enrollment. All dismissals are non-permanent—the next notification in the cadence appears at the scheduled time.
 - Users who initiate enrollment voluntarily (before the deadline) proceed directly to the profile-based enrollment flow (Stage 7) without experiencing the non-dismissible lockout screen.
 
 ### Watch Out For
 
 - **Users dismissing all notifications.** Users who habitually dismiss notifications may reach the deadline without acting. Communicate the migration timeline and the consequences of the deadline enforcement (non-dismissible lock) to users in advance.
-- **User-initiated enrollment before Intune readiness.** If a user attempts enrollment before the Intune ADE enrollment policy is confirmed assigned, enrollment will fail. Ensure Intune readiness (Stage 3) is complete before the first notification appears on devices.
+- **User-initiated enrollment before Intune readiness.** If a user attempts enrollment before the Intune ADE enrollment policy is confirmed assigned, enrollment fails. Ensure Intune readiness (Stage 3) is complete before the first notification appears on devices.
 
 ---
 
@@ -307,7 +307,7 @@ After the deadline is set in ABM, the device begins displaying migration notific
 
 At the deadline time, the device displays a **non-dismissible full-screen migration prompt** that prevents the user from using the device for any work until MDM enrollment completes. In the **Intune admin center**, the enrollment status remains "Not enrolled" until the device successfully connects to Intune and completes enrollment.
 
-From the **Intune admin center**, monitor the device's enrollment status. From **ABM**, an admin can cancel or modify the migration deadline before or during enforcement (see Watch Out For for recovery options).
+From the **Intune admin center**, monitor the device's enrollment status. From **ABM**, an administrator can cancel or modify the migration deadline before or during enforcement (see Watch Out For for recovery options).
 
 ### What Happens
 
@@ -315,22 +315,22 @@ From the **Intune admin center**, monitor the device's enrollment status. From *
 
 2. **Enrollment from the locked screen.** If the Intune enrollment policy is correctly assigned and network connectivity is available, the user can complete enrollment directly from the locked screen. The lock clears automatically when enrollment completes.
 
-3. **Admin recovery (pre-lockout or post-lockout).** If the device reaches deadline enforcement and enrollment cannot complete (e.g., because the enrollment policy was not assigned):
-   - **Before lockout (preferred):** In ABM, navigate to the device and select **Change Deadline → remove deadline** to cancel the migration (verify the exact ABM label — may read "Change Deadline" or equivalent in the current ABM portal on authoring day). This immediately clears the notification prompts and reverts the device to its current MDM assignment. Correct the Intune enrollment policy assignment, then re-set the deadline.
-   - **After lockout:** Fix the Intune-side enrollment issue (confirm ADE enrollment policy is assigned to the device serial number, confirm network connectivity). Once the enrollment issue is resolved, the device can complete enrollment from the locked screen. If the enrollment cannot complete, the ABM admin can cancel the migration via ABM (conceptual: Devices → select device → cancel or modify migration). Verify the exact ABM UI navigation for post-lockout release in the current ABM portal — contact Apple Business Support if ABM cancellation does not release the lock.
+3. **Administrator recovery (pre-lockout or post-lockout).** If the device reaches deadline enforcement and enrollment cannot complete (for example, because the enrollment policy was not assigned):
+   - **Before lockout (preferred):** In ABM, navigate to the device and select **Change Deadline → remove deadline** to cancel the migration (verify the exact ABM label—may read "Change Deadline" or equivalent in the current ABM portal on authoring day). This immediately clears the notification prompts and reverts the device to its current MDM assignment. Correct the Intune enrollment policy assignment, then re-set the deadline.
+   - **After lockout:** Fix the Intune-side enrollment issue (confirm ADE enrollment policy is assigned to the device serial number, confirm network connectivity). Once the enrollment issue is resolved, the device can complete enrollment from the locked screen. If the enrollment cannot complete, the ABM administrator can cancel the migration through ABM (conceptual: Devices → select device → cancel or modify migration). Verify the exact ABM UI navigation for post-lockout release in the current ABM portal—contact Apple Business Support if ABM cancellation does not release the lock.
 
-   > **Note:** ABM admin recovery for a deadline-locked device is MEDIUM confidence. Apple confirms that an ABM admin with Administrator or Device Enrollment Manager privileges can cancel or unlock a deadline migration, but the exact UI path for a device already in the lockout state is not confirmed in a single authoritative source. Verify in current ABM documentation or contact Apple Business Support.
+   > **Note:** ABM administrator recovery for a deadline-locked device is MEDIUM confidence. Apple confirms that an ABM administrator with Administrator or Device Enrollment Manager privileges can cancel or unlock a deadline migration, but the exact UI path for a device already in the lockout state is not confirmed in a single authoritative source. Verify in current ABM documentation or contact Apple Business Support.
 
 ### Behind the Scenes
 
-- The non-dismissible lock behavior is enforced by macOS directly when the deadline passes. Apple Business Manager holds the migration lock; an authorized ABM admin with appropriate privileges can release or cancel the migration.
-- The "Change Deadline → remove deadline" path in ABM (before lockout) is the cleanest recovery path and should be the first action when enrollment issues are identified.
+- The non-dismissible lock behavior is enforced by macOS directly when the deadline passes. Apple Business Manager holds the migration lock; an authorized ABM administrator with appropriate privileges can release or cancel the migration.
+- The "Change Deadline → remove deadline" path in ABM (before lockout) is the cleanest recovery path and is the preferred first action when enrollment issues are identified.
 
 ### Watch Out For
 
 - **Enrollment policy not assigned at deadline.** The most common cause of a deadline lockout with no self-recovery path. Verify Stage 3 pre-deadline checks are complete for every device before setting its deadline.
-- **Network connectivity failure at deadline.** Even with a correct enrollment policy, a device that cannot reach Intune enrollment endpoints at deadline time will be locked. Verify network connectivity to required Intune and Apple endpoints before deadlines are set.
-- **Attempting to recover via `profiles renew`.** Do NOT attempt `sudo profiles renew -type enrollment` on a locked device. This command is not a valid recovery mechanism for ADE-enrolled macOS devices at any stage. See [B2 Path: Pre-macOS-26 Wipe-and-Re-Enroll](#b2-path-pre-macos-26-wipe-and-re-enroll) for the explicit prohibition.
+- **Network connectivity failure at deadline.** Even with a correct enrollment policy, a device that cannot reach Intune enrollment endpoints at deadline time is locked. Verify network connectivity to required Intune and Apple endpoints before deadlines are set.
+- **Attempting to recover through `profiles renew`.** Do NOT attempt `sudo profiles renew -type enrollment` on a locked device. This command is not a valid recovery mechanism for ADE-enrolled macOS devices at any stage. See [B2 Path: Pre-macOS-26 Wipe-and-Re-Enroll](#b2-path-pre-macos-26-wipe-and-re-enroll) for the explicit prohibition.
 - For detailed lockout investigation and recovery, see [L2 #30 macOS MDM Migration Failure](../l2-runbooks/30-macos-mdm-migration-failure.md) Track A.
 
 ---
@@ -339,23 +339,23 @@ From the **Intune admin center**, monitor the device's enrollment status. From *
 
 ### What the Admin Sees
 
-After the user initiates enrollment (voluntarily at Stage 5 or at the non-dismissible prompt at Stage 6), the device proceeds through the re-enrollment flow. In the **Intune admin center**, navigate to **Devices > macOS > All Devices** — the device appears with enrollment status "Enrolled" after the re-enrollment completes. The device's compliance and configuration status updates as policies are delivered.
+After the user initiates enrollment (voluntarily at Stage 5 or at the non-dismissible prompt at Stage 6), the device proceeds through the re-enrollment flow. In the **Intune admin center**, navigate to **Devices > macOS > All Devices**—the device appears with enrollment status "Enrolled" after the re-enrollment completes. The device's compliance and configuration status updates as policies are delivered.
 
 ### What Happens
 
-1. **Genuine MDM unenrollment.** The device unenrolls from Kandji/Iru MDM completely. This triggers IdP unregistration — the Platform SSO registration associated with the old MDM is destroyed (see Stage 9 for why PSSO re-registration is always required).
+1. **Genuine MDM unenrollment.** The device unenrolls from Kandji/Iru MDM completely. This triggers IdP unregistration—the Platform SSO registration associated with the old MDM is destroyed (see Stage 9 for why PSSO re-registration is always required).
 
-2. **Profile-based re-enrollment via Intune.** The device re-enrolls with Intune using the ADE enrollment policy assigned to its serial number. From the device's perspective, this is equivalent to a fresh ADE enrollment. An ACME certificate is issued as part of the re-enrollment (genuine re-enrollment always results in ACME reissuance on macOS 13.1+).
+2. **Profile-based re-enrollment through Intune.** The device re-enrolls with Intune using the ADE enrollment policy assigned to its serial number. From the device's perspective, this is equivalent to a fresh ADE enrollment. An ACME certificate is issued as part of the re-enrollment (genuine re-enrollment always results in ACME reissuance on macOS 13.1+).
 
 3. **Policy delivery.** Intune delivers the enrollment policy, PSSO Settings Catalog policy, device configuration profiles, and other assigned policies. The PSSO Settings Catalog policy must reach the device at this stage to prepare for PSSO re-registration at Stage 9.
 
-4. **Supervision status (MEDIUM confidence).** Supervision is expected to be re-granted through the B1 in-place migration. Apple's authoritative supervision guide states: "Mac computers are also supervised if they: Have macOS 11 or later and enroll in a device management service using account-driven Device Enrollment, profile-based Device Enrollment, or Automated Device Enrollment" ([dep1d89f0bff](https://support.apple.com/en-gw/guide/deployment/dep1d89f0bff/web)). Since the B1 migration re-enrolls via profile-based enrollment (Apple's own terminology for the migration result) and macOS 26 satisfies the macOS 11+ condition, supervision should be re-granted by the re-enrollment. However, no single authoritative source explicitly confirms supervision *survives* the momentary unenrollment transition itself — MEDIUM confidence is correct and must not be upgraded to a flat assertion.
+4. **Supervision status (MEDIUM confidence).** Supervision is expected to be re-granted through the B1 in-place migration. Apple's authoritative supervision guide states: "Mac computers are also supervised if they: Have macOS 11 or later and enroll in a device management service using account-driven Device Enrollment, profile-based Device Enrollment, or Automated Device Enrollment" ([dep1d89f0bff](https://support.apple.com/en-gw/guide/deployment/dep1d89f0bff/web)). Since the B1 migration re-enrolls through profile-based enrollment (Apple's own terminology for the migration result) and macOS 26 satisfies the macOS 11+ condition, supervision is expected to be re-granted by the re-enrollment. However, no single authoritative source explicitly confirms supervision *survives* the momentary unenrollment transition itself—MEDIUM confidence is correct and must not be upgraded to a flat assertion.
 
-   > **Note:** Supervision status preservation through OS-26 in-place migration is MEDIUM confidence — the Apple supervision rule ([dep1d89f0bff](https://support.apple.com/en-gw/guide/deployment/dep1d89f0bff/web)) confirms profile-based enrollment grants supervision on macOS 11+, but does not explicitly confirm survival through the unenrollment transition. Verify on a pilot device before fleet migration using: `profiles status -type enrollment | grep Supervised`. If supervision is not present on the pilot device after migration, do not proceed with fleet migration until the status is investigated.
+   > **Note:** Supervision status preservation through OS-26 in-place migration is MEDIUM confidence—the Apple supervision rule ([dep1d89f0bff](https://support.apple.com/en-gw/guide/deployment/dep1d89f0bff/web)) confirms profile-based enrollment grants supervision on macOS 11+, but does not explicitly confirm survival through the unenrollment transition. Verify on a pilot device before fleet migration using: `profiles status -type enrollment | grep Supervised`. If supervision is not present on the pilot device after migration, do not proceed with fleet migration until the status is investigated.
 
 ### Behind the Scenes
 
-- The Apple-described mechanism for OS-26 migration is "unenrolls from an Automated Device Enrollment and reenrolls with profile-based enrollment" ([Apple Platform Deployment Guide](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web)). From Intune's perspective, the device re-enrolls as a fresh ADE enrollment — no separate "profile-based enrollment" configuration mode is required in Intune. The existing ADE enrollment policy (assigned to the device serial number or set as the token default) automatically handles the migrated device's re-enrollment. **Source-verified (full confidence):** Microsoft Learn confirms the single Intune enrollment construct for this scenario is the ADE enrollment policy ([Set up ADE for macOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-macos); [Manage macOS ADE devices and tokens](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/manage-devices-tokens-macos), both updated 2026-06-22). The official Microsoft TechCommunity Intune blog for macOS 26 migration states: "Since migration is treated as a new device enrollment, you'll need to follow standard Intune ADE (Automated Device Enrollment) guidance to setup device enrollment profile ... manually assign it to the devices via device serial number" — no additional profile-based enrollment configuration step ([Microsoft TechCommunity, 2025-08-04](https://techcommunity.microsoft.com/blog/intunecustomersuccess/apple-making-device-migration-to-microsoft-intune-easy-with-upcoming-os-26-relea/4439895)).
+- The Apple-described mechanism for OS-26 migration is "unenrolls from an Automated Device Enrollment and reenrolls with profile-based enrollment" ([Apple Platform Deployment Guide](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web)). From Intune's perspective, the device re-enrolls as a fresh ADE enrollment—no separate "profile-based enrollment" configuration mode is required in Intune. The existing ADE enrollment policy (assigned to the device serial number or set as the token default) automatically handles the migrated device's re-enrollment. **Source-verified (full confidence):** Microsoft Learn confirms the single Intune enrollment construct for this scenario is the ADE enrollment policy ([Set up ADE for macOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-macos); [Manage macOS ADE devices and tokens](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/manage-devices-tokens-macos), both updated 2026-06-22). The official Microsoft TechCommunity Intune blog for macOS 26 migration states: "Since migration is treated as a new device enrollment, you'll need to follow standard Intune ADE (Automated Device Enrollment) guidance to setup device enrollment profile ... manually assign it to the devices via device serial number"—no additional profile-based enrollment configuration step ([Microsoft TechCommunity, 2025-08-04](https://techcommunity.microsoft.com/blog/intunecustomersuccess/apple-making-device-migration-to-microsoft-intune-easy-with-upcoming-os-26-relea/4439895)).
 - ACME certificate reissuance is a property of genuine re-enrollment. Profile-based enrollment on macOS 13.1+ always results in a new ACME certificate. The SCEP fallback does not apply to B1 in-place migration.
 - The PSSO Settings Catalog policy delivery at this stage is what enables the "Registration Required" notification at Stage 9. If the PSSO policy does not deliver here, Stage 9 may not occur until the next MDM check-in cycle.
 
@@ -371,7 +371,7 @@ After the user initiates enrollment (voluntarily at Stage 5 or at the non-dismis
 
 ### What the Admin Sees
 
-In the **Intune admin center**, navigate to **Devices > macOS > [device name] > Recovery Keys**. After migration and enrollment, Intune's FileVault escrow policy generates and escrows a new FileVault recovery key for the device. The recovery key should appear in the Intune admin center after the first FileVault escrow policy enforcement cycle.
+In the **Intune admin center**, navigate to **Devices > macOS > [device name] > Recovery Keys**. After migration and enrollment, Intune's FileVault escrow policy generates and escrows a new FileVault recovery key for the device. Confirm the recovery key appears in the Intune admin center after the first FileVault escrow policy enforcement cycle.
 
 ### What Happens
 
@@ -383,27 +383,27 @@ In the **Intune admin center**, navigate to **Devices > macOS > [device name] > 
 
 ### Behind the Scenes
 
-- FileVault encryption state is preserved through the migration — the disk remains encrypted throughout. Only the management key (recovery key) changes hands from Kandji/Iru to Intune.
+- FileVault encryption state is preserved through the migration—the disk remains encrypted throughout. Only the management key (recovery key) changes hands from Kandji/Iru to Intune.
 - The Intune FileVault escrow policy requires the device to be enrolled and the user to be logged in. If the device is FileVault-encrypted but the user has not yet completed setup, key rotation may be delayed until the next user login and MDM check-in.
 
 ### Watch Out For
 
-- **Using the pre-migration Kandji/Iru FileVault key after migration.** The key retrieved in Stage 2 may still function immediately post-migration (the disk encryption key itself has not changed), but it should be treated as deprecated once the Intune-escrowed key is confirmed. Rely on the Intune-escrowed key going forward.
-- **FileVault escrow policy not assigned.** If Intune's FileVault escrow Settings Catalog policy is not assigned to the device (or its target group), no new key will be generated and escrowed. Confirm the FileVault escrow policy is part of the Intune readiness setup (Stage 2) for all migration targets.
+- **Using the pre-migration Kandji/Iru FileVault key after migration.** The key retrieved in Stage 2 may still function immediately post-migration (the disk encryption key itself has not changed), but it must be treated as deprecated once the Intune-escrowed key is confirmed. Rely on the Intune-escrowed key going forward.
+- **FileVault escrow policy not assigned.** If Intune's FileVault escrow Settings Catalog policy is not assigned to the device (or its target group), no new key is generated and escrowed. Confirm the FileVault escrow policy is part of the Intune readiness setup (Stage 2) for all migration targets.
 
 ---
 
 ## Stage 9: PSSO Re-Registration (B1 Path)
 
-*This is the mandatory post-migration PSSO re-registration stage. PSSO re-registration is ALWAYS required after MDM migration — there is no exception, including for same-tenant migrations.*
+*This is the mandatory post-migration PSSO re-registration stage. PSSO re-registration is ALWAYS required after MDM migration—there is no exception, including for same-tenant migrations.*
 
 ### What the Admin Sees
 
-After enrollment completes (Stage 7) and the PSSO Settings Catalog policy has been delivered to the device, the user receives a **"Registration Required"** notification in Notification Center. This notification is expected behavior after migration — it is not a failure indicator.
+After enrollment completes (Stage 7) and the PSSO Settings Catalog policy has been delivered to the device, the user receives a **"Registration Required"** notification in Notification Center. This notification is expected behavior after migration—it is not a failure indicator.
 
 ### What Happens
 
-1. **Why re-registration is always required.** Apple's authoritative documentation states: "If you unenroll a Mac from the device management service, it also unregisters from the IdP." The B1 migration is a genuine unenroll + reenroll — the Mac unenrolls from Kandji/Iru MDM, which triggers IdP unregistration. The Platform SSO Secure Enclave key associated with the previous Kandji/Iru enrollment is destroyed. When Intune's PSSO Settings Catalog policy delivers to the newly-enrolled Mac, a new Secure Enclave key must be created for the new enrollment — requiring a fresh PSSO registration.
+1. **Why re-registration is always required.** Apple's authoritative documentation states: "If you unenroll a Mac from the device management service, it also unregisters from the IdP." The B1 migration is a genuine unenroll + reenroll—the Mac unenrolls from Kandji/Iru MDM, which triggers IdP unregistration. The Platform SSO Secure Enclave key associated with the previous Kandji/Iru enrollment is destroyed. When Intune's PSSO Settings Catalog policy delivers to the newly-enrolled Mac, a new Secure Enclave key must be created for the new enrollment—requiring a fresh PSSO registration.
 
 2. **Migration-specific registration flow.** The "Registration Required" notification triggers the same user-facing PSSO registration experience as a fresh enrollment:
    - User taps "Registration Required" in Notification Center.
@@ -411,7 +411,7 @@ After enrollment completes (Stage 7) and the PSSO Settings Catalog policy has be
    - After MFA completes, a new WPJ Secure Enclave key is written for the Intune enrollment.
    - Both Device Registration and User Registration transition to REGISTERED.
 
-   For the detailed user-facing MFA and registration UX steps, see [macOS Platform SSO Provisioning Walkthrough — Stage 7A](01-psso-provisioning-walkthrough.md).
+   For the detailed user-facing MFA and registration UX steps, see [macOS Platform SSO Provisioning Walkthrough—Stage 7A](01-psso-provisioning-walkthrough.md).
 
 3. **Verification.** After the user completes the "Registration Required" flow, verify the PSSO registration state.
 
@@ -419,12 +419,12 @@ After enrollment completes (Stage 7) and the PSSO Settings Catalog policy has be
 
 - The Secure Enclave key from the Kandji/Iru enrollment is permanently destroyed when the device unenrolls from Kandji/Iru MDM. This is a hardware-enforced property of the Secure Enclave: the key is bound to the enrollment and is destroyed on unenrollment. The key cannot survive migration, be ported, or be transferred between MDMs.
 - ACME certificate reissuance (Stage 7) is separate from PSSO re-registration. Both occur post-migration, but ACME is issued during enrollment while PSSO re-registration occurs after the user responds to the "Registration Required" notification.
-- New-tenant Secure Enclave key creation: even if the migration is within the same Entra tenant, the PSSO registration is always a fresh registration with a newly-created Secure Enclave key. This is Apple's authoritative behavior — do NOT document same-tenant key survival as a possible outcome.
+- New-tenant Secure Enclave key creation: even if the migration is within the same Entra tenant, the PSSO registration is always a fresh registration with a newly-created Secure Enclave key. This is Apple's authoritative behavior—do NOT document same-tenant key survival as a possible outcome.
 
 ### Watch Out For
 
-- **Skipping PSSO re-registration.** Users who dismiss the "Registration Required" notification without completing registration will not have working PSSO SSO. Conditional Access-protected resources will be inaccessible until PSSO re-registration is completed. Train users to complete this step immediately after migration.
-- **MFA not completed.** If the user starts the registration flow but abandons it before MFA completes, the Secure Enclave key is not written. Registration remains incomplete. The notification should reappear at the next check-in.
+- **Skipping PSSO re-registration.** Users who dismiss the "Registration Required" notification without completing registration do not have working PSSO SSO. Conditional Access-protected resources are inaccessible until PSSO re-registration is completed. Train users to complete this step immediately after migration.
+- **MFA not completed.** If the user starts the registration flow but abandons it before MFA completes, the Secure Enclave key is not written. Registration remains incomplete. The notification is expected to reappear at the next check-in.
 - **"Registration Required" not appearing.** If the PSSO Settings Catalog policy was not delivered during enrollment (Stage 7), the "Registration Required" notification may not appear. Check the Intune admin center for the PSSO policy delivery status for the device. If the notification is absent and the policy shows as delivered, wait one MDM check-in cycle (typically 8 hours). For investigation guidance, see [L2 #30 macOS MDM Migration Failure](../l2-runbooks/30-macos-mdm-migration-failure.md) Track C.
 
 ### How to Verify
@@ -442,30 +442,30 @@ Device Registration: REGISTERED
 User Registration: REGISTERED
 ```
 
-If either line shows a different value, wait and re-run the command — registration may still be in progress. If the values do not transition to REGISTERED after several minutes, escalate. Because this is a **post-migration** failure, start with the migration-specific runbook:
+If either line shows a different value, wait and re-run the command—registration may still be in progress. If the values do not transition to REGISTERED after several minutes, escalate. Because this is a **post-migration** failure, start with the migration-specific runbook:
 
-- [L2 #30 macOS MDM Migration Failure — Track C: PSSO Re-Registration Stuck](../l2-runbooks/30-macos-mdm-migration-failure.md) (migration-context primary)
+- [L2 #30 macOS MDM Migration Failure—Track C: PSSO Re-Registration Stuck](../l2-runbooks/30-macos-mdm-migration-failure.md) (migration-context primary)
 - [L1 #35 macOS SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md)
 - [L1 #36 macOS Secure Enclave Key](../l1-runbooks/36-macos-secure-enclave-key.md)
 - [L2 #27 macOS SSO Investigation](../l2-runbooks/27-macos-sso-investigation.md)
 
-Do not attempt inline triage — these runbooks contain the authoritative investigation steps. For the complete user-facing PSSO registration UX (notification interaction, MFA flow, and expected screen sequence), see [macOS Platform SSO Provisioning Walkthrough — Stage 7A](01-psso-provisioning-walkthrough.md).
+Do not attempt inline triage—these runbooks contain the authoritative investigation steps. For the complete user-facing PSSO registration UX (notification interaction, MFA flow, and expected screen sequence), see [macOS Platform SSO Provisioning Walkthrough—Stage 7A](01-psso-provisioning-walkthrough.md).
 
 ---
 
-_Section provenance — `last_verified: 2026-06-26` / `review_by: 2026-09-24`. This section covers macOS 26-gated features (B1 in-place MDM migration via ABM "Assign Device Management" + Deadline mechanics, profile-based re-enrollment, PSSO re-registration). Covers in-scope MIGV-01 (Intune config requirement — verified against Microsoft Learn 2026-06-22 + Microsoft TechCommunity blog) and MIGV-03 (supervision callout — cited against Apple dep1d89f0bff) edits. Re-confirm ABM button label ("Assign Device Management" vs "Re-assign Device Management"), non-dismissible deadline lock behavior, and supervision-status preservation through OS-26 in-place migration against current Apple Business Manager documentation and Apple Support migration guide at each 90-day review. Also re-confirm: (a) Microsoft Learn ADE enrollment policy pages still show no separate profile-based enrollment configuration step; (b) Apple dep1d89f0bff supervision guide still includes "profile-based Device Enrollment" in the macOS 11+ supervision list._
+_Section provenance—`last_verified: 2026-06-26` / `review_by: 2026-09-24`. This section covers macOS 26-gated features (B1 in-place MDM migration through ABM "Assign Device Management" + Deadline mechanics, profile-based re-enrollment, PSSO re-registration). Covers in-scope MIGV-01 (Intune configuration requirement—verified against Microsoft Learn 2026-06-22 + Microsoft TechCommunity blog) and MIGV-03 (supervision callout—cited against Apple dep1d89f0bff) edits. Re-confirm ABM button label ("Assign Device Management" vs "Re-assign Device Management"), non-dismissible deadline lock behavior, and supervision-status preservation through OS-26 in-place migration against current Apple Business Manager documentation and Apple Support migration guide at each 90-day review. Also re-confirm: (a) Microsoft Learn ADE enrollment policy pages still show no separate profile-based enrollment configuration step; (b) Apple dep1d89f0bff supervision guide still includes "profile-based Device Enrollment" in the macOS 11+ supervision list._
 
 ---
 
 ## B2 Path: Pre-macOS-26 Wipe-and-Re-Enroll
 
-**Pre-macOS-26 wipe-and-re-enroll path (B2) — required for all devices running macOS 25 or earlier.**
+**Pre-macOS-26 wipe-and-re-enroll path (B2)—required for all devices running macOS 25 or earlier.**
 
-The B1 in-place migration path is not available on macOS 25 or earlier. This path requires a full device wipe. The device will go through a standard ADE enrollment via Intune's Setup Assistant, followed by a fresh PSSO provisioning flow.
+The B1 in-place migration path is not available on macOS 25 or earlier. This path requires a full device wipe. The device goes through a standard ADE enrollment using Intune's Setup Assistant, followed by a fresh PSSO provisioning flow.
 
 ---
 
-**`sudo profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled macOS devices.** macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe. Using `profiles renew` on an ADE-enrolled device results in enrollment failure — the SSO extension profile cannot be installed because MDM enrollment is a prerequisite for that profile, creating a circular dependency. There is no no-wipe shortcut for ADE-enrolled devices on macOS 25 or earlier.
+**`sudo profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled macOS devices.** macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe. Using `profiles renew` on an ADE-enrolled device results in enrollment failure—the SSO extension profile cannot be installed because MDM enrollment is a prerequisite for that profile, creating a circular dependency. There is no no-wipe shortcut for ADE-enrolled devices on macOS 25 or earlier.
 
 ---
 
@@ -487,12 +487,12 @@ The B1 in-place migration path is not available on macOS 25 or earlier. This pat
 **What Happens:**
 
 1. Confirm the device is running macOS 25 or earlier. The B1 in-place migration path (ABM "Assign Device Management" deadline flow) is not available for these devices.
-2. Proceed with the B2 retire/wipe/re-enroll path. Communicate to the device's user that the device will be wiped and will need to go through Setup Assistant to re-enroll with Intune.
-3. Schedule the wipe during a maintenance window or coordinate with the user for a convenient time — the user will need to reconfigure personal settings and access resources after re-enrollment.
+2. Proceed with the B2 retire/wipe/re-enroll path. Communicate to the device's user that the device will be wiped and must go through Setup Assistant to re-enroll with Intune.
+3. Schedule the wipe during a maintenance window or coordinate with the user for a convenient time—the user must reconfigure personal settings and access resources after re-enrollment.
 
 ### B2 Stage 2: Secret Retrieval
 
-**What the Admin Sees:** Complete the secret-retrieval steps from the shared pre-flight (Stage 2 above) for the B2 device before any wipe action. The ordering is mandatory and identical to the B1 pre-flight.
+**What the Admin Sees:** Complete the secret-retrieval steps from the shared pre-flight (Stage 2) for the B2 device before any wipe action. The ordering is mandatory and identical to the B1 pre-flight.
 
 **What Happens:**
 
@@ -500,17 +500,17 @@ The B1 in-place migration path is not available on macOS 25 or earlier. This pat
 2. Retrieve Activation Lock bypass code from Kandji/Iru console **BEFORE** Delete Device Record and wipe. The code is permanently destroyed on device record deletion and is only available within 30 days of device supervision.
 3. Complete Delete Device Record in Kandji/Iru and allow ~15 minutes for agent self-removal before proceeding to the wipe.
 
-For full detail on the secret-retrieval process and Kandji/Iru console steps, see [Stage 2: Intune Readiness, Secret Retrieval, and Source Release](#stage-2-intune-readiness-secret-retrieval-and-source-release) above. The ordering requirements, both-name surfacing, and vendor-neutral authoring guidance are identical for B2 devices.
+For full detail on the secret-retrieval process and Kandji/Iru console steps, see [Stage 2: Intune Readiness, Secret Retrieval, and Source Release](#stage-2-intune-readiness-secret-retrieval-and-source-release). The ordering requirements, both-name surfacing, and vendor-neutral authoring guidance are identical for B2 devices.
 
 ### B2 Stage 3: Retire and Wipe in Kandji/Iru
 
-**What the Admin Sees:** After secrets are retrieved and the device record is deleted in Kandji/Iru, initiate an Erase Mac command (or equivalent wipe action) from the Kandji/Iru console or directly on the device via System Settings > General > Transfer or Reset > Erase All Content and Settings.
+**What the Admin Sees:** After secrets are retrieved and the device record is deleted in Kandji/Iru, initiate an Erase Mac command (or equivalent wipe action) from the Kandji/Iru console or directly on the device through System Settings > General > Transfer or Reset > Erase All Content and Settings.
 
 > **Important:** Do NOT use `sudo profiles renew -type enrollment` on ADE-enrolled macOS devices as a wipe alternative.
 
-> `profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled devices — macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe.
+> `profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled devices—macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe.
 
-> Using `profiles renew` on an ADE-enrolled device results in enrollment failure because the SSO extension profile cannot be installed when MDM enrollment (its prerequisite) has not completed —
+> Using `profiles renew` on an ADE-enrolled device results in enrollment failure because the SSO extension profile cannot be installed when MDM enrollment (its prerequisite) has not completed—
 
 > creating a circular dependency.
 
@@ -518,7 +518,7 @@ For full detail on the secret-retrieval process and Kandji/Iru console steps, se
 
 1. Initiate an Erase Mac (wipe) on the device. The device restarts and enters Setup Assistant.
 2. All user data, applications, and configuration profiles are removed. This is a full factory reset.
-3. The device contacts ABM during Setup Assistant to determine its MDM assignment — it will find the Intune MDM server assignment (set when you completed Stage 2's Intune readiness and the device serial was assigned to Intune in ABM).
+3. The device contacts ABM during Setup Assistant to determine its MDM assignment—it finds the Intune MDM server assignment (set when you completed Stage 2's Intune readiness and the device serial was assigned to Intune in ABM).
 
 ### B2 Stage 4: ADE Re-Enroll via Intune
 
@@ -526,7 +526,7 @@ For full detail on the secret-retrieval process and Kandji/Iru console steps, se
 
 **What Happens:**
 
-1. During Setup Assistant, the device contacts Apple's ADE endpoints and retrieves the Intune enrollment profile (the same ADE enrollment policy that handles B1 migrated devices — no separate configuration required).
+1. During Setup Assistant, the device contacts Apple's ADE endpoints and retrieves the Intune enrollment profile (the same ADE enrollment policy that handles B1 migrated devices—no separate configuration required).
 2. The device installs the Intune enrollment profile and establishes the MDM management relationship with Intune.
 3. Intune delivers configuration profiles, including the PSSO Settings Catalog policy, during or after Setup Assistant (depending on Await Configuration settings).
 4. ACME certificate is issued as part of the fresh ADE enrollment.
@@ -535,9 +535,9 @@ For full detail on the secret-retrieval process and Kandji/Iru console steps, se
 
 **What the Admin Sees:** After Setup Assistant completes and Intune delivers the PSSO Settings Catalog policy, the device presents the standard PSSO "Registration Required" notification on the desktop (A1 standard post-enrollment path from guide 01).
 
-B2 devices go through the **same fresh PSSO provisioning flow as any new ADE enrollment.** This walkthrough does not duplicate the PSSO provisioning steps — they are fully documented in:
+B2 devices go through the **same fresh PSSO provisioning flow as any new ADE enrollment.** This walkthrough does not duplicate the PSSO provisioning steps—they are fully documented in:
 
-**[macOS Platform SSO Provisioning Walkthrough — A1 Standard Path](01-psso-provisioning-walkthrough.md)**
+**[macOS Platform SSO Provisioning Walkthrough—A1 Standard Path](01-psso-provisioning-walkthrough.md)**
 
 Follow guide 01 from Stage 7A onwards. The B2 migration is complete when `app-sso platform -s` shows both `Device Registration: REGISTERED` and `User Registration: REGISTERED`.
 
@@ -598,7 +598,7 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 ## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle
 
-[Stage 2](#stage-2-intune-readiness-secret-retrieval-and-source-release) above documents the source-release steps for Kandji/Iru as the source MDM. Organizations migrating from Jamf Pro or Mosyle follow the same three-step sequencing — FileVault recovery key retrieval → Activation Lock bypass code retrieval → device-record deletion — at the conceptual-action level. Exact console paths differ between vendors; the steps for each are documented below at conceptual depth. Verify current console labels in the respective admin console on your authoring day before fleet migration.
+[Stage 2](#stage-2-intune-readiness-secret-retrieval-and-source-release) documents the source-release steps for Kandji/Iru as the source MDM. Organizations migrating from Jamf Pro or Mosyle follow the same three-step sequencing—FileVault recovery key retrieval → Activation Lock bypass code retrieval → device-record deletion—at the conceptual-action level. Exact console paths differ between vendors; the steps for each are documented in the following steps at conceptual depth. Verify current console labels in the respective administrator console on your authoring day before fleet migration.
 
 ### Jamf Pro
 
@@ -614,7 +614,7 @@ In the Jamf Pro console, navigate to the device record for the target Mac. Locat
 
 > The conceptual action is the same: open the device record, access the FileVault or security section, and retrieve the escrowed recovery key before any deletion step.
 
-> Verify current console labels in the Jamf Pro admin console on your authoring day.
+> Verify current console labels in the Jamf Pro administrator console on your authoring day.
 
 **2. Activation Lock Bypass Code Retrieval**
 
@@ -630,7 +630,7 @@ After retrieving both secrets, perform the device-record deletion action in the 
 
 > **Note:** The exact action label may read "Delete Computer," "Delete," "Unmanage," or similar depending on the current Jamf Pro version.
 
-> Verify the current label in the Jamf Pro admin console on your authoring day.
+> Verify the current label in the Jamf Pro administrator console on your authoring day.
 
 ### Mosyle
 
@@ -640,13 +640,13 @@ After retrieving both secrets, perform the device-record deletion action in the 
 
 **1. FileVault Recovery Key Retrieval**
 
-Mosyle enforces FileVault via its Security profile and escrows personal recovery keys to the console. In the Mosyle console, navigate to the device record for the target Mac and retrieve the escrowed FileVault recovery key from the device's security information section. Record it securely before proceeding to any deletion step.
+Mosyle enforces FileVault through its Security profile and escrows personal recovery keys to the console. In the Mosyle console, navigate to the device record for the target Mac and retrieve the escrowed FileVault recovery key from the device's security information section. Record it securely before proceeding to any deletion step.
 
 > **Note:** Mosyle console navigation is not live-verifiable without operator login credentials.
 
 > The conceptual action is the same: open the device record, locate the security or FileVault section, and retrieve the recovery key before any deletion step.
 
-> Verify current console labels in the Mosyle admin console on your authoring day.
+> Verify current console labels in the Mosyle administrator console on your authoring day.
 
 **2. Activation Lock Bypass Code Retrieval**
 
@@ -656,7 +656,7 @@ In the Mosyle console, navigate to the device record for the target Mac and loca
 
 > Exact labels may differ in the current Mosyle version. Verify current console navigation on your authoring day.
 
-> Retrieve both codes if two are present — a user-initiated and an MDM-initiated bypass code.
+> Retrieve both codes if two are present—a user-initiated and an MDM-initiated bypass code.
 
 **3. Device-Record Deletion**
 

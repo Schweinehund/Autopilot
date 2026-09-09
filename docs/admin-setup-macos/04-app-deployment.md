@@ -16,9 +16,9 @@ platform: macOS
 
 ## Summary
 
-This guide covers deploying macOS applications through Intune via three methods -- DMG, PKG (managed Line-of-Business and unmanaged), and VPP/Apps and Books. It requires the Intune Administrator role plus an active Apple Business Manager content token for VPP licensing, and applies with no specific macOS version prerequisite beyond IME agent version floors per delivery method.
+This guide covers deploying macOS applications through Intune using three methods -- DMG, PKG (managed Line-of-Business and unmanaged), and VPP/Apps and Books. It requires the Intune Administrator role plus an active Apple Business Manager content token for VPP licensing, and applies with no specific macOS version prerequisite beyond IME agent version floors per delivery method.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration with Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
@@ -45,7 +45,7 @@ This guide covers deploying macOS applications through Intune using three method
 ### DMG and PKG Prerequisites
 
 - Intune Administrator role
-- Devices enrolled via ADE
+- Devices enrolled through ADE
 - Intune Management Extension (IME) agent installed on target devices (for DMG and unmanaged PKG)
 - For PKG managed LOB: `.pkg` must be signed with "Developer ID Installer" certificate from Apple Developer account
 - For PKG managed LOB: `.pkg` must contain a payload (packages without payload attempt to reinstall continuously)
@@ -55,7 +55,7 @@ This guide covers deploying macOS applications through Intune using three method
 - Apple Business Manager account with an active content token (formerly VPP location token; still labeled "Apple VPP token" in Intune)
 - Content token uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
 - App licenses purchased in ABM for each app to deploy
-- Annual token renewal configured (see Renewal / Maintenance section below)
+- Annual token renewal configured (see Renewal / Maintenance section)
 
 ## DMG Apps
 
@@ -99,7 +99,7 @@ This guide covers deploying macOS applications through Intune using three method
 
 > See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
-> **What breaks if misconfigured:** PKG without payload (e.g., script-only packages) continuously reinstalls.
+> **What breaks if misconfigured:** PKG without payload (for example, script-only packages) continuously reinstalls.
 
 > Symptom appears in: Intune admin center (perpetual "Installing" status) and on device (repeated installation prompts). See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
@@ -136,7 +136,7 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 4. Select the app > **Properties** > **Assignments**.
 5. Assign as Required (device or user groups) or Available for enrolled devices (user groups only).
 
-> **What breaks if misconfigured:** VPP app assigned as Available to a device group will not appear in Company Portal. Available deployment intent for VPP works only with user groups.
+> **What breaks if misconfigured:** VPP app assigned as Available to a device group does not appear in Company Portal. Available deployment intent for VPP works only with user groups.
 
 > Use Required for device groups. Symptom appears in: Intune admin center (assignment shows succeeded) but device (Company Portal does not list the app).
 
@@ -196,7 +196,7 @@ Up to 3,000 VPP tokens supported per Intune tenant. One VPP token cannot be shar
 |------|--------|--------|
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- DMG, PKG (managed/unmanaged), VPP with comparison table, per-type prerequisites, VPP renewal | -- |
-| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP location token" to "content token" per Apple 2026-04-14 rebrand (L45, L46, L113, L148); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |
+| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP location token" to "content token" per Apple 2026-04-14 rebrand (L45, L46, L113, L148); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; pitfall register CI-2 closure | -- |
 
 ## Version History
 

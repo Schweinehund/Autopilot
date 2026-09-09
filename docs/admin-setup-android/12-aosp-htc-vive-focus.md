@@ -16,13 +16,13 @@ applies_to: AOSP
 
 ## Summary
 
-This guide covers AOSP (Android Open Source Project) device management for HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because these headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing. This is the simplest of the five AR/VR AOSP OEM flows: no vendor-portal coexistence is required, and enrollment uses the verbatim in-device path Settings > Advanced > MDM setup > QR code.
+This guide covers AOSP (Android Open Source Project) device management for HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal—Wi-Fi embedding in the enrollment QR is optional because these headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing. This is the simplest of the five AR/VR AOSP OEM flows: no vendor-portal coexistence is required, and enrollment uses the verbatim in-device path Settings > Advanced > MDM setup > QR code.
 
-> **Platform gate:** HTC VIVE Focus AOSP device management — Vive Focus 3 / Vive XR Elite / Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune.
+> **Platform gate:** HTC VIVE Focus AOSP device management—Vive Focus 3 / Vive XR Elite / Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune.
 
 > For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE)—no GMS, no FCM push, no Managed Google Play.
 
 > See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
@@ -34,17 +34,17 @@ This guide covers AOSP (Android Open Source Project) device management for HTC V
 
 ## Scope and Status
 
-HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision are supported under AOSP in Intune because they have no GMS. If GMS is present on a target device, use Android Enterprise fully managed (COBO) instead — these devices are not supported under AOSP when GMS is available. `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
+HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision are supported under AOSP in Intune because they have no GMS. If GMS is present on a target device, use Android Enterprise fully managed (COBO) instead—these devices are not supported under AOSP when GMS is available. `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
-HTC's enterprise AR/VR headsets are positioned for training, simulation, and XR collaboration — standalone six-degree-of-freedom headsets used for skills training, design review, remote-expert assistance, and immersive frontline workflows. Among the five AR/VR-class AOSP OEMs (RealWear / Zebra / Pico / HTC / Meta Quest), HTC carries the simplest direct-QR Intune enrollment flow: no vendor-portal coexistence is required (HTC has no Intune-side equivalent of RealWear Cloud, Pico Business Suite, or Meta for Work) and no per-device add-on profile delivery channel is mandated for the Intune-direct path. `[HIGH: AEAOSPFULL-04 + vive.com support, last_verified 2026-04-25]`
+HTC's enterprise AR/VR headsets are positioned for training, simulation, and XR collaboration—standalone six-degree-of-freedom headsets used for skills training, design review, remote-expert assistance, and immersive frontline workflows. Among the five AR/VR-class AOSP OEMs (RealWear / Zebra / Pico / HTC / Meta Quest), HTC carries the simplest direct-QR Intune enrollment flow: no vendor-portal coexistence is required (HTC has no Intune-side equivalent of RealWear Cloud, Pico Business Suite, or Meta for Work) and no per-device add-on profile delivery channel is mandated for the Intune-direct path. `[HIGH: AEAOSPFULL-04 + vive.com support, last_verified 2026-04-25]`
 
 > **Vive Business Management System is an alternative MDM, NOT Intune coexistence.**
 
 > HTC offers the Vive Business Management System (a vendor-side MDM) as an alternative deployment surface for fleets that do not use Intune.
 
-> Choose Intune AOSP enrollment OR Vive Business Management System per fleet need — the two surfaces are alternatives, not coexistence partners
+> Choose Intune AOSP enrollment OR Vive Business Management System per fleet need—the two surfaces are alternatives, not coexistence partners
 
-> (unlike Pico Business Suite, which CAN coexist with Intune AOSP per the Pico admin guide). `[HIGH: vive.com support + ManageXR alternative, last_verified 2026-04-25]`
+> (unlike Pico Business Suite, which CAN coexist with Intune AOSP per the Pico administrator guide). `[HIGH: vive.com support + ManageXR alternative, last_verified 2026-04-25]`
 
 <a id="hardware-scope"></a>
 ## Hardware Scope
@@ -59,23 +59,23 @@ HTC's three Intune-supported enterprise headsets are supported under AOSP becaus
 
 `[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
-These three SKUs are HTC's enterprise-positioned AR/VR line. Consumer Vive variants exist but are out of scope for Intune AOSP enrollment per the v1.4.1 milestone scope. Confirm hardware is one of the three enterprise SKUs above before procurement and rollout — the MS Learn AOSP supported-devices list is the authoritative gate for what Intune will accept. `[HIGH: vive.com/business + MS Learn AOSP supported devices, last_verified 2026-04-25]`
+These three SKUs are HTC's enterprise-positioned AR/VR line. Consumer Vive variants exist but are out of scope for Intune AOSP enrollment per the v1.4.1 milestone scope. Confirm hardware is one of the three preceding enterprise SKUs before procurement and rollout—the MS Learn AOSP supported-devices list is the authoritative gate for what Intune accepts. `[HIGH: vive.com/business + MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
 <a id="prerequisites"></a>
 ## Prerequisites and Licensing
 
-- **Microsoft Intune Plan 2 OR Intune Suite** — HTC VIVE Focus AR/VR headsets fall under Microsoft's specialty-device licensing tier; AR/VR headsets are explicitly named in MS Learn's specialty-devices-with-intune scope, and Intune Plan 1 alone does not entitle the tenant to manage HTC VIVE Focus hardware. `[HIGH: MS Learn specialty-devices-with-intune, last_verified 2026-04-25]`
-- **Microsoft Entra ID tenant** with Intune Administrator role available to the admin authoring the AOSP enrollment profile.
-- **Staging Wi-Fi network on-site** that the headset can join during enrollment. HTC VIVE Focus headsets have an interactive Wi-Fi setup UI in their first-boot enrollment flow, so embedding Wi-Fi credentials in the AOSP QR is OPTIONAL for HTC (it helps zero-touch staging but is not strictly required — operators can complete Wi-Fi join interactively if the QR omits the Wi-Fi block). `[HIGH: vive.com support, last_verified 2026-04-25]`
-- **No vendor portal required** for Intune-direct enrollment. HTC does not operate an Intune-coexistence vendor portal analogous to RealWear Cloud, Pico Business Suite, or Meta for Work. The Vive Business Management System exists as an alternative MDM (NOT for Intune coexistence) — choose Intune AOSP OR Vive Business Management System, not both. `[HIGH: vive.com support, last_verified 2026-04-25]`
+- **Microsoft Intune Plan 2 OR Intune Suite**—HTC VIVE Focus AR/VR headsets fall under Microsoft's specialty-device licensing tier; AR/VR headsets are explicitly named in MS Learn's specialty-devices-with-intune scope, and Intune Plan 1 alone does not entitle the tenant to manage HTC VIVE Focus hardware. `[HIGH: MS Learn specialty-devices-with-intune, last_verified 2026-04-25]`
+- **Microsoft Entra ID tenant** with Intune Administrator role available to the administrator authoring the AOSP enrollment profile.
+- **Staging Wi-Fi network on-site** that the headset can join during enrollment. HTC VIVE Focus headsets have an interactive Wi-Fi setup UI in their first-boot enrollment flow, so embedding Wi-Fi credentials in the AOSP QR is OPTIONAL for HTC (it helps zero-touch staging but is not strictly required—operators can complete Wi-Fi join interactively if the QR omits the Wi-Fi block). `[HIGH: vive.com support, last_verified 2026-04-25]`
+- **No vendor portal required** for Intune-direct enrollment. HTC does not operate an Intune-coexistence vendor portal analogous to RealWear Cloud, Pico Business Suite, or Meta for Work. The Vive Business Management System exists as an alternative MDM (NOT for Intune coexistence)—choose Intune AOSP OR Vive Business Management System, not both. `[HIGH: vive.com support, last_verified 2026-04-25]`
 
 ## Enrollment Method
 
-QR-only AOSP enrollment, one device at a time. Direct-QR Intune flow — the simplest of the 5 AR/VR AOSP OEMs (no vendor-portal coexistence required, no add-on configuration H2s). Wi-Fi embedding in the QR is OPTIONAL (HTC devices have interactive Wi-Fi UI). `[HIGH: AEAOSPFULL-04 + vive.com support, last_verified 2026-04-25]`
+QR-only AOSP enrollment, one device at a time. Direct-QR Intune flow—the simplest of the 5 AR/VR AOSP OEMs (no vendor-portal coexistence required, no add-on configuration H2s). Wi-Fi embedding in the QR is OPTIONAL (HTC devices have interactive Wi-Fi UI). `[HIGH: AEAOSPFULL-04 + vive.com support, last_verified 2026-04-25]`
 
 The HTC VIVE Focus enterprise headsets are supported under AOSP because no GMS; if GMS is present, use Android Enterprise fully managed instead. BOTH **user-associated** and **userless** AOSP enrollment modes are supported (the typical AR/VR pattern). Choose user-associated when each headset is checked out to a named operator (compliance and Conditional Access then bind to that user); choose userless for shared-pool fleets used in training rooms or simulation labs where multiple operators rotate through the same hardware. `[MEDIUM: AR/VR pattern + vive.com support docs imply both, last_verified 2026-04-25]`
 
-On-device QR scan path: **Settings > Advanced > MDM setup > QR code** (Vive Focus Vision specifically; Focus 3 and XR Elite paths are similar). Confirm the firmware on the headset meets the minimum floor in [Hardware Scope](#hardware-scope) before navigating — older firmware variants may not surface the **MDM setup** menu option. `[HIGH: vive.com/us/support, last_verified 2026-04-25]`
+On-device QR scan path: **Settings > Advanced > MDM setup > QR code** (Vive Focus Vision specifically; Focus 3 and XR Elite paths are similar). Confirm the firmware on the headset meets the minimum floor in [Hardware Scope](#hardware-scope) before navigating—older firmware variants may not surface the **MDM setup** menu option. `[HIGH: vive.com/us/support, last_verified 2026-04-25]`
 
 <a id="provisioning-steps"></a>
 ## Provisioning Steps
@@ -85,28 +85,28 @@ On-device QR scan path: **Settings > Advanced > MDM setup > QR code** (Vive Focu
 1. Sign in to the [Intune admin center](https://endpoint.microsoft.com). <!-- verify UI at execute time -->
 2. Navigate to **Devices** > **Android** > **Enrollment**. <!-- verify UI at execute time -->
 3. Choose the AOSP enrollment surface: **Corporate-owned dedicated devices (AOSP)** for shared-pool training-room headsets (userless), or **Corporate-owned, user-associated (AOSP)** for named-operator assignment. <!-- verify UI at execute time -->
-4. Select **Token**. Configure profile name (e.g., `AOSP-HTC-Vive-Focus-Training`), token expiry (userless = 90 days max; user-associated = up to 65 years), and target device-set scope.
-5. Save the profile; do NOT generate the QR yet — Step 2 decides whether to embed Wi-Fi in the QR (OPTIONAL for HTC).
+4. Select **Token**. Configure profile name (for example, `AOSP-HTC-Vive-Focus-Training`), token expiry (userless = 90 days max; user-associated = up to 65 years), and target device-set scope.
+5. Save the profile; do NOT generate the QR yet—Step 2 decides whether to embed Wi-Fi in the QR (OPTIONAL for HTC).
 
-    > **What breaks if misconfigured:** Choosing the wrong AOSP enrollment surface (e.g., user-associated when the headsets are training-room shared pool) produces compliance and Conditional Access bindings to a phantom user, and the staging-token expiry is asymmetric — userless caps at 90 days while user-associated allows up to 65 years. Recovery: delete the profile, re-create on the correct surface; previously enrolled devices are unaffected. Symptom appears in: Intune admin center > Devices > Android (devices show wrong enrollment mode in the Owner column).
+    > **What breaks if misconfigured:** Choosing the wrong AOSP enrollment surface (e.g., user-associated when the headsets are training-room shared pool) produces compliance and Conditional Access bindings to a phantom user, and the staging-token expiry is asymmetric—userless caps at 90 days while user-associated allows up to 65 years. Recovery: delete the profile, re-create on the correct surface; previously enrolled devices are unaffected. Symptom appears in: Intune admin center > Devices > Android (devices show wrong enrollment mode in the Owner column).
 
 ### Step 2 — Generate the AOSP QR code (Wi-Fi embedding OPTIONAL for HTC)
 
 1. From the saved AOSP enrollment profile, choose **Generate QR code**. <!-- verify UI at execute time -->
-2. Decide whether to embed Wi-Fi credentials. For zero-touch staging (operator scans QR and walks away while the headset enrolls), embed the staging Wi-Fi block. For lighter-touch staging where the operator can use the headset's interactive Wi-Fi UI at first-boot, omit the Wi-Fi block — HTC VIVE Focus devices have an interactive Wi-Fi setup UI that handles join during enrollment.
+2. Decide whether to embed Wi-Fi credentials. For zero-touch staging (operator scans QR and walks away while the headset enrolls), embed the staging Wi-Fi block. For lighter-touch staging where the operator can use the headset's interactive Wi-Fi UI at first-boot, omit the Wi-Fi block—HTC VIVE Focus devices have an interactive Wi-Fi setup UI that handles join during enrollment.
 3. If embedding Wi-Fi: enter SSID + auth type (typically WPA2-PSK or WPA3-Personal) + PSK. Verify against the staging access point configuration before saving.
-4. Download the QR image as PNG. Distribute via a secure channel — the QR contains the staging enrollment token (and Wi-Fi PSK if embedded); treat it as a credential.
+4. Download the QR image as PNG. Distribute through a secure channel—the QR contains the staging enrollment token (and Wi-Fi PSK if embedded); treat it as a credential.
 
-    > **What breaks if misconfigured:** QR shared via insecure channel (mass email, public chat) leaks the staging token (and Wi-Fi PSK if embedded). Recovery: regenerate the staging token in Intune (invalidates the leaked QR), rotate the staging Wi-Fi PSK if embedded, redistribute the new QR via a secure channel. Symptom appears in: unexpected enrollments from out-of-policy devices, staging-Wi-Fi unauthorized client list.
+    > **What breaks if misconfigured:** QR shared through insecure channel (mass email, public chat) leaks the staging token (and Wi-Fi PSK if embedded). Recovery: regenerate the staging token in Intune (invalidates the leaked QR), rotate the staging Wi-Fi PSK if embedded, redistribute the new QR through a secure channel. Symptom appears in: unexpected enrollments from out-of-policy devices, staging-Wi-Fi unauthorized client list.
 
 ### Step 3 — Provision the device by scanning the QR via in-device path Settings > Advanced > MDM setup > QR code
 
 1. Power on the HTC VIVE Focus headset out-of-box (factory-reset state if previously enrolled). The headset boots into its first-time setup flow.
 2. On the headset, navigate verbatim to **Settings > Advanced > MDM setup > QR code** (Vive Focus Vision; Focus 3 and XR Elite paths are similar). This is the in-device QR scan UI path published by HTC support. <!-- verify UI at execute time -->
 3. Position the QR image so the headset's onboard camera can capture it. The headset confirms the scan with an on-display acknowledgment.
-4. If Wi-Fi was NOT embedded in the QR, complete Wi-Fi join via the headset's interactive Wi-Fi UI when prompted.
+4. If Wi-Fi was NOT embedded in the QR, complete Wi-Fi join using the headset's interactive Wi-Fi UI when prompted.
 5. Wait for the AOSP enrollment handshake with Intune. Typical enrollment window is **~15 minutes** from scan to "Enrolled" status in Intune admin center.
-6. The headset boots into the configured AOSP mode (user-associated or userless). For user-associated mode, the assigned operator signs in at first use. Repeat per device — AOSP enrollment is one-device-per-QR-scan; bulk enrollment is not supported under AOSP.
+6. The headset boots into the configured AOSP mode (user-associated or userless). For user-associated mode, the assigned operator signs in at first use. Repeat per device—AOSP enrollment is one-device-per-QR-scan; bulk enrollment is not supported under AOSP.
 
     > **What breaks if misconfigured:** Wrong in-device path used (older firmware variant where the **MDM setup** option is not visible) → operator cannot reach the QR scanner from Settings. Recovery: confirm firmware meets the minimum floor in the [Hardware Scope](#hardware-scope) table; consult [vive.com support](https://www.vive.com/us/support/) for the variant-specific path on the exact firmware build. Symptom appears in: device-side missing menu option (no **MDM setup** entry under **Settings > Advanced**).
 
@@ -116,13 +116,13 @@ On-device QR scan path: **Settings > Advanced > MDM setup > QR code** (Vive Focu
 1. Sign in to the [Intune admin center](https://endpoint.microsoft.com). <!-- verify UI at execute time -->
 2. Navigate to **Devices** > **All devices**, filter by **Platform = Android**, and search by serial number (the HTC VIVE Focus serial is on the chassis label and in **Settings > About** on the headset). <!-- verify UI at execute time -->
 3. Confirm the headset row shows **Enrolled** status with the expected AOSP mode in the Owner column (user-associated or dedicated/userless).
-4. Confirm the AOSP enrollment profile from Step 1 is applied — Intune admin center > Devices > select HTC headset > Device configuration shows the profile assignment status. <!-- verify UI at execute time -->
+4. Confirm the AOSP enrollment profile from Step 1 is applied—Intune admin center > Devices > select HTC headset > Device configuration shows the profile assignment status. <!-- verify UI at execute time -->
 5. Wait up to ~15 minutes from first boot for the initial compliance state to populate; confirm the **Compliance** column reports the expected verdict per your tenant's compliance policy.
 
 <a id="common-failures"></a>
 ## Common Failures
 
-HTC VIVE Focus enterprise headsets are supported under AOSP because no GMS; if GMS is present, use Android Enterprise fully managed instead. The failure modes below are scoped to the Intune-direct AOSP enrollment surface for the three HTC enterprise SKUs.
+HTC VIVE Focus enterprise headsets are supported under AOSP because no GMS; if GMS is present, use Android Enterprise fully managed instead. The following failure modes are scoped to the Intune-direct AOSP enrollment surface for the three HTC enterprise SKUs.
 
 | Symptom | Likely Cause | Recovery | Severity |
 |---|---|---|---|
@@ -159,11 +159,11 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 ## See Also
 
-- [AOSP Stub](06-aosp-stub.md) — AOSP scope context
-- [AOSP OEM Matrix](../reference/aosp-oem-matrix.md) — cross-OEM AOSP capability mapping
-- [Android Capability Matrix](../reference/android-capability-matrix.md) — overall Android mode capability landscape
-- [Android Glossary](../_glossary-android.md) — AOSP / OEMConfig / GMS terminology
-- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md#aosp) — placement of AOSP within the Android enrollment lifecycle
+- [AOSP Stub](06-aosp-stub.md)—AOSP scope context
+- [AOSP OEM Matrix](../reference/aosp-oem-matrix.md)—cross-OEM AOSP capability mapping
+- [Android Capability Matrix](../reference/android-capability-matrix.md)—overall Android mode capability landscape
+- [Android Glossary](../_glossary-android.md)—AOSP / OEMConfig / GMS terminology
+- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md#aosp)—placement of AOSP within the Android enrollment lifecycle
 
 ## Changelog
 
@@ -173,13 +173,13 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 ---
 
-*Wave 3 runbook 29 (Cause D) and L2 runbook 23 (Pattern D) cross-link landing target: [`#common-failures`](#common-failures) anchor above is stable per D-05 anchor-scaffolding contract.*
+*Wave 3 runbook 29 (Cause D) and L2 runbook 23 (Pattern D) cross-link landing target: [`#common-failures`](#common-failures) anchor is stable per D-05 anchor-scaffolding contract.*
 
 *Wave 2 `aosp-oem-matrix.md` consumes the HTC column data shipped here: Vive Focus 3 / XR Elite / Focus Vision + per-model firmware floors (Hardware Scope row); QR-only AOSP + Wi-Fi OPTIONAL (Enrollment Method and Wi-Fi Embedding row); vendor portal None (Intune-direct; Vive Business Management System is alternative MDM not coexistence) + Plan 2 OR Suite (Vendor Portals and Licensing row); BOTH user-associated AND userless supported (Intune AOSP Mode row).*
 
-*"Simplest of AR/VR OEMs" framing rationale (per AEAOSPFULL-04): HTC's Intune-direct AOSP flow has no vendor-portal coexistence step (contrast with RealWear Cloud REQUIRED Wi-Fi-QR-embedding, Pico Business Suite OPTIONAL coexistence, and Meta for Work + Meta Horizon Subscription Status REQUIRED add-on H2s). The 11-H2 baseline ships verbatim with NO add-on H2s per D-02 — Provisioning Steps flows directly into Verification without intermediate vendor-side configuration H2s. Per-model firmware floor variance (3 distinct firmware strings across Focus 3 / XR Elite / Focus Vision) is the only HTC-distinctive content surfaced as an inline table, NOT as an add-on H2.*
+*"Simplest of AR/VR OEMs" framing rationale (per AEAOSPFULL-04): HTC's Intune-direct AOSP flow has no vendor-portal coexistence step (contrast with RealWear Cloud REQUIRED Wi-Fi-QR-embedding, Pico Business Suite OPTIONAL coexistence, and Meta for Work + Meta Horizon Subscription Status REQUIRED add-on H2s). The 11-H2 baseline ships verbatim with NO add-on H2s per D-02—Provisioning Steps flows directly into Verification without intermediate vendor-side configuration H2s. Per-model firmware floor variance (3 distinct firmware strings across Focus 3 / XR Elite / Focus Vision) is the only HTC-distinctive content surfaced as an inline table, NOT as an add-on H2.*
 
-*Verbatim in-device QR scan UI path **Settings > Advanced > MDM setup > QR code** (per RESEARCH.md §1 HTC sourced from `vive.com/us/support`) is reproduced at three points in this guide — Enrollment Method (definitional placement), Step 3 H3 heading (procedural placement), and Common Failures HIGH row (recovery placement) — so an admin reading any of the three primary sections can locate the on-device path without cross-section navigation.*
+*Verbatim in-device QR scan UI path **Settings > Advanced > MDM setup > QR code** (per phase research §1 HTC sourced from `vive.com/us/support`) is reproduced at three points in this guide—Enrollment Method (definitional placement), Step 3 H3 heading (procedural placement), and Common Failures HIGH row (recovery placement)—so an administrator reading any of the three primary sections can locate the on-device path without cross-section navigation.*
 
 ## Version History
 

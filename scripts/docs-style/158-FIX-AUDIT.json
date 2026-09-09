@@ -1,0 +1,939 @@
+{
+  "range": {
+    "from": "0a458c84cfab294dea802479f0f624546dfa2f5d",
+    "to": "aa9ae5ae5491de7f09c5ec99abed744557c075f9"
+  },
+  "authored_at_sha": "aa9ae5ae5491de7f09c5ec99abed744557c075f9",
+  "authored_at_sha_note": "This binding population is authored at 158-05's completion commit (the final content revision before this task's own commit), and range.to is re-resolved to that same SHA -- a deliberate deviation from the plan's literal 'reuse the tracer's pair, do not advance the end point' text. D-01 requires the range's end point be 'resolved to a SHA pair at authoring', and D-69 constraint 5 / this plan's own must_haves.truths require the binding audit to run 'at the final content revision, after every corpus edit this phase makes'. The tracer (plan 158-01) resolved range.to at ITS OWN authoring time (d0531dbfb132f7c83ab9722667a92b155d4ec299), which predates every 158-02/158-03/158-05 commit this task must also audit as own-remediation rows -- the tool's present_at_head/absent_at_head ops are bound to range.to, so leaving it at the stale value makes every own-remediation row vacuous (both counts zero, proven by measurement: all 17 own-remediation rows failed vacuous/direction against the tracer's original range.to before this correction). range.from (4e781fc5^ = 0a458c84...) is unchanged, so the milestone-claims population (surface 1-7 rows) is identical to what the tracer's boundary specifies; only the end point advances, to exactly the final content revision the precondition and D-69 constraint 5 require, and no further (it is not re-resolved again after this task's own commits land). The run log recording this JSON's row-set hash is committed at a SHA whose PARENT is authored_at_sha, not equal to it -- ordinary GSD close-out (task commit -> SUMMARY commit) always advances HEAD past any in-plan measurement, so literal HEAD equality with the recording commit is unsatisfiable by construction and is not asserted anywhere in this file.",
+  "rows": [
+    {
+      "id": "flagship-keep-local-admin-account",
+      "source": {
+        "kind": "RESUME.md ruling table",
+        "ref": "Rulings added in batch 6 (`admin-setup-*`) -- row subject `Create a local admin account`"
+      },
+      "claim": "KEEP: 'Create a local admin account' correctly appears twice in 02-enrollment-profile.md (settings-table row + prose echo); presence alone was green throughout the original defect.",
+      "kind": "corpus-consistency",
+      "fix_sha": "af678f0c",
+      "path": "docs/admin-setup-macos/02-enrollment-profile.md",
+      "needle": "Create a local admin account",
+      "assert": [
+        {
+          "op": "count_at_head_eq",
+          "value": 2
+        }
+      ],
+      "note": "Needle re-derived from the shipped corpus bytes at docs/admin-setup-macos/02-enrollment-profile.md:94 and :146 (git show HEAD:<path>), not retyped from RESUME.md's own pre-substitution scratch text. fix_sha is the commit that landed this file's current tracked state into this branch's history (feat(154-02): land 277 clean google-style applies from scratch corpus) -- the RESUME-cited commits f30c37b/dc7e996 predate the merge and are not ancestors of HEAD, so they cannot serve as this row's fix_sha within the resolved range."
+    },
+    {
+      "id": "wrapped-citation-hp-sure-admin",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(156): restore two falsified HP Sure Admin citations (CR-01)"
+      },
+      "claim": "REPLACE: line-wrapped 'HP Sure/Administrator' citation in firmware-oem-matrix.md restored to 'HP Sure Admin' -- git-log-S reports 0 commits on a fix that provably landed.",
+      "kind": "replace",
+      "fix_sha": "bb22f89a",
+      "path": "docs/reference/firmware-oem-matrix.md",
+      "needle": "Sure Administrator",
+      "assert": [
+        {
+          "op": "count_decreased_vs_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ],
+      "note": "Needle re-derived from the parent blob's own bytes (git show bb22f89a^:docs/reference/firmware-oem-matrix.md, joined and whitespace-collapsed): 'Secure BIOS with HP Sure\\n  Administrator and CMSL' and 'HP Sure\\n  Administrator step-by-step' both collapse to 'Sure Administrator', parent count 2. This is the exact claim a pickaxe (git log -S\"Sure Administrator\") reports as never having happened -- it returns 0 commits on a fix that provably landed, because the needle only ever existed as two whitespace-joined blob reads, never as a single unwrapped line `git log -S` could match against a diff hunk."
+    },
+    {
+      "id": "citation-date-autopatch-groups-hyg04",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md HYG-04"
+      },
+      "claim": "HYG-04: the Windows Autopatch groups overview citation date corrected from 2026-06-19 to the page's own ms.date, 2025-06-17.",
+      "kind": "external-fact",
+      "fix_sha": "2cacf1cb",
+      "path": "docs/operations/patch-management/00-overview.md",
+      "needle": "(updated 2025-06-17)",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "verified_by": "157 D-41's rendered-bytes method against the Windows Autopatch groups overview Learn page's own ms.date control field -- not re-fetched here; this row asserts only that the corpus's own citation text agrees with that prior measurement, nothing about the live page today."
+    },
+    {
+      "id": "package-manager-conflation-macos-matrix-hyg03",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md HYG-03"
+      },
+      "claim": "HYG-03: macOS capability matrix names the Intune Microsoft Store app type, not Windows Package Manager, as the Store integration mechanism.",
+      "kind": "corpus-consistency",
+      "fix_sha": "97f7ca28",
+      "path": "docs/reference/macos-capability-matrix.md",
+      "needle": "Yes (Intune Microsoft Store app type)",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "five-platform-hub-overview-hyg01",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md HYG-01"
+      },
+      "claim": "HYG-01: the Patch & Update Management overview hub routes to the Linux update-delivery guide alongside the other four platforms.",
+      "kind": "corpus-consistency",
+      "fix_sha": "18f378aa",
+      "path": "docs/operations/patch-management/00-overview.md",
+      "needle": "For Linux update delivery, see [Linux Update Delivery](05-linux-update-delivery.md).",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "File-scoped countInBlob join collapses the source line wrap, so the needle spans the wrap safely."
+    },
+    {
+      "id": "leak-class-linux-capability-matrix",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-03): apply the leak-class substitution vocabulary to remaining 26 sites"
+      },
+      "claim": "Planning-artifact citation 'ROADMAP SC#4' replaced with 'phase success criterion #4' in the Linux capability matrix's cross-platform equivalences note.",
+      "kind": "replace",
+      "fix_sha": "9a5827ce",
+      "path": "docs/reference/linux-capability-matrix.md",
+      "needle": "called out in phase success criterion #4",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "hyg02-truncate-roadmap-citation",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-03): correct both HYG-02 named defects and uniform the clone family"
+      },
+      "claim": "The app-lifecycle overview's operations-index cross-reference note drops its trailing ROADMAP-entry citation clause.",
+      "kind": "replace",
+      "fix_sha": "6f9da288",
+      "path": "docs/operations/app-lifecycle/00-overview.md",
+      "needle": "Phase 55 does not amend the operations index per the ROADMAP entry",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ],
+      "note": "Uses the OLD full clause as the needle (present at parent, absent at head) rather than the new truncated text, because the new text is a strict prefix of the old and a needle built from it would already be present at parent as a substring."
+    },
+    {
+      "id": "leak-class-pitfalls-04-custom-role",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-02): replace leaked planning-artifact citations in remaining Apple Business runbooks"
+      },
+      "claim": "Planning-artifact citation 'PITFALLS.md OP-2' replaced with 'pitfall register OP-2' in the custom-role-authoring runbook.",
+      "kind": "replace",
+      "fix_sha": "b9877990",
+      "path": "docs/cross-platform/apple-business/04-custom-role-authoring.md",
+      "needle": "and pitfall register OP-2 for the full lockout-recovery rationale.",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "leak-class-research-01-role-permission",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-02): replace leaked planning-artifact citations in four Apple Business runbooks"
+      },
+      "claim": "Planning-artifact citation 'RESEARCH.md §1 seed data and 62-SCRAPE-PREP.md' replaced with the fixed lowercase vocabulary in the role-permission model doc.",
+      "kind": "replace",
+      "fix_sha": "f9822a55",
+      "path": "docs/cross-platform/apple-business/01-role-permission-model.md",
+      "needle": "cross-referenced against phase research §1 seed data and portal scrape preparation notes.",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "eee-sop-drop-repo-path-phase151",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-01): drop repository paths from EEE-SOP-standard.md, keep provenance"
+      },
+      "claim": "EEE-SOP standard's D-08 changelog row cites 'the Phase 151 context' instead of the raw repository path to 151-CONTEXT.md.",
+      "kind": "replace",
+      "fix_sha": "e6930d25",
+      "path": "docs/_standards/EEE-SOP-standard.md",
+      "needle": "recorded as D-04 in the Phase 151 context",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "kiosk-shell-launcher-edition-only-gate",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155-06): label every RE-237 pilot observation, align activation claims, rewrite D-17 self-contradiction"
+      },
+      "claim": "The walk-up AVD kiosk recipe restates Microsoft's own ShellLauncher gate as edition-only, separating it from the pilot-observed activation-status behavior.",
+      "kind": "replace",
+      "fix_sha": "2fba8fc5",
+      "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+      "needle": "Microsoft states the `ShellLauncher` node's gate in edition-only terms.",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "kiosk-pilot-marker-convention",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155-05): label every RE-237 pilot observation, align activation claims, rewrite D-17 self-contradiction"
+      },
+      "claim": "The walk-up AVD kiosk recipe's intro adopts the bolded inline **[PILOT]** marker convention for single-tenant, single-device observations.",
+      "kind": "replace",
+      "fix_sha": "15bbb796",
+      "path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+      "needle": "the text carries the bolded inline **[PILOT]** marker",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "re224-autologon-multiapp-arm-rcp07",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md RCP-07(a)"
+      },
+      "claim": "RE-224's anti-feature row is narrowed: where the sole allow-listed app performs its own sign-in, autologon multi-app is the correct, reference-implementation arm.",
+      "kind": "replace",
+      "fix_sha": "c49af29a",
+      "path": "docs/recipes/03-windows-11-multi-app-kiosk.md",
+      "needle": "Where the sole allow-listed app performs its own sign-in, autologon multi-app is the correct arm",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "re222-settings-catalog-field-resolved-rcp07",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155-04): reconcile RE-222's three [ASSUMED] markers, route autologon readers to RE-237"
+      },
+      "claim": "RE-222's three Settings Catalog field names are resolved from [ASSUMED] to field-resolved, naming Deploy-WindowsApp.ps1's own registry writes as the source.",
+      "kind": "replace",
+      "fix_sha": "36225814",
+      "path": "docs/recipes/01-shared-windows-avd-client.md",
+      "needle": "written to `HKLM\\SOFTWARE\\Microsoft\\WindowsApp` as `AutoLogoffEnable`",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "android-work-profile-administrator-guide",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(154-02): resolve android work-profile privacy-questions conflict"
+      },
+      "claim": "The Android work-profile end-user guide's privacy-boundary cross-reference names 'the administrator guide', matching the corpus's own doc-class vocabulary.",
+      "kind": "replace",
+      "fix_sha": "2a1fd8e7",
+      "path": "docs/end-user-guides/android-work-profile-setup.md",
+      "needle": "table in the administrator guide.",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "index-sub-org-administrator",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(154-02): resolve index.md and patch-management overview drift-overlap conflicts"
+      },
+      "claim": "The documentation index's Apple Business governance blurb reads 'sub-org administrator onboarding', matching the corpus's own role vocabulary.",
+      "kind": "replace",
+      "fix_sha": "6cc9e0aa",
+      "path": "docs/index.md",
+      "needle": "sub-org administrator onboarding",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "glossary-linux-reboot-marker-both-spellings",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(157-06): drop the invented same-file claim from the unattended-upgrades entry"
+      },
+      "claim": "The Linux glossary's unattended-upgrades entry names both reboot-marker path spellings Canonical's guidance and the tool's own log output use, dropping the invented same-file claim.",
+      "kind": "corpus-consistency",
+      "fix_sha": "9a68aa1a",
+      "path": "docs/_glossary-linux.md",
+      "needle": "the `unattended-upgrades` log output names `/var/run/reboot-required`",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "seed-001-closed-hyg07",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md HYG-07"
+      },
+      "claim": "SEED-001 frontmatter status flipped from planted to closed per SC#4 (HYG-07); body byte-unchanged.",
+      "kind": "replace",
+      "fix_sha": "9c93a2f3",
+      "path": ".planning/seeds/SEED-001-macos-psso-admin-setup-doc-accuracy.md",
+      "evidence_path": ".planning/REQUIREMENTS.md",
+      "needle": "status: closed",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "evidence_path names REQUIREMENTS.md's HYG-07 line (the requirement this flip discharges), distinct from the commit's own touched file, per D-03/task instruction."
+    },
+    {
+      "id": "judge-packets-walk-root-fix",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(156-01): scope judge-packets.py to walk root, check git returncode"
+      },
+      "claim": "judge-packets.py's changed_files() resolves paths against the repository root instead of the walk root, fixing the docs/docs/... false-empty bug D-16 measured.",
+      "kind": "replace",
+      "fix_sha": "655654f2",
+      "path": "scripts/docs-style/judge-packets.py",
+      "evidence_path": "docs",
+      "needle": "def repo_root_of(root):",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "evidence_path names docs/ (the walk root the bug silently emptied), distinct from the commit's own tool-file path, per D-03/task instruction."
+    },
+    {
+      "id": "kiosk-currentkiosk-guard",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155): guard $currentKiosk before orphan profile deletion"
+      },
+      "claim": "Remove-KioskRunTasks.ps1 guards $currentKiosk with the same kioskUser-match pattern already used for the OneDrive-payload cleanup before running the destructive orphan-profile deletion loop.",
+      "kind": "replace",
+      "fix_sha": "d7a1b297",
+      "path": "assets/recipes/06-walk-up-avd-kiosk/remediations/run-task-cleanup/Remove-KioskRunTasks.ps1",
+      "evidence_path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+      "needle": "if ($currentKiosk -match '^kioskUser\\d+$') {",
+      "assert": [
+        {
+          "op": "count_increased"
+        }
+      ],
+      "note": "The guard pattern already existed once (OneDrive cleanup, unchanged); the fix ADDS a second use (orphan-profile loop), so count_increased (not absent_at_parent) is the correct direction. evidence_path names the recipe doc this script implements, distinct from the commit's own asset path, per D-03/task instruction."
+    },
+    {
+      "id": "secret-cmg-hostname-scrub",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155-03): remove real CMG hostname from NOTICE scrub narrative"
+      },
+      "claim": "[REDACTED] internal CMG FQDN segment removed from the walk-up AVD kiosk recipe's NOTICE scrub narrative.",
+      "kind": "secret",
+      "fix_sha": "077b29b7",
+      "path": "assets/recipes/06-walk-up-avd-kiosk/NOTICE",
+      "needle": null,
+      "assert": [
+        {
+          "op": "present_at_parent"
+        }
+      ],
+      "note": "Secret row per D-31/T-158-01: NOTICE is the one of this commit's two changed files with exactly one removed content line that carries the value; the sibling changed file (155-03-SUMMARY.md) also has exactly one removed content line but it names only the (partial, non-identifying) grep pattern used, not the value itself -- see the sibling row 'summary-correction-155-03-hostname' for that file's own, distinct, non-secret claim. No pickaxe run for this row; recovery is scoped to this row's own path per D-31."
+    },
+    {
+      "id": "summary-correction-155-03-hostname",
+      "source": {
+        "kind": "SUMMARY line (surface 3, 154-157)",
+        "ref": "155-03-SUMMARY.md Task 1 verification note"
+      },
+      "claim": "155-03-SUMMARY.md's verification note is corrected: the original grep pattern could not have caught the real hostname it left behind; the note stops reproducing search terms.",
+      "kind": "replace",
+      "fix_sha": "077b29b7",
+      "path": ".planning/phases/155-rcp-walk-up-avd-kiosk-recipe-formalization/155-03-SUMMARY.md",
+      "needle": "That pattern was structurally incapable of catching the hostname this plan left in the `NOTICE` scrub narrative.",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "check-phase-135-retire-line-pin",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(155-01): retire V-135-RECIPE's 328-line equality pin for content needles"
+      },
+      "claim": "check-phase-135.mjs's V-135-RECIPE line-count pin (328) is deleted, replaced by existence/non-emptiness/H1/content-needle checks so RCP-07's prose fixes do not trip the apex by arithmetic.",
+      "kind": "deletion",
+      "fix_sha": "6689ffc3",
+      "path": "scripts/validation/check-phase-135.mjs",
+      "evidence_path": "docs/recipes/03-windows-11-multi-app-kiosk.md",
+      "needle": "const EXPECTED_LINE_COUNT = 328;",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ],
+      "note": "evidence_path names the recipe file the retired pin actually gated, distinct from the commit's own validator-script path, per D-03/task instruction."
+    },
+    {
+      "id": "sure-admin-exemption-batch9",
+      "source": {
+        "kind": "fix commit",
+        "ref": "fix(154-04): exempt Sure Admin from row 26's admin->administrator expansion"
+      },
+      "claim": "subs-admin-batch9.tsv row 26 gains a (?<!Sure ) negative-lookbehind alternate, exempting HP's 'Sure Admin' product name from the Admin->Administrator expansion.",
+      "kind": "replace",
+      "fix_sha": "a7ac71e0",
+      "path": "scripts/docs-style/subs-admin-batch9.tsv",
+      "evidence_path": "docs/reference/firmware-oem-matrix.md",
+      "needle": "(?<!Sure )(?<!> )",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "evidence_path names the corpus site the exemption protects (the same file the wrapped-citation-hp-sure-admin row asserts against), distinct from the commit's own substitution-table path, per D-03/task instruction."
+    },
+    {
+      "id": "re237-registry-approved-rcp04",
+      "source": {
+        "kind": "requirement line",
+        "ref": "REQUIREMENTS.md RCP-04"
+      },
+      "claim": "RE-237 is registered in RE-index.md with Status Approved only after review, sign-off and the two-site frontmatter flip landed.",
+      "kind": "corpus-consistency",
+      "fix_sha": "d278a3b1",
+      "path": "docs/_registry/RE-index.md",
+      "needle": "| RE-237 | docs/recipes/06-walk-up-avd-kiosk-autologon.md | Walk-Up AVD Kiosk: Autologon Multi-App Assigned Access with Windows App Auto-Launch | Guide | Approved |",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "dfci-glossary-predates-hyg06",
+      "source": {
+        "kind": "prior-phase hand-off",
+        "ref": "157-VERIFICATION.md:118 (D-44 disposition, HYG-06 six-vs-five)"
+      },
+      "claim": "DFCI already had a glossary entry since Phase 149, before HYG-06's five-entry fix landed in Phase 157 -- REQUIREMENTS.md:80 still says six, not five.",
+      "kind": "corpus-consistency",
+      "fix_sha": "8e5070d9",
+      "path": "docs/_glossary.md",
+      "needle": "### Device Firmware Configuration Interface (DFCI)",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "fix_sha is the Phase 149 commit that introduced this glossary entry (docs(149-02): add four firmware and BIOS terms to the glossary) -- not a Phase 157/158 commit -- because the claim being audited is that this entry PREDATES Phase 157's HYG-06 fix, which is exactly what absent-at-parent/present-at-head against this earlier fix_sha proves."
+    },
+    {
+      "id": "style01-superseded-figure-requirements",
+      "source": {
+        "kind": "GATE-BASELINE note",
+        "ref": "154-GATE-BASELINE.json phase_baseline.fork_point_drift.note"
+      },
+      "claim": "REQUIREMENTS.md STYLE-01 still quotes the superseded pre-158 merge-drift figure (22 files/4,032 insertions) alongside its own annotate-and-supersede correction; the row is superseded, not deleted.",
+      "kind": "corpus-consistency",
+      "fix_sha": "8de413aa",
+      "path": ".planning/REQUIREMENTS.md",
+      "needle": "22 files changed, 4,032 insertions, 12 deletions",
+      "assert": [
+        {
+          "op": "present_at_head"
+        }
+      ],
+      "note": "This is an intentionally-still-present superseded figure (D-66 annotate-and-supersede, not deletion), so the assertion is presence, not absence. fix_sha names the commit 154-GATE-BASELINE.json's own anchor_note re-points to (C1's true parent) -- used here only as a stable reference point, not as the commit that wrote this REQUIREMENTS.md line."
+    },
+    {
+      "id": "windows-row15-hp-sure-admin-count",
+      "source": {
+        "kind": "WINDOWS.md row",
+        "ref": "WINDOWS.md row 15 (156, deviation, subs-admin-batch9.tsv)"
+      },
+      "claim": "WINDOWS.md row 15's own stated verification -- restoring both firmware-oem-matrix.md citation sites to 'HP Sure Admin and CMSL' -- holds at head.",
+      "kind": "corpus-consistency",
+      "fix_sha": "bb22f89a",
+      "path": "docs/reference/firmware-oem-matrix.md",
+      "needle": "HP Sure Admin and CMSL",
+      "assert": [
+        {
+          "op": "count_at_head_eq",
+          "value": 3
+        }
+      ],
+      "note": "Distinct assertion from the tracer row wrapped-citation-hp-sure-admin (which asserts the falsified needle is gone); this row asserts the restored phrase is present at head. Measured 3, not 2: the phrase also occurs once more at firmware-oem-matrix.md:175 in an unrelated sentence, outside the two citation sites row 15 restored -- the count is reported as measured, not forced to match row 15's own prose figure."
+    },
+    {
+      "id": "remediation-d05-skill-divergence-measured",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-41/D-05: falsified skill-divergence identity claim"
+      },
+      "claim": "EEE-SOP-standard.md's D-05 no longer claims the two skill copies are byte-identical today; it states the measured divergence instead.",
+      "kind": "replace",
+      "fix_sha": "3c53f72a",
+      "path": "docs/_standards/EEE-SOP-standard.md",
+      "needle": "have already diverged",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d04-above-to-preceding",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-42/D-04: directional reference"
+      },
+      "claim": "EEE-SOP-standard.md's D-04 corpus-scope paragraph replaces the directional 'above' with 'the preceding EEE structural sections'.",
+      "kind": "replace",
+      "fix_sha": "3c53f72a",
+      "path": "docs/_standards/EEE-SOP-standard.md",
+      "needle": "the preceding EEE structural sections",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d01-wish-to-want",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-01: desire-verb word-list replacement"
+      },
+      "claim": "EEE-SOP-standard.md's opening paragraph replaces 'unenforceable wish list' with 'unenforceable want list' per the word list.",
+      "kind": "replace",
+      "fix_sha": "3c53f72a",
+      "path": "docs/_standards/EEE-SOP-standard.md",
+      "needle": "unenforceable want list",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d44-reboot-handling-cross-reference",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-44: corpus-consistency cross-reference, not an external-fact fetch"
+      },
+      "claim": "The Linux glossary's unattended-upgrades entry gains a second link to the Linux update-delivery guide's reboot-handling anchor.",
+      "kind": "corpus-consistency",
+      "fix_sha": "804e12ba",
+      "path": "docs/_glossary-linux.md",
+      "needle": "[Reboot Handling](operations/patch-management/05-linux-update-delivery.md#reboot-handling)",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-native-to-built-in-glossary",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-61: nativeness-word replacement"
+      },
+      "claim": "The Linux glossary's unattended-upgrades entry replaces 'a native Intune profile' with 'a built-in Intune profile'.",
+      "kind": "replace",
+      "fix_sha": "804e12ba",
+      "path": "docs/_glossary-linux.md",
+      "needle": "a native Intune profile",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-via-to-using-index",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-10: tool-sense preposition, docs/index.md"
+      },
+      "claim": "docs/index.md's Patch & Update Management hub line replaces 'via apt' with 'using apt' (tool sense, never 'through').",
+      "kind": "replace",
+      "fix_sha": "1c4f7880",
+      "path": "docs/index.md",
+      "needle": "Linux update delivery via apt and unattended-upgrades.",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-via-to-using-operations-index",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-10: tool-sense preposition, docs/operations/00-index.md"
+      },
+      "claim": "docs/operations/00-index.md's Patch & Update Management hub line replaces 'via apt' with 'using apt' (tool sense, never 'through').",
+      "kind": "replace",
+      "fix_sha": "1c4f7880",
+      "path": "docs/operations/00-index.md",
+      "needle": "Linux update delivery via apt and unattended-upgrades.",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d43-verify2-base-argument",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-43/R7: verify2.py invocation requires BASE"
+      },
+      "claim": "google-style-verify/SKILL.md's verify2.py invocation now carries its required BASE argument.",
+      "kind": "replace",
+      "fix_sha": "91a25f7d",
+      "path": ".claude/skills/google-style-verify/SKILL.md",
+      "needle": "python scripts/docs-style/verify2.py # link + anchor health, before/after",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ],
+      "note": "Full-line needle (D-50): the old line has no BASE argument and is otherwise subsumed by the new line once whitespace is collapsed by countInBlob's join -- a needle built from a shorter fragment risks matching both."
+    },
+    {
+      "id": "remediation-d43-pins2-positional-roots",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-43/R7: pins2.py invocation requires its two positional roots"
+      },
+      "claim": "google-style-verify/SKILL.md's pins2.py invocation now passes its two positional roots (scripts/validation, docs) instead of falling back to hardcoded, host-specific defaults.",
+      "kind": "replace",
+      "fix_sha": "91a25f7d",
+      "path": ".claude/skills/google-style-verify/SKILL.md",
+      "needle": "python scripts/docs-style/pins2.py > /tmp/pins-now.txt",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ],
+      "note": "Full-line needle (D-50): the old line lacks the two positional-root arguments the new line inserts mid-line."
+    },
+    {
+      "id": "remediation-d43-any-output-claim-removed",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-43/R7: false \"any output = broken pin\" claim"
+      },
+      "claim": "google-style-verify/SKILL.md drops the false claim that any pin-differ output means a broken pin; pins2.py globs *.mjs only, so one permanent line always survives.",
+      "kind": "deletion",
+      "fix_sha": "91a25f7d",
+      "path": ".claude/skills/google-style-verify/SKILL.md",
+      "needle": "any output = broken pin",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d43-9363-superseded-count",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-43/R7: superseded 9,363 candidate count"
+      },
+      "claim": "google-style-verify/SKILL.md replaces the superseded '9,363' candidate count with EEE-SOP-standard.md's own qualitative 'more than ten thousand' phrasing.",
+      "kind": "deletion",
+      "fix_sha": "91a25f7d",
+      "path": ".claude/skills/google-style-verify/SKILL.md",
+      "needle": "9,363",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-d45-exclusion-record-date-stamp",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-45/R6: exclusion-record date-stamp"
+      },
+      "claim": "check-prose-style.py's PERMANENT EXCLUSION RECORD gains one dated line stating the em-dash and directional exclusion figures moved under this phase's sweep and are not re-derivable.",
+      "kind": "corpus-consistency",
+      "fix_sha": "44ab8c21",
+      "path": "scripts/validation/check-prose-style.py",
+      "needle": "[DATED 2026-09-08] The em-dash-spaced and directional pairs",
+      "assert": [
+        {
+          "op": "absent_at_parent"
+        },
+        {
+          "op": "present_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-re-index",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/_registry/RE-index.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/_registry/RE-index.md",
+      "needle": "is the publish gate — any other value silently",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-09-aosp-realwear",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/admin-setup-android/09-aosp-realwear.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/admin-setup-android/09-aosp-realwear.md",
+      "needle": "the staging-token expiry is asymmetric — userless caps at 90 days",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-11-aosp-pico",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/admin-setup-android/11-aosp-pico.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/admin-setup-android/11-aosp-pico.md",
+      "needle": "the staging-token expiry is asymmetric — userless caps at 90 days",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-android-work-profile-setup",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/end-user-guides/android-work-profile-setup.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/end-user-guides/android-work-profile-setup.md",
+      "needle": "A stable internet connection — Wi-Fi or cellular data.",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-01-device-not-registered",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/l1-runbooks/01-device-not-registered.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/l1-runbooks/01-device-not-registered.md",
+      "needle": "This runbook covers read-only L1 diagnostic steps only — no registry edits",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    },
+    {
+      "id": "remediation-emdash-sweep-02-shared-ipad-full-provisioning",
+      "source": {
+        "kind": "158 own remediation",
+        "ref": "D-09: corpus-wide em-dash sweep, file outside Phase 157's 59-file edit set"
+      },
+      "claim": "The mechanical em-dash sweep tightens a spaced em dash in docs/recipes/02-shared-ipad-full-provisioning.md, a file outside Phase 157's enumerated 59-file edit set.",
+      "kind": "replace",
+      "fix_sha": "44ab8c21",
+      "path": "docs/recipes/02-shared-ipad-full-provisioning.md",
+      "needle": "that is a distinct fact from the factory reset above — it is the one that destroys user data",
+      "assert": [
+        {
+          "op": "present_at_parent"
+        },
+        {
+          "op": "absent_at_head"
+        }
+      ]
+    }
+  ],
+  "row_set_hash": "e12dd27e296baca34c42be3bfd95df08256d270d2958b127080e159c8fa37e92"
+}

@@ -16,9 +16,9 @@ platform: Android
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices enrolled in Intune where Conditional Access is blocking Microsoft 365 resource access due to non-compliant status, scoped to four independently diagnosable causes: Play Integrity attestation failure, OS version policy mismatch, post-enrollment CA timing gap, and passcode or encryption policy mismatch.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices enrolled in Intune where Conditional Access is blocking Microsoft 365 resource access due to non-compliant status, scoped to four independently diagnosable causes: Play Integrity attestation failure, OS version policy mismatch, post-enrollment CA timing gap, and passcode or encryption policy mismatch.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting through Intune.
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
@@ -28,7 +28,7 @@ L1 runbook for Android devices where compliance evaluation is blocking access to
 
 - **Cause A:** Play Integrity verdict failure (attestation)
 - **Cause B:** OS version policy mismatch
-- **Cause C:** CA timing gap — first compliance evaluation pending after enrollment
+- **Cause C:** CA timing gap—first compliance evaluation pending after enrollment
 - **Cause D:** Passcode / encryption / work-profile security policy mismatch
 
 Applies to all GMS modes (BYOD, Fully managed, Dedicated, ZTE post-enrollment). AOSP devices do NOT use Play Integrity; AOSP compliance failures route to L2.
@@ -42,16 +42,16 @@ Routed here from the [Android Triage Decision Tree](../decision-trees/08-android
 - Portal shorthand used in this runbook:
    - **P-09** = `Devices > All devices > [device] > Device compliance` (compliance state view)
    - **P-08** = `Endpoint security > Device compliance > Compliance policy settings` (tenant-wide default posture toggle)
-   - **P-COMP** = the Android Enterprise compliance policy assigned to the user's group (found via `Endpoint security > Device compliance > [policy name]`)
+   - **P-COMP** = the Android Enterprise compliance policy assigned to the user's group (found through `Endpoint security > Device compliance > [policy name]`)
 
 ## How to Use This Runbook
 
-Check the cause that matches your observation. Causes are independently diagnosable — you do not need to rule out prior causes.
+Check the cause that matches your observation. Causes are independently diagnosable—you do not need to rule out prior causes.
 
-- [Cause A: Play Integrity Verdict Failure](#cause-a-play-integrity-verdict-failure) — Intune compliance shows "Not compliant" with failing setting "Play Integrity Verdict" or "Check strong integrity using hardware-backed security features"
-- [Cause B: OS Version Policy Mismatch](#cause-b-os-version-policy-mismatch) — Device below minimum Android version per compliance policy
-- [Cause C: CA Timing Gap (First Compliance Evaluation Pending)](#cause-c-ca-timing-gap) — User just enrolled within the last 30 minutes; Intune shows "Not evaluated" or "In grace period"
-- [Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch](#cause-d-passcode-encryption-policy-mismatch) — Compliance blocked by device-side security settings (missing passcode, encryption not enabled, work-profile-password complexity)
+- [Cause A: Play Integrity Verdict Failure](#cause-a-play-integrity-verdict-failure)—Intune compliance shows "Not compliant" with failing setting "Play Integrity Verdict" or "Check strong integrity using hardware-backed security features"
+- [Cause B: OS Version Policy Mismatch](#cause-b-os-version-policy-mismatch)—Device earlier than the minimum Android version per compliance policy
+- [Cause C: CA Timing Gap (First Compliance Evaluation Pending)](#cause-c-ca-timing-gap)—User enrolled within the last 30 minutes; Intune shows "Not evaluated" or "In grace period"
+- [Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch](#cause-d-passcode-encryption-policy-mismatch)—Compliance blocked by device-side security settings (missing passcode, encryption not enabled, work-profile-password complexity)
 
 If none matches, proceed directly to [Escalation Criteria](#escalation-criteria).
 
@@ -77,23 +77,23 @@ See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Your device is being checked against a security attestation (Play Integrity). I'll look at the details in Intune."
-2. Open P-09 for the device. Note the exact failing setting label — match it to one of: "Check basic integrity", "Check basic integrity & device integrity", or "Check strong integrity using hardware-backed security features".
+2. Open P-09 for the device. Note the exact failing setting label—match it to one of: "Check basic integrity", "Check basic integrity & device integrity", or "Check strong integrity using hardware-backed security features".
 3. Check the device's Android version and security patch level (ask the user: `Settings > About phone > Android version` and `Security patch level`).
 4. Note whether the failure started after September 30, 2025. Google changed strong integrity requirements for Android 13+ in May 2025, enforced by Intune from September 30, 2025: devices without a security patch from the last 12 months no longer meet "strong integrity" on Android 13+. Some previously-compliant devices may now fail "Check strong integrity using hardware-backed security features" if their security patch is more than 12 months old.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
-- Review the Android compliance policy assigned to the user's group (P-COMP). Examine the Play Integrity Verdict setting and the "Check strong integrity using hardware-backed security features" setting — determine whether the policy requirement matches the user's device capability.
+- Review the Android compliance policy assigned to the user's group (P-COMP). Examine the Play Integrity Verdict setting and the "Check strong integrity using hardware-backed security features" setting—determine whether the policy requirement matches the user's device capability.
 - If the user's device cannot meet strong integrity (hardware limitations, or security patch > 12 months old on Android 13+): either update the compliance policy to a tier the device can pass, OR assist the user in updating their Android OS and security patch to meet the strong integrity requirement.
 - Verify the Play Integrity attestation setting is correctly configured for Android Enterprise devices in the tenant. [VERIFIED: learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-android-for-work]
 
 **Verify:**
 
-- After admin update (or user OS/patch update): P-09 shows state transition from "Not compliant" to "Compliant" within approximately 15–30 minutes (next compliance evaluation cycle).
+- After administrator update (or user OS/patch update): P-09 shows state transition from "Not compliant" to "Compliant" within approximately 15–30 minutes (next compliance evaluation cycle).
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
@@ -104,7 +104,7 @@ See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation
 ### Escalation (within Cause A)
 
 - Device cannot achieve strong integrity despite being current-patched AND compliance policy cannot be loosened per org policy
-- Multiple users on the same device model show Play Integrity failure in a pattern (likely an OEM firmware issue — L2 investigation required)
+- Multiple users on the same device model show Play Integrity failure in a pattern (likely an OEM firmware issue—L2 investigation required)
 
 ---
 
@@ -112,14 +112,14 @@ See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation
 
 ## Cause B: OS Version Policy Mismatch
 
-**Entry condition:** P-09 shows "Not compliant" with a failing setting referencing the Android OS version (e.g., "Minimum OS version").
+**Entry condition:** P-09 shows "Not compliant" with a failing setting referencing the Android OS version (for example, "Minimum OS version").
 
 ### Symptom
 
-- P-09 shows "Not compliant" with failing setting referencing Android OS version (e.g., "Minimum OS version: 12; Device OS version: 10")
-- User's device is below the minimum Android version configured in the assigned compliance policy
+- P-09 shows "Not compliant" with failing setting referencing Android OS version (for example, "Minimum OS version: 12; Device OS version: 10")
+- User's device is earlier than the minimum Android version configured in the assigned compliance policy
 
-Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md) — per-mode minimum versions and notable breakpoints (Android 11 COPE NFC removal, Android 12 IMEI/serial removal from corporate identifiers, Android 15 FRP hardening).
+Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md)—per-mode minimum versions and notable breakpoints (Android 11 COPE NFC removal, Android 12 IMEI/serial removal from corporate identifiers, Android 15 FRP hardening).
 
 ### L1 Triage Steps
 
@@ -129,7 +129,7 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Review the Android compliance policy's Minimum OS Version setting (P-COMP). If the policy minimum is reasonable for the fleet, the user must update their device OS.
 - If the user's device cannot update further (OEM software support has ended, or carrier firmware is locked), consider device replacement OR scoping the user out of this compliance policy into a policy with a lower minimum.
@@ -138,13 +138,13 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 - After the user updates their Android OS version: P-09 compliance state transitions to "Compliant" on the next evaluation cycle (approximately 15–30 minutes after device check-in).
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
 ### User Action Required
 
-- Update the device OS: `Settings > System > System update > Check for update`. If no update is available and the device is below the required minimum, the device may be at OEM end-of-software-support.
+- Update the device OS: `Settings > System > System update > Check for update`. If no update is available and the device is earlier than the required minimum, the device may be at OEM end-of-software-support.
 
 ### Escalation (within Cause B)
 
@@ -162,19 +162,19 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 - User enrolled recently (within 30 minutes) and cannot access Outlook, SharePoint, or Teams
 - P-09 shows state "Not evaluated" (most common post-enrollment state) OR "In grace period"
-- Alternate variant: P-09 shows "Not compliant" but the failing-settings list is EMPTY — this is the default-posture variant (no compliance policy assigned; P-08 default = "Not compliant")
+- Alternate variant: P-09 shows "Not compliant" but the failing-settings list is EMPTY—this is the default-posture variant (no compliance policy assigned; P-08 default = "Not compliant")
 - [VERIFIED: learn.microsoft.com/en-us/intune/device-security/compliance/overview, 2026-04-16]
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Your device just enrolled and Intune is still completing its initial compliance evaluation. This typically resolves within 30 minutes. I'll check the current status now."
 2. Open P-09. Note the enrollment timestamp and current compliance state.
-3. If state = "Not evaluated" AND enrollment occurred less than 30 minutes ago: this is the expected post-enrollment state. Advise the user to wait; no admin action is required yet.
-4. If state = "Not compliant" BUT the failing settings list is EMPTY: check P-08 (`Endpoint security > Device compliance > Compliance policy settings`). Review the "Mark devices with no compliance policy assigned as" toggle. If set to "Not compliant" AND no Android compliance policy is assigned to the user's group, this is the default-posture variant — admin action is required.
+3. If state = "Not evaluated" AND enrollment occurred less than 30 minutes ago: this is the expected post-enrollment state. Advise the user to wait; no administrator action is required yet.
+4. If state = "Not compliant" BUT the failing settings list is EMPTY: check P-08 (`Endpoint security > Device compliance > Compliance policy settings`). Review the "Mark devices with no compliance policy assigned as" toggle. If set to "Not compliant" AND no Android compliance policy is assigned to the user's group, this is the default-posture variant—administrator action is required.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Verify that an Android Enterprise compliance policy is assigned to the user's Entra group (for the default-posture variant where the failing-settings list is empty).
 - If no policy is assigned: assign an appropriate Android compliance policy to the user's group, OR (less preferred from a security standpoint) set the P-08 default posture toggle to "Compliant".
@@ -182,9 +182,9 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 **Verify:**
 
-- P-09 transitions to "Compliant" (expected outcome) OR transitions to "Not compliant" with actual failing settings listed — which would route back to Causes A, B, or D for resolution.
+- P-09 transitions to "Compliant" (expected outcome) OR transitions to "Not compliant" with actual failing settings listed—which routes back to Causes A, B, or D for resolution.
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
@@ -196,7 +196,7 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 ### Escalation (within Cause C)
 
 - State remains "Not evaluated" more than 30 minutes after enrollment completion
-- Admin assigns a compliance policy but compliance state does not update after 60 minutes
+- Administrator assigns a compliance policy but compliance state does not update after 60 minutes
 
 ---
 
@@ -219,7 +219,7 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Review the Android compliance policy's Password and System Security settings (P-COMP). Verify complexity requirements are achievable for the user's device and Android version.
 - For BYOD: verify the work-profile password requirements in the compliance policy are aligned with the work-profile configuration policy. A mismatch between the compliance policy minimum and the work-profile configuration policy can cause a circular non-compliant state where the device cannot satisfy both policies simultaneously.
@@ -228,7 +228,7 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 - After the user sets a compliant passcode or work-profile password: P-09 transitions to "Compliant" on the next evaluation cycle (approximately 15–30 minutes after device check-in).
 
-**If the admin confirms none of the above applies:**
+**If the administrator confirms none of these apply:**
 
 - Proceed to [Escalation Criteria](#escalation-criteria).
 
@@ -246,26 +246,26 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 ## User Action Required
 
-User-actionable remediation per sub-cause above. Cross-cause summary:
+User-actionable remediation per the preceding sub-cause. Cross-cause summary:
 
 - **Cause A** (Play Integrity): user may update OS / security patch if the failure is related to the September 30, 2025 strong integrity requirement (patch must be ≤ 12 months old on Android 13+)
-- **Cause B** (OS version): user updates Android OS via `Settings > System > System update`; device may be at OEM end-of-software-support if no update is available
-- **Cause C** (CA timing gap): user waits 30 minutes from enrollment then retries; the default-posture variant is NOT user-fixable (admin must assign a compliance policy)
+- **Cause B** (OS version): user updates Android OS through `Settings > System > System update`; device may be at OEM end-of-software-support if no update is available
+- **Cause C** (CA timing gap): user waits 30 minutes from enrollment then retries; the default-posture variant is NOT user-fixable (administrator must assign a compliance policy)
 - **Cause D** (passcode/encryption): user sets the required passcode or work-profile password; verifies device encryption is enabled
 
 ---
 
 ## Escalation Criteria
 
-(Overall — applies across all four causes.)
+(Overall—applies across all four causes.)
 
-Escalate to L2 (or to the Intune admin directly if not already done). See [Android Compliance Investigation](../l2-runbooks/21-android-compliance-investigation.md) — L1 Cause A maps to RB21 Cause A, Cause B→B, Cause C→C, Cause D→D. Use the [L2 Runbook Index](../l2-runbooks/00-index.md#android-l2-runbooks) for routing.
+Escalate to L2 (or to the Intune administrator directly if not already done). See [Android Compliance Investigation](../l2-runbooks/21-android-compliance-investigation.md)—L1 Cause A maps to RB21 Cause A, Cause B→B, Cause C→C, Cause D→D. Use the [L2 Runbook Index](../l2-runbooks/00-index.md#android-l2-runbooks) for routing.
 
 Escalate to L2 if:
 
 - Cause A: device cannot achieve strong integrity despite having a current security patch AND the compliance policy cannot be adjusted per org policy
 - Cause B: user cannot update device OS (OEM support ended) AND the compliance policy cannot be adjusted for this user
-- Cause C: compliance state remains "Not evaluated" more than 30 minutes after enrollment, OR admin assigns a policy but state does not update after 60 minutes
+- Cause C: compliance state remains "Not evaluated" more than 30 minutes after enrollment, OR administrator assigns a policy but state does not update after 60 minutes
 - Cause D: user sets a compliant passcode but compliance state does not update after 30 minutes, AND the device supports the required encryption tier
 - Observation does not cleanly match any single cause (multiple failing settings, ambiguous compliance state, or multiple users on the same device model affected in a pattern)
 

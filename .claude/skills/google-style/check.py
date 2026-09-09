@@ -9,6 +9,14 @@ project whose heading strings are pinned by validators or fixed by its own doc s
 Every hit is a CANDIDATE, not a violation. Most word-list rules are narrowly scoped
 ("type" is flagged only when it means "enter text"), so each hit carries Google's own
 guidance -- read it before changing anything.
+
+Standing rule: never mandate a rule set whose checker cannot report zero on work
+already accepted. This checker is the worked example -- it returns more than ten
+thousand candidates on a corpus that has already been fully human-audited, and one
+of its rules (the no-space em dash rule) conflicts directly with this repository's
+own validators, which content-match a spaced em dash used as a table N/A placeholder.
+See scripts/validation/check-prose-style.py's header for the full exclusion record
+before treating a candidate count as a backlog.
 """
 import re, sys, pathlib
 

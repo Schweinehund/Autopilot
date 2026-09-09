@@ -16,7 +16,7 @@ applies_to: GMS-modes
 
 ## Summary
 
-This guide covers Managed Google Play (MGP) tenant binding, the foundational prerequisite for every Android Enterprise GMS enrollment mode — Fully Managed (COBO), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE). It requires Managed Google Play portal access (not Zero-Touch portal access), and the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
+This guide covers Managed Google Play (MGP) tenant binding, the foundational prerequisite for every Android Enterprise GMS enrollment mode—Fully Managed (COBO), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE). It requires Managed Google Play portal access (not Zero-Touch portal access), and the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Managed Google Play (MGP) tenant binding for Android
 > Enterprise GMS modes:
@@ -24,21 +24,21 @@ This guide covers Managed Google Play (MGP) tenant binding, the foundational pre
 > COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE).
 
 > MGP binding is NOT required for AOSP.
-> For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
+> For iOS/iPadOS administrator setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 
 > For macOS ADE, see [macOS Admin Setup](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 Managed Google Play (MGP) binding is the hard prerequisite gate for every Android Enterprise GMS mode. A single binding per Intune tenant lets Intune approve apps, distribute configurations, and deliver LOB apps to enrolled devices. Without it, COBO, BYOD Work Profile, Dedicated, and the GMS path of ZTE cannot operate; only AOSP (non-GMS) devices are unaffected.
 
-Binding is effectively one-way. Reversal is destructive — see [Disconnect Consequences](#disconnect-consequences) before binding.
+Binding is effectively one-way. Reversal is destructive—see [Disconnect Consequences](#disconnect-consequences) before binding.
 
 ## Prerequisites
 
 - [ ] **Microsoft Intune Plan 1** (or higher) with Intune Administrator role (or a custom RBAC role granting enrollment-management permissions)
-- [ ] **Microsoft Entra account** with corporate email and active mailbox (Entra preferred since August 2024 — see [Account Types](#account-types))
+- [ ] **Microsoft Entra account** with corporate email and active mailbox (Entra preferred since August 2024—see [Account Types](#account-types))
 - [ ] **Two or more Entra account owners recommended** (Google recommends a minimum of two for redundancy; the linked account cannot be changed without disconnecting)
-- [ ] **Browser security zones aligned** — `portal.azure.com`, `play.google.com`, and `enterprise.google.com` must share one zone (see [What Breaks](#what-breaks))
+- [ ] **Browser security zones aligned**—`portal.azure.com`, `play.google.com`, and `enterprise.google.com` must share one zone (see [What Breaks](#what-breaks))
 
 ## Account Types
 
@@ -48,7 +48,7 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 | Consumer Gmail account | YES — Legacy supported | Pre-August-2024 bindings continue to work; new bindings should use Entra |
 | Google Workspace / G-Suite | NO | Binding fails with opaque error; do not use |
 
-**See also:** Binding migration for pre-August-2024 consumer Google/Gmail bindings — tracked for v1.4.1 and out of scope for v1.4.
+**See also:** Binding migration for pre-August-2024 consumer Google/Gmail bindings—tracked for v1.4.1 and out of scope for v1.4.
 
 ## Steps
 
@@ -59,7 +59,7 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 1. Sign in to [Intune admin center](https://endpoint.microsoft.com).
 2. Navigate to **Devices** > **Enrollment** > **Android** tab > **Prerequisites** > **Managed Google Play**.
 
-   > **What breaks if misconfigured:** Using `https://intune.microsoft.com` (older URL) can trigger a browser security-zone mismatch during the Google redirect, causing redirect loops or silent binding failure. Symptom appears in: admin browser (redirect loop) and Intune admin center (no binding recorded). See [What Breaks](#what-breaks) for recovery.
+   > **What breaks if misconfigured:** Using `https://intune.microsoft.com` (older URL) can trigger a browser security-zone mismatch during the Google redirect, causing redirect loops or silent binding failure. Symptom appears in: administrator browser (redirect loop) and Intune admin center (no binding recorded). See [What Breaks](#what-breaks) for recovery.
 
 ### Step 2: Accept data-sharing and launch Google
 
@@ -74,7 +74,7 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 
 > **Account type check:** Google prefills your Microsoft Entra account. **As of August 2024, Entra is preferred.**
 
-> Consumer Gmail remains supported for legacy tenants; Google Workspace accounts fail. See [Account Types](#account-types) above.
+> Consumer Gmail remains supported for legacy tenants; Google Workspace accounts fail. See [Account Types](#account-types).
 
 1. Confirm the prefilled Microsoft Entra account, or switch accounts.
 2. Follow Google prompts to create the Google Admin account tied to your Entra account.
@@ -88,10 +88,10 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 
 1. Sign in to [Managed Google Play](https://play.google.com/work) with the Entra account used to bind.
 2. Confirm these four apps are auto-approved in your Managed Google Play store:
-   - **Microsoft Intune** (`com.microsoft.intune`) — fully managed, dedicated, and COPE scenarios.
-   - **Microsoft Authenticator** (`com.azure.authenticator`) — 2FA and Entra shared device mode.
-   - **Intune Company Portal** (`com.microsoft.windowsintune.companyportal`) — work-profile and MAM.
-   - **Managed Home Screen** (`com.microsoft.launcher.enterprise`) — multi-app kiosk on dedicated devices.
+   - **Microsoft Intune** (`com.microsoft.intune`)—fully managed, dedicated, and COPE scenarios.
+   - **Microsoft Authenticator** (`com.azure.authenticator`)—2FA and Entra shared device mode.
+   - **Intune Company Portal** (`com.microsoft.windowsintune.companyportal`)—work-profile and MAM.
+   - **Managed Home Screen** (`com.microsoft.launcher.enterprise`)—multi-app kiosk on dedicated devices.
 
 <a id="bind-mgp"></a>
 
@@ -126,7 +126,7 @@ Disconnecting the binding disables Android Enterprise management for the entire 
 4. Retire all dedicated devices.
 5. Only then disconnect the binding.
 
-After disconnect, app assignments, OEMConfig assignments, and LOB app availability are lost. Re-binding creates a new Google enterprise relationship — every app must be re-approved and every assignment recreated manually. Coordinate with app and device owners first.
+After disconnect, app assignments, OEMConfig assignments, and LOB app availability are lost. Re-binding creates a new Google enterprise relationship—every app must be re-approved and every assignment recreated manually. Coordinate with app and device owners first.
 
 ## Renewal / Maintenance
 

@@ -16,13 +16,13 @@ platform: Android
 
 ## Summary
 
-This reference document is a capability matrix comparing Intune management capabilities across the five Android Enterprise enrollment modes — COBO, COPE, BYOD Work Profile, Dedicated (COSU), and Zero-Touch, plus AOSP — organized mode-first across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It also maps three Apple-to-Android capability equivalences. The primary audience is Intune administrators and L2 engineers managing Android Enterprise device fleets.
+This reference document is a capability matrix comparing Intune management capabilities across the five Android Enterprise enrollment modes—COBO, COPE, BYOD Work Profile, Dedicated (COSU), and Zero-Touch, plus AOSP—organized mode-first across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It also maps three Apple-to-Android capability equivalences. The primary audience is Intune administrators and L2 engineers managing Android Enterprise device fleets.
 
-This matrix compares Intune management capabilities across the five Android Enterprise enrollment modes: COBO (Fully Managed), BYOD (Work Profile), Dedicated (COSU), ZTE (Zero-Touch), and AOSP (stub reference). It is organized mode-first (columns = modes, rows = features) across six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access. For Apple↔Android capability analogs across these modes, see the [Cross-Platform Equivalences section](#cross-platform-equivalences) below, which lays out three paired rows mapping iOS/Apple enrollment concepts to Android enrollment concepts. For the sibling platform matrices, see [iOS Capability Matrix](ios-capability-matrix.md) and [macOS Capability Matrix](macos-capability-matrix.md). For the enrollment narrative that gave rise to these 5 modes (including the two-axes ownership × management-scope model), see [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md). For a side-by-side comparison of Android capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
+This matrix compares Intune management capabilities across the five Android Enterprise enrollment modes: COBO (Fully Managed), BYOD (Work Profile), Dedicated (COSU), ZTE (Zero-Touch), and AOSP (stub reference). It is organized mode-first (columns = modes, rows = features) across six locked domains—Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access. For Apple↔Android capability analogs across these modes, see the [Cross-Platform Equivalences section](#cross-platform-equivalences), which lays out three paired rows mapping iOS/Apple enrollment concepts to Android enrollment concepts. For the sibling platform matrices, see [iOS Capability Matrix](ios-capability-matrix.md) and [macOS Capability Matrix](macos-capability-matrix.md). For the enrollment narrative that gave rise to these 5 modes (including the two-axes ownership × management-scope model), see [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md). For a side-by-side comparison of Android capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
 
-The table below compares enrollment-related capabilities — admin surface, ownership model, provisioning methods, and identity — across the five Android Enterprise modes.
+The following table compares enrollment-related capabilities—administrator surface, ownership model, provisioning methods, and identity—across the five Android Enterprise modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -43,7 +43,7 @@ The table below compares enrollment-related capabilities — admin surface, owne
 
 ## Configuration
 
-The table below compares configuration capabilities — Settings Catalog reach, restriction breadth, and Wi-Fi authentication — across the six Android modes.
+The following table compares configuration capabilities—Settings Catalog reach, restriction breadth, and Wi-Fi authentication—across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -61,7 +61,7 @@ The table below compares configuration capabilities — Settings Catalog reach, 
 
 ## App Deployment
 
-The table below compares app-deployment capabilities — managed app channel, silent install, LOB delivery, and app-config targeting — across the six Android modes.
+The following table compares app-deployment capabilities—managed app channel, silent install, LOB delivery, and app-config targeting—across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -77,7 +77,7 @@ The table below compares app-deployment capabilities — managed app channel, si
 
 ## Compliance
 
-The table below compares compliance capabilities — Play Integrity verdict levels, CA attestation, restriction enforcement, and posture — across the six Android modes.
+The following table compares compliance capabilities—Play Integrity verdict levels, CA attestation, restriction enforcement, and posture—across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -92,7 +92,7 @@ The table below compares compliance capabilities — Play Integrity verdict leve
 
 ## Software Updates
 
-The table below compares software-update capabilities — update posture, deferral windows, and OEM enforcement — across the six Android modes.
+The following table compares software-update capabilities—update posture, deferral windows, and OEM enforcement—across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -105,7 +105,7 @@ The table below compares software-update capabilities — update posture, deferr
 
 ## Conditional Access
 
-The table below compares Conditional Access capabilities — device-based CA, web-app CA, per-app CA, and risk-based CA — across the six Android modes.
+The following table compares Conditional Access capabilities—device-based CA, web-app CA, per-app CA, and risk-based CA—across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|-------------|---------------------|------------------|------------------|------|
@@ -124,9 +124,9 @@ The table below compares Conditional Access capabilities — device-based CA, we
      "Dedicated" / "ZTE" — never "supervised". Each paired row MUST attribute the
      platform in the column header (e.g., "iOS Supervision" not "Supervision"). -->
 
-This section maps three Apple↔Android capability pairs called out in ROADMAP SC#1. It is NOT a 4-platform comparison — see the [4-platform deferral footer](#deferred-4-platform-unified-capability-comparison) below. Each paired row attributes the platform explicitly on both sides (e.g., "iOS Supervision" and "Android Fully Managed"); the Android side never uses Apple-attributed terms such as "supervised" or "unsupervised" as Android management states.
+This section maps three Apple↔Android capability pairs called out in phase success criterion #1. It is NOT a 4-platform comparison—see the [4-platform deferral footer](#deferred-4-platform-unified-capability-comparison). Each paired row attributes the platform explicitly on both sides (for example, "iOS Supervision" and "Android Fully Managed"); the Android side never uses Apple-attributed terms such as "supervised" or "unsupervised" as Android management states.
 
-The table below pairs three iOS/Apple concepts with their closest Android analog: supervision, zero-touch enrollment, and BYOD privacy-preserving enrollment.
+The following table pairs three iOS/Apple concepts with their closest Android analog: supervision, zero-touch enrollment, and BYOD privacy-preserving enrollment.
 
 | iOS / Apple | Android |
 |-------------|---------|
@@ -143,37 +143,37 @@ The table below pairs three iOS/Apple concepts with their closest Android analog
 
 The most significant Android capability gaps relative to Windows/macOS/iOS are (8 items, iOS-matrix parity):
 
-1. **No CLI diagnostic hook** — Android has no equivalent of Windows `mdmdiagnosticstool.exe` or macOS `profiles` / `log show`; Android device diagnostics come through Company Portal / Intune app log uploads, and the L1/L2 investigation paths rely on Intune admin-center reports. See [L2 Log Collection](../l2-runbooks/18-android-log-collection.md).
-2. **Mode-locked restriction scope** — The deepest restriction settings (device-wide silent install, hardware toggles, CA trust-store control, USB policy, forced OS-update deferral) are 🔒 FM/DO-only — unavailable on BYOD Work Profile by design, and structurally different from the iOS ADE-gated restriction set (see the [Cross-Platform Equivalences](#cross-platform-equivalences) section for the full cross-platform mapping).
-3. **Tri-portal admin surface** — Android Enterprise uniquely requires three admin portals (Intune + Managed Google Play + Zero-Touch portal when ZTE is used), vs a single admin center for Windows, and two portals for Apple (Intune + ABM).
-4. **Play Integrity replaces the prior device-attestation predecessor** — Google's January 2025 cutover to [Play Integrity](../_glossary-android.md#play-integrity) (successor to the prior Google attestation API, turned off January 2025) means there is no fallback for the deprecated API on any Android device today; compliance policies must reference Play Integrity verdict levels exclusively.
-5. **AMAPI-migrated BYOD DPC** — Post-April 2025, the Microsoft Intune app is the primary DPC for BYOD (replacing Company Portal); custom OMA-URI profiles are removed for BYOD; Wi-Fi must use certificate-based authentication. Legacy BYOD tenants require migration.
-6. **No DDM equivalent** — Android does not have a Declarative Device Management analog; Android uses a Play-integrated policy channel (Android Device Policy + AMAPI) rather than the DDM status-channel model used by iOS 17+ / macOS 14+.
-7. **AOSP per-OEM matrix** — AOSP (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest) per-OEM capability mapping is in the [AOSP OEM Matrix](aosp-oem-matrix.md); this matrix cross-references it at lines 121-127.
-8. **Dedicated = COSU + MHS, not Apple single-app mode** — Android Dedicated uses Managed Home Screen (MHS) with an exit-PIN gate, distinct from Apple single-app mode (which is ADE-gated on iOS and configures the app directly); the MHS exit-PIN must sync between the device-restrictions profile and the MHS app-config profile.
+1. **No CLI diagnostic hook**—Android has no equivalent of Windows `mdmdiagnosticstool.exe` or macOS `profiles` / `log show`; Android device diagnostics come through Company Portal / Intune app log uploads, and the L1/L2 investigation paths rely on Intune admin-center reports. See [L2 Log Collection](../l2-runbooks/18-android-log-collection.md).
+2. **Mode-locked restriction scope**—The deepest restriction settings (device-wide silent install, hardware toggles, CA trust-store control, USB policy, forced OS-update deferral) are 🔒 FM/DO-only—unavailable on BYOD Work Profile by design, and structurally different from the iOS ADE-gated restriction set (see the [Cross-Platform Equivalences](#cross-platform-equivalences) section for the full cross-platform mapping).
+3. **Tri-portal admin surface**—Android Enterprise uniquely requires three administrator portals (Intune + Managed Google Play + Zero-Touch portal when ZTE is used), vs a single admin center for Windows, and two portals for Apple (Intune + ABM).
+4. **Play Integrity replaces the prior device-attestation predecessor**—Google's January 2025 cutover to [Play Integrity](../_glossary-android.md#play-integrity) (successor to the prior Google attestation API, turned off January 2025) means there is no fallback for the deprecated API on any Android device today; compliance policies must reference Play Integrity verdict levels exclusively.
+5. **AMAPI-migrated BYOD DPC**—Post-April 2025, the Microsoft Intune app is the primary DPC for BYOD (replacing Company Portal); custom OMA-URI profiles are removed for BYOD; Wi-Fi must use certificate-based authentication. Legacy BYOD tenants require migration.
+6. **No DDM equivalent**—Android does not have a Declarative Device Management analog; Android uses a Play-integrated policy channel (Android Device Policy + AMAPI) rather than the DDM status-channel model used by iOS 17+ / macOS 14+.
+7. **AOSP per-OEM matrix**—AOSP (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest) per-OEM capability mapping is in the [AOSP OEM Matrix](aosp-oem-matrix.md); this matrix cross-references it at lines 121-127.
+8. **Dedicated = COSU + MHS, not Apple single-app mode**—Android Dedicated uses Managed Home Screen (MHS) with an exit-PIN gate, distinct from Apple single-app mode (which is ADE-gated on iOS and configures the app directly); the MHS exit-PIN must sync between the device-restrictions profile and the MHS app-config profile.
 
 ## See Also
 
-- [iOS Capability Matrix](ios-capability-matrix.md) — sibling trilateral Windows / macOS / iOS capability matrix
-- [macOS Capability Matrix](macos-capability-matrix.md) — sibling bilateral Windows / macOS capability matrix
-- [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md) — enrollment-overview narrative with two-axes model
-- [Android Provisioning Methods](../android-lifecycle/02-provisioning-methods.md) — canonical mode × method matrix (NFC / QR / afw#setup / Zero-Touch)
-- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md) — canonical Intune-minimum Android version per mode and notable version breakpoints
+- [iOS Capability Matrix](ios-capability-matrix.md)—sibling trilateral Windows / macOS / iOS capability matrix
+- [macOS Capability Matrix](macos-capability-matrix.md)—sibling bilateral Windows / macOS capability matrix
+- [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md)—enrollment-overview narrative with two-axes model
+- [Android Provisioning Methods](../android-lifecycle/02-provisioning-methods.md)—canonical mode × method matrix (NFC / QR / afw#setup / Zero-Touch)
+- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md)—canonical Intune-minimum Android version per mode and notable version breakpoints
 
 ---
 
 <a id="knox-mobile-enrollment-row"></a>
 ### Knox Mobile Enrollment (Samsung)
 
-Knox Mobile Enrollment (KME) is Samsung's zero-touch-equivalent enrollment channel for Samsung devices. KME provisions Samsung devices into the existing Android Enterprise device-owner modes (COBO / Dedicated / WPCO) via the Knox Admin Portal → Intune handoff using a flat `EXTRA_ENROLLMENT_TOKEN` Custom JSON Data field. KME itself is **free** and does not require a paid Knox license; KPE Premium has been free since Samsung's 2024-03-21 update, and Microsoft Intune Plan 1+ supplies KPE Premium transparently to enrolled Samsung devices. KME is **mutually exclusive with Google Zero-Touch** on the same Samsung device — KME takes precedence at the device firmware level when both are configured.
+Knox Mobile Enrollment (KME) is Samsung's zero-touch-equivalent enrollment channel for Samsung devices. KME provisions Samsung devices into the existing Android Enterprise device-owner modes (COBO / Dedicated / WPCO) through the Knox Admin Portal → Intune handoff using a flat `EXTRA_ENROLLMENT_TOKEN` Custom JSON Data field. KME itself is **free** and does not require a paid Knox license; KPE Premium has been free since Samsung's 2024-03-21 update, and Microsoft Intune Plan 1+ supplies KPE Premium transparently to enrolled Samsung devices. KME is **mutually exclusive with Google Zero-Touch** on the same Samsung device—KME takes precedence at the device firmware level when both are configured.
 
-For full admin coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For provisioning-method placement in the lifecycle reference, see [Knox Mobile Enrollment](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment).
+For full administrator coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For provisioning-method placement in the lifecycle reference, see [Knox Mobile Enrollment](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment).
 
 <a id="deferred-full-aosp-capability-mapping"></a>
 ### AOSP per-OEM capability mapping
 
-AOSP (Android Open Source Project) devices — RealWear, Zebra, Pico, HTC VIVE
-Focus, Meta Quest — appear in this matrix as a single AOSP column. Per-OEM
+AOSP (Android Open Source Project) devices—RealWear, Zebra, Pico, HTC VIVE
+Focus, Meta Quest—appear in this matrix as a single AOSP column. Per-OEM
 capability mapping (5-OEM × 4-capability-H2 sub-tables) is documented in
 [AOSP OEM Matrix](aosp-oem-matrix.md). See also [AOSP stub](../admin-setup-android/06-aosp-stub.md).
 

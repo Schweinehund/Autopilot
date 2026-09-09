@@ -34,24 +34,24 @@ Key characteristics of APv2:
 
 - **No hardware hash registration required.** Devices do not need to be pre-registered with Autopilot before deployment. There is no OEM or partner pre-staging workflow.
 - **No Enrollment Status Page (ESP).** APv2 does not use a separate ESP configuration. App and policy delivery is integrated directly into the Device Preparation policy.
-- **Device group membership assigned at enrollment time.** When a user authenticates during OOBE, the device is added to a pre-defined security group immediately — not pre-staged by an admin or matched via hardware hash.
+- **Device group membership assigned at enrollment time.** When a user authenticates during OOBE, the device is added to a pre-defined security group immediately—not pre-staged by an administrator or matched by hardware hash.
 - **The Intune Provisioning Client** (service principal AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) must be the **owner** of the ETG device security group. This service principal performs the group membership assignment at enrollment time.
 
 ## Enrollment Time Grouping (ETG) -- The Core Mechanism
 
 ETG is the architectural foundation that distinguishes APv2 from APv1. In APv1, devices are pre-registered with hardware hashes, assigned to dynamic groups, and the Enrollment Status Page (ESP) tracks policy and app installation. In APv2, ETG replaces all of this with a two-phase approach:
 
-**Phase 1 -- Admin preparation (before any device enrolls):**
-- Admin creates a device security group and adds the Intune Provisioning Client (AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) as the group owner.
-- Admin assigns apps, scripts, and policies to this device security group.
-- Admin creates a Device Preparation policy that references this device group.
+**Phase 1 -- Administrator preparation (before any device enrolls):**
+- Administrator creates a device security group and adds the Intune Provisioning Client (AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) as the group owner.
+- Administrator assigns apps, scripts, and policies to this device security group.
+- Administrator creates a Device Preparation policy that references this device group.
 
 **Phase 2 -- Enrollment time (when a device enrolls):**
 - User authenticates during OOBE. The device joins Entra ID and enrolls in Intune.
 - The Intune Provisioning Client adds the device to the ETG security group at enrollment time.
 - Apps and scripts selected in the Device Preparation policy install during OOBE. Remaining apps/scripts assigned to the group (but not selected in the policy) install after the user reaches the desktop.
 
-**Why this matters:** ETG bypasses dynamic group evaluation delays entirely. In APv1, newly enrolled devices must wait for dynamic group membership to evaluate before targeted policies apply — this can take minutes to hours. With ETG, the device is a member of the target group the moment it enrolls, so policies and apps apply immediately.
+**Why this matters:** ETG bypasses dynamic group evaluation delays entirely. In APv1, newly enrolled devices must wait for dynamic group membership to evaluate before targeted policies apply—this can take minutes to hours. With ETG, the device is a member of the target group the moment it enrolls, so policies and apps apply immediately.
 
 ## APv2 vs APv1: Key Differences
 
@@ -74,7 +74,7 @@ The user-driven mode is generally available and is the primary APv2 deployment m
 
 ### Automatic (Preview -- Windows 365 Only)
 
-Automatic mode is in **public preview** and applies exclusively to Windows 365 Cloud PCs. In this mode, the Cloud PC agent triggers enrollment — no user authentication occurs during OOBE. Apps and scripts install before any user signs in. This mode is not available for physical devices.
+Automatic mode is in **public preview** and applies exclusively to Windows 365 Cloud PCs. In this mode, the Cloud PC agent triggers enrollment—no user authentication occurs during OOBE. Apps and scripts install before any user signs in. This mode is not available for physical devices.
 
 Supported Windows 365 SKUs (as of November 2025):
 - Windows 365 Frontline in shared mode (preview from April 2, 2025)

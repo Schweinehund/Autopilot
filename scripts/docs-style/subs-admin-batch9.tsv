@@ -23,4 +23,4 @@
 # Not reachable and so not ruled on here: frontmatter owner: Intune Admin Lead, table rows,
 # headings, and > **Ask the admin:** (pinned twice, blocked by the exact pin check).
 (?<!Intune )(?<!Sub-Org )(?<![\w-])Admins(?! [A-Z])(?![\w-])	Administrators
-(?<!Intune )(?<!Sub-Org )(?<!Google )(?<!Local )(?<!macOS )(?<!iOS )(?<!> )(?<!/ )(?<![\w-])Admin(?![\w-])(?! ?[A-Z])(?! log)(?! consent)(?! directory)(?! sees)(?! \(Intune\))(?!:)	Administrator
+(?<!Intune )(?<!Sub-Org )(?<!Google )(?<!Local )(?<!macOS )(?<!iOS )(?<!Sure )(?<!> )(?<!/ )(?<![\w-])Admin(?![\w-])(?! ?[A-Z])(?! log)(?! consent)(?! directory)(?! sees)(?! \(Intune\))(?!:)	Administrator

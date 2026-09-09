@@ -18,7 +18,7 @@ platform: macOS
 
 This guide covers macOS compliance policies -- the detection counterpart to configuration profile enforcement -- covering System Integrity Protection, OS version/build requirements, password rules, FileVault encryption, firewall, and Gatekeeper checks. It requires the Intune Administrator role; macOS has no Intune security baselines, so all settings must be configured manually with no specific macOS version floor of its own.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration with Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
@@ -28,7 +28,7 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 
 > macOS has zero security baselines.
 
-> Admins must configure macOS security settings manually via a combination of compliance policies (detect non-compliance) and configuration profiles (enforce settings).
+> Administrators must configure macOS security settings manually through a combination of compliance policies (detect non-compliance) and configuration profiles (enforce settings).
 
 > See [Configuration Profiles](03-configuration-profiles.md) for enforcement.
 
@@ -42,7 +42,7 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 | Enforce SIP | No (compliance check only) | SIP cannot be enforced via MDM -- read-only |
 | Enforce encryption | No | Yes (Settings Catalog > Full Disk Encryption) |
 
-> **What breaks if misconfigured:** If compliance policies are deployed WITHOUT corresponding configuration profiles, devices will be marked non-compliant but nothing enforces the settings.
+> **What breaks if misconfigured:** If compliance policies are deployed WITHOUT corresponding configuration profiles, devices are marked non-compliant but nothing enforces the settings.
 
 > Users can change settings freely, and Conditional Access may block access.
 
@@ -53,7 +53,7 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 ## Prerequisites
 
 - Intune Administrator role
-- Devices enrolled via ADE
+- Devices enrolled through ADE
 - Configuration profiles deployed for settings you want to enforce (see [Configuration Profiles](03-configuration-profiles.md))
 - Understanding that compliance policies DETECT; configuration profiles ENFORCE
 
@@ -86,7 +86,7 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 - Minimum OS build version (supports Apple Rapid Security Response build strings)
 - Maximum OS build version
 
-> **What breaks if misconfigured:** OS version requirements that are ahead of the latest available macOS update will mark ALL devices non-compliant
+> **What breaks if misconfigured:** OS version requirements that are ahead of the latest available macOS update mark ALL devices non-compliant
 
 > with no remediation path until Apple releases the update.
 
@@ -133,7 +133,7 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 
 > A configuration profile (Settings Catalog > System Policy) is required to prevent users from changing the setting.
 
-> If set to "Mac App Store" and user overrides to "Anywhere" without a config profile enforcing it, device becomes non-compliant immediately.
+> If set to "Mac App Store" and user overrides to "Anywhere" without a configuration profile enforcing it, device becomes non-compliant immediately.
 
 > Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Conditional Access blocks access if CA policy active).
 
@@ -164,7 +164,7 @@ Assign to device groups or user groups as appropriate.
 
 - [ ] Compliance policy shows assigned devices in Intune admin center
 - [ ] Device compliance status visible at Devices > [device] > Compliance
-- [ ] Non-compliant devices show specific failing settings (not just "non-compliant")
+- [ ] Non-compliant devices show specific failing settings (not only "non-compliant")
 - [ ] Grace period configured matches organizational policy
 - [ ] Each compliance setting has a corresponding configuration profile enforcing it
 

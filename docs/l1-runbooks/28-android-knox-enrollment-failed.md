@@ -16,15 +16,15 @@ platform: Android
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Samsung Knox Mobile Enrollment (KME) failures where a Samsung corporate device was expected to auto-enroll via KME but did not appear in Intune. L1 diagnoses four documented KME-specific causes and documents the device identifiers and Samsung Knox portal state for the administrator's configuration review.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Samsung Knox Mobile Enrollment (KME) failures where a Samsung corporate device was expected to auto-enroll through KME but did not appear in Intune. L1 diagnoses four documented KME-specific causes and documents the device identifiers and Samsung Knox portal state for the administrator's configuration review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting through Intune.
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
-L1 runbook for Knox Mobile Enrollment (KME) failures: Samsung device was expected to enroll automatically via KME but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Four L1-diagnosable causes plus Cause E (escalate-only).
+L1 runbook for Knox Mobile Enrollment (KME) failures: Samsung device was expected to enroll automatically through KME but did not—device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Four L1-diagnosable causes plus Cause E (escalate-only).
 
 **Applies to KME only (Samsung).** For non-Samsung corporate Zero-Touch enrollment failures see runbook [27 ZTE](27-android-zte-enrollment-failed.md). For non-corporate enrollment failures see ([22](22-android-enrollment-blocked.md) / [23](23-android-work-profile-not-created.md) / [24](24-android-device-not-enrolled.md) / [25](25-android-compliance-blocked.md) / [26](26-android-mgp-app-not-installed.md)).
 
@@ -32,25 +32,25 @@ Routed here from the [Android Triage Decision Tree](../decision-trees/08-android
 
 ## Prerequisites
 
-- Access to Intune admin center (https://intune.microsoft.com) — L1 read-only
+- Access to Intune admin center (https://intune.microsoft.com)—L1 read-only
 - Device serial number, IMEI, or manufacturer identifier
 - Confirmation that device is Samsung manufacturer
 - Portal shorthand used in this runbook:
    - **P-INTUNE** = Intune admin center Devices / Tenant admin blades
-   - **P-KAP** = Knox Admin Portal (knox.samsung.com) — **admin-only**; Samsung-specific
+   - **P-KAP** = Knox Admin Portal (knox.samsung.com)—**admin-only**; Samsung-specific
 
-**L1 scope note:** Knox Admin Portal is admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for KAP portal actions. All Knox Admin Portal click paths in this runbook are within `## Admin Action Required` sections.
+**L1 scope note:** Knox Admin Portal is admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the administrator for KAP portal actions. All Knox Admin Portal click paths in this runbook are within `## Admin Action Required` sections.
 
 ## How to Use This Runbook
 
-Check the cause that matches your observation. Causes are independently diagnosable — you do not need to rule out prior causes. Cause ordering below reflects frequency (most common first):
+Check the cause that matches your observation. Causes are independently diagnosable—you do not need to rule out prior causes. The following cause ordering reflects frequency (most common first):
 
-- [Cause A: Samsung Knox B2B Account Approval Pending](#cause-a-b2b-account-pending) — Admin cannot sign in to Knox Admin Portal; B2B account submission still within or beyond 1-2 business day approval window
-- [Cause B: Device Not in Knox Admin Portal](#cause-b-device-not-in-kap) — Reseller upload not done OR Knox Deployment App pathway not used; device serial absent from KAP Devices view
-- [Cause C: KME Profile Not Assigned to Device Set](#cause-c-profile-unassigned) — Profile exists in KAP but device shows no profile assignment
-- [Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung)](#cause-d-kme-zt-mutex-collision) — Samsung device dual-configured in both Knox Mobile Enrollment and Zero-Touch; KME takes precedence at firmware level
+- [Cause A: Samsung Knox B2B Account Approval Pending](#cause-a-b2b-account-pending)—Administrator cannot sign in to Knox Admin Portal; B2B account submission still within or beyond 1-2 business day approval window
+- [Cause B: Device Not in Knox Admin Portal](#cause-b-device-not-in-kap)—Reseller upload not done OR Knox Deployment App pathway not used; device serial absent from KAP Devices view
+- [Cause C: KME Profile Not Assigned to Device Set](#cause-c-profile-unassigned)—Profile exists in KAP but device shows no profile assignment
+- [Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung)](#cause-d-kme-zt-mutex-collision)—Samsung device dual-configured in both Knox Mobile Enrollment and Zero-Touch; KME takes precedence at firmware level
 
-If none of Causes A-D match and enrollment still fails, see [Escalation Criteria](#escalation-criteria) below for Cause E (DPC Custom JSON malformation / Knox tripped status / Knox license edge cases — admin-only investigation).
+If none of Causes A-D match and enrollment still fails, see [Escalation Criteria](#escalation-criteria) for Cause E (DPC Custom JSON malformation / Knox tripped status / Knox license edge cases—admin-only investigation).
 
 ---
 
@@ -58,34 +58,34 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ## Cause A: Samsung Knox B2B Account Approval Pending
 
-**Entry condition:** Admin reports they cannot sign in to Knox Admin Portal at knox.samsung.com — sign-in returns "Account pending approval" OR admin has not yet submitted the B2B application.
+**Entry condition:** Administrator reports they cannot sign in to Knox Admin Portal at knox.samsung.com—sign-in returns "Account pending approval" OR administrator has not yet submitted the B2B application.
 
 ### Symptom
 
 - User (or IT purchaser) reports the corporate Samsung device went through "normal" Setup Wizard instead of automatic corporate enrollment.
 - Device does NOT appear in Intune after expected enrollment window (typically within 15 minutes of first power-on with internet).
-- Admin reports Knox Admin Portal sign-in fails with "Account pending approval" OR admin has not yet submitted the B2B application.
+- Administrator reports Knox Admin Portal sign-in fails with "Account pending approval" OR administrator has not yet submitted the B2B application.
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "I'll verify whether your Samsung device was prepared correctly for automatic enrollment. If not, I'll coordinate with your IT administrator and Samsung Knox B2B support."
 2. In Intune admin center, navigate to `Devices > All devices`, filter platform = Android, search by serial. Confirm device is NOT present. <!-- verify UI at execute time -->
-3. Collect device identifiers for admin escalation: serial number, IMEI 1, model (e.g., Galaxy S23), Android OS version if known.
+3. Collect device identifiers for administrator escalation: serial number, IMEI 1, model (for example, Galaxy S23), Android OS version if known.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
 - Open the [Samsung Knox Portal](https://www.samsungknox.com) and confirm B2B account application status.
-- If application not yet submitted: submit per [admin doc Step 0](../admin-setup-android/07-knox-mobile-enrollment.md#step-0-b2b-approval). Approval takes 1-2 business days.
-- If application submitted but >2 business days pending: contact Samsung Knox B2B support with the application ID; escalate via Samsung support ticket.
+- If application not yet submitted: submit per [administrator doc Step 0](../admin-setup-android/07-knox-mobile-enrollment.md#step-0-b2b-approval). Approval takes 1-2 business days.
+- If application submitted but >2 business days pending: contact Samsung Knox B2B support with the application ID; escalate through Samsung support ticket.
 
 **Verify:**
 
-- After approval: admin can sign in to [Knox Admin Portal](https://knox.samsung.com) without "Account pending approval" error.
-- After admin completes Steps 1-N of the [KME admin guide](../admin-setup-android/07-knox-mobile-enrollment.md), user can factory-reset device and retry first-boot enrollment.
+- After approval: administrator can sign in to [Knox Admin Portal](https://knox.samsung.com) without "Account pending approval" error.
+- After administrator completes Steps 1-N of the [KME administrator guide](../admin-setup-android/07-knox-mobile-enrollment.md), user can factory-reset device and retry first-boot enrollment.
 
-**If the admin confirms B2B account is approved AND devices still fall through:** Route to [Cause B](#cause-b-device-not-in-kap).
+**If the administrator confirms B2B account is approved AND devices still fall through:** Route to [Cause B](#cause-b-device-not-in-kap).
 
 ### Escalation (within Cause A)
 
@@ -98,26 +98,26 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ## Cause B: Device Not in Knox Admin Portal
 
-**Entry condition:** Admin confirms the device serial is NOT visible in Knox Admin Portal Devices view. Device boots to consumer Setup Wizard on first power-on.
+**Entry condition:** Administrator confirms the device serial is NOT visible in Knox Admin Portal Devices view. Device boots to consumer Setup Wizard on first power-on.
 
 ### Symptom
 
 - User (or IT purchaser) reports the corporate Samsung device went through "normal" Setup Wizard instead of automatic corporate enrollment.
 - Device does NOT appear in Intune after 15 minutes of first power-on with internet.
-- Admin searches Knox Admin Portal Devices view by IMEI/serial — no match.
+- Administrator searches Knox Admin Portal Devices view by IMEI/serial—no match.
 - Reseller has not uploaded the device to Knox Admin Portal, or the device was acquired outside the authorized-reseller channel.
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "I'll confirm whether your Samsung device is registered for automatic corporate enrollment. If your reseller hasn't uploaded it, I'll coordinate with your IT administrator to either contact the reseller or use the Knox Deployment App pathway."
 2. In Intune admin center, navigate to `Devices > All devices`, filter platform = Android, search by serial. Confirm device is NOT present. <!-- verify UI at execute time -->
-3. Collect device identifiers for admin escalation: serial number, IMEI 1, model, Android OS version if known, reseller name (if known to user/IT purchaser).
+3. Collect device identifiers for administrator escalation: serial number, IMEI 1, model, Android OS version if known, reseller name (if known to user/IT purchaser).
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
-- Open [Knox Admin Portal](https://knox.samsung.com); go to **Devices** tab; search by IMEI/serial. If absent: contact authorized Samsung reseller for upload (per [admin doc Step 3 — Reseller bulk upload](../admin-setup-android/07-knox-mobile-enrollment.md#step-3-add-devices)) OR use [Knox Deployment App](../admin-setup-android/07-knox-mobile-enrollment.md#step-3-add-devices) for existing-stock retroactive enrollment via Bluetooth/NFC.
+- Open [Knox Admin Portal](https://knox.samsung.com); go to **Devices** tab; search by IMEI/serial. If absent: contact authorized Samsung reseller for upload (per [administrator doc Step 3—Reseller bulk upload](../admin-setup-android/07-knox-mobile-enrollment.md#step-3-add-devices)) OR use [Knox Deployment App](../admin-setup-android/07-knox-mobile-enrollment.md#step-3-add-devices) for existing-stock retroactive enrollment through Bluetooth/NFC.
 
 **Verify:**
 
@@ -128,7 +128,7 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ### Escalation (within Cause B)
 
-- Reseller denies device upload AND Knox Deployment App pathway also fails OR is not feasible (e.g., no Bluetooth/NFC access)
+- Reseller denies device upload AND Knox Deployment App pathway also fails OR is not feasible (for example, no Bluetooth/NFC access)
 - Device was purchased outside the authorized-reseller channel (no KME upload path)
 
 ---
@@ -137,25 +137,25 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ## Cause C: KME Profile Not Assigned to Device Set
 
-**Entry condition:** Admin confirms device IS in Knox Admin Portal Devices view but Profile column is EMPTY.
+**Entry condition:** Administrator confirms device IS in Knox Admin Portal Devices view but Profile column is EMPTY.
 
 ### Symptom
 
 - User (or IT purchaser) reports the corporate Samsung device went through "normal" Setup Wizard instead of automatic corporate enrollment.
 - Device does NOT appear in Intune after 15 minutes of first power-on with internet.
-- Admin reports Knox Admin Portal Devices view shows the device row with an empty Profile column.
+- Administrator reports Knox Admin Portal Devices view shows the device row with an empty Profile column.
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "I'll coordinate with your IT administrator to verify a Knox Mobile Enrollment profile is assigned to your device. If not, the admin will assign one and we'll factory-reset your device to retry."
 2. In Intune admin center, navigate to `Devices > All devices`, filter platform = Android, search by serial. Confirm device is NOT present. <!-- verify UI at execute time -->
-3. Collect device identifiers for admin escalation: serial number, IMEI 1, model, Android OS version if known.
+3. Collect device identifiers for administrator escalation: serial number, IMEI 1, model, Android OS version if known.
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
-- Open [Knox Admin Portal](https://knox.samsung.com); navigate to **Profiles**; verify a KME profile exists with EMM = Microsoft Intune. Assign profile to device set per [admin doc Step 4](../admin-setup-android/07-knox-mobile-enrollment.md#step-4-assign-profile). Profile MUST be assigned BEFORE first boot — assignment after first boot does not retro-trigger KME (device must be factory-reset).
+- Open [Knox Admin Portal](https://knox.samsung.com); navigate to **Profiles**; verify a KME profile exists with EMM = Microsoft Intune. Assign profile to device set per [administrator doc Step 4](../admin-setup-android/07-knox-mobile-enrollment.md#step-4-assign-profile). Profile MUST be assigned BEFORE first boot—assignment after first boot does not retro-trigger KME (device must be factory-reset).
 
 **Verify:**
 
@@ -167,7 +167,7 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 ### Escalation (within Cause C)
 
 - Profile assigned in KAP AND device factory-reset AND enrollment still falls through
-- Admin cannot create a KME profile because EMM = Microsoft Intune is not selectable (Knox Admin Portal license / EMM-link issue)
+- Administrator cannot create a KME profile because EMM = Microsoft Intune is not selectable (Knox Admin Portal license / EMM-link issue)
 
 ---
 
@@ -175,43 +175,43 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ## Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung)
 
-**Entry condition:** Samsung device registered in BOTH Knox Mobile Enrollment AND Zero-Touch portal. KME takes precedence at the device firmware level when both are configured (this is Samsung firmware-level behavior; cannot be overridden via Intune or ZT portal).
+**Entry condition:** Samsung device registered in BOTH Knox Mobile Enrollment AND Zero-Touch portal. KME takes precedence at the device firmware level when both are configured (this is Samsung firmware-level behavior; cannot be overridden through Intune or ZT portal).
 
 ### Symptom
 
-- Device enrolls via KME when ZT was the desired path; OR device enrollment shows wrong mode in Intune; OR ZT portal claim shows but no first-boot activity.
-- Admin reports the Samsung device is present in BOTH the Knox Admin Portal Devices view AND the Zero-Touch customer portal Devices tab.
-- User (or IT purchaser) reports unexpected enrollment behavior: device enrolled via the wrong portal, or enrollment never initiated despite both portals showing the device.
+- Device enrolls through KME when ZT was the intended path; OR device enrollment shows wrong mode in Intune; OR ZT portal claim shows but no first-boot activity.
+- Administrator reports the Samsung device is present in BOTH the Knox Admin Portal Devices view AND the Zero-Touch customer portal Devices tab.
+- User (or IT purchaser) reports unexpected enrollment behavior: device enrolled through the wrong portal, or enrollment never initiated despite both portals showing the device.
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Your Samsung device is registered in both the Knox and Zero-Touch portals. I'll coordinate with your IT administrator to keep only one and we'll factory-reset your device to retry."
 2. In Intune admin center, navigate to `Devices > All devices`, filter platform = Android, search by serial. Document whether device is present and, if so, which enrollment type is recorded. <!-- verify UI at execute time -->
-3. Collect device identifiers for admin escalation: serial number, IMEI 1, model, Android OS version if known, current enrollment type observed in Intune (if any).
+3. Collect device identifiers for administrator escalation: serial number, IMEI 1, model, Android OS version if known, current enrollment type observed in Intune (if any).
 
 ### Admin Action Required
 
-**Ask the admin to:**
+**Ask the administrator to:**
 
-- Choose ONE portal for the device set: remove from KME (per [admin doc KME/ZT Mutual Exclusion](../admin-setup-android/07-knox-mobile-enrollment.md#kme-zt-mutual-exclusion)) OR remove from ZT (per [02-zero-touch-portal.md#kme-zt-mutual-exclusion](../admin-setup-android/02-zero-touch-portal.md#kme-zt-mutual-exclusion)). After removal: factory-reset device and retry first-boot enrollment via the kept portal.
+- Choose ONE portal for the device set: remove from KME (per [administrator doc KME/ZT Mutual Exclusion](../admin-setup-android/07-knox-mobile-enrollment.md#kme-zt-mutual-exclusion)) OR remove from ZT (per [02-zero-touch-portal.md#kme-zt-mutual-exclusion](../admin-setup-android/02-zero-touch-portal.md#kme-zt-mutual-exclusion)). After removal: factory-reset device and retry first-boot enrollment through the kept portal.
 
 **Verify:**
 
 - After removal from the non-desired portal: device appears in only ONE of (Knox Admin Portal Devices view) / (Zero-Touch portal Devices tab).
-- After user factory-resets device: enrollment initiates via the kept portal and device arrives in Intune `Devices > All devices` (filter Android) within ~15 minutes.
+- After user factory-resets device: enrollment initiates through the kept portal and device arrives in Intune `Devices > All devices` (filter Android) within ~15 minutes.
 
-**If device removed from non-desired portal AND factory-reset AND enrollment still doesn't initiate:** Escalate to L2 (likely Cause E — DPC Custom JSON malformation / Knox tripped status / Knox license edge case).
+**If device removed from non-desired portal AND factory-reset AND enrollment still doesn't initiate:** Escalate to L2 (likely Cause E—DPC Custom JSON malformation / Knox tripped status / Knox license edge case).
 
 ### Escalation (within Cause D)
 
 - Device removed from one portal but enrollment still routes through the removed portal (likely KAP/ZT-portal sync delay; retry after 24h)
-- Admin cannot determine which portal owns the device set (mixed reseller history)
+- Administrator cannot determine which portal owns the device set (mixed reseller history)
 
 ---
 
 ## Escalation Criteria
 
-(Overall — applies across all four L1-diagnosable causes plus Cause E admin-only path.)
+(Overall—applies across all four L1-diagnosable causes plus Cause E admin-only path.)
 
 Escalate to L2. See [Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md) for KME-specific Pattern A-E investigation and [Android Log Collection Guide](../l2-runbooks/18-android-log-collection.md).
 
@@ -219,18 +219,18 @@ Escalate to L2 if:
 
 - Cause A: B2B account approval >5 business days pending; OR Samsung support ticket has no resolution path
 - Cause B: Reseller denies device upload AND Knox Deployment App pathway also fails OR is not feasible
-- Cause C: Admin assigned KME profile to device set in KAP AND user factory-reset device AND enrollment still falls through
+- Cause C: Administrator assigned KME profile to device set in KAP AND user factory-reset device AND enrollment still falls through
 - Cause D: Samsung device removed from one portal (KME or ZT) AND factory-reset; the kept-portal enrollment still doesn't initiate
 
-**Cause E (DPC Custom JSON / Knox tripped / Knox license — admin-only, not an L1 diagnosis):**
+**Cause E (DPC Custom JSON / Knox tripped / Knox license—admin-only, not an L1 diagnosis):**
 
-If all Cause A-D checks pass but devices still fail at enrollment, escalate to Intune admin for investigation:
+If all Cause A-D checks pass but devices still fail at enrollment, escalate to Intune administrator for investigation:
 
-- DPC Custom JSON Data review (see [admin doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json)) — silent failure if ZT JSON wrapper pasted into KME profile
-- Knox eFuse tripped status — non-recoverable; device must use non-KME enrollment path
-- Knox license edge cases — KPE Premium activation; Plan 1+ misalignment
+- DPC Custom JSON Data review (see [administrator doc Step 5](../admin-setup-android/07-knox-mobile-enrollment.md#dpc-custom-json))—silent failure if ZT JSON wrapper pasted into KME profile
+- Knox eFuse tripped status—non-recoverable; device must use non-KME enrollment path
+- Knox license edge cases—KPE Premium activation; Plan 1+ misalignment
 
-L1 does NOT modify DPC Custom JSON, Knox eFuse status, or licensing. Hand to L2 + admin.
+L1 does NOT modify DPC Custom JSON, Knox eFuse status, or licensing. Hand to L2 + administrator.
 
 **Before escalating, collect:**
 
@@ -242,7 +242,7 @@ L1 does NOT modify DPC Custom JSON, Knox eFuse status, or licensing. Hand to L2 
 - For Cause C: screenshot of Knox Admin Portal Profile-to-Devices assignment view (admin-provided)
 - For Cause D: confirmation of device presence/absence in BOTH Knox Admin Portal AND Zero-Touch portal (admin-provided)
 - For Cause E: Knox eFuse status (admin-provided if KAP exposes it; otherwise Samsung support ticket reference); KME profile name; reseller name (if applicable)
-- Number of devices affected (single device vs fleet — shape-of-problem signal)
+- Number of devices affected (single device vs fleet—shape-of-problem signal)
 - Timestamp of most recent failed enrollment attempt
 
 ---

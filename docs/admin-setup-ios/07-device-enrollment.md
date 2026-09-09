@@ -16,15 +16,15 @@ platform: iOS
 
 ## Summary
 
-This guide covers Device Enrollment, Intune's non-ABM iOS/iPadOS enrollment path in which users self-enroll via Company Portal or a web-based URL, for both BYOD and corporate-owned devices that did not come through Apple Business Manager. Administering this path requires only the Intune Administrator role — no Apple Business Manager admin role is needed since no ADE token is involved. Devices enrolled this way run unsupervised, so supervised-only features such as locked enrollment and silent app install are unavailable.
+This guide covers Device Enrollment, Intune's non-ABM iOS/iPadOS enrollment path in which users self-enroll through Company Portal or a web-based URL, for both BYOD and corporate-owned devices that did not come through Apple Business Manager. Administering this path requires only the Intune Administrator role—no Apple Business Manager administrator role is needed since no ADE token is involved. Devices enrolled this way run unsupervised, so supervised-only features such as locked enrollment and silent app install are unavailable.
 
-> **Platform gate:** This guide covers iOS/iPadOS Device Enrollment via Intune (no ABM required). For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
+> **Platform gate:** This guide covers iOS/iPadOS Device Enrollment through Intune (no ABM required). For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
 
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md). Portal navigation may vary by Intune admin center version.
 
 > See [Overview](00-overview.md#portal-navigation-note) for details.
 
-Device Enrollment is Intune's non-ABM enrollment path for iOS/iPadOS devices. Users initiate enrollment themselves — either by downloading the Intune Company Portal app or by visiting a web-based enrollment URL — and the resulting enrolled device runs in unsupervised mode with the full Intune MDM management capability set minus supervised-only features. Device Enrollment covers both personal-owned BYOD devices and corporate-owned devices that did not come through Apple Business Manager.
+Device Enrollment is Intune's non-ABM enrollment path for iOS/iPadOS devices. Users initiate enrollment themselves—either by downloading the Intune Company Portal app or by visiting a web-based enrollment URL—and the resulting enrolled device runs in unsupervised mode with the full Intune MDM management capability set minus supervised-only features. Device Enrollment covers both personal-owned BYOD devices and corporate-owned devices that did not come through Apple Business Manager.
 
 ## Capabilities Available Without Supervision
 
@@ -58,24 +58,24 @@ For the complete supervised/unsupervised capability comparison across all enroll
 
 iOS/iPadOS Device Enrollment has two user-initiated flows. Both produce the same unsupervised managed-device end-state and the same capability set. They differ in how the user starts enrollment and what the user experience looks like.
 
-- **Company Portal enrollment** — User installs the Intune Company Portal app from the App Store, signs in with their work account, and follows the in-app prompts. Suitable for tenants that want a branded enrollment experience and plan to use Company Portal for ongoing app discovery.
-- **Web-based enrollment** — User visits a tenant-specific enrollment URL in Safari, signs in, and downloads the management profile. Suitable for tenants that do not require the Company Portal app or prefer a lighter-weight end-user experience.
+- **Company Portal enrollment**—User installs the Intune Company Portal app from the App Store, signs in with their work account, and follows the in-app prompts. Suitable for tenants that want a branded enrollment experience and plan to use Company Portal for ongoing app discovery.
+- **Web-based enrollment**—User visits a tenant-specific enrollment URL in Safari, signs in, and downloads the management profile. Suitable for tenants that do not require the Company Portal app or prefer a lighter-weight end-user experience.
 
-Choose one flow per enrollment campaign or let end users choose — both are supported simultaneously.
+Choose one flow per enrollment campaign or let end users choose—both are supported simultaneously.
 
-The two flows produce identical managed-device outcomes; pick a flow based on user experience preferences, not on which capabilities will be available afterward. Every capability in the [Capabilities Available Without Supervision](#capabilities-available-without-supervision) table above applies equally to both flows.
+The two flows produce identical managed-device outcomes; pick a flow based on user experience preferences, not on which capabilities are available afterward. Every capability in the [Capabilities Available Without Supervision](#capabilities-available-without-supervision) table applies equally to both flows.
 
 ### When to Choose Device Enrollment
 
 Device Enrollment is the right path when at least one of the following is true:
 
 - The device is personally owned (BYOD) and the tenant accepts Personal ownership and the management capability set available without supervision.
-- The device is corporate-owned but was not purchased through Apple Business Manager (for example, devices bought from a retailer or acquired through a merger) and cannot be reset and re-enrolled via ADE.
+- The device is corporate-owned but was not purchased through Apple Business Manager (for example, devices bought from a retailer or acquired through a merger) and cannot be reset and re-enrolled using ADE.
 - The user needs Intune management now and ABM onboarding is not scheduled.
 
-For privacy-preserving BYOD — where IT wants app-data protection without management-level device inventory — use [User Enrollment](08-user-enrollment.md) (account-driven) or [MAM App Protection](09-mam-app-protection.md) (no enrollment at all) instead.
+For privacy-preserving BYOD—where IT wants app-data protection without management-level device inventory—use [User Enrollment](08-user-enrollment.md) (account-driven) or [MAM App Protection](09-mam-app-protection.md) (no enrollment at all) instead.
 
-For corporate devices that should arrive supervised with Setup-Assistant-time enrollment, use ADE (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)). Device Enrollment does not support kiosk/shared-iPad deployments because those require supervision.
+For corporate devices that must arrive supervised with Setup-Assistant-time enrollment, use ADE (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)). Device Enrollment does not support kiosk/shared-iPad deployments because those require supervision.
 
 ### Tenant-Level Enrollment Restrictions Apply
 
@@ -85,21 +85,21 @@ Intune enrollment restrictions (platform filtering, ownership flag, per-user dev
 
 A Device Enrollment flow moves through four phases:
 
-1. **Pre-enrollment** — Admin confirms tenant prerequisites (APNs certificate active, enrollment restrictions permit the target user group, Intune license assigned to the user).
-2. **User-initiated enrollment** — User completes Flow 1 (Company Portal) or Flow 2 (web-based). Both flows end with the management profile installed on the device.
-3. **Post-enrollment delivery** — Intune begins delivering assigned configuration profiles, apps, and compliance evaluation over APNs. Initial delivery typically completes within 30 minutes.
-4. **Ongoing management** — The device checks in periodically (APNs-triggered) for policy updates, compliance re-evaluation, and remote action execution (for example, a wipe or retire triggered from Intune).
+1. **Pre-enrollment**—Administrator confirms tenant prerequisites (APNs certificate active, enrollment restrictions permit the target user group, Intune license assigned to the user).
+2. **User-initiated enrollment**—User completes Flow 1 (Company Portal) or Flow 2 (web-based). Both flows end with the management profile installed on the device.
+3. **Post-enrollment delivery**—Intune begins delivering assigned configuration profiles, apps, and compliance evaluation over APNs. Initial delivery typically completes within 30 minutes.
+4. **Ongoing management**—The device checks in periodically (APNs-triggered) for policy updates, compliance re-evaluation, and remote action execution (for example, a wipe or retire triggered from Intune).
 
-Device Enrollment devices do not re-enter Setup Assistant on a policy change or a profile reassignment; the management profile stays installed until explicitly removed (user-initiated for Personal devices without locked enrollment, or admin-initiated via Retire or Wipe).
+Device Enrollment devices do not re-enter Setup Assistant on a policy change or a profile reassignment; the management profile stays installed until explicitly removed (user-initiated for Personal devices without locked enrollment, or admin-initiated through Retire or Wipe).
 
 ## Prerequisites
 
-Admin prerequisites for Device Enrollment:
+Administrator prerequisites for Device Enrollment:
 
-- APNs certificate configured and active (see [APNs Certificate Guide](01-apns-certificate.md) — same APNs certificate serves ADE, Device Enrollment, and User Enrollment)
+- APNs certificate configured and active (see [APNs Certificate Guide](01-apns-certificate.md)—same APNs certificate serves ADE, Device Enrollment, and User Enrollment)
 - Intune Administrator role, or a custom RBAC role with enrollment management permissions
 - Microsoft Intune Plan 1 (or higher) subscription
-- Tenant enrollment restrictions reviewed — see [iOS/iPadOS Admin Setup Overview § Intune Enrollment Restrictions](00-overview.md#intune-enrollment-restrictions)
+- Tenant enrollment restrictions reviewed—see [iOS/iPadOS Admin Setup Overview § Intune Enrollment Restrictions](00-overview.md#intune-enrollment-restrictions)
 
 End-user prerequisites:
 
@@ -108,13 +108,13 @@ End-user prerequisites:
 - Network access to the Microsoft Intune enrollment endpoints (`enrollment.manage.microsoft.com`, `login.microsoftonline.com`, Apple Push Notification service hosts) on the device's current network
 - Sufficient local storage on the device for the management profile and assigned apps
 
-Flow-specific prereqs are listed within each per-flow section below.
+Flow-specific prereqs are listed within each per-flow section.
 
 Unlike ADE, Device Enrollment does not require:
 
 - An Apple Business Manager (ABM) account or ADE token (both are ABM-specific)
 - An enrollment profile object in Intune (Device Enrollment flows use tenant-wide restrictions only, not per-device profile assignment)
-- Physical device-identifier pre-registration before the user enrolls (although identifier upload is later used to reclassify devices as Corporate — see [Personal vs Corporate Ownership](#personal-vs-corporate-ownership))
+- Physical device-identifier pre-registration before the user enrolls (although identifier upload is later used to reclassify devices as Corporate—see [Personal vs Corporate Ownership](#personal-vs-corporate-ownership))
 
 ## Steps
 
@@ -135,13 +135,13 @@ Device Enrollment has two parallel flows. Complete the portal-side configuration
 
    > **What breaks if misconfigured:** A tenant-wide block on personally-owned enrollment prevents Company Portal completion for BYOD users even after Company Portal is installed. Symptom appears in: device (Company Portal shows "This device can't be managed" or "Your administrator hasn't made this option available") with no failure in the Intune admin center portal itself.
 
-4. Navigate to **Apps** > **iOS/iPadOS** and confirm the Intune Company Portal app is assigned as a Required app to the enrollment user groups. Company Portal self-distributes via the App Store for unassigned users; explicit assignment ensures the app stays available and updates apply.
+4. Navigate to **Apps** > **iOS/iPadOS** and confirm the Intune Company Portal app is assigned as a Required app to the enrollment user groups. Company Portal self-distributes through the App Store for unassigned users; explicit assignment ensures the app stays available and updates apply.
 
-   > **What breaks if misconfigured:** If Company Portal is not assigned and the tenant relies on App Store auto-discovery only, users on devices with App Store access blocked by Screen Time or parental-control settings cannot install Company Portal and cannot complete enrollment via this flow. Symptom appears in: device (user reports "I can't find Company Portal in the App Store") and Intune admin center (no new device enrollments from affected user groups).
+   > **What breaks if misconfigured:** If Company Portal is not assigned and the tenant relies on App Store auto-discovery only, users on devices with App Store access blocked by Screen Time or parental-control settings cannot install Company Portal and cannot complete enrollment through this flow. Symptom appears in: device (user reports "I can't find Company Portal in the App Store") and Intune admin center (no new device enrollments from affected user groups).
 
 **End-user flow (outcome-level summary):**
 
-After the admin configuration above is in place, end users complete Company Portal enrollment by installing Company Portal from the App Store, signing in with their work account, and completing the in-app enrollment prompts. The flow installs the MDM profile on the device and ends with the device registered as managed in Intune. The expected outcome is a device visible in Intune admin center under **Devices** > **All devices** with the user's UPN, a Management Name, and the Personal ownership designation (unless the device is later reclassified as Corporate — see [Personal vs Corporate Ownership](#personal-vs-corporate-ownership) below).
+After the administrator configuration is in place, end users complete Company Portal enrollment by installing Company Portal from the App Store, signing in with their work account, and completing the in-app enrollment prompts. The flow installs the MDM profile on the device and ends with the device registered as managed in Intune. The expected outcome is a device visible in Intune admin center under **Devices** > **All devices** with the user's UPN, a Management Name, and the Personal ownership designation (unless the device is later reclassified as Corporate—see [Personal vs Corporate Ownership](#personal-vs-corporate-ownership)).
 
 During the flow, the user accepts the management profile installation prompt on the device, which is the point of user consent. After the profile is installed, compliance evaluation begins automatically and any assigned configuration profiles and apps start to deliver. First check-in typically completes within a few minutes; initial app delivery and compliance evaluation may continue for up to 30 minutes post-enrollment.
 
@@ -159,9 +159,9 @@ During the flow, the user accepts the management profile installation prompt on 
 
    > **What breaks if misconfigured:** A tenant-wide enrollment-restriction block affects both flows identically. Symptom appears in: device (enrollment URL sign-in succeeds but profile download never starts, or download starts and fails mid-flow with "enrollment not allowed").
 
-3. Communicate the web-based enrollment URL to end users. This URL is tenant-scoped and varies by cloud environment; the canonical starting point is the Microsoft Intune Company Portal web experience at `https://portal.manage.microsoft.com`, from which Safari handles the profile download. Confirm the exact current URL and any tenant-specific redirects against Microsoft Learn (`ios-device-enrollment`) before distributing to end users — Microsoft has relocated this flow in the past and may do so again.
+3. Communicate the web-based enrollment URL to end users. This URL is tenant-scoped and varies by cloud environment; the canonical starting point is the Microsoft Intune Company Portal web experience at `https://portal.manage.microsoft.com`, from which Safari handles the profile download. Confirm the exact current URL and any tenant-specific redirects against Microsoft Learn (`ios-device-enrollment`) before distributing to end users—Microsoft has relocated this flow in the past and may do so again.
 
-   > **What breaks if misconfigured:** If users are directed to the enrollment URL from a non-Safari browser (Chrome, Edge, Firefox on iOS), the management-profile download will not trigger because only Safari on iOS can hand profile payloads off to the Settings app for installation. Symptom appears in: device (browser loads the URL and sign-in succeeds, but the download button does nothing, returns an error, or opens a blank page). Resolution: user opens the same URL in Safari.
+   > **What breaks if misconfigured:** If users are directed to the enrollment URL from a non-Safari browser (Chrome, Edge, Firefox on iOS), the management-profile download does not trigger because only Safari on iOS can hand profile payloads off to the Settings app for installation. Symptom appears in: device (browser loads the URL and sign-in succeeds, but the download button does nothing, returns an error, or opens a blank page). Resolution: user opens the same URL in Safari.
 
 **End-user flow (outcome-level summary):**
 
@@ -173,18 +173,18 @@ Once the profile is downloaded, the user navigates to **Settings** > **General**
 
 Tenants supporting both flows should document which flow is preferred for which user population rather than leaving the choice entirely to end users. Recommended patterns:
 
-- **Company Portal preferred** — organizations that plan to use Company Portal for ongoing managed-app discovery, or that want a branded enrollment experience with consistent pre/post-enrollment messaging.
-- **Web-based preferred** — organizations where the App Store is restricted by network or device policy, where users resist installing an additional app, or where enrollment throughput matters (web-based enrollment can complete faster than a fresh Company Portal install).
-- **Either flow supported** — acceptable as long as help-desk runbooks cover both; support cost increases slightly because troubleshooting steps differ between flows.
+- **Company Portal preferred**—organizations that plan to use Company Portal for ongoing managed-app discovery, or that want a branded enrollment experience with consistent pre/post-enrollment messaging.
+- **Web-based preferred**—organizations where the App Store is restricted by network or device policy, where users resist installing an additional app, or where enrollment throughput matters (web-based enrollment can complete faster than a fresh Company Portal install).
+- **Either flow supported**—acceptable as long as help-desk runbooks cover both; support cost increases slightly because troubleshooting steps differ between flows.
 
 ### Post-Enrollment: What Happens Next
 
-Once the management profile is installed (by either flow), several things happen automatically and do not require additional admin action per device:
+Once the management profile is installed (by either flow), several things happen automatically and do not require additional administrator action per device:
 
 - **Compliance evaluation begins.** Within the 0-30 minute window after enrollment, the device evaluates against every assigned compliance policy (see [Compliance Policy § Compliance Evaluation Timing](06-compliance-policy.md#compliance-evaluation-timing-and-conditional-access) for timing mechanics).
 - **Configuration profiles deliver.** Wi-Fi, VPN, email, certificate, and device-restriction profiles (see [Configuration Profiles](04-configuration-profiles.md)) arrive over APNs and install without further user consent.
 - **Assigned apps deliver.** Required VPP device-licensed, VPP user-licensed, LOB, and Store apps begin to install per their respective mechanisms (see [App Deployment](05-app-deployment.md)).
-- **Conditional Access enforces compliance state.** Any CA policy that requires "device marked compliant" starts admitting or blocking the device based on the compliance record from the step above.
+- **Conditional Access enforces compliance state.** Any CA policy that requires "device marked compliant" starts admitting or blocking the device based on the compliance record from the preceding step.
 
 The user can open the Company Portal app (if installed) to see the managed device and any Available-assignment apps. The Intune admin center device-overview pane shows Management state "Managed", a device check-in timestamp, and (once evaluation completes) a Compliance status.
 
@@ -205,31 +205,31 @@ Intune assigns every iOS/iPadOS device an ownership designation of **Personal** 
 
 ### Reclassifying a Device as Corporate
 
-A Device-Enrollment-enrolled device defaults to Personal. To reclassify as Corporate (for example, when an admin takes ownership of a BYOD device that will be repurposed as a shared corporate device), use one of:
+A Device-Enrollment-enrolled device defaults to Personal. To reclassify as Corporate (for example, when an administrator takes ownership of a BYOD device that will be repurposed as a shared corporate device), use one of:
 
-- **Device identifier upload** — Upload a CSV of IMEI, serial number, or Apple Account identifiers to Intune via **Devices** > **Enrollment** > **Corporate device identifiers**. Devices matching the identifier are marked Corporate at next check-in.
-- **Bulk-update via Microsoft Graph** — `PATCH` the device object's `managedDeviceOwnerType` field (advanced; verify current Graph schema against Microsoft Learn at time of writing).
+- **Device identifier upload**—Upload a CSV of IMEI, serial number, or Apple Account identifiers to Intune through **Devices** > **Enrollment** > **Corporate device identifiers**. Devices matching the identifier are marked Corporate at next check-in.
+- **Bulk-update using Microsoft Graph**—`PATCH` the device object's `managedDeviceOwnerType` field (advanced; verify current Graph schema against Microsoft Learn at time of writing).
 
-Reclassification does NOT change the device's supervision state — the device remains unsupervised. To gain supervised capabilities, the device must be wiped and re-enrolled via ADE (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)).
+Reclassification does NOT change the device's supervision state—the device remains unsupervised. To gain supervised capabilities, the device must be wiped and re-enrolled through ADE (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)).
 
 ### Identifier Upload Workflow
 
 Corporate device identifier upload is the most common mechanism for reclassifying Device-Enrollment devices as Corporate. The identifier options and their trade-offs:
 
-- **IMEI** — Cellular devices only (iPads with LTE/5G, iPhones). IMEI is printed on the device and retrievable via **Settings** > **General** > **About**. IMEI-matching is stable across resets and reassignment.
-- **Serial number** — Works for all iOS/iPadOS hardware. Serial numbers are retrievable from the device, from purchase records, or from an MDM device list. Preferred identifier for Wi-Fi-only iPads (which have no IMEI).
-- **Apple Account identifier** — Less common for iOS; more often used for macOS. Ties the Corporate designation to an Apple Account rather than a specific device.
+- **IMEI**—Cellular devices only (iPads with LTE/5G, iPhones). IMEI is printed on the device and retrievable through **Settings** > **General** > **About**. IMEI-matching is stable across resets and reassignment.
+- **Serial number**—Works for all iOS/iPadOS hardware. Serial numbers are retrievable from the device, from purchase records, or from an MDM device list. Preferred identifier for Wi-Fi-only iPads (which have no IMEI).
+- **Apple Account identifier**—Less common for iOS; more often used for macOS. Ties the Corporate designation to an Apple Account rather than a specific device.
 
-Identifier matching happens at the next device check-in after upload, which typically means within a few minutes (APNs push) to several hours (if the device is offline at upload time). Bulk identifier upload via CSV is the typical pattern for fleet reclassification events.
+Identifier matching happens at the next device check-in after upload, which typically means within a few minutes (APNs push) to several hours (if the device is offline at upload time). Bulk identifier upload using CSV is the typical pattern for fleet reclassification events.
 
 ### Unenrollment and Wipe Behavior
 
 How a Device-Enrollment device leaves management depends on ownership and who initiates removal:
 
-- **User-initiated removal (Personal devices)** — On Device Enrollment (which is unsupervised), the user can remove the management profile via **Settings** > **General** > **VPN & Device Management** at any time. Removal deletes the MDM profile, all managed configuration profiles, and any VPP user-licensed apps; user data outside the managed scope is untouched.
-- **Admin-initiated Retire** — Intune issues a Retire command over APNs. For Personal devices, Retire removes corporate data and policies only. For Corporate devices, Retire does the same — use Wipe instead for a factory reset.
-- **Admin-initiated Wipe** — Available for Corporate devices only on Device Enrollment; triggers a factory reset via the iOS MDM RemoteWipe command. Not available for Personal devices (the Retire scope is the maximum).
-- **Compliance-triggered Retire** — Compliance policies with a terminal Retire action automatically retire noncompliant devices after the configured grace period.
+- **User-initiated removal (Personal devices)**—On Device Enrollment (which is unsupervised), the user can remove the management profile through **Settings** > **General** > **VPN & Device Management** at any time. Removal deletes the MDM profile, all managed configuration profiles, and any VPP user-licensed apps; user data outside the managed scope is untouched.
+- **Admin-initiated Retire**—Intune issues a Retire command over APNs. For Personal devices, Retire removes corporate data and policies only. For Corporate devices, Retire does the same—use Wipe instead for a factory reset.
+- **Admin-initiated Wipe**—Available for Corporate devices only on Device Enrollment; triggers a factory reset through the iOS MDM RemoteWipe command. Not available for Personal devices (the Retire scope is the maximum).
+- **Compliance-triggered Retire**—Compliance policies with a terminal Retire action automatically retire noncompliant devices after the configured grace period.
 
 ## Verification
 
@@ -241,17 +241,17 @@ How a Device-Enrollment device leaves management depends on ownership and who in
 - [ ] Assigned Required apps (managed apps) begin to appear on the device home screen or in the App Library
 - [ ] Company Portal self-service actions (sync, rename, retire) succeed from the device (if Company Portal is installed)
 - [ ] For Company Portal flow: Company Portal app shows the device as managed with corporate resources visible
-- [ ] Intune device properties include a recent check-in timestamp (within the last 8 hours) confirming MDM push notifications are being delivered via APNs
+- [ ] Intune device properties include a recent check-in timestamp (within the last 8 hours) confirming MDM push notifications are being delivered through APNs
 
 ### If Enrollment Does Not Complete
 
-If a verification item fails, start the triage from the symptom first observed by the user or admin:
+If a verification item fails, start the triage from the symptom first observed by the user or administrator:
 
-- **Device never reaches Intune admin center** — Likely a tenant-level block (APNs, enrollment restriction, license) or a network-access issue on the device. See the Configuration-Caused Failures table below.
-- **Device appears but stays "Not evaluated"** — Compliance evaluation has not yet run; wait the expected window or force a sync from Company Portal.
-- **Assigned profiles or apps do not arrive** — Check assignment scope (the user or device is actually targeted), then confirm check-in timestamp to ensure APNs is healthy end-to-end.
+- **Device never reaches Intune admin center**—Likely a tenant-level block (APNs, enrollment restriction, license) or a network-access issue on the device. See the Configuration-Caused Failures table.
+- **Device appears but stays "Not evaluated"**—Compliance evaluation has not yet run; wait the expected window or force a sync from Company Portal.
+- **Assigned profiles or apps do not arrive**—Check assignment scope (the user or device is actually targeted), then confirm check-in timestamp to ensure APNs is healthy end-to-end.
 
-Full triage trees for each symptom live in the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) and are executed via the [iOS L1 Runbooks 16-21](../l1-runbooks/00-index.md#ios-l1-runbooks).
+Full triage trees for each symptom live in the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) and are executed through the [iOS L1 Runbooks 16-21](../l1-runbooks/00-index.md#ios-l1-runbooks).
 
 ## Configuration-Caused Failures
 
@@ -271,14 +271,14 @@ Full triage trees for each symptom live in the [iOS Triage Decision Tree](../dec
 
 ## See Also
 
-- [iOS/iPadOS Admin Setup Overview](00-overview.md) — Path router and shared Intune Enrollment Restrictions section
-- [User Enrollment](08-user-enrollment.md) — Privacy-preserving account-driven enrollment alternative
-- [MAM App Protection](09-mam-app-protection.md) — App-layer protection without device enrollment
-- [ADE Enrollment Profile](03-ade-enrollment-profile.md) — Supervised corporate enrollment (prerequisite for supervised-only features)
-- [Configuration Profiles](04-configuration-profiles.md) — Wi-Fi/VPN/Certificates/Device Restrictions delivery
-- [App Deployment](05-app-deployment.md) — VPP / LOB / Store apps
-- [Compliance Policies](06-compliance-policy.md) — OS version, passcode, jailbreak, CA timing
-- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md) — Conceptual path comparison
+- [iOS/iPadOS Admin Setup Overview](00-overview.md)—Path router and shared Intune Enrollment Restrictions section
+- [User Enrollment](08-user-enrollment.md)—Privacy-preserving account-driven enrollment alternative
+- [MAM App Protection](09-mam-app-protection.md)—App-layer protection without device enrollment
+- [ADE Enrollment Profile](03-ade-enrollment-profile.md)—Supervised corporate enrollment (prerequisite for supervised-only features)
+- [Configuration Profiles](04-configuration-profiles.md)—Wi-Fi/VPN/Certificates/Device Restrictions delivery
+- [App Deployment](05-app-deployment.md)—VPP / LOB / Store apps
+- [Compliance Policies](06-compliance-policy.md)—OS version, passcode, jailbreak, CA timing
+- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md)—Conceptual path comparison
 - [Apple Provisioning Glossary](../_glossary-macos.md)
 
 ---

@@ -30,7 +30,7 @@ Not sure which action to use? See [Device Lifecycle Decision Tree](../decision-t
 
 ## Step-by-Step: Retire
 
-Use Retire for BYOD offboarding or employee departure where the device contains personal files the user should keep.
+Use Retire for BYOD offboarding or employee departure where the device contains personal files the user must keep.
 
 1. In the **Intune admin center** (endpoint.microsoft.com), navigate to **Devices** > **All devices**.
 2. Select the target device.
@@ -39,7 +39,7 @@ Use Retire for BYOD offboarding or employee departure where the device contains 
 
 The device receives the retire command at the next Intune check-in. Org data (email, corporate apps, MDM policies) is removed. Personal data and user-installed personal apps are preserved.
 
-> **L1 Action:** For BYOD offboarding, use Retire (preserves personal data). NEVER use Wipe on a personal device — this erases everything including personal photos and documents. Confirm the device type (corporate vs. personal) before selecting an action.
+> **L1 Action:** For BYOD offboarding, use Retire (preserves personal data). NEVER use Wipe on a personal device—this erases everything including personal photos and documents. Confirm the device type (corporate versus personal) before selecting an action.
 
 > **L2 Note:** If Retire fails to remove org data, check that the device has an active network connection and has checked in recently. Stale devices (no check-in for 30+ days) may need manual org data removal. Check Intune device sync status: Devices > All devices > device > Device action status.
 
@@ -53,11 +53,11 @@ Use Wipe for lost/stolen devices, full decommission, or hybrid Entra joined devi
 2. Select the target device.
 3. Select **Wipe**.
 4. Configure wipe options:
-   - **Wipe device, but keep enrollment state and associated user account** — device reboots to OOBE and re-enrolls automatically. Use for corporate-owned devices being re-provisioned.
-   - **Wipe device and continue to wipe even if device loses power** — persisted wipe. Use for lost/stolen devices where you need to ensure data destruction completes even if device is powered off and on again.
+   - **Wipe device, but keep enrollment state and associated user account**—device reboots to OOBE and re-enrolls automatically. Use for corporate-owned devices being re-provisioned.
+   - **Wipe device and continue to wipe even if device loses power**—persisted wipe. Use for lost/stolen devices where you need to ensure data destruction completes even if device is powered off and on again.
 5. Confirm when prompted.
 
-> **What breaks if misconfigured:** Selecting "keep enrollment state" on a device that should be fully decommissioned leaves the device able to re-enroll automatically. If re-provisioning for a new user, this is correct behavior. If decommissioning permanently, do NOT select this option.
+> **What breaks if misconfigured:** Selecting "keep enrollment state" on a device that must be fully decommissioned leaves the device able to re-enroll automatically. If re-provisioning for a new user, this is correct behavior. If decommissioning permanently, do NOT select this option.
 
 ---
 
@@ -69,7 +69,7 @@ Use Fresh Start to reinstall a clean Windows OS on a corporate device while keep
 2. Select the target device.
 3. Select **Fresh Start**.
 4. Configure option:
-   - **Keep user data on this device** — preserves files in the user's Home folder. Enable this to avoid data loss.
+   - **Keep user data on this device**—preserves files in the user's Home folder. Enable this to avoid data loss.
 5. Confirm when prompted.
 
 Fresh Start removes OEM-installed apps, manufacturer bloatware, and user-installed apps. Windows is reinstalled from a clean image. The device stays Entra joined and re-enrolls in MDM automatically.
@@ -87,7 +87,7 @@ Use Delete to remove a stale Intune/Autopilot record without affecting the physi
 3. Select **Delete**.
 4. Confirm when prompted.
 
-> **What breaks if misconfigured:** Deleting a device record removes its Autopilot registration. If the device is still active and in use, it will fail to re-provision via Autopilot on next reset — the hardware hash must be re-imported. Only delete records for devices that are decommissioned, returned, or being migrated.
+> **What breaks if misconfigured:** Deleting a device record removes its Autopilot registration. If the device is still active and in use, it fails to re-provision through Autopilot on next reset—the hardware hash must be re-imported. Only delete records for devices that are decommissioned, returned, or being migrated.
 
 To remove the Autopilot registration specifically (separate from the Intune device record):
 
@@ -95,7 +95,7 @@ To remove the Autopilot registration specifically (separate from the Intune devi
 2. Search for the device by serial number.
 3. Select the device and choose **Delete**.
 
-Both the Intune device record and the Autopilot registration record should be removed before tenant migration. See [Tenant Migration](04-tenant-migration.md).
+Both the Intune device record and the Autopilot registration record must be removed before tenant migration. See [Tenant Migration](04-tenant-migration.md).
 
 ---
 
@@ -112,10 +112,10 @@ Both the Intune device record and the Autopilot registration record should be re
 
 ## See Also
 
-- [Autopilot Reset](01-autopilot-reset.md) — Re-provision a device within the same tenant without full wipe (APv1 only)
-- [Device Re-Provisioning](03-re-provisioning.md) — Ownership transfer and re-enrollment guide
-- [Tenant Migration](04-tenant-migration.md) — Moving devices between Microsoft tenants
-- [Device Lifecycle Decision Tree](../decision-trees/05-device-lifecycle.md) — Guided action selection
+- [Autopilot Reset](01-autopilot-reset.md)—Re-provision a device within the same tenant without full wipe (APv1 only)
+- [Device Re-Provisioning](03-re-provisioning.md)—Ownership transfer and re-enrollment guide
+- [Tenant Migration](04-tenant-migration.md)—Moving devices between Microsoft tenants
+- [Device Lifecycle Decision Tree](../decision-trees/05-device-lifecycle.md)—Guided action selection
 
 ---
 

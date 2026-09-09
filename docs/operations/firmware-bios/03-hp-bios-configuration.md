@@ -7,14 +7,14 @@ platform: Windows
 ---
 
 > **Platform applicability:** This guide is Windows-specific and covers HP BIOS configuration
-> through Intune — delivery surfaces, authentication and secret custody, scope of control,
+> through Intune—delivery surfaces, authentication and secret custody, scope of control,
 > prerequisites and hard blockers, offboarding and loss of the management plane, and recovery. For
 > the domain overview and the routing question of who holds the BIOS secret on Dell, HP and Lenovo
 > hardware, see [Firmware and BIOS Governance](00-overview.md).
 
 # HP BIOS Configuration Through Intune
 
-HP is the vendor where a vendor-hosted cloud console holds the BIOS secret — not Intune, and not
+HP is the vendor where a vendor-hosted cloud console holds the BIOS secret—not Intune, and not
 the customer's own tenant. This guide covers HP Connect for Microsoft Endpoint Manager, the vendor
 connector that publishes Sure Admin certificate policies and BIOS password policies into Intune
 device groups as Remediations, plus the HP Client Management Script Library and HP BIOS
@@ -46,15 +46,15 @@ Policies authored in HP Connect are published into Intune device groups as Intun
 >
 > HP Connect interacts with Endpoint Manager via Microsoft Graph API.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 Consent is granted once by an Entra **Global Administrator** signing in at `admin.hp.com`; after
 that, an **Intune Administrator** operates HP Connect day to day.
 
-Authentication into a managed device is certificate- and key-pair-based, through HP Sure Admin —
-developed fully in Authentication below.
+Authentication into a managed device is certificate- and key-pair-based, through HP Sure Admin—developed
+fully in Authentication below.
 
-**No per-device agent.** HP Connect installs nothing on the device it manages — a real distinction
+**No per-device agent.** HP Connect installs nothing on the device it manages—a real distinction
 from Dell, whose Dell Command | Endpoint Configure for Microsoft Intune (DCECMI) **is** a per-device
 Win32 agent that must be installed before its BIOS configuration policy is assigned. See
 [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md).
@@ -64,14 +64,14 @@ The script packages HP Connect creates in your tenant are named
 Proactive Remediation, where Properties shows the assigned device groups and schedule and Device
 Status shows which systems received the policy. That path label is the console's own literal label
 and ships as written; the surrounding prose in this guide uses current names. This is the single
-most useful operational fact in the HP material — it is how a service desk answers where a BIOS
+most useful operational fact in the HP material—it is how a service desk answers where a BIOS
 policy came from in a tenant it did not build. HP's own latency warning applies:
 
 > Status reporting can take hours, even days to apply and show up in this list.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
-HP Connect is a **current** product — HP's live Client Management Solutions page still lists it and
+HP Connect is a **current** product—HP's live Client Management Solutions page still lists it and
 marks no BIOS management tool retired. Its only comprehensive first-party document, however, is
 Version 1.2.0 dated 2022-09-27, and this corpus's 2026-08-25 research re-confirmed that no newer
 edition exists. The custody model that document describes is the durable fact; its console
@@ -86,7 +86,7 @@ HP Connect supports two mutually exclusive authentication models:
 
 The wording above is HP's own [sic].
 
-**(a) HP Sure Admin / EBAM — certificate-based, password-free.** Sure Admin rides on HP Secure
+**(a) HP Sure Admin / EBAM—certificate-based, password-free.** Sure Admin rides on HP Secure
 Platform Management. Three keys, and their hierarchy is the whole story:
 
 > Endorsement Key: The Endorsement Key is the secure foundation for the platform. It protects the
@@ -107,7 +107,7 @@ fence for that reason:
 4. Enable EBAM.
 5. Provision the Local Access Key.
 
-`Get-HPSecurePlatformState` returns one of three states — named here as a signpost only, no
+`Get-HPSecurePlatformState` returns one of three states—named here as a signpost only, no
 invocation syntax.
 
 Anti-replay is a real operational constraint:
@@ -117,7 +117,7 @@ Anti-replay is a real operational constraint:
 
 **Source:** [Secure BIOS with HP Sure Admin and CMSL](https://developers.hp.com/hp-client-management/blog/secure-bios-hp-sure-admin-and-cmsl) (HP Developer Portal, updated 2024-09-10)
 
-HP's practical consequence: delay creating a disable payload until it is ready to be used — a
+HP's practical consequence: delay creating a disable payload until it is ready to be used—a
 payload generated too early is spent the moment it is used, and anti-replay will not let it be used
 again.
 
@@ -126,12 +126,12 @@ The default-behavior trap:
 > If only the Secure Platform Management (SPM) keys are saved but not the Local Access key, HP
 > Connect will use the Signing Key (saved as the SPM secret) as the Local Access Key.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
-Skipping Local Access Key setup silently widens the Signing Key's exposure to field technicians —
-the key meant to sign every BIOS change ends up handed to whoever scans the F10 QR code.
+Skipping Local Access Key setup silently widens the Signing Key's exposure to field technicians—the
+key meant to sign every BIOS change ends up handed to whoever scans the F10 QR code.
 
-**Custody — this is where Success Criterion 3 is decided.** HP's own statement:
+**Custody—this is where Success Criterion 3 is decided.** HP's own statement:
 
 > Passwords are managed by HP Connect and stored in a cloud vault.
 >
@@ -139,23 +139,23 @@ the key meant to sign every BIOS change ends up handed to whoever scans the F10 
 > Sure Admin. These cryptographic keys are then used when creating BIOS authentication policies, and
 > to authorize (sign) BIOS settings changes.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 Contrast with Dell's own custody statement, quoted here in full because that juxtaposition is what
-"quoted against" requires — pointing at another file would not satisfy it:
+"quoted against" requires—pointing at another file would not satisfy it:
 
 > Dell does not collect or retain any customer data from Microsoft Intune. The data remains in the Microsoft tenant but is supplemented with Dell-specific capabilities which are transacted with Microsoft infrastructure through Graph API calls.
 
 **Source:** [How to Connect Dell Management Portal to Microsoft Intune](https://www.dell.com/support/kbdoc/en-us/000356434/how-to-connect-dell-management-portal-to-microsoft-intune) (Dell, Version 2, Last Modified 2026-05-23)
 
 Using HP Connect means the BIOS Endorsement and Signing private keys, and the BIOS passwords, live
-in HP's cloud — outside the Entra tenant, outside Intune's control, and outside the tenant's own
+in HP's cloud—outside the Entra tenant, outside Intune's control, and outside the tenant's own
 data-governance boundary. Dell's model is the opposite pole: Intune itself holds the secret.
 Lenovo's Key Vault option keeps the key in the customer's own Azure subscription. See
 [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md) and
 [Lenovo BIOS Configuration Through Intune](04-lenovo-bios-configuration.md).
 
-**(b) BIOS passwords — the legacy model, with a lockout trap.** HP Connect tracks passwords by
+**(b) BIOS passwords—the legacy model, with a lockout trap.** HP Connect tracks passwords by
 hint:
 
 > HP Connect maintains password hints on each device managed by policy. The hint resides in the
@@ -163,7 +163,7 @@ hint:
 
 The wording above is HP's own [sic].
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 HP's analogue of Dell's blocker is a lockout rather than a refusal, shipped complete because this
 file is unenrolled and the string is over the 200-character cap:
@@ -175,7 +175,7 @@ file is unenrolled and the string is over the 200-character cap:
 
 The spacing and grammar above are HP's own, preserved exactly [sic].
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 <a id="scope"></a>
 ## Scope
@@ -188,13 +188,13 @@ Per D-25, the Microsoft Graph write scope ships qualitatively, not as an enumera
 > most of the permissions are Read-Only, except for one. HP Connect requires write access to device
 > configuration and policies.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 The guide's own Appendix C enumerates the Graph scopes as screenshots with no text layer; grepping
 the raw extraction for the expected scope-name prefixes returned zero matches. That is an
-enumeration fact about the published document — the scope list is not invented here.
+enumeration fact about the published document—the scope list is not invented here.
 
-Some settings will not apply unless an authentication method — Sure Admin or a BIOS password — is
+Some settings will not apply unless an authentication method—Sure Admin or a BIOS password—is
 already in place. HP's own sentence describing this truncates mid-word at a page boundary in this
 corpus's extraction, so it ships as an unquoted claim rather than a quote.
 
@@ -207,7 +207,7 @@ gets its own sentence because a shared seam sentence would suppress it:
 
 **Source:** [Secure BIOS with HP Sure Admin and CMSL](https://developers.hp.com/hp-client-management/blog/secure-bios-hp-sure-admin-and-cmsl) (HP Developer Portal, updated 2024-09-10)
 
-Plainly: choosing Sure Admin changes how BIOS updates are delivered, permanently — a firmware
+Plainly: choosing Sure Admin changes how BIOS updates are delivered, permanently—a firmware
 capsule now has to be signed and applied through Sure Admin's own commands rather than a generic
 updater.
 
@@ -218,7 +218,7 @@ firmware setting blocks TPM attestation, see
 [TPM Attestation Failure Decision Tree](../../decision-trees/03-tpm-attestation.md).
 
 For scripted configuration, this corpus recommends the **HP Client Management Script Library
-(CMSL)**. **HP BIOS Configuration Utility (BCU)** remains legacy-but-supported — HP has not called
+(CMSL)**. **HP BIOS Configuration Utility (BCU)** remains legacy-but-supported—HP has not called
 it retired or withdrawn, and this guide does not say so either.
 
 <a id="prerequisites"></a>
@@ -226,9 +226,9 @@ it retired or withdrawn, and this guide does not say so either.
 
 HP is the third leg of the inverted-prerequisite story: **HP retries until the BIOS locks out.**
 That is the opposite failure mode to Dell, which refuses outright when a BIOS password already
-exists — and it is why both fleets need the same first step.
+exists—and it is why both fleets need the same first step.
 
-Before assigning anything, survey existing BIOS passwords across the fleet — the same survey step
+Before assigning anything, survey existing BIOS passwords across the fleet—the same survey step
 that prevents a refusal on the Dell leg of this story; see
 [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md).
 
@@ -249,20 +249,20 @@ The remaining hard requirements:
   >
   > The license must allow the use of Proactive Remediations.
 
-  **Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+  **Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
   See [Licensing Matrix](../../reference/licensing-matrix.md) for the authoritative tier detail
-  rather than restating it here — restating it would create a second contradiction surface.
+  rather than restating it here—restating it would create a second contradiction surface.
 
 - **Consent.** A Global Administrator signs in at `admin.hp.com` and consents once:
 
   > A tenant Global Administrator can accept these permissions on behalf of the entire organization.
 
-  **Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+  **Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
   Thereafter, an Intune Administrator can operate HP Connect.
 
-- **Tenant storage.** None is required in the customer's own Azure tenant — the flip side of the
+- **Tenant storage.** None is required in the customer's own Azure tenant—the flip side of the
   custody position in Authentication above; readers should see both together.
 
 - **MDM authority.** Intune configured as the MDM authority.
@@ -280,14 +280,14 @@ The remaining hard requirements:
 <a id="offboarding"></a>
 ## Offboarding and Loss of the Management Plane
 
-**Order one — de-provisioning a single device.**
+**Order one—de-provisioning a single device.**
 
 1. Disable EBAM.
 2. De-provision the Local Access Key.
 3. De-provision the Signing Key.
 4. De-provision the Endorsement Key.
 
-Immediately after this order, the partial-removal trap — shipped complete because this file is
+Immediately after this order, the partial-removal trap—shipped complete because this file is
 unenrolled and the string is over the 200-character cap:
 
 > in order to fully disable HP Sure Admin, the CMSL provides specific commands, but note that the Local Access Key must be removed as well or the user will continue to see a QR code when attempting to enter the BIOS locally after pressing F10 during boot.
@@ -297,7 +297,7 @@ unenrolled and the string is over the 200-character cap:
 Disabling EBAM without clearing the Local Access Key leaves the machine *looking* locked, and that
 generates service-desk tickets.
 
-**Order two — retiring HP Connect itself.**
+**Order two—retiring HP Connect itself.**
 
 1. De-provision the fleet.
 2. Deactivate the HP Connect account.
@@ -306,32 +306,32 @@ This is a different object from the per-device key order above. Deactivating HP 
 devices are still Sure-Admin-provisioned destroys the only copy of the keys needed to de-provision
 them.
 
-Account deactivation carries its own fuse, and orphaned Remediation scripts survive it — two
+Account deactivation carries its own fuse, and orphaned Remediation scripts survive it—two
 contiguous quotes from the same page:
 
 > Deactivation starts a 30-day countdown where tenant administrators will be able to login to admin.hp.com in read only mode (view only). At the end of the 30 days, all policies and secrets created by the organization in HP Connect will be permanently deleted.
 >
 > the Microsoft Endpoint Manager Proactive Remediation scripts published by HP Connect to AAD will remain in place. If these Remediations are no longer required, they need to be manually removed from MEM.
 
-**Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
+**Source:** [HP Connect for Microsoft Endpoint Manager—User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (HP, Version 1.2.0, published 2022-09-27)
 
 Reactivation inside the 30-day window requires a Global Administrator. The orphaned Remediation
 scripts keep running in Intune after HP Connect is gone and must be removed by hand.
 
-In both HP and Dell, losing the management plane loses the secret — but HP documents an order and
+In both HP and Dell, losing the management plane loses the secret—but HP documents an order and
 Dell documents none. Re-confirmed 2026-08-25: Dell KB 000356434 states no disconnection or
 de-provisioning order at all. This guide does not invent a Dell order to satisfy a literal reading
-of that symmetry — doing so would be exactly the unsourced drift this corpus's own governance bars.
+of that symmetry—doing so would be exactly the unsourced drift this corpus's own governance bars.
 See [Dell BIOS Configuration Through Intune](02-dell-bios-configuration.md).
 
 <a id="recovery"></a>
 ## Recovery
 
-What is documented — the ordered de-provisioning path above — is this section's starting point; it
+What is documented—the ordered de-provisioning path above—is this section's starting point; it
 is referenced here, not repeated.
 
 **The Endorsement-Key-loss gap.** HP's own definition, already quoted in Authentication above,
-makes the Endorsement Key required to provision **or de-provision** the device — the fragment
+makes the Endorsement Key required to provision **or de-provision** the device—the fragment
 shipped there is 48 characters, drawn from the fuller 169-character definition; it is referenced
 here rather than re-quoted, keeping its evidence line scoped to one page.
 
@@ -388,7 +388,7 @@ corpus does not reproduce them.
 
 ## External References
 
-- [HP Connect for Microsoft Endpoint Manager — User Guide (HP)](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf)
+- [HP Connect for Microsoft Endpoint Manager—User Guide (HP)](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf)
 - [Secure BIOS with HP Sure Admin and CMSL (HP)](https://developers.hp.com/hp-client-management/blog/secure-bios-hp-sure-admin-and-cmsl)
 - [HP Secure Platform Management and HP Client Management Script Library (HP)](https://developers.hp.com/hp-client-management/blog/hp-secure-platform-management-hp-client-management-script-library)
 - [HP Sure Admin step-by-step (HP)](https://developers.hp.com/hp-client-management/blog/hp-sure-admin-step-step)

@@ -560,3 +560,4 @@ check-phase-
 snap install
 native terms
 file missing
+## Prose Style Authoring Standard

@@ -16,17 +16,17 @@ platform: macOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing why a Mac does not appear in Intune after an ADE enrollment attempt, covering Apple Business Manager device lookup, MDM server assignment verification, ADE token status, and enrollment profile checks before escalating unresolvable cases to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing why a Mac does not appear in Intune after an ADE enrollment attempt, covering Apple Business Manager device lookup, MDM server assignment verification, ADE token status, and enrollment profile checks before escalating unresolvable cases to L2.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
-Use this runbook when a Mac is not found in Intune admin center after the user attempted ADE enrollment, or when a Mac is expected to enroll via [ADE](../_glossary-macos.md#ade) but the device serial number does not appear in Intune Devices > macOS.
+Use this runbook when a Mac is not found in Intune admin center after the user attempted ADE enrollment, or when a Mac is expected to enroll through [ADE](../_glossary-macos.md#ade) but the device serial number does not appear in Intune Devices > macOS.
 
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com) with read permissions to macOS devices
 - Access to Apple Business Manager (https://business.apple.com) with read permissions to Devices
-- Device serial number — ask the user to read it from the physical label, or from **Apple menu** > **About This Mac** > **System Report** (under Hardware Overview: Serial Number)
+- Device serial number—ask the user to read it from the physical label, or from **Apple menu** > **About This Mac** > **System Report** (under Hardware Overview: Serial Number)
 
 ## Steps
 
@@ -40,17 +40,17 @@ Use this runbook when a Mac is not found in Intune admin center after the user a
 
 5. Open Apple Business Manager (https://business.apple.com) and navigate to **Devices**. Search for the serial number.
 
-6. **If the device is not found in ABM:** The device was not purchased through the Apple Automated Device Enrollment program or was not added to ABM. This requires procurement verification — proceed to [Escalation Criteria](#escalation-criteria).
+6. **If the device is not found in ABM:** The device was not purchased through the Apple Automated Device Enrollment program or was not added to ABM. This requires procurement verification—proceed to [Escalation Criteria](#escalation-criteria).
 
 7. **If the device is found in ABM:** Check the **MDM Server** field for the device record.
    - If the MDM Server field shows a different organization or "None": the device is assigned to the wrong MDM server. Proceed to [Escalation Criteria](#escalation-criteria).
    - If the MDM Server is correct: continue to the next step.
 
-8. In Intune admin center, navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens**. Check the token **Status** column. If any token shows "Expired" or "Expires soon", the ADE connection is broken — proceed to [Escalation Criteria](#escalation-criteria).
+8. In Intune admin center, navigate to **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens**. Check the token **Status** column. If any token shows "Expired" or "Expires soon", the ADE connection is broken—proceed to [Escalation Criteria](#escalation-criteria).
 
 9. On the active token, select it and review **Profiles**. Confirm an enrollment profile is assigned as the default or is specifically assigned to this device's group. If no profile is assigned, proceed to [Escalation Criteria](#escalation-criteria).
 
-10. If all checks above pass but the device still does not appear, attempt a manual sync: in Intune admin center > **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > select the token > **Sync**. Wait 5 minutes and re-search for the device serial number.
+10. If all the preceding checks pass but the device still does not appear, attempt a manual sync: in Intune admin center > **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > select the token > **Sync**. Wait 5 minutes and re-search for the device serial number.
 
 ## Escalation Criteria
 
@@ -58,15 +58,15 @@ Escalate to L2 if:
 
 - Device serial number is not found in Apple Business Manager
 - Device is in ABM but assigned to a different MDM server
-- Device is in ABM but shows "Assigned to: [other organization]" — this requires inter-organization device release
-- ADE token is expired (requires admin renewal at L2 or admin level)
+- Device is in ABM but shows "Assigned to: [other organization]"—this requires inter-organization device release
+- ADE token is expired (requires administrator renewal at L2 or administrator level)
 - No enrollment profile is assigned and adding one is outside L1 permission scope
 - Device does not appear in Intune after a manual sync
 
 **Before escalating, collect:**
 
 - Device serial number
-- Device make and model (e.g., MacBook Pro 14-inch, 2023)
+- Device make and model (for example, MacBook Pro 14-inch, 2023)
 - macOS version if accessible (Apple menu > About This Mac)
 - Screenshot of Intune Devices > macOS search showing no results
 - Screenshot of ABM device record (or note "not found in ABM")

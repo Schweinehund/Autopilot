@@ -22,15 +22,15 @@ This guide covers APv2 Automatic mode, a preview deployment path scoped exclusiv
 
 > It does NOT apply to physical devices or standard APv2 user-driven deployments. Preview features may change before general availability.
 
-> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) — Automatic mode. For APv2 user-driven mode, see [APv2 Deployment Flow](02-deployment-flow.md).
+> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2)—Automatic mode. For APv2 user-driven mode, see [APv2 Deployment Flow](02-deployment-flow.md).
 
 > For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 ## Overview
 
-Automatic mode is a distinct deployment mode within Windows Autopilot Device Preparation (APv2) — it is not a variant of user-driven mode. Automatic mode is scoped exclusively to Windows 365 Cloud PC provisioning.
+Automatic mode is a distinct deployment mode within Windows Autopilot Device Preparation (APv2)—it is not a variant of user-driven mode. Automatic mode is scoped exclusively to Windows 365 Cloud PC provisioning.
 
-In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no user authentication occurs during OOBE. Apps and scripts install before any user signs in, ensuring the Cloud PC is fully configured at first user login.
+In automatic mode, the Windows 365 Cloud PC agent triggers enrollment—no user authentication occurs during OOBE. Apps and scripts install before any user signs in, ensuring the Cloud PC is fully configured at first user login.
 
 > **Preview:** This section describes preview functionality. Behavior may change before general availability.
 
@@ -43,7 +43,7 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 | Windows 365 Frontline in dedicated mode | November 21, 2025 |
 | Windows 365 Cloud Apps | November 21, 2025 |
 
-**GCCH/DoD exception:** Windows 365 Frontline in shared mode is NOT supported in GCCH and DoD environments. All other SKUs listed above are supported in GCCH and DoD.
+**GCCH/DoD exception:** Windows 365 Frontline in shared mode is NOT supported in GCCH and DoD environments. All other SKUs listed here are supported in GCCH and DoD.
 
 > **Preview:** SKU availability and support matrix may change.
 
@@ -51,9 +51,9 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 
 ## How Automatic Mode Differs from User-Driven
 
-- **No user authentication during OOBE** — the Cloud PC agent triggers enrollment automatically.
-- **Policy is included in the Windows 365 Cloud PC provisioning policy** — it is not a standalone Device Preparation policy assignment.
-- **Apps and scripts install before any user signs in** — the Cloud PC is fully configured at first user login.
+- **No user authentication during OOBE**—the Cloud PC agent triggers enrollment automatically.
+- **Policy is included in the Windows 365 Cloud PC provisioning policy**—it is not a standalone Device Preparation policy assignment.
+- **Apps and scripts install before any user signs in**—the Cloud PC is fully configured at first user login.
 - **Console status progression:** Provisioning -> Preparing (during APv2) -> Provisioned.
 
 ## The 9-Step Automatic Deployment Process
@@ -62,8 +62,8 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 2. **Cloud PC agent joins Microsoft Entra.**
 3. **Cloud PC agent triggers Intune enrollment.**
 4. **Cloud PC agent calls the Device Preparation policy;** configuration is applied.
-5. **IME installs** — the Intune Management Extension is deployed to the Cloud PC.
-6. **MDM sync** — LOB/M365 apps are checked; MDM policies sync (but are not individually tracked). If this step fails, the deployment status shows **"Failed"** at phase **"Policy installation"**.
+5. **IME installs**—the Intune Management Extension is deployed to the Cloud PC.
+6. **MDM sync**—LOB/M365 apps are checked; MDM policies sync (but are not individually tracked). If this step fails, the deployment status shows **"Failed"** at phase **"Policy installation"**.
 7. **LOB/M365 apps install.** If this step fails, the deployment status shows **"Failed"** at phase **"Apps installation"**.
 8. **PowerShell scripts run.** If this step fails, the deployment status shows **"Failed"** at phase **"Scripts installation"**.
 9. **Win32, Microsoft Store, Enterprise App Catalog apps install.** If this step fails, the deployment status shows **"Failed"** at phase **"Apps installation"**.
@@ -81,14 +81,14 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 
 ## Admin Setup Workflow (6 Steps)
 
-The following is a high-level orientation of the admin setup process. For detailed configuration steps, see the [APv2 Admin Setup Guide](../admin-setup-apv2/00-overview.md).
+The following is a high-level orientation of the administrator setup process. For detailed configuration steps, see the [APv2 Admin Setup Guide](../admin-setup-apv2/00-overview.md).
 
-1. **Set up Windows automatic Intune enrollment** — configure MDM scope in Microsoft Entra.
-2. **Create an assigned device group** — this group receives apps, scripts, and policies.
-3. **Assign applications and PowerShell scripts to device group** — target the apps and scripts that must install during provisioning.
-4. **Create Windows Autopilot Device Preparation policy** — select "Automatic" as the deployment mode.
-5. **Create a Cloud PC provisioning policy** — link the Device Preparation policy to the Windows 365 provisioning policy.
-6. **Monitor the deployment** — track provisioning status in the Intune admin center (Provisioning -> Preparing -> Provisioned).
+1. **Set up Windows automatic Intune enrollment**—configure MDM scope in Microsoft Entra.
+2. **Create an assigned device group**—this group receives apps, scripts, and policies.
+3. **Assign applications and PowerShell scripts to device group**—target the apps and scripts that must install during provisioning.
+4. **Create Windows Autopilot Device Preparation policy**—select "Automatic" as the deployment mode.
+5. **Create a Cloud PC provisioning policy**—link the Device Preparation policy to the Windows 365 provisioning policy.
+6. **Monitor the deployment**—track provisioning status in the Intune admin center (Provisioning -> Preparing -> Provisioned).
 
 > For detailed configuration steps, see the [APv2 Admin Setup Guide](../admin-setup-apv2/00-overview.md).
 
@@ -102,7 +102,7 @@ The following is a high-level orientation of the admin setup process. For detail
 
 ---
 
-*Content sourced from [Microsoft Learn — APv2 Automatic Mode Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/automatic/automatic-workflow), verified April 2026.*
+*Content sourced from [Microsoft Learn—APv2 Automatic Mode Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/automatic/automatic-workflow), verified April 2026.*
 
 ## Version History
 

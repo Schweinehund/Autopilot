@@ -7,23 +7,23 @@ platform: ios+macos+shared-ipad
 ---
 
 > **Platform applicability:** This document covers Apple Business Shared iPad passcode reset
-> operations — resetting the per-user Managed Apple Account passcode on a Shared iPad device
+> operations—resetting the per-user Managed Apple Account passcode on a Shared iPad device
 > partition. This is distinct from Intune device passcode management (Reset Passcode / Remove
 > Passcode remote actions), which operate at the device level and do NOT reset per-user Shared
-> iPad partition passcodes — those are an Intune-side operation outside the Apple Business
+> iPad partition passcodes—those are an Intune-side operation outside the Apple Business
 > permission surface. For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).
 
 > **Scope boundary:** This runbook covers Apple Business-side Shared iPad passcode reset
 > (Path A, the primary path); Paths B and C involve MDM commands (ClearPasscode / EraseDevice)
-> which are issued from Intune but are included here for completeness as the escalation matrix —
+> which are issued from Intune but are included here for completeness as the escalation matrix—
 > the Apple Business permission context and decision criteria are documented for all three paths.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).
 
 > **Training-data notice:** Shared iPad passcode reset UI labels and step sequences are authored
 > from AI training knowledge of Apple Business portal behavior as of the pre-2026-04-14
-> rebrand, cross-referenced against research/FEATURES.md §4 and PITFALLS.md OP-11. Steps are
+> rebrand, cross-referenced against feature research §4 and pitfall register OP-11. Steps are
 > marked `[CITED: training; needs live verification]` pending a live portal scrape.
 > Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
 
@@ -38,9 +38,9 @@ EraseDevice, L2-with-approval, destructive last resort).
 
 ## Required Role & Permission
 
-**Path A — Apple Business UI reset (primary path):**
+**Path A—Apple Business UI reset (primary path):**
 
-**Required permission:** "Reset Shared iPad passcode" (People subgroup) — OU-scoped.
+**Required permission:** "Reset Shared iPad passcode" (People subgroup)—OU-scoped.
 See [01-role-permission-model.md](01-role-permission-model.md) People subgroup for the full
 permission catalog. The OP-3 companion View dependency applies: "View users" MUST also be
 granted; without it, the People tab shows an empty user list and the reset action cannot be
@@ -58,7 +58,7 @@ hold this permission for their assigned OU.
 > **OP-2:** Do not perform Shared iPad passcode resets using Account Holder credentials.
 > Account Holder is not a delegatable role for routine operations.
 
-**Paths B and C require L2 (Intune admin or higher) and are not delegatable to L1 help-desk.**
+**Paths B and C require L2 (Intune administrator or higher) and are not delegatable to L1 help-desk.**
 
 ---
 
@@ -70,9 +70,9 @@ correct and preferred path for all routine passcode resets.
 **What Path A does:** Generates a new 8-character alphanumeric passcode (Apple-enforced minimum
 length). The new passcode can be delivered as a 1-up PDF or CSV file for handoff to the user.
 
-**Federated-auth caveat:** Resetting the Shared iPad passcode via Apple Business does **NOT**
+**Federated-auth caveat:** Resetting the Shared iPad passcode through Apple Business does **NOT**
 change the user's federated Entra password. The Shared iPad passcode is a separate device-side
-credential for Shared iPad partition access — it is distinct from the user's Entra/Azure AD
+credential for Shared iPad partition access—it is distinct from the user's Entra/Azure AD
 sign-in password.
 
 | Step | Action | Who | Notes |
@@ -87,14 +87,14 @@ sign-in password.
 
 > **Note:** If the target user does not appear in the People tab, verify that "View users" is
 > granted for the correct OU. A missing companion View permission is the most common cause of
-> empty user lists (OP-3 blank-UI symptom — see
+> empty user lists (OP-3 blank-UI symptom—see
 > [01-role-permission-model.md](01-role-permission-model.md) Edit-without-View table).
 
 ---
 
 ### Path B — MDM ClearPasscode (L2-only)
 
-> **⚠️ Anti-feature warning — Read before using Path B.**
+> **⚠️ Anti-feature warning—Read before using Path B.**
 
 **Path B does NOT reset the per-user Shared iPad partition passcode.**
 
@@ -102,18 +102,18 @@ This is the highest-stakes anti-feature in the v1.6 corpus. MDM ClearPasscode (a
 equivalent "Reset Passcode" / "Remove Passcode") resets the **device-level screen lock**
 passcode, NOT the per-user Shared iPad partition passcode.
 
-On a managed Shared iPad, the device-level screen lock is typically not set (or is managed via
-MDM policy). The per-user Shared iPad partition passcode — the credential a user enters to
-access their personal session on the shared device — can ONLY be reset via:
-- **Path A** (Apple Business UI — resets the Managed Apple Account passcode), or
-- **Path C** (EraseDevice — destroys all partitions, data-loss path).
+On a managed Shared iPad, the device-level screen lock is typically not set (or is managed through
+MDM policy). The per-user Shared iPad partition passcode—the credential a user enters to
+access their personal session on the shared device—can ONLY be reset through:
+- **Path A** (Apple Business UI—resets the Managed Apple Account passcode), or
+- **Path C** (EraseDevice—destroys all partitions, data-loss path).
 
 **Path B correct use case:** MDM ClearPasscode is valid for clearing the device-level screen
 lock on a NON-Shared-iPad supervised device (standard single-user supervised iPhone or iPad).
 It is NOT applicable to the Shared iPad per-user partition passcode problem.
 
 <!-- ABAUDIT-07: next line describes Path B's correct use as an MDM action requiring Intune RBAC for non-Shared-iPad devices; C15 regex 1 false-positive exemption (factual disambiguation of which surface this action belongs to) -->
-Executing MDM ClearPasscode on a Shared iPad requires Intune RBAC permission (not an Apple Business permission); the action is issued from Intune, but it will NOT resolve a Shared iPad partition passcode problem — it targets the wrong credential layer.
+Executing MDM ClearPasscode on a Shared iPad requires Intune RBAC permission (not an Apple Business permission); the action is issued from Intune, but it does NOT resolve a Shared iPad partition passcode problem—it targets the wrong credential layer.
 
 **Decision gate for Path B:**
 
@@ -143,14 +143,14 @@ passcode must be reset. It is destructive and irreversible.
 > Only use Path C when:
 > - Path A (Apple Business UI) is unavailable or has not resolved the partition passcode AND
 > - Data loss on all Shared iPad user partitions has been explicitly accepted by the
->   device owner and an L2 admin has approved the action.
+>   device owner and an L2 administrator has approved the action.
 >
-> Do **not** attempt Path B (MDM ClearPasscode) as a prerequisite — it targets the
+> Do **not** attempt Path B (MDM ClearPasscode) as a prerequisite—it targets the
 > device-level screen-lock, not the per-user Shared iPad partition passcode (see the
-> Path B anti-feature note above), so it cannot resolve a partition-passcode problem and
+> preceding Path B anti-feature note), so it cannot resolve a partition-passcode problem and
 > issuing it first only sends a wrong-layer command to the device.
 >
-> Source: PITFALLS.md OP-11 — Apple MDM Protocol reference; ROADMAP.md SC#1
+> Source: pitfall register OP-11—Apple MDM Protocol reference; phase success criterion #1
 
 ---
 
@@ -185,17 +185,17 @@ passcode must be reset. It is destructive and irreversible.
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — People subgroup;
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—People subgroup;
   "Reset Shared iPad passcode" (conditionally-grant, OP-11 note); OP-3 Edit-without-View table
-- Shared iPad lifecycle: [09-shared-ipad-lifecycle.md](09-shared-ipad-lifecycle.md) — enrollment
+- Shared iPad lifecycle: [09-shared-ipad-lifecycle.md](09-shared-ipad-lifecycle.md)—enrollment
   prerequisites; Find My pre-check (OP-12); lifecycle stages
-- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) —
+- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md)—
   full Apple-Business-vs-Intune responsibility table (D-02 SOT)
-- **L1 runbook:** [L1 #34 — Apple Business Shared iPad Passcode Reset](../../l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) (Path A L1-delegated entry point)
+- **L1 runbook:** [L1 #34—Apple Business Shared iPad Passcode Reset](../../l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) (Path A L1-delegated entry point)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-22 | Phase 64 plan 64-02: initial authoring — canonical 3-path Shared iPad passcode reset runbook; Path A (Apple Business UI, L1-delegatable); Path B anti-feature (ClearPasscode ≠ partition passcode, ABAUDIT-07 exemption); Path C (EraseDevice, OP-11 hard callout + L2-approval gate); C16 Phase 65 back-link deferred (DELEG-02) | -- |
-| 2026-05-22 | Phase 65 plan 65-04: added L1 #34 back-link to `## Cross-References` tail per D-04a + C16 atomic-reconciliation contract (62-08-PLAN §464-465); removed admin_12 C16 exemption from allowlist | -- |
+| 2026-05-22 | Phase 65 plan 65-04: added L1 #34 back-link to `## Cross-References` tail per D-04a + C16 atomic-reconciliation contract (Phase 62 plan §464-465); removed admin_12 C16 exemption from allowlist | -- |

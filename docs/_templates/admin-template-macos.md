@@ -19,6 +19,9 @@
      - Runbook links should point to the appropriate L1 runbook in docs/l1-runbooks/ (10-15 range for macOS ADE)
      - Include Renewal/Maintenance section ONLY when the guide's subject has a
        renewable component (e.g., ADE token, APNs certificate). Omit otherwise.
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: macOS Platform Lead (role, not person name)
 -->
@@ -39,16 +42,16 @@ audience: admin
 
 ## Summary
 
-[2–3 sentences describing the scope, target audience, and any safety or version constraints for this macOS admin setup guide. Minimum 30 words. State which enrollment method or feature this guide covers (e.g., ADE, MDM profile, Platform SSO), the Apple Business Manager and Intune admin roles required, and any macOS version prerequisites.]
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this macOS administrator setup guide. Minimum 30 words. State which enrollment method or feature this guide covers (for example, ADE, MDM profile, Platform SSO), the Apple Business Manager and Intune administrator roles required, and any macOS version prerequisites.]
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
+> **Platform gate:** This guide covers macOS ADE configuration with Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 ## Prerequisites
 
-- [Required admin role -- e.g., Intune Administrator, ABM Device Manager]
-- [Required license or subscription -- e.g., Microsoft Intune Plan 1, Apple Business Manager account]
+- [Required administrator role -- for example, Intune Administrator, ABM Device Manager]
+- [Required license or subscription -- for example, Microsoft Intune Plan 1, Apple Business Manager account]
 - [Prior configuration that must be completed first -- link to that guide]
 - [Required portal access -- specify both ABM and Intune admin center if applicable]
 
@@ -97,11 +100,11 @@ audience: admin
 
 | Component | Renewal Period | Consequence of Lapse | Renewal Steps |
 |-----------|---------------|---------------------|---------------|
-| [e.g., ADE token] | [e.g., 365 days] | [What stops working] | [Brief steps or link to renewal procedure] |
+| [for example, ADE token] | [for example, 365 days] | [What stops working] | [Brief steps or link to renewal procedure] |
 
 ## See Also
 
-- [Related macOS admin guide](link)
+- [Related macOS administrator guide](link)
 - [macOS ADE Lifecycle Overview](link)
 - [Windows vs macOS Concept Comparison](../windows-vs-macos.md)
 - [macOS Provisioning Glossary](../_glossary-macos.md)

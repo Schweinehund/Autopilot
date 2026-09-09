@@ -16,14 +16,14 @@ platform: macOS
 
 ## Summary
 
-This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically via the Microsoft Graph v1.0 `platformCredentialAuthenticationMethod` resource, covering List, Get, and Delete operations plus the leaver/offboarding automation pattern. Delete operations require the Authentication Administrator or Privileged Authentication Administrator Entra role, and target devices must already have Platform SSO deployed with the Secure Enclave authentication method (see guide 07) before credentials exist to manage.
+This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically through the Microsoft Graph v1.0 `platformCredentialAuthenticationMethod` resource, covering List, Get, and Delete operations plus the leaver/offboarding automation pattern. Delete operations require the Authentication Administrator or Privileged Authentication Administrator Entra role, and target devices must already have Platform SSO deployed with the Secure Enclave authentication method (see guide 07) before credentials exist to manage.
 
-> **Platform gate:** This guide covers programmatic management of macOS Secure Enclave Platform Credentials via the Microsoft Graph API (`platformCredentialAuthenticationMethod`, Graph v1.0).
+> **Platform gate:** This guide covers programmatic management of macOS Secure Enclave Platform Credentials through the Microsoft Graph API (`platformCredentialAuthenticationMethod`, Graph v1.0).
 
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
-This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically via the Microsoft Graph v1.0 API. It covers the `platformCredentialAuthenticationMethod` resource — how to list, retrieve, and delete credential registrations for users in your tenant, the required permissions for each operation, and the leaver/offboarding automation pattern with a mandatory dry-run step.
+This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically through the Microsoft Graph v1.0 API. It covers the `platformCredentialAuthenticationMethod` resource—how to list, retrieve, and delete credential registrations for users in your tenant, the required permissions for each operation, and the leaver/offboarding automation pattern with a mandatory dry-run step.
 
 ---
 
@@ -31,13 +31,13 @@ This guide is the operations reference for administering macOS Secure Enclave Pl
 
 **No Create or Update operation exists for Platform Credentials.**
 
-Platform Credentials are **device-initiated only** — they are created automatically by Company Portal during Platform SSO registration on the macOS device. There is no Graph API endpoint to create or update a Platform Credential remotely. Scripting credential creation is not possible through the Graph API. If a user's credential is missing, the device must re-register through Company Portal.
+Platform Credentials are **device-initiated only**—they are created automatically by Company Portal during Platform SSO registration on the macOS device. There is no Graph API endpoint to create or update a Platform Credential remotely. Scripting credential creation is not possible through the Graph API. If a user's credential is missing, the device must re-register through Company Portal.
 
 This guide covers **List / Get / Delete** of existing Platform Credential registrations only. It does NOT cover:
 
 - Creating or updating Platform Credentials (no such operation exists).
 - Scripting Platform SSO enrollment or Company Portal registration.
-- Bulk-audit reporting (enumerate users with zero registrations) — see the forward cross-link in the [Leaver / Offboarding Automation Pattern](#leaver--offboarding-automation-pattern) section for Phase 85 runbook #29.
+- Bulk-audit reporting (enumerate users with zero registrations)—see the forward cross-link in the [Leaver / Offboarding Automation Pattern](#leaver--offboarding-automation-pattern) section for Phase 85 runbook #29.
 
 ---
 
@@ -79,7 +79,7 @@ GET https://graph.microsoft.com/v1.0/me/authentication/platformCredentialMethods
 GET https://graph.microsoft.com/v1.0/users/{id | userPrincipalName}/authentication/platformCredentialMethods
 ```
 
-**Response:** Returns a collection of `platformCredentialAuthenticationMethod` objects. The `device` relationship is NOT expanded by default on List — use a single GET with `?$expand=device` to retrieve device details.
+**Response:** Returns a collection of `platformCredentialAuthenticationMethod` objects. The `device` relationship is NOT expanded by default on List—use a single GET with `?$expand=device` to retrieve device details.
 
 #### PowerShell SDK (`Microsoft.Graph.Identity.SignIns`)
 
@@ -129,9 +129,9 @@ Removes a Platform Credential registration from Entra ID.
 > [!WARNING]
 > **Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.**
 
-> The user will see the "Registration Required" prompt on their next Conditional Access-gated sign-in.
+> The user sees the "Registration Required" prompt on their next Conditional Access-gated sign-in.
 
-> The Secure Enclave private key on the device is NOT remotely erased — only the Entra-side record is removed.
+> The Secure Enclave private key on the device is NOT remotely erased—only the Entra-side record is removed.
 
 > Use with care in automation loops; test with `-WhatIf` before running against production users.
 
@@ -190,7 +190,7 @@ The permissions required differ by operation (read vs delete) and calling contex
 
 **Minimum Entra role for cross-user delegated delete:** Authentication Administrator or Privileged Authentication Administrator. **Global Reader is NOT sufficient for delete operations.**
 
-**MFA re-prompt:** If a user deletes their own credential and last authenticated more than 10 minutes ago in the current Graph session, the system will prompt for MFA before completing the delete.
+**MFA re-prompt:** If a user deletes their own credential and last authenticated more than 10 minutes ago in the current Graph session, the system prompts for MFA before completing the delete.
 
 ### National Cloud Availability
 
@@ -243,7 +243,7 @@ foreach ($cred in $creds) {
 #     -Confirm
 ```
 
-**What happens after deletion:** The user's macOS device retains the Secure Enclave private key (it is NOT remotely erased), but the Entra-side registration record is removed. The user will be prompted for PSSO re-registration ("Registration Required") on their next Conditional Access-gated sign-in. For a returning user (re-hire), re-registration occurs automatically through Company Portal.
+**What happens after deletion:** The user's macOS device retains the Secure Enclave private key (it is NOT remotely erased), but the Entra-side registration record is removed. The user is prompted for PSSO re-registration ("Registration Required") on their next Conditional Access-gated sign-in. For a returning user (re-hire), re-registration occurs automatically through Company Portal.
 
 ---
 
@@ -253,7 +253,7 @@ foreach ($cred in $creds) {
 
 - **Secure Enclave authentication method in use:** The Platform Credential resource represents Secure Enclave-backed credentials specifically. The Platform SSO authentication method must be configured for Secure Enclave key (not Password sync) for credentials to appear. See [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md) for authentication method selection.
 
-- **Appropriate Graph API permissions:** The calling identity (Entra App Registration for application context, or admin account for delegated context) must be granted the permissions documented in the [Permissions](#permissions) section above. Admin consent is required for all application permissions.
+- **Appropriate Graph API permissions:** The calling identity (Entra App Registration for application context, or administrator account for delegated context) must be granted the permissions documented in the [Permissions](#permissions) section. Admin consent is required for all application permissions.
 
 - **PowerShell SDK module (for PowerShell examples):**
 
@@ -267,7 +267,7 @@ foreach ($cred in $creds) {
 
 ## Verification
 
-Use the following read-only command to confirm Platform Credentials exist for a user before performing any Delete operation. This is the safe pre-delete check — it does not modify any data.
+Use the following read-only command to confirm Platform Credentials exist for a user before performing any Delete operation. This is the safe pre-delete check—it does not modify any data.
 
 ```powershell
 Import-Module Microsoft.Graph.Identity.SignIns
@@ -284,7 +284,7 @@ $creds | Select-Object Id, DisplayName, Platform, CreatedDateTime, KeyStrength
 |----|-------------|----------|-----------------|-------------|
 | `{guid}` | `Mac-Device-Name` | `macOS` | `2026-01-15T...` | `normal` |
 
-A `KeyStrength` of `normal` confirms the credential is Secure Enclave-backed. An empty result set means no Platform Credentials are registered for the user — either Platform SSO is not deployed, the device has not completed registration, or credentials have already been deleted.
+A `KeyStrength` of `normal` confirms the credential is Secure Enclave-backed. An empty result set means no Platform Credentials are registered for the user—either Platform SSO is not deployed, the device has not completed registration, or credentials have already been deleted.
 
 ---
 

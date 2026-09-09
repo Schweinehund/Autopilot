@@ -20,7 +20,7 @@ This reference documents the compliance-policy evaluation timeline, the three co
 
 > **Version gate:** This guide expands on the compliance verification in [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) with detailed timing and state transition information.
 
-Compliance evaluation does not happen instantly after enrollment. New admins frequently escalate "Not evaluated" as a failure when it is expected behavior. This guide documents the normal timing window, the three distinct compliance states, grace period configuration, and the ongoing evaluation schedule.
+Compliance evaluation does not happen instantly after enrollment. New administrators frequently escalate "Not evaluated" as a failure when it is expected behavior. This guide documents the normal timing window, the three distinct compliance states, grace period configuration, and the ongoing evaluation schedule.
 
 ---
 
@@ -59,11 +59,11 @@ Policy evaluated and the device **fails** one or more compliance requirements. T
 Policy evaluated and the device passes all requirements. This is the healthy state.
 
 - Appears as green in the Intune portal.
-- Conditional Access policies enforcing "Require compliant device" will allow access for this device.
+- Conditional Access policies enforcing "Require compliant device" allow access for this device.
 
-> **Admin Note:** "Not evaluated" and "Non-compliant" both appear as non-green states in the portal. New admins frequently confuse them.
+> **Admin Note:** "Not evaluated" and "Non-compliant" both appear as non-green states in the portal. New administrators frequently confuse them.
 
-> Always check the timestamp — if less than 30 minutes since enrollment, "Not evaluated" is expected behavior, not a failure requiring action.
+> Always check the timestamp—if less than 30 minutes since enrollment, "Not evaluated" is expected behavior, not a failure requiring action.
 
 ---
 
@@ -94,7 +94,7 @@ Actions are ordered and each can have its own delay. The "Mark device as noncomp
 
 > **What breaks if misconfigured:** Grace period set to 0.25 days (minimum) with "Retire" as an enforcement action.
 
-> Device enrolls, evaluates as non-compliant due to a pending Windows Update, and is auto-retired 6 hours later — before an admin can intervene.
+> Device enrolls, evaluates as non-compliant due to a pending Windows Update, and is auto-retired 6 hours later—before an administrator can intervene.
 
 > The user loses access to all corporate resources. There is no undo for retirement without re-enrolling the device.
 
@@ -106,8 +106,8 @@ Compliance state feeds directly into Conditional Access enforcement:
 
 - Once "Non-compliant" state is set **after the grace period expires**, CA policies with "Require compliant device" immediately block access for that device.
 - During the "Not evaluated" window (0–30 minutes post-enrollment), CA behavior depends on the **"Mark devices with no compliance policy assigned as"** setting:
-  - **Compliant** — Devices without a compliance policy (or in "Not evaluated" state) are treated as compliant. Less secure but reduces enrollment friction.
-  - **Not compliant** — Default. Devices without an assigned policy or in "Not evaluated" state are treated as non-compliant. Can block enrollment if a grace period is not configured.
+  - **Compliant**—Devices without a compliance policy (or in "Not evaluated" state) are treated as compliant. Less secure but reduces enrollment friction.
+  - **Not compliant**—Default. Devices without an assigned policy or in "Not evaluated" state are treated as non-compliant. Can block enrollment if a grace period is not configured.
 
 Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md) for the enrollment-specific chicken-and-egg problem when CA and compliance policies interact during first enrollment.
 
@@ -125,7 +125,7 @@ Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md)
 
 > **Admin Note:** Compliance policy changes do not immediately re-evaluate all devices. The change propagates on the next 8-hour check-in cycle for each device.
 
-> If you need immediate compliance re-evaluation (e.g., after remediating a non-compliant setting), ask the user to manually sync from Company Portal.
+> If you need immediate compliance re-evaluation (for example, after remediating a non-compliant setting), ask the user to manually sync from Company Portal.
 
 ---
 
@@ -142,9 +142,9 @@ Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md)
 
 ## See Also
 
-- [Conditional Access Enrollment Timing](ca-enrollment-timing.md) — CA chicken-and-egg problem during new device enrollment
-- [Security Baseline Conflicts](security-baseline-conflicts.md) — Settings that cause non-compliance post-enrollment
-- [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) — Stage 5 verification checklist; "Not evaluated" vs "Non-compliant" context
+- [Conditional Access Enrollment Timing](ca-enrollment-timing.md)—CA chicken-and-egg problem during new device enrollment
+- [Security Baseline Conflicts](security-baseline-conflicts.md)—Settings that cause non-compliance post-enrollment
+- [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md)—Stage 5 verification checklist; "Not evaluated" vs "Non-compliant" context
 
 ## Version History
 

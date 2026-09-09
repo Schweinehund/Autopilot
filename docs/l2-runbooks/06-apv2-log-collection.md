@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv2 L2 investigations: BootstrapperAgent event log export, IME log folder copy, and Intune auto-diagnostic download.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv2 L2 investigations: BootstrapperAgent event log export, IME log folder copy, and Intune auto-diagnostic download.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2). For Windows Autopilot (classic), see [APv1 Log Collection Guide](01-log-collection.md).
 
@@ -31,7 +31,7 @@ Step 1 is always initial portal state verification. Step 2 and beyond begin log 
 
 ## Context
 
-This guide is the prerequisite for all APv2 L2 investigation runbooks. Before starting any [BootstrapperAgent event ID](07-apv2-event-ids.md) or [deployment report](08-apv2-deployment-report.md) investigation, collect a complete APv2 diagnostic package using the steps below.
+This guide is the prerequisite for all APv2 L2 investigation runbooks. Before starting any [BootstrapperAgent event ID](07-apv2-event-ids.md) or [deployment report](08-apv2-deployment-report.md) investigation, collect a complete APv2 diagnostic package using the following steps.
 
 The principle is **gather everything first, then investigate**. Collecting all artifacts upfront prevents having to return to the device mid-investigation when a log file is needed.
 
@@ -125,7 +125,7 @@ Copy-Item "$src\AgentExecutor.log" "$dest\$prefix`_agentexecutor.log"
 
 ### Step 4: Collect Intune auto-diagnostics (if available)
 
-Intune auto-collects diagnostics on APv2 deployment failure. Access via:
+Intune auto-collects diagnostics on APv2 deployment failure. Access through:
 
 ```
 Intune admin center (https://intune.microsoft.com)

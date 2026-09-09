@@ -24,15 +24,15 @@ This guide covers configuring Intune compliance policies for Linux devices (Ubun
 
 > For the locked Linux management surface, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
 
-> ⚠️ **Architecture callout — compliance reporting is NOT a Conditional Access grant on Linux:**
+> ⚠️ **Architecture callout—compliance reporting is NOT a Conditional Access grant on Linux:**
 
-> A Linux device that reports `compliant` via an Intune compliance policy does NOT receive Conditional-Access-level access grants.
+> A Linux device that reports `compliant` through an Intune compliance policy does NOT receive Conditional-Access-level access grants.
 
-> The CA grant control `Require device to be marked as compliant` is **not available** on Linux — the only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+.
+> The CA grant control `Require device to be marked as compliant` is **not available** on Linux—the only CA enforcement path on Linux is web-app CA through Microsoft Edge for Linux 102.x+.
 
-> Compliance policy on Linux is **detect-only** (it produces a compliance verdict admins can monitor and use for reporting), not enforce-grant.
+> Compliance policy on Linux is **detect-only** (it produces a compliance verdict administrators can monitor and use for reporting), not enforce-grant.
 
-> See [Conditional Access](05-conditional-access.md) and [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access) for the architectural detail.
+> See [Conditional Access](05-conditional-access.md) and [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access) for the architectural detail.
 
 ## Compliance vs. Configuration: Critical Distinction
 
@@ -41,7 +41,7 @@ This guide covers configuring Intune compliance policies for Linux devices (Ubun
 | Verify a setting | Yes (detect-only on Linux) | n/a — Linux has no MDM configuration profile concept in Intune |
 | Enforce a setting | n/a | n/a |
 
-**Note for Linux admins:** Linux differs from Windows/macOS — there is no MDM configuration profile concept. Compliance policies are detect-only; enforcement is via custom-compliance Bash discovery scripts that REPORT a verdict (the script does not push a fix; it returns compliant/non-compliant). For tenant-side CA enforcement, see the PITFALL-2 architecture callout above and [Conditional Access](05-conditional-access.md).
+**Note for Linux administrators:** Linux differs from Windows/macOS—there is no MDM configuration profile concept. Compliance policies are detect-only; enforcement is using custom-compliance Bash discovery scripts that REPORT a verdict (the script does not push a fix; it returns compliant/non-compliant). For tenant-side CA enforcement, see the PITFALL-2 architecture callout and [Conditional Access](05-conditional-access.md).
 
 ## Prerequisites
 
@@ -58,7 +58,7 @@ This guide covers configuring Intune compliance policies for Linux devices (Ubun
 
 1. Navigate to **Devices > Compliance > Policies > Create Policy**
 2. Platform: **Linux**
-3. Enter a policy name (e.g., `Linux-Baseline-Compliance`) and description
+3. Enter a policy name (for example, `Linux-Baseline-Compliance`) and description
 4. Click **Create**
 
 ### Step 2: Configure Allowed Distributions
@@ -71,9 +71,9 @@ Linux compliance policy restricts which Ubuntu LTS distributions are considered 
 2. Add the supported Ubuntu LTS distributions:
    - `Ubuntu` (operator: `Equals`) with version constraints for 24.04 LTS
    - `Ubuntu` (operator: `Equals`) with version constraints for 26.04 LTS
-3. Devices running an unlisted distribution or version will report non-compliant
+3. Devices running an unlisted distribution or version report non-compliant
 
-> **What breaks if misconfigured:** If the Allowed Distribution list excludes the Ubuntu version running on your enrolled devices, those devices will immediately report non-compliant.
+> **What breaks if misconfigured:** If the Allowed Distribution list excludes the Ubuntu version running on your enrolled devices, those devices immediately report non-compliant.
 
 > Symptom appears in: Intune admin center (device shows non-compliant status with distribution mismatch reason).
 
@@ -84,10 +84,10 @@ Linux compliance policy restricts which Ubuntu LTS distributions are considered 
 Custom compliance on Linux uses admin-authored Bash discovery scripts to evaluate device state against org-defined rules. The script returns a compliance verdict; Intune surfaces compliant or non-compliant based on the script exit code and output.
 
 **Concept-level summary (Bash deep-dive deferred to v1.5.1 LIN-DEFER-01):**
-- Admin authors a Bash script that checks a specific setting (e.g., SSH configuration, antivirus status, file permissions)
+- Administrator authors a Bash script that checks a specific setting (for example, SSH configuration, antivirus status, file permissions)
 - Script outputs a JSON-formatted verdict and exits 0 (compliant) or 1 (non-compliant)
 - Intune delivers the script to enrolled Linux devices and evaluates the result
-- The script does NOT push a fix — it reports the current compliance state
+- The script does NOT push a fix—it reports the current compliance state
 
 #### In Intune admin center
 
@@ -96,7 +96,7 @@ Custom compliance on Linux uses admin-authored Bash discovery scripts to evaluat
 3. Assign the script to your compliance policy
 4. Assign the compliance policy to the target device group
 
-> **What breaks if misconfigured:** A Bash script with a syntax error will cause compliance evaluation to fail (the script exits non-zero for reasons unrelated to the compliance check).
+> **What breaks if misconfigured:** A Bash script with a syntax error causes compliance evaluation to fail (the script exits non-zero for reasons unrelated to the compliance check).
 
 > The device may show a compliance evaluation error rather than compliant/non-compliant.
 
@@ -108,7 +108,7 @@ Custom compliance on Linux uses admin-authored Bash discovery scripts to evaluat
 
 Linux full-disk encryption compliance check verifies that the device storage is encrypted using dm-crypt with LUKS (Linux Unified Key Setup). This is the standard Linux full-disk encryption surface.
 
-For terminology, see [Linux Glossary — dm-crypt](../_glossary-linux.md#dm-crypt) and [Linux Glossary — LUKS](../_glossary-linux.md#luks).
+For terminology, see [Linux Glossary—dm-crypt](../_glossary-linux.md#dm-crypt) and [Linux Glossary—LUKS](../_glossary-linux.md#luks).
 
 #### In Intune admin center
 
@@ -116,9 +116,9 @@ For terminology, see [Linux Glossary — dm-crypt](../_glossary-linux.md#dm-cryp
 2. Set **Require encryption of data storage on device** to **Require**
 3. Intune checks that LUKS-based encryption is active on the device's storage
 
-> **What breaks if misconfigured:** If Device Encryption is required but the device was enrolled without encryption enabled, it will report non-compliant immediately.
+> **What breaks if misconfigured:** If Device Encryption is required but the device was enrolled without encryption enabled, it reports non-compliant immediately.
 
-> Remediation requires re-imaging the device with encryption enabled — there is no in-place LUKS encryption path for a running system without data loss risk.
+> Remediation requires re-imaging the device with encryption enabled—there is no in-place LUKS encryption path for a running system without data loss risk.
 
 > Symptom appears in: Intune admin center (non-compliant for encryption).
 
@@ -136,9 +136,9 @@ Linux compliance policy can enforce password settings including minimum length, 
    - **Password complexity** (require non-alphanumeric characters, mixed case, etc.)
    - **Maximum minutes of inactivity before screen locks**
    - **Number of previous passwords to prevent reuse**
-3. Devices that do not meet the password requirements will report non-compliant
+3. Devices that do not meet the password requirements report non-compliant
 
-> **What breaks if misconfigured:** Password-policy thresholds that exceed what is configured on the device baseline will cause devices to report non-compliant immediately.
+> **What breaks if misconfigured:** Password-policy thresholds that exceed what is configured on the device baseline cause devices to report non-compliant immediately.
 
 > Symptom appears in: Intune admin center (non-compliant for password policy).
 
@@ -150,7 +150,7 @@ Configure what happens when a device is found non-compliant:
 
 - **Mark device noncompliant:** Immediately or after a configurable grace period
 - **Send email to end user:** Notification about the non-compliant status
-- **Retire the noncompliant device** (use with caution — irreversible without re-enrollment)
+- **Retire the noncompliant device** (use with caution—irreversible without re-enrollment)
 
 ### Step 7: Assign the Compliance Policy
 
@@ -158,20 +158,20 @@ Assign the policy to device groups or user groups as appropriate. Start with a t
 
 ## Conditional Access Cross-Reference
 
-> Compliance policy on Linux is **detect-only** — a compliant verdict does NOT automatically unlock CA grants.
+> Compliance policy on Linux is **detect-only**—a compliant verdict does NOT automatically unlock CA grants.
 
-> For the Linux Conditional Access workflow (web-app CA via Microsoft Edge for Linux 102.x+), see [Conditional Access](05-conditional-access.md).
+> For the Linux Conditional Access workflow (web-app CA through Microsoft Edge for Linux 102.x+), see [Conditional Access](05-conditional-access.md).
 
-> For the capability comparison, see [Linux Capability Matrix — Compliance](../reference/linux-capability-matrix.md#compliance)
+> For the capability comparison, see [Linux Capability Matrix—Compliance](../reference/linux-capability-matrix.md#compliance)
 
-> and [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
+> and [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
 
 ## Verification
 
 - [ ] Compliance policy created and saved in Intune admin center
 - [ ] Policy assigned to a test group (Linux devices only)
-- [ ] Test device reports a compliance verdict (compliant or non-compliant — not "evaluation pending" indefinitely)
-- [ ] Non-compliant devices show specific failing settings (not just a generic non-compliant state)
+- [ ] Test device reports a compliance verdict (compliant or non-compliant—not "evaluation pending" indefinitely)
+- [ ] Non-compliant devices show specific failing settings (not only a generic non-compliant state)
 - [ ] Allowed Distributions setting matches the Ubuntu LTS versions deployed in your org
 - [ ] If custom-compliance Bash script used: script exits successfully and verdict is reported
 
@@ -187,9 +187,9 @@ Assign the policy to device groups or user groups as appropriate. Start with a t
 ## See Also
 
 - [Conditional Access](05-conditional-access.md)
-- [Linux Capability Matrix — Compliance](../reference/linux-capability-matrix.md#compliance)
-- [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access)
-- [Linux Glossary — web-app CA](../_glossary-linux.md#web-app-ca)
+- [Linux Capability Matrix—Compliance](../reference/linux-capability-matrix.md#compliance)
+- [Linux Capability Matrix—Conditional Access](../reference/linux-capability-matrix.md#conditional-access)
+- [Linux Glossary—web-app CA](../_glossary-linux.md#web-app-ca)
 - (Phase 51 runbook) [31-linux-compliance-non-compliant.md](../l1-runbooks/31-linux-compliance-non-compliant.md)
 - (Phase 51 runbook) [32-linux-ca-blocking-web-access.md](../l1-runbooks/32-linux-ca-blocking-web-access.md)
 

@@ -16,9 +16,9 @@ platform: iOS
 
 ## Summary
 
-Reference decision table for iOS/iPadOS triage via Intune, gating first on whether the device is visible in the Intune admin center, then routing by what the user saw or attempted (if not visible) or by primary symptom (if visible) to an L1 runbook or L2 escalation within 2 decision steps.
+Reference decision table for iOS/iPadOS triage through Intune, gating first on whether the device is visible in the Intune admin center, then routing by what the user saw or attempted (if not visible) or by primary symptom (if visible) to an L1 runbook or L2 escalation within 2 decision steps.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting through Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
 
 > For macOS ADE, see [macOS ADE Triage](06-macos-triage.md).
 
@@ -30,7 +30,7 @@ No network reachability gate is included at the root because Setup Assistant com
 
 ## Decision Tree
 
-**LOCKED — 23 (nodes + labeled edges)** — 12 nodes + 11 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 3 diamonds (IOS1, IOS2, IOS3) are represented below; each row traces one complete path from the root question to a terminal action, and no cell collapses more than one incoming labeled edge.
+**LOCKED — 23 (nodes + labeled edges)** — 12 nodes + 11 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 3 diamonds (IOS1, IOS2, IOS3) are represented in the following table; each row traces one complete path from the root question to a terminal action, and no cell collapses more than one incoming labeled edge.
 
 ## Routing Verification
 
@@ -67,7 +67,7 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 
 - [iOS L1 Runbooks Index](../l1-runbooks/00-index.md) -- All 6 iOS L1 runbooks (16-21)
 - [iOS L2 Runbooks](../l2-runbooks/00-index.md#ios-l2-runbooks) -- L2 investigation (log collection + 3 investigation runbooks)
-- [iOS/iPadOS Admin Setup Overview](../admin-setup-ios/00-overview.md) -- Admin config reference
+- [iOS/iPadOS Admin Setup Overview](../admin-setup-ios/00-overview.md) -- Administrator configuration reference
 - [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) -- Enrollment path concepts
 - [Initial Triage Decision Tree](00-initial-triage.md) -- Windows Autopilot (classic) triage
 - [macOS ADE Triage](06-macos-triage.md) -- Sibling Apple platform triage

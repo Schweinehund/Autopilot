@@ -19,7 +19,7 @@ platform: iOS
 <!-- ABAUDIT-26: reviewed false positive — dual-portal role prerequisites (Intune Administrator in Intune admin center + ABM Device Manager in Apple Business Manager), not an Intune-delegation anti-pattern. v1.15 close, 119-05. -->
 This guide covers Automated Device Enrollment (ADE) token configuration, the link between Apple Business Manager (ABM) and Microsoft Intune that enables device syncing and enrollment profile assignment for iOS/iPadOS devices. Completing it requires the Intune Administrator role in Intune admin center and the Device Manager or Administrator role in Apple Business Manager, plus a Managed Apple ID (not a personal Apple ID). There is no supervised-device prerequisite for token creation itself; supervision is established later by the enrollment profile step that follows.
 
-> **Platform gate:** This guide covers iOS/iPadOS ADE token configuration via Apple Business Manager and Intune.
+> **Platform gate:** This guide covers iOS/iPadOS ADE token configuration through Apple Business Manager and Intune.
 
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 
@@ -33,7 +33,7 @@ This guide covers Automated Device Enrollment (ADE) token configuration, the lin
 
 > See the [Apple Business Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
 
-The ADE token links Apple Business Manager to Microsoft Intune, enabling device syncing and enrollment profile assignment for iOS/iPadOS devices. The steps are structurally identical to the macOS ABM token configuration — this guide cross-references the macOS guide for shared portal steps and documents only iOS-specific differences inline. Apple School Manager (ASM) is functionally identical to ABM for MDM purposes; follow the same steps if your organization uses ASM.
+The ADE token links Apple Business Manager to Microsoft Intune, enabling device syncing and enrollment profile assignment for iOS/iPadOS devices. The steps are structurally identical to the macOS ABM token configuration—this guide cross-references the macOS guide for shared portal steps and documents only iOS-specific differences inline. Apple School Manager (ASM) is functionally identical to ABM for MDM purposes; follow the same steps if your organization uses ASM.
 
 ## Prerequisites
 
@@ -63,25 +63,25 @@ The four-step ADE token creation process is the same for iOS/iPadOS and macOS. T
 
 ### Step 1: Download the Intune public key certificate
 
-The Intune public key certificate is used to establish trust between Intune and Apple Business Manager. Follow [ABM Configuration: Step 1 — Download Intune Public Key](../admin-setup-macos/01-abm-configuration.md#step-1-download-intune-public-key) in the macOS ABM guide.
+The Intune public key certificate is used to establish trust between Intune and Apple Business Manager. Follow [ABM Configuration: Step 1—Download Intune Public Key](../admin-setup-macos/01-abm-configuration.md#step-1-download-intune-public-key) in the macOS ABM guide.
 
 **iOS-specific difference:** None. The public key download process is identical for iOS/iPadOS and macOS.
 
 ### Step 2: Create MDM server and download server token in ABM
 
-The MDM server in ABM represents your Intune tenant. Creating the server and downloading the token establishes the enrollment program link. Follow [ABM Configuration: Step 2 — Create MDM Server and Download Server Token](../admin-setup-macos/01-abm-configuration.md#step-2-create-mdm-server-and-download-server-token) in the macOS ABM guide.
+The MDM server in ABM represents your Intune tenant. Creating the server and downloading the token establishes the enrollment program link. Follow [ABM Configuration: Step 2—Create MDM Server and Download Server Token](../admin-setup-macos/01-abm-configuration.md#step-2-create-mdm-server-and-download-server-token) in the macOS ABM guide.
 
-**iOS-specific difference:** If your organization uses separate MDM servers for macOS and iOS/iPadOS, use a descriptive name that identifies the platform (e.g., "Intune Production — iOS/iPadOS").
+**iOS-specific difference:** If your organization uses separate MDM servers for macOS and iOS/iPadOS, use a descriptive name that identifies the platform (for example, "Intune Production—iOS/iPadOS").
 
 ### Step 3: Upload server token to Intune
 
-Upload the .p7m server token downloaded from ABM to Intune. Follow [ABM Configuration: Step 3 — Upload Server Token to Intune](../admin-setup-macos/01-abm-configuration.md#step-3-upload-server-token-to-intune) in the macOS ABM guide.
+Upload the .p7m server token downloaded from ABM to Intune. Follow [ABM Configuration: Step 3—Upload Server Token to Intune](../admin-setup-macos/01-abm-configuration.md#step-3-upload-server-token-to-intune) in the macOS ABM guide.
 
 **iOS-specific difference:** When creating the token in Intune, select **iOS/iPadOS** as the platform. This determines which device types sync through this token.
 
 ### Step 4: Assign devices to MDM server in ABM
 
-Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow [ABM Configuration: Step 4 — Assign Devices to MDM Server](../admin-setup-macos/01-abm-configuration.md#step-4-assign-devices-to-mdm-server) in the macOS ABM guide.
+Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow [ABM Configuration: Step 4—Assign Devices to MDM Server](../admin-setup-macos/01-abm-configuration.md#step-4-assign-devices-to-mdm-server) in the macOS ABM guide.
 
 **iOS-specific difference:** When filtering devices in ABM, filter by device type **iPhone** or **iPad** to locate iOS/iPadOS devices. iOS devices can also be looked up by IMEI in addition to serial number.
 
@@ -110,7 +110,7 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 ## Verification
 
 - [ ] ADE token shows "Active" status in Intune admin center > Devices > Enrollment > Apple > Enrollment program tokens
-- [ ] Token expiration date is visible (should be ~365 days from creation)
+- [ ] Token expiration date is visible (expect ~365 days from creation)
 - [ ] Apple ID matches the Managed Apple ID used in ABM
 - [ ] Platform shows iOS/iPadOS (not macOS)
 - [ ] At least one iOS/iPadOS device appears after sync (if devices were assigned in ABM)

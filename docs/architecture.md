@@ -16,7 +16,7 @@ The Windows Autopilot Troubleshooter is a three-tier application designed to dia
 - `AutopilotDiagnostics.psm1`: Device status inspection, log collection, connectivity tests
 - `AutopilotRemediation.psm1`: Automated fixes for common issues
 
-**Execution Context**: Runs locally on Windows devices or remote via PowerShell remoting
+**Execution Context**: Runs locally on Windows devices or remote through PowerShell remoting
 
 **Key Functions**:
 - Hardware hash retrieval from WMI/CIM

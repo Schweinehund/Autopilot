@@ -22,11 +22,11 @@ This reference document maps Windows Autopilot concepts and terminology to their
 
 > It covers terminology and enrollment mechanisms, not Intune feature parity (see [Capability Matrix](reference/macos-capability-matrix.md)).
 
-Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning via Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help admins who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis — for Intune capability gaps between platforms, see the [Capability Matrix](reference/macos-capability-matrix.md).
+Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning through Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help administrators who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis—for Intune capability gaps between platforms, see the [Capability Matrix](reference/macos-capability-matrix.md).
 
 ## Concept Comparison
 
-The table below maps 14 Windows Autopilot concepts to their macOS ADE equivalents, from registration portal and first-run experience through platform-exclusive concepts.
+The following table maps 14 Windows Autopilot concepts to their macOS ADE equivalents, from registration portal and first-run experience through platform-exclusive concepts.
 
 | Concept | Windows Autopilot | macOS ADE | Notes |
 |---------|-------------------|-----------|-------|
@@ -49,7 +49,7 @@ The table below maps 14 Windows Autopilot concepts to their macOS ADE equivalent
 
 ## Diagnostic Tools
 
-The table below maps four common diagnostic tasks to their Windows and macOS command-line equivalents.
+The following table maps four common diagnostic tasks to their Windows and macOS command-line equivalents.
 
 | Task | Windows | macOS |
 |------|---------|-------|
@@ -74,27 +74,27 @@ The table below maps four common diagnostic tasks to their Windows and macOS com
 - The device was assigned to your MDM server in Apple Business Manager (ABM)
 - The device went through macOS Setup Assistant during provisioning
 - The device is a Mac (MacBook, Mac mini, iMac, Mac Pro, or Mac Studio)
-- The device is supervised (check via `profiles status -type enrollment`)
+- The device is supervised (check through `profiles status -type enrollment`)
 
 Return to [Documentation Hub](index.md) to find your platform and role.
 
 ## See Also
 
-- [Autopilot Glossary](_glossary.md) — Windows Autopilot terminology
-- [macOS Provisioning Glossary](_glossary-macos.md) — macOS ADE terminology
-- [APv1 vs APv2](apv1-vs-apv2.md) — Windows framework selection
-- [Capability Matrix](reference/macos-capability-matrix.md) — Intune feature parity comparison
+- [Autopilot Glossary](_glossary.md)—Windows Autopilot terminology
+- [macOS Provisioning Glossary](_glossary-macos.md)—macOS ADE terminology
+- [APv1 vs APv2](apv1-vs-apv2.md)—Windows framework selection
+- [Capability Matrix](reference/macos-capability-matrix.md)—Intune feature parity comparison
 
 ---
 
-This legacy changelog table predates the `## Version History` heading convention adopted later in the corpus; it is preserved as-is below.
+This legacy changelog table predates the `## Version History` heading convention adopted later in the corpus; it is preserved as-is.
 
 | Version | Change | Author |
 |---------|--------|--------|
 | 2026-04-14 | Resolved capability matrix forward references to reference/macos-capability-matrix.md | -- |
 | 2026-04-13 | Initial version | -- |
 
-> **Table summary:** This table records 2 pre-v1.15 change-history entries for this document, predating the standard `## Version History` heading now used below.
+> **Table summary:** This table records 2 pre-v1.15 change-history entries for this document, predating the standard `## Version History` heading now in use.
 
 ## Version History
 

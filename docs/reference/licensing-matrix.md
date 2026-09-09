@@ -3,8 +3,8 @@ doc_id: RE-157
 status: Approved
 owner: Intune Admin Lead
 doc_type: Reference
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-09-03
+review_by: 2026-12-02
 applies_to: both
 audience: admin
 platform: Windows
@@ -20,7 +20,7 @@ This reference documents the Microsoft 365, Enterprise Mobility + Security, and 
 
 > **Version gate:** Licensing requirements are the same for APv1 and APv2. For feature differences between frameworks, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-Autopilot requires both Microsoft Intune and Entra ID P1 (formerly Azure AD Premium P1). These are included together in all Microsoft 365 bundles and Enterprise Mobility + Security suites. A user missing either entitlement will Entra-join successfully but MDM enrollment will fail silently.
+Autopilot requires both Microsoft Intune and Entra ID P1 (formerly Azure AD Premium P1). These are included together in all Microsoft 365 bundles and Enterprise Mobility + Security suites. A user missing either entitlement Entra-joins successfully but MDM enrollment fails silently.
 
 > **What breaks if misconfigured:** User assigned a license without Intune entitlement. Auto-enrollment to MDM fails silently.
 
@@ -28,7 +28,7 @@ Autopilot requires both Microsoft Intune and Entra ID P1 (formerly Azure AD Prem
 
 ## Required Licenses
 
-Any one license from the table below satisfies the minimum requirements. Each license includes both Intune and Entra ID P1.
+Any one license from the following table satisfies the minimum requirements. Each license includes both Intune and Entra ID P1.
 
 | License | Includes Intune | Includes Entra P1 | Autopilot Supported | Notes |
 |---------|-----------------|--------------------|--------------------|-------|
@@ -59,13 +59,21 @@ Some Autopilot features require licenses beyond the base requirement. Verify you
 | APv2 (Device Preparation) | Any license in table above | Same licensing as APv1 |
 | Autopilot Reset | Any license in table above | APv1 only; no additional license |
 | Dynamic device groups | Entra ID P1 (included in all above) | Required for automatic profile assignment by group membership |
-| Windows Subscription Activation (Pro→Enterprise) | Microsoft 365 E3, E5, or A3/A5 | NOT available in Business Premium or F-series; manual OS upgrade required without this |
+| Windows Subscription Activation (Pro→Enterprise) | Microsoft 365 E3, E5, or A3/A5 | NOT available in Business Premium or F-series; manual OS upgrade required without this. Also does not apply to a self-deploying, userless kiosk device—see the blockquote below |
 | Microsoft Defender for Endpoint (P2) | Microsoft 365 E5 or Defender for Endpoint standalone | Defender P1 included in M365 Business Premium |
 | Endpoint Analytics (Intune suite) | Intune Plan 2 or Microsoft Intune Suite add-on | Optional; required for advanced deployment reporting |
 
 > **What breaks if missing Windows Subscription Activation:** Devices provisioned with Windows 10/11 Pro remain on Pro SKU after Autopilot enrollment.
 
 > Enterprise-only policies (AppLocker, Credential Guard, etc.) do not apply. Users see "Windows 11 Pro" in Settings instead of "Windows 11 Enterprise."
+
+> **Self-deploying kiosk consequence:** a per-user entitlement cannot license a device nobody signs into, so a self-deploying kiosk never triggers per-user Windows Subscription Activation.
+
+> This needs a device-scoped activation path instead. A per-device volume key (MAK) is the reasoned option for an Entra-only, internet-only kiosk.
+
+> Not pilot-tested—stated as reasoning from the licensing structure, not as an observation.
+
+> See [Walk-Up AVD Kiosk (RE-237)](../recipes/06-walk-up-avd-kiosk-autologon.md) for the worked case.
 
 ## License Assignment Verification
 
@@ -78,7 +86,7 @@ Get-MgUserLicenseDetail -UserId "user@contoso.com" | Select-Object SkuPartNumber
 
 Expected output includes at minimum: a SKU containing `INTUNE` and `AAD_PREMIUM` (Entra P1).
 
-From Intune admin center: Navigate to **Intune admin center** > **Users** > select user > **Licenses** — verify Intune and Entra ID P1 appear in the assigned licenses list.
+From Intune admin center: Navigate to **Intune admin center** > **Users** > select user > **Licenses**—verify Intune and Entra ID P1 appear in the assigned licenses list.
 
 ## See Also
 
@@ -90,4 +98,5 @@ From Intune admin center: Navigate to **Intune admin center** > **Users** > sele
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-09-03 | Phase 155 RCP-08: self-deploying kiosk userless-device activation consequence documented in Feature-to-License Mapping | — |
 | 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides Service Desk agents through confirming a device is genuinely unregistered in the Autopilot portal, communicating clearly with the affected user, and collecting the hardware hash import status, serial number, and deployment mode before escalating to L2 for registration completion.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides Service Desk agents through confirming a device is genuinely unregistered in the Autopilot portal, communicating clearly with the affected user, and collecting the hardware hash import status, serial number, and deployment mode before escalating to L2 for registration completion.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
@@ -37,7 +37,7 @@ Use this runbook when a device is not found in the [Autopilot](../_glossary.md#a
 
 3. In the search box, enter the full device serial number exactly as it appears on the device label. Do not use partial serial numbers.
 
-4. If the device appears in the search results: it IS registered — this runbook does not apply. Return to the [initial triage decision tree](../decision-trees/00-initial-triage.md) to identify the correct failure scenario.
+4. If the device appears in the search results: it IS registered—this runbook does not apply. Return to the [initial triage decision tree](../decision-trees/00-initial-triage.md) to identify the correct failure scenario.
 
 5. If no results appear: confirm the serial number. Ask the user to read the serial number from **Settings** > **System** > **About** on the device (if accessible) or from the device label. Re-search with the confirmed serial number.
 

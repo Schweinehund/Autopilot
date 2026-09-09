@@ -52,7 +52,7 @@ MDM server: https://*.manage.microsoft.com/...
 
 **Output Interpretation:**
 
-- **Enrolled via DEP: Yes** -- The device was enrolled through Automated Device Enrollment (ADE) via Apple Business Manager. If `No`, the device was enrolled manually via Company Portal or user-initiated enrollment.
+- **Enrolled via DEP: Yes** -- The device was enrolled through Automated Device Enrollment (ADE) with Apple Business Manager. If `No`, the device was enrolled manually through Company Portal or user-initiated enrollment.
 - **MDM enrollment: Yes (User Approved)** -- The device has an active MDM enrollment and the user has approved MDM management in System Settings > Privacy & Security. `User Approved` is required for full management capabilities (kernel extensions, PPPC, etc.). If only `Yes` without `User Approved`, management scope is limited.
 - **MDM server** -- The URL of the Intune MDM server the device checks in to. The `*.manage.microsoft.com` pattern confirms Intune management.
 
@@ -147,7 +147,7 @@ system_profiler SPConfigurationProfileDataType
 
 | Parameter | Purpose |
 |-----------|---------|
-| domain path | Path to the plist domain (e.g., `/Library/Managed Preferences/com.microsoft.intune`) |
+| domain path | Path to the plist domain (for example, `/Library/Managed Preferences/com.microsoft.intune`) |
 | key (optional) | Specific key to read; omit to dump all keys |
 
 **Example:**

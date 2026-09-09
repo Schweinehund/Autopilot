@@ -7,7 +7,7 @@ platform: ios+ipados+macos+tvos
 ---
 
 > **Platform applicability:** This document covers Apple Business audit log access and
-> scoping — how sub-org admins access Activity logs within their OU scope, understand
+> scoping—how sub-org administrators access Activity logs within their OU scope, understand
 > author-scope vs target-scope semantics, and export logs to an external SIEM for long-term
 > retention. This covers iOS, iPadOS, macOS, and tvOS devices managed in Apple Business OUs.
 > This is distinct from Intune device audit logs and Intune compliance reports, which are
@@ -23,7 +23,7 @@ platform: ios+ipados+macos+tvos
 
 > **Training-data notice:** Activity log UI labels, filter dimensions, and export mechanics
 > are authored from AI training knowledge of Apple Business portal behavior as of the
-> pre-2026-04-14 rebrand, cross-referenced against research/FEATURES.md §7 + PITFALLS.md
+> pre-2026-04-14 rebrand, cross-referenced against feature research §7 + pitfall register
 > OP-13/OP-14 (SIEM export pattern + author-scope semantics). Steps are marked
 > `[CITED: training; needs live verification]` pending a live portal scrape.
 > Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
@@ -38,11 +38,11 @@ that operators must understand before building automation.
 ## Required Role & Permission
 
 **Required permission:**
-- "Read log files" — Logs / Activity permission group — OU-scoped — delegatable via custom role
+- "Read log files"—Logs / Activity permission group—OU-scoped—delegatable using a custom role
 
-Sub-org admins holding "Read log files" can access Activity logs for events **authored** within
+Sub-org administrators holding "Read log files" can access Activity logs for events **authored** within
 their OU scope. Tenant-wide Activity log queries (cross-OU) require a tenant IT administrator
-or Account Holder role. See the Author-Scope vs Target-Scope section below for the critical
+or Account Holder role. See the Author-Scope vs Target-Scope section for the critical
 distinction.
 
 For the full permission catalog, see [01-role-permission-model.md](01-role-permission-model.md).
@@ -59,8 +59,8 @@ For the full permission catalog, see [01-role-permission-model.md](01-role-permi
 
 ## Accessing Activity Logs
 
-The Apple Business Activity log is accessed via the **Activity** sidebar in the Apple Business
-portal. `[CITED: FEATURES.md §7.1 — sourced from Apple Support axmf7d043c03]`
+The Apple Business Activity log is accessed through the **Activity** sidebar in the Apple Business
+portal. `[CITED: feature research §7.1 — sourced from Apple Support axmf7d043c03]`
 
 ### Activity Log Access Procedure
 
@@ -72,24 +72,24 @@ portal. `[CITED: FEATURES.md §7.1 — sourced from Apple Support axmf7d043c03]`
 | 4 | Review filtered log entries | Admin | Entries show: timestamp, event name, author (who performed the action), target resource, status |
 | 5 | Download the filtered log set | Admin | Select **Download Logs** to export the filtered view — see No Public REST API section below |
 
-> **Note (filter dimensions — [CITED: training; needs live verification]):** The filter
-> dimensions listed above (Category, Event name, Activity status, Date range) are based on
+> **Note (filter dimensions—[CITED: training; needs live verification]):** The filter
+> preceding dimensions (Category, Event name, Activity status, Date range) are based on
 > AI training knowledge of the Apple Business portal. The exact labels and available filter
-> options should be confirmed against the live portal. `[CITED: training; needs live verification]`
+> options must be confirmed against the live portal. `[CITED: training; needs live verification]`
 
 ---
 
 ## Author-Scope vs Target-Scope
 
 > **Note (critical audit visibility model):** Apple Business audit log entries are scoped to
-> the **AUTHOR's OU** — the OU of the admin who performed the action — NOT the OU of the
-> TARGET resource. This distinction affects what sub-org admins can see and is a common
-> source of audit-trail gaps. [CITED: PITFALLS.md OP-14 — MEDIUM confidence; Apple does
+> the **AUTHOR's OU**—the OU of the administrator who performed the action—NOT the OU of the
+> TARGET resource. This distinction affects what sub-org administrators can see and is a common
+> source of audit-trail gaps. [CITED: pitfall register OP-14—MEDIUM confidence; Apple does
 > not single-source document this matrix]
 
 ### The "Ghost Device" Example (OP-14)
 
-**Scenario:** Sub-org admin for OU-A transfers a device from OU-A to OU-B (a cross-OU
+**Scenario:** Sub-org administrator for OU-A transfers a device from OU-A to OU-B (a cross-OU
 transfer; see [14-device-transfer-runbook.md](14-device-transfer-runbook.md)).
 
 | Role | Can see the transfer audit entry? | Why |
@@ -98,8 +98,8 @@ transfer; see [14-device-transfer-runbook.md](14-device-transfer-runbook.md)).
 | Sub-org admin for OU-B (target) | **May NOT see it** — the inbound device transfer | The action was authored in OU-A's scope; OU-B's log shows only actions authored by OU-B admins |
 | Tenant IT administrator | **Yes** — sees both | Tenant-wide scope covers all OU author-scopes |
 
-**Consequence:** The OU-B sub-org admin discovers a "ghost device" — a device that appeared
-in their OU with no visible audit trail for why or when. The transfer is traceable only via a
+**Consequence:** The OU-B sub-org administrator discovers a "ghost device"—a device that appeared
+in their OU with no visible audit trail for why or when. The transfer is traceable only through a
 tenant-wide log query.
 
 ### Resolution for OU-B Admins Discovering Ghost Devices
@@ -112,8 +112,8 @@ tenant-wide log query.
 | 4 | Confirm the source OU, author admin, and timestamp from the tenant-wide result |
 | 5 | Document the finding for your OU's audit trail |
 
-> **Note (OU-A admin best practice):** When performing cross-OU transfers, the OU-A admin
-> should notify the OU-B admin directly and document the transfer reason in a ticket or
+> **Note (OU-A administrator best practice):** When performing cross-OU transfers, the OU-A administrator
+> should notify the OU-B administrator directly and document the transfer reason in a ticket or
 > change record. The Apple Business audit log alone is insufficient for OU-B's visibility.
 > See [14-device-transfer-runbook.md](14-device-transfer-runbook.md) for the cross-OU
 > transfer pre-transfer dependency checklist and 4-cell impact matrix.
@@ -124,12 +124,12 @@ tenant-wide log query.
 
 For compliance retention requirements (SOX, ISO 27001, NIST, HIPAA), Apple Business Activity
 logs should be exported to an external SIEM or log archive on a regular schedule.
-[CITED: PITFALLS.md OP-13 — HIGH confidence for "no published retention SLA" claim;
+[CITED: pitfall register OP-13—HIGH confidence for "no published retention SLA" claim;
 MEDIUM confidence for export mechanics]
 
-> **Note (retention SLA — Apple does not publish):** Apple does NOT publish a definitive
+> **Note (retention SLA—Apple does not publish):** Apple does NOT publish a definitive
 > retention period for Apple Business Activity logs. Community reports suggest fewer than
-> one year of log history may be available in the portal (MEDIUM confidence — unverified).
+> one year of log history may be available in the portal (MEDIUM confidence—unverified).
 > Do NOT rely on Apple Business as a long-term audit log archive. For any retention
 > requirement beyond a few months, configure regular export to an external SIEM.
 
@@ -145,29 +145,29 @@ MEDIUM confidence for export mechanics]
 |------|--------|-----|-------|
 | 1 | Sign in to Apple Business with a Managed Apple Account holding "Read log files" | Admin | OP-2: do not use Account Holder credentials |
 | 2 | Navigate to **Activity** sidebar | Admin | `[CITED: training; needs live verification]` |
-| 3 | Set the Date range filter to cover the export window (e.g., previous calendar month) | Admin | Ensure the window does not overlap with the previous export to avoid duplicates |
+| 3 | Set the Date range filter to cover the export window (for example, previous calendar month) | Admin | Ensure the window does not overlap with the previous export to avoid duplicates |
 | 4 | Apply any required Category or Event filters for the SIEM feed | Admin | `[CITED: training; needs live verification]` — adjust filters per your SIEM intake policy |
-| 5 | Select **Download Logs** | Admin | Apple exports the filtered log set as a downloadable file (text/log format; CSV available for device-assignment-specific events) `[CITED: FEATURES.md §7.4]` |
+| 5 | Select **Download Logs** | Admin | Apple exports the filtered log set as a downloadable file (text/log format; CSV available for device-assignment-specific events) `[CITED: feature research §7.4]` |
 | 6 | Upload the exported file to your SIEM ingest endpoint | SIEM operator | Follow your organization's SIEM upload procedure; index on timestamp, event type, and author OU |
 | 7 | Verify log entries are indexed and searchable in the SIEM | SIEM operator | Spot-check 2–3 entries against the Apple Business Activity view to confirm no data loss during export/import |
 
-> **Note (cross-OU SIEM completeness):** A sub-org admin's Activity log download covers only
+> **Note (cross-OU SIEM completeness):** A sub-org administrator's Activity log download covers only
 > their OU author-scope. For a complete tenant-wide audit archive, a tenant IT administrator
 > must perform the export from a tenant-wide Activity view. OU-scoped exports cover actions
-> authored by that OU's admins only — not inbound transfers or actions by other OUs affecting
-> resources in this OU. See the Author-Scope vs Target-Scope section above.
+> authored by that OU's administrators only—not inbound transfers or actions by other OUs affecting
+> resources in this OU. See the Author-Scope vs Target-Scope section.
 
 ---
 
 ## No Public REST API
 
-> **Note (anti-feature — no public REST API for audit log export):** Apple Business does NOT
+> **Note (anti-feature—no public REST API for audit log export):** Apple Business does NOT
 > provide a public REST API for Activity log access or export. Audit log access is
-> **UI-only** — the only export mechanism is the manual **Download Logs** button in the
+> **UI-only**—the only export mechanism is the manual **Download Logs** button in the
 > Apple Business portal Activity sidebar.
-> [CITED: FEATURES.md §7.6 — HIGH confidence, directly stated in Apple Support documentation]
+> [CITED: feature research §7.6—HIGH confidence, directly stated in Apple Support documentation]
 
-Admins and engineers seeking to automate audit log collection should be aware of this limitation
+Administrators and engineers seeking to automate audit log collection must be aware of this limitation
 before designing compliance or SIEM automation workflows.
 
 ### No Public REST API — What This Means for Automation
@@ -182,21 +182,21 @@ before designing compliance or SIEM automation workflows.
 ### Feature Requests
 
 If your organization's compliance requirements cannot be met by the manual download mechanism,
-submit a feature request to Apple via **Apple Feedback Assistant** at https://feedbackassistant.apple.com.
+submit a feature request to Apple through **Apple Feedback Assistant** at https://feedbackassistant.apple.com.
 Select the **Apple Business** category and request a REST API for audit log access.
 
 ### Distinction: Apple Business Device API Is NOT Audit Log Access
 
-> **Note (Apple Business Device API — separate surface):** The Apple Business portal
+> **Note (Apple Business Device API—separate surface):** The Apple Business portal
 > includes a **Device API Manager** preset role associated with the Apple Business Device
 > API (introduced alongside the April 2026 rebrand). This API surface covers device
 > management operations, NOT audit log access. The Apple Business Device API does not
 > expose Activity log entries or audit event data.
-> [CITED: STACK.md §9.3; 01-role-permission-model.md Device API Manager note]
+> [CITED: stack research §9.3; 01-role-permission-model.md Device API Manager note]
 >
 > If you encounter the Device API Manager preset role in your portal, treat it as a
 > device-management API surface (see [01-role-permission-model.md](01-role-permission-model.md)
-> for the current v1.6 policy on Device API Manager — acknowledge but do not document deeply
+> for the current v1.6 policy on Device API Manager—acknowledge but do not document deeply
 > pending Apple publishing developer-facing documentation). It is unrelated to the audit log
 > limitation described in this section.
 
@@ -225,9 +225,9 @@ Select the **Apple Business** category and request a REST API for audit log acce
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — Logs / Activity permission group; "Read log files" permission
-- Cross-OU device transfer: [14-device-transfer-runbook.md](14-device-transfer-runbook.md) — OP-14 "ghost device" scenario; cross-OU transfers and their audit visibility implications
-- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) — full Apple-Business-vs-Intune responsibility table (D-02 SOT)
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—Logs / Activity permission group; "Read log files" permission
+- Cross-OU device transfer: [14-device-transfer-runbook.md](14-device-transfer-runbook.md)—OP-14 "ghost device" scenario; cross-OU transfers and their audit visibility implications
+- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md)—full Apple-Business-vs-Intune responsibility table (D-02 SOT)
 
 ## Version History
 

@@ -36,8 +36,8 @@ Organizations running MDT task sequences or SCCM/ConfigMgr OSD can migrate to Wi
 
 - Complete inventory of task sequence applications (name, version, installer type: MSI/EXE/custom script)
 - Documented task sequence customizations (scripts, driver injection steps, OS settings, join behavior)
-- SCCM client version documented if SCCM OSD is the source — required for the "Autopilot for Existing Devices" scenario
-- GPO baseline exported as XML from GPMC.msc before migration — feeds the [GPO-to-Intune migration](gpo-to-intune.md) process
+- SCCM client version documented if SCCM OSD is the source—required for the "Autopilot for Existing Devices" scenario
+- GPO baseline exported as XML from GPMC.msc before migration—feeds the [GPO-to-Intune migration](gpo-to-intune.md) process
 
 ### Target Environment
 
@@ -62,9 +62,9 @@ For each application in the task sequence inventory, follow these steps.
 
 Determine the installer type for each application:
 
-- **MSI** — Windows Installer package (`.msi`). Detection rule can use Product Code (auto-detected by Intune).
-- **EXE** — Executable installer with silent switch. Requires manual detection rule (file version or registry key).
-- **Custom script** — PowerShell or batch installer. Requires PowerShell detection script.
+- **MSI**—Windows Installer package (`.msi`). Detection rule can use Product Code (auto-detected by Intune).
+- **EXE**—Executable installer with silent switch. Requires manual detection rule (file version or registry key).
+- **Custom script**—PowerShell or batch installer. Requires PowerShell detection script.
 
 ### Step 2: Package as Win32 (.intunewin) using the Win32 Content Prep Tool
 
@@ -82,16 +82,16 @@ Determine the installer type for each application:
 
 Configure how Intune determines whether the app is installed:
 
-- **MSI**: Use **MSI product code** — auto-populated from the `.intunewin` file metadata. Preferred for MSI apps.
-- **EXE**: Use **File version check** — specify the executable path and minimum version. More reliable than registry when installers update the executable.
-- **Custom script**: Use **PowerShell detection script** — script must exit 0 (detected) or non-zero (not detected) and optionally write to stdout.
+- **MSI**: Use **MSI product code**—auto-populated from the `.intunewin` file metadata. Preferred for MSI apps.
+- **EXE**: Use **File version check**—specify the executable path and minimum version. More reliable than registry when installers update the executable.
+- **Custom script**: Use **PowerShell detection script**—script must exit 0 (detected) or non-zero (not detected) and optionally write to stdout.
 
 See [Win32 App Packaging Best Practices](win32-app-packaging.md) for detection rule priority and common pitfalls.
 
 ### Step 4: Configure assignment
 
-- **Required** — App is tracked by ESP and must install before the user reaches the desktop. Use for critical apps.
-- **Available** — App appears in Company Portal but does not block enrollment. Use for optional apps.
+- **Required**—App is tracked by ESP and must install before the user reaches the desktop. Use for critical apps.
+- **Available**—App appears in Company Portal but does not block enrollment. Use for optional apps.
 
 > **What breaks if sequenced incorrectly:** Too many Required apps causes ESP timeouts.
 
@@ -121,7 +121,7 @@ For organizations with existing SCCM infrastructure that want to use Autopilot w
 **JSON profile limitations (important):**
 - JSON supports: user-driven Entra join, user-driven hybrid Entra join
 - JSON does NOT support: self-deploying mode, pre-provisioning (white glove)
-- The task sequence MUST include a full device wipe — Autopilot for Existing Devices does not work on upgrade-in-place
+- The task sequence MUST include a full device wipe—Autopilot for Existing Devices does not work on upgrade-in-place
 
 **SCCM task sequence steps:**
 1. Download the JSON profile from Intune (Intune admin center > Devices > Windows enrollment > Deployment profiles > Export profile).

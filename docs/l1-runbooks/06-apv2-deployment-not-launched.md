@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses APv2 Device Preparation deployments where the Device Preparation screen never appeared after OOBE sign-in. Agents verify the Device Preparation policy exists, confirm the user belongs to the assigned group, check OS version requirements, validate MDM scope, and confirm Entra join permissions before escalating to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses APv2 Device Preparation deployments where the Device Preparation screen never appeared after OOBE sign-in. Agents verify the Device Preparation policy exists, confirm the user belongs to the assigned group, check OS version requirements, validate MDM scope, and confirm Entra join permissions before escalating to L2.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md).
@@ -36,7 +36,7 @@ Use this runbook when a device completed OOBE sign-in but the Device Preparation
 
 2. Navigate to **Devices** > **Windows** > **Enrollment** > **Device preparation policies**.
 
-3. Verify that at least one Device Preparation policy exists. If no policy exists: this is the cause. Inform the admin team that no Device Preparation policy is configured.
+3. Verify that at least one Device Preparation policy exists. If no policy exists: this is the cause. Inform the administrator team that no Device Preparation policy is configured.
 
 4. Select the Device Preparation policy. Verify that a **user group** is assigned in the policy's Assignments section. Note the group name.
 
@@ -46,7 +46,7 @@ Use this runbook when a device completed OOBE sign-in but the Device Preparation
 
 7. Check whether the signing-in user is a member of the assigned user group: navigate to **Intune admin center** > **Groups** > search for the group name noted in step 4 > **Members**. Search for the user's name or UPN.
 
-8. If the user is NOT a member of the assigned group: this is the likely cause. Inform the admin team that the user needs to be added to the Device Preparation policy's assigned group.
+8. If the user is NOT a member of the assigned group: this is the likely cause. Inform the administrator team that the user needs to be added to the Device Preparation policy's assigned group.
 
 9. Verify the device OS version meets minimum requirements: Ask the user to check **Settings** > **System** > **About** and read the Windows version. APv2 requires Windows 11 22H2 or later with update KB5035942 or later installed.
 
@@ -64,7 +64,7 @@ Use this runbook when a device completed OOBE sign-in but the Device Preparation
 
 Escalate to L2 if:
 
-- All portal checks above are clear (policy exists, user in group, OS version correct, MDM scope set, Entra join allowed) but deployment still did not launch
+- All preceding portal checks are clear (policy exists, user in group, OS version correct, MDM scope set, Entra join allowed) but deployment still did not launch
 - OS version appears correct but user is unsure about installed updates
 - Multiple devices from the same user or location are affected (possible tenancy-level configuration issue)
 

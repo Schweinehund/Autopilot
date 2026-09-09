@@ -26,11 +26,11 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 **Framework:** APv1 (classic)
 
-1. **Device in portal?** — Intune > Devices > Windows > Enrollment > [Windows Autopilot](_glossary.md#autopilot) devices — search by serial number
-2. **Profile assigned?** — Same portal page, Profile column shows "Assigned" (not blank or "Not assigned")
-3. **Endpoints reachable?** — From device browser, navigate to `https://login.microsoftonline.com` — page loads without error
-4. **[ESP](_glossary.md#esp) past expected time?** — Device phase: >30 min stuck. User phase: >60 min stuck.
-5. **Error code on screen?** — Look up in [Error Code Index](error-codes/00-index.md)
+1. **Device in portal?**—Intune > Devices > Windows > Enrollment > [Windows Autopilot](_glossary.md#autopilot) devices—search by serial number
+2. **Profile assigned?**—Same portal page, Profile column shows "Assigned" (not blank or "Not assigned")
+3. **Endpoints reachable?**—From device browser, navigate to `https://login.microsoftonline.com`—page loads without error
+4. **[ESP](_glossary.md#esp) past expected time?**—Device phase: >30 min stuck. User phase: >60 min stuck.
+5. **Error code on screen?**—Look up in [Error Code Index](error-codes/00-index.md)
 
 ## Escalation Triggers
 
@@ -45,7 +45,7 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ## Decision Trees
 
-- [Initial Triage](decision-trees/00-initial-triage.md) — start here
+- [Initial Triage](decision-trees/00-initial-triage.md)—start here
 - [ESP Failure](decision-trees/01-esp-failure.md)
 - [Profile Assignment](decision-trees/02-profile-assignment.md)
 - [TPM Attestation](decision-trees/03-tpm-attestation.md)
@@ -59,10 +59,10 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 - [Network Connectivity Failure](l1-runbooks/04-network-connectivity.md)
 - [OOBE Fails Immediately](l1-runbooks/05-oobe-failure.md)
 - [Error Code Index](error-codes/00-index.md)
-- [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) — cross-platform
-- [802.1X RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) — cross-platform
-- [802.1X Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) — cross-platform
-- [802.1X EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — cross-platform
+- [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md)—cross-platform
+- [802.1X RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md)—cross-platform
+- [802.1X Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md)—cross-platform
+- [802.1X EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md)—cross-platform
 
 ---
 
@@ -72,8 +72,8 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ### Top 3 Checks
 
-1. **Device Preparation experience appeared?** -- After OOBE sign-in, the deployment experience screen should launch automatically. If the desktop appeared instead, the device may not be targeted by a Device Preparation policy.
-2. **Apps and scripts installing?** -- During the deployment experience, apps and scripts should show progress. If items show as "Failed" or "Skipped," check the Device Preparation policy configuration in Intune.
+1. **Device Preparation experience appeared?** -- After OOBE sign-in, confirm the deployment experience screen launched automatically. If the desktop appeared instead, the device may not be targeted by a Device Preparation policy.
+2. **Apps and scripts installing?** -- During the deployment experience, confirm apps and scripts show progress. If items show as "Failed" or "Skipped," check the Device Preparation policy configuration in Intune.
 3. **Deployment report status?** -- Intune admin center > Devices > Monitor > Device preparation deployments -- check the device's deployment status for errors.
 
 ### APv2 Escalation Triggers
@@ -114,9 +114,9 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 - Configuration profile not applied after 4-hour sync wait and manual sync --> **Escalate L2** (collect: serial number, expected profile name, Intune device compliance screenshot)
 - App showing "Failed" in Intune after reinstall attempt --> **Escalate L2** (collect: app name, app type, Intune app install status screenshot)
 - Device non-compliant but user believes settings are correct --> **Escalate L2** (collect: non-compliant setting names, device serial)
-- Secure Enclave key error after password reset or FileVault recovery --> **Use [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) runbook** first; escalate to L2 if re-registration fails (collect: serial number, macOS version, `app-sso platform -s` output)
+- Secure Enclave key error after password reset or FileVault recovery --> **Use [Platform SSO—Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) runbook** first; escalate to L2 if re-registration fails (collect: serial number, macOS version, `app-sso platform -s` output)
 - Platform SSO sign-in loop or "Registration Required" notification never appeared --> **Use [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) runbook** (collect: Intune Succeeded screenshot, Company Portal version, `app-sso platform -s` output)
-- User cannot log in — local password lost or unknown --> **Use [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md) runbook** (FileVault recovery key / LAPS admin / Apple ID; PSSO re-registration via #36 required afterward)
+- User cannot log in—local password lost or unknown --> **Use [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md) runbook** (FileVault recovery key / LAPS administrator / Apple ID; PSSO re-registration per #36 required afterward)
 
 ### macOS Decision Tree
 
@@ -130,9 +130,9 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 - [App Not Installed](l1-runbooks/13-macos-app-not-installed.md)
 - [Compliance / Access Blocked](l1-runbooks/14-macos-compliance-access-blocked.md)
 - [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
-- [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) — "Registration Required" not appearing, sign-in loop
-- [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) — key loss after password reset
-- [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md) — local password lost or unknown; locked out of Mac
+- [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md)—"Registration Required" not appearing, sign-in loop
+- [Platform SSO—Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md)—key loss after password reset
+- [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md)—local password lost or unknown; locked out of Mac
 
 ---
 
@@ -161,7 +161,7 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ### iOS Runbooks
 
-- [iOS APNs Certificate Expired](l1-runbooks/16-ios-apns-expired.md) -- cross-platform blast radius; all iOS/iPadOS + macOS MDM communication affected
+- [iOS APNs Certificate Expired](l1-runbooks/16-ios-apns-expired.md) -- cross-platform scope; all iOS/iPadOS + macOS MDM communication affected
 - [iOS ADE Not Starting](l1-runbooks/17-ios-ade-not-starting.md) -- three failure signatures
 - [iOS Enrollment Restriction Blocking](l1-runbooks/18-ios-enrollment-restriction-blocking.md) -- reciprocal with Device Cap Reached
 - [iOS License Invalid](l1-runbooks/19-ios-license-invalid.md) -- dual manifestation at enrollment
@@ -176,7 +176,7 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 1. **[All GMS]** Device visible in Intune? -- Intune admin center > Devices > Android -- search by serial number, check enrollment state
 2. **[BYOD]** Work profile / briefcase badge present on device? -- User-side check; if briefcase missing on a BYOD-mode device, work profile creation failed (route to runbook 23)
-3. **[ZTE/Knox]** Serial in Zero-Touch portal or Knox Mobile Enrollment portal? -- Admin-only check; L1 escalates to admin if portal access required
+3. **[ZTE/Knox]** Serial in Zero-Touch portal or Knox Mobile Enrollment portal? -- Admin-only check; L1 escalates to administrator if portal access required
 4. **[All GMS]** Compliance state in Intune device blade? -- Devices > [device] > Device compliance -- Compliant vs Non-compliant + non-compliant settings (incl. Play Integrity verdict)
 5. **[AOSP]** OEM identifier captured? -- RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest -- different enrollment paths per OEM (route to runbook 29)
 
@@ -237,15 +237,15 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ## Apple Business Quick Reference
 
-**Platform:** Apple Business (Shared iPad + sub-org admin delegated governance)
+**Platform:** Apple Business (Shared iPad + sub-org administrator delegated governance)
 
 ### Top Checks — Shared iPad Passcode Reset
 
-1. **Which path?** — Can the sub-org admin reach the Apple Business portal? → Path A (Apple Business UI, L1-delegatable)
-2. **Pool owner?** — See [`05-sub-org-admin-onboarding.md#which-admin-owns-this-pool`](cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) to confirm who owns the Shared iPad pool
-3. **Portal reachable?** — Navigate to Apple Business and confirm sub-org admin can log in
-4. **Permission granted?** — Sub-org admin has "Reset Shared iPad passcode" in their OU
-5. **Error visible?** — Note exact portal error text for escalation
+1. **Which path?**—Can the sub-org administrator reach the Apple Business portal? → Path A (Apple Business UI, L1-delegatable)
+2. **Pool owner?**—See [`05-sub-org-admin-onboarding.md#which-admin-owns-this-pool`](cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) to confirm who owns the Shared iPad pool
+3. **Portal reachable?**—Navigate to Apple Business and confirm sub-org administrator can log in
+4. **Permission granted?**—Sub-org administrator has "Reset Shared iPad passcode" in their OU
+5. **Error visible?**—Note exact portal error text for escalation
 
 ### Apple Business Escalation Triggers
 
@@ -255,8 +255,8 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ### Apple Business Runbooks
 
-- [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) — Path A primary (L1-delegatable)
-- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf L2 triage tree
+- [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md)—Path A primary (L1-delegatable)
+- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md)—7-leaf L2 triage tree
 
 ## Version History
 

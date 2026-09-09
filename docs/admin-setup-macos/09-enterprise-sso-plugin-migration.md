@@ -31,7 +31,7 @@ This guide is for Intune administrators with existing deployments of the Microso
 
 **Terminology Trap -- "Configure the Enterprise SSO Plug-in" Is Ambiguous:**
 
-Writing "configure the Microsoft Enterprise SSO plug-in" does NOT specify which configuration surface to use. Admins who configure the legacy **Device Features** template (instead of the **Settings Catalog** Platform SSO policy) end up with a legacy SSO app extension profile -- and if a Platform SSO Settings Catalog policy is also assigned to the same device, both stop working (Error 10002). The confusion arises because the umbrella product name appears in both configuration paths.
+Writing "configure the Microsoft Enterprise SSO plug-in" does NOT specify which configuration surface to use. Administrators who configure the legacy **Device Features** template (instead of the **Settings Catalog** Platform SSO policy) end up with a legacy SSO app extension profile -- and if a Platform SSO Settings Catalog policy is also assigned to the same device, both stop working (Error 10002). The confusion arises because the umbrella product name appears in both configuration paths.
 
 The four terms have distinct meanings:
 
@@ -42,19 +42,19 @@ The four terms have distinct meanings:
 | **SSO app extension** | Legacy sub-feature. Provides app and browser SSO via URL-matching redirect. Does NOT provide OS-level login binding, Entra device join, or a hardware-bound PRT. | Intune **Device Features** template (legacy path); also auto-included when Platform SSO is configured |
 | **Kerberos SSO extension** | Separate Apple-NATIVE extension -- NOT a Microsoft extension. Handles on-premises AD / Kerberos authentication only. Uses a different payload type (Kerberos, not Redirect). | Separate MDM payload; coexists with PSSO (see [Kerberos SSO Extension (Coexistence)](#kerberos-sso-extension-coexistence)) |
 
-**Key functional difference:** Configuring Platform SSO via the Settings Catalog automatically provides BOTH Platform SSO AND the SSO app extension in a single policy. Configuring the legacy Device Features template provides ONLY the SSO app extension -- no OS-level login binding, no Entra device join, no hardware-bound PRT. Admins who want the full Platform SSO feature set must use the Settings Catalog path.
+**Key functional difference:** Configuring Platform SSO through the Settings Catalog automatically provides BOTH Platform SSO AND the SSO app extension in a single policy. Configuring the legacy Device Features template provides ONLY the SSO app extension -- no OS-level login binding, no Entra device join, no hardware-bound PRT. Administrators who want the full Platform SSO feature set must use the Settings Catalog path.
 
 ---
 
 ## When-to-Use-Which Decision Matrix
 
-The matrix below covers the **migrate / keep-legacy / coexist** decision axis only. For authentication method selection within Platform SSO (Secure Enclave key vs Password sync vs Smart Card), see [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md).
+The following matrix covers the **migrate / keep-legacy / coexist** decision axis only. For authentication method selection within Platform SSO (Secure Enclave key vs Password sync vs Smart Card), see [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md).
 
 > **"Coexist" means cross-segment fleet coexistence -- NOT same-device:** A legacy SSO app extension profile and a Platform SSO Settings Catalog policy assigned to the **same device simultaneously**
 
 > is FORBIDDEN and triggers Error 10002 (see [Staged Migration Sequence](#staged-migration-sequence)).
 
-> "Coexist" in the matrix below means separate device groups -- legacy-OS devices on the legacy profile, modern-OS devices on the PSSO profile -- running side-by-side in the same tenant.
+> "Coexist" in the following matrix means separate device groups -- legacy-OS devices on the legacy profile, modern-OS devices on the PSSO profile -- running side-by-side in the same tenant.
 
 | Fleet Scenario | Recommended Path |
 |----------------|-----------------|
@@ -73,7 +73,7 @@ The matrix below covers the **migrate / keep-legacy / coexist** decision axis on
 
 From approximately August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the **Secure Enclave** rather than the Login Keychain. The `security find-certificate` command returns **false negatives** for all PSSO-enrolled devices -- it cannot see Secure Enclave-stored keys.
 
-If your compliance scripts or IT tooling use `security find-certificate -a | grep Microsoft` (or similar) to check whether a device has a WPJ certificate, those checks will report "device not joined / not compliant" on any correctly PSSO-enrolled device. A false negative during a **successful** migration looks identical to a failed migration and may trigger an unnecessary -- and **destructive** -- rollback (see [Rollback](#rollback)).
+If your compliance scripts or IT tooling use `security find-certificate -a | grep Microsoft` (or similar) to check whether a device has a WPJ certificate, those checks report "device not joined / not compliant" on any correctly PSSO-enrolled device. A false negative during a **successful** migration looks identical to a failed migration and may trigger an unnecessary -- and **destructive** -- rollback (see [Rollback](#rollback)).
 
 **Before starting migration**, replace compliance checks with:
 
@@ -101,7 +101,7 @@ Follow this sequence to migrate from the legacy SSO app extension (Device Featur
 
 1. **Create a PILOT group** -- a separate Entra group containing a small set of test devices that are NOT currently in any group assigned the legacy Device Features SSO app extension profile. The pilot group must not overlap with any existing legacy-profile assignment.
 
-2. **Assign the Platform SSO Settings Catalog policy to the PILOT group** -- deploy the PSSO Settings Catalog profile to the pilot group only. Verify via `app-sso platform -s` on representative pilot devices: confirm `Device Registration: REGISTERED` and `User Registration: REGISTERED`. Confirm Error 10001 and Error 10002 are absent in Intune device status.
+2. **Assign the Platform SSO Settings Catalog policy to the PILOT group** -- deploy the PSSO Settings Catalog profile to the pilot group only. Verify using `app-sso platform -s` on representative pilot devices: confirm `Device Registration: REGISTERED` and `User Registration: REGISTERED`. Confirm Error 10001 and Error 10002 are absent in Intune device status.
 
 3. **Validate app and browser SSO on pilot devices** -- confirm browser SSO works in Edge and Chrome, and that Entra-integrated apps authenticate without additional prompts.
 
@@ -131,7 +131,7 @@ After PSSO registration, Edge browser SSO requires the user to be signed in to t
 A PSSO Settings Catalog profile installs on macOS 12 and earlier, but PSSO registration fails with no error displayed. These devices must retain the legacy Device Features SSO app extension profile or be upgraded to macOS 13+ before migration. Scope the PSSO assignment to a dynamic device group filtered on macOS version >= 13.
 
 **4. Transient profile-conflict window during policy sync triggers Error 10002.**
-If both profiles coexist on a device -- even briefly during policy sync -- Error 10002 appears and SSO stops temporarily. Stage the swap carefully per the sequence above (step 6); assigning to separate per-group batches rather than all devices simultaneously reduces the blast radius and makes rollback tractable.
+If both profiles coexist on a device -- even briefly during policy sync -- Error 10002 appears and SSO stops temporarily. Stage the swap carefully per the preceding sequence (step 6); assigning to separate per-group batches rather than all devices simultaneously reduces the scope of a failure and makes rollback tractable.
 
 ---
 
@@ -143,13 +143,13 @@ If both profiles coexist on a device -- even briefly during policy sync -- Error
 
 - **CA-blocked-until-re-registered impact window:** After rollback, affected users have **no Entra device registration**. PSSO deleted the old Login Keychain WPJ certificate during enrollment, and removing the PSSO policy removes the Secure Enclave WPJ key without reinstating the legacy Keychain certificate. Users cannot satisfy device-based Conditional Access policies until they manually open Company Portal and complete a fresh legacy WPJ registration. This is an **active service outage** for any user protected by device-based CA policies.
 
-- **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate----update-compliance-scripts-first) prerequisite callout above -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
+- **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate----update-compliance-scripts-first) prerequisite callout -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
 
 **Rollback procedure:**
 
 1. Unassign the Platform SSO Settings Catalog policy from the affected device group.
 2. Re-assign the legacy Device Features SSO app extension profile to the affected devices.
-3. Instruct affected users to open Company Portal and complete WPJ re-registration before Conditional Access will pass.
+3. Instruct affected users to open Company Portal and complete WPJ re-registration before Conditional Access passes.
 4. Monitor compliance dashboards using `app-sso platform -s` (NOT `security find-certificate`) to confirm re-registration is complete.
 
 ---
@@ -158,7 +158,7 @@ If both profiles coexist on a device -- even briefly during policy sync -- Error
 
 The Kerberos SSO extension is a **distinct Apple-native extension** -- NOT a Microsoft extension. It handles Kerberos ticket-granting for on-premises Active Directory / Kerberos resources only; it is not used for Entra ID authentication. It uses the **Kerberos payload type**, not the Redirect payload type used by the Microsoft Enterprise SSO plug-in.
 
-**Separate Extension Identifiers are required.** The Apple SSO extension framework supports multiple extensions per device when they have different Extension Identifiers. The Microsoft PSSO extension uses identifier `com.microsoft.CompanyPortalMac.ssoextension`. The Apple Kerberos SSO extension uses a different, Apple-controlled identifier. If an admin configures both extensions under the **same** Extension Identifier value, one overrides the other -- both stop functioning correctly.
+**Separate Extension Identifiers are required.** The Apple SSO extension framework supports multiple extensions per device when they have different Extension Identifiers. The Microsoft PSSO extension uses identifier `com.microsoft.CompanyPortalMac.ssoextension`. The Apple Kerberos SSO extension uses a different, Apple-controlled identifier. If an administrator configures both extensions under the **same** Extension Identifier value, one overrides the other -- both stop functioning correctly.
 
 **Coexists with Platform SSO.** On devices that need both Entra ID cloud authentication (Platform SSO) and on-premises AD / Kerberos resources (Kerberos SSO extension), both extensions can be deployed simultaneously as separate profile entries with their distinct identifiers. Platform SSO handles Entra cloud auth; the Kerberos SSO extension handles on-prem Kerberos SSO. They operate in parallel without conflict when identifiers are correctly separated.
 

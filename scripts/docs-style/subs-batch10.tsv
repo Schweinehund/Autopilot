@@ -1,0 +1,34 @@
+# Batch 10 -- the lowercase admin / admins / sign-in-to prose-expansion residue
+# (D-01/D-02/D-32). Plan 156-03 (the tracer) authored the first two rows; plan
+# 156-04 (batch of the remaining 12 documents) adds the third row below to close
+# the one sign-in-to residue site the tracer document did not carry
+# (docs/recipes/06-walk-up-avd-kiosk-autologon.md:19).
+#
+# This TSV reimplements three of sweep3.py's own built-in base-substitution-set
+# rules (admin, admins, sign-in-to) as authored --subs rows, because D-32 forbids
+# ever running the base substitution set (sweep3.py with no --subs) in this phase
+# -- its "desired" row sits on a verbatim vendor quotation elsewhere in the corpus
+# (08-windows-app-updates.md:266) that editing would fabricate a citation.
+# Authoring only these three tokens here, never the base list's remaining three
+# (vs, config, desired), keeps that citation site untouched by construction --
+# none of the three patterns below can match a line whose only base-list token is
+# "desired"; each pattern requires the literal word "admin", "admins" or the
+# two-word phrase "sign into" to be present, and the citation-blocked line
+# (08-windows-app-updates.md:266, quoting "the desired state of the development
+# environment on your Windows machine") contains none of those three tokens --
+# proven by dry-run in this plan's gate-baseline record (citation_guard).
+#
+# Blocked by lookahead:  admin center (the UI label the corpus routes readers to,
+#   exempted identically in sweep3.py:22's own hardcoded rule).
+# Blocked by the trailing (?![\w-]) on both admin rows: admin-authored, admin-edited,
+#   admin-side, admin-reading forms already read as compound tokens are unaffected
+#   because a following hyphen is barred by the same guard sweep3.py's built-in rule
+#   uses; admins/administrator/administrators/Admin/Administrators are untouched by
+#   construction (word-boundary lookarounds), and Title Case Admin/Admins stays the
+#   separate concern subs-admin-batch9.tsv already owns.
+# The sign-in-to row is sweep3.py:33's own regex verbatim -- word-boundary lookarounds
+# on both sides of the two-word phrase "sign into", so "signed into" and "sign-in-to"
+# (already a compound noun form) are untouched by construction.
+(?<![\w-])admins(?![\w-])	administrators
+(?<![\w-])admin(?!\s+center)(?![\w-])	administrator
+(?<![\w-])sign into(?![\w-])	sign in to

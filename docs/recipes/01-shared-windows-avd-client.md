@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
-last_verified: 2026-08-26
-review_by: 2026-10-25
+last_verified: 2026-09-03
+review_by: 2026-11-02
 applies_to: Shared Windows AVD-client device (self-deploying, kiosk or Shared PC)
 audience: admin
 ---
@@ -26,14 +26,14 @@ app assignment this recipe walks through.
 
 ## Prerequisites
 
-- **This recipe is NOT:** Entra "Shared device mode" (SDM/Global Sign-Out is iOS/Android-only), a RemoteApp-on-host-pool publishing guide, or a guide to Autopilot registration itself — see the linked references below for those.
+- **This recipe is NOT:** Entra "Shared device mode" (SDM/Global Sign-Out is iOS/Android-only), a RemoteApp-on-host-pool publishing guide, or a guide to Autopilot registration itself—see the following linked references for those.
 - **RBAC:** Intune Administrator role (or an equivalent custom role covering device configuration profiles, app assignment, and enrollment configuration).
-- **Licensing:** target users already hold the Azure Virtual Desktop / Windows 365 entitlement that grants access to the AVD host pool this device will connect to.
-- **Autopilot-registered device** — hardware hash uploaded and matched to a deployment profile; see [Hardware Hash Upload](../admin-setup-apv1/01-hardware-hash-upload.md).
-- **TPM 2.0** with attestation capability — the sole self-deploying authentication mechanism; see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
-- **Wired Ethernet** at the deployment location for a fully unattended, zero-touch enrollment; built-in Wi-Fi at OOBE is an alternative but requires manually selecting language, locale, and keyboard, then joining the network — see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full prerequisite detail. Post-enrollment wired-vs-Wi-Fi network access is a separate, later stage — see [Step 7](#step-7-wired-vs-wi-fi-network-access-post-enrollment).
-- **Device-phase-only Enrollment Status Page (ESP)** policy configured — see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
-- **AVD infrastructure already exists** (host pool, session hosts, FSLogix) — this recipe configures the client endpoint only.
+- **Licensing:** target users already hold the Azure Virtual Desktop / Windows 365 entitlement that grants access to the AVD host pool this device connects to.
+- **Autopilot-registered device**—hardware hash uploaded and matched to a deployment profile; see [Hardware Hash Upload](../admin-setup-apv1/01-hardware-hash-upload.md).
+- **TPM 2.0** with attestation capability—the sole self-deploying authentication mechanism; see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
+- **Wired Ethernet** at the deployment location for a fully unattended, zero-touch enrollment; built-in Wi-Fi at OOBE is an alternative but requires manually selecting language, locale, and keyboard, then joining the network—see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full prerequisite detail. Post-enrollment wired-vs-Wi-Fi network access is a separate, later stage—see [Step 7](#step-7-wired-vs-wi-fi-network-access-post-enrollment).
+- **Device-phase-only Enrollment Status Page (ESP)** policy configured—see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
+- **AVD infrastructure already exists** (host pool, session hosts, FSLogix)—this recipe configures the client endpoint only.
 - **Users assigned to the AVD application group(s)** that grant feed access on sign-in.
 
 ## Unsupported and Anti-Feature Callouts
@@ -53,9 +53,9 @@ app assignment this recipe walks through.
 2. Set **Membership type**: **Dynamic Device**.
 3. Add the ZTDId-based membership rule.
 
-Create this group first — the deployment profile, ESP, and Windows App assignments in the following steps all target it.
+Create this group first—the deployment profile, ESP, and Windows App assignments in the following steps all target it.
 
-See [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the exact membership-rule syntax — do not recreate the rule here.
+See [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the exact membership-rule syntax—do not recreate the rule here.
 
 ### Step 2: Create the self-deploying deployment profile
 
@@ -64,14 +64,14 @@ See [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the ex
 3. Set **Join type**: **Microsoft Entra joined** (hybrid join is not available for self-deploying mode).
 4. Assign the profile to the dynamic device group created in [Step 1](#step-1-create-the-dynamic-device-group).
 
-See [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full field reference, the TPM 2.0 requirement, and network prerequisites — this recipe links rather than repeats that detail.
+See [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full field reference, the TPM 2.0 requirement, and network prerequisites—this recipe links rather than repeats that detail.
 
 ### Step 3: Configure the device-phase-only Enrollment Status Page
 
 1. Navigate to **Intune admin center** > **Devices** > **Enrollment** (Windows enrollment) > **Enrollment Status Page** > **Create**.
 2. Assign the policy to the same dynamic device group.
 
-> Self-deploying mode has no user affinity, so only the device phase of ESP runs — there is no user phase to configure.
+> Self-deploying mode has no user affinity, so only the device phase of ESP runs—there is no user phase to configure.
 
 See [ESP Policy](../admin-setup-apv1/03-esp-policy.md) for the full field reference.
 
@@ -86,9 +86,9 @@ See [ESP Policy](../admin-setup-apv1/03-esp-policy.md) for the full field refere
 
 > Targeting a device group installs the app before the user signs in; targeting a user group instead delays install until after that user's first sign-in.
 
-The AVD feed subscribes automatically for each signed-in Entra user once Windows App is present on the device — no separate feed-URL configuration is required for a standard commercial-cloud AVD deployment.
+The AVD feed subscribes automatically for each signed-in Entra user once Windows App is present on the device—no separate feed-URL configuration is required for a standard commercial-cloud AVD deployment.
 
-> The legacy `RemoteDesktop/AutoSubscription` CSP is User-scope only and targets the retired MSRDC client, not Windows App — it plays no role in this device-context deployment.
+> The legacy `RemoteDesktop/AutoSubscription` CSP is User-scope only and targets the retired MSRDC client, not Windows App—it plays no role in this device-context deployment.
 
 > **Ask the admin:** When should Windows App reset cached session state between users on this shared device?
 
@@ -98,9 +98,11 @@ The AVD feed subscribes automatically for each signed-in Entra user once Windows
 | Reset after each connection ends | Users may leave Windows App open; reset on remote-session disconnect | `ResetAppAfterConnection` |
 | Reset after an idle period | Device sits unattended between users; reset after a timeout | `ResetAppOnIdle` |
 
-> **[ASSUMED]:** These three field names are carried from the requirements list, not a fetched Learn page.
+> **Field-resolved:** there is no Settings Catalog field for these three values.
 
-> Verify the exact Settings Catalog field names against your own tenant (search "Windows App" or "reset") before finalizing this policy.
+> They are install parameters of `Deploy-WindowsApp.ps1`, written to `HKLM\SOFTWARE\Microsoft\WindowsApp` as `AutoLogoffEnable`, `AutoLogoffTimeInterval` and `AutoLogoffOnSuccessfulConnect`.
+
+> No tenant verification is needed—these names are delivered by the install parameters above, not a Settings Catalog field.
 
 ### Step 5: Choose kiosk or Shared PC
 
@@ -124,23 +126,29 @@ The AVD feed subscribes automatically for each signed-in Entra user once Windows
 
 > **MSIX machine-wide provisioning:** the autologon account is local, with no Entra credentials, so Windows App must already be provisioned machine-wide.
 
-> The Required + device-group deployment from [Step 4](#step-4-deploy-windows-app-device-context) already satisfies this — without it, the kiosk launches to a missing app.
+> The Required + device-group deployment from [Step 4](#step-4-deploy-windows-app-device-context) already satisfies this—without it, the kiosk launches to a missing app.
 
-> **[ASSUMED] Offline Store license:** the autologon account may need an offline license for Windows App, by analogy with Kiosk Browser's documented autologon requirement.
+> **Single-app Assigned Access runs above the lock screen.** The Windows App sign-in broker is the known risk here.
 
-> Treat this as a plan-time verification item before deploying — no first-party page confirms it for Windows App specifically.
+> Windows App is not one process—its sign-in and connection child processes are what break.
+
+> A reader who wants autologon instead should follow [RE-237](06-walk-up-avd-kiosk-autologon.md)—the reference implementation's shipped pattern for this device class is multi-app autologon.
+
+> **Offline Store license, field-resolved:** the pilot provisioned the package for the autologon account with no offline license, and the app launched normally.
+
+> This is no longer a plan-time verification item; the pilot resolution above supersedes it.
 
 > **[ASSUMED] Configure from console, not RDP:** perform kiosk configuration and AUMID discovery at the physical console, not over an active Remote Desktop session.
 
 > Kiosk lockdown engaging mid-session over RDP can lock out the very session used to configure it.
 
-**AUMID discovery.** Run `Get-StartApps` in PowerShell on a reference device with Windows App installed, and use the returned AUMID verbatim in the **Add Store app** step above. Do not hardcode a guessed AUMID string — Store package identifiers can shift across releases.
+**AUMID discovery.** Run `Get-StartApps` in PowerShell on a reference device with Windows App installed, and use the returned AUMID verbatim in the preceding **Add Store app** step. Do not hardcode a guessed AUMID string—Store package identifiers can shift across releases.
 
 > **Optional advanced pointer:** `Azure/WindowsAppKiosk` provides a turnkey lockdown script for this exact scenario.
 
-> Never point to the retired MSRDC-era turnkey kiosk script — it is superseded and collides with the anti-feature table's retired-client row above.
+> Never point to the retired MSRDC-era turnkey kiosk script—it is superseded and collides with the anti-feature table's retired-client row.
 
-Raw AssignedAccess CSP XML is an optional advanced pointer only — the GUI path above is the primary, first-party-documented mechanism and covers this recipe's single-app kiosk fully.
+Raw AssignedAccess CSP XML is an optional advanced pointer only—the preceding GUI path is the primary, first-party-documented mechanism and covers this recipe's single-app kiosk fully.
 
 ### Step 5b: Shared PC configuration
 
@@ -148,7 +156,7 @@ Raw AssignedAccess CSP XML is an optional advanced pointer only — the GUI path
 
 > Microsoft's current documentation increasingly leads with the Settings Catalog surface for these nodes.
 
-> This recipe uses Templates for symmetry with the kiosk branch's own Templates posture — Settings Catalog remains a valid advanced alternative.
+> This recipe uses Templates for symmetry with the kiosk branch's own Templates posture—Settings Catalog remains a valid advanced alternative.
 
 | GUI Setting | GUI Value (asserted) | CSP Node | Recorded As |
 |---|---|---|---|
@@ -157,13 +165,13 @@ Raw AssignedAccess CSP XML is an optional advanced pointer only — the GUI path
 | Account management | Enabled | `EnableAccountManager` | `true` |
 | Local Storage | Disabled | `RestrictLocalStorage` | `true` (restricts local storage) |
 
-> **Guest account = Domain:** the GUI default is "Guest" (`AccountModel = 0`), which creates local guest accounts with no Entra token — the AVD feed stays empty.
+> **Guest account = Domain:** the GUI default is "Guest" (`AccountModel = 0`), which creates local guest accounts with no Entra token—the AVD feed stays empty.
 
 > Never leave "Guest account" defaulted for this recipe.
 
-> **Local Storage = Disabled:** GUI "Disabled" maps to CSP `RestrictLocalStorage` true — the restrictive choice, using GUI wording "storage space," not "disk."
+> **Local Storage = Disabled:** GUI "Disabled" maps to CSP `RestrictLocalStorage` true—the restrictive choice, using GUI wording "storage space," not "disk."
 
-> Do not record this setting the other way around — the GUI is allow-framed, the CSP is restrict-framed. Session data lives in the remote session, not on this device.
+> Do not record this setting the other way around—the GUI is allow-framed, the CSP is restrict-framed. Session data lives in the remote session, not on this device.
 
 > **Ask the admin:** Should Intune automatically manage and delete guest/domain accounts on this device?
 
@@ -182,7 +190,7 @@ Raw AssignedAccess CSP XML is an optional advanced pointer only — the GUI path
 
 > With **Immediately after log-out**, every sign-in re-authenticates against Entra (possibly re-prompting MFA).
 
-> This is the same re-auth behavior the Shared PC branch feed-repopulation check relies on in Verification below.
+> This is the same re-auth behavior the Shared PC branch feed-repopulation check relies on in Verification.
 
 > When **Account Deletion** is "At storage space threshold and inactive threshold," an **Inactive account threshold** field appears.
 
@@ -192,20 +200,20 @@ Raw AssignedAccess CSP XML is an optional advanced pointer only — the GUI path
 
 Both branches use a maintenance-window concept, but the underlying CSP differs per branch:
 
-- **Shared PC:** GUI **Maintenance start time (in minutes from midnight)** — `MaintenanceStartTime`, range 0–1440 (for example, `120` for 2 AM).
-- **Kiosk:** the Kiosk template's own **Specify Maintenance Window for App Restarts** setting — `ApplicationManagement/ScheduleForceRestartForUpdateFailures`, a separate CSP node with its own start time and recurrence.
+- **Shared PC:** GUI **Maintenance start time (in minutes from midnight)**—`MaintenanceStartTime`, range 0–1440 (for example, `120` for 2 AM).
+- **Kiosk:** the Kiosk template's own **Specify Maintenance Window for App Restarts** setting—`ApplicationManagement/ScheduleForceRestartForUpdateFailures`, a separate CSP node with its own start time and recurrence.
 
-> These are two distinct CSP nodes sharing one admin-facing concept — do not assume a single shared value applies to both branches.
+> These are two distinct CSP nodes sharing one admin-facing concept—do not assume a single shared value applies to both branches.
 
 ### Step 7: Wired vs Wi-Fi network access (post-enrollment)
 
-If devices stay on wired Ethernet after enrollment, no additional network profile is required — the connection used for zero-touch deployment continues to work.
+If devices stay on wired Ethernet after enrollment, no additional network profile is required—the connection used for zero-touch deployment continues to work.
 
-If devices need Wi-Fi after enrollment, rather than only at OOBE, configure 802.1X — see [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md) for the profile configuration and [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md) for the overview. This recipe never configures 802.1X directly; this is a separate, later stage from the Wi-Fi-at-OOBE anti-pattern covered above.
+If devices need Wi-Fi after enrollment, rather than only at OOBE, configure 802.1X—see [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md) for the profile configuration and [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md) for the overview. This recipe never configures 802.1X directly; this is a separate, later stage from the Wi-Fi-at-OOBE anti-pattern covered earlier.
 
 ## Verification
 
-Both branches — confirm first:
+Both branches—confirm first:
 
 - [ ] Device completed OOBE unattended (no manual credential entry during device deployment)
 - [ ] Device is Entra joined (not hybrid) and enrolled in Intune
@@ -214,7 +222,7 @@ Both branches — confirm first:
 
 **Kiosk branch:**
 
-- [ ] Device boots directly into Windows App in full-screen kiosk mode via the autologon local account
+- [ ] Device boots directly into Windows App in full-screen kiosk mode using the autologon local account
 - [ ] After a session reset, Windows App relaunches automatically and the next end user authenticates the feed interactively inside the app
 
 **Shared PC branch:**
@@ -230,8 +238,8 @@ governing the device; the first one cannot be undone that way at all.
 
 **The self-deploying deployment profile:**
 
-- Unassign the profile from the dynamic device group, or delete the profile, to stop it applying to devices that have not yet been provisioned. A device already provisioned is unaffected — the profile governs the deployment, not the device afterwards.
-- **This is the mechanism with no clean rollback.** A device cannot automatically re-enroll through Windows Autopilot after an initial deployment in self-deploying mode. Moving an already-provisioned device to a different posture means deleting its device record — **Intune admin center** > **Devices** > **All devices** > select the device > **Delete** — and provisioning it again, not editing a policy.
+- Unassign the profile from the dynamic device group, or delete the profile, to stop it applying to devices that have not yet been provisioned. A device already provisioned is unaffected—the profile governs the deployment, not the device afterwards.
+- **This is the mechanism with no clean rollback.** A device cannot automatically re-enroll through Windows Autopilot after an initial deployment in self-deploying mode. Moving an already-provisioned device to a different posture means deleting its device record—**Intune admin center** > **Devices** > **All devices** > select the device > **Delete** — and provisioning it again, not editing a policy.
 - Deleting the device record and removing the Autopilot registration are separate actions. The second is the one that decides whether the hardware can be registered and provisioned again later, so decide it deliberately rather than as a cleanup step.
 
 **The Enrollment Status Page policy:**
@@ -266,8 +274,8 @@ governing the device; the first one cannot be undone that way at all.
 
 ## See Also
 
-- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision blocks instantiate
-- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) — full self-deploying field reference, TPM 2.0, and network prerequisites
-- [APv1 vs APv2](../apv1-vs-apv2.md) — framework selection reference
-- [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md) — post-enrollment Wi-Fi/wired profile configuration
-- [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md) — 802.1X overview and setup sequence
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md)—the full spec this recipe's decision blocks instantiate
+- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md)—full self-deploying field reference, TPM 2.0, and network prerequisites
+- [APv1 vs APv2](../apv1-vs-apv2.md)—framework selection reference
+- [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md)—post-enrollment Wi-Fi/wired profile configuration
+- [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md)—802.1X overview and setup sequence

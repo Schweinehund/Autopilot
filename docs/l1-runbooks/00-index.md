@@ -16,11 +16,11 @@ platform: all
 
 ## Summary
 
-This is the L1 runbook index — a navigation hub listing every Level-1 troubleshooting runbook by platform; it contains no procedural or diagnostic steps of its own. Service Desk agents should start with the platform-specific triage decision tree linked in each section, then navigate directly to the matching runbook. This index covers APv1 classic Autopilot, APv2 Device Preparation, macOS ADE, iOS, Android, Linux, Apple Business Shared iPad, and 802.1X scenarios.
+This is the L1 runbook index—a navigation hub listing every Level-1 troubleshooting runbook by platform; it contains no procedural or diagnostic steps of its own. Service Desk agents start with the platform-specific triage decision tree linked in each section, then navigate directly to the matching runbook. This index covers APv1 classic Autopilot, APv2 Device Preparation, macOS ADE, iOS, Android, Linux, Apple Business Shared iPad, and 802.1X scenarios.
 
 > **Version gate:** This index covers L1 runbooks for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
 
-Scripted procedures for the five highest-volume [Autopilot](../_glossary.md#autopilot) failure scenarios. Each runbook provides step-by-step instructions for Service Desk agents with no registry access, no PowerShell execution, and no log file analysis required. Start with the [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) to identify which runbook applies, or select directly from the list below.
+Scripted procedures for the five highest-volume [Autopilot](../_glossary.md#autopilot) failure scenarios. Each runbook provides step-by-step instructions for Service Desk agents with no registry access, no PowerShell execution, and no log file analysis required. Start with the [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) to identify which runbook applies, or select directly from the following list.
 
 ## APv1 Runbooks
 
@@ -61,11 +61,11 @@ Scripted procedures for macOS ADE enrollment failure scenarios. Each runbook pro
 
 ## iOS L1 Runbooks
 
-L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure scenarios. Start with the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) to identify the failure, then follow the matching runbook below. All runbooks include L1-executable steps and explicit escalation triggers to L2.
+L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure scenarios. Start with the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) to identify the failure, then follow the matching runbook. All runbooks include L1-executable steps and explicit escalation triggers to L2.
 
 | Runbook | Scenario | Primary Cause |
 |---------|----------|---------------|
-| [16: iOS APNs Certificate Expired](16-ios-apns-expired.md) | Device Not Appearing (cross-platform blast radius) | APNs certificate lapsed — impacts ALL iOS/iPadOS MDM communication |
+| [16: iOS APNs Certificate Expired](16-ios-apns-expired.md) | Device Not Appearing (cross-platform scope) | APNs certificate lapsed — impacts ALL iOS/iPadOS MDM communication |
 | [17: iOS ADE Not Starting](17-ios-ade-not-starting.md) | ADE Setup Assistant not completing enrollment | ABM token sync failure, profile assignment, or device not in ABM |
 | [18: iOS Enrollment Restriction Blocking](18-ios-enrollment-restriction-blocking.md) | Device blocked at enrollment restriction | Platform/ownership/count restriction in Intune |
 | [19: iOS License Invalid](19-ios-license-invalid.md) | "User license invalid" at enrollment | User lacks Intune license OR ABM license sync issue |
@@ -76,7 +76,7 @@ L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure
 
 ## Android L1 Runbooks
 
-L1 runbooks for the **eight most common** Android Enterprise enrollment and compliance failure scenarios. Start with the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) to identify the failure mode, then follow the matching runbook below. All runbooks include L1-executable portal-only steps and explicit escalation triggers to L2.
+L1 runbooks for the **eight most common** Android Enterprise enrollment and compliance failure scenarios. Start with the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) to identify the failure mode, then follow the matching runbook. All runbooks include L1-executable portal-only steps and explicit escalation triggers to L2.
 
 | Runbook | Scenario | Applies To |
 |---------|----------|------------|
@@ -91,7 +91,7 @@ L1 runbooks for the **eight most common** Android Enterprise enrollment and comp
 
 ## Linux L1 Runbooks
 
-L1 runbooks for the four most common Linux Intune client failure scenarios on Ubuntu 24.04/26.04 LTS. Start with the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) to identify the failure mode, then follow the matching runbook below. All runbooks include L1-executable steps (portal-first or terminal walkthrough as appropriate per cause) and explicit escalation triggers to L2.
+L1 runbooks for the four most common Linux Intune client failure scenarios on Ubuntu 24.04/26.04 LTS. Start with the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) to identify the failure mode, then follow the matching runbook. All runbooks include L1-executable steps (portal-first or terminal walkthrough as appropriate per cause) and explicit escalation triggers to L2.
 
 | Runbook | Scenario | Applies To |
 |---------|----------|------------|
@@ -110,14 +110,14 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 ## Related Resources
 
-- [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) — Start here to identify the failure scenario
+- [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md)—Start here to identify the failure scenario
 - [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) -- APv2 failure routing
 - [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) -- macOS failure routing
 - [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) -- iOS/iPadOS failure routing
-- [ESP Failure Decision Tree](../decision-trees/01-esp-failure.md) — Detailed ESP triage flowchart
-- [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md) — Profile assignment triage flowchart
-- [Master Error Code Index](../error-codes/00-index.md) — Look up any error code
-- [Autopilot Glossary](../_glossary.md) — Term definitions
+- [ESP Failure Decision Tree](../decision-trees/01-esp-failure.md)—Detailed ESP triage flowchart
+- [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md)—Profile assignment triage flowchart
+- [Master Error Code Index](../error-codes/00-index.md)—Look up any error code
+- [Autopilot Glossary](../_glossary.md)—Term definitions
 - [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) -- 802.1X authentication failure symptom routing
 
 ---
@@ -132,7 +132,7 @@ L1 runbook for the Apple Business Shared iPad passcode reset scenario. Start wit
 
 ## 802.1X L1 Runbooks
 
-L1 runbooks for 802.1X network authentication failure scenarios. All four runbooks are cross-platform — each covers Windows, macOS, iOS/iPadOS, Android Enterprise, and Linux with per-platform inline sections. Start with the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) to route by symptom.
+L1 runbooks for 802.1X network authentication failure scenarios. All four runbooks are cross-platform—each covers Windows, macOS, iOS/iPadOS, Android Enterprise, and Linux with per-platform inline sections. Start with the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) to route by symptom.
 
 | # | Runbook | When to Use |
 |---|---------|-------------|

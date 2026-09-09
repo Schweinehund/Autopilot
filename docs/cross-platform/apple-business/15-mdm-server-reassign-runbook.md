@@ -6,7 +6,7 @@ audience: admin
 platform: ios+ipados+macos+tvos
 ---
 
-> **Platform applicability:** This document covers Apple Business MDM server reassignment —
+> **Platform applicability:** This document covers Apple Business MDM server reassignment—
 > changing the MDM server a device is assigned to within an Organizational Unit (OU). This is
 > distinct from Intune MDM push-certificate management and device re-enrollment operations, which
 > are Intune-side operations outside the Apple Business permission surface and are not covered here.
@@ -22,14 +22,14 @@ platform: ios+ipados+macos+tvos
 
 > **Training-data notice:** MDM server reassignment UI labels and step sequences are authored
 > from AI training knowledge of Apple Business portal behavior as of the pre-2026-04-14
-> rebrand, cross-referenced against research/FEATURES.md §5.3 and Apple Deployment Guide
+> rebrand, cross-referenced against feature research §5.3 and Apple Deployment Guide
 > dep4acb2aa44. Steps are marked `[CITED: training; needs live verification]` pending a live
 > portal scrape. Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
 
 # MDM Server Reassignment Runbook (DELEG-05)
 
 This runbook documents the procedure for reassigning devices to a different MDM server in Apple
-Business. It consolidates FEATURES Workflow 5.3 into a single file with two sub-H2s — one for
+Business. It consolidates feature research Workflow 5.3 into a single file with two sub-H2s—one for
 legacy devices requiring a factory erase (Sub-H2 A) and one for OS 26+ devices supporting
 in-place migration (Sub-H2 B).
 
@@ -38,7 +38,7 @@ no second file (`15b-` or `15-mdm-server-reassign-2`). Both legacy and OS-26+ pa
 
 ## Required Role & Permission
 
-**Required permission:** "Assign devices to MDM server" (Devices subgroup) — OU-scoped. This
+**Required permission:** "Assign devices to MDM server" (Devices subgroup)—OU-scoped. This
 permission maps to the **Sub-Org Admin bundle** (see
 [04-custom-role-authoring.md](04-custom-role-authoring.md)). The canonical Sub-Org Admin
 bundle includes "Assign devices to MDM server" as a conditionally-grant permission.
@@ -53,9 +53,9 @@ Devices subgroup.
 | Manage MDM Servers | tenant-wide | **DENY-by-default (OP-1)** — reserved for tenant IT administrator / Account Holder only |
 
 > **OP-1 DENY-by-default:** "Manage MDM Servers" is a tenant-wide superprivilege that bundles
-> four actions (Add / Edit / Assign / Download MDM server token). Sub-org admins who need to
+> four actions (Add / Edit / Assign / Download MDM server token). Sub-org administrators who need to
 > **assign** devices to an MDM server hold the narrower "Assign devices to MDM server"
-> (OU-scoped) — NOT "Manage MDM Servers". Granting "Manage MDM Servers" to a sub-org admin
+> (OU-scoped)—NOT "Manage MDM Servers". Granting "Manage MDM Servers" to a sub-org administrator
 > allows creation of competing MDM servers and routes new devices to the wrong tenant. See
 > [01-role-permission-model.md](01-role-permission-model.md) OP-1 callout.
 
@@ -77,24 +77,24 @@ before selecting Sub-H2 A or Sub-H2 B.
 | macOS | ≤ 25 (macOS 15 and earlier) | Factory erase required | Sub-H2 A |
 | tvOS | ≤ 25 | Factory erase required | Sub-H2 A |
 
-[CITED: FEATURES.md §5.3.1-5.3.2 — sourced from Apple Deployment Guide dep4acb2aa44]
+[CITED: feature research §5.3.1-5.3.2—sourced from Apple Deployment Guide dep4acb2aa44]
 
 > **Note (mixed-OS fleet):** If your fleet contains both legacy (≤ 25) and OS-26+ devices,
-> split the migration into two waves: process OS 26+ devices first via Sub-H2 B (in-place,
-> no erase), then process legacy devices via Sub-H2 A (factory erase). Do not interleave the
+> split the migration into two waves: process OS 26+ devices first through Sub-H2 B (in-place,
+> no erase), then process legacy devices through Sub-H2 A (factory erase). Do not interleave the
 > two paths.
 
 ## Sub-H2 A: Legacy Reassignment (iOS/iPadOS ≤ 25 / macOS ≤ 15 / tvOS ≤ 25)
 
 For devices running iOS 18 (and earlier), iPadOS 18 (and earlier), macOS 15 (and earlier),
 or tvOS 25 (and earlier), MDM server reassignment requires a **factory erase and re-enrollment**
-via Setup Assistant. The Apple Business portal records the new MDM server assignment; the device
+through Setup Assistant. The Apple Business portal records the new MDM server assignment; the device
 picks up the new assignment only after being wiped and re-run through Setup Assistant.
 
-Use case: greenfield rollouts, device refresh cycles, MDM server retirement where devices will
-be reimaged anyway.
+Use case: greenfield rollouts, device refresh cycles, MDM server retirement where devices are
+reimaged anyway.
 
-[CITED: FEATURES.md §5.3.1 — sourced from Apple Deployment Guide dep4acb2aa44]
+[CITED: feature research §5.3.1—sourced from Apple Deployment Guide dep4acb2aa44]
 
 ### Sub-H2 A Procedure
 
@@ -112,7 +112,7 @@ be reimaged anyway.
 > **Note:** After completing Step 5 (saving the assignment in Apple Business), the device is
 > in a split state: Apple Business records the new MDM server, but the device is still enrolled
 > in the old MDM server. The split state resolves only after factory wipe + re-enrollment.
-> Do not rely on the Apple Business portal assignment alone — verify with the new MDM console.
+> Do not rely on the Apple Business portal assignment alone—verify with the new MDM console.
 
 ## Sub-H2 B: In-Place Migration (iOS/iPadOS/macOS/tvOS 26+)
 
@@ -121,7 +121,7 @@ For devices running iOS 26+, iPadOS 26+, macOS 26+, or tvOS 26+, Apple Business 
 MDM server and enrolls in the new one while preserving all user data and declarative managed
 app data.
 
-[CITED: FEATURES.md §5.3.2 — sourced from Apple Deployment Guide dep4acb2aa44]
+[CITED: feature research §5.3.2—sourced from Apple Deployment Guide dep4acb2aa44]
 
 ### What Is Preserved vs Not Preserved
 
@@ -135,7 +135,7 @@ app data.
 | VPN profiles | No — new MDM must redeploy VPN configs |
 | Wi-Fi profiles | No — new MDM must redeploy Wi-Fi configs |
 
-[CITED: FEATURES.md §5.3.2]
+[CITED: feature research §5.3.2]
 
 ### VPP Content Token Implication
 
@@ -143,7 +143,7 @@ app data.
 > require the new MDM server's content token to be uploaded and synced within 30 days of
 > migration start. If the content token upload is delayed beyond 30 days, VPP app assignments
 > managed by the new MDM server may lapse. Plan the content token re-upload before initiating
-> migration. `[CITED: FEATURES.md §5.3.2]`
+> migration. `[CITED: feature research §5.3.2]`
 
 ### Sub-H2 B Procedure
 
@@ -161,7 +161,7 @@ app data.
 > **Note (migration deadline enforcement):** After the enrollment deadline, iOS/iPadOS devices
 > receive a mandatory restart prompt; macOS devices receive a full-screen blocking prompt
 > enforcing migration. Set the deadline with adequate lead time (recommend minimum 7 business
-> days) to allow users to complete the guided migration voluntarily. `[CITED: FEATURES.md §5.3.2]`
+> days) to allow users to complete the guided migration voluntarily. `[CITED: feature research §5.3.2]`
 
 ## Verification
 
@@ -176,20 +176,20 @@ app data.
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — Devices
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—Devices
   subgroup; "Assign devices to MDM server" (OU-scoped, conditionally-grant); OP-1 DENY-by-default
   on "Manage MDM Servers"
-- Sub-Org Admin bundle: [04-custom-role-authoring.md](04-custom-role-authoring.md) — canonical
+- Sub-Org Admin bundle: [04-custom-role-authoring.md](04-custom-role-authoring.md)—canonical
   6-permission bundle; "Assign devices to MDM server" is included as a conditionally-grant permission
-- MDM server assignment (admin setup): [06-mdm-server-assignment.md](06-mdm-server-assignment.md) —
+- MDM server assignment (administrator setup): [06-mdm-server-assignment.md](06-mdm-server-assignment.md)—
   per-OU initial MDM server configuration; this runbook covers the operational reassignment
-- Cross-OU device transfer: [14-device-transfer-runbook.md](14-device-transfer-runbook.md) —
+- Cross-OU device transfer: [14-device-transfer-runbook.md](14-device-transfer-runbook.md)—
   OU transfer (changing which OU a device belongs to) is a separate operation from MDM server reassignment
-- Apple TV lifecycle: [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md) — Apple TV MDM server
-  reassignment follows this runbook; see also Sub-H2 A for retail Apple TV re-enrollment via Configurator
-- OU architecture: [02-ous-architecture.md](02-ous-architecture.md) — OU scope coverage table;
+- Apple TV lifecycle: [10-apple-tv-lifecycle.md](10-apple-tv-lifecycle.md)—Apple TV MDM server
+  reassignment follows this runbook; see also Sub-H2 A for retail Apple TV re-enrollment through Configurator
+- OU architecture: [02-ous-architecture.md](02-ous-architecture.md)—OU scope coverage table;
   MDM servers row; per-OU device routing model
-- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) —
+- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md)—
   full Apple-Business-vs-Intune responsibility table (D-02 SOT)
 
 ## Version History

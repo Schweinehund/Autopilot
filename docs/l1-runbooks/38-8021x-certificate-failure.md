@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of 802.1X certificate-related failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux), covering Trusted Certificate and SCEP/PKCS client certificate profile deployment status and per-platform diagnostic signal collection for escalation.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of 802.1X certificate-related failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux), covering Trusted Certificate and SCEP/PKCS client certificate profile deployment status and per-platform diagnostic signal collection for escalation.
 
 > **Platform gate:** This guide covers 802.1X certificate-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
@@ -24,7 +24,7 @@ This runbook covers read-only L1 diagnostic steps only — no registry edits, no
 
 > **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
 
-> State-changing actions (removing profiles, re-issuing certificates, modifying SCEP/PKCS configuration) appear ONLY in L2 runbooks — they are not L1 actions.
+> State-changing actions (removing profiles, re-issuing certificates, modifying SCEP/PKCS configuration) appear ONLY in L2 runbooks—they are not L1 actions.
 
 ## Symptom
 
@@ -39,10 +39,10 @@ If all certificate profiles show **Succeeded** and the device is being cleanly r
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com)
-- Access to Microsoft Entra admin center (https://entra.microsoft.com) — read-only is sufficient
+- Access to Microsoft Entra admin center (https://entra.microsoft.com)—read-only is sufficient
 - Device serial number
 - User's UPN (email address)
-- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux) — required to use the per-platform diagnostic table below
+- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux)—required to use the following per-platform diagnostic table
 
 ## First Checks (All Platforms)
 
@@ -50,11 +50,11 @@ Verify certificate profile deployment status in Intune **in this exact order** (
 
 1. In Intune admin center, navigate to **Devices** > [platform] > select device by serial number > **Device configuration**.
 
-2. Locate the **Trusted Certificate** profile. It must show **Succeeded**. If it shows Error, Pending, or Not applicable — this is the first failure point. Note any error code displayed.
+2. Locate the **Trusted Certificate** profile. It must show **Succeeded**. If it shows Error, Pending, or Not applicable—this is the first failure point. Note any error code displayed.
 
-3. Locate the **SCEP** or **PKCS** client certificate profile. It must show **Succeeded**. If the Trusted Certificate profile in step 2 is not Succeeded, the SCEP/PKCS profile cannot deploy — resolve the Trusted Certificate status first.
+3. Locate the **SCEP** or **PKCS** client certificate profile. It must show **Succeeded**. If the Trusted Certificate profile in step 2 is not Succeeded, the SCEP/PKCS profile cannot deploy—resolve the Trusted Certificate status first.
 
-4. Locate the **Wi-Fi** or **Wired** network profile. Note its status. A network profile showing Error while cert profiles show Succeeded indicates a separate network profile configuration issue — note any error code.
+4. Locate the **Wi-Fi** or **Wired** network profile. Note its status. A network profile showing Error while cert profiles show Succeeded indicates a separate network profile configuration issue—note any error code.
 
 > **NOTE:** The Trusted Certificate profile must be deployed and showing Succeeded **before** SCEP/PKCS and network profiles can succeed.
 
@@ -64,7 +64,7 @@ Verify certificate profile deployment status in Intune **in this exact order** (
 
 ## Per-Platform Diagnostic Signal
 
-Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries — copy the complete output and provide it to L2.
+Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries—copy the complete output and provide it to L2.
 
 | Platform | Signal / Channel | L1 Action |
 |----------|-----------------|-----------|
@@ -75,19 +75,19 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 | **Android** | Intune portal — device configuration profile status | **L1 action: check Intune portal only.** Navigate to Intune admin center > **Devices** > [Android Enterprise] > device > **Device configuration** and inspect cert and Wi-Fi profile statuses. Note the signal `adb logcat -s "wpa_supplicant"` for escalation — do **not** attempt to run it at L1; it requires USB debugging and a tethered PC and is an escalation-collected signal for L2 use only. |
 | **Linux** | NetworkManager journal (primary); wpa_supplicant journal (supplement) | Ask the user to run: `journalctl -u NetworkManager`. If the NetworkManager output is insufficient, supplement with `journalctl -u wpa_supplicant`. Copy the **complete output**; do not interpret. |
 
-**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
+**NOTE—macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence—sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
 
 ## Per-Platform Escalation Notes
 
 ### Windows
 
-Events 8001 (auth attempted), 8002 (auth succeeded), and 8003 (auth failed) appear in both the `Microsoft-Windows-WLAN-AutoConfig/Operational` (Wi-Fi) and `Microsoft-Windows-Wired-AutoConfig/Operational` (wired) channels. A certificate failure typically surfaces alongside a reference to "certificate was not found," "chain verification failure," or similar. Do not interpret individual events — collect the complete log output and provide it to L2.
+Events 8001 (auth attempted), 8002 (auth succeeded), and 8003 (auth failed) appear in both the `Microsoft-Windows-WLAN-AutoConfig/Operational` (Wi-Fi) and `Microsoft-Windows-Wired-AutoConfig/Operational` (wired) channels. A certificate failure typically surfaces alongside a reference to "certificate was not found," "chain verification failure," or similar. Do not interpret individual events—collect the complete log output and provide it to L2.
 
-For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
+For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup—Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 
-The eapolclient unified log shows the EAPOL negotiation sequence on macOS. A certificate failure typically appears as a TLS handshake failure or identity-rejection message. The `log show` command does not require elevated privileges. If the 30-minute window returns empty output, the connection attempt may fall outside the window — extend to `--last 2h`.
+The eapolclient unified log shows the EAPOL negotiation sequence on macOS. A certificate failure typically appears as a TLS handshake failure or identity-rejection message. The `log show` command does not require elevated privileges. If the 30-minute window returns empty output, the connection attempt may fall outside the window—extend to `--last 2h`.
 
 ### iOS/iPadOS
 
@@ -95,7 +95,7 @@ No device-side log command is available for iOS/iPadOS. L1 is limited to Intune 
 
 ### Android
 
-The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only — they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. L1 action is Intune portal profile status inspection only.
+The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only—they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. L1 action is Intune portal profile status inspection only.
 
 ### Linux
 

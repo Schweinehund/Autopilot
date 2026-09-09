@@ -46,7 +46,6 @@ const CHAIN_SKIP = new Set([]);
 
 const RECIPE = 'docs/recipes/03-windows-11-multi-app-kiosk.md';
 const RECIPE_01 = 'docs/recipes/01-shared-windows-avd-client.md';
-const EXPECTED_LINE_COUNT = 328;
 const EXPECTED_ANTIFEATURE_ROWS = 12;
 
 // Table-data-row counter: given a header-line regex, counts '|'-prefixed lines after the header +
@@ -65,18 +64,28 @@ function countTableDataRows(content, headerRegex) {
 
 const checks = [];
 
-// === V-135-RECIPE: docs/recipes/03-windows-11-multi-app-kiosk.md exists at the measured line count ===
+// === V-135-RECIPE: docs/recipes/03-windows-11-multi-app-kiosk.md exists, is non-empty, and carries its H1 + two content needles ===
+// RCP-07 mandates three prose corrections to this file; a line-count equality pin makes those
+// corrections an immediate apex failure by arithmetic alone (Phase 155 D-09). Retired per Phase 155
+// D-10 [OWNER-RULED]: existence + non-emptiness + verbatim-H1 + content-needle assertions replace the
+// count. D-00a exception recorded in .planning/STATE.md.
 checks.push({
   id: 'RECIPE',
-  name: 'V-135-RECIPE: ' + RECIPE + ' exists at ' + EXPECTED_LINE_COUNT + ' lines',
+  name: 'V-135-RECIPE: ' + RECIPE + ' exists, non-empty, H1 + content needles present',
   run() {
     const c = readFile(RECIPE);
     if (c === null) return { pass: false, detail: RECIPE + ' missing' };
-    const lineCount = c.endsWith('\n') ? c.split('\n').length - 1 : c.split('\n').length;
-    if (lineCount !== EXPECTED_LINE_COUNT) {
-      return { pass: false, detail: RECIPE + ' line count drift: expected ' + EXPECTED_LINE_COUNT + ', got ' + lineCount };
+    if (c.trim().length === 0) return { pass: false, detail: RECIPE + ' is empty after trimming' };
+    if (!c.includes('# Windows 11 Multi-App Kiosk: Assigned Access Provisioning')) {
+      return { pass: false, detail: 'RECIPE H1 needle absent: "# Windows 11 Multi-App Kiosk: Assigned Access Provisioning" not found verbatim' };
     }
-    return { pass: true, detail: RECIPE + ' present at ' + lineCount + ' lines' };
+    if (!c.includes('## Unsupported and Anti-Feature Callouts')) {
+      return { pass: false, detail: 'RECIPE content needle absent: "## Unsupported and Anti-Feature Callouts" not found verbatim' };
+    }
+    if (!c.includes('./Vendor/MSFT/AssignedAccess/Configuration')) {
+      return { pass: false, detail: 'RECIPE content needle absent: "./Vendor/MSFT/AssignedAccess/Configuration" not found verbatim' };
+    }
+    return { pass: true, detail: RECIPE + ' present, non-empty, H1 and both content needles verbatim' };
   }
 });
 

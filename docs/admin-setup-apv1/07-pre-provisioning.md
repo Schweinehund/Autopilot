@@ -50,7 +50,7 @@ Pre-provisioning is a two-phase deployment: a technician completes device setup 
 
 The technician performs these steps in the staging facility:
 
-1. Connect the device to **wired ethernet** (mandatory -- Wi-Fi will NOT work).
+1. Connect the device to **wired ethernet** (mandatory -- Wi-Fi does NOT work).
 2. Power on the device.
 3. At the first OOBE screen (region selection), press **Win+F12**.
    - Alternative: press the Windows button **5 times within 10 seconds**.

@@ -6,7 +6,7 @@ audience: admin
 platform: ios+ipados+macos+tvos
 ---
 
-> **Platform applicability:** This document covers Apple Business VPP catalog operations —
+> **Platform applicability:** This document covers Apple Business VPP catalog operations—
 > content-token management, app purchasing, license transfer, and payment scoping per
 > Organizational Unit (OU). This is distinct from Intune VPP token management (uploading the
 > downloaded content token to Intune at Tenant administration > Connectors and tokens > Apple VPP tokens),
@@ -22,7 +22,7 @@ platform: ios+ipados+macos+tvos
 
 > **Training-data notice:** VPP catalog UI labels and step sequences are authored
 > from AI training knowledge of Apple Business portal behavior as of the pre-2026-04-14
-> rebrand, cross-referenced against research/PITFALLS.md OP-9. Steps are marked
+> rebrand, cross-referenced against pitfall register OP-9. Steps are marked
 > `[CITED: training; needs live verification]` pending a live portal scrape.
 > Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
 
@@ -33,28 +33,28 @@ VPP (Volume Purchase Program) catalog in Apple Business. It covers four areas: c
 content token, transferring licenses between OUs, purchasing apps, and scoping payment methods.
 
 **Label disambiguation:** Apple calls this artifact a **content token**; Microsoft Intune labels
-the same artifact an **Apple VPP token**. They are the same object — a cryptographic credential
+the same artifact an **Apple VPP token**. They are the same object—a cryptographic credential
 that ties purchased app licenses to an OU. This disambiguation matters when following both
 Apple Business and Intune documentation simultaneously. All steps in this runbook use Apple's
 terminology ("content token").
 
 ## Required Role & Permission
 
-**Required permission:** "Download content tokens" (Apps & Books subgroup) — OU-scoped.
+**Required permission:** "Download content tokens" (Apps & Books subgroup)—OU-scoped.
 See [01-role-permission-model.md](01-role-permission-model.md) Apps & Books subgroup for the
 full permission catalog. The OP-3 companion View dependency applies: "View content tokens"
 MUST also be granted; without it, the Apps & Books tab shows an empty list and the download
 action cannot be targeted.
 
 **For purchasing and license assignment:** "Purchase apps and books" and "Assign content
-(device-licensed)" / "Assign content (user-licensed)" are each separately grantable — all
+(device-licensed)" / "Assign content (user-licensed)" are each separately grantable—all
 require "View content tokens" as companion View.
 
 > **OP-2:** Do not perform VPP catalog operations using Account Holder credentials.
 > Account Holder is not a delegatable role for routine operations and must not be used for
 > day-to-day content token management.
 
-**Tenant-wide gated permission — DENY-by-default:**
+**Tenant-wide gated permission—DENY-by-default:**
 
 | Permission | Scope | Permitted for sub-org admin? |
 |------------|-------|------------------------------|
@@ -64,7 +64,7 @@ require "View content tokens" as companion View.
 | Manage content token location | tenant-wide | **DENY-by-default (OP-1)** — requires tenant IT administrator |
 
 > **Note:** "Manage content token location" is a tenant-wide superprivilege. It controls which
-> OU a content token is associated with. Sub-org admins must not hold this permission —
+> OU a content token is associated with. Sub-org administrators must not hold this permission—
 > inadvertently moving a token between OUs breaks existing app license assignments for the
 > source OU. Escalate all cross-OU token-location operations to the tenant IT administrator
 > (OP-1 constraint).
@@ -123,13 +123,13 @@ The maximum single-transfer quantity is 24,999 licenses per app.
 > - [ ] All Content Managers have selected the new OU
 > - [ ] All VPP purchasers invited and accepted
 >
-> Source: PITFALLS.md OP-9 — Apple official "Migrate content tokens" guide
+> Source: pitfall register OP-9—Apple official "Migrate content tokens" guide
 
 ---
 
 ## Purchase Apps for a Sub-Org
 
-Content Managers or admins with "Purchase apps and books" permission can buy apps directly
+Content Managers or administrators with "Purchase apps and books" permission can buy apps directly
 for an OU's catalog.
 
 | Step | Action | Who | Notes |
@@ -152,7 +152,7 @@ purchase-order method, providing budget isolation across organizational units.
 | 2 | Select the target OU | Admin | Each OU manages its own payment method independently |
 | 3 | Add or update the payment method for the OU | Admin | Changes apply to all future purchases in that OU |
 
-> **Note:** Tenant-wide payment configuration requires a higher-privilege role. Sub-org admins
+> **Note:** Tenant-wide payment configuration requires a higher-privilege role. Sub-org administrators
 > can only manage payment methods for their assigned OU(s). Tenant-level billing disputes or
 > central procurement routing require IT Administrator or Account Holder involvement.
 
@@ -178,7 +178,7 @@ After a content-token migration (legacy OU → new OU), compare license counts:
 3. Compute: `|new_OU_count - expected_transferred_count| / total_purchased ≤ 0.001` (0.1% tolerance).
 
 If the count discrepancy exceeds **0.1%**, STOP. Do not proceed with device re-enrollment.
-Contact Apple Enterprise Support — in-use licenses may have been stranded on the legacy token
+Contact Apple Enterprise Support—in-use licenses may have been stranded on the legacy token
 (OP-9 trap). Provide the legacy token ID and the new OU name.
 
 ### Post-Purchase Verification
@@ -191,14 +191,14 @@ Contact Apple Enterprise Support — in-use licenses may have been stranded on t
 
 ## Cross-References
 
-- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md) — Apps & Books
+- Permission catalog: [01-role-permission-model.md](01-role-permission-model.md)—Apps & Books
   subgroup; "Download content tokens" (line 313); "Manage content token location"
   DENY-by-default (line 319); OP-3 Edit-without-View table
-- OU architecture: [02-ous-architecture.md](02-ous-architecture.md) — OU scope coverage table;
+- OU architecture: [02-ous-architecture.md](02-ous-architecture.md)—OU scope coverage table;
   content tokens row; Untouched-OU Trap framing
-- Content token consolidation: [07-vpp-content-token-consolidation.md](07-vpp-content-token-consolidation.md) —
+- Content token consolidation: [07-vpp-content-token-consolidation.md](07-vpp-content-token-consolidation.md)—
   admin-setup counterpart covering per-OU content-token consolidation concepts and topology decisions
-- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) —
+- Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md)—
   full Apple-Business-vs-Intune responsibility table (D-02 SOT)
 
 ## Version History

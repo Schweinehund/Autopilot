@@ -16,13 +16,13 @@ platform: iOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices enrolled in Intune where Conditional Access is blocking access to Microsoft 365 resources due to non-compliant or unevaluated compliance status. Includes user-actionable steps such as device restart, iOS update, and passcode change where the compliance gap is user-resolvable without administrative intervention; policy configuration gaps are escalated to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices enrolled in Intune where Conditional Access is blocking access to Microsoft 365 resources due to non-compliant or unevaluated compliance status. Includes user-actionable steps such as device restart, iOS update, and passcode change where the compliance gap is user-resolvable without administrative intervention; policy configuration gaps are escalated to L2.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting through Intune.
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
-Use this runbook when an iOS/iPadOS user is enrolled in Intune but Conditional Access is blocking access to Microsoft 365 resources (Outlook, SharePoint, Teams, OneDrive, etc.), OR when the device is showing as "Non-compliant" or "Not evaluated" in Intune without a clear reason. This is the ONLY iOS L1 runbook that includes user-actionable remediation (device restart, iOS update, passcode change) — the other 5 runbooks are tenant-config failures that require admin action.
+Use this runbook when an iOS/iPadOS user is enrolled in Intune but Conditional Access is blocking access to Microsoft 365 resources (Outlook, SharePoint, Teams, OneDrive, etc.), OR when the device is showing as "Non-compliant" or "Not evaluated" in Intune without a clear reason. This is the ONLY iOS L1 runbook that includes user-actionable remediation (device restart, iOS update, passcode change)—the other 5 runbooks are tenant-config failures that require administrator action.
 
 ## Prerequisites
 
@@ -35,11 +35,11 @@ Use this runbook when an iOS/iPadOS user is enrolled in Intune but Conditional A
 
 Go directly to the section matching the observation:
 
-- [Cause A: CA Gap (First Compliance Evaluation Pending)](#cause-a-ca-gap) — User just enrolled within the last 30 minutes; Intune shows compliance state "Not evaluated" or "In grace period"
-- [Cause B: Actual Policy Mismatch](#cause-b-policy-mismatch) — Intune shows "Non-compliant" with a specific failing setting (OS version, passcode, jailbreak detection, restricted-apps list)
-- [Cause C: Default Posture "Not Compliant" Configuration](#cause-c-default-posture) — Device is enrolled but has no compliance policy assigned, AND the tenant default-posture toggle is set to "Not compliant", AND CA requires compliant device
+- [Cause A: CA Gap (First Compliance Evaluation Pending)](#cause-a-ca-gap)—User enrolled within the last 30 minutes; Intune shows compliance state "Not evaluated" or "In grace period"
+- [Cause B: Actual Policy Mismatch](#cause-b-policy-mismatch)—Intune shows "Non-compliant" with a specific failing setting (OS version, passcode, jailbreak detection, restricted-apps list)
+- [Cause C: Default Posture "Not Compliant" Configuration](#cause-c-default-posture)—Device is enrolled but has no compliance policy assigned, AND the tenant default-posture toggle is set to "Not compliant", AND CA requires compliant device
 
-If none of the above matches the observation, proceed directly to the [overall Escalation Criteria](#escalation-criteria) at the bottom.
+If none of these match the observation, proceed directly to the [overall Escalation Criteria](#escalation-criteria).
 
 ---
 
@@ -58,7 +58,7 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 1. > **Say to the user:** "Your device just enrolled and Intune is still evaluating compliance. This usually takes 15-30 minutes after enrollment completes. During this window, access to corporate resources may be blocked. Please wait ~30 minutes from enrollment, then retry."
 2. Navigate to P-09. Confirm state = "Not evaluated" AND enrollment completion timestamp within last 30 minutes.
-3. Deep-link for admin/user reference: the CA timing behavior is documented at [iOS Compliance Policy Guide § Compliance Evaluation Timing and Conditional Access](../admin-setup-ios/06-compliance-policy.md#compliance-evaluation-timing-and-conditional-access).
+3. Deep-link for administrator/user reference: the CA timing behavior is documented at [iOS Compliance Policy Guide § Compliance Evaluation Timing and Conditional Access](../admin-setup-ios/06-compliance-policy.md#compliance-evaluation-timing-and-conditional-access).
 
 ### User Action Required
 
@@ -73,7 +73,7 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 ### Escalation (within Cause A)
 
-- State remains "Not evaluated" > 30 minutes after enrollment — escalate (likely runbook 16 APNs or check-in problem overlap).
+- State remains "Not evaluated" > 30 minutes after enrollment—escalate (likely runbook 16 APNs or check-in problem overlap).
 
 ---
 
@@ -87,18 +87,18 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 - User can reach Company Portal but is blocked from Outlook / SharePoint / Teams.
 - P-09 shows: compliance state "Non-compliant" + one or more failing settings (OS version, passcode, jailbreak, restricted-apps list).
-- Failing setting is clickable in Intune portal — provides remediation guidance per Microsoft Learn **[CITED: learn.microsoft.com/intune/intune-service/protect/compliance-policy-monitor]**.
+- Failing setting is clickable in Intune portal—provides remediation guidance per Microsoft Learn **[CITED: learn.microsoft.com/intune/intune-service/protect/compliance-policy-monitor]**.
 
 ### L1 Triage Steps
 
-1. > **Say to the user:** "Your device is currently showing as non-compliant with our security policy. We'll work through what needs to change — most issues are resolved by a simple device update or settings change."
+1. > **Say to the user:** "Your device is currently showing as non-compliant with our security policy. We'll work through what needs to change—most issues are resolved by a simple device update or settings change."
 2. Navigate to P-09 > device compliance tab. Click the "Non-compliant" state to view failing settings.
 3. Record which settings are failing and what Intune's remediation guidance says.
 4. Common failing settings:
    - **OS version below minimum** → user action (update iOS)
    - **Passcode complexity mismatch** → user action (change passcode)
    - **Jailbreak detected** → IMMEDIATE Security team escalation (NOT L2; see Escalation Criteria)
-   - **Restricted app installed** → user action (remove app) OR admin adjusts list
+   - **Restricted app installed** → user action (remove app) OR administrator adjusts list
 
 ### User Action Required
 
@@ -107,18 +107,18 @@ If none of the above matches the observation, proceed directly to the [overall E
 - **Restricted app installed:** > **Say to the user:** "Please uninstall [App name] to meet compliance. Touch-and-hold the app icon, tap Remove App."
 - **Device restart (any persistent issue):** > **Say to the user:** "Please restart your device by holding the side button and volume up until the power-off slider appears, then power back on. Wait 15 minutes before retesting."
 
-**Optional per D-08 extension (research open question Q4):** After the user completes a required action, L1 MAY trigger a per-device Intune sync via `Devices > All devices > [device] > Sync` to accelerate re-evaluation. This is a per-device sync (not tenant-scope) matching macOS runbook 12 step 6 precedent. If strict D-08 literal (ADE token sync only) is preferred, defer the sync to the admin.
+**Optional per D-08 extension (research open question Q4):** After the user completes a required action, L1 MAY trigger a per-device Intune sync through `Devices > All devices > [device] > Sync` to accelerate re-evaluation. This is a per-device sync (not tenant-scope) matching macOS runbook 12 step 6 precedent. If strict D-08 literal (ADE token sync only) is preferred, defer the sync to the administrator.
 
 ### Admin Action Required
 
-- **Only if** the compliance policy setting itself is too strict for the user's device (e.g., minimum OS version set ahead of Apple's current release per `../admin-setup-ios/06-compliance-policy.md` failure-pattern line 216):
-  - **Ask the admin to:** review compliance policy minimum-OS vs Apple's current release; adjust policy if set too aggressively.
+- **Only if** the compliance policy setting itself is too strict for the user's device (for example, minimum OS version set ahead of Apple's current release per `../admin-setup-ios/06-compliance-policy.md` failure-pattern line 216):
+  - **Ask the administrator to:** review compliance policy minimum-OS vs Apple's current release; adjust policy if set too aggressively.
   - **Verify:** P-09 compliance state returns to Compliant after user action AND policy review.
 
 ### Escalation (within Cause B)
 
 - User performs required action (OS update, passcode change) but compliance remains Non-compliant after 60 minutes
-- Jailbreak detection — **escalate to Security team immediately (NOT L2 alone)**; this is a security-incident track per the device's `06-compliance-policy.md` line 217 ("Known jailbroken devices treated as compliant; data exfiltration risk open") escalation posture
+- Jailbreak detection—**escalate to Security team immediately (NOT L2 alone)**; this is a security-incident track per the device's `06-compliance-policy.md` line 217 ("Known jailbroken devices treated as compliant; data exfiltration risk open") escalation posture
 
 ---
 
@@ -136,31 +136,31 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 ### L1 Triage Steps
 
-1. > **Say to the user:** "We're checking your device's compliance configuration. This type of issue is resolved by your Intune administrator — your admin is being notified."
+1. > **Say to the user:** "We're checking your device's compliance configuration. This type of issue is resolved by your Intune administrator—your admin is being notified."
 2. Navigate to P-09. Confirm compliance state = "Non-compliant" AND "No compliance policy assigned".
 3. Navigate to P-08: `Endpoint security > Device compliance > Compliance policy settings`. Document the current "Mark devices with no compliance policy assigned as" toggle value ("Compliant" / "Not compliant").
-4. Also document whether the user exists in any Entra group that SHOULD have a compliance policy assigned (via Intune > Compliance policies > [policy] > Assignments).
+4. Also document whether the user exists in any Entra group that is expected to have a compliance policy assigned (through Intune > Compliance policies > [policy] > Assignments).
 
 ### Admin Action Required
 
-- **Ask the admin to (choose one):**
-  1. Assign an appropriate iOS compliance policy to the user's Entra group (preferred — aligned to Microsoft Learn recommendation at `compliance-policy-monitor § Important concepts`). See [iOS Compliance Policy Guide](../admin-setup-ios/06-compliance-policy.md) for configuration reference.
+- **Ask the administrator to (choose one):**
+  1. Assign an appropriate iOS compliance policy to the user's Entra group (preferred—aligned to Microsoft Learn recommendation at `compliance-policy-monitor § Important concepts`). See [iOS Compliance Policy Guide](../admin-setup-ios/06-compliance-policy.md) for configuration reference.
   2. If the user is genuinely exempt (executive override, special-case BYOD), add the user to an exempt group OR adjust the CA policy's scope.
 - **Verify:** P-09 compliance state transitions from "Non-compliant" to "Compliant" once policy is assigned and evaluated.
 
 ### Escalation (within Cause C)
 
-- Admin assigns policy but P-09 compliance state does not update after 30 minutes — likely check-in problem; escalate.
+- Administrator assigns policy but P-09 compliance state does not update after 30 minutes—likely check-in problem; escalate.
 
 ---
 
 ## User Action Required
 
-User-actionable remediation is documented per sub-cause above. Cross-reference summary:
+User-actionable remediation is documented per the preceding sub-cause. Cross-reference summary:
 
 - **Cause A** (CA gap): Wait 30 minutes from enrollment; retry. Power-cycle device if > 30 minutes.
 - **Cause B** (policy mismatch): Update iOS if OS-version failure; change passcode if passcode complexity failure; uninstall restricted app if applicable; restart device.
-- **Cause C** (default posture): NOT user-fixable — admin action required.
+- **Cause C** (default posture): NOT user-fixable—administrator action required.
 
 See the per-cause sections above for the exact "Say to the user" scripts and remediation guidance.
 
@@ -168,17 +168,17 @@ See the per-cause sections above for the exact "Say to the user" scripts and rem
 
 ## Escalation Criteria
 
-(Overall — applies across all three causes.)
+(Overall—applies across all three causes.)
 
 Escalate to L2 if:
 
-- Cause A: state remains "Not evaluated" > 30 minutes after enrollment (overlap with runbook 16 — APNs check-in issue)
+- Cause A: state remains "Not evaluated" > 30 minutes after enrollment (overlap with runbook 16—APNs check-in issue)
 - Cause B: user performs required action (OS update, passcode change) but compliance remains non-compliant after 60 minutes
-- Cause C: admin assigns policy but compliance state does not update (check-in issue)
+- Cause C: administrator assigns policy but compliance state does not update (check-in issue)
 
 **Escalate to Security team IMMEDIATELY (not L2) if:**
 
-- Cause B jailbreak detection triggered on a device user is actively using — this is a security-incident track per the device's `06-compliance-policy.md` line 217 ("Known jailbroken devices treated as compliant; data exfiltration risk open") escalation posture
+- Cause B jailbreak detection triggered on a device user is actively using—this is a security-incident track per the device's `06-compliance-policy.md` line 217 ("Known jailbroken devices treated as compliant; data exfiltration risk open") escalation posture
 
 **Before escalating, collect:**
 
@@ -196,11 +196,11 @@ Escalate to L2 if:
 
 See [Compliance & CA Timing Investigation](../l2-runbooks/17-ios-compliance-ca-timing.md) for advanced compliance / CA investigation (Cause A maps to the timing axis; Causes B and C map to the config-error axis).
 
-For admin configuration references:
+For administrator configuration references:
 - [iOS Compliance Policy Guide](../admin-setup-ios/06-compliance-policy.md)
-- [iOS Compliance Policy § Compliance Evaluation Timing and Conditional Access](../admin-setup-ios/06-compliance-policy.md#compliance-evaluation-timing-and-conditional-access) — Cause A deep-link
+- [iOS Compliance Policy § Compliance Evaluation Timing and Conditional Access](../admin-setup-ios/06-compliance-policy.md#compliance-evaluation-timing-and-conditional-access)—Cause A deep-link
 - [iOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md)
-- [Runbook 16: APNs Expired](16-ios-apns-expired.md) — If Cause A state remains "Not evaluated" > 30 minutes, APNs check-in issue may overlap
+- [Runbook 16: APNs Expired](16-ios-apns-expired.md)—If Cause A state remains "Not evaluated" > 30 minutes, APNs check-in issue may overlap
 
 ## Version History
 

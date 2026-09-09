@@ -42,11 +42,11 @@ Errors whose primary entry is in another category file are listed as cross-refer
 
 ## Pre-Provisioning Specific Notes
 
-**Reset button causes retry failures.** When pre-provisioning fails and the technician clicks the Reset button on the ESP failure screen, TPM attestation may fail on the retry attempt. This is a known behavior, not a separate bug. L1 action: do not use the reset button when pre-provisioning fails. Instead, power off the device completely and restart provisioning from a clean state. If the retry also fails, **Escalate** — collect: serial, error code, mode, timestamp, number of attempts.
+**Reset button causes retry failures.** When pre-provisioning fails and the technician clicks the Reset button on the ESP failure screen, TPM attestation may fail on the retry attempt. This is a known behavior, not a separate bug. L1 action: do not use the reset button when pre-provisioning fails. Instead, power off the device completely and restart provisioning from a clean state. If the retry also fails, **Escalate**—collect: serial, error code, mode, timestamp, number of attempts.
 
 ## Self-Deploying Mode Requirements
 
-**Physical TPM 2.0 is mandatory.** Self-deploying mode requires a physical TPM 2.0 chip. Virtual machines and devices with TPM 1.2 will always fail with 0x800705b4. This is by design, not a configuration error. If a device fails with 0x800705b4 in self-deploying mode, confirm it has physical TPM 2.0 hardware before any further troubleshooting. A VM or a device with only TPM 1.2 cannot be used with self-deploying mode regardless of other configuration changes.
+**Physical TPM 2.0 is mandatory.** Self-deploying mode requires a physical TPM 2.0 chip. Virtual machines and devices with TPM 1.2 always fail with 0x800705b4. This is by design, not a configuration error. If a device fails with 0x800705b4 in self-deploying mode, confirm it has physical TPM 2.0 hardware before any further troubleshooting. A VM or a device with only TPM 1.2 cannot be used with self-deploying mode regardless of other configuration changes.
 
 ---
 

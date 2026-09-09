@@ -6,13 +6,13 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** Tenant migration is not a formally supported Intune scenario — this is a best-effort process documented from official Microsoft support guidance. Microsoft does not provide automated tooling for tenant-to-tenant device migration. Test the process in a non-production environment before executing at scale.
+> **Version gate:** Tenant migration is not a formally supported Intune scenario—this is a best-effort process documented from official Microsoft support guidance. Microsoft does not provide automated tooling for tenant-to-tenant device migration. Test the process in a non-production environment before executing at scale.
 
 # Tenant-to-Tenant Device Migration
 
 Tenant migration moves Windows Autopilot-registered devices from one Microsoft 365 tenant (Tenant A) to another (Tenant B). This is required when organizations merge, split, or are acquired. The process involves deregistering devices from Tenant A's Autopilot service, removing MDM enrollment, and re-registering hardware hashes into Tenant B.
 
-> **Critical warnings — read before proceeding:**
+> **Critical warnings—read before proceeding:**
 >
 > - **Do NOT use Autopilot Reset during tenant migration.** Autopilot Reset leaves the device managed by the old tenant. Use "Reset this PC" in Windows Settings or the Intune Wipe action instead.
 > - **500-device batch limit** for hardware hash uploads into Intune. Large migrations must be broken into batches of 500 or fewer.
@@ -23,9 +23,9 @@ Tenant migration moves Windows Autopilot-registered devices from one Microsoft 3
 
 ## Prerequisites
 
-- Admin rights in both Tenant A (source) and Tenant B (destination) Intune environments
+- Administrator rights in both Tenant A (source) and Tenant B (destination) Intune environments
 - Intune Service Administrator or Global Administrator role in each tenant
-- Hardware hash collection method available (see below)
+- Hardware hash collection method available (see the following section)
 - Tenant B: Autopilot deployment profile (APv1) or Device Preparation policy (APv2) pre-configured and ready to assign
 - Tenant B: Required licenses assigned to the migration target user accounts
 
@@ -52,7 +52,7 @@ Install-Script -Name Get-WindowsAutoPilotInfo -Force
 Get-WindowsAutoPilotInfo -online -OutputFile C:\Temp\device-hashes.csv
 ```
 
-Alternative for bulk collection via Microsoft Configuration Manager:
+Alternative for bulk collection through Microsoft Configuration Manager:
 - Run the Autopilot hardware hash collection task sequence against all target devices.
 
 ### Step 2: Delete Devices from Tenant A
@@ -107,7 +107,7 @@ Deregister devices from Tenant A's Autopilot service in batches. Timing the dere
 
 ### Step 2: Collect Hardware Hashes
 
-Collect hardware hashes during deregistration batches. Store hash CSV files securely — they contain device identifiers.
+Collect hardware hashes during deregistration batches. Store hash CSV files securely—they contain device identifiers.
 
 ### Step 3: Create Tenant B Autopilot Configuration File (Offline Profile)
 
@@ -137,7 +137,7 @@ Import hardware hash batches into Tenant B as devices are wiped and re-provision
 
 ## Verification
 
-- [ ] All devices removed from Tenant A Autopilot device list (Devices > Enrollment > Windows Autopilot devices — serial numbers no longer appear)
+- [ ] All devices removed from Tenant A Autopilot device list (Devices > Enrollment > Windows Autopilot devices—serial numbers no longer appear)
 - [ ] All devices appear in Tenant B Autopilot device list with correct profile assignment
 - [ ] Pilot batch devices successfully completed OOBE under Tenant B profile
 - [ ] Users can sign in with Tenant B credentials
@@ -161,9 +161,9 @@ Import hardware hash batches into Tenant B as devices are wiped and re-provision
 
 ## See Also
 
-- [Retire, Wipe, and Removal Actions](02-retire-wipe.md) — Delete and Wipe action procedures
-- [Network Endpoints Reference](../reference/endpoints.md) — Required endpoints for both source and destination tenants
-- [APv1 Hardware Hash Upload](../admin-setup-apv1/01-hardware-hash-upload.md) — Hash collection and import procedures for Tenant B
+- [Retire, Wipe, and Removal Actions](02-retire-wipe.md)—Delete and Wipe action procedures
+- [Network Endpoints Reference](../reference/endpoints.md)—Required endpoints for both source and destination tenants
+- [APv1 Hardware Hash Upload](../admin-setup-apv1/01-hardware-hash-upload.md)—Hash collection and import procedures for Tenant B
 
 ---
 

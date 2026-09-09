@@ -83,9 +83,9 @@ Replace `YOUR_GROUP_TAG` with the actual tag value assigned during hardware hash
 
 1. Navigate to **Azure portal** > **Microsoft Entra ID** > **Groups** > [group name] > **Members**.
 2. Confirm target devices appear as members.
-3. Cross-check in **Intune admin center** > **Devices** > **Windows** > **Windows Autopilot** > **Devices** -- Profile Status should show "Assigning" or "Assigned" for devices in the group.
+3. Cross-check in **Intune admin center** > **Devices** > **Windows** > **Windows Autopilot** > **Devices** -- Profile Status shows "Assigning" or "Assigned" for devices in the group.
 
-> **What breaks if misconfigured:** Multiple profiles targeting the same device via different groups: the **oldest created profile wins** (not most specific, not highest priority).
+> **What breaks if misconfigured:** Multiple profiles targeting the same device through different groups: the **oldest created profile wins** (not most specific, not highest priority).
 
 > Audit profile creation dates when troubleshooting unexpected assignments.
 

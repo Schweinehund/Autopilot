@@ -18,17 +18,17 @@ applies_to: AOSP
 
 This reference document is a capability matrix comparing Microsoft Intune support across the five specialty-hardware OEMs enrolled under AOSP: RealWear, Zebra, Pico, HTC, and Meta Quest. It covers hardware scope, enrollment method and Wi-Fi embedding, vendor portals and licensing tiers, and Intune AOSP mode support for each OEM. The primary audience is Intune administrators configuring AOSP-managed specialty hardware.
 
-This matrix compares Microsoft Intune support across the 5 specialty-hardware OEMs in scope for AOSP enrollment: RealWear, Zebra, Pico, HTC, and Meta Quest. The matrix is organized capability-first; columns = capability dimensions, rows = OEMs. For per-OEM admin guides see [09-aosp-realwear.md](../admin-setup-android/09-aosp-realwear.md), [10-aosp-zebra.md](../admin-setup-android/10-aosp-zebra.md), [11-aosp-pico.md](../admin-setup-android/11-aosp-pico.md), [12-aosp-htc-vive-focus.md](../admin-setup-android/12-aosp-htc-vive-focus.md), [13-aosp-meta-quest.md](../admin-setup-android/13-aosp-meta-quest.md). For the broader Android capability landscape (modes, mode-vs-feature mapping) see [Android Capability Matrix](android-capability-matrix.md).
+This matrix compares Microsoft Intune support across the 5 specialty-hardware OEMs in scope for AOSP enrollment: RealWear, Zebra, Pico, HTC, and Meta Quest. The matrix is organized capability-first; columns = capability dimensions, rows = OEMs. For per-OEM administrator guides see [09-aosp-realwear.md](../admin-setup-android/09-aosp-realwear.md), [10-aosp-zebra.md](../admin-setup-android/10-aosp-zebra.md), [11-aosp-pico.md](../admin-setup-android/11-aosp-pico.md), [12-aosp-htc-vive-focus.md](../admin-setup-android/12-aosp-htc-vive-focus.md), [13-aosp-meta-quest.md](../admin-setup-android/13-aosp-meta-quest.md). For the broader Android capability landscape (modes, mode-vs-feature mapping) see [Android Capability Matrix](android-capability-matrix.md).
 
 ## Scope
 
 > ⚠️ **AOSP scope reminder.** Devices listed in this matrix are supported under AOSP because they have no GMS.
 
-> If GMS is present on a target device, use Android Enterprise fully managed instead — these OEMs are not supported under AOSP when GMS is available. (Phase 39 PITFALL-7 framing.)
+> If GMS is present on a target device, use Android Enterprise fully managed instead—these OEMs are not supported under AOSP when GMS is available. (Phase 39 PITFALL-7 framing.)
 
 ## Hardware Scope
 
-The table below lists the supported models, minimum firmware, and device type for each of the five AOSP OEMs.
+The following table lists the supported models, minimum firmware, and device type for each of the five AOSP OEMs.
 
 | OEM | Models | Minimum Firmware | Type |
 |-----|--------|------------------|------|
@@ -42,7 +42,7 @@ The table below lists the supported models, minimum firmware, and device type fo
 
 ## Enrollment Method and Wi-Fi Embedding
 
-The table below compares the AOSP enrollment method and Wi-Fi credential embedding requirement for each OEM.
+The following table compares the AOSP enrollment method and Wi-Fi credential embedding requirement for each OEM.
 
 | OEM | Enrollment Method | Wi-Fi Embedding |
 |-----|-------------------|-----------------|
@@ -56,7 +56,7 @@ The table below compares the AOSP enrollment method and Wi-Fi credential embeddi
 
 ## Vendor Portals and Licensing
 
-The table below shows each OEM's optional vendor portal and the minimum Intune plan tier required.
+The following table shows each OEM's optional vendor portal and the minimum Intune plan tier required.
 
 | OEM | Vendor Portal | Intune Plan Tier |
 |-----|---------------|------------------|
@@ -66,11 +66,11 @@ The table below shows each OEM's optional vendor portal and the minimum Intune p
 | HTC | None | Plan 2 OR Suite |
 | Meta Quest | Meta for Work / Meta Horizon Managed Services [^meta-volatility] | Plan 2 OR Suite |
 
-> **Table summary:** This table shows Zebra is the only OEM requiring just Intune Plan 1; the remaining four OEMs require Plan 2 or Suite.
+> **Table summary:** This table shows Zebra is the only OEM requiring only Intune Plan 1; the remaining four OEMs require Plan 2 or Suite.
 
 ## Intune AOSP Mode
 
-The table below shows whether each OEM supports user-associated and userless Intune AOSP enrollment modes.
+The following table shows whether each OEM supports user-associated and userless Intune AOSP enrollment modes.
 
 | OEM | User-Associated | Userless |
 |-----|-----------------|----------|
@@ -86,25 +86,25 @@ The table below shows whether each OEM supports user-associated and userless Int
 
 ## See Also
 
-- [AOSP Stub](../admin-setup-android/06-aosp-stub.md) — AOSP scope context
-- [Android Capability Matrix](android-capability-matrix.md) — Android mode-vs-feature mapping; this matrix's `#deferred-full-aosp-capability-mapping` anchor links to this AOSP OEM matrix per AEAOSPFULL-09
-- [09 RealWear](../admin-setup-android/09-aosp-realwear.md) — RealWear admin guide
-- [10 Zebra](../admin-setup-android/10-aosp-zebra.md) — Zebra admin guide
-- [11 Pico](../admin-setup-android/11-aosp-pico.md) — Pico admin guide
-- [12 HTC](../admin-setup-android/12-aosp-htc-vive-focus.md) — HTC VIVE Focus admin guide
-- [13 Meta Quest](../admin-setup-android/13-aosp-meta-quest.md) — Meta Quest admin guide
+- [AOSP Stub](../admin-setup-android/06-aosp-stub.md)—AOSP scope context
+- [Android Capability Matrix](android-capability-matrix.md)—Android mode-vs-feature mapping; this matrix's `#deferred-full-aosp-capability-mapping` anchor links to this AOSP OEM matrix per AEAOSPFULL-09
+- [09 RealWear](../admin-setup-android/09-aosp-realwear.md)—RealWear administrator guide
+- [10 Zebra](../admin-setup-android/10-aosp-zebra.md)—Zebra administrator guide
+- [11 Pico](../admin-setup-android/11-aosp-pico.md)—Pico administrator guide
+- [12 HTC](../admin-setup-android/12-aosp-htc-vive-focus.md)—HTC VIVE Focus administrator guide
+- [13 Meta Quest](../admin-setup-android/13-aosp-meta-quest.md)—Meta Quest administrator guide
 
 ## Source Attribution
 
-Per-OEM source-confidence pins for the data points across the four capability sub-tables above (D-15: pins live OUTSIDE tables to keep cells literal-strings only per D-16).
+Per-OEM source-confidence pins for the data points across the preceding four capability sub-tables (D-15: pins live OUTSIDE tables to keep cells literal-strings only per D-16).
 
 - RealWear: `[HIGH: MS Learn AOSP supported devices + support.realwear.com, last_verified 2026-04-25]`
 - Zebra: `[HIGH: MS Learn oemconfig-zebra-android-devices + techdocs.zebra.com, last_verified 2026-04-25]`
-- Pico: `[HIGH: MS Learn + business.picoxr.com, last_verified 2026-04-25]` (license tier MEDIUM per RESEARCH.md §1)
+- Pico: `[HIGH: MS Learn + business.picoxr.com, last_verified 2026-04-25]` (license tier MEDIUM per phase research §1)
 - HTC: `[HIGH: MS Learn + vive.com support, last_verified 2026-04-25]`
 - Meta Quest: `[HIGH: MS Learn + meta.com/blog/an-update-on-meta-for-work, last_verified 2026-04-25]`
 
-**Per-OEM Intune AOSP Mode (sub-table #4) — section-level confidence pin per W-3:** `[MEDIUM: AR/VR pattern inference + MS Learn dual-mode AOSP support, last_verified 2026-04-25] — per-OEM verification deferred to v1.5 if mode-specific failure modes emerge in field use`. This single section-level pin replaces per-cell MEDIUM markers across the 10 mode cells; addresses RESEARCH.md Open Question §1 (per-OEM mode enumeration) at the section level rather than scattering markers inline.
+**Per-OEM Intune AOSP Mode (sub-table #4)—section-level confidence pin per W-3:** `[MEDIUM: AR/VR pattern inference + MS Learn dual-mode AOSP support, last_verified 2026-04-25] — per-OEM verification deferred to v1.5 if mode-specific failure modes emerge in field use`. This single section-level pin replaces per-cell MEDIUM markers across the 10 mode cells; addresses phase research Open Question §1 (per-OEM mode enumeration) at the section level rather than scattering markers inline.
 
 ## Version History
 

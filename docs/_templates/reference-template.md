@@ -16,6 +16,9 @@
        of the closing table delimiter (Phase 118 C17 table-remediation rule — assertion #11).
        Use the "Table summary" blockquote pattern shown in the example section below.
      - No Mermaid code fences (C17 assertion #1)
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: [Platform Lead for the reference domain]
 -->
@@ -35,11 +38,11 @@ review_by: YYYY-MM-DD
 
 ## Summary
 
-[2–3 sentences describing the scope and purpose of this reference document and its target audience. Minimum 30 words. State what information this doc provides (e.g., capability matrix, error-code lookup, endpoint list, platform comparison), which platforms or product versions it covers, and who the primary audience is (L1 service desk, L2 engineers, Intune admins, or end users).]
+[2–3 sentences describing the scope and purpose of this reference document and its target audience. Minimum 30 words. State what information this doc provides (for example, capability matrix, error-code lookup, endpoint list, platform comparison), which platforms or product versions it covers, and who the primary audience is (L1 service desk, L2 engineers, Intune administrators, or end users).]
 
 ## [Reference Section Title]
 
-[Reference content — tables, lists, code samples, or comparison matrices. Use this section for structured lookup material.]
+[Reference content—tables, lists, code samples, or comparison matrices. Use this section for structured lookup material.]
 
 ### Tables exceeding 25 rows — prose summary required
 
@@ -52,9 +55,9 @@ Example:
 |------------|------------|------------|
 | [value]    | [value]    | [value]    |
 
-> **Table summary:** [1–2 sentence prose summary — REQUIRED if the table exceeds 25 rows. Describe what the table shows and call out the most operationally important entries. Omit this blockquote for tables with 25 or fewer rows.]
+> **Table summary:** [1–2 sentence prose summary—REQUIRED if the table exceeds 25 rows. Describe what the table shows and call out the most operationally important entries. Omit this blockquote for tables with 25 or fewer rows.]
 
 ## See Also
 
 - [Related reference doc](link)
-- [Relevant runbook or admin guide](link)
+- [Relevant runbook or administrator guide](link)

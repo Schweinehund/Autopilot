@@ -51,11 +51,11 @@ The Intune Connector for Active Directory is required for hybrid Entra join depl
 
 ### Step 1: Check for Existing Connector
 
-If upgrading from an older connector version: **uninstall the existing connector first** via Programs and Features. There is no in-place upgrade path.
+If upgrading from an older connector version: **uninstall the existing connector first** through Programs and Features. There is no in-place upgrade path.
 
 > **What breaks if misconfigured:** Installing the new connector over an existing old connector results in undefined behavior.
 
-> Enrollment requests may silently fail with no error visible to the admin. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> Enrollment requests may silently fail with no error visible to the administrator. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 2: Download and Install Connector
 
@@ -67,7 +67,7 @@ If upgrading from an older connector version: **uninstall the existing connector
 
 > **What breaks if misconfigured:** Using a non-Intune-Administrator account causes installation to fail with an access denied error.
 
-> The account needs Intune service permissions, not just local admin rights on the server.
+> The account needs Intune service permissions, not only local administrator rights on the server.
 
 ### Step 3: Verify Connector Status
 
@@ -78,7 +78,7 @@ If upgrading from an older connector version: **uninstall the existing connector
 
 > **What breaks if misconfigured:** Connector shows Active but the version is too old -- enrollment requests are silently rejected.
 
-> Hybrid join fails with no clear error on the device side. Admin must check the connector version explicitly in the version column. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> Hybrid join fails with no clear error on the device side. Administrator must check the connector version explicitly in the version column. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 4: Configure OU for Computer Object Creation
 

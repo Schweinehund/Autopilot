@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-This guide covers the three Windows Autopilot (APv1) deployment modes -- User-Driven, Pre-Provisioning, and Self-Deploying -- and applies to Windows devices configured by an admin holding the Intune Administrator role. It compares hardware requirements, network dependencies, and user-experience differences across the three modes so an admin can select the mode that matches their provisioning workflow before following the mode-specific configuration guide.
+This guide covers the three Windows Autopilot (APv1) deployment modes -- User-Driven, Pre-Provisioning, and Self-Deploying -- and applies to Windows devices configured by an administrator holding the Intune Administrator role. It compares hardware requirements, network dependencies, and user-experience differences across the three modes so an administrator can select the mode that matches their provisioning workflow before following the mode-specific configuration guide.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 

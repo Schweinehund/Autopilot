@@ -16,11 +16,11 @@ platform: all
 
 ## Summary
 
-This reference document compares Microsoft Intune management capabilities across all five supported platforms — Windows, macOS, iOS/iPadOS, Android, and Linux — spanning six operational domains: enrollment, configuration, app deployment, compliance, software updates, and conditional access. Each table links back to the authoritative per-platform capability matrix rather than duplicating verdicts. The primary audience is Intune administrators and L2 engineers evaluating cross-platform feature parity.
+This reference document compares Microsoft Intune management capabilities across all five supported platforms—Windows, macOS, iOS/iPadOS, Android, and Linux—spanning six operational domains: enrollment, configuration, app deployment, compliance, software updates, and conditional access. Each table links back to the authoritative per-platform capability matrix rather than duplicating verdicts. The primary audience is Intune administrators and L2 engineers evaluating cross-platform feature parity.
 
-This reference doc compares Microsoft Intune management capabilities across all five platforms in the v1.5 documentation suite — Windows (Autopilot v1 / v2), macOS (Apple Automated Device Enrollment via Apple Business Manager), iOS / iPadOS (Apple ADE + Account-Driven User Enrollment + MAM-WE), Android (Android Enterprise — COBO / COPE / BYOD / Dedicated / ZTE / AOSP), and Linux (Ubuntu 24.04 / 26.04 LTS via the `intune-portal` deb client). Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference per PITFALL-7 — no per-cell duplication of platform-specific matrix prose).
+This reference doc compares Microsoft Intune management capabilities across all five platforms in the v1.5 documentation suite—Windows (Autopilot v1 / v2), macOS (Apple Automated Device Enrollment through Apple Business Manager), iOS / iPadOS (Apple ADE + Account-Driven User Enrollment + MAM-WE), Android (Android Enterprise—COBO / COPE / BYOD / Dedicated / ZTE / AOSP), and Linux (Ubuntu 24.04 / 26.04 LTS through the `intune-portal` deb client). Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference per PITFALL-7—no per-cell duplication of platform-specific matrix prose).
 
-Windows column links target the Windows column of [`linux-capability-matrix.md`](linux-capability-matrix.md) (the existing Win-bilateral capability source); a dedicated `windows-capability-matrix.md` is deferred to v1.6+. Within `linux-capability-matrix.md` the table columns are Feature / Windows / Linux — both the Windows column and the Linux column in this comparison doc reach the same H2 anchor in the same file but represent different rows of that bilateral table.
+Windows column links target the Windows column of [`linux-capability-matrix.md`](linux-capability-matrix.md) (the existing Win-bilateral capability source); a dedicated `windows-capability-matrix.md` is deferred to v1.6+. Within `linux-capability-matrix.md` the table columns are Feature / Windows / Linux—both the Windows column and the Linux column in this comparison doc reach the same H2 anchor in the same file but represent different rows of that bilateral table.
 
 **Verdict vocabulary** (5-state lock): cells use exactly one of `Supported` / `Partial` / `Not supported` / `Mode-dependent` / `n/a`. The em-dash (`—`) separates the verdict word from the hyperlink. `Mode-dependent` applies primarily to Android (which has 5 GMS modes + AOSP) where verdicts diverge per mode; the linked source matrix carries the per-mode prose.
 
@@ -28,7 +28,7 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 
 ## Enrollment
 
-The table below compares enrollment-related capabilities — zero-touch methods, hardware identity, ESP equivalents, and BYOD support — across all five platforms.
+The following table compares enrollment-related capabilities—zero-touch methods, hardware identity, ESP equivalents, and BYOD support—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -48,7 +48,7 @@ The table below compares enrollment-related capabilities — zero-touch methods,
 
 ## Configuration
 
-The table below compares configuration-management capabilities — profile mechanisms, Settings Catalog breadth, DDM, and 802.1X — across all five platforms.
+The following table compares configuration-management capabilities—profile mechanisms, Settings Catalog breadth, DDM, and 802.1X—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -66,7 +66,7 @@ The table below compares configuration-management capabilities — profile mecha
 
 ## App Deployment
 
-The table below compares app-deployment capabilities — packaging formats, delivery mechanisms, supersedence, and app-config targeting — across all five platforms.
+The following table compares app-deployment capabilities—packaging formats, delivery mechanisms, supersedence, and app-config targeting—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -84,7 +84,7 @@ The table below compares app-deployment capabilities — packaging formats, deli
 
 ## Compliance
 
-The table below compares compliance capabilities — settings scope, custom scripts, hardware attestation, and CA grant targets — across all five platforms.
+The following table compares compliance capabilities—settings scope, custom scripts, hardware attestation, and CA grant targets—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -102,7 +102,7 @@ The table below compares compliance capabilities — settings scope, custom scri
 
 ## Software Updates
 
-The table below compares software-update capabilities — update mechanisms, deferral, deadline enforcement, and reporting — across all five platforms.
+The following table compares software-update capabilities—update mechanisms, deferral, deadline enforcement, and reporting—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -118,7 +118,7 @@ The table below compares software-update capabilities — update mechanisms, def
 
 ## Conditional Access
 
-The table below compares Conditional Access capabilities — device-based CA, web-app CA, per-app CA, and risk-based CA — across all five platforms.
+The following table compares Conditional Access capabilities—device-based CA, web-app CA, per-app CA, and risk-based CA—across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -132,7 +132,7 @@ The table below compares Conditional Access capabilities — device-based CA, we
 
 ## Single Sign-On
 
-The table below documents OS-integrated Platform SSO support, which in this comparison set is macOS-exclusive.
+The following table documents OS-integrated Platform SSO support, which in this comparison set is macOS-exclusive.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -144,12 +144,12 @@ The table below documents OS-integrated Platform SSO support, which in this comp
 
 ## See Also
 
-- [Linux Capability Matrix](linux-capability-matrix.md) — Win|Linux bilateral comparison; primary Windows column source per architecture deferral
-- [macOS Capability Matrix](macos-capability-matrix.md) — Windows|macOS bilateral comparison
-- [iOS Capability Matrix](ios-capability-matrix.md) — Windows|macOS|iOS trilateral comparison
-- [Android Capability Matrix](android-capability-matrix.md) — Android Enterprise mode-by-feature matrix (5 GMS modes + AOSP)
-- [APv1 vs APv2 Comparison](../apv1-vs-apv2.md) — Windows-internal Autopilot v1 vs v2 feature divergence (footnote target for 3 Enrollment H2 rows)
-- [Windows vs macOS Concept Comparison](../windows-vs-macos.md) — terminology mapping (not feature parity)
+- [Linux Capability Matrix](linux-capability-matrix.md)—Win|Linux bilateral comparison; primary Windows column source per architecture deferral
+- [macOS Capability Matrix](macos-capability-matrix.md)—Windows|macOS bilateral comparison
+- [iOS Capability Matrix](ios-capability-matrix.md)—Windows|macOS|iOS trilateral comparison
+- [Android Capability Matrix](android-capability-matrix.md)—Android Enterprise mode-by-feature matrix (5 GMS modes + AOSP)
+- [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)—Windows-internal Autopilot v1 vs v2 feature divergence (footnote target for 3 Enrollment H2 rows)
+- [Windows vs macOS Concept Comparison](../windows-vs-macos.md)—terminology mapping (not feature parity)
 
 ## Version History
 

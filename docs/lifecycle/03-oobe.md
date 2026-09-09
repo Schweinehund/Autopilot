@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-This guide covers Stage 3 of the Windows Autopilot (classic) deployment lifecycle — the Out-of-Box Experience where the device becomes visible to the end user or technician and the deployment mode branches into user-driven, pre-provisioning, or self-deploying, each with different actors, steps, and TPM requirements, all converging into Stage 4 (Enrollment Status Page).
+This guide covers Stage 3 of the Windows Autopilot (classic) deployment lifecycle—the Out-of-Box Experience where the device becomes visible to the end user or technician and the deployment mode branches into user-driven, pre-provisioning, or self-deploying, each with different actors, steps, and TPM requirements, all converging into Stage 4 (Enrollment Status Page).
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
 
@@ -26,11 +26,11 @@ This guide covers Stage 3 of the Windows Autopilot (classic) deployment lifecycl
 
 Stage 3 of 5. [OOBE](../_glossary.md#oobe) is where Windows Autopilot becomes visible to the end user or technician. The device powers on for the first time, the Autopilot service delivers the assigned profile, and the deployment mode branches into one of three paths: user-driven, pre-provisioning, or self-deploying.
 
-Every path eventually produces a managed, enrolled device — but the steps, actors, and [TPM](../_glossary.md#tpm) requirements differ significantly.
+Every path eventually produces a managed, enrolled device—but the steps, actors, and [TPM](../_glossary.md#tpm) requirements differ significantly.
 
-**Depends on:** Profile Assignment (Stage 2) — device must have an assigned profile ready for lookup at OOBE.
+**Depends on:** Profile Assignment (Stage 2)—device must have an assigned profile ready for lookup at OOBE.
 
-**Feeds into:** Stage 4 — Enrollment Status Page (ESP).
+**Feeds into:** Stage 4—Enrollment Status Page (ESP).
 
 > **Autopilot Reset note:** [Autopilot Reset](../_glossary.md#autopilot-reset) re-enters at Stage 3, skipping Stages 1 and 2.
 
@@ -46,11 +46,11 @@ The user powers on the device and sees customized OOBE screens based on the assi
 
 ### Pre-Provisioning Mode
 
-The technician (or OEM) powers on the device and sees a standard first OOBE screen. Before entering credentials, the technician presses **Win+F12** to invoke the provisioning flow. A blue "Windows Autopilot provisioning" screen appears with device details. The device runs the device-side [ESP](../_glossary.md#esp) phase in full — policies, certificates, and apps are deployed to the device scope. When complete, the screen shows a "Success" or "Error" result. On success, the technician reseals the device (shuts down for shipping). The end user later powers on and completes a shortened user-driven OOBE.
+The technician (or OEM) powers on the device and sees a standard first OOBE screen. Before entering credentials, the technician presses **Win+F12** to invoke the provisioning flow. A blue "Windows Autopilot provisioning" screen appears with device details. The device runs the device-side [ESP](../_glossary.md#esp) phase in full—policies, certificates, and apps are deployed to the device scope. When complete, the screen shows a "Success" or "Error" result. On success, the technician reseals the device (shuts down for shipping). The end user later powers on and completes a shortened user-driven OOBE.
 
 ### Self-Deploying Mode
 
-The user (or automated process) powers on the device and sees minimal OOBE screens with no credential prompt. The device progresses automatically through network detection, profile lookup, [TPM attestation](../_glossary.md#tpm-attestation), and Azure AD device join — all without user input. This mode is designed for kiosks, shared devices, and digital signage.
+The user (or automated process) powers on the device and sees minimal OOBE screens with no credential prompt. The device progresses automatically through network detection, profile lookup, [TPM attestation](../_glossary.md#tpm-attestation), and Azure AD device join—all without user input. This mode is designed for kiosks, shared devices, and digital signage.
 
 ---
 
@@ -62,7 +62,7 @@ The user (or automated process) powers on the device and sees minimal OOBE scree
 2. **Regional and keyboard settings.** These screens may appear depending on profile configuration (can be skipped).
 3. **Network connection.** Device connects to available Wi-Fi or Ethernet. A [WinHTTP proxy](../_glossary.md#winhttp-proxy) is required if network access is proxy-gated; user-level proxy settings are not available at this point.
 4. **ZTD profile check.** Device contacts `ztd.dds.microsoft.com` with its hardware hash. If a matching profile is found, it is downloaded and [OOBE](../_glossary.md#oobe) customizations apply.
-5. **Mode branch.** Based on the deployment mode in the profile, OOBE follows one of the three paths below.
+5. **Mode branch.** Based on the deployment mode in the profile, OOBE follows one of the three paths that follow.
 
 ### User-Driven Path
 
@@ -75,7 +75,7 @@ The user (or automated process) powers on the device and sees minimal OOBE scree
 
 - Technician presses **Win+F12** at the first OOBE screen to invoke pre-provisioning.
 - The "Windows Autopilot provisioning" screen appears showing device serial, profile name, and tenant.
-- [TPM attestation](../_glossary.md#tpm-attestation) is performed — the device proves its TPM identity to Microsoft's attestation service.
+- [TPM attestation](../_glossary.md#tpm-attestation) is performed—the device proves its TPM identity to Microsoft's attestation service.
 - Device-side ESP runs: device-targeted apps, policies, and certificates are installed (the [device phase](../_glossary.md#device-phase)).
 - On success, technician reseals (shuts down) the device and ships to user.
 - End user powers on, sees shortened user-driven OOBE, signs in with Azure AD credentials, [user phase](../_glossary.md#user-phase) of ESP completes.
@@ -83,9 +83,9 @@ The user (or automated process) powers on the device and sees minimal OOBE scree
 ### Self-Deploying Path
 
 - No user credential prompt appears.
-- [TPM attestation](../_glossary.md#tpm-attestation) authenticates the device to Azure AD — the device joins as a device object with no user affinity.
+- [TPM attestation](../_glossary.md#tpm-attestation) authenticates the device to Azure AD—the device joins as a device object with no user affinity.
 - [MDM enrollment](../_glossary.md#mdm-enrollment) begins immediately after device join.
-- Only the device phase of ESP runs — no user phase (no user to log in).
+- Only the device phase of ESP runs—no user phase (no user to log in).
 
 ### Deployment Mode Comparison (LOCKED — 20 (15 nodes + 5 labeled edges))
 
@@ -106,7 +106,7 @@ The Pre-Provisioning path's device-side ESP run resolves through a second decisi
 | Success | Technician reseals device → Ship to user → User completes user-driven OOBE | Stage 4: ESP (User completes user-driven OOBE → Stage 4: ESP) |
 | Failure | Investigate and retry | (terminal — returns to troubleshooting, does not reach ESP) |
 
-All three converging edges into Stage 4: ESP are preserved above: `AAD join with user context → Stage 4: ESP`, `User completes user-driven OOBE → Stage 4: ESP` (via the Pre-Provisioning reseal/ship path), and `AAD join as device — no user affinity → Stage 4: ESP` — a 3-way merge into the same terminal node.
+All three converging edges into Stage 4: ESP are preserved: `AAD join with user context → Stage 4: ESP`, `User completes user-driven OOBE → Stage 4: ESP` (through the Pre-Provisioning reseal/ship path), and `AAD join as device — no user affinity → Stage 4: ESP`—a 3-way merge into the same terminal node.
 
 ### TPM Requirements
 
@@ -180,15 +180,15 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 
 - **TPM not ready for pre-provisioning or self-deploying.** Check `Get-TPMStatus` before attempting these modes. The TPM must be present, enabled, activated, and version 2.0. If the device uses fTPM, verify manufacturer EK certificate endpoints are reachable.
 - **Network or proxy blocking required endpoints.** Devices at OOBE cannot use user-level proxy settings. If the network requires a proxy, configure `WinHTTP proxy` settings in the OS image or use WPAD. The ZTD and AAD endpoints must be reachable before any OOBE interaction.
-- **Hybrid join requires DC reachability.** Hybrid join (Azure AD + on-premises AD) requires the device to reach a domain controller during OOBE for the ODJ process. Devices on isolated network segments or guest Wi-Fi will fail. Plan network routing accordingly before deploying hybrid join profiles.
+- **Hybrid join requires DC reachability.** Hybrid join (Azure AD + on-premises AD) requires the device to reach a domain controller during OOBE for the ODJ process. Devices on isolated network segments or guest Wi-Fi fail. Plan network routing accordingly before deploying hybrid join profiles.
 
 ---
 
 ## Tool References
 
-- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate) — Confirms the device downloaded its Autopilot profile (registry key populated after successful OOBE profile detection).
-- [`Get-TPMStatus`](../reference/powershell-ref.md#get-tpmstatus) — Checks TPM presence, readiness, and attestation capability before attempting pre-provisioning or self-deploying modes.
-- [`Test-AutopilotConnectivity`](../reference/powershell-ref.md#test-autopilotconnectivity) — Tests connectivity to the 5 core Autopilot endpoints. Run before OOBE to confirm network access is in place. For the full 13-endpoint list including TPM attestation endpoints, see [endpoints.md](../reference/endpoints.md).
+- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate)—Confirms the device downloaded its Autopilot profile (registry key populated after successful OOBE profile detection).
+- [`Get-TPMStatus`](../reference/powershell-ref.md#get-tpmstatus)—Checks TPM presence, readiness, and attestation capability before attempting pre-provisioning or self-deploying modes.
+- [`Test-AutopilotConnectivity`](../reference/powershell-ref.md#test-autopilotconnectivity)—Tests connectivity to the 5 core Autopilot endpoints. Run before OOBE to confirm network access is in place. For the full 13-endpoint list including TPM attestation endpoints, see [endpoints.md](../reference/endpoints.md).
 
 **Further Reading:**
 

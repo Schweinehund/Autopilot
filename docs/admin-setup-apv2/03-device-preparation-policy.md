@@ -71,7 +71,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
    > | Selected (non-admin users excluded) | Administrator | Standard User |
    > | All | Standard User | Standard User |
    >
-   > **For Administrator result** (user is admin on device):
+   > **For Administrator result** (user is administrator on device):
    >
    > | Entra ID Local Admin Setting | Device Prep Policy User Account Type | Result |
    > |------------------------------|--------------------------------------|--------|
@@ -89,7 +89,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 1. Select **Add device group**.
 2. Choose the ETG device group created in Step 2 of the setup sequence ([ETG Device Group](02-etg-device-group.md)).
 
-   > **Warning:** Select the **device** group here, not a user group. The Device group page requires the ETG security group. The Assignments page (Step 7) requires the user group. Selecting the wrong group type is a common misconfiguration -- see the Configuration-Caused Failures table below.
+   > **Warning:** Select the **device** group here, not a user group. The Device group page requires the ETG security group. The Assignments page (Step 7) requires the user group. Selecting the wrong group type is a common misconfiguration -- see the Configuration-Caused Failures table.
 
    > **What breaks if misconfigured:** **Admin sees:** Policy shows "0 devices" or an unexpected group name in the Device group field.
    > **End user sees:** Deployment never launches -- no matching policy is found for the enrolling device.
@@ -119,7 +119,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 
 3. Set **Allow users to skip setup after multiple attempts** to **Yes** or **No**.
    - **Yes**: Adds a "Continue anyway" button alongside Retry on the error screen. The user can proceed to the desktop with incomplete setup.
-   - **No**: The user can only Retry or contact support. The device is blocked until deployment succeeds or an admin intervenes.
+   - **No**: The user can only Retry or contact support. The device is blocked until deployment succeeds or an administrator intervenes.
 
    > **What breaks if misconfigured:** **Admin sees:** No deployment failure -- this is an intentional policy choice, not a misconfiguration.
    > **End user sees:** If set to Yes: user may bypass incomplete setup and work with missing apps or policies. If set to No: user is blocked at the error screen until deployment succeeds.
@@ -138,7 +138,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 ### Step 5: Configure apps
 
 1. Select **Add apps** to choose up to **25** managed applications to install during OOBE.
-2. Supported app types: LOB (line-of-business), Win32, Microsoft Store (WinGet only), Microsoft 365, Enterprise App Catalog.
+2. Supported app types: LOB (line-of-business), Win32, [Microsoft Store](../operations/patch-management/08-windows-app-updates.md#eam-store-winget-routing) (WinGet only), Microsoft 365, Enterprise App Catalog.
 
    > **Requirement:** Every app selected here MUST also be assigned to the ETG device group with **Required** assignment intent and **Device (System)** install context. The policy selection and the app assignment are two separate steps -- both are required. See [ETG Device Group -- Step 3: Assign Apps and Scripts](02-etg-device-group.md) for the assignment procedure.
 
@@ -159,7 +159,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 ### Step 7: Configure assignments (user group)
 
 1. Under **Assignments**, select **Add group**.
-2. Choose the **user security group** containing the users who should receive this APv2 deployment.
+2. Choose the **user security group** containing the users who receive this APv2 deployment.
 
    > **Warning:** Select the **user** group here, not the ETG device group. The Assignments page targets which users trigger APv2 deployment at sign-in. The Device group page (Step 3) targets the ETG device group for group membership assignment. Mixing these up prevents policy matching at enrollment time.
 
@@ -187,7 +187,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 - [ ] Timeout value is set appropriately for the app set (minimum 60 minutes for standard deployments)
 - [ ] All required apps appear in the policy's Apps section (up to 25)
 - [ ] All required scripts appear in the policy's Scripts section (up to 10)
-- [ ] Entra ID Local administrator settings match a valid combination from the table above for the desired User account type result
+- [ ] Entra ID Local administrator settings match a valid combination from the preceding table for the intended User account type result
 
 ## Configuration-Caused Failures
 

@@ -29,6 +29,9 @@
      - Use imperative voice for steps ("Navigate to...", "Select...", "Enter...")
      - Include full Intune portal navigation paths (e.g., Intune admin center > Devices > ...)
      - Link to relevant troubleshooting runbooks from "what breaks" callouts
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: Intune Admin Lead (role, not person name)
 -->
@@ -50,9 +53,9 @@ audience: admin
 
 ## Summary
 
-Following this recipe yields [a concrete, named end-state -- e.g., a self-deploying
+Following this recipe yields [a concrete, named end-state -- for example, a self-deploying
 Entra-joined shared Windows AVD-client device], provisioned end-to-end from zero through
-Intune. [1-2 more sentences: target platform, admin role/permissions required. Minimum 30
+Intune. [1-2 more sentences: target platform, administrator role/permissions required. Minimum 30
 words total -- C17 #5 fires on templates.]
 
 <!-- WORKED DECISION-POINT EXAMPLES (delete this whole comment block before publishing)
@@ -93,7 +96,7 @@ routing or recording prose like this line lives OUTSIDE the blockquote, never in
 
 ## Prerequisites
 
-- [Required admin role or RBAC permissions]
+- [Required administrator role or RBAC permissions]
 - [Required license or subscription]
 - [Prior configuration that must be completed first -- link to that guide]
 
@@ -111,7 +114,7 @@ routing or recording prose like this line lives OUTSIDE the blockquote, never in
 2. Select **[option]**.
 3. Configure **[setting name]**: [value or instruction].
 
-   > **What breaks if misconfigured:** [Specific downstream failure this causes. Include: what the admin will see, what the end user will see, and link to the troubleshooting runbook that covers this failure.]
+   > **What breaks if misconfigured:** [Specific downstream failure this causes. Include: what the administrator sees, what the end user sees, and link to the troubleshooting runbook that covers this failure.]
    > See: [Troubleshooting Runbook Title](../l1-runbooks/relevant-runbook.md)
 
 4. [Next action in this step].
@@ -150,5 +153,5 @@ it as a quotation.]
 ## See Also
 
 - [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) -- the full spec these worked examples instantiate, and the D-02 ruling classifying `docs/recipes/*` as `doc_type: Guide`
-- [Related admin guide](link)
+- [Related administrator guide](link)
 - [Relevant lifecycle overview](link)

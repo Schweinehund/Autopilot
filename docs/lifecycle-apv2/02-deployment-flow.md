@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-This guide walks through the 10-step Windows Autopilot Device Preparation (APv2) user-driven deployment flow, from OEM device boot through Enrollment Time Grouping, Entra join, IME installation, app and script delivery, and final desktop sign-in. It also maps the five stages where deployment failures most commonly surface, giving admins and L1/L2 support a quick reference for isolating where a stalled or failed APv2 deployment broke down.
+This guide walks through the 10-step Windows Autopilot Device Preparation (APv2) user-driven deployment flow, from OEM device boot through Enrollment Time Grouping, Entra join, IME installation, app and script delivery, and final desktop sign-in. It also maps the five stages where deployment failures most commonly surface, giving administrators and L1/L2 support a quick reference for isolating where a stalled or failed APv2 deployment broke down.
 
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2).
 
@@ -25,15 +25,15 @@ This guide walks through the 10-step Windows Autopilot Device Preparation (APv2)
 
 ## How to Use This Guide
 
-This is the 10-step deployment process for Windows Autopilot Device Preparation (APv2) in user-driven mode. Each step is explained below with what happens, what can fail, and where to look when it does. For prerequisites and configuration requirements, see [APv2 Prerequisites](01-prerequisites.md). For automatic mode (Windows 365 Cloud PCs), see [APv2 Automatic Mode](03-automatic-mode.md).
+This is the 10-step deployment process for Windows Autopilot Device Preparation (APv2) in user-driven mode. Each step is explained with what happens, what can fail, and where to look when it does. For prerequisites and configuration requirements, see [APv2 Prerequisites](01-prerequisites.md). For automatic mode (Windows 365 Cloud PCs), see [APv2 Automatic Mode](03-automatic-mode.md).
 
 ## Level 1 — Happy Path (LOCKED — 11 (11 nodes + 0 labeled edges))
 
 The 10-step deployment sequence runs as a single linear chain with no decision branches.
 
-1. Step 1: Device boots — OEM Windows 11
+1. Step 1: Device boots—OEM Windows 11
 2. Step 2: User connects to network + authenticates to Entra ID
-3. Enrollment Time Grouping (ETG) — device added to security group
+3. Enrollment Time Grouping (ETG)—device added to security group
 4. Step 3: Entra join + Intune enrollment
 5. Step 4: IME installs
 6. Step 5: Standard user enforcement
@@ -41,11 +41,11 @@ The 10-step deployment sequence runs as a single linear chain with no decision b
 8. Step 7: LOB and M365 apps install
 9. Step 8: PowerShell scripts run
 10. Step 9: Win32, Store, EAC apps install
-11. Step 10: Required setup complete — user signs in to desktop
+11. Step 10: Required setup complete—user signs in to desktop
 
 > ETG (Enrollment Time Grouping) is the core mechanism that replaces APv1's hardware hash pre-staging.
 
-> The device is added to a pre-defined security group at enrollment time — no prior device registration required.
+> The device is added to a pre-defined security group at enrollment time—no prior device registration required.
 
 ## Level 2 — Failure Points (LOCKED — 13 (13 nodes + 0 labeled edges))
 
@@ -65,7 +65,7 @@ The following table shows where common failures surface across the deployment fl
 
 **What happens:** The device powers on with the OEM-preinstalled Windows 11 image. The Out-of-Box Experience (OOBE) begins and prompts the user for region, keyboard layout, and network connection.
 
-**What can go wrong:** If the device runs Windows 10 or an unsupported Windows 11 version (below 22H2 without KB5035942), the APv2 Device Preparation policy will not activate. The device enrolls without APv2 configuration.
+**What can go wrong:** If the device runs Windows 10 or an unsupported Windows 11 version (earlier than 22H2 without KB5035942), the APv2 Device Preparation policy does not activate. The device enrolls without APv2 configuration.
 
 **Key detail:** APv2 requires Windows 11, version 22H2 with KB5035942 or later. April 2024 media and later includes this KB. Windows 10 is not supported.
 
@@ -81,7 +81,7 @@ The following table shows where common failures surface across the deployment fl
 
 **What happens:** The device joins Microsoft Entra ID and enrolls in Intune. At enrollment, the device is added to the Enrollment Time Grouping (ETG) security group. This is the ETG mechanism: the Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) adds the device to the pre-configured security group at enrollment time, bypassing dynamic group evaluation delays entirely.
 
-**What can go wrong:** Enrollment fails if the device is already registered as an APv1 Autopilot device — the APv1 profile silently takes precedence. Enrollment also fails if Microsoft Entra automatic enrollment (MDM scope) is not configured, or if the ETG security group does not have the Intune Provisioning Client as owner.
+**What can go wrong:** Enrollment fails if the device is already registered as an APv1 Autopilot device—the APv1 profile silently takes precedence. Enrollment also fails if Microsoft Entra automatic enrollment (MDM scope) is not configured, or if the ETG security group does not have the Intune Provisioning Client as owner.
 
 **Key detail:** If both an APv1 profile and an APv2 policy exist for a device, APv1 wins silently. Deregister from Autopilot before attempting APv2 deployment. See [APv2 Prerequisites](01-prerequisites.md) for the deregistration procedure.
 
@@ -97,9 +97,9 @@ The following table shows where common failures surface across the deployment fl
 
 **What happens:** If the user was added to the local Administrators group during Entra join, they are removed if the Device Preparation policy configures the account as a standard user. This enforcement happens before app installation.
 
-**What can go wrong:** If the Entra ID Local Administrator settings conflict with the Device Preparation policy, the user may retain admin rights or lose them unexpectedly.
+**What can go wrong:** If the Entra ID Local Administrator settings conflict with the Device Preparation policy, the user may retain administrator rights or lose them unexpectedly.
 
-**Key detail:** This step enforces the admin/standard user setting from the Device Preparation policy. Check the Entra ID portal for Local Administrator settings if user permission levels are incorrect.
+**Key detail:** This step enforces the administrator/standard user setting from the Device Preparation policy. Check the Entra ID portal for Local Administrator settings if user permission levels are incorrect.
 
 ### Step 6: MDM sync and policy delivery
 
@@ -121,7 +121,7 @@ The following table shows where common failures surface across the deployment fl
 
 **What happens:** PowerShell scripts selected in the Device Preparation policy execute on the device. These typically configure device settings, security baselines, or environment variables required before the user signs in.
 
-**What can go wrong:** Script execution failures at this step cause the entire deployment to fail. Scripts that exit with a non-zero exit code, throw unhandled exceptions, or time out will trigger a failure. **Failure here fails the deployment.**
+**What can go wrong:** Script execution failures at this step cause the entire deployment to fail. Scripts that exit with a non-zero exit code, throw unhandled exceptions, or time out trigger a failure. **Failure here fails the deployment.**
 
 **Key detail:** Up to 10 PowerShell scripts can be selected in the Device Preparation policy. Scripts run in the SYSTEM context.
 
@@ -149,18 +149,18 @@ After the user dismisses the "Required setup complete" page and signs in to the 
 - **Additional MDM policies** that synced during Step 6 continue applying.
 - **User-based configurations** (apps and policies targeted to user groups) begin deploying.
 
-This background processing is invisible to the user but may cause brief performance impacts or require a restart for certain policies (e.g., BitLocker encryption).
+This background processing is invisible to the user but may cause brief performance impacts or require a restart for certain policies (for example, BitLocker encryption).
 
 ## Note on Windows Quality Updates
 
-Windows quality updates may install after the device preparation page completes, adding 20-40 minutes and a possible restart to the total provisioning time. This behavior is subject to change — check [What's New in Windows Autopilot Device Preparation](https://learn.microsoft.com/en-us/autopilot/device-preparation/whats-new) for the latest update on this feature.
+Windows quality updates may install after the device preparation page completes, adding 20-40 minutes and a possible restart to the total provisioning time. This behavior is subject to change—check [What's New in Windows Autopilot Device Preparation](https://learn.microsoft.com/en-us/autopilot/device-preparation/whats-new) for the latest update on this feature.
 
 <details>
 <summary>L2 detail: MDM policy tracking vs app tracking</summary>
 
 During APv2 deployment, MDM policies sync but their application is NOT individually tracked. Only app and script installations are tracked and can cause deployment failure. This is a key difference from APv1's ESP, which tracks both policy and app installation.
 
-In the Intune admin center, the APv2 deployment status shows progress for app installations and script executions, but does not show individual policy application status. If a policy fails to apply, it will not be reflected in the deployment status — the failure surfaces later as a compliance or configuration issue.
+In the Intune admin center, the APv2 deployment status shows progress for app installations and script executions, but does not show individual policy application status. If a policy fails to apply, it is not reflected in the deployment status—the failure surfaces later as a compliance or configuration issue.
 
 </details>
 
@@ -174,7 +174,7 @@ In the Intune admin center, the APv2 deployment status shows progress for app in
 
 ---
 
-*Deployment flow sourced from [Microsoft Learn — APv2 User-Driven Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/user-driven/entra-join-workflow), verified April 2026.*
+*Deployment flow sourced from [Microsoft Learn—APv2 User-Driven Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/user-driven/entra-join-workflow), verified April 2026.*
 
 ## Version History
 

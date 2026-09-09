@@ -1,0 +1,887 @@
+{
+  "phase_baseline": {
+    "sha": "845218a48a30944939a13e5e0d0969c29a4d2f06",
+    "sha_short": "845218a4",
+    "branch": "v1.22/154-style-landing",
+    "measured_at": "2026-09-08T05:45:14Z",
+    "path_note": "Phase 158 and Phase 159 must RESOLVE this artifact's path rather than hardcode it -- .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close.",
+    "resolver": {
+      "helper": "scripts/validation/_lib/archive-path.mjs",
+      "function": "resolveArchivedPhasePath",
+      "roots": [
+        "v1.22-phases"
+      ],
+      "on_null": "the caller exits loud rather than falling back or globbing -- this token is unverifiable until archival, and a predecessor validator (check-phase-125.mjs:86) has carried a wrong milestone-root token green for two milestones. The loud exit converts a silent miss into a failure at archival.",
+      "confirmed_this_task": {
+        "live_suffix": "158-final-corpus-verification-publish-bundle",
+        "live_result": ".planning/phases/158-final-corpus-verification-publish-bundle",
+        "bogus_suffix": "999-does-not-exist",
+        "bogus_result": null,
+        "invocation": "node -e \"import('./scripts/validation/_lib/archive-path.mjs').then(m=>{const live=m.resolveArchivedPhasePath('158-final-corpus-verification-publish-bundle',['v1.22-phases']);const bogus=m.resolveArchivedPhasePath('999-does-not-exist',['v1.22-phases']);console.log(live,bogus);})\""
+      }
+    },
+    "embedded_156": {
+      "source_sha": "090ca859acf841d9c856df04635c184a7b7fa428",
+      "source_content_hash": "f69977d287fc3f8e523be036e363a55be8f98292ce678bbc40a76ab0851b998d",
+      "hash_method": "python3 -c \"import json,hashlib; d=json.load(open('.planning/phases/156-style-extension-full-landing-verification/156-GATE-BASELINE.json',encoding='utf-8')); v=d['phase_baseline']['after']; print(hashlib.sha256(json.dumps(v,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest())\"",
+      "rederivation": "1) Load 156-GATE-BASELINE.json (resolved via the same resolver, roots ['v1.22-phases']). 2) Take values = phase_baseline.after. 3) json.dumps(values, sort_keys=True, ensure_ascii=False), sha256 the UTF-8 bytes. 4) Compare to embedded_156.source_content_hash -- equal means this embed has not gone stale.",
+      "note": "This embeds Phase 156's OWN AFTER half (its final recorded post-batch-10 measurement, sha 090ca859), not its before half. It is NOT treated as Phase 158's own before -- Phase 158's before is measured fresh in this task at 845218a4 (D-19: embedding 156's after as 158's before would double-count, since 8 metrics already differ between them).",
+      "values": {
+        "sha": "090ca859acf841d9c856df04635c184a7b7fa428",
+        "sha_short": "090ca859",
+        "branch": "v1.22/154-style-landing",
+        "measured_at": "2026-09-05T06:12:28Z",
+        "shell_note": "Git Bash (POSIX sh) via the Bash tool, per D-13; no MSYS-style absolute path used in any invocation.",
+        "structural_gate": {
+          "c17": {
+            "script": "scripts/validation/c17-eee-contract.mjs",
+            "invocation": "node scripts/validation/c17-eee-contract.mjs",
+            "exitCode": 0,
+            "filesChecked": 237,
+            "totalViolations": 0,
+            "perAssertionViolations": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0,
+              "8": 0,
+              "9": 0,
+              "10": 0,
+              "11": 0,
+              "12": 0,
+              "13": 0
+            },
+            "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+          },
+          "check-phase-153": {
+            "script": "scripts/validation/check-phase-153.mjs",
+            "invocation": "node scripts/validation/check-phase-153.mjs",
+            "nested": false,
+            "exitCode": 0,
+            "pass": 111,
+            "fail": 0,
+            "skipped": 0,
+            "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+          },
+          "check-nav-hub-links": {
+            "script": "scripts/validation/check-nav-hub-links.mjs",
+            "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+            "exitCode": 0,
+            "hubPresenceFailures": 0,
+            "corpusLinkFailures": 0,
+            "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+          },
+          "verify2": {
+            "script": "scripts/docs-style/verify2.py",
+            "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+            "base": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+            "baseSource": "read from the resolved Phase 154 artifact's components.verify2.base value via the phase_baseline.resolver candidates (exactly one match: .planning/phases/154-*/154-GATE-BASELINE.json), not retyped as a hex string, per D-30 -- resolved fresh in this task, not copied from phase_baseline.before.structural_gate.verify2.baseSource",
+            "walkRoot": "docs",
+            "exitCode": 0,
+            "changedLines": 6382,
+            "explainedByFourRules": 3713,
+            "unexplained": 2669,
+            "lineCountDiffersFiles": [
+              "docs/_registry/RE-index.md",
+              "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md",
+              "docs/index.md",
+              "docs/recipes/01-shared-windows-avd-client.md",
+              "docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+              "docs/reference/licensing-matrix.md"
+            ],
+            "resolvedOk": {
+              "baseline": 6271,
+              "after": 6304
+            },
+            "missingFile": {
+              "baseline": 27,
+              "after": 27
+            },
+            "missingAnchor": {
+              "baseline": 454,
+              "after": 454
+            },
+            "introducedBySweep": 0,
+            "incidentallyFixed": 0,
+            "broad_drift_claim_dropped": "Unchanged conclusion from the before half, per D-31: Part A's raw changed/explained/unexplained counts (6382/3713/2669) moved again against both Phase 154's own recorded before-half figures (6119/3493/2626) and this phase's own before-half figures (6070/3462/2608), because verify2.py always diffs against the single ancient pre-merge BASE (789a348a) rather than incrementally, so every commit since the merge -- Phase 155's RCP prose and this phase's batch-10 edits alike -- adds to the raw counts. The lineCountDiffersFiles list is IDENTICAL to the before half (same 6 files, same resolvedOk 6271->6304) -- batch-10 introduced zero additional Part B drift. The only assertion this after half makes on this component is the narrow INTRODUCED 0 (link/anchor health is not worse after batch-10 than before it) -- the broad zero-structural-drift claim stays dropped, exactly as the before half recorded it.",
+            "tallyLine": "  INTRODUCED by the sweep: 0"
+          },
+          "pin_differ": {
+            "tallyLine": "562 pins / 562 found / 0 lost (legacy); 685 live-corpus pins / 0 lost / 0 added (live-corpus)",
+            "legacy": {
+              "tool": "ad hoc grep -F membership check, one invocation per pin line (per D-31's Phase-154 precedent: pins2.py must not be substituted for this assertion)",
+              "pinsFile": "scripts/docs-style/_CONTENT-PINS.txt",
+              "pinCount": 562,
+              "pinCountMethod": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt (never wc -l -- wc -l undercounts a file lacking a trailing newline)",
+              "found": 562,
+              "lost": 0,
+              "byteUnchanged": true,
+              "byteUnchangedInvocation": "test \"$(grep -c '' scripts/docs-style/_CONTENT-PINS.txt)\" = \"562\" && git diff --exit-code -- scripts/docs-style/_CONTENT-PINS.txt  (shell: Git Bash / POSIX sh via the Bash tool)",
+              "tallyLine": "562 pins / 562 found / 0 lost"
+            },
+            "liveCorpus": {
+              "beforeFile": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-before.txt",
+              "afterFile": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-after.txt",
+              "regenerationInvocation": "python scripts/docs-style/pins2.py scripts/validation docs > 156-LIVE-PINS-after.txt  (stderr: \"4590 literals scanned, 685 pinned\"; shell: Git Bash / POSIX sh via the Bash tool)",
+              "beforeCount": 685,
+              "afterCount": 685,
+              "lostCount": 0,
+              "lostInvocation": "grep -vxFf 156-LIVE-PINS-after.txt 156-LIVE-PINS-before.txt | grep -c ''  -- 0",
+              "addedCount": 0,
+              "addedInvocation": "grep -vxFf 156-LIVE-PINS-before.txt 156-LIVE-PINS-after.txt | grep -c ''  -- 0",
+              "note": "0 lost and 0 added: the batch-10 mechanical/em-dash/reflow edits did not remove or introduce any of the 685 live validator literals present in the corpus at either measurement point. This is the D-08 detector actually needed -- the legacy 562-pin differ alone could not have caught a loss among the 78 present-but-unpinned literals this phase's before half measured."
+            }
+          }
+        }
+      }
+    },
+    "embedded_157": {
+      "source_sha": "1cd8c4d7f579f0e07eaef9d97df739b88dec8584",
+      "source_sha_note": "157-BASELINE.json's own top-level key is base_sha, not sha -- note the naming break from the GATE-BASELINE convention (D-19).",
+      "source_content_hash": "c71f502c2e81e0b2943fc21cf5da9c46a0b6eaafdc5c030109c8707c9514376f",
+      "hash_method": "python3 -c \"import json,hashlib; d=json.load(open('.planning/phases/157-std-hyg-authoring-standard-corpus-hygiene/157-BASELINE.json',encoding='utf-8')); print(hashlib.sha256(json.dumps(d,sort_keys=True,ensure_ascii=False).encode('utf-8')).hexdigest())\"",
+      "rederivation": "1) Load 157-BASELINE.json (resolved via the same resolver, roots ['v1.22-phases']). 2) json.dumps(the whole object, sort_keys=True, ensure_ascii=False), sha256 the UTF-8 bytes. 3) Compare to embedded_157.source_content_hash -- equal means this embed has not gone stale.",
+      "note": "157-BASELINE.json carries no before/after split -- it is Phase 157's single pre-content-edit measurement (base_sha 1cd8c4d7). Embedded whole, not treated as Phase 158's own before.",
+      "values": {
+        "base_sha": "1cd8c4d7f579f0e07eaef9d97df739b88dec8584",
+        "apex": {
+          "pass": 111,
+          "fail": 0,
+          "skipped": 0,
+          "summary_tail": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+        },
+        "c17": {
+          "files_checked": 237,
+          "violations": 0,
+          "summary_tail": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+        },
+        "nav_hub": {
+          "summary_tail": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+        },
+        "checkpy": {
+          "total": 10402,
+          "rules": {
+            "passive": 3756,
+            "em-dash-spaced": 3123,
+            "word-list": 3078,
+            "directional": 207,
+            "future-tense": 91,
+            "person-first": 86,
+            "latin-abbrev": 61
+          }
+        },
+        "tracked_md": 294,
+        "needle_literal": 2,
+        "needle_fix11": 2,
+        "needle_class": 83,
+        "needle_class_sites": [
+          "docs/admin-setup-8021x/01-eap-method-overview.md:179",
+          "docs/admin-setup-android/02-zero-touch-portal.md:268",
+          "docs/admin-setup-android/08-cope-full-admin.md:143",
+          "docs/admin-setup-android/08-cope-full-admin.md:395",
+          "docs/admin-setup-android/10-aosp-zebra.md:62",
+          "docs/admin-setup-android/10-aosp-zebra.md:216",
+          "docs/admin-setup-android/12-aosp-htc-vive-focus.md:182",
+          "docs/admin-setup-android/13-aosp-meta-quest.md:257",
+          "docs/admin-setup-android/13-aosp-meta-quest.md:265",
+          "docs/admin-setup-ios/05-app-deployment.md:273",
+          "docs/admin-setup-macos/04-app-deployment.md:199",
+          "docs/admin-setup-macos/08-auth-methods-deep-dive.md:200",
+          "docs/admin-setup-macos/10-kerberos-sso-extension.md:274",
+          "docs/cross-platform/apple-business/01-role-permission-model.md:17",
+          "docs/cross-platform/apple-business/01-role-permission-model.md:57",
+          "docs/cross-platform/apple-business/01-role-permission-model.md:166",
+          "docs/cross-platform/apple-business/01-role-permission-model.md:257",
+          "docs/cross-platform/apple-business/04-custom-role-authoring.md:51",
+          "docs/cross-platform/apple-business/04-custom-role-authoring.md:129",
+          "docs/cross-platform/apple-business/06-mdm-server-assignment.md:30",
+          "docs/cross-platform/apple-business/07-vpp-content-token-consolidation.md:24",
+          "docs/cross-platform/apple-business/08-managed-apple-account-provisioning.md:31",
+          "docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md:68",
+          "docs/cross-platform/apple-business/11-vpp-catalog-runbook.md:25",
+          "docs/cross-platform/apple-business/11-vpp-catalog-runbook.md:126",
+          "docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md:26",
+          "docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md:153",
+          "docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md:201",
+          "docs/cross-platform/apple-business/13-device-release-runbook.md:24",
+          "docs/cross-platform/apple-business/13-device-release-runbook.md:95",
+          "docs/cross-platform/apple-business/14-device-transfer-runbook.md:25",
+          "docs/cross-platform/apple-business/14-device-transfer-runbook.md:82",
+          "docs/cross-platform/apple-business/14-device-transfer-runbook.md:98",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:25",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:32",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:80",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:97",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:124",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:138",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:146",
+          "docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md:164",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:29",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:95",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:125",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:147",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:155",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:169",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:180",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:192",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:207",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:225",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:234",
+          "docs/cross-platform/apple-business/16-managed-apple-account-runbook.md:317",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:26",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:63",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:87",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:127",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:150",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:168",
+          "docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md:195",
+          "docs/cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md:17",
+          "docs/decision-trees/08-android-triage.md:98",
+          "docs/l1-runbooks/29-android-aosp-enrollment-failed.md:237",
+          "docs/l2-runbooks/24-linux-log-collection.md:78",
+          "docs/l2-runbooks/24-linux-log-collection.md:134",
+          "docs/l2-runbooks/25-linux-agent-investigation.md:202",
+          "docs/l2-runbooks/25-linux-agent-investigation.md:243",
+          "docs/l2-runbooks/26-apple-business-permission-denied.md:81",
+          "docs/l2-runbooks/33-8021x-radius-eap-investigation.md:65",
+          "docs/operations/app-lifecycle/00-overview.md:220",
+          "docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md:213",
+          "docs/operations/co-management/03-cocmgmt-migration-paths.md:55",
+          "docs/operations/drift-migration/00-overview.md:204",
+          "docs/operations/drift-migration/01-windows-drift-detection.md:221",
+          "docs/operations/drift-migration/02-macos-drift-detection.md:117",
+          "docs/operations/drift-migration/03-ios-android-drift-detection.md:131",
+          "docs/operations/patch-management/00-overview.md:266",
+          "docs/reference/android-capability-matrix.md:127",
+          "docs/reference/aosp-oem-matrix.md:103",
+          "docs/reference/aosp-oem-matrix.md:107",
+          "docs/reference/linux-capability-matrix.md:105",
+          "docs/v1.9-DEFERRED-CLEANUP.md:19",
+          "docs/_glossary-macos.md:347"
+        ],
+        "needles": {
+          "needle_literal": "\\.planning/",
+          "needle_fix11": "\\.planning/research/|\\.planning/phases/",
+          "needle_class": "\\b(ROADMAP|REQUIREMENTS|PITFALLS|FEATURES|RESEARCH|STACK|PLAN|SUMMARY)(\\.md)?\\b"
+        },
+        "needle_scope_notes": {
+          "needle_literal": "grep -rn over docs/ with no directory exclusion, per D-23 / SC#4",
+          "needle_fix11": "grep -rn over docs/ with no directory exclusion, per D-20/D-21 (FIX-11's own criterion)",
+          "needle_class": "grep -rnE over docs/*.md, excludes docs/_standards/ and docs/_registry/ per D-23 (provenance-recording directories)"
+        }
+      }
+    },
+    "before": {
+      "sha": "845218a48a30944939a13e5e0d0969c29a4d2f06",
+      "sha_short": "845218a4",
+      "measured_at": "2026-09-08T05:45:14Z",
+      "shell_note": "Git Bash (POSIX sh) via the Bash tool; every command below ran directly in one Bash-tool invocation, never wrapped in a second bash -c (D-20's 53-zero-byte-file incident).",
+      "c17": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/c17-eee-contract.mjs"
+        ],
+        "exitCode": 0,
+        "filesChecked": 237,
+        "violations": 0,
+        "extractor": "stdout tail: 'C17 summary: N files checked, M with violations, K total violations'",
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check_phase_153": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/check-phase-153.mjs"
+        ],
+        "exitCode": 0,
+        "pass": 111,
+        "fail": 0,
+        "skipped": 0,
+        "extractor": "stdout tail: 'Result: N PASS, M FAIL, K SKIPPED (total checks: T)'",
+        "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+      },
+      "check_nav_hub_links": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/check-nav-hub-links.mjs"
+        ],
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "extractor": "stdout tail: 'check-nav-hub-links summary: N hub-presence failure(s), M corpus-link failure(s), K total'",
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "verify2": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify2.py",
+          "d0b611e8"
+        ],
+        "base": "d0b611e8",
+        "base_note": "BASE per D-12/158-RESEARCH.md: d0b611e8 is the parent of e6930d25, Phase 157's first content commit -- excludes 157's own planning commits while capturing every 157 docs/ edit.",
+        "exitCode": 0,
+        "part_a": {
+          "changed_lines": 88,
+          "explained_by_four_rules": 0,
+          "unexplained": 88,
+          "note": "Directional-only per D-31/D-18: this component asserts nothing on the raw Part A totals, which move at every measurement because verify2.py always diffs against the fixed pre-merge BASE."
+        },
+        "part_b": {
+          "resolved_ok": 6319,
+          "missing_file": 27,
+          "missing_anchor": 455,
+          "introduced_by_sweep": 1,
+          "introduced_item": "docs/admin-setup-apv2/03-device-preparation-policy.md -> ../operations/patch-management/08-windows-app-updates.md#eam-store-winget-routing",
+          "introduced_item_note": "D-18's named, attributed blind-spot item -- introduced by 97f7ca28 fix(157-05) (a deliberate explicit-anchor link); the anchor is live; check-nav-hub-links.mjs unions explicit <a id> values and reports 0. Not a real link break."
+        },
+        "line_count_differs": {
+          "count": 14,
+          "files": [
+            "docs/_glossary-linux.md",
+            "docs/_glossary.md",
+            "docs/_standards/EEE-SOP-standard.md",
+            "docs/_templates/admin-template-android.md",
+            "docs/_templates/admin-template-ios.md",
+            "docs/_templates/admin-template-macos.md",
+            "docs/_templates/admin-template.md",
+            "docs/_templates/l1-template.md",
+            "docs/_templates/l2-template.md",
+            "docs/_templates/recipe-template.md",
+            "docs/_templates/reference-template.md",
+            "docs/operations/drift-migration/02-macos-drift-detection.md",
+            "docs/operations/drift-migration/03-ios-android-drift-detection.md",
+            "docs/operations/patch-management/00-overview.md"
+          ],
+          "note": "158-CONTEXT.md D-16 states this moved 6 -> 21 (21 total, 15 more files). 158-RESEARCH.md's live re-measurement at HEAD f5b01df7 found 14, not 21, with docs/ provably byte-identical between CONTEXT's measurement commit (937d0a1f) and RESEARCH's HEAD -- so this is not staleness from a moved corpus. This task's own live run at 845218a4 reproduces 14 exactly (verbatim file list above, via `python scripts/docs-style/verify2.py d0b611e8 2>&1 | grep -c \"LINE COUNT DIFFERS\"`), matching RESEARCH and NOT CONTEXT. Per this milestone's own 'a written record is not evidence' principle (VERIFY-06's premise), this live measurement SUPERSEDES both prior written figures (CONTEXT's 21 and RESEARCH's own un-committed 14) as the phase's asserted before-half value. 21 is not reproducible by any command recorded anywhere in this repository."
+        }
+      },
+      "pin_differ": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/pins2.py",
+          "scripts/validation",
+          "docs"
+        ],
+        "live_corpus": {
+          "pinned": 685,
+          "scanned": 4590,
+          "compared_to": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-after.txt",
+          "lost": 0,
+          "added": 0
+        },
+        "constants": {
+          "content_pins_count": 563,
+          "content_pins_invocation": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt",
+          "pinned_headings_count": 187,
+          "pinned_headings_invocation": "grep -c '' scripts/docs-style/_PINNED-HEADINGS.txt",
+          "note": "These two are constants recorded for reference, never asserted as the differ's own result -- the differ's result is the live_corpus block above (685/0/0)."
+        }
+      },
+      "check_prose_style": {
+        "cmd": "python",
+        "args": [
+          "scripts/validation/check-prose-style.py"
+        ],
+        "exitCode": 0,
+        "tallyLine": "check-prose-style summary: all assertions PASS -- 0 findings across the gated slice"
+      }
+    },
+    "after": {
+      "sha": "b889501f7e43dfc22f9a85f10f645032a1a6bf44",
+      "sha_short": "b889501f",
+      "measured_at": "2026-09-08T08:00:00Z",
+      "shell_note": "Git Bash (POSIX sh) via the Bash tool; every recorded command below ran directly in one Bash-tool invocation, never wrapped in a second bash -c (D-20's 53-zero-byte-file incident).",
+      "tracked_tree_clean": {
+        "cmd": "git",
+        "args": [
+          "status",
+          "--porcelain",
+          "--untracked-files=no"
+        ],
+        "result_empty": true
+      },
+      "untracked_set": {
+        "cmd": "git",
+        "args": [
+          "status",
+          "--porcelain"
+        ],
+        "count": 10,
+        "entries": [
+          ".agents/",
+          ".claude/skills/fireworks-tech-graph/",
+          ".claude/skills/jira-milestone/install-jira-milestone-hook.cjs",
+          ".gsd/",
+          ".obsidian/",
+          ".planning/milestone.lock",
+          ".planning/phases/154-style-landing-merge-the-verified-google-style-pass/154-PATTERNS.md",
+          ".planning/state.json",
+          ".playwright-mcp/",
+          "skills-lock.json"
+        ],
+        "note": "MEASURED 10, not the 9 this artifact's before half and this task's own <verify> block expect: .planning/milestone.lock is a NEW foreign entry not present at the before-half measurement (845218a4) or at this session's start -- its own content identifies it as this session's own GSD phase-lock file (`{\"phase\":\"158\",\"session\":\"claude-code-session-id-d17be97b-...\",\"pid\":48448,...}`), created by the gsd-tools runtime as session bookkeeping, not a corpus-drift artifact. Per this milestone's own 'measure live, record the discrepancy, do not force the written figure' discipline (158-01's LINE COUNT DIFFERS correction, 158-05's four measured discrepancies), the count is recorded as measured (10) with the new entry named explicitly, rather than silently reported as 9. All 10 entries, including the 9 recorded at the before half, are listed verbatim above; 3 sit under .planning/ (state.json, 154-PATTERNS.md, milestone.lock), not 2."
+      },
+      "c17": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/c17-eee-contract.mjs"
+        ],
+        "exitCode": 0,
+        "filesChecked": 237,
+        "violations": 0,
+        "extractor": "stdout tail: 'C17 summary: N files checked, M with violations, K total violations'",
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check_phase_153": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/check-phase-153.mjs"
+        ],
+        "exitCode": 0,
+        "pass": 111,
+        "fail": 0,
+        "skipped": 0,
+        "extractor": "stdout tail: 'Result: N PASS, M FAIL, K SKIPPED (total checks: T)'",
+        "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)"
+      },
+      "check_nav_hub_links": {
+        "cmd": "node",
+        "args": [
+          "scripts/validation/check-nav-hub-links.mjs"
+        ],
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "extractor": "stdout tail: 'check-nav-hub-links summary: N hub-presence failure(s), M corpus-link failure(s), K total'",
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "verify2": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify2.py",
+          "d0b611e8"
+        ],
+        "base": "d0b611e8",
+        "exitCode": 0,
+        "part_a": {
+          "changed_lines": 105,
+          "explained_by_four_rules": 17,
+          "unexplained": 88,
+          "note": "Directional-only per D-31/D-18/D-19: this component asserts nothing on the raw Part A totals, which move at every measurement (verify2.py always diffs against the fixed pre-merge BASE d0b611e8). Moved from the before half (88/0/88) because 158-02/158-03/158-05 landed 24 tracked-file edits since; 17 of the added lines now match the four canon rules (via->using x2, native->built-in, wish->want, above->preceding, plus em-dash tightening on 28 lines)."
+        },
+        "part_b": {
+          "resolved_ok": 6320,
+          "missing_file": 27,
+          "missing_anchor": 455,
+          "introduced_by_sweep": 1,
+          "introduced_item": "docs/admin-setup-apv2/03-device-preparation-policy.md -> ../operations/patch-management/08-windows-app-updates.md#eam-store-winget-routing",
+          "introduced_item_note": "D-18's named, attributed blind-spot item, unchanged from the before half -- introduced by 97f7ca28 fix(157-05), already reflected in this phase's own before-half measurement (845218a4), not a within-phase-158 delta. Discharged below via nav-hub-at-base-worktree."
+        },
+        "line_count_differs": {
+          "count": 14,
+          "files": [
+            "docs/_glossary-linux.md",
+            "docs/_glossary.md",
+            "docs/_standards/EEE-SOP-standard.md",
+            "docs/_templates/admin-template-android.md",
+            "docs/_templates/admin-template-ios.md",
+            "docs/_templates/admin-template-macos.md",
+            "docs/_templates/admin-template.md",
+            "docs/_templates/l1-template.md",
+            "docs/_templates/l2-template.md",
+            "docs/_templates/recipe-template.md",
+            "docs/_templates/reference-template.md",
+            "docs/operations/drift-migration/02-macos-drift-detection.md",
+            "docs/operations/drift-migration/03-ios-android-drift-detection.md",
+            "docs/operations/patch-management/00-overview.md"
+          ],
+          "note": "IDENTICAL to the before half's 14-file list (steady, no within-phase-158 delta). docs/reference/firmware-oem-matrix.md -- the file 158-CONTEXT.md D-51's original 'LINE COUNT DIFFERS 6->21 with a post-156-close bucket (firmware-oem-matrix.md, bb22f89a)' language names -- does not appear in this list at either the before or the after half; that premise was already superseded by plan 158-01's live measurement (14, not 21; see 158-01-SUMMARY key-decisions) before this task ran. No drift[] row is authored for this metric (before == after; D-51's rows are conditioned on 'if their metrics moved')."
+        }
+      },
+      "pin_differ": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/pins2.py",
+          "scripts/validation",
+          "docs"
+        ],
+        "live_corpus": {
+          "pinned": 685,
+          "scanned": 4590,
+          "compared_to": ".planning/phases/156-style-extension-full-landing-verification/156-LIVE-PINS-after.txt",
+          "lost": 0,
+          "added": 0
+        },
+        "constants": {
+          "content_pins_count": 563,
+          "content_pins_invocation": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt",
+          "pinned_headings_count": 187,
+          "pinned_headings_invocation": "grep -c '' scripts/docs-style/_PINNED-HEADINGS.txt",
+          "note": "Both constants steady vs. the before half (563/187) -- the 562->563 transition (83660691) predates this phase's own before-half measurement, already reflected in it. No drift row (steady, not moved within Phase 158)."
+        }
+      },
+      "check_prose_style": {
+        "cmd": "python",
+        "args": [
+          "scripts/validation/check-prose-style.py"
+        ],
+        "exitCode": 0,
+        "tallyLine": "check-prose-style summary: all assertions PASS -- 0 findings across the gated slice"
+      },
+      "nav_hub_at_base_worktree": {
+        "cmd": "git",
+        "args": [
+          "worktree",
+          "add",
+          "--detach",
+          "<tmp-dir>",
+          "d0b611e8"
+        ],
+        "followed_by": {
+          "cmd": "node",
+          "args": [
+            "scripts/validation/check-nav-hub-links.mjs"
+          ],
+          "cwd": "<tmp-dir> (the worktree of BASE d0b611e8)"
+        },
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total",
+        "worktree_removed": true,
+        "worktree_removed_invocation": "git worktree remove --force <tmp-dir>",
+        "discharge_note": "D-18's link-health blind-spot item (docs/admin-setup-apv2/03-device-preparation-policy.md -> .../08-windows-app-updates.md#eam-store-winget-routing) is discharged as four things: (1) the item itself, named above; (2) its class -- the explicit-anchor class, 284 of verify2's 289 distinct missing-anchor items at HEAD are this class, the remaining 5 are 2 inside a fenced block in EEE-SOP-standard.md:542-549 and 3 in docs/_templates/ (which check-nav-hub-links.mjs skips as a link source, not a target); (3) its introducing commit, 97f7ca28 fix(157-05); (4) a clean 0/0 result at BOTH ends -- HEAD (measured directly, tallyLine above in check_nav_hub_links) and BASE d0b611e8 (measured here via a worktree of BASE, running the unmodified HEAD checker with its cwd set to that worktree -- the checker is fully cwd-relative per :54/:61/:207, so this holds the resolver constant with no new tool and no modification to the checker). No extra worktree remains after removal (confirmed via `git worktree list`)."
+      }
+    },
+    "comparison": {
+      "comparators": {
+        "c17": "equality",
+        "check-phase-153": "equality",
+        "check-nav-hub-links": "equality",
+        "pin_differ": "equality (live-corpus pinned/lost/added)",
+        "verify2": "directional (Part A only; Part B's narrow INTRODUCED assertion is equality-by-exception per D-18)"
+      },
+      "components": [
+        "c17",
+        "check-phase-153",
+        "check-nav-hub-links",
+        "verify2",
+        "pin_differ",
+        "check-prose-style",
+        "nav-hub-at-base-worktree"
+      ],
+      "components_note": "nav-hub-at-base-worktree (D-18) is named here as the seventh comparison component but is not measured in this task's before-half -- it is obtained later by running the HEAD check-nav-hub-links.mjs with cwd set to a git worktree of BASE, to discharge verify2's INTRODUCED-1 item.",
+      "dropped": [
+        {
+          "name": "check-phase-135",
+          "reason": "its surface is untouched by this phase; it runs in full under the apex (check-phase-153.mjs's CHAIN-135 member) with 0 NESTED refs, so a standalone re-run adds nothing check-phase-153 doesn't already assert (D-19)."
+        },
+        {
+          "name": "verify2 BASE-worktree sibling (a second gate-drift.mjs)",
+          "reason": "declined per D-21: a self-typed zero in a second tool proves only determinism, not correctness; the discharge is the item, its class, its commit, and the checker's 0/0 at both ends, not a new tool."
+        }
+      ]
+    },
+    "deterministic_slice": {
+      "sweep3_mechanical_residual": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/sweep3.py",
+          "docs",
+          "scripts/docs-style/_CONTENT-PINS.txt"
+        ],
+        "total_edits": 1,
+        "site": "docs/operations/patch-management/08-windows-app-updates.md:266 (token 'desired')",
+        "note": "Reproduces unchanged from the before half: the citation-blocked, permanent residual first recorded at Phase 156, confirmed still 1 at the after half."
+      },
+      "rule_sets_scoped_13": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/sweep3.py",
+          "<scratch-copy-of-the-13-156-targets>/docs",
+          "scripts/docs-style/_CONTENT-PINS.txt",
+          "--subs",
+          "<each-of-36-subs-*.tsv-in-turn>"
+        ],
+        "total_edits": 0,
+        "note": "Reproduces unchanged from the before half: 0 across all 36 rule sets against a scratch copy containing only Phase 156's 13 target documents (156-TARGETS.txt) -- neither Phase 158's 15 sweep-touched files nor its hand-remediation edits overlap with these 13 targets."
+      },
+      "rule_sets_unscoped": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/sweep3.py",
+          "docs",
+          "scripts/docs-style/_CONTENT-PINS.txt",
+          "--subs",
+          "<each-of-36-subs-*.tsv-in-turn>"
+        ],
+        "total_edits": 9,
+        "before_this_phase": 50,
+        "note": "MOVED from the before half's 50 (D-17's reproduced figure) to 9, measured fresh at the after half. This is the deliberately unscoped reading (D-17): recorded HERE, in this block, and never inside comparison.components, because it is a different question with a different scope (all 36 rule sets over the whole of docs/, not the 7 gated structural components) and mixing them would make the component comparison meaningless. The movement (50 -> 9) is explained, not asserted: 158-02's three hand-remediation edits (via->using x2, native->built-in) and 158-03's em-dash sweep (28 lines, 15 files) each remove candidates this unscoped 36-set reading would otherwise still find, so the reduction is expected and consistent with the phase's own remediation, not a regression or an unexplained drift."
+      }
+    },
+    "recorded": {
+      "checkpy_total": {
+        "cmd": "python",
+        "args": [
+          ".claude/skills/google-style/check.py",
+          "--no-headings",
+          "<git ls-files docs/*.md, single Bash-tool word-split, never a nested bash -c>"
+        ],
+        "total": 10403,
+        "before_this_phase": 10427,
+        "note": "MOVED from the before half's 10427 to 10403 (-24), consistent with the em-dash sweep's 28 tightened lines (each removing one 'em-dash-spaced' candidate from check.py's own count) offset by a small number of new candidates 158-02's own prose introduced. Recorded, never asserted, per D-19 -- it moves on every prose byte and is not a criterion."
+      },
+      "zip_size_bytes": 4105804,
+      "zip_sha256": "65a102345151865339dc45076ad8b4b3879c508bd5d3ec64122949f16be7b4ce",
+      "zip_note": "[MEASURED, plan 158-07] python hashlib.sha256 over dist/docs-library-v1.22.zip after the single build invocation (build committed at 86c5f074): size_bytes=4105804, sha256 as recorded. Both values are non-reproducible by design -- Compress-Archive stamps per-entry DOS times and pandoc embeds a build timestamp (D-24) -- and are recorded here outside drift[] and are never asserted as equalities against a prior build."
+    },
+    "drift": [
+      {
+        "component": "verify2",
+        "metric": "part_b.resolved_ok",
+        "before": 6319,
+        "after": 6320,
+        "attributed_to": [
+          "804e12ba"
+        ],
+        "file": "docs/_glossary-linux.md",
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify2.py",
+          "d0b611e8"
+        ],
+        "extractor": "stdout Part B table, 'resolved OK' after-column value",
+        "comparator": "equality (informational; verify2 Part B's narrow assertion is the INTRODUCED-count only, per D-18 -- this metric is recorded, not asserted)",
+        "evidence": "804e12ba added `[Reboot Handling](operations/patch-management/05-linux-update-delivery.md#reboot-handling)` to docs/_glossary-linux.md:143, a new in-corpus link that resolves to a live anchor (05-linux-update-delivery.md:233 `## Reboot Handling`); `git show --name-only 804e12ba` includes docs/_glossary-linux.md. This attribution is falsifiable, not proven-causal (see unattributed_rows note): the runner's drift-attribution mode confirms 804e12ba touches this row's file, which is what the evidence check can establish."
+      },
+      {
+        "component": "verify2",
+        "metric": "part_a (raw, directional -- changed_lines / explained_by_four_rules)",
+        "before": {
+          "changed_lines": 88,
+          "explained_by_four_rules": 0,
+          "unexplained": 88
+        },
+        "after": {
+          "changed_lines": 105,
+          "explained_by_four_rules": 17,
+          "unexplained": 88
+        },
+        "attributed_to": "158-remediation",
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify2.py",
+          "d0b611e8"
+        ],
+        "extractor": "stdout Part A summary lines",
+        "comparator": "directional (D-19: asserts nothing on the raw totals; verify2.py always diffs against the fixed pre-merge BASE d0b611e8, so every commit since the before half accrues to these totals)",
+        "evidence": "attributed_to is the string '158-remediation', not a SHA list, per D-51's vocabulary -- this metric is a bulk effect of 158-02/158-03/158-05's 24 tracked-file edits collectively (via->using x2, native->built-in, wish->want, above->preceding, the 28-line em-dash sweep), not attributable to one commit; the drift-attribution runner SKIPs non-list attributions rather than counting them unattributed or forcing a single-commit claim it cannot support."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/_registry/RE-index.md",
+        "before": "is the publish gate — any other value silently",
+        "after": "is the publish gate—any other value silently",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/_registry/RE-index.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/_registry/RE-index.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/_registry/RE-index.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/admin-setup-android/09-aosp-realwear.md",
+        "before": "the staging-token expiry is asymmetric — userless caps at 90 days",
+        "after": "the staging-token expiry is asymmetric—userless caps at 90 days",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/admin-setup-android/09-aosp-realwear.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/admin-setup-android/09-aosp-realwear.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/admin-setup-android/09-aosp-realwear.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/admin-setup-android/11-aosp-pico.md",
+        "before": "the staging-token expiry is asymmetric — userless caps at 90 days",
+        "after": "the staging-token expiry is asymmetric—userless caps at 90 days",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/admin-setup-android/11-aosp-pico.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/admin-setup-android/11-aosp-pico.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/admin-setup-android/11-aosp-pico.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/end-user-guides/android-work-profile-setup.md",
+        "before": "A stable internet connection — Wi-Fi or cellular data.",
+        "after": "A stable internet connection—Wi-Fi or cellular data.",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/end-user-guides/android-work-profile-setup.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/end-user-guides/android-work-profile-setup.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/end-user-guides/android-work-profile-setup.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/l1-runbooks/01-device-not-registered.md",
+        "before": "This runbook covers read-only L1 diagnostic steps only — no registry edits",
+        "after": "This runbook covers read-only L1 diagnostic steps only—no registry edits",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/l1-runbooks/01-device-not-registered.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/l1-runbooks/01-device-not-registered.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/l1-runbooks/01-device-not-registered.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "sweep-coverage",
+        "metric": "content diff, file outside Phase 157's enumerated 59-file edit set: docs/recipes/02-shared-ipad-full-provisioning.md",
+        "before": "that is a distinct fact from the factory reset above — it is the one that destroys user data",
+        "after": "that is a distinct fact from the factory reset above—it is the one that destroys user data",
+        "attributed_to": [
+          "44ab8c21"
+        ],
+        "file": "docs/recipes/02-shared-ipad-full-provisioning.md",
+        "cmd": "git",
+        "args": [
+          "diff",
+          "--stat",
+          "0a458c84cfab294dea802479f0f624546dfa2f5d..HEAD",
+          "--",
+          "docs/recipes/02-shared-ipad-full-provisioning.md"
+        ],
+        "extractor": "git diff hunk, the tightened em dash on the quoted line",
+        "comparator": "presence (file changed by the sweep, confirmed by evidence)",
+        "evidence": "git show --name-only 44ab8c21 includes docs/recipes/02-shared-ipad-full-provisioning.md; comm -12 against 156-TARGETS.txt confirms zero overlap with Phase 156's 13 targets (158-03-SUMMARY.md)."
+      },
+      {
+        "component": "verify2",
+        "metric": "Part A LINE-COUNT-DIFFERS blind-spot coverage of the em-dash sweep's 15 files",
+        "before": "n/a (structural fact, not a before/after value)",
+        "after": "4 of the 15 swept files (docs/_glossary.md, docs/_glossary-linux.md, docs/_standards/EEE-SOP-standard.md, docs/_templates/admin-template-android.md) sit on the 14-item LINE-COUNT-DIFFERS list and are therefore invisible to verify2 Part A's per-line diff; 2 of the 15 (docs/_registry/RE-index.md, docs/operations/00-index.md) carry no doc_id frontmatter and are not enrolled in the C17/EEE structural contract.",
+        "attributed_to": "158-sweep",
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify2.py",
+          "d0b611e8"
+        ],
+        "extractor": "set intersection: the 15 sweep-file list (158-03-SUMMARY.md) vs. the 14-file LINE COUNT DIFFERS list (this task's own verify2 run) vs. `head -8 <file> | grep -i doc_id` for EEE enrollment",
+        "comparator": "informational (a coverage fact, not an equality/direction assertion)",
+        "evidence": "2 of the 4 hand-remediation sites (docs/_standards/EEE-SOP-standard.md, docs/_glossary-linux.md) are among the 4 LINE-COUNT-DIFFERS-blind files, confirmed by direct grep; the third hand-remediation commit's files (docs/index.md, docs/operations/00-index.md) are NOT on the LINE-COUNT-DIFFERS list -- a measured correction to this plan's own action-text phrasing ('including all three hand-remediation sites'), recorded per this milestone's 'measure live, record the discrepancy' discipline rather than forced to read 'three' or 'a third' (5 of 15) when the live count is 4 of 15."
+      }
+    ],
+    "unattributed_rows": {
+      "count": 0,
+      "rows": [],
+      "computed_by": "scripts/docs-style/audit-claimed-fixes.mjs --drift (the runner's drift-attribution mode, D-21/D-47), not typed by hand",
+      "invocation": "node scripts/docs-style/audit-claimed-fixes.mjs --drift .planning/phases/158-final-corpus-verification-publish-bundle/158-GATE-BASELINE.json --log <tmp-log>",
+      "raw_output": "{\"unattributed_rows\":[]}",
+      "scope_note": "7 of the 9 drift[] rows carry a SHA-list attributed_to and were checked; 2 rows (the Part A raw-totals movement and the LINE-COUNT-DIFFERS blind-spot coverage row) carry a non-list attributed_to ('158-remediation' / '158-sweep') and are SKIPPED by this mode by design, not counted as unattributed -- D-51 names these as the two vocabulary members exactly for cases where no single commit is the correct unit of attribution.",
+      "causation_caveat": "This check (git show --name-only <sha> confirms the attributed commit(s) touch the row's own file) falsifies a WRONG attribution -- it proves nothing about whether that commit is the true CAUSE of the measured delta, only that it is a commit capable of having caused it. A count of 0 unattributed rows here means every list-attributed drift row's claimed commit is at least evidentially consistent with the file it names; it is not independent proof of causation, and this artifact does not claim otherwise."
+    },
+    "discharge": {
+      "sc3": {
+        "criterion": "SC#3: every file Phase 157 edited gets its style pass and disposition.",
+        "points_at": [
+          "scripts/docs-style/_DISPOSITIONS-158.tsv (plan 158-05: 9 corpus meaning-checker findings, header-attributes 5 planning-tree findings, zero undispositioned docs/ findings at base d0b611e8)",
+          "scripts/docs-style/_STYLE-DISPOSITIONS-158.tsv (plan 158-05: 93 occurrence rows + 27 NO-CANDIDATES rows over all 59 Phase-157-edited files, exactly 5 EDIT rows)",
+          ".planning/phases/158-final-corpus-verification-publish-bundle/158-SWEEP-DISPOSITIONS.md (plan 158-05: the thin narrative and its three-limb re-proof -- limb 1: all 5 EDIT rows silent; limb 2: 14 line-sharing movements investigated and recorded, none re-anchored; limb 3: 85 measured at the post-edit tip, corrected arithmetic 93-5 EDIT-3 SWEPT=85)",
+          "this task's own sweep-coverage drift rows (the six outside-59 files) and the LINE-COUNT-DIFFERS blind-spot coverage row above"
+        ]
+      },
+      "sc4": {
+        "criterion": "SC#4: reproduce Phase 156's clean gate with every delta attributed.",
+        "points_at": [
+          "phase_baseline.before (measured fresh at 845218a4) and phase_baseline.after (measured at b889501f, this task) -- the two structural-gate halves",
+          "phase_baseline.drift[] -- 8 rows: 2 genuine within-phase-158 deltas (verify2 resolved_ok +1, verify2 Part A raw movement), 6 sweep-coverage rows for the outside-59 files, plus the LINE-COUNT-DIFFERS blind-spot coverage row",
+          "phase_baseline.unattributed_rows -- computed by audit-claimed-fixes.mjs --drift, not typed",
+          "phase_baseline.nav_hub_at_base_worktree -- the D-18 link-health blind-spot discharge, clean 0/0 at both ends",
+          "the reproduce half above (156's recorded verify-meaning.py invocation no longer returns 0 docs/ findings; 158's own sibling table proves 0 undispositioned docs/ findings at the recorded base)"
+        ]
+      }
+    },
+    "final_apex_recorded_in": ".planning/phases/158-final-corpus-verification-publish-bundle/158-07-SUMMARY.md",
+    "reproduce_half": {
+      "prior_recorded_invocation": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify-meaning.py",
+          "987770f8",
+          "--dispositions",
+          "scripts/docs-style/_DISPOSITIONS-batch10.tsv"
+        ],
+        "originally_recorded_result": "156-VERIFICATION.md: 0 undispositioned docs/ findings; 4 undispositioned total, all .planning/",
+        "reproduced_result_now": "14 undispositioned findings: 9 on docs/ paths (8 template [htmlcomment] wiring comments per 157 D-30, 1 08-cope-full-admin.md [htmlcomment]), 4 on .planning/ paths (SEED-001, STATE.md x2, WINDOWS.md)",
+        "delta_explanation": "Phase 157's own D-30 wiring-comment authoring (landed after 156's own recorded run) put 9 docs/ paths in scope that did not exist at 156's measurement point; this is expected corpus growth between the milestone phases, not a regression in this phase's own work. verify-meaning.py's changed_files() has no path scope (D-13), so ordinary GSD close-out commits also put .planning/ paths in scope -- the identical root cause as WINDOWS.md rows 9/10."
+      },
+      "own_sibling_table_proof": {
+        "cmd": "python",
+        "args": [
+          "scripts/docs-style/verify-meaning.py",
+          "d0b611e8",
+          "--dispositions",
+          "scripts/docs-style/_DISPOSITIONS-158.tsv"
+        ],
+        "result": "5 undispositioned findings, all on .planning/ paths (REQUIREMENTS.md, STATE.md x2, WINDOWS.md, SEED-001); ZERO on docs/ paths",
+        "proves": "Zero undispositioned corpus (docs/) findings at the recorded base d0b611e8, using this phase's own sibling table (plan 158-05's _DISPOSITIONS-158.tsv) -- the same standard 156-VERIFICATION.md and this phase's own predecessor artifacts hold themselves to."
+      },
+      "declined_alternatives": [
+        "Dispositioning the 9 new docs/ findings into the frozen _DISPOSITIONS-batch10.tsv file instead of a new sibling table -- declined because that file is contractually frozen at exactly 6 data rows (D-13) and padding it would silently widen a Phase-154 contract this phase does not own.",
+        "Fixing the 8 template [htmlcomment] wiring-comment findings at source (rewriting the comments so the finding never fires) -- declined because 157 D-30's wiring comment is a deliberate, load-bearing authoring instruction in 8 doc-class templates, not a defect; rewriting it to silence a checker would remove real content for no correctness gain.",
+        "Reproducing against a 156-era worktree of the phase's own base (987770f8) instead of the live tree -- declined because the reproduce half's purpose is proving the CURRENT corpus (at d0b611e8, the recorded base for THIS phase's own gate) has zero undispositioned docs/ findings with THIS phase's own table; a 156-era worktree would prove a fact about a revision this phase does not ship from."
+      ]
+    }
+  }
+}

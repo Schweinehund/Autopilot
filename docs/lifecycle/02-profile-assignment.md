@@ -26,11 +26,11 @@ This guide covers Stage 2 of the Windows Autopilot classic lifecycle: deployment
 
 Stage 2 of 5. The Autopilot deployment profile defines how [OOBE](../_glossary.md#oobe) behaves: which screens are skipped, what deployment mode runs, whether the user sees a company logo, and whether the device joins Azure AD or [hybrid join](../_glossary.md#hybrid-join).
 
-A device with a registered [hardware hash](../_glossary.md#hardware-hash) but no assigned profile will reach OOBE without any Autopilot customization — it will complete standard Windows setup instead.
+A device with a registered [hardware hash](../_glossary.md#hardware-hash) but no assigned profile reaches OOBE without any Autopilot customization—it completes standard Windows setup instead.
 
-**Depends on:** Hardware Hash Import (Stage 1) — device must be registered in the Autopilot service.
+**Depends on:** Hardware Hash Import (Stage 1)—device must be registered in the Autopilot service.
 
-**Feeds into:** Stage 3 — OOBE and Deployment Mode Selection.
+**Feeds into:** Stage 3—OOBE and Deployment Mode Selection.
 
 ---
 
@@ -41,8 +41,8 @@ You create and manage Autopilot deployment profiles in the Intune portal at **De
 - **Name and description**
 - **Deployment mode** (User-Driven or Self-Deploying)
 - **Join type** (Azure AD joined or Hybrid Azure AD joined)
-- **Out-of-box experience settings** — skip or show specific OOBE screens (privacy settings, license agreement, keyboard layout, account setup, etc.)
-- **Assignments** — Azure AD groups that receive this profile
+- **Out-of-box experience settings**—skip or show specific OOBE screens (privacy settings, license agreement, keyboard layout, account setup, etc.)
+- **Assignments**—Azure AD groups that receive this profile
 
 Once created, profiles appear in the list with columns for Name, Deployment Mode, Join Type, and assigned group count. The **Assignments** tab on each profile shows which Azure AD groups are targeted and whether assignment is currently active.
 
@@ -50,7 +50,7 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 
 ## What Happens
 
-1. **Admin creates a deployment profile in Intune.** You configure deployment mode, join type, OOBE screen behavior, and any enrollment status page settings.
+1. **Administrator creates a deployment profile in Intune.** You configure deployment mode, join type, OOBE screen behavior, and any enrollment status page settings.
 
 2. **Profile is assigned to an Azure AD group.** You assign the profile to one or more static or dynamic Azure AD groups containing the target device objects.
 
@@ -77,7 +77,7 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 
 > **L2 Note:**
 >
-> - Profile assignment uses Microsoft Graph API — Intune writes the profile association to Graph, which propagates to the Autopilot service.
+> - Profile assignment uses Microsoft Graph API—Intune writes the profile association to Graph, which propagates to the Autopilot service.
 
 > - At OOBE, the device contacts `ztd.dds.microsoft.com` (ZTD profile lookup) and `cs.dds.microsoft.com` (configuration data) to retrieve its assigned profile.
 
@@ -85,7 +85,7 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 
 > - The `AutopilotSettings` registry key (`HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings`) is populated when the device downloads the profile.
 
-> If the device cannot reach the ZTD service, this key will not be written and OOBE proceeds without Autopilot customization. See [registry-paths.md](../reference/registry-paths.md).
+> If the device cannot reach the ZTD service, this key is not written and OOBE proceeds without Autopilot customization. See [registry-paths.md](../reference/registry-paths.md).
 
 > - For hybrid join deployments, the Offline Domain Join (ODJ) Connector must be installed on an on-premises server and must be able to communicate with Active Directory domain controllers.
 
@@ -117,9 +117,9 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 
 ## Typical Timeline
 
-- **Static group assignment:** Profile is available for profile lookup within minutes of the admin adding the device to the group.
+- **Static group assignment:** Profile is available for profile lookup within minutes of the administrator adding the device to the group.
 - **Dynamic group evaluation:** 5–15 minutes for simple rules. Complex rules with many attribute conditions in large tenants (10,000+ devices) can take up to 24 hours for initial evaluation. Plan imaging schedules accordingly.
-- **Profile download at OOBE:** Seconds — the ZTD service lookup occurs early in OOBE, before the user sees any input screen.
+- **Profile download at OOBE:** Seconds—the ZTD service lookup occurs early in OOBE, before the user sees any input screen.
 
 ---
 
@@ -127,14 +127,14 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 
 - **Dynamic group delay causing missed profile delivery.** The most reliable mitigation is to use a static group for controlled deployments, or to delay OOBE initiation until you have confirmed dynamic group membership. You can check group membership in Azure AD before powering on the device.
 - **"All devices" profile conflicts with targeted profiles.** If you have a broad "All Autopilot Devices" profile assigned to the built-in group and a more specific profile targeted to a subset group, profile precedence rules apply. Intune delivers the profile from the most specific assignment; however, ensure you understand precedence order before creating overlapping assignments to avoid unintended profile delivery.
-- **Hybrid join requires ODJ Connector and DC connectivity.** Even if the profile is correctly assigned, hybrid join deployments will fail at OOBE if the ODJ Connector is not running or if the device cannot reach a domain controller. This is an infrastructure dependency, not a profile configuration issue.
+- **Hybrid join requires ODJ Connector and DC connectivity.** Even if the profile is correctly assigned, hybrid join deployments fail at OOBE if the ODJ Connector is not running or if the device cannot reach a domain controller. This is an infrastructure dependency, not a profile configuration issue.
 
 ---
 
 ## Tool References
 
-- [`Get-AutopilotProfileAssignment`](../reference/powershell-ref.md#get-autopilotprofileassignment) — Gets assigned profile details from the `AutopilotSettings` registry key. Returns `$null` if no profile has been downloaded to the device.
-- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate) — Checks registration state and tenant association. Use to confirm the device is registered and associated with the correct tenant before OOBE.
+- [`Get-AutopilotProfileAssignment`](../reference/powershell-ref.md#get-autopilotprofileassignment)—Gets assigned profile details from the `AutopilotSettings` registry key. Returns `$null` if no profile has been downloaded to the device.
+- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate)—Checks registration state and tenant association. Use to confirm the device is registered and associated with the correct tenant before OOBE.
 
 **Further Reading:**
 
@@ -143,7 +143,7 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 
 > **APv2 Note:** Windows Autopilot Device Preparation uses Device Preparation policies, not Autopilot deployment profiles.
 
-> There is no hardware hash matching step — assignment is based on Azure AD group membership evaluated at OOBE sign-in. The profile lookup via `ztd.dds.microsoft.com` does not apply.
+> There is no hardware hash matching step—assignment is based on Azure AD group membership evaluated at OOBE sign-in. The profile lookup through `ztd.dds.microsoft.com` does not apply.
 
 > See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) for the full comparison.
 

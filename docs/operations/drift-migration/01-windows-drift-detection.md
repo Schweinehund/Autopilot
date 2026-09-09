@@ -28,10 +28,10 @@ For the cross-platform compliance drift overview, see
 [Drift Detection Overview](00-overview.md). For tenant-to-tenant migration (a separate scope),
 see [Tenant Migration Runbook](04-tenant-migration-runbook.md).
 
-> **Scope distinction:** This guide covers **configuration** drift via Intune Remediations
+> **Scope distinction:** This guide covers **configuration** drift through Intune Remediations
 > (PowerShell detect+remediate script pairs that run on schedule on Windows-managed devices).
 > For Autopilot **registration** drift (profile assignment states: Not assigned / Assigning /
-> Assigned / Fix pending — a different drift class entirely), see
+> Assigned / Fix pending—a different drift class entirely), see
 > [Registration Drift Detection](../../reference/drift-detection.md). The two scopes are
 > orthogonal: a device may be properly registered (no registration drift) yet drift in
 > configuration (an admin-installed app gets uninstalled by the user, a setting was overridden
@@ -48,16 +48,16 @@ Intune Remediations is configured in the Intune admin center at:
 
 A remediation consists of two PowerShell scripts:
 
-- **Detection script** — Runs on schedule under SYSTEM context (or per-user context if
-  toggled). Returns `exit 1` if drift is detected (the remediation script will then run);
+- **Detection script**—Runs on schedule under SYSTEM context (or per-user context if
+  toggled). Returns `exit 1` if drift is detected (the remediation script then runs);
   returns `exit 0` if the device is compliant (no remediation needed). Any other exit code (or
   exception) is reported as `Error`.
-- **Remediation script** — Runs only when the detection script returned `exit 1`. Returns
+- **Remediation script**—Runs only when the detection script returned `exit 1`. Returns
   `exit 0` on success (reported as `Issues fixed`); non-zero on failure (reported as `Error`).
 
 ### Configuration steps
 
-1. In the Intune admin center, navigate to the portal path above.
+1. In the Intune admin center, navigate to the preceding portal path.
 2. Click **Create** to start a new remediation script pair.
 3. **Basics**: name, description, publisher.
 4. **Settings**:
@@ -85,7 +85,7 @@ After a remediation runs on a device, the per-device status report shows one of 
 | `Error`                 | Detection or remediation returned an unexpected non-zero exit code OR threw an unhandled exception. Investigate via Log Analytics. |
 
 The portal report shows the summary status only. The detection and remediation script
-**output** (stdout written via `Write-Output`) is captured by Intune and forwarded to a Log
+**output** (stdout written using `Write-Output`) is captured by Intune and forwarded to a Log
 Analytics workspace if the Intune-Log-Analytics connector is configured. See the next section
 for canonical script-authoring patterns and the Log Analytics surface for L2-level investigation.
 
@@ -99,11 +99,11 @@ PowerShell scripts, exit-code semantics, and stdout output captured for L2 inves
 
 A detection script returns:
 
-- `exit 0` — Device is compliant; reported as `No issues detected`. The remediation script does
+- `exit 0`—Device is compliant; reported as `No issues detected`. The remediation script does
   NOT run.
-- `exit 1` — Drift detected; the remediation script will run on the next interval. After
-  successful remediation, the device's status will be reported as `Issues fixed`.
-- Any other exit code (or unhandled exception) — Reported as `Error`. Inspect the Log Analytics
+- `exit 1`—Drift detected; the remediation script runs on the next interval. After
+  successful remediation, the device's status is reported as `Issues fixed`.
+- Any other exit code (or unhandled exception)—Reported as `Error`. Inspect the Log Analytics
   full-output surface to determine the failure mode.
 
 ```powershell
@@ -134,8 +134,8 @@ catch {
 
 A remediation script returns:
 
-- `exit 0` — Remediation succeeded; reported as `Issues fixed`.
-- Non-zero exit code (or unhandled exception) — Reported as `Error`. Inspect the Log Analytics
+- `exit 0`—Remediation succeeded; reported as `Issues fixed`.
+- Non-zero exit code (or unhandled exception)—Reported as `Error`. Inspect the Log Analytics
   full-output surface to determine the failure mode.
 
 ```powershell
@@ -170,17 +170,17 @@ summary state, Log Analytics is the canonical surface.
 
 ### Authoring guidelines
 
-- **Exit-code-first** — Treat `exit 1` / `exit 0` as the contract; treat `Write-Output` as
-  human-readable supporting evidence. Admins reading the per-device status report will see only
+- **Exit-code-first**—Treat `exit 1` / `exit 0` as the contract; treat `Write-Output` as
+  human-readable supporting evidence. Administrators reading the per-device status report see only
   the three summary states (`No issues detected` / `Issues fixed` / `Error`); detailed prose
   output is for Log Analytics investigation.
-- **Idempotent remediations** — Remediation scripts may run multiple times if the detection
+- **Idempotent remediations**—Remediation scripts may run multiple times if the detection
   script continues to flag drift. Author idempotent operations (use `Test-Path` before file
   writes; check service state before `Start-Service`).
-- **Bounded execution time** — Intune enforces a 60-minute per-script execution cap. Keep
+- **Bounded execution time**—Intune enforces a 60-minute per-script execution cap. Keep
   detection scripts under 30 seconds; remediations may take longer but should fail fast on
   irrecoverable conditions.
-- **Signed scripts in production** — SHA256-signed PowerShell scripts are recommended; unsigned
+- **Signed scripts in production**—SHA256-signed PowerShell scripts are recommended; unsigned
   scripts require `Bypass` execution policy override at the per-script setting level (less
   secure).
 
@@ -188,14 +188,14 @@ summary state, Log Analytics is the canonical surface.
 ## Microsoft Graph Compliance Reports
 
 For fleet-wide drift signal analysis beyond the per-device status report, Microsoft Graph
-`exportJobs` exposes compliance reports that can be pulled programmatically or consumed via
+`exportJobs` exposes compliance reports that can be pulled programmatically or consumed through
 Power BI. The relevant report names for Windows configuration drift investigation (verified at
 Microsoft Learn 2026):
 
-- `DeviceNonCompliance` — devices currently in a non-compliant state per compliance policy
-- `NonCompliantDevicesAndSettings` — per-device, per-setting non-compliance breakdown
-- `ConfigurationPolicyAggregate` — aggregate compliance across configuration policies
-- `SettingComplianceAggReport` — per-setting compliance aggregate across the fleet
+- `DeviceNonCompliance`—devices currently in a non-compliant state per compliance policy
+- `NonCompliantDevicesAndSettings`—per-device, per-setting non-compliance breakdown
+- `ConfigurationPolicyAggregate`—aggregate compliance across configuration policies
+- `SettingComplianceAggReport`—per-setting compliance aggregate across the fleet
 
 These reports are generated asynchronously: POST a request to
 `/deviceManagement/reports/exportJobs` with the report name, then poll for the download URL.
@@ -206,16 +206,16 @@ listed in External References.
 
 ## Related Resources
 
-- [Drift Detection Overview](00-overview.md) — Cross-platform compliance drift hub
-- [macOS Drift Detection](02-macos-drift-detection.md) — macOS sibling
-- [iOS + Android Drift Detection](03-ios-android-drift-detection.md) — iOS jailbreak / OS downgrade + Android Play Integrity
-- [Tenant Migration Runbook](04-tenant-migration-runbook.md) — Cross-platform tenant migration (MEDIUM confidence)
-- [Registration Drift Detection](../../reference/drift-detection.md) — v1.2 SSoT — Autopilot registration drift (scope-distinct from configuration drift covered here)
-- [Patch & Update Management Overview](../patch-management/00-overview.md) — Sibling ops-domain (Phase 54)
-- [App Lifecycle Automation Overview](../app-lifecycle/00-overview.md) — Sibling ops-domain (Phase 55)
+- [Drift Detection Overview](00-overview.md)—Cross-platform compliance drift hub
+- [macOS Drift Detection](02-macos-drift-detection.md)—macOS sibling
+- [iOS + Android Drift Detection](03-ios-android-drift-detection.md)—iOS jailbreak / OS downgrade + Android Play Integrity
+- [Tenant Migration Runbook](04-tenant-migration-runbook.md)—Cross-platform tenant migration (MEDIUM confidence)
+- [Registration Drift Detection](../../reference/drift-detection.md)—v1.2 SSoT—Autopilot registration drift (scope-distinct from configuration drift covered here)
+- [Patch & Update Management Overview](../patch-management/00-overview.md)—Sibling ops-domain (Phase 54)
+- [App Lifecycle Automation Overview](../app-lifecycle/00-overview.md)—Sibling ops-domain (Phase 55)
 
 ## External References
 
-- [Use Remediations to detect and fix support issues (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations) — DRIFT-01 portal path + status report semantics
-- [Microsoft Graph deviceManagement reports (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports) — `exportJobs` reports for fleet-level drift signals
-- [Operations Documentation Index](../00-index.md) — Cross-reference only; Phase 56 does NOT amend the operations index per the Phase 59 ROADMAP entry
+- [Use Remediations to detect and fix support issues (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-management/tools/deploy-remediations)—DRIFT-01 portal path + status report semantics
+- [Microsoft Graph deviceManagement reports (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports)—`exportJobs` reports for fleet-level drift signals
+- [Operations Documentation Index](../00-index.md)—Cross-reference only; Phase 56 does NOT amend the operations index

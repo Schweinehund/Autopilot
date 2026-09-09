@@ -22,20 +22,20 @@ This guide covers app delivery to Linux devices managed by Microsoft Intune (Ubu
 
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
-> 📋 **Scope note — Linux app delivery is script-based only.** Intune does NOT deliver binary packages to Linux. There is no Win32 / MSIX / `.pkg` / `.deb` direct-delivery analog for Linux.
+> 📋 **Scope note—Linux app delivery is script-based only.** Intune does NOT deliver binary packages to Linux. There is no Win32 / MSIX / `.pkg` / `.deb` direct-delivery analog for Linux.
 
 > Intune delivers Shell/Bash scripts to the device;
 
-> the script itself is responsible for downloading and installing whatever package the org needs (e.g., `apt install` from a trusted repo, `curl | sh` from a vendor URL, etc.).
+> the script itself is responsible for downloading and installing whatever package the org needs (for example, `apt install` from a trusted repo, `curl | sh` from a vendor URL, etc.).
 
-> See [Linux Capability Matrix — App Deployment](../reference/linux-capability-matrix.md#app-deployment) for the bilateral-comparison context.
+> See [Linux Capability Matrix—App Deployment](../reference/linux-capability-matrix.md#app-deployment) for the bilateral-comparison context.
 
 ## Prerequisites
 
 - Linux device enrolled and reporting healthy in Intune (see [01-intune-linux-agent.md](01-intune-linux-agent.md))
 - Intune Administrator role
 - Bash available on target distro (default on Ubuntu LTS)
-- Trusted package repository configured (admin's choice — `packages.microsoft.com` for Microsoft software; org-internal apt mirror; vendor URLs)
+- Trusted package repository configured (administrator's choice—`packages.microsoft.com` for Microsoft software; org-internal apt mirror; vendor URLs)
 - Org-authored Bash script validated and tested before upload
 
 ## Concept Overview
@@ -44,12 +44,12 @@ Intune delivers Bash scripts to Linux devices as the only app-delivery mechanism
 
 **How it works:**
 
-1. Admin authors a Bash script that installs or configures the required software
-2. Admin uploads the script to Intune and assigns it to a Linux device group
+1. Administrator authors a Bash script that installs or configures the required software
+2. Administrator uploads the script to Intune and assigns it to a Linux device group
 3. The Intune Linux client (`intune-agent.timer`) delivers and executes the script on target devices
 4. Intune admin center reports exit-code success (0) or failure (non-zero)
 
-**Common patterns (concept-level — full deep-dive deferred to v1.5.1 LIN-DEFER-01 Bash custom-compliance guide):**
+**Common patterns (concept-level—full deep-dive deferred to v1.5.1 LIN-DEFER-01 Bash custom-compliance guide):**
 
 - **Install a deb from a Microsoft repo:** Script runs `apt update && apt install <package>` after ensuring `packages.microsoft.com` repo is configured
 - **Install a vendor binary:** Script `curl`s the binary from a vendor URL, verifies signature or checksum, then runs the installer
@@ -58,7 +58,7 @@ Intune delivers Bash scripts to Linux devices as the only app-delivery mechanism
 
 > ⚠️ **Supply-chain note:** Bash scripts run with elevated privileges on Linux devices. Orgs are responsible for verifying script sources and signatures before uploading to Intune.
 
-> Scripts downloaded from vendor URLs should be verified against published checksums. There is no Win32 app catalog or Managed Google Play analog that pre-validates package provenance.
+> Scripts downloaded from vendor URLs must be verified against published checksums. There is no Win32 app catalog or Managed Google Play analog that pre-validates package provenance.
 
 ## Minimal Example
 
@@ -93,15 +93,15 @@ Linux app delivery is significantly narrower than other Intune-managed platforms
 - [ ] Script saved and uploaded in Intune admin center (Devices > Linux > Scripts)
 - [ ] Script assigned to a test device group containing one or more enrolled Linux devices
 - [ ] Test device reports successful script execution (exit code 0) in Intune admin center
-- [ ] Installed package or configuration verifiable on the test device (e.g., `dpkg -l org-tool`)
+- [ ] Installed package or configuration verifiable on the test device (for example, `dpkg -l org-tool`)
 - [ ] No sensitive credentials or tokens are embedded in the script body (use environment variables or secure delivery if needed)
 
 ## See Also
 
-- [Linux Capability Matrix — App Deployment](../reference/linux-capability-matrix.md#app-deployment)
-- [Compliance Policy](03-compliance-policy.md) — custom-compliance Bash scripts use the same script-execution surface as app-delivery scripts
-- [01-intune-linux-agent.md](01-intune-linux-agent.md) — agent installation required before scripts are delivered
-- (v1.5.1 LIN-DEFER-01) Bash custom-compliance deep-dive — when shipped, will cross-link here
+- [Linux Capability Matrix—App Deployment](../reference/linux-capability-matrix.md#app-deployment)
+- [Compliance Policy](03-compliance-policy.md)—custom-compliance Bash scripts use the same script-execution surface as app-delivery scripts
+- [01-intune-linux-agent.md](01-intune-linux-agent.md)—agent installation required before scripts are delivered
+- (v1.5.1 LIN-DEFER-01) Bash custom-compliance deep-dive—when shipped, will cross-link here
 
 ---
 

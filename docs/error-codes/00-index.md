@@ -16,22 +16,22 @@ audience: both
 
 ## Summary
 
-This is the master error-code lookup reference for Windows Autopilot deployments, indexing hex error codes and Event IDs across MDM enrollment, TPM attestation, ESP, pre-provisioning, and hybrid join categories for classic Autopilot (APv1), with a cross-reference to APv2 Device Preparation's symptom-based failure catalog. Primary audience is L1 service desk (quick lookup and escalation triage) and L2 engineers (category drill-down for detailed causes and fixes).
+This is the primary error-code lookup reference for Windows Autopilot deployments, indexing hex error codes and Event IDs across MDM enrollment, TPM attestation, ESP, pre-provisioning, and hybrid join categories for classic Autopilot (APv1), with a cross-reference to APv2 Device Preparation's symptom-based failure catalog. Primary audience is L1 service desk (quick lookup and escalation triage) and L2 engineers (category drill-down for detailed causes and fixes).
 
 > **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes.
 
 > APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-This is the master lookup table for all Windows [Autopilot](../_glossary.md#autopilot) error codes. Find your error code below and follow the link to the detailed category page for causes, L1 actions, and L2 fixes. Use Ctrl+F to search by hex code or Event ID.
+This is the primary lookup table for all Windows [Autopilot](../_glossary.md#autopilot) error codes. Find your error code in the following table and follow the link to the detailed category page for causes, L1 actions, and L2 fixes. Use Ctrl+F to search by hex code or Event ID.
 
 ## Categories
 
-- [MDM Enrollment Errors (0x8018xxxx)](01-mdm-enrollment.md) — MDM enrollment failures during OOBE
-- [TPM Attestation Errors](02-tpm-attestation.md) — TPM hardware and firmware attestation failures
-- [ESP and Enrollment Errors](03-esp-enrollment.md) — Enrollment Status Page failures and policy conflicts
-- [Pre-Provisioning and Self-Deploying Errors](04-pre-provisioning.md) — Technician flow and kiosk deployment failures
-- [Hybrid Join and Device Registration Errors](05-hybrid-join.md) — Hybrid Entra join failures and event ID mapping
+- [MDM Enrollment Errors (0x8018xxxx)](01-mdm-enrollment.md)—MDM enrollment failures during OOBE
+- [TPM Attestation Errors](02-tpm-attestation.md)—TPM hardware and firmware attestation failures
+- [ESP and Enrollment Errors](03-esp-enrollment.md)—Enrollment Status Page failures and policy conflicts
+- [Pre-Provisioning and Self-Deploying Errors](04-pre-provisioning.md)—Technician flow and kiosk deployment failures
+- [Hybrid Join and Device Registration Errors](05-hybrid-join.md)—Hybrid Entra join failures and event ID mapping
 
 ## Quick Lookup
 
@@ -71,7 +71,7 @@ This is the master lookup table for all Windows [Autopilot](../_glossary.md#auto
 
 ## No-Code ESP Failures
 
-Some ESP failures show "Something went wrong" without a specific error code. See [ESP and Enrollment Errors — Policy Conflicts](03-esp-enrollment.md#policy-conflicts-no-discrete-error-code) for these scenarios.
+Some ESP failures show "Something went wrong" without a specific error code. See [ESP and Enrollment Errors—Policy Conflicts](03-esp-enrollment.md#policy-conflicts-no-discrete-error-code) for these scenarios.
 
 ---
 
@@ -81,7 +81,7 @@ Some ESP failures show "Something went wrong" without a specific error code. See
 
 ---
 
-Select a category above or use Ctrl+F to find your error code in the Quick Lookup table.
+Select a category from the preceding list or use Ctrl+F to find your error code in the Quick Lookup table.
 
 ## Version History
 

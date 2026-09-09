@@ -16,15 +16,15 @@ platform: Linux
 
 ## Summary
 
-This reference document is a capability matrix comparing Microsoft Intune management capabilities between Windows and Linux (Ubuntu 24.04 LTS and 26.04 LTS via the intune-portal deb client) across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains, plus a Cross-Platform Equivalences section mapping Linux capabilities to their closest Apple and Android analogs. The primary audience is Intune administrators and L2 engineers managing Linux device fleets.
+This reference document is a capability matrix comparing Microsoft Intune management capabilities between Windows and Linux (Ubuntu 24.04 LTS and 26.04 LTS through the intune-portal deb client) across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains, plus a Cross-Platform Equivalences section mapping Linux capabilities to their closest Apple and Android analogs. The primary audience is Intune administrators and L2 engineers managing Linux device fleets.
 
-This document compares Intune management capabilities between Windows (Autopilot v1, Autopilot v2, manual enrollment) and Linux (Ubuntu 24.04 LTS, Ubuntu 26.04 LTS — `intune-portal` deb client). Linux Intune management is structurally narrower than Windows; this matrix quantifies the gaps and provides a Cross-Platform Equivalences section attributing the closest Apple/Android analogs for each Linux capability.
+This document compares Intune management capabilities between Windows (Autopilot v1, Autopilot v2, manual enrollment) and Linux (Ubuntu 24.04 LTS, Ubuntu 26.04 LTS—`intune-portal` deb client). Linux Intune management is structurally narrower than Windows; this matrix quantifies the gaps and provides a Cross-Platform Equivalences section attributing the closest Apple/Android analogs for each Linux capability.
 
-For Linux admin setup guides, see [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md). For the locked Linux management surface (whitelist) and out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface) — this matrix EXTENDS the whitelist with bilateral comparison; it does not duplicate the whitelist.
+For Linux administrator setup guides, see [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md). For the locked Linux management surface (whitelist) and out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface)—this matrix EXTENDS the whitelist with bilateral comparison; it does not duplicate the whitelist.
 
 ## Enrollment
 
-The table below compares zero-touch, hybrid join, user-initiated, and BYOD enrollment support between Windows and Linux.
+The following table compares zero-touch, hybrid join, user-initiated, and BYOD enrollment support between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -37,7 +37,7 @@ The table below compares zero-touch, hybrid join, user-initiated, and BYOD enrol
 
 ## Configuration
 
-The table below compares configuration-profile mechanisms, custom scripting, OEMConfig, and 802.1X support between Windows and Linux.
+The following table compares configuration-profile mechanisms, custom scripting, OEMConfig, and 802.1X support between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -51,7 +51,7 @@ The table below compares configuration-profile mechanisms, custom scripting, OEM
 
 ## App Deployment
 
-The table below compares binary package delivery, script-based delivery, store integration, and supersedence support between Windows and Linux.
+The following table compares binary package delivery, script-based delivery, store integration, and supersedence support between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -64,7 +64,7 @@ The table below compares binary package delivery, script-based delivery, store i
 
 ## Compliance
 
-The table below compares built-in compliance settings, custom scripts, CA enforcement, and reporting between Windows and Linux.
+The following table compares built-in compliance settings, custom scripts, CA enforcement, and reporting between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -77,7 +77,7 @@ The table below compares built-in compliance settings, custom scripts, CA enforc
 
 ## Software Updates
 
-The table below compares update enforcement, driver/firmware updates, and scheduling support between Windows and Linux.
+The following table compares update enforcement, driver/firmware updates, and scheduling support between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -89,7 +89,7 @@ The table below compares update enforcement, driver/firmware updates, and schedu
 
 ## Conditional Access
 
-The table below compares device-based, web-app, MAM, and risk-based Conditional Access support between Windows and Linux.
+The following table compares device-based, web-app, MAM, and risk-based Conditional Access support between Windows and Linux.
 
 | Feature | Windows | Linux |
 |---------|---------|-------|
@@ -98,13 +98,13 @@ The table below compares device-based, web-app, MAM, and risk-based Conditional 
 | MAM (Managed App without enrollment) | n/a (Windows uses Intune client) | Not supported (no Intune SDK for Linux apps; closest analog is web-app CA via Edge — see [Cross-Platform Equivalences](#cross-platform-equivalences)) |
 | Risk-based CA | Supported (Entra ID Protection signals) | Partial — risk evaluation works for the user/session but does not factor Linux device state |
 
-> **Table summary:** This table compares 4 Conditional Access features; Linux has no device-based CA and only user/session-level risk evaluation, with web-app CA via Edge as the sole enforcement path.
+> **Table summary:** This table compares 4 Conditional Access features; Linux has no device-based CA and only user/session-level risk evaluation, with web-app CA with Edge as the sole enforcement path.
 
 ## Cross-Platform Equivalences
 
-This section maps three Linux↔Apple capability pairs called out in ROADMAP SC#4. It is NOT a 4-platform comparison — see the [4-Platform Capability Comparison](4-platform-capability-comparison.md) for that. Each paired row attributes the platform explicitly on both sides; mappings are STRUCTURAL, not behavioral (per Phase 49 PITFALL-1 partial-mapping discipline at `_glossary-linux.md` line 84 and 112).
+This section maps three Linux↔Apple capability pairs called out in phase success criterion #4. It is NOT a 4-platform comparison—see the [4-Platform Capability Comparison](4-platform-capability-comparison.md) for that. Each paired row attributes the platform explicitly on both sides; mappings are STRUCTURAL, not behavioral (per Phase 49 PITFALL-1 partial-mapping discipline at `_glossary-linux.md` line 84 and 112).
 
-The table below pairs the Linux client-side enrollment components with their closest macOS/iOS analog.
+The following table pairs the Linux client-side enrollment components with their closest macOS/iOS analog.
 
 | Linux | macOS / iOS |
 |-------|-------------|
@@ -113,7 +113,7 @@ The table below pairs the Linux client-side enrollment components with their clo
 
 > **Table summary:** This table pairs the Linux intune-portal + microsoft-identity-broker unit with the macOS Company Portal app + IntuneMDMDaemon LaunchAgent; the mapping is structural.
 
-The table below pairs the Linux user-scope check-in timer with the iOS APNs-triggered check-in cycle.
+The following table pairs the Linux user-scope check-in timer with the iOS APNs-triggered check-in cycle.
 
 | Linux | iOS |
 |-------|-----|
@@ -122,7 +122,7 @@ The table below pairs the Linux user-scope check-in timer with the iOS APNs-trig
 
 > **Table summary:** This table pairs the Linux poll-based check-in timer with the iOS APNs-push check-in cycle; both re-evaluate compliance on a device-side schedule.
 
-The table below pairs Linux web-app Conditional Access (via Microsoft Edge) with iOS MAM-WE as the closest structural analog.
+The following table pairs Linux web-app Conditional Access (through Microsoft Edge) with iOS MAM-WE as the closest structural analog.
 
 | Linux | iOS |
 |-------|-----|
@@ -135,25 +135,25 @@ The table below pairs Linux web-app Conditional Access (via Microsoft Edge) with
 
 The most significant capability gaps for Linux compared to Windows are:
 
-1. **App delivery is script-based only** — the largest operational gap. Linux has no Win32, MSIX, MSI, or .pkg analog. There is no binary package delivery pipeline, no app supersedence, and no dependency graph support. Organizations must author Bash scripts that invoke system package managers (`apt`) or vendor-provided installers. Script exit-code reporting is the only delivery feedback mechanism; Intune does not parse package manager output.
+1. **App delivery is script-based only**—the largest operational gap. Linux has no Win32, MSIX, MSI, or .pkg analog. There is no binary package delivery pipeline, no app supersedence, and no dependency graph support. Organizations must author Bash scripts that invoke system package managers (`apt`) or vendor-provided installers. Script exit-code reporting is the only delivery feedback mechanism; Intune does not parse package manager output.
 
-2. **No device-level Conditional Access** — Linux compliance state is visible in the Intune admin center but the `Require device to be marked as compliant` CA grant control is not available on Linux. The only enforcement path is web-app CA via Microsoft Edge for Linux 102.x+, which challenges the user at org web-app sign-in time. Device-level CA (enforcing on all client apps, including native/thick clients) cannot be achieved on Linux.
+2. **No device-level Conditional Access**—Linux compliance state is visible in the Intune admin center but the `Require device to be marked as compliant` CA grant control is not available on Linux. The only enforcement path is web-app CA through Microsoft Edge for Linux 102.x+, which challenges the user at org web-app sign-in time. Device-level CA (enforcing on all client apps, including native/thick clients) cannot be achieved on Linux.
 
-3. **No MDM configuration profile concept** — The Intune Settings Catalog for Linux exposes only 4 compliance-category settings (Allowed Distributions, Custom Compliance, Device Encryption, Password Policy). There is no equivalent to the thousands of CSP-mapped Windows Settings Catalog entries. OEMConfig, ADMX ingestion, and hardware/firmware policy are absent. Configuration management on Linux is out-of-band from Intune (org-managed scripts, configuration management tools, standard OS package management).
+3. **No MDM configuration profile concept**—The Intune Settings Catalog for Linux exposes only 4 compliance-category settings (Allowed Distributions, Custom Compliance, Device Encryption, Password Policy). There is no equivalent to the thousands of CSP-mapped Windows Settings Catalog entries. OEMConfig, ADMX ingestion, and hardware/firmware policy are absent. Configuration management on Linux is out-of-band from Intune (org-managed scripts, configuration management tools, standard OS package management).
 
-4. **Software updates are unmanaged by Intune** — Intune does not orchestrate `apt` updates on Linux. Windows Update for Business rings, Autopatch, and Hotpatch have no Linux equivalent. Update scheduling, enforcement, and deferral are outside Intune's management surface. Organizations must use OS-native update mechanisms (unattended-upgrades, cron-apt, Landscape, Ansible, etc.).
+4. **Software updates are unmanaged by Intune**—Intune does not orchestrate `apt` updates on Linux. Windows Update for Business rings, Autopatch, and Hotpatch have no Linux equivalent. Update scheduling, enforcement, and deferral are outside Intune's management surface. Organizations must use OS-native update mechanisms (unattended-upgrades, cron-apt, Landscape, Ansible, etc.).
 
-5. **No zero-touch enrollment** — Windows Autopilot v1 and v2 (hardware hash registration, Pre-Provisioning, OOBE flows) have no Linux equivalent. Linux enrollment is user-initiated only: the end user installs the `intune-portal` deb package and signs in interactively. Hybrid Entra Join (AD + Entra Connect dual-state) is not supported on Linux.
+5. **No zero-touch enrollment**—Windows Autopilot v1 and v2 (hardware hash registration, Pre-Provisioning, OOBE flows) have no Linux equivalent. Linux enrollment is user-initiated only: the end user installs the `intune-portal` deb package and signs in interactively. Hybrid Entra Join (AD + Entra Connect dual-state) is not supported on Linux.
 
-6. **BYOD vs corporate-owned ambiguity** — Unlike Windows (which has distinct Autopilot, hybrid join, and BYOD MDM-enrollment flows) and iOS/Android (which have well-defined supervised/COBO vs personal-device flows), Linux has a single user-initiated enrollment model. The distinction between "corporate-owned Linux" and "BYOD Linux" is partially ambiguous; see the [BYOD vs Corporate-Owned Caveat](../linux-lifecycle/00-enrollment-overview.md#enrollment-constraints) in Phase 49's enrollment overview for the full scope boundary.
+6. **BYOD vs corporate-owned ambiguity**—Unlike Windows (which has distinct Autopilot, hybrid join, and BYOD MDM-enrollment flows) and iOS/Android (which have well-defined supervised/COBO vs personal-device flows), Linux has a single user-initiated enrollment model. The distinction between "corporate-owned Linux" and "BYOD Linux" is partially ambiguous; see the [BYOD vs Corporate-Owned Caveat](../linux-lifecycle/00-enrollment-overview.md#enrollment-constraints) in Phase 49's enrollment overview for the full scope boundary.
 
 ## See Also
 
 - [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md)
-- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md) — Phase 49 management-surface whitelist + out-of-scope callouts
-- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md) — Ubuntu version matrix
+- [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md)—Phase 49 management-surface whitelist + out-of-scope callouts
+- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md)—Ubuntu version matrix
 - [Linux Provisioning Glossary](../_glossary-linux.md)
-- [macOS Capability Matrix](macos-capability-matrix.md) — Win|macOS bilateral comparison
+- [macOS Capability Matrix](macos-capability-matrix.md)—Win|macOS bilateral comparison
 - [iOS Capability Matrix](ios-capability-matrix.md)
 - [Android Capability Matrix](android-capability-matrix.md)
 - [4-Platform Capability Comparison](4-platform-capability-comparison.md)

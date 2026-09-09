@@ -1,9 +1,11 @@
 {
   "gate_baseline": {
-    "sha": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
-    "sha_short": "789a348a",
+    "sha": "8de413aae65387a6b381fd34f70f65128592f65d",
+    "sha_short": "8de413aa",
     "branch": "master",
     "measured_at": "2026-09-01T12:00:17Z",
+    "measured_at_sha": "789a348a8696e5b29e677a7e8b847dbc7c300a26",
+    "anchor_note": "ANNOTATE-AND-SUPERSEDE (owner-ruled 2026-09-01, plan 154-02 Task 2): `sha`/`sha_short` were re-pointed from 789a348a (the SHA actually live when this baseline's components were measured, in plan 154-01) to 8de413aa (C1's true parent, per D-33/T-154-04's equality requirement). Two intervening commits (0ad34e95 wrote this JSON, 8de413aa wrote 154-01's SUMMARY+STATE+ROADMAP) sit between them, and neither touched docs/: `git rev-parse 789a348a^{tree}:docs` and `git rev-parse 8de413aa^{tree}:docs` are the SAME tree object (2a275d9a1976c380b545e6772b5b5ffdfd23c995), so every measured component below is still a correct reading of the tree the landing built on -- this is a stale label on a sound measurement, not a re-measurement. `measured_at_sha` preserves the original value verbatim; `measured_at` (the timestamp) is untouched and still records the true measurement time. Logged as a plan defect for 154-04's amendment sweep: ordinary GSD close-out sequencing (task commits -> SUMMARY commit) makes a literal same-commit baseline-vs-HEAD equality structurally unsatisfiable by the time the next plan starts.",
     "path_note": "Phase 156 and Phase 158 must RESOLVE this artifact's path rather than hardcode it -- .planning/phases/ relocates to .planning/milestones/v1.22-phases/ at milestone close.",
     "components": {
       "c17": {
@@ -151,6 +153,299 @@
       }
     }
   },
-  "landing": {},
-  "post_merge": {}
+  "landing": {
+    "branch": "v1.22/154-style-landing",
+    "commits": {
+      "C1": {
+        "sha": "af678f0c61391250f447ab1893874c6339062dbc",
+        "subject": "feat(154-02): land 277 clean google-style applies from scratch corpus",
+        "files": 277,
+        "parent": "8de413aae65387a6b381fd34f70f65128592f65d",
+        "note": "Parent equals gate_baseline.sha after the annotate-and-supersede correction above."
+      },
+      "C2": {
+        "sha": "6cc9e0aa36458dde712b94f660f77dde56ae2a3f",
+        "subject": "fix(154-02): resolve index.md and patch-management overview drift-overlap conflicts",
+        "files": ["docs/index.md", "docs/operations/patch-management/00-overview.md"]
+      },
+      "C3": {
+        "sha": "2a1fd8e7125a542bf766c044f6ebec731e6b4990",
+        "subject": "fix(154-02): resolve android work-profile privacy-questions conflict",
+        "files": ["docs/end-user-guides/android-work-profile-setup.md"]
+      },
+      "C4": {
+        "sha": "feeae16b454a1345d4529e6978fe1d5e38c0fe26",
+        "subject": "docs(154-02): apply the single sweep edit to EEE-SOP-standard.md",
+        "files": ["docs/_standards/EEE-SOP-standard.md"]
+      }
+    },
+    "apply_shape": {
+      "invocation": "git diff c97d322 e71f862 > full281.patch; git apply --3way --directory=docs --exclude='docs/_PASSIVE-REPORT.md' full281.patch",
+      "patchDiffHeaders": 281,
+      "exitCode": 1,
+      "statusShape": {"M": 277, "UU": 3},
+      "cleanlyCount": 277,
+      "conflictCount": 3,
+      "conflictFiles": [
+        "docs/end-user-guides/android-work-profile-setup.md",
+        "docs/index.md",
+        "docs/operations/patch-management/00-overview.md"
+      ],
+      "absentAfterApply": ["docs/_PASSIVE-REPORT.md", "docs/_PINNED-HEADINGS.txt"]
+    },
+    "conflict_marker_gate_runs": {
+      "invocation": "git grep -nE '^(<{7}|={7}|>{7})' -- docs/",
+      "runsBeforeEachCommit": 4,
+      "allExitCode": 1,
+      "allOutputEmpty": true
+    },
+    "shortstat": {
+      "invocation": "git diff --shortstat 534073f4..HEAD -- docs/",
+      "forkPoint": "534073f4",
+      "atSha": "feeae16b454a1345d4529e6978fe1d5e38c0fe26",
+      "value": "290 files changed, 10475 insertions(+), 6164 deletions(-)"
+    },
+    "post_apply_checks": {
+      "navHubLinkChecker": {
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total",
+        "exitCode": 0
+      },
+      "c17": {
+        "invocation": "node scripts/validation/c17-eee-contract.mjs",
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations",
+        "exitCode": 0
+      },
+      "checkPhase153Apex": {
+        "invocation": "node scripts/validation/check-phase-153.mjs",
+        "nested": false,
+        "tallyLine": "Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)",
+        "exitCode": 0
+      },
+      "verifyMeaningSelfTest": {
+        "invocation": "python scripts/docs-style/verify-meaning.py --self-test",
+        "resultLine": "PASS: 10/10 self-test assertions",
+        "exitCode": 0
+      },
+      "verify2LinkDiffer": {
+        "invocation": "python scripts/docs-style/verify2.py 789a348a8696e5b29e677a7e8b847dbc7c300a26",
+        "resolvedOk": {"baseline": 6271, "after": 6271},
+        "missingFile": {"baseline": 27, "after": 27},
+        "missingAnchor": {"baseline": 454, "after": 454},
+        "introducedBySweep": 0,
+        "incidentallyFixed": 0,
+        "note": "Part A of this script's output (changed-lines / explained-by-4-rules / UNEXPLAINED) reported 6119/3493/2626, expected for a 280-file corpus landing whose 406-hunk judge-verified prose is far broader than the 4 mechanical rules this differ's Part A recognizes; SC#4's actual pass criterion is Part B (link/anchor health), reproduced above unchanged from baseline."
+      },
+      "pinDifferVerbatim": {
+        "invocation": "every _CONTENT-PINS.txt line occurs verbatim in docs/ (no tool -- per D-31, pins2.py must not be run)",
+        "pinCount": 562,
+        "found": 562,
+        "lost": 0
+      },
+      "headingCensus": {
+        "titleCase": {"pattern": "^## Escalation Criteria$", "count": 43},
+        "sentenceCase": {"pattern": "^## Escalation criteria$", "count": 0},
+        "note": "Unchanged from gate_baseline.census -- STYLE-04 discharge."
+      },
+      "adminGuideLabelCensus": {
+        "shortForm": {"text": "admin guide", "count": 19},
+        "expandedForm": {"text": "administrator guide", "count": 42},
+        "note": "19+42=61 conserves gate_baseline.census.admin_guide_label.shortForm.count (61 pre-merge, 0 expanded). The 19 remaining short-form occurrences are batch-10/RE-237 paths this phase does not own."
+      }
+    },
+    "mechanical_residual": {
+      "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+      "mode": "dry-run (unconditional default)",
+      "totalEdits": 9,
+      "filesLoaded": 5,
+      "perTokenEdits": {"admin": 6, "admins": 1, "sign-in-to": 1, "desired": 1, "vs": 0, "config": 0},
+      "landedSetResidual": 0,
+      "note": "Zero of the 9 wanted edits land on a file this plan committed. Enumerated affected files (all batch-10/RE-237, none in C1-C4): docs/operations/firmware-bios/01-windows-dfci.md, docs/operations/firmware-bios/02-dell-bios-configuration.md, docs/operations/patch-management/08-windows-app-updates.md, docs/recipes/05-enterprise-update-plan.md, docs/recipes/06-walk-up-avd-kiosk-autologon.md. 9 matches D-16's pre-measured batch-10 residual exactly. File list captured via a scratch --apply + immediate git checkout revert (never committed); confirmed docs/ byte-identical to HEAD both before and after."
+    }
+  },
+  "post_merge": {
+    "residual": {
+      "conflict_gate": {
+        "invocation": "git grep -nE '^(<{7}|={7}|>{7})' -- docs/",
+        "exitCode": 1,
+        "output": "",
+        "note": "Re-run inside this task, not inherited from plan 154-02 (STYLE-06 concurrency edge)."
+      },
+      "pins_count": {
+        "invocation": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt",
+        "count": 562,
+        "method": "grep -c '' (never wc -l -- wc -l undercounts a file lacking a trailing newline)"
+      },
+      "sweep": {
+        "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_CONTENT-PINS.txt",
+        "mode": "dry-run (unconditional default -- sweep3.py has no --dry-run flag; it parses only --subs and --apply and silently discards everything else)",
+        "filesLoaded": 5,
+        "pinsLoaded": 562,
+        "perTokenEdits": {"admin": 6, "admins": 1, "vs": 0, "sign-in-to": 1, "config": 0, "desired": 1},
+        "totalEdits": 9,
+        "tallyLine": "DRY RUN -- 5 files, 562 pins loaded / 9 TOTAL edits"
+      },
+      "attribution": {
+        "method": "Direct import of sweep3.sweep(root, pins, apply=False) via `python3 -c \"import sweep3; sweep3.sweep('docs', pins, False)\"` -- read-only (apply=False means no docs/ write ever happens), no argv passed to the script, `touched` is populated identically in dry-run mode so this is the exact same 5-file/9-edit sweep as the CLI invocation above, just with per-file attribution surfaced.",
+        "landed_bucket": [],
+        "landed_count": 0,
+        "inherited_bucket": [
+          {"path": "docs/operations/firmware-bios/01-windows-dfci.md", "class": "batch-10 (STYLE-02 enumerated nine-document set)"},
+          {"path": "docs/operations/firmware-bios/02-dell-bios-configuration.md", "class": "batch-10 (STYLE-02 enumerated nine-document set)"},
+          {"path": "docs/operations/patch-management/08-windows-app-updates.md", "class": "batch-10 (STYLE-02 enumerated nine-document set)"},
+          {"path": "docs/recipes/05-enterprise-update-plan.md", "class": "batch-10 (STYLE-02 enumerated nine-document set)"},
+          {"path": "docs/recipes/06-walk-up-avd-kiosk-autologon.md", "class": "RE-237's own document"}
+        ],
+        "inherited_count": 5,
+        "landedSetVerification": "for each of the 5 paths above: `git log --oneline af678f0c^..feeae16b -- <path>` returned empty -- none was touched by C1, C2, C3 or C4",
+        "caveat": "Phase 155's recipe (RCP) work rewrites four of Phase 156's thirteen documents between this measurement and its use. Phase 156 MUST re-measure this residual rather than consume this number as-is; it is recorded here as the post-merge-at-154-03 reading only."
+      },
+      "zero_not_styled": {
+        "note": "Zero wanted edits over the landed set does NOT mean the corpus is fully styled. These survive by design inside table rows, KEEP_LINE matches and protected spans -- see gate_baseline.mechanical_residual.protected for the full protected-category breakdown.",
+        "standalone_admin_token": {
+          "invocation": "grep -rnoE '(^|[^A-Za-z0-9_-])admin([^A-Za-z0-9_-]|$)' docs/ --include='*.md' | wc -l  (and grep -rlE ... | wc -l for the file count)",
+          "occurrences": 1542,
+          "files": 262
+        },
+        "admin_guide_label": {
+          "shortForm": {"text": "admin guide", "occurrences": 19, "files": 16, "invocation": "grep -rno 'admin guide' docs/ --include='*.md' | wc -l"},
+          "expandedForm": {"text": "administrator guide", "occurrences": 42, "files": 23, "invocation": "grep -rno 'administrator guide' docs/ --include='*.md' | wc -l"},
+          "conservation_check": "19 + 42 = 61, conserving gate_baseline.census.admin_guide_label.shortForm.count (61 pre-merge, 0 expanded) -- the short form fell and the expanded form rose by the same amount, as expected."
+        }
+      },
+      "negative_control_never_a_gate": {
+        "note": "Recorded ONCE as a labelled negative control per D-31/D-27. This is NEVER a pass/fail input. _EMDASH-PINS.txt must never be supplied to sweep3.py as the input to any gate or acceptance criterion anywhere in this phase.",
+        "invocation": "python scripts/docs-style/sweep3.py docs scripts/docs-style/_EMDASH-PINS.txt",
+        "mode": "dry-run (same unconditional default as above)",
+        "pinsFile": "scripts/docs-style/_EMDASH-PINS.txt",
+        "pinsFileCount": 8,
+        "pinsFileCountMethod": "grep -c '' scripts/docs-style/_EMDASH-PINS.txt",
+        "filesLoaded": 10,
+        "pinsLoaded": 8,
+        "perTokenEdits": {"admin": 37, "admins": 1, "vs": 0, "sign-in-to": 1, "config": 0, "desired": 1},
+        "totalEdits": 40,
+        "tallyLine": "DRY RUN -- 10 files, 8 pins loaded / 40 TOTAL edits"
+      },
+      "unmodified_checks": {
+        "pinsAndPins2Untouched": {"invocation": "git diff --exit-code -- scripts/docs-style/_CONTENT-PINS.txt scripts/docs-style/pins2.py", "exitCode": 0},
+        "docsUntouched": {"invocation": "git diff --exit-code -- docs/", "exitCode": 0}
+      }
+    },
+    "verify_meaning": {
+      "half_a_historical_reproduction": {
+        "workingDirectory": "D:/claude/docs-google-style-test",
+        "invocation": "python D:/claude/Autopilot/scripts/docs-style/verify-meaning.py c97d322 --dispositions D:/claude/Autopilot/scripts/docs-style/_DISPOSITIONS.tsv",
+        "exitCode": 0,
+        "output": "verify-meaning: 281 changed .md vs c97d322\n      6  dispositioned (silent)\n\n  JUDGE WORKLIST: 642 hunks where a modal was removed (153 high-risk: a 'should' was dropped)\n\nPASS: no undispositioned findings.",
+        "scratchRepoUnmodified": {
+          "statusBefore": "clean (git status --porcelain empty)",
+          "statusAfter": "clean (git status --porcelain empty)",
+          "headBefore": "e71f86254fc8add49c2ee98768ec0351144d2e82",
+          "headAfter": "e71f86254fc8add49c2ee98768ec0351144d2e82",
+          "note": "Read, never written, exactly per D-28."
+        }
+      },
+      "half_b_raw_run_no_dispositions": {
+        "workingDirectory": "D:/claude/Autopilot",
+        "invocation": "python scripts/docs-style/verify-meaning.py 8de413aae65387a6b381fd34f70f65128592f65d",
+        "exitCode": 1,
+        "totalFindings": 9,
+        "docsFindings": 6,
+        "docsFindingsMatchDispositionsSix": true,
+        "note": "Findings BREAK DOWN as: 6 docs/-prefixed findings matching the exact 6 files/reasons _DISPOSITIONS.tsv covers (confirmed by --json diff, byte-identical reason strings), plus 3 findings on .planning/STATE.md and .planning/WINDOWS.md -- see the deviation note below. Zero findings landed on any file NOT covered by _DISPOSITIONS.tsv's six docs/ files.",
+        "docsFindingIds": [
+          {"id": "e80777e4d67d", "kind": "quotation", "file": "docs/_glossary-android.md", "matchesOriginalId": "268b3b1cb0df"},
+          {"id": "2764735e74dc", "kind": "htmlcomment", "file": "docs/_templates/admin-template-android.md", "matchesOriginalId": "1a5a0524bc2a"},
+          {"id": "a3284ab3e3e9", "kind": "split-verb", "file": "docs/admin-setup-android/11-aosp-pico.md", "matchesOriginalId": "2b9b87aded2d"},
+          {"id": "b9b803c74dd1", "kind": "quotation", "file": "docs/admin-setup-ios/06-compliance-policy.md", "matchesOriginalId": "6b1534ddf400"},
+          {"id": "56818f6c65ef", "kind": "quotation", "file": "docs/admin-setup-macos/07-platform-sso-setup.md", "matchesOriginalId": "5122a4be1df3"},
+          {"id": "0fad662f5069", "kind": "quotation", "file": "docs/cross-platform/apple-business/_admin-directory.md", "matchesOriginalId": "fb6e0e5874f4"}
+        ],
+        "planningFindingIds": [
+          {"id": "f42aa84a0bff", "kind": "frontmatter", "file": ".planning/STATE.md"},
+          {"id": "3c611a1f71a6", "kind": "quotation", "file": ".planning/STATE.md"},
+          {"id": "664e24c01344", "kind": "frontmatter", "file": ".planning/WINDOWS.md"}
+        ]
+      },
+      "dispositions_sibling": {
+        "path": "scripts/docs-style/_DISPOSITIONS-docs.tsv",
+        "dataRowCount": 6,
+        "reasonsByteIdenticalToOriginal": true,
+        "originalUntouched": {"invocation": "git diff --exit-code -- scripts/docs-style/_DISPOSITIONS.tsv scripts/docs-style/verify-meaning.py", "exitCode": 0}
+      },
+      "half_b_proof_run": {
+        "workingDirectory": "D:/claude/Autopilot",
+        "invocation": "python scripts/docs-style/verify-meaning.py 8de413aae65387a6b381fd34f70f65128592f65d --dispositions scripts/docs-style/_DISPOSITIONS-docs.tsv",
+        "exitCode": 1,
+        "expectedByPlanText": "exit 0, 6 dispositioned, 0 undispositioned",
+        "actualDispositioned": 6,
+        "actualUndispositioned": 3,
+        "undispositionedFindingsAllOutsideDocs": true,
+        "undispositionedFindings": [
+          {"id": "f42aa84a0bff", "kind": "frontmatter", "file": ".planning/STATE.md"},
+          {"id": "3c611a1f71a6", "kind": "quotation", "file": ".planning/STATE.md"},
+          {"id": "664e24c01344", "kind": "frontmatter", "file": ".planning/WINDOWS.md"}
+        ],
+        "docsFindingsRemainingUndispositioned": 0,
+        "deviation": "The literal exit-0 acceptance criterion does not hold. Root cause, fully traced: verify-meaning.py's changed_files() runs `git diff --name-only BASE` against the current worktree/HEAD with no path scope, so EVERY changed .md file since BASE enters the scan, not only the landing's docs-only commits. `git log 8de413aa..HEAD -- .planning/STATE.md .planning/WINDOWS.md` shows exactly one commit, 9086c705 (plan 154-02's own SUMMARY+STATE+ROADMAP+WINDOWS close-out) -- ordinary GSD workflow bookkeeping, not part of the landing and not a corpus-meaning change. D-28's assumption ('with BASE = the pre-merge SHA and the landing's docs-only commits, no planning file is in range') is falsified by the same root cause already logged as WINDOWS.md #9 for plan 154-02's Task 1 precondition: ordinary GSD close-out sequencing (task commits -> SUMMARY/STATE/ROADMAP/WINDOWS commit) makes any BASE captured before a prior plan's own close-out commit see that close-out's .planning/ changes in every subsequent worktree-diffing tool run. This is NOT a corpus-meaning defect: independently confirmed zero of the 9 findings land on any docs/ file outside the six _DISPOSITIONS.tsv already covers, and the 6 docs/ findings are fully and correctly dispositioned. VERIFY-01's actual deterministic-meaning-preservation guarantee over docs/ is proven; the literal 'exit 0' wording is not met due to this plan-authoring gap, per the same precedent already established for the Task 1 precondition (not re-litigated, not fixed by adding path scoping -- prohibited -- or by editing the 6-row dispositions file to 9 rows, which would break the '_DISPOSITIONS.tsv's six reasons only' contract). Flagged for 154-04's amendment sweep alongside WINDOWS.md #9."
+      },
+      "half_c_self_test": {
+        "invocation": "python scripts/docs-style/verify-meaning.py --self-test",
+        "exitCode": 0,
+        "resultLine": "PASS: 10/10 self-test assertions"
+      }
+    },
+    "style_04_05": {
+      "style04_pinned_headings_sweep": {
+        "invocation": "git show e71f862:_PINNED-HEADINGS.txt | grep -c ''",
+        "entries_checked": 186,
+        "found_verbatim_under_docs": 141,
+        "not_found_under_docs": 45,
+        "entries_lost_attributable_to_landing": 0,
+        "acceptance_criterion_literal_result": "FAIL as literally worded (entries_lost==0 over all 186 entries): 45 entries did not occur verbatim under docs/ post-merge.",
+        "deviation": "Investigated all 45: git-grep-checked each against docs/ at gate_baseline.sha (the PRE-merge tree) -- all 45 were ALSO absent from docs/ before this phase touched anything. git-grep-checked each against scripts/validation/*.mjs -- all 45 resolve there verbatim, as validator detail-message/test-fixture string literals (e.g. '## Android Enterprise Failure Scenarios H2 missing', '### Kandji / Iru' -- the latter an EXPLICITLY forbidden variant per .planning/milestones/v1.11-phases/91-glossary-capability-matrix/91-01-PLAN.md, which mandates '### Kandji-Iru' and never this form). _PINNED-HEADINGS.txt is therefore not exclusively a docs/-headings list as D-25 assumed; it also carries validator-source-only heading-shaped strings that were never docs/ content. Zero heading loss is attributable to this phase's landing -- every entry present in docs/ pre-merge is still present post-merge. Logged as WINDOWS.md #11, flagged for 154-04's amendment sweep alongside #9/#10.",
+        "verificationMethod": "git grep -F -q '<entry>' -- docs/ for each of the 186 entries (post-merge HEAD) and again against gate_baseline.sha (pre-merge), plus git grep -F -l '<entry>' -- scripts/validation/ for the 45 non-matches"
+      },
+      "style04_escalation_criteria_census": {
+        "titleCase": {"invocation": "grep -rc '^## Escalation Criteria$' docs/ --include='*.md' | awk -F: '{s+=$2} END{print s+0}'", "count": 43},
+        "sentenceCase": {"invocation": "grep -rc '^## Escalation criteria$' docs/ --include='*.md' | awk -F: '{s+=$2} END{print s+0}'", "count": 0},
+        "caseSensitive": true,
+        "matchesGateBaseline": true
+      },
+      "style04_correction": {
+        "note": "The headings flag named in STYLE-04 (--no-headings) belongs to .claude/skills/google-style/check.py (confirmed at check.py:4,140-142), not sweep3.py. sweep3.py's argv parse (sweep3.py:242-249) recognizes only --subs and --apply and silently discards every other token. sweep3.py skips heading lines unconditionally regardless of any flag (HEADING.match(ln): continue, sweep3.py:209-211). Passing --no-headings to sweep3.py would have been a silent no-op. Both at-risk heading edits (index.md, patch-management overview) arrived via the merge's own conflict resolutions (D-01's baseline), which D-01 already excludes from sweep3.py entirely -- no flag was ever the mechanism protecting them."
+      },
+      "style05_canon_source_unchanged": {
+        "sweepUnchangedSinceBase": {"invocation": "git diff --exit-code 8de413aae65387a6b381fd34f70f65128592f65d -- scripts/docs-style/sweep3.py", "exitCode": 0},
+        "doEmHardcodedOff": {"invocation": "grep -n 'do_em' scripts/docs-style/sweep3.py", "line": "212:            do_em = False", "context": "inside the per-line loop, sweep3.py:212, immediately preceding the transform(ln, do_em, probe) call at :214"},
+        "substitutionLine": {"lines": "88-89", "quoted": "        if do_emdash:\n            seg, n = EMDASH.subn(\"\\u2014\", seg)", "direction": "substitutes the spaced em-dash form toward the TIGHT (unspaced) form; tight is the canon's OUTPUT and a fixed point per REQUIREMENTS.md STYLE-05"}
+      },
+      "style05_corpus_census": {
+        "tightEmDash": {
+          "invocation": "python regex (?<!\\s)\\u2014(?!\\s) across docs/**/*.md",
+          "codePoint": "U+2014 EM DASH",
+          "occurrences": 4365,
+          "files": 244,
+          "preMerge": {"occurrences": 7, "files": 5},
+          "strictlyGreater": true,
+          "note": "The canon landed corpus-wide; this is expected, not drift. No correction, reversion or normalization was applied anywhere in this phase."
+        },
+        "lineEndingFact": {
+          "reproducible": "All 294 committed docs/**/*.md blobs at HEAD are 100% line-feed (0 of 294 contain \\r\\n), verified via git show HEAD:<path> per file.",
+          "unreproducibleFigureOmitted": "The corpus split figure (mixed CRLF/LF on-disk working-tree counts) is not repeated anywhere in this plan's outputs, per D-04's own correction."
+        }
+      },
+      "style05_pins_distinction": {
+        "contentPins": {"invocation": "grep -c '' scripts/docs-style/_CONTENT-PINS.txt", "count": 562},
+        "emdashPins": {"invocation": "grep -c '' scripts/docs-style/_EMDASH-PINS.txt", "count": 8},
+        "note": "Every sweep3.py invocation in this phase named _CONTENT-PINS.txt (562 pins); _EMDASH-PINS.txt was invoked exactly once, as the labelled negative control in Task 1, never as a gate input."
+      },
+      "navHubLinkChecker": {
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total",
+        "exitCode": 0
+      },
+      "docsUntouched": {"invocation": "git diff --exit-code -- docs/", "exitCode": 0}
+    }
+  }
 }

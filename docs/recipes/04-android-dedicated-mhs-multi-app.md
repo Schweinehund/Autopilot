@@ -16,13 +16,13 @@ audience: admin
 
 ## Summary
 
-Following this recipe yields an Android Enterprise Dedicated device locked to a curated Managed Home Screen (MHS) multi-app kiosk — a bounded allow-list of apps on a fixed home-screen grid, delivered by an Intune App Configuration policy assigned to the Managed Home Screen app (`com.microsoft.launcher.enterprise`). It covers Android 8.0 and later on devices already enrolled with a Standard Corporate-owned dedicated device token, and requires the Intune Administrator role to assign the Managed Home Screen app as Required and to author and assign the MHS App Configuration policy carrying the worked JSON payload.
+Following this recipe yields an Android Enterprise Dedicated device locked to a curated Managed Home Screen (MHS) multi-app kiosk—a bounded allow-list of apps on a fixed home-screen grid, delivered by an Intune App Configuration policy assigned to the Managed Home Screen app (`com.microsoft.launcher.enterprise`). It covers Android 8.0 and later on devices already enrolled with a Standard Corporate-owned dedicated device token, and requires the Intune Administrator role to assign the Managed Home Screen app as Required and to author and assign the MHS App Configuration policy carrying the worked JSON payload.
 
-> **Scope:** Covers the Android Enterprise **Dedicated** multi-app kiosk scenario — a curated Managed Home Screen (MHS) app grid on a device with no per-user identity by default.
+> **Scope:** Covers the Android Enterprise **Dedicated** multi-app kiosk scenario—a curated Managed Home Screen (MHS) app grid on a device with no per-user identity by default.
 
 > See [Android dedicated device disambiguation](../_glossary-android.md#dedicated).
 
-> This is distinct from single-app Lock Task Mode, digital signage, and Entra shared device mode — all four scenarios share one enrollment surface but diverge in locking style and identity model.
+> This is distinct from single-app Lock Task Mode, digital signage, and Entra shared device mode—all four scenarios share one enrollment surface but diverge in locking style and identity model.
 
 > Assumes the device is already enrolled as Dedicated with a Standard token, and that every allow-listed app already exists as an Intune app.
 
@@ -30,10 +30,10 @@ Following this recipe yields an Android Enterprise Dedicated device locked to a 
 
 ## Prerequisites
 
-- **This recipe is NOT:** Entra shared device mode ([per-user Entra sign-in and sign-out on a shared device](../_glossary-android.md#entra-shared-device-mode) — a different enrollment token type), single-app kiosk / Lock Task Mode (one app pinned via Android's OS-level lock rather than a curated MHS grid — see [Scenarios](../admin-setup-android/05-dedicated-devices.md#scenarios)), digital signage / screensaver mode (unattended-display use, deferred — see [Scenarios](../admin-setup-android/05-dedicated-devices.md#scenarios)), or Windows multi-app kiosk (a different platform's restricted-user-experience recipe).
-- **Managed Google Play binding complete** — see [Managed Google Play binding](../admin-setup-android/01-managed-google-play.md#bind-mgp). This recipe does not re-bind it.
-- **A static Entra device group** already exists and is the single target for both the Managed Home Screen app assignment ([Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)) and the App Configuration policy assignment ([Step 5](#step-5-author-and-assign-the-app-configuration-policy)) — see [Enrollment profile — Delta 2](../admin-setup-android/05-dedicated-devices.md#enrollment-profile).
-- **A device already enrolled as Dedicated with a Standard token.** This recipe starts post-enrollment; enrollment profile creation and token-type semantics are the anchor's own content — see [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile) and [Enrollment token](../admin-setup-android/05-dedicated-devices.md#enrollment-token).
+- **This recipe is NOT:** Entra shared device mode ([per-user Entra sign-in and sign-out on a shared device](../_glossary-android.md#entra-shared-device-mode)—a different enrollment token type), single-app kiosk / Lock Task Mode (one app pinned through Android's OS-level lock rather than a curated MHS grid—see [Scenarios](../admin-setup-android/05-dedicated-devices.md#scenarios)), digital signage / screensaver mode (unattended-display use, deferred—see [Scenarios](../admin-setup-android/05-dedicated-devices.md#scenarios)), or Windows multi-app kiosk (a different platform's restricted-user-experience recipe).
+- **Managed Google Play binding complete**—see [Managed Google Play binding](../admin-setup-android/01-managed-google-play.md#bind-mgp). This recipe does not re-bind it.
+- **A static Entra device group** already exists and is the single target for both the Managed Home Screen app assignment ([Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)) and the App Configuration policy assignment ([Step 5](#step-5-author-and-assign-the-app-configuration-policy))—see [Enrollment profile—Delta 2](../admin-setup-android/05-dedicated-devices.md#enrollment-profile).
+- **A device already enrolled as Dedicated with a Standard token.** This recipe starts post-enrollment; enrollment profile creation and token-type semantics are the anchor's own content—see [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile) and [Enrollment token](../admin-setup-android/05-dedicated-devices.md#enrollment-token).
 - **Intune Administrator role**, or a custom RBAC role covering app assignment and app-configuration-policy authoring.
 
 ## Unsupported and Anti-Feature Callouts
@@ -54,7 +54,7 @@ Following this recipe yields an Android Enterprise Dedicated device locked to a 
 
 ### Step 1: Confirm the token type on the enrollment profile
 
-Confirm that the enrollment profile which provisioned this device uses the Standard Corporate-owned dedicated device token. If it uses the Corporate-owned dedicated device with Microsoft Entra ID shared mode token instead, this recipe is not the path — this step confirms and routes only; token-type creation and semantics are the anchor's own content.
+Confirm that the enrollment profile which provisioned this device uses the Standard Corporate-owned dedicated device token. If it uses the Corporate-owned dedicated device with Microsoft Entra ID shared mode token instead, this recipe is not the path—this step confirms and routes only; token-type creation and semantics are the anchor's own content.
 
 > **Ask the admin:** Does this device need per-user Entra sign-in and sign-out, or does it run under a single shared device identity?
 
@@ -72,15 +72,15 @@ Confirm that the enrollment profile which provisioned this device uses the Stand
 | `afw#setup` | A technician types the DPC identifier manually at the Google sign-in prompt | DPC identifier |
 | Zero-Touch | Devices are pre-registered with a reseller for zero-touch provisioning at unboxing | Zero-Touch DPC extras JSON |
 
-Configuring Zero-Touch and [Knox Mobile Enrollment (KME)](../admin-setup-android/05-dedicated-devices.md#provisioning-method-choice) simultaneously on the same Samsung hardware is a CRITICAL-severity mutual exclusion — pick one provisioning method per Samsung device; see [Provisioning method choice](../admin-setup-android/05-dedicated-devices.md#provisioning-method-choice) for every method's own click-path and constraints.
+Configuring Zero-Touch and [Knox Mobile Enrollment (KME)](../admin-setup-android/05-dedicated-devices.md#provisioning-method-choice) simultaneously on the same Samsung hardware is a CRITICAL-severity mutual exclusion—pick one provisioning method per Samsung device; see [Provisioning method choice](../admin-setup-android/05-dedicated-devices.md#provisioning-method-choice) for every method's own click-path and constraints.
 
 > **What breaks if misconfigured:** Confirming the wrong token type routes this whole recipe to the wrong scenario before any MHS configuration is authored.
 
-Recovery is the anchor's own — revoke the token, recreate the enrollment profile with the correct token type, and redistribute the enrollment artifact. See [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile).
+Recovery is the anchor's own—revoke the token, recreate the enrollment profile with the correct token type, and redistribute the enrollment artifact. See [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile).
 
 ### Step 2: Deploy Managed Home Screen as a Required app
 
-Managed Home Screen (`com.microsoft.launcher.enterprise`) is already present in **Apps** > **All apps** the moment the tenant binds to Managed Google Play — there is no Create or Add step. `[MEDIUM: MS Learn setup dedicated + add-managed-google-play, last_verified 2026-08-03]`
+Managed Home Screen (`com.microsoft.launcher.enterprise`) is already present in **Apps** > **All apps** the moment the tenant binds to Managed Google Play—there is no Create or Add step. `[MEDIUM: MS Learn setup dedicated + add-managed-google-play, last_verified 2026-08-03]`
 
 1. **Apps** > **All apps**.
 2. Select **Managed Home Screen** from the list.
@@ -91,20 +91,20 @@ Managed Home Screen (`com.microsoft.launcher.enterprise`) is already present in 
 
 > **What breaks if misconfigured:** A Required assignment boots the device directly into Managed Home Screen before an exit PIN exists on either policy surface.
 
-Devices already enrolled and in the target group when this step lands boot straight into the no-PIN state. Until the exit PIN is set in [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries), attempting to exit shows "A PIN to exit kiosk mode has not been set by your IT admin" with no way out. Complete Steps 3-6 promptly, and force a policy sync from the Intune admin center rather than waiting the typical 8-hour window — see [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization).
+Devices already enrolled and in the target group when this step lands boot straight into the no-PIN state. Until the exit PIN is set in [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries), attempting to exit shows "A PIN to exit kiosk mode has not been set by your IT admin" with no way out. Complete Steps 3-6 promptly, and force a policy sync from the Intune admin center rather than waiting the typical 8-hour window—see [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization).
 
 ### Step 3: Deploy the allow-listed apps
 
-Every app that will appear on the MHS grid must already be installed on the device — on Dedicated devices, only apps assigned Required actually install.
+Every app that appears on the MHS grid must already be installed on the device—on Dedicated devices, only apps assigned Required actually install.
 
 1. **Apps** > **All apps**.
 2. Select each allow-listed app.
 3. Select **Properties** > **Edit** next to **Assignments**.
 4. On the **Assignments** tab, under **Required**, select **Add group** and select the same static Entra device group used in [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app).
 
-> **What breaks if misconfigured:** An app assigned Available, or to the wrong group, is absent from the device — and therefore the MHS grid — with no error surfaced.
+> **What breaks if misconfigured:** An app assigned Available, or to the wrong group, is absent from the device—and therefore the MHS grid—with no error surfaced.
 
-> See: [L2: Android App Install Investigation](../l2-runbooks/20-android-app-install-investigation.md) — covers an MGP or LOB app showing Failed, Not installed, or Pending.
+> See: [L2: Android App Install Investigation](../l2-runbooks/20-android-app-install-investigation.md)—covers an MGP or LOB app showing Failed, Not installed, or Pending.
 
 ### Step 4: Choose the sign-in mode
 
@@ -122,25 +122,25 @@ When `enable_mhs_signin` is TRUE, two further decision points become meaningful 
 
 > **What breaks if misconfigured:** Choosing `signin_type: Microsoft Entra ID` without confirming Entra licensing for every worker adds friction, not a broken sign-in.
 
-`enable_mhs_signin` stays FALSE unless a specific accountability need justifies turning it on — flipping it with no plan for `signin_type` lands users on the Entra-ID default by surprise.
+`enable_mhs_signin` stays FALSE unless a specific accountability need justifies turning it on—flipping it with no plan for `signin_type` lands users on the Entra-ID default by surprise.
 
 ### Step 5: Author and assign the App Configuration policy
 
-Declined from the payload below, each for a stated reason: the screensaver keys (deferred, RCPFUT-04); the widgets, wallpaper and branding keys (deferred, RCPFUT-05); the cosmetic ordering and icon keys — `app_orders`, `app_order_enabled`, `icon_size`, `app_folder_icon`, `screen_orientation` (out of scope; an anti-feature "Do this instead" cell may still name `Application order enabled` at the admin/policy layer); the virtual home button (declined — it was a Case-2 candidate and stays out of this recipe's bounded key set); and `enable_app_offline` plus `app_available_prior_to_sign_in`, the two `applications` sub-keys that are only meaningful when sign-in is TRUE and are therefore inert here — a named carve-out from the general rule that sign-in sub-keys are out, since `app_available_prior_to_sign_in` sits inside `applications`, a key that is in. Also declined: the OEMConfig Overlay and exact-alarm permission grant, because every dependent feature — screensaver, virtual home button, automatic sign-out, notification badges, auto-relaunch — is itself deferred or scoped to a non-worked sign-in arm.
+Declined from the following payload, each for a stated reason: the screensaver keys (deferred, RCPFUT-04); the widgets, wallpaper and branding keys (deferred, RCPFUT-05); the cosmetic ordering and icon keys—`app_orders`, `app_order_enabled`, `icon_size`, `app_folder_icon`, `screen_orientation` (out of scope; an anti-feature "Do this instead" cell may still name `Application order enabled` at the administrator/policy layer); the virtual home button (declined—it was a Case-2 candidate and stays out of this recipe's bounded key set); and `enable_app_offline` plus `app_available_prior_to_sign_in`, the two `applications` sub-keys that are only meaningful when sign-in is TRUE and are therefore inert here—a named carve-out from the general rule that sign-in sub-keys are out, since `app_available_prior_to_sign_in` sits inside `applications`, a key that is in. Also declined: the OEMConfig Overlay and exact-alarm permission grant, because every dependent feature—screensaver, virtual home button, automatic sign-out, notification badges, auto-relaunch—is itself deferred or scoped to a non-worked sign-in arm.
 
 1. **Apps** > **Configuration** > **Create** > **Managed devices**.
 2. **Basics:** enter a **Name** and **Description** (**Device enrollment type** is fixed to **Managed devices**).
 3. **Platform:** select **Android Enterprise**.
 4. **Targeted app:** select **Select app** > choose **Managed Home Screen** > **OK**.
 5. Select **Next** to reach **Settings**.
-6. **Configuration settings format:** select **Enter JSON data** and paste the payload below. The equivalent UI path is the **Configuration designer**, which exposes the same settings as individual fields.
+6. **Configuration settings format:** select **Enter JSON data** and paste the following payload. The equivalent UI path is the **Configuration designer**, which exposes the same settings as individual fields.
 7. Select **Next** through **Scope tags**.
-8. On **Assignments**, set **Assign to** to **Add groups** and select the static Entra device group from [Prerequisites](#prerequisites) — a separate Intune blade from [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)'s app assignment, and the action that makes the payload below take effect.
+8. On **Assignments**, set **Assign to** to **Add groups** and select the static Entra device group from [Prerequisites](#prerequisites)—a separate Intune blade from [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)'s app assignment, and the action that makes the following payload take effect.
 9. Select **Next** to **Review + create**, then select **Create**.
 
-`[MEDIUM: MS Learn app-configuration-policies-use-android, last_verified 2026-08-03]` This article's own introductory prose says user groups, while its wizard's **Assign to** dropdown also offers **Add groups** and **Add all devices** — do not let the stale introductory phrasing narrow this instruction; verify against your own tenant at author time.
+`[MEDIUM: MS Learn app-configuration-policies-use-android, last_verified 2026-08-03]` This article's own introductory prose says user groups, while its wizard's **Assign to** dropdown also offers **Add groups** and **Add all devices**—do not let the stale introductory phrasing narrow this instruction; verify against your own tenant at author time.
 
-Paste the JSON below into the **Enter JSON data** editor.
+Paste the following JSON into the **Enter JSON data** editor.
 
 ```json
 {
@@ -216,7 +216,7 @@ Paste the JSON below into the **Enter JSON data** editor.
 
 > **[MEDIUM: MS Learn, last_verified 2026-08-03]:** Microsoft's field description states this password "must be configured through a device configuration profile."
 
-Set the matching value in the Device Restrictions profile too, per [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization) — do not rely on this JSON entry alone.
+Set the matching value in the Device Restrictions profile too, per [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization)—do not rely on this JSON entry alone.
 
 | # | Setting / JSON key | Configuration designer label | What it does | Worked value |
 |---|---|---|---|---|
@@ -230,15 +230,15 @@ Set the matching value in the Device Restrictions profile too, per [Exit-kiosk P
 | 8 | `enable_mhs_signin` | Enable sign in | Turns end-user sign-in to Managed Home Screen on or off; defaults to FALSE | `false` |
 | 9 | — | Enable easy access debug menu | Controls whether the easy-access entry point to the debug menu is shown; the 15-press back-button gesture reaches the exit-PIN prompt regardless — see [Verification](#verification) | not in the payload |
 
-Every key above ships in the fence except row 9, which is GUI-only and demoted to a Verification line — see [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) for the exit-PIN and retry-hardening detail this table decomposes.
+Every key listed here ships in the fence except row 9, which is GUI-only and demoted to a Verification line—see [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) for the exit-PIN and retry-hardening detail this table decomposes.
 
 > **Ask the admin:** What grid size (`columns;rows`) should the allow-listed apps use?
 
-The supplied value is recorded directly as the `grid_size` string in the fence above.
+The supplied value is recorded directly as the `grid_size` string in the preceding fence.
 
 > **Ask the admin:** Should the allow-listed apps be grouped into named folders, and if so, what should each folder contain?
 
-The supplied grouping is recorded directly as `managed_folders` entries in the fence above; omit the key entirely if no grouping is needed.
+The supplied grouping is recorded directly as `managed_folders` entries in the preceding fence; omit the key entirely if no grouping is needed.
 
 > **What breaks if misconfigured:** Authoring the JSON payload without also assigning the policy on the **Assignments** page leaves it created but never delivered to any device.
 
@@ -252,35 +252,35 @@ The retry-hardening keys are already set in [Step 5](#step-5-author-and-assign-t
 
 > **What breaks if misconfigured:** Setting `max_number_of_attempts_for_exit_PIN` alone does nothing.
 
-Time before exit lock task mode password can be retried must also be set for the max-attempts limit to take effect — with no error and no admin-side signal if it isn't. No unit is documented for the retry-delay integer: sibling timers on the same page state seconds, this one does not. Both values at 0 mean no limit.
+Time before exit lock task mode password can be retried must also be set for the max-attempts limit to take effect—with no error and no admin-side signal if it isn't. No unit is documented for the retry-delay integer: sibling timers on the same page state seconds, this one does not. Both values at 0 mean no limit.
 
-Two settings share nearly the same name but gate on different conditions and produce different consequences. `max_number_of_attempts_for_exit_PIN` ("Maximum number of attempts to exit lock task mode") is usable only if the exit lock task mode password is configured, and blocks further exit attempts once exceeded. `max_number_of_attempts_for_session_PIN` ("Maximum number of attempts for session PIN") is usable only if session PIN and sign-in are both enabled, and automatically logs the user out of Managed Home Screen once exceeded. The session-PIN key stays out of the payload above — it is inert under this recipe's worked `enable_mhs_signin: false`.
+Two settings share nearly the same name but gate on different conditions and produce different consequences. `max_number_of_attempts_for_exit_PIN` ("Maximum number of attempts to exit lock task mode") is usable only if the exit lock task mode password is configured, and blocks further exit attempts once exceeded. `max_number_of_attempts_for_session_PIN` ("Maximum number of attempts for session PIN") is usable only if session PIN and sign-in are both enabled, and automatically logs the user out of Managed Home Screen once exceeded. The session-PIN key stays out of the preceding payload—it is inert under this recipe's worked `enable_mhs_signin: false`.
 
-Microsoft's own labels do not spell the setting name the same way across the two retry fields: the max-attempts label reads "Maximum number of attempts to exit lock task **mode**," while the retry-delay label reads "Time before exit lock task **password** can be retried" — carried here as published, not normalized.
+Microsoft's own labels do not spell the setting name the same way across the two retry fields: the max-attempts label reads "Maximum number of attempts to exit lock task **mode**," while the retry-delay label reads "Time before exit lock task **password** can be retried"—carried here as published, not normalized.
 
 ## Verification
 
-- [ ] The MHS grid shows exactly the allow-listed apps from [Step 3](#step-3-deploy-the-allow-listed-apps) — nothing more, nothing less.
+- [ ] The MHS grid shows exactly the allow-listed apps from [Step 3](#step-3-deploy-the-allow-listed-apps)—nothing more, nothing less.
 - [ ] Home, Overview, and the back-navigation gesture do not surface the standard Android launcher or any app outside the allow-list.
 - [ ] Pressing back roughly 15 times reaches the exit-PIN prompt, and the PIN configured in [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) exits lock-task mode.
 - [ ] Folders and apps on the grid cannot be dragged, renamed, or reordered by a test user.
 - [ ] Test users can switch between already-visible Wi-Fi networks, but the Wi-Fi radio toggle itself is unavailable from inside MHS.
 - [ ] The Intune admin center confirms the device enrolled under the Standard Corporate-owned dedicated device token, not Entra shared device mode.
-- [ ] The easy-access entry point to the debug menu is closed by the fence's default — only the back-button gesture above still reaches the exit-PIN prompt.
+- [ ] The easy-access entry point to the debug menu is closed by the fence's default—only the preceding back-button gesture still reaches the exit-PIN prompt.
 
-For Android 15 re-provisioning behavior, see [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning) — cross-link only; the three-pathway table is not re-authored here.
+For Android 15 re-provisioning behavior, see [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning)—cross-link only; the three-pathway table is not re-authored here.
 
 ## Rollback/Recovery
 
-Returning a device to its prior state is not the same as removing this recipe's own configuration — the two procedures below are the ones the anchor does not already cover.
+Returning a device to its prior state is not the same as removing this recipe's own configuration—the two procedures that follow are the ones the anchor does not already cover.
 
 **Returning a device to the standard launcher:**
 
-- Unassign the MHS App Configuration policy, or set the Managed Home Screen app assignment to Uninstall for the device group — either removes the Required assignment that keeps the device in the MHS grid.
+- Unassign the MHS App Configuration policy, or set the Managed Home Screen app assignment to Uninstall for the device group—either removes the Required assignment that keeps the device in the MHS grid.
 
 **A forgotten exit PIN:**
 
-- The anchor's own remediation — verify both policies carry the same code — presupposes a known code. If the code itself is forgotten, set a new value in both the Device Restrictions profile and the MHS App Configuration policy and force a policy sync; there is no separate "reveal" path once a PIN is set, since its value is obfuscated after saving.
+- The anchor's own remediation—verify both policies carry the same code—presupposes a known code. If the code itself is forgotten, set a new value in both the Device Restrictions profile and the MHS App Configuration policy and force a policy sync; there is no separate "reveal" path once a PIN is set, since its value is obfuscated after saving.
 
 ## Configuration-Caused Failures
 
@@ -293,9 +293,9 @@ Returning a device to its prior state is not the same as removing this recipe's 
 
 ## See Also
 
-- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision blocks instantiate
-- [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning) — re-provisioning behavior for kiosk fleets, additive to its Verification placement
-- [Managed Google Play binding](../admin-setup-android/01-managed-google-play.md#bind-mgp) — the hard prerequisite this recipe assumes is already complete
-- [Android dedicated device disambiguation](../_glossary-android.md#dedicated) — cross-platform terminology comparison
-- [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile) — token-type creation and the static-device-group requirement this recipe assumes
-- [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization) — the two-policy PIN requirement Step 6 cross-links
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md)—the full spec this recipe's decision blocks instantiate
+- [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning)—re-provisioning behavior for kiosk fleets, additive to its Verification placement
+- [Managed Google Play binding](../admin-setup-android/01-managed-google-play.md#bind-mgp)—the hard prerequisite this recipe assumes is already complete
+- [Android dedicated device disambiguation](../_glossary-android.md#dedicated)—cross-platform terminology comparison
+- [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile)—token-type creation and the static-device-group requirement this recipe assumes
+- [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization)—the two-policy PIN requirement Step 6 cross-links

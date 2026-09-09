@@ -16,27 +16,27 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X EAP negotiation failures where the supplicant and RADIUS server cannot agree on an EAP method or inner-auth configuration, across all five platforms, including the iOS/iPadOS PEAP inner-auth mismatch pattern.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X EAP negotiation failures where the supplicant and RADIUS server cannot agree on an EAP method or inner-auth configuration, across all five platforms, including the iOS/iPadOS PEAP inner-auth mismatch pattern.
 
 > **Platform gate:** This guide covers 802.1X EAP-negotiation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
 > For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
 
-**L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying the EAP type or inner-auth method in an Intune profile, requesting RADIUS policy changes from the networking team) appear ONLY in L2 runbooks — they are not L1 actions.
+**L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying the EAP type or inner-auth method in an Intune profile, requesting RADIUS policy changes from the networking team) appear ONLY in L2 runbooks—they are not L1 actions.
 
 ## Symptom
 
-The 802.1X connection attempt fails after a **longer delay** than a certificate rejection would produce. The EAP negotiation starts but the supplicant and the RADIUS server cannot agree on a method or inner-auth configuration. The following conditions are all true:
+The 802.1X connection attempt fails after a **longer delay** than a certificate rejection produces. The EAP negotiation starts but the supplicant and the RADIUS server cannot agree on a method or inner-auth configuration. The following conditions are all true:
 
 - All certificate profiles (**Trusted Certificate** and **SCEP/PKCS** client cert) show **Succeeded** in Intune.
 - No trust prompt appears on the device.
 - No certificate error is visible in Intune.
-- The symptom is **consistent across all users on the same device type or platform** — it is not a single-user or single-device anomaly.
+- The symptom is **consistent across all users on the same device type or platform**—it is not a single-user or single-device anomaly.
 
 A key indicator of EAP negotiation failure is when **one platform fails while others succeed on the same SSID or wired port**. The most common cause of this platform-specific pattern:
 
-- **iOS/iPadOS with PEAP where the RADIUS server requires PAP inner auth:** iOS PEAP always uses MS-CHAPv2 as the inner-auth method — PAP is not supported and causes an immediate EAP-NAK from the iOS supplicant. This appears as "Authentication Failed on iOS only" while Windows, macOS, Android, and Linux devices on the same SSID succeed.
-- **EAP-TTLS inner-auth mismatch:** The inner-auth method configured in the Intune profile (e.g., MS-CHAPv2) does not match what the RADIUS policy expects (e.g., PAP or CHAP), causing negotiation failure across platforms.
+- **iOS/iPadOS with PEAP where the RADIUS server requires PAP inner auth:** iOS PEAP always uses MS-CHAPv2 as the inner-auth method—PAP is not supported and causes an immediate EAP-NAK from the iOS supplicant. This appears as "Authentication Failed on iOS only" while Windows, macOS, Android, and Linux devices on the same SSID succeed.
+- **EAP-TTLS inner-auth mismatch:** The inner-auth method configured in the Intune profile (for example, MS-CHAPv2) does not match what the RADIUS policy expects (for example, PAP or CHAP), causing negotiation failure across platforms.
 
 For EAP method context, the co-equal path comparison (EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS), and supported inner-auth combinations, see [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md).
 
@@ -49,10 +49,10 @@ Differential:
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com)
-- Access to Microsoft Entra admin center (https://entra.microsoft.com) — read-only is sufficient
+- Access to Microsoft Entra admin center (https://entra.microsoft.com)—read-only is sufficient
 - Device serial number
 - User's UPN (email address)
-- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux) — required to use the per-platform diagnostic table below
+- Device platform (Windows / macOS / iOS/iPadOS / Android / Linux)—required to use the following per-platform diagnostic table
 
 ## First Checks (All Platforms)
 
@@ -63,7 +63,7 @@ Perform these checks before collecting platform-specific diagnostic output. They
    - SCEP or PKCS client certificate profile
    - Wi-Fi or Wired network profile
 
-   If any cert profile is not Succeeded, this is a certificate deployment failure — route to [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md) instead.
+   If any cert profile is not Succeeded, this is a certificate deployment failure—route to [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md) instead.
 
 2. Open the Wi-Fi or Wired network profile in Intune (**Devices** > **Configuration** > [profile] > **Properties**). Note the **EAP type** configured (EAP-TLS, PEAP, or EAP-TTLS) and, if applicable, the **inner authentication method** (MS-CHAPv2, PAP, etc.). For EAP method definitions, supported configurations, and the co-equal path comparison, see [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md).
 
@@ -72,17 +72,17 @@ Perform these checks before collecting platform-specific diagnostic output. They
    - "Did 802.1X work on this device or platform before, or has it never worked?"
    - "Does the failure affect one device type only (for example, iOS only) or all platforms on the same SSID or wired port?"
 
-   If the answer is **iOS/iPadOS only fails while other platforms succeed**: this is a strong indicator of a PEAP inner-auth mismatch. iOS PEAP always requires MS-CHAPv2 inner auth — PAP causes an immediate EAP-NAK. Record this platform-scope pattern in the escalation note.
+   If the answer is **iOS/iPadOS only fails while other platforms succeed**: this is a strong indicator of a PEAP inner-auth mismatch. iOS PEAP always requires MS-CHAPv2 inner auth—PAP causes an immediate EAP-NAK. Record this platform-scope pattern in the escalation note.
 
 > **NOTE:** EAP negotiation failures (this runbook) are distinct from RADIUS-reject failures (#39).
 
-> An EAP negotiation failure surfaces **before** the RADIUS server evaluates the user's credentials — the supplicant and server cannot agree on a method, so no credential exchange occurs.
+> An EAP negotiation failure surfaces **before** the RADIUS server evaluates the user's credentials—the supplicant and server cannot agree on a method, so no credential exchange occurs.
 
 > The longer connection-attempt delay and the platform-specific symptom pattern are the primary L1-visible discriminators.
 
 ## Per-Platform Diagnostic Signal
 
-Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries — copy the complete output and provide it to L2.
+Collect the diagnostic output for the affected platform. Do **not** attempt to interpret individual log entries—copy the complete output and provide it to L2.
 
 | Platform | Signal / Channel | L1 Action |
 |----------|-----------------|-----------|
@@ -93,31 +93,31 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 | **Android** | Intune portal — device configuration profile status | **L1 action: check Intune portal only.** Navigate to Intune admin center > **Devices** > [Android Enterprise] > device > **Device configuration** and confirm all profile statuses. Note the signal `adb logcat -s "wpa_supplicant"` for escalation — do **not** attempt to run it at L1; it requires USB debugging and a tethered PC and is an escalation-collected signal for L2 use only. |
 | **Linux** | NetworkManager journal (primary); wpa_supplicant journal (supplement) | Ask the user to run: `journalctl -u NetworkManager`. If the NetworkManager output is insufficient, supplement with `journalctl -u wpa_supplicant`. Copy the **complete output**; do not interpret. |
 
-**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
+**NOTE—macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence—sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
 
 ## Per-Platform Escalation Notes
 
 ### Windows
 
-Events in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel for EAP negotiation failures may reference the EAP method type (for example, EAP type 25 = PEAP, type 21 = EAP-TTLS, type 13 = EAP-TLS) or include method-mismatch text alongside the failure event. Do not interpret individual events — collect the complete log output and provide it to L2.
+Events in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel for EAP negotiation failures may reference the EAP method type (for example, EAP type 25 = PEAP, type 21 = EAP-TTLS, type 13 = EAP-TLS) or include method-mismatch text alongside the failure event. Do not interpret individual events—collect the complete log output and provide it to L2.
 
-For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
+For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup—Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 
-The eapolclient unified log shows the EAP negotiation sequence on macOS. An EAP negotiation failure typically surfaces earlier in the EAPOL exchange than a RADIUS reject — before the identity exchange is complete. Collect the complete `log show` output; do not interpret. If the 30-minute window returns empty output, extend to `--last 2h`.
+The eapolclient unified log shows the EAP negotiation sequence on macOS. An EAP negotiation failure typically surfaces earlier in the EAPOL exchange than a RADIUS reject—before the identity exchange is complete. Collect the complete `log show` output; do not interpret. If the 30-minute window returns empty output, extend to `--last 2h`.
 
 ### iOS/iPadOS
 
-No device-side log command is available for iOS/iPadOS. The primary L1 signal for iOS/iPadOS is the **symptom pattern**: if iOS/iPadOS devices fail on an SSID or wired port where Windows, macOS, Android, and Linux devices succeed, this is a strong indicator of a PEAP inner-auth mismatch. iOS PEAP inner auth is always MS-CHAPv2 — PAP is not supported and causes an immediate EAP-NAK. Record this platform-scope pattern in the escalation note. L1 action is Intune portal profile status inspection only.
+No device-side log command is available for iOS/iPadOS. The primary L1 signal for iOS/iPadOS is the **symptom pattern**: if iOS/iPadOS devices fail on an SSID or wired port where Windows, macOS, Android, and Linux devices succeed, this is a strong indicator of a PEAP inner-auth mismatch. iOS PEAP inner auth is always MS-CHAPv2—PAP is not supported and causes an immediate EAP-NAK. Record this platform-scope pattern in the escalation note. L1 action is Intune portal profile status inspection only.
 
 ### Android
 
-The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only — they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. The wpa_supplicant log records EAP-NAK events and method negotiation details useful for L2 diagnosis. L1 action is Intune portal profile status inspection only.
+The Android 802.1X supplicant logs (`adb logcat -s "wpa_supplicant"`) are collected by L2 only—they require USB debugging, developer mode enabled, and a tethered PC. L1 names this signal for the escalation note; L1 does **not** collect it. The wpa_supplicant log records EAP-NAK events and method negotiation details useful for L2 diagnosis. L1 action is Intune portal profile status inspection only.
 
 ### Linux
 
-The `journalctl -u NetworkManager` command is the primary L1 signal on Linux. EAP negotiation failures surface in the NM journal as EAP method negotiation events from the wpa_supplicant subprocess. Supplement with `journalctl -u wpa_supplicant` if the NM journal output is truncated or wpa_supplicant is running as an independent unit. Do not interpret — collect the complete output and provide it to L2.
+The `journalctl -u NetworkManager` command is the primary L1 signal on Linux. EAP negotiation failures surface in the NM journal as EAP method negotiation events from the wpa_supplicant subprocess. Supplement with `journalctl -u wpa_supplicant` if the NM journal output is truncated or wpa_supplicant is running as an independent unit. Do not interpret—collect the complete output and provide it to L2.
 
 ## Escalation Criteria
 
@@ -138,9 +138,9 @@ Escalate to L2 if:
 - For Windows: complete `Microsoft-Windows-WLAN-AutoConfig/Operational` or `Microsoft-Windows-Wired-AutoConfig/Operational` event log output (do not filter by event ID)
 - For macOS: complete output of `log show --predicate 'subsystem contains "com.apple.eapol"' --info --last 30m` (or `--last 2h` if the 30-minute window is empty)
 - For Linux: complete output of `journalctl -u NetworkManager`
-- For iOS/iPadOS: Intune portal profile status screenshot and a description of which platforms succeed vs. fail (no device log available)
+- For iOS/iPadOS: Intune portal profile status screenshot and a description of which platforms succeed versus fail (no device log available)
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
-- Results of the First Checks steps above, including confirmed EAP type and platform-scope symptom pattern
+- Results of the First Checks steps, including confirmed EAP type and platform-scope symptom pattern
 
 See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
 log sources, then [L2 RADIUS/EAP Investigation (#33)](../l2-runbooks/33-8021x-radius-eap-investigation.md)

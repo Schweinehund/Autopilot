@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), firmware and BIOS management (DFCI, UEFI CSP, BIOS password custody), deployment modes (self-deploying, pre-provisioning, user-driven), and device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe).
+This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), firmware and BIOS management (DFCI, UEFI CSP, BIOS password custody), deployment modes (self-deploying, pre-provisioning, user-driven), device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe), and update and app-delivery vocabulary (hotpatching, the Autopatch group model, Microsoft 365 Apps update channels, the Enterprise App Catalog).
 
 > **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2). Terms specific to one framework are labeled. See
 
@@ -30,13 +30,13 @@ This reference defines the core terminology for Windows Autopilot deployment acr
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BIOS configuration and other settings](#bios-configuration-and-other-settings) | [BIOS password](#bios-password) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [DCECMI](#dcecmi) | [Device Firmware Configuration Interface (DFCI)](#device-firmware-configuration-interface-dfci) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [HP Connect](#hp-connect) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Sure Admin](#sure-admin) | [Tenant migration](#tenant-migration) | [Think BIOS Config](#think-bios-config) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [UEFI CSP](#uefi-csp) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopatch group](#autopatch-group) | [Autopilot Reset](#autopilot-reset) | [BIOS configuration and other settings](#bios-configuration-and-other-settings) | [BIOS password](#bios-password) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [DCECMI](#dcecmi) | [Device Firmware Configuration Interface (DFCI)](#device-firmware-configuration-interface-dfci) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Enterprise App Catalog](#enterprise-app-catalog) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hotpatching](#hotpatching) | [HP Connect](#hp-connect) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [Microsoft 365 Apps update channels](#microsoft-365-apps-update-channels) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Sure Admin](#sure-admin) | [Tenant migration](#tenant-migration) | [Think BIOS Config](#think-bios-config) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [UEFI CSP](#uefi-csp) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
 ## Autopilot
 
-Windows Autopilot — Microsoft's cloud-based deployment service that provisions corporate-owned Windows devices directly from the factory or OEM. Two generations coexist: **Autopilot (classic / APv1)** uses the Enrollment Status Page (ESP) gate and assigns deployment profiles to registered hardware hashes; **Autopilot Device Preparation (APv2)** uses Enrollment Time Grouping (ETG) and a Device Preparation policy for a more portal-native flow. See [APv1 vs APv2](apv1-vs-apv2.md) for selection guidance.
+Windows Autopilot—Microsoft's cloud-based deployment service that provisions corporate-owned Windows devices directly from the factory or OEM. Two generations coexist: **Autopilot (classic / APv1)** uses the Enrollment Status Page (ESP) gate and assigns deployment profiles to registered hardware hashes; **Autopilot Device Preparation (APv2)** uses Enrollment Time Grouping (ETG) and a Device Preparation policy for a more portal-native flow. See [APv1 vs APv2](apv1-vs-apv2.md) for selection guidance.
 
 ---
 
@@ -44,15 +44,15 @@ Windows Autopilot — Microsoft's cloud-based deployment service that provisions
 
 ### OOBE
 
-Out-of-Box Experience — the first-run setup screens a device presents after power-on, before a user profile exists.
+Out-of-Box Experience—the first-run setup screens a device presents after power-on, before a user profile exists.
 
-> **Cross-platform note:** On macOS, the equivalent first-run configuration experience is Setup Assistant, which is customizable via the ADE enrollment profile in Intune. iOS/iPadOS also uses Setup
+> **Cross-platform note:** On macOS, the equivalent first-run configuration experience is Setup Assistant, which is customizable through the ADE enrollment profile in Intune. iOS/iPadOS also uses Setup
 
 > Assistant. Android uses a Setup Wizard with the DPC download flow for enterprise provisioning. See also: [Setup Assistant](_glossary-macos.md#setup-assistant) (Apple/macOS+iOS).
 
 ### ESP
 
-Enrollment Status Page — the progress screen during Autopilot provisioning that blocks desktop access until required apps and policies are applied (APv1 only).
+Enrollment Status Page—the progress screen during Autopilot provisioning that blocks desktop access until required apps and policies are applied (APv1 only).
 
 > **APv2 note:** APv2 does not use ESP. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) for the APv2 equivalent mechanism.
 
@@ -64,7 +64,7 @@ Enrollment Status Page — the progress screen during Autopilot provisioning tha
 
 ### MDM
 
-Mobile Device Management — the protocol and service (Intune) used to push policies, apps, and configuration to enrolled devices.
+Mobile Device Management—the protocol and service (Intune) used to push policies, apps, and configuration to enrolled devices.
 
 ### MDM enrollment
 
@@ -86,7 +86,7 @@ A component of the Intune Management Extension (IME) that orchestrates APv2 Devi
 
 ### Enrollment Time Grouping (ETG)
 
-The core APv2 mechanism that replaces APv1 hardware hash pre-staging and ESP. A two-phase model: the admin creates a security group owned by the [Intune Provisioning Client](#intune-provisioning-client); at enrollment time, the device is added to the group automatically, enabling policy and app delivery during the deployment experience.
+The core APv2 mechanism that replaces APv1 hardware hash pre-staging and ESP. A two-phase model: the administrator creates a security group owned by the [Intune Provisioning Client](#intune-provisioning-client); at enrollment time, the device is added to the group automatically, enabling policy and app delivery during the deployment experience.
 
 > **APv2 only.** Replaces the role of both [hardware hash](#hardware-hash) registration (device pre-staging) and [ESP](#esp) (policy/app delivery tracking) in APv1. See also:
 
@@ -128,17 +128,17 @@ A 4K-byte device fingerprint derived from hardware identifiers, used by APv1 to 
 
 ### ZTD
 
-Zero Touch Deployment — Microsoft's internal codename for Windows Autopilot; also the prefix for the deployment service endpoint (`ztd.dds.microsoft.com`) and device identifier (ZTDID).
+Zero Touch Deployment—Microsoft's internal codename for Windows Autopilot; also the prefix for the deployment service endpoint (`ztd.dds.microsoft.com`) and device identifier (ZTDID).
 
 ### ZTDID
 
-Zero Touch Device ID — the unique identifier assigned to a device when it is registered in the Autopilot service.
+Zero Touch Device ID—the unique identifier assigned to a device when it is registered in the Autopilot service.
 
 ### TPM
 
-Trusted Platform Module — the hardware security chip that stores cryptographic keys and performs attestation; required for self-deploying and pre-provisioning modes.
+Trusted Platform Module—the hardware security chip that stores cryptographic keys and performs attestation; required for self-deploying and pre-provisioning modes.
 
-> See also: [Secure Enclave](_glossary-macos.md#secure-enclave) (analogous Apple hardware root of trust; not bit-for-bit equivalent — Secure Enclave performs no TPM-2.0/DICE attestation).
+> See also: [Secure Enclave](_glossary-macos.md#secure-enclave) (analogous Apple hardware root of trust; not bit-for-bit equivalent—Secure Enclave performs no TPM-2.0/DICE attestation).
 
 ### TPM attestation
 
@@ -166,7 +166,7 @@ Device identifiers (serial number, manufacturer, model) uploaded to Intune to ma
 
 > are optional for APv2 enrollment restrictions).
 
-> **Cross-platform note:** On Android, the equivalent is Corporate Identifiers — pre-loaded IMEI, serial, or MEID lists in Intune that tag devices as corporate-owned at enrollment. All achieve the same
+> **Cross-platform note:** On Android, the equivalent is Corporate Identifiers—pre-loaded IMEI, serial, or MEID lists in Intune that tag devices as corporate-owned at enrollment. All achieve the same
 
 > enrollment-time corporate tagging effect but use different identity plumbing (serial/manufacturer/model on Windows; IMEI/serial on Android; ABM device assignment on Apple platforms). See also:
 
@@ -174,11 +174,11 @@ Device identifiers (serial number, manufacturer, model) uploaded to Intune to ma
 
 ### BIOS configuration and other settings
 
-The Intune Templates profile type that pushes a vendor BIOS configuration file to a device — for Dell, a Dell Client Configuration Tool Kit file (`.cctk`) subject to a 2 MB file size limit. Dell is the only vendor this profile type supports today, and Dell appears on no DFCI manufacturer list, so the two surfaces are disjoint: no device is reachable by both.
+The Intune Templates profile type that pushes a vendor BIOS configuration file to a device—for Dell, a Dell Client Configuration Tool Kit file (`.cctk`) subject to a 2 MB file size limit. Dell is the only vendor this profile type supports today, and Dell appears on no DFCI manufacturer list, so the two surfaces are disjoint: no device is reachable by both.
 
 ### BIOS password
 
-The firmware setup or supervisor password that gates BIOS changes on hardware that requires one. Who holds it — the Intune tenant, an OEM cloud service, or the customer — is the discriminator the firmware and BIOS governance domain routes on, because custody decides who can change a setting and who can recover a locked device.
+The firmware setup or supervisor password that gates BIOS changes on hardware that requires one. Who holds it—the Intune tenant, an OEM cloud service, or the customer—is the discriminator the firmware and BIOS governance domain routes on, because custody decides who can change a setting and who can recover a locked device.
 
 ### Device Firmware Configuration Interface (DFCI)
 
@@ -196,7 +196,7 @@ HP's certificate-based, password-free BIOS authentication, riding on HP Secure P
 Management. Three keys form a hierarchy: the Endorsement Key is the root of trust, required to
 provision and de-provision the device; the Signing Key, endorsed by the Endorsement Key, signs
 every payload; and the Local Access Key secures local BIOS Setup behind a QR-code challenge. HP BIOS
-admits two authentication models — this certificate-based one and a legacy BIOS password — and
+admits two authentication models—this certificate-based one and a legacy BIOS password—and
 they cannot coexist on one device.
 
 ### Think BIOS Config
@@ -211,7 +211,7 @@ initial supervisor password, which must already exist on the device.
 HP's vendor cloud console for BIOS configuration, administered at `admin.hp.com` and also
 reachable from the Intune admin center's Partner portals tab. It publishes policies into Intune
 device groups as Remediations over the Microsoft Graph API, installs no per-device agent, and
-stores BIOS passwords and Sure Admin private keys in HP's own cloud vault — outside the customer's
+stores BIOS passwords and Sure Admin private keys in HP's own cloud vault—outside the customer's
 tenant. Deactivating the account starts a 30-day countdown after which those secrets are deleted.
 
 ### DCECMI
@@ -231,7 +231,7 @@ The system-level HTTP proxy configuration used by Windows services during OOBE (
 
 ### NCSI
 
-Network Connection Status Indicator — the Windows component that tests internet reachability via `*.msftconnecttest.com`.
+Network Connection Status Indicator—the Windows component that tests internet reachability through `*.msftconnecttest.com`.
 
 ---
 
@@ -239,9 +239,9 @@ Network Connection Status Indicator — the Windows component that tests interne
 
 ### Entra ID SSO
 
-Microsoft Entra ID single sign-on on Windows devices: when a user signs in to an Entra-joined or Entra-registered device, the Web Account Manager (WAM) obtains a Primary Refresh Token (PRT) that silently authenticates the user to apps and browsers without requiring repeated credential entry. The PRT is hardware-bound (via TPM when available) and carries device compliance claims evaluated by Conditional Access policies.
+Microsoft Entra ID single sign-on on Windows devices: when a user signs in to an Entra-joined or Entra-registered device, the Web Account Manager (WAM) obtains a Primary Refresh Token (PRT) that silently authenticates the user to apps and browsers without requiring repeated credential entry. The PRT is hardware-bound (using the TPM when available) and carries device compliance claims evaluated by Conditional Access policies.
 
-> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO);
+> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent through Microsoft Enterprise SSO plug-in and Platform SSO);
 
 > [Kerberos SSO Extension](_glossary-macos.md#kerberos-sso-extension) (macOS on-premises Kerberos TGT extension, coexisting with PSSO);
 
@@ -253,7 +253,7 @@ A UEFI firmware feature that verifies the bootloader's digital signature, requir
 
 ### SCP
 
-Service Connection Point — an Active Directory object that tells Azure AD Connect which tenant to use for hybrid join.
+Service Connection Point—an Active Directory object that tells Azure AD Connect which tenant to use for hybrid join.
 
 ### Selective wipe
 
@@ -265,13 +265,13 @@ See [Device retirement](#device-retirement). The term "selective wipe" is someti
 
 ### APv1
 
-Windows Autopilot (classic) — the original deployment framework requiring hardware hash pre-staging and supporting all deployment modes.
+Windows Autopilot (classic)—the original deployment framework requiring hardware hash pre-staging and supporting all deployment modes.
 
 See also: [APv1 vs APv2 disambiguation](apv1-vs-apv2.md).
 
 ### APv2
 
-Windows Autopilot Device Preparation — the newer framework (Windows 11 22H2+) that removes hardware hash requirements and simplifies provisioning.
+Windows Autopilot Device Preparation—the newer framework (Windows 11 22H2+) that removes hardware hash requirements and simplifies provisioning.
 
 See also: [APv1 vs APv2 disambiguation](apv1-vs-apv2.md).
 
@@ -305,7 +305,7 @@ An Azure AD join type where the device is simultaneously joined to on-premises A
 
 ### ODJ
 
-Offline Domain Join — the mechanism used during hybrid Autopilot to join a device to on-premises AD without requiring direct DC connectivity during OOBE.
+Offline Domain Join—the mechanism used during hybrid Autopilot to join a device to on-premises AD without requiring direct DC connectivity during OOBE.
 
 ### Device phase
 
@@ -323,12 +323,38 @@ An Intune remote action that factory-resets a device, removing all data and retu
 
 The second half of ESP (after user login) that applies user-targeted apps and policies.
 
+### Hotpatching
+
+Hotpatching is a Windows update-servicing model, enabled by default for eligible devices, that installs security fixes by patching kernel and OS-mode binaries already in memory rather than through the classic reboot-driven install. It reduces the reboot cadence from monthly to a quarterly cumulative update that consolidates the in-memory hotpatches with the on-disk image. Virtualization-based security must be enabled for a device to be offered hotpatch updates; without it, a device falls back to the classic servicing model. See [Windows WUfB Rings + Hotpatch + Driver/Firmware](operations/patch-management/01-windows-wufb-rings.md#hotpatch) for configuration levels and the compliance-reporting effect.
+
+> See also: [Autopatch group](#autopatch-group) -- the Windows Autopatch grouping model hotpatching devices can belong to.
+
+### Autopatch group
+
+An Autopatch group is the Windows Autopatch container that groups several Microsoft Entra groups together and carries a standalone Update rings policy for Windows 10 and later, taking over WUfB deployment ring topology for the devices it contains. Two default deployment rings, Test and Last, are structural and cannot be removed or renamed. A tenant may add more, up to 15 deployment rings per Autopatch group, and may run up to 300 Autopatch groups in a tenant. See [Windows Autopatch](operations/patch-management/07-windows-autopatch.md) for enrollment prerequisites and the containment model.
+
+> See also: [Hotpatching](#hotpatching) -- the update-servicing model Autopatch-enrolled devices use.
+
+### Microsoft 365 Apps update channels
+
+Microsoft 365 Apps for enterprise ships six subscription update channels—Current Channel (the default), Current Channel (Preview), Monthly Enterprise Channel, Semi-Annual Enterprise Channel, Semi-Annual Enterprise Channel (Preview), and Beta Channel (not supported for production use)—each with its own feature-update cadence and rollback window. A channel is device-specific, not user-specific, and only one channel can be configured for a device at a time across every Microsoft 365 subscription product installed on it. An Autopatch-enrolled device is steered toward the Monthly Enterprise Channel. See [Windows App Updates](operations/patch-management/08-windows-app-updates.md#microsoft-365-apps-update-channels) for the full channel comparison and the channel-setting mechanisms.
+
+> See also: [Enterprise App Catalog](#enterprise-app-catalog) -- a separate Windows app-update surface with its own update mechanism.
+
+### Enterprise App Catalog
+
+The Enterprise App Catalog is delivered through Enterprise App Management, a licensed Intune add-on that keeps Required-assigned catalog applications current automatically through the Intune management extension, with no new app object and no supersedence relationship created. Applications assigned as Available continue to use the existing update workflow instead of the auto-update path. Intune performs no license check on catalog apps; an organization without the add-on subscription is blocked by not having purchased the entitlement, not by an Intune-enforced gate. See [Windows App Updates](operations/patch-management/08-windows-app-updates.md#enterprise-app-management) for licensing scope, hosting, and cloud-environment coverage.
+
+> See also: [Microsoft 365 Apps update channels](#microsoft-365-apps-update-channels) -- a separate Windows app-update surface with its own update mechanism.
+
 ---
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-09-05 | Phase 157 (HYG-06): added the Hotpatching, Autopatch group, Microsoft 365 Apps update channels and Enterprise App Catalog terms (Deployment Modes section); Alphabetical Index updated with the four entries; `## Summary` amended to name update and app-delivery vocabulary | -- |
+| 2026-09-05 | Phase 157: `last_verified` and `review_by` deliberately NOT advanced for the 2026-09-05 additions. This file is on a 90-day review cycle, not the milestone's 60-day one, so `last_verified` records when this file's review cycle last completed rather than when its newest entry was written. Owner ruling, 2026-08-25; see D-63 | -- |
 | 2026-08-25 | Phase 150 (BIOS-05..BIOS-12): added `### Sure Admin`, `### Think BIOS Config`, `### HP Connect` and `### DCECMI` terms (Hardware section); Alphabetical Index updated with the four sorted entries. `last_verified` and `review_by` deliberately NOT advanced — see the Phase 149 2026-08-25 row below for the owner-ruled review-cycle reasoning | -- |
 | 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a one-way `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
 | 2026-08-25 | Phase 149: `last_verified` deliberately NOT advanced for the 2026-08-24 additions. This file is on a 90-day review cycle, not the milestone's 60-day one, so `last_verified` records when this file's review cycle last completed rather than when its newest entry was written. Owner ruling, 2026-08-25; see D-63 | -- |

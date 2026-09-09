@@ -23,7 +23,7 @@ This guide covers the prerequisites and custom RBAC role setup for Autopilot Dev
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-Before configuring any APv2 objects in Intune, verify each prerequisite and create the custom RBAC role. Skipping these steps causes silent failures during deployment -- devices enroll without the APv2 experience or admins receive "Access denied" errors when creating policies.
+Before configuring any APv2 objects in Intune, verify each prerequisite and create the custom RBAC role. Skipping these steps causes silent failures during deployment -- devices enroll without the APv2 experience or administrators receive "Access denied" errors when creating policies.
 
 ## Prerequisites
 
@@ -33,11 +33,11 @@ Complete in order. Item 0 is the most critical -- if APv1 and APv2 registrations
 
 1. **Licensing** -- Microsoft Intune Plan 1 or equivalent (included in Microsoft 365 E3/E5, EMS E3/E5, Microsoft 365 Business Premium, Intune standalone). APv2 Device Preparation requires Intune enrollment authority for the enrolling user.
 
-2. **Intune auto-enrollment** -- MDM auto-enrollment must be configured in Entra ID: **Azure portal** > **Microsoft Entra ID** > **Mobility (MDM and WIP)** > **Microsoft Intune**. MDM user scope must be set to **All** or **Some** (covering the enrolling user). Without this, devices will not auto-enroll into Intune during OOBE -- the APv2 deployment will fail at the enrollment step.
+2. **Intune auto-enrollment** -- MDM auto-enrollment must be configured in Entra ID: **Azure portal** > **Microsoft Entra ID** > **Mobility (MDM and WIP)** > **Microsoft Intune**. MDM user scope must be set to **All** or **Some** (covering the enrolling user). Without this, devices do not auto-enroll into Intune during OOBE -- the APv2 deployment fails at the enrollment step.
 
 3. **Entra ID device join permissions** -- Targeted users must be allowed to join devices to Microsoft Entra ID: **Azure portal** > **Microsoft Entra ID** > **Devices** > **Device settings** > **Users may join devices to Microsoft Entra ID**. Set to **All** or ensure enrolling users are included in the allowed group. Without this, the Entra join step during OOBE fails with an access denied error.
 
-4. **Device-level prerequisites** -- For OS version (Windows 11 22H2+ minimum), networking endpoints, and hardware requirements, see [APv2 Prerequisites Checklist](../lifecycle-apv2/01-prerequisites.md). This guide covers admin configuration prerequisites only -- device readiness is documented separately to avoid duplication.
+4. **Device-level prerequisites** -- For OS version (Windows 11 22H2+ minimum), networking endpoints, and hardware requirements, see [APv2 Prerequisites Checklist](../lifecycle-apv2/01-prerequisites.md). This guide covers administrator configuration prerequisites only -- device readiness is documented separately to avoid duplication.
 
 ## Steps
 
@@ -78,8 +78,8 @@ The custom RBAC role must be created before attempting to configure any APv2 obj
 
 1. Navigate to **Intune admin center** > **Tenant administration** > **Roles** > **Create**.
 2. Select **Intune role**.
-3. Enter a name (e.g., "APv2 Device Preparation Administrator") and a description.
-4. Configure the following 5 permission categories. All other permissions not listed below should remain at the default (No):
+3. Enter a name (for example, "APv2 Device Preparation Administrator") and a description.
+4. Configure the following 5 permission categories. All other permissions not listed here must remain at the default (No):
 
    **Category 1: Device configurations**
 
@@ -128,7 +128,7 @@ The custom RBAC role must be created before attempting to configure any APv2 obj
 7. Select **Next** to review, then select **Create** to save the role.
 
    > **What breaks if misconfigured:** **Admin sees:** "Access denied" or "Insufficient permissions" error when navigating to Device preparation policies, or when attempting to create a policy.
-   > **End user sees:** Deployment never launches because the policy was not created or not assigned due to admin errors during setup.
+   > **End user sees:** Deployment never launches because the policy was not created or not assigned due to administrator errors during setup.
    > **Runbook:** [Deployment Not Launched](../l1-runbooks/06-apv2-deployment-not-launched.md)
 
 ## Verification
@@ -138,7 +138,7 @@ The custom RBAC role must be created before attempting to configure any APv2 obj
 - [ ] Users may join devices to Microsoft Entra ID is set to All or includes enrolling users at Azure portal > Microsoft Entra ID > Devices > Device settings
 - [ ] Custom RBAC role exists in Intune admin center > Tenant administration > Roles with all 5 permission categories configured as specified
 - [ ] RBAC role is assigned to the security group containing APv2 administrators
-- [ ] Admin can navigate to **Intune admin center** > **Devices** > **Windows** > **Windows enrollment** > **Device preparation policies** without receiving an "Access denied" error
+- [ ] Administrator can navigate to **Intune admin center** > **Devices** > **Windows** > **Windows enrollment** > **Device preparation policies** without receiving an "Access denied" error
 
 ## Configuration-Caused Failures
 

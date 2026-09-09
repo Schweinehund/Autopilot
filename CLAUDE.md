@@ -323,6 +323,16 @@ Autopilot/
 └── config/                  # Configuration templates
 ```
 
+## Documentation Authoring
+
+New documents under `docs/` are authored against the `google-style` skill (Google's
+developer documentation style guide). Any bulk prose rewrite across existing corpus
+documents pairs that skill with the `google-style-verify` skill, which judges whether
+the rewrite preserved meaning -- never run one without the other on a multi-file pass.
+The standing authoring rules, including two measured rewrite hazards and the corpus-scope
+resolution, are recorded in `docs/_standards/EEE-SOP-standard.md`, under the
+"## Prose Style Authoring Standard" section.
+
 ## Security Notes
 
 - Never commit `.env` file or any credentials

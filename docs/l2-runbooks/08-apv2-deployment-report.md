@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers Intune APv2 deployment report interpretation: status value reference tables, phase breakdown mapping, and investigation paths for Entra join failure, enrollment failure, app/script failure, timeout, and the stuck-at-100% known issue.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers Intune APv2 deployment report interpretation: status value reference tables, phase breakdown mapping, and investigation paths for Entra join failure, enrollment failure, app/script failure, timeout, and the stuck-at-100% known issue.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2) deployment report interpretation.
 
@@ -51,7 +51,7 @@ Before starting: collect a diagnostic package per the [APv2 Log Collection Guide
 
 ### Step 2: Review deployment report status values
 
-Use the reference tables below to interpret every field in the deployment report. Identify the failure indicator, then proceed to the investigation path that matches the failure type (Step 3).
+Use the following reference tables to interpret every field in the deployment report. Identify the failure indicator, then proceed to the investigation path that matches the failure type (Step 3).
 
 ---
 
@@ -120,7 +120,7 @@ Map each Phase value to deployment flow step numbers from [APv2 Deployment Flow]
 
 ### Step 3: Follow investigation path by failure type
 
-Based on the deployment report status values identified in Step 2, follow the matching investigation path below.
+Based on the deployment report status values identified in Step 2, follow the matching investigation path.
 
 ## Investigation Paths by Failure Type
 
@@ -214,7 +214,7 @@ Based on the deployment report status values identified in Step 2, follow the ma
 
 ## Escalation Ceiling
 
-If investigation using the deployment report and BootstrapperAgent logs does not identify a resolvable root cause, or if the deployment report shows an error state not covered by the scenarios above, escalate to Microsoft Premier Support with:
+If investigation using the deployment report and BootstrapperAgent logs does not identify a resolvable root cause, or if the deployment report shows an error state not covered by the preceding scenarios, escalate to Microsoft Premier Support with:
 
 - Deployment report screenshot/export
 - BootstrapperAgent `.evtx` export

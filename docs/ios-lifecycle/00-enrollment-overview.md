@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the four iOS/iPadOS enrollment paths — Automated Device Enrollment, Device Enrollment, account-driven User Enrollment, and MAM Without Enrollment — and the permanent supervision state each path establishes at enrollment time.
+This guide orients Intune administrators, L1 Service Desk, and L2 Desktop Engineering to the four iOS/iPadOS enrollment paths—Automated Device Enrollment, Device Enrollment, account-driven User Enrollment, and MAM Without Enrollment—and the permanent supervision state each path establishes at enrollment time.
 
 > **Version gate:** This guide covers iOS/iPadOS enrollment paths in Microsoft Intune. For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
 
@@ -28,15 +28,15 @@ This guide describes all four iOS/iPadOS enrollment paths and establishes the su
 
 - **L1 Service Desk:** Use the [Enrollment Path Comparison](#enrollment-path-comparison) table to identify the enrollment type, then read the per-path section for use case confirmation.
 - **L2 Desktop Engineering:** Use the [Supervision](#supervision) section for the enrollment-time constraint and its consequences.
-- **Intune Admins:** Use the per-path sections for selection guidance and links to admin setup guides.
+- **Intune Admins:** Use the per-path sections for selection guidance and links to administrator setup guides.
 
 ## The Four iOS/iPadOS Enrollment Paths
 
 iOS/iPadOS supports four distinct enrollment approaches, each with fundamentally different management scopes, ownership models, and supervision states. Selecting the wrong enrollment path at deployment time can result in over-collection of personal data or under-management of corporate assets.
 
-The choice of enrollment path determines supervision state, which is permanent once set. Supervised mode grants the MDM server expanded control capabilities unavailable on unsupervised devices — OS update enforcement, silent app installation, and supervised-only restrictions. Supervision cannot be layered onto an existing enrollment.
+The choice of enrollment path determines supervision state, which is permanent once set. Supervised mode grants the MDM server expanded control capabilities unavailable on unsupervised devices—OS update enforcement, silent app installation, and supervised-only restrictions. Supervision cannot be layered onto an existing enrollment.
 
-Three of the four paths involve MDM enrollment, installing a device management profile that gives Intune device-level control. The fourth path, MAM Without Enrollment (MAM-WE), operates at the application layer only — no device enrollment, no MDM profile installed.
+Three of the four paths involve MDM enrollment, installing a device management profile that gives Intune device-level control. The fourth path, MAM Without Enrollment (MAM-WE), operates at the application layer only—no device enrollment, no MDM profile installed.
 
 ## Enrollment Path Comparison
 
@@ -51,39 +51,39 @@ Three of the four paths involve MDM enrollment, installing a device management p
 
 **What supervision is:** [Supervision](../_glossary-macos.md#supervision) is a management state set at enrollment time. Supervised devices give the MDM server expanded capabilities unavailable on unsupervised devices: blocking native app removal, enforcing OS updates, silently installing apps, and applying supervised-only configuration policies. Unsupervised devices receive standard MDM management only (policies, certificates, Wi-Fi, VPN, compliance) and cannot be governed by supervised-only settings.
 
-**When supervision is set:** Supervision is set at enrollment time, exclusively through [Automated Device Enrollment (ADE)](../_glossary-macos.md#ade). For iOS/iPadOS 13.0 and later, devices enrolled via ADE are automatically supervised. Supervision cannot be added to a device that was enrolled without it — a device enrolled through Device Enrollment or User Enrollment is unsupervised for the lifetime of that enrollment.
+**When supervision is set:** Supervision is set at enrollment time, exclusively through [Automated Device Enrollment (ADE)](../_glossary-macos.md#ade). For iOS/iPadOS 13.0 and later, devices enrolled through ADE are automatically supervised. Supervision cannot be added to a device that was enrolled without it—a device enrolled through Device Enrollment or User Enrollment is unsupervised for the lifetime of that enrollment.
 
-**Changing supervision requires a full device erase:** Changing a device from unsupervised to supervised requires a full device erase and re-enrollment via ADE. A full device erase removes ALL data on the device, including personal data, installed apps, accounts, and settings. This is not a selective wipe — it restores the device to factory state.
+**Changing supervision requires a full device erase:** Changing a device from unsupervised to supervised requires a full device erase and re-enrollment through ADE. A full device erase removes ALL data on the device, including personal data, installed apps, accounts, and settings. This is not a selective wipe—it restores the device to factory state.
 
 To verify supervision state: **Settings > General > About** shows "This iPhone is supervised and managed by [organization name]" on supervised devices.
 
-Subsequent admin setup guides mark supervised-only settings with the supervised-only callout pattern.
+Subsequent administrator setup guides mark supervised-only settings with the supervised-only callout pattern.
 
 ## Enrollment Path Details
 
 ### Automated Device Enrollment (ADE)
 
-[ADE](../_glossary-macos.md#ade) is the zero-touch corporate enrollment path for iOS/iPadOS. Devices assigned to an MDM server in Apple Business Manager ([ABM](../_glossary-macos.md#abm)) enroll automatically during Setup Assistant — no user interaction required. All ADE-enrolled iOS/iPadOS devices are **supervised** (see [Supervision](#supervision)), enabling the full range of Intune MDM capabilities including OS update enforcement, silent app installation, and supervised-only restrictions.
+[ADE](../_glossary-macos.md#ade) is the zero-touch corporate enrollment path for iOS/iPadOS. Devices assigned to an MDM server in Apple Business Manager ([ABM](../_glossary-macos.md#abm)) enroll automatically during Setup Assistant—no user interaction required. All ADE-enrolled iOS/iPadOS devices are **supervised** (see [Supervision](#supervision)), enabling the full range of Intune MDM capabilities including OS update enforcement, silent app installation, and supervised-only restrictions.
 
-ADE requires corporate device ownership and prior ABM assignment. It is appropriate for new or wiped devices only — existing devices cannot be re-enrolled via ADE without a full device erase. See [iOS/iPadOS ADE Lifecycle](01-ade-lifecycle.md) for the complete end-to-end pipeline.
+ADE requires corporate device ownership and prior ABM assignment. It is appropriate for new or wiped devices only—existing devices cannot be re-enrolled through ADE without a full device erase. See [iOS/iPadOS ADE Lifecycle](01-ade-lifecycle.md) for the complete end-to-end pipeline.
 
 ### Device Enrollment
 
 Device Enrollment uses Company Portal or web-based enrollment to install an MDM profile. Enrollment is user-initiated and does not require ABM. Enrolled devices are **unsupervised** (see [Supervision](#supervision)), limiting management to standard MDM capabilities: policies, certificates, Wi-Fi, VPN, and compliance evaluation. Supervised-only restrictions and silent app installation are not available.
 
-Device Enrollment is appropriate for BYOD or corporate devices not eligible for ADE. Personal devices enrolled through this path are subject to full device-level management — admins should evaluate whether User Enrollment provides a better privacy boundary.
+Device Enrollment is appropriate for BYOD or corporate devices not eligible for ADE. Personal devices enrolled through this path are subject to full device-level management—evaluate whether User Enrollment provides a better privacy boundary.
 
 ### User Enrollment
 
-Account-driven User Enrollment is the privacy-preserving BYOD path for iOS 15 and later. The user enrolls by adding a work account via **Settings > VPN & Device Management**, creating a separate managed APFS volume that isolates managed apps and data from personal content. Enrolled devices are **unsupervised** (see [Supervision](#supervision)).
+Account-driven User Enrollment is the privacy-preserving BYOD path for iOS 15 and later. The user enrolls by adding a work account through **Settings > VPN & Device Management**, creating a separate managed APFS volume that isolates managed apps and data from personal content. Enrolled devices are **unsupervised** (see [Supervision](#supervision)).
 
-Intune does not collect UDID, serial number, or IMEI. Management is limited to apps, per-app VPN, Wi-Fi, and compliance within the managed volume. Profile-based user enrollment via Company Portal is deprecated as of iOS 18 and is no longer available for newly enrolled devices — account-driven User Enrollment is the current standard.
+Intune does not collect UDID, serial number, or IMEI. Management is limited to apps, per-app VPN, Wi-Fi, and compliance within the managed volume. Profile-based user enrollment through Company Portal is deprecated as of iOS 18 and is no longer available for newly enrolled devices—account-driven User Enrollment is the current standard.
 
 ---
 
 ### MAM Without Enrollment (MAM-WE)
 
-MAM-WE applies app protection policies to Microsoft 365 apps using the Intune App SDK — no MDM profile is installed and the device is not enrolled in Intune. Policy controls apply only within SDK-integrated apps (Outlook, Teams, Microsoft Edge, and others). IT has no device-level management: no inventory, no compliance evaluation, no device wipe.
+MAM-WE applies app protection policies to Microsoft 365 apps using the Intune App SDK—no MDM profile is installed and the device is not enrolled in Intune. Policy controls apply only within SDK-integrated apps (Outlook, Teams, Microsoft Edge, and others). IT has no device-level management: no inventory, no compliance evaluation, no device wipe.
 
 MAM-WE provides selective wipe capability: managed app data and corporate accounts are removed without affecting personal data or other apps. MAM-WE is appropriate for unmanaged personal devices needing M365 app access, contractor or partner devices, or devices already managed by another MDM.
 

@@ -22,7 +22,7 @@ This reference documents the firewall, VPN, and proxy infrastructure requirement
 
 > For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-This doc covers firewall rules, VPN configuration, and proxy settings for the endpoints required by Windows Autopilot. It does NOT duplicate the endpoint table — see [Network Endpoints](endpoints.md) for the complete list of URLs and their criticality ratings.
+This doc covers firewall rules, VPN configuration, and proxy settings for the endpoints required by Windows Autopilot. It does NOT duplicate the endpoint table—see [Network Endpoints](endpoints.md) for the complete list of URLs and their criticality ratings.
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ Used for: WPAD/PAC file retrieval, initial HTTP redirects to HTTPS.
 
 Used for: All Autopilot enrollment traffic, Azure AD authentication, Microsoft Graph API calls, Intune MDM enrollment, and profile download.
 
-Port 443 must be open for all critical endpoints in [Network Endpoints](endpoints.md). This is non-negotiable — Autopilot cannot operate over any other port for HTTPS traffic.
+Port 443 must be open for all critical endpoints in [Network Endpoints](endpoints.md). This is non-negotiable—Autopilot cannot operate over any other port for HTTPS traffic.
 
 > **What breaks if misconfigured:** Any critical endpoint blocked on 443 causes enrollment failure at the step that endpoint serves.
 
@@ -58,11 +58,11 @@ Used for: Clock synchronization with `time.windows.com`.
 
 > **What breaks if misconfigured:** Clock skew greater than 5 minutes blocks Kerberos and Azure AD token validation.
 
-> Device reaches enrollment but authentication fails with clock-skew error. Enrollment fails silently — no useful message at OOBE.
+> Device reaches enrollment but authentication fails with clock-skew error. Enrollment fails silently—no useful message at OOBE.
 
 ## Split-Tunnel VPN Considerations
 
-Autopilot must reach all required endpoints WITHOUT going through the corporate VPN. The VPN profile is not applied until after ESP completes — during OOBE there is no VPN tunnel.
+Autopilot must reach all required endpoints WITHOUT going through the corporate VPN. The VPN profile is not applied until after ESP completes—during OOBE there is no VPN tunnel.
 
 **Which endpoints must be on the split-tunnel exclusion list:** All of them. Every endpoint in [Network Endpoints](endpoints.md) must be excluded from VPN tunneling.
 
@@ -79,7 +79,7 @@ Autopilot must reach all required endpoints WITHOUT going through the corporate 
 
 ### Pre-Provisioning (Technician Flow) and VPN
 
-In pre-provisioning (technician phase), the device is provisioned at the staging location — typically corporate network with direct internet access. VPN is not involved. The user phase happens later at the user's location, where split-tunnel VPN considerations apply.
+In pre-provisioning (technician phase), the device is provisioned at the staging location—typically corporate network with direct internet access. VPN is not involved. The user phase happens later at the user's location, where split-tunnel VPN considerations apply.
 
 ## Proxy Configuration
 
@@ -87,7 +87,7 @@ Proxy settings must be configured on the proxy server itself. Intune policy prox
 
 ### WPAD/PAC File (Recommended)
 
-Configure a WPAD entry or PAC file URL so devices automatically discover proxy settings via DNS. The device queries `wpad.<yourdomain>` or the PAC URL during OOBE before any Intune policy applies.
+Configure a WPAD entry or PAC file URL so devices automatically discover proxy settings through DNS. The device queries `wpad.<yourdomain>` or the PAC URL during OOBE before any Intune policy applies.
 
 > **What breaks if misconfigured:** If WPAD/PAC is not discoverable, device uses no proxy during OOBE. If your network requires a proxy to reach internet, all Autopilot traffic is blocked.
 
@@ -102,20 +102,20 @@ OOBE runs as the SYSTEM account. The SYSTEM account has no user credentials and 
 
 > **What breaks if misconfigured:** Authenticated proxy blocks SYSTEM account traffic during OOBE. Device hangs at "Identifying your device" screen.
 
-> No error is shown to the user — the screen appears frozen. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
+> No error is shown to the user—the screen appears frozen. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
 
 ### SSL Inspection
 
 If your proxy performs SSL inspection (HTTPS decryption and re-encryption), certificates for Microsoft endpoints must be trusted on the provisioning device.
 
-During OOBE, the device uses the Windows built-in certificate store — not a custom certificate deployed via Intune. Custom CA certificates from Intune policy are not available until after enrollment completes.
+During OOBE, the device uses the Windows built-in certificate store—not a custom certificate deployed through Intune. Custom CA certificates from Intune policy are not available until after enrollment completes.
 
 > **What breaks if misconfigured:** SSL inspection with an untrusted CA cert causes certificate validation errors on HTTPS connections.
 
 > Device sees "unable to connect" errors at login.microsoftonline.com or ztd.dds.microsoft.com. Enrollment fails.
 
 **Options for SSL inspection:**
-- Deploy the proxy CA cert via a provisioning package (PPKG) loaded at OOBE
+- Deploy the proxy CA cert using a provisioning package (PPKG) loaded at OOBE
 - Bypass SSL inspection for Microsoft cloud endpoints (recommended)
 - Use a Microsoft-trusted CA for your proxy (validates against built-in Windows trust store)
 
@@ -154,7 +154,7 @@ Invoke-WebRequest -Uri https://cs.dds.microsoft.com -UseBasicParsing -TimeoutSec
 Invoke-WebRequest -Uri https://ztd.dds.microsoft.com -UseBasicParsing -TimeoutSec 5
 ```
 
-A 4xx or 5xx HTTP response is acceptable — it means the endpoint is reachable. A connection error or SSL error indicates a firewall or proxy issue.
+A 4xx or 5xx HTTP response is acceptable—it means the endpoint is reachable. A connection error or SSL error indicates a firewall or proxy issue.
 
 ### NTP
 
@@ -183,7 +183,7 @@ netsh winhttp show proxy
 
 ## See Also
 
-- [Network Endpoints](endpoints.md) — Canonical endpoint URL table with test commands
+- [Network Endpoints](endpoints.md)—Canonical endpoint URL table with test commands
 - [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
 - [OOBE Stage](../lifecycle/03-oobe.md)
 

@@ -1,0 +1,19 @@
+# Dispositions for verify-meaning.py, sibling of _DISPOSITIONS.tsv (D-28, phase 154-03).
+#
+# This file exists because verify-meaning.py's fingerprint is sha1(kind \0 file \0
+# evidence), keyed to the FILE PATH. _DISPOSITIONS.tsv's six ids were computed against
+# the scratch corpus's root-relative paths (e.g. "_glossary-android.md"); after the
+# landing, verify-meaning.py sees the same six findings under their docs/-prefixed
+# paths (e.g. "docs/_glossary-android.md"), so every one of the six ids goes stale and
+# nothing else does. This file carries the SAME six reason strings, copied verbatim
+# from _DISPOSITIONS.tsv, under six new ids recomputed against the docs/-prefixed
+# paths -- taken from verify-meaning.py's own --json output, never computed by hand.
+# _DISPOSITIONS.tsv itself is unedited so the historical reproduction (run inside the
+# scratch repository against c97d322) stays runnable.
+#
+2764735e74dc	RATIFIED (RESUME.md, batch-8 rulings): admin-template-android.md carries the same example "What breaks" sentence at line 64 inside the <!-- --> authoring block and at line 86 in the body. Restyling only the visible one would propagate `admin` back into every doc generated from this template, so BOTH were edited. RESUME records this as "the one accepted HTML-comment drift in the whole pass." No validator matches it.
+a3284ab3e3e9	FALSE POSITIVE, read in context (admin-setup-android/11-aosp-pico.md:83). Baseline: "are NOT on the supported list and will fail Intune AOSP enrollment"; pass dropped "will". The rule's premise -- one modal governing two verbs, only the first converted -- does not hold here: "are" and "fail" are two coordinated finite present-tense verbs, both governed by the same subject, and "fail" is not a bare infinitive under a dropped modal. The sentence is grammatical and states the same fact. Do not "fix" correct prose.
+e80777e4d67d	KEEP (_glossary-android.md). Corpus scare quote, not a vendor citation: "user-controlled hidden personal-side partition that admin policies cannot reach" is this library's own gloss of Android 15 private space, in a "Cross-platform note" the corpus authored. No Google/Microsoft page carries that sentence. `admin` -> `administrator` inside it is terminology consistency, not falsification.
+b9b803c74dd1	KEEP (admin-setup-ios/06-compliance-policy.md). Corpus scare quote, not a UI label and not a vendor sentence: "enforce via config profile" is the author's shorthand for a capability that does not exist as an Intune control, used to say iOS compliance settings have no such paired equivalent. Verified no Intune blade carries this string. Expanded to "enforce through configuration profile" for consistency with the rest of the corpus.
+56818f6c65ef	KEEP (admin-setup-macos/07-platform-sso-setup.md:343). Corpus rhetorical question, not a citation: 'The deciding question is "who creates the macOS account," not "did we use the enrollment profile"'. First person -> second person is the Google second-person rule applied to the corpus's own words. Meaning identical.
+0fad662f5069	KEEP (cross-platform/apple-business/_admin-directory.md). Corpus scare quote of a lookup question L1 staff ask -- "which administrator owns this device pool" -- not a vendor sentence or a UI string. `admin` -> `administrator` matches the rest of the pass.

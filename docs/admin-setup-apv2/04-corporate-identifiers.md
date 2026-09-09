@@ -30,7 +30,7 @@ Corporate identifiers identify devices as corporate-owned during enrollment. Thi
 Corporate identifiers are needed when **both** of the following are true:
 
 1. Your organization has enrollment restrictions configured to block personal Windows device enrollment.
-2. Devices will enroll via APv2 (Device Preparation).
+2. Devices enroll through APv2 (Device Preparation).
 
 Corporate identifiers are **not** needed when:
 
@@ -38,7 +38,7 @@ Corporate identifiers are **not** needed when:
 - Enrollment restrictions allow personal device enrollment.
 - All devices are pre-registered with hardware identifiers through another method.
 
-**Why this matters:** When a device enrolls via APv2, Intune evaluates it against enrollment restrictions before starting the Device Preparation experience. Without a matching corporate identifier, the device is treated as a personal device at enrollment time. If a personal enrollment restriction blocks it, the Device Preparation experience never launches -- the user reaches the desktop without expected apps or policies, and no APv2-specific error is shown.
+**Why this matters:** When a device enrolls through APv2, Intune evaluates it against enrollment restrictions before starting the Device Preparation experience. Without a matching corporate identifier, the device is treated as a personal device at enrollment time. If a personal enrollment restriction blocks it, the Device Preparation experience never launches -- the user reaches the desktop without expected apps or policies, and no APv2-specific error is shown.
 
 See [Enrollment Restriction Interaction with APv2](#enrollment-restriction-interaction-with-apv2) for the full conflict precedence explanation.
 
@@ -104,7 +104,7 @@ This section explains how enrollment restrictions interact with APv2 (Device Pre
 
 ### Key principle
 
-Enrollment restrictions are evaluated **BEFORE** the Device Preparation policy. A device blocked by an enrollment restriction will never reach the Device Preparation experience. The user sees a generic enrollment error, not an APv2-specific error.
+Enrollment restrictions are evaluated **BEFORE** the Device Preparation policy. A device blocked by an enrollment restriction never reaches the Device Preparation experience. The user sees a generic enrollment error, not an APv2-specific error.
 
 ### APv2 enrollment ownership behavior
 

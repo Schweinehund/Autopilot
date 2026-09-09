@@ -20,7 +20,7 @@ This reference documents known conflicts between Windows security baselines and 
 
 > **Version gate:** This guide covers security baseline conflicts that affect both APv1 and APv2 Autopilot deployments.
 
-Security baselines applied too early in the Autopilot provisioning flow can block enrollment or silently skip critical settings. The Enrollment Status Page (ESP) does not distinguish "setting applied" from "setting failed silently" — admins often see "Some settings could not be applied" with no indication of which baseline setting caused it.
+Security baselines applied too early in the Autopilot provisioning flow can block enrollment or silently skip critical settings. The Enrollment Status Page (ESP) does not distinguish "setting applied" from "setting failed silently"—administrators often see "Some settings could not be applied" with no indication of which baseline setting caused it.
 
 ## Known Conflict Areas
 
@@ -49,15 +49,15 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 
 ## General Guidance
 
-- **Apply security baselines AFTER successful enrollment**, not as part of the initial ESP blocking configuration. Baseline application as a blocking ESP requirement multiplies the chance that one setting will interrupt the ESP flow.
+- **Apply security baselines AFTER successful enrollment**, not as part of the initial ESP blocking configuration. Baseline application as a blocking ESP requirement multiplies the chance that one setting interrupts the ESP flow.
 
-- **Use Intune configuration profiles for individual security settings** (BitLocker, Firewall, Windows Defender settings) rather than monolithic security baselines during initial deployment. Individual profiles can be targeted, sequenced, and troubleshot independently. A baseline applies as a unit — one conflicting setting blocks the entire baseline.
+- **Use Intune configuration profiles for individual security settings** (BitLocker, Firewall, Windows Defender settings) rather than monolithic security baselines during initial deployment. Individual profiles can be targeted, sequenced, and troubleshot independently. A baseline applies as a unit—one conflicting setting blocks the entire baseline.
 
 - **Test every security baseline change with a pilot Autopilot deployment** before fleet-wide rollout. A baseline that works correctly on an already-enrolled device may behave differently on a device going through first-run OOBE.
 
 > **What breaks if misconfigured:** A security baseline applied during ESP enables a setting that requires a reboot or blocks IME.
 
-> ESP either fails or loops. The admin sees "Some settings could not be applied" in the ESP failure summary but cannot determine which baseline setting caused the failure from the ESP UI alone.
+> ESP either fails or loops. The administrator sees "Some settings could not be applied" in the ESP failure summary but cannot determine which baseline setting caused the failure from the ESP UI alone.
 
 > Log collection from `mdmdiagnosticstool.exe` is required to identify the conflicting setting.
 
@@ -76,10 +76,10 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 
 ## See Also
 
-- [Conditional Access Enrollment Timing](ca-enrollment-timing.md) — Compliance policy chicken-and-egg problem
-- [Compliance Policy Timing](compliance-timing.md) — Evaluation schedule, grace periods, state transitions
-- [Stage 4: ESP](../lifecycle/04-esp.md) — Enrollment Status Page flow and configuration
-- [APv1 Configuration-Caused Failures](../admin-setup-apv1/10-config-failures.md) — Full reverse-lookup table for configuration mistakes
+- [Conditional Access Enrollment Timing](ca-enrollment-timing.md)—Compliance policy chicken-and-egg problem
+- [Compliance Policy Timing](compliance-timing.md)—Evaluation schedule, grace periods, state transitions
+- [Stage 4: ESP](../lifecycle/04-esp.md)—Enrollment Status Page flow and configuration
+- [APv1 Configuration-Caused Failures](../admin-setup-apv1/10-config-failures.md)—Full reverse-lookup table for configuration mistakes
 
 ## Version History
 

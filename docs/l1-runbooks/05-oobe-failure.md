@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses failures during the Out-of-Box Experience before the Enrollment Status Page appears, including device crashes, freezes, blue screens, reboots to recovery, and OOBE completing standard Windows setup without Autopilot customization. A single power cycle is the only L1 intervention; repeated or unusual failures escalate immediately to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses failures during the Out-of-Box Experience before the Enrollment Status Page appears, including device crashes, freezes, blue screens, reboots to recovery, and OOBE completing standard Windows setup without Autopilot customization. A single power cycle is the only L1 intervention; repeated or unusual failures escalate immediately to L2.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
@@ -27,17 +27,17 @@ Use this runbook when the device fails during the initial [Out-of-Box Experience
 
 - Access to Intune admin center (https://intune.microsoft.com)
 - Device serial number from the device label or user report
-- A description of what the user saw on screen — exact error messages, which screens appeared, and the sequence of events
+- A description of what the user saw on screen—exact error messages, which screens appeared, and the sequence of events
 
 ## Steps
 
 1. > **Say to the user:** "I understand your device ran into a problem during the initial setup. I'm going to check a few things and then try one restart. If that doesn't resolve it, I'll escalate to our technical team with all the details."
 
-2. **Confirm the device is registered in the Autopilot portal.** Open the Intune admin center (https://intune.microsoft.com). Navigate to **Devices** > **Windows** > **Enrollment** > **Windows Autopilot devices**. Search for the device serial number. If the device is NOT found in the list, this is a different issue — follow the [Device Not Registered runbook](01-device-not-registered.md) instead.
+2. **Confirm the device is registered in the Autopilot portal.** Open the Intune admin center (https://intune.microsoft.com). Navigate to **Devices** > **Windows** > **Enrollment** > **Windows Autopilot devices**. Search for the device serial number. If the device is NOT found in the list, this is a different issue—follow the [Device Not Registered runbook](01-device-not-registered.md) instead.
 
 3. **Confirm network connectivity.** Ask the user whether the device was connected to a network when the failure occurred. If network connectivity was not confirmed or if the user reports the device could not connect, follow the [Network Connectivity Failure runbook](04-network-connectivity.md) first.
 
-4. **Confirm the expected deployment mode.** Ask the user or check the Autopilot device record in the portal: was this device intended to use user-driven, pre-provisioning, or self-deploying mode? Note the expected mode — you will need it for escalation data.
+4. **Confirm the expected deployment mode.** Ask the user or check the Autopilot device record in the portal: was this device intended to use user-driven, pre-provisioning, or self-deploying mode? Note the expected mode—you need it for escalation data.
 
 5. **Document exactly what appeared on screen.** Ask the user to describe the sequence of events in order:
    - What was the last screen they saw before the failure?
@@ -53,7 +53,7 @@ Use this runbook when the device fails during the initial [Out-of-Box Experience
 
 8. **If OOBE fails again in the same way:** Proceed to [Escalation Criteria](#escalation-criteria).
 
-9. **If OOBE now presents standard Windows setup (no company branding, no Azure AD sign-in prompt):** This means the [deployment profile](../_glossary.md#user-driven-mode) did not load during OOBE. Confirm whether a profile is assigned to this device in the Autopilot portal. If a profile is assigned but did not apply, follow the [Profile Not Assigned runbook](03-profile-not-assigned.md). This is likely a misroute — the root cause is profile assignment or delivery, not an OOBE crash.
+9. **If OOBE now presents standard Windows setup (no company branding, no Azure AD sign-in prompt):** This means the [deployment profile](../_glossary.md#user-driven-mode) did not load during OOBE. Confirm whether a profile is assigned to this device in the Autopilot portal. If a profile is assigned but did not apply, follow the [Profile Not Assigned runbook](03-profile-not-assigned.md). This is likely a misroute—the root cause is profile assignment or delivery, not an OOBE crash.
 
 ## Escalation Criteria
 

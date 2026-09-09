@@ -44,7 +44,7 @@ This reference defines the Apple provisioning terminology used across macOS and 
 
 ### Account-Driven User Enrollment
 
-Apple's privacy-preserving BYOD enrollment method for iOS/iPadOS (iOS 15+) and macOS (Sonoma+). The user starts enrollment from Settings > General > VPN & Device Management on their personal device by signing in with their Managed Apple ID; the OS coordinates with the organization's MDM via the well-known `https://[domain]/.well-known/com.apple.remotemanagement` discovery endpoint. Only the organization's "work" apps and data are managed; the user's personal content (photos, iCloud, personal apps) remains invisible to IT. Supersedes the deprecated profile-based User Enrollment (deprecated iOS 18).
+Apple's privacy-preserving BYOD enrollment method for iOS/iPadOS (iOS 15+) and macOS (Sonoma+). The user starts enrollment from Settings > General > VPN & Device Management on their personal device by signing in with their Managed Apple ID; the OS coordinates with the organization's MDM through the well-known `https://[domain]/.well-known/com.apple.remotemanagement` discovery endpoint. Only the organization's "work" apps and data are managed; the user's personal content (photos, iCloud, personal apps) remains invisible to IT. Supersedes the deprecated profile-based User Enrollment (deprecated iOS 18).
 
 > **Windows equivalent:** No direct equivalent.
 
@@ -62,7 +62,7 @@ Automated Device Enrollment -- Apple's zero-touch enrollment mechanism for organ
 
 > APv2 uses [Enrollment Time Grouping](_glossary.md#enrollment-time-grouping-etg).
 
-> Both achieve zero-touch enrollment but use different identity mechanisms (serial number via ABM vs hardware hash upload to Intune).
+> Both achieve zero-touch enrollment but use different identity mechanisms (serial number through ABM vs hardware hash upload to Intune).
 
 > See also: [Zero-Touch Enrollment](_glossary-android.md#zero-touch-enrollment) (Android).
 
@@ -78,7 +78,7 @@ A setting in the macOS ADE enrollment profile (officially "Await final configura
 
 ### Setup Assistant
 
-The macOS first-run configuration experience presented after power-on or device wipe. Screens are customizable (show or hide) via the ADE enrollment profile in Intune. Includes Apple-specific screens such as Apple ID, FileVault, Siri, and Privacy.
+The macOS first-run configuration experience presented after power-on or device wipe. Screens are customizable (show or hide) through the ADE enrollment profile in Intune. Includes Apple-specific screens such as Apple ID, FileVault, Siri, and Privacy.
 
 > **Windows equivalent:** [OOBE](_glossary.md#oobe) (Out-of-Box Experience) -- both are the first-run setup flow on their respective platforms.
 
@@ -88,7 +88,7 @@ The macOS first-run configuration experience presented after power-on or device 
 
 ### Supervision
 
-Apple's formal management designation for organization-owned iOS/iPadOS devices enrolled through [ADE](#ade) via Apple Business Manager. Supervision applies to iOS, iPadOS, and (to a lesser gating extent) macOS. Supervision is set at enrollment time and CANNOT be added retroactively without a full device erase. Supervised iOS/iPadOS devices unlock capabilities unavailable on unsupervised devices -- silent app install ([VPP](#vpp) device-licensed), home screen layout control, extensive restriction profiles, AirDrop/Camera/Safari restrictions, and DDM-enforced app install. Verify on device: Settings > General > About shows "This iPhone is supervised and managed by [organization]."
+Apple's formal management designation for organization-owned iOS/iPadOS devices enrolled through [ADE](#ade) with Apple Business Manager. Supervision applies to iOS, iPadOS, and (to a lesser gating extent) macOS. Supervision is set at enrollment time and CANNOT be added retroactively without a full device erase. Supervised iOS/iPadOS devices unlock capabilities unavailable on unsupervised devices -- silent app install ([VPP](#vpp) device-licensed), home screen layout control, extensive restriction profiles, AirDrop/Camera/Safari restrictions, and DDM-enforced app install. Verify on device: Settings > General > About shows "This iPhone is supervised and managed by [organization]."
 
 > **Windows equivalent:** No direct equivalent in Autopilot.
 
@@ -108,7 +108,7 @@ The enrollment type resulting from the macOS 26 in-place ABM migration (B1 path)
 
 ### ACME
 
-Automated Certificate Management Environment -- certificate protocol used by Intune to issue device identity certificates during genuine MDM enrollment on macOS 13.1 and later. The ACME certificate is reissued on every genuine re-enrollment (including the macOS 26 in-place migration via the B1 path); it is NOT reissued on profile renewal or MDM refresh without a full unenroll/reenroll. See [Stage 7](macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
+Automated Certificate Management Environment -- certificate protocol used by Intune to issue device identity certificates during genuine MDM enrollment on macOS 13.1 and later. The ACME certificate is reissued on every genuine re-enrollment (including the macOS 26 in-place migration through the B1 path); it is NOT reissued on profile renewal or MDM refresh without a full unenroll/reenroll. See [Stage 7](macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
 
 > **Windows equivalent:** No direct equivalent -- Windows Intune device certificates use SCEP/PKCS protocols; ACME is macOS-specific in the Intune context.
 
@@ -124,7 +124,7 @@ Apple Business Manager -- Apple's web portal for managing device enrollment, app
 
 > **Windows equivalent:** No direct single equivalent. Device enrollment is managed in the [Intune admin center](https://intune.microsoft.com) under Devices > Windows > Enrollment.
 
-> ABM is Apple-side while Intune is Microsoft-side; macOS admins work across both portals.
+> ABM is Apple-side while Intune is Microsoft-side; macOS administrators work across both portals.
 
 > See also: [ABM (Apple Business Manager)](_glossary-linux.md#abm-apple-business-manager) (Linux).
 
@@ -140,15 +140,15 @@ The server token (.p7m file) downloaded from Apple Business Manager that enables
 
 ### APNs
 
-Apple Push Notification service -- Apple's push notification service used by all Apple platforms (iOS, iPadOS, macOS, tvOS) for MDM command delivery. Intune uses APNs to wake devices and deliver configuration profiles, app install commands, and compliance evaluation triggers. The Apple **APNs certificate** (Microsoft also calls it the "MDM Push Certificate") is provisioned per-tenant in Intune admin center at `Devices > Enrollment > Apple > MDM Push Certificate` and must be renewed annually. **Critical cross-platform blast radius:** a single expired or revoked APNs certificate breaks ALL iOS/iPadOS AND macOS MDM communication for the entire tenant until renewed. Must be renewed by the SAME Apple ID that created it -- renewing with a different Apple ID forces re-enrollment of every managed Apple device.
+Apple Push Notification service -- Apple's push notification service used by all Apple platforms (iOS, iPadOS, macOS, tvOS) for MDM command delivery. Intune uses APNs to wake devices and deliver configuration profiles, app install commands, and compliance evaluation triggers. The Apple **APNs certificate** (Microsoft also calls it the "MDM Push Certificate") is provisioned per-tenant in Intune admin center at `Devices > Enrollment > Apple > MDM Push Certificate` and must be renewed annually. **Critical cross-platform scope:** a single expired or revoked APNs certificate breaks ALL iOS/iPadOS AND macOS MDM communication for the entire tenant until renewed. Must be renewed by the SAME Apple ID that created it -- renewing with a different Apple ID forces re-enrollment of every managed Apple device.
 
 > **Windows equivalent:** No direct equivalent for the certificate lifecycle. Windows Autopilot relies on Windows Notification Service (WNS) and HTTPS polling;
 
-> there is no per-tenant certificate to renew. The closest parallel is Intune's automatic communication with Windows clients via Entra ID, which does not lapse annually.
+> there is no per-tenant certificate to renew. The closest parallel is Intune's automatic communication with Windows clients through Entra ID, which does not lapse annually.
 
 ### MDM Migration
 
-The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is moved to a target MDM (such as Microsoft Intune) without requiring a full device wipe. On macOS 26+, the "Assign Device Management" action in Apple Business Manager triggers an in-place migration (B1 path) that unenrolls the device from the source MDM and re-enrolls it in the target MDM via profile-based enrollment. Pre-macOS-26 devices require a wipe-and-re-enroll fallback (B2 path). PSSO re-registration is always required post-migration regardless of path. See [MDM Migration Walkthrough](macos-lifecycle/02-mdm-migration-psso.md).
+The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is moved to a target MDM (such as Microsoft Intune) without requiring a full device wipe. On macOS 26+, the "Assign Device Management" action in Apple Business Manager triggers an in-place migration (B1 path) that unenrolls the device from the source MDM and re-enrolls it in the target MDM through profile-based enrollment. Pre-macOS-26 devices require a wipe-and-re-enroll fallback (B2 path). PSSO re-registration is always required post-migration regardless of path. See [MDM Migration Walkthrough](macos-lifecycle/02-mdm-migration-psso.md).
 
 > **Windows equivalent:** No direct equivalent --
 
@@ -210,7 +210,7 @@ Device-specific code enabling an administrator to bypass Activation Lock if the 
 
 ### Jailbreak Detection
 
-An iOS/iPadOS-specific compliance check in Intune that evaluates device integrity indicators (e.g., root filesystem writability, presence of jailbreak tool signatures) and marks the device non-compliant if jailbreak is detected. Configured in Intune admin center at `Devices > Compliance policies > [policy] > Device Health > Jailbroken devices`. Not a real-time protection -- evaluation happens at compliance sync intervals. Users are notified via Company Portal if their device is flagged.
+An iOS/iPadOS-specific compliance check in Intune that evaluates device integrity indicators (for example, root filesystem writability, presence of jailbreak tool signatures) and marks the device non-compliant if jailbreak is detected. Configured in Intune admin center at `Devices > Compliance policies > [policy] > Device Health > Jailbroken devices`. Not a real-time protection -- evaluation happens at compliance sync intervals. Users are notified through Company Portal if their device is flagged.
 
 > **Windows equivalent:** No direct equivalent (jailbreaking is an iOS/iPadOS concept).
 
@@ -224,12 +224,12 @@ An iOS/iPadOS-specific compliance check in Intune that evaluates device integrit
 
 ### VPP
 
-Volume Purchase Program -- Apple's bulk app licensing mechanism, now branded as "Apps and Books" within Apple Business Manager. Applies to all Apple platforms (iOS, iPadOS, macOS, tvOS). Licenses are purchased in ABM and synced to Intune via a location token. The VPP licensing model has two variants that affect deployment behavior on iOS/iPadOS:
+Volume Purchase Program -- Apple's bulk app licensing mechanism, now branded as "Apps and Books" within Apple Business Manager. Applies to all Apple platforms (iOS, iPadOS, macOS, tvOS). Licenses are purchased in ABM and synced to Intune through a location token. The VPP licensing model has two variants that affect deployment behavior on iOS/iPadOS:
 
 - **Device-licensed** -- License is pinned to the device serial number. Enables silent install on supervised iOS/iPadOS devices (no Apple ID sign-in required on the device). Preferred for corporate-owned supervised (ADE) deployments.
 - **User-licensed** -- License is pinned to the user's Managed Apple ID. Requires the user to sign in on the device. Used in 1:1 education and personal-device scenarios.
 
-Silent app installation on iOS/iPadOS requires BOTH (a) VPP device-licensed assignment AND (b) device supervision via ADE. On unsupervised iOS devices, even VPP apps prompt the user for confirmation. On macOS, VPP installs silently regardless of supervision state (macOS does not enforce the supervised-only silent-install gate).
+Silent app installation on iOS/iPadOS requires BOTH (a) VPP device-licensed assignment AND (b) device supervision through ADE. On unsupervised iOS devices, even VPP apps prompt the user for confirmation. On macOS, VPP installs silently regardless of supervision state (macOS does not enforce the supervised-only silent-install gate).
 
 Cross-links: [iOS App Deployment Guide](admin-setup-ios/05-app-deployment.md) | [macOS App Deployment Guide](admin-setup-macos/04-app-deployment.md)
 
@@ -243,7 +243,7 @@ Cross-links: [iOS App Deployment Guide](admin-setup-ios/05-app-deployment.md) | 
 
 ### LOB app
 
-Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intune as a managed app, as opposed to VPP/App Store ("Apps and Books") distribution. On macOS the Company Portal is always deployed as a PKG (added to Intune as an LOB app, or as an unmanaged macOS PKG app) so it is present before the user reaches the desktop — it is never distributed via Apple VPP on macOS (that channel applies to the iOS/iPadOS Company Portal only). The ADE-during-Setup-Assistant PSSO path requires Company Portal **5.2604.0 or newer specifically**, because only that build carries the registration-during-Setup-Assistant capability.
+Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intune as a managed app, as opposed to VPP/App Store ("Apps and Books") distribution. On macOS the Company Portal is always deployed as a PKG (added to Intune as an LOB app, or as an unmanaged macOS PKG app) so it is present before the user reaches the desktop—it is never distributed via Apple VPP on macOS (that channel applies to the iOS/iPadOS Company Portal only). The ADE-during-Setup-Assistant PSSO path requires Company Portal **5.2604.0 or newer specifically**, because only that build carries the registration-during-Setup-Assistant capability.
 
 > **Windows equivalent:** Intune line-of-business apps (.msi) and Win32 apps (.intunewin) -- organization-supplied installers uploaded directly to Intune rather than sourced from a store.
 
@@ -275,13 +275,13 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 
 ### Platform SSO
 
-Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 recommended) powered by the Microsoft Enterprise SSO plug-in that enables users to sign in to their Mac using their Microsoft Entra ID credentials and provides single sign-on across apps and browsers that use Entra ID for authentication. It registers the Mac with Entra ID, delivering a hardware-bound Primary Refresh Token (PRT) used for device-wide SSO. Platform SSO offers three mutually exclusive authentication methods configured in the Settings Catalog: Secure Enclave key/Platform Credential (recommended — local macOS password unchanged), Password sync (Entra ID password replaces and stays synced with local password), and Smart Card (requires macOS 14+; local password unchanged). Assigning the Platform SSO policy to user groups — not device groups — is required for devices with user affinity.
+Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 recommended) powered by the Microsoft Enterprise SSO plug-in that enables users to sign in to their Mac using their Microsoft Entra ID credentials and provides single sign-on across apps and browsers that use Entra ID for authentication. It registers the Mac with Entra ID, delivering a hardware-bound Primary Refresh Token (PRT) used for device-wide SSO. Platform SSO offers three mutually exclusive authentication methods configured in the Settings Catalog: Secure Enclave key/Platform Credential (recommended—local macOS password unchanged), Password sync (Entra ID password replaces and stays synced with local password), and Smart Card (requires macOS 14+; local password unchanged). Assigning the Platform SSO policy to user groups—not device groups—is required for devices with user affinity.
 
 > **Windows equivalent:** On Windows, Entra-joined devices receive a Primary Refresh Token brokered by Windows Hello for Business or the Web Account Manager, which silently provides SSO across apps,
 
 > Edge, and browsers. Platform SSO on macOS is conceptually analogous:
 
-> hardware-bound credentials, phishing-resistant authentication, and device-wide SSO — both establish a PRT tied to device identity for continuous access.
+> hardware-bound credentials, phishing-resistant authentication, and device-wide SSO—both establish a PRT tied to device identity for continuous access.
 
 > See also: [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Entra ID SSO](_glossary.md#entra-id-sso); [Platform SSO Setup Guide](admin-setup-macos/07-platform-sso-setup.md);
 
@@ -289,9 +289,9 @@ Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 rec
 
 ### Secure Enclave
 
-The Secure Enclave is a dedicated secure subsystem integrated into Apple's SoC, physically isolated from the main processor, that stores and manages cryptographic keys such that software — including the OS kernel — cannot extract the private key material. Keys are generated and used within the Secure Enclave; they never leave in plain-text form (Apple's own phrasing: "Not having a mechanism to transfer plain-text key data into or out of the Secure Enclave is fundamental to its security"). Hardware scope: all Apple Silicon Macs (M1 and later, 2020+) and Intel Macs with the Apple T2 Security Chip (MacBook Pro/Air 2018–2020, Mac mini 2018, iMac 2020, Mac Pro 2019); pre-2018 Intel Macs without T2 cannot use the Secure Enclave Platform Credential auth method. From August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the Secure Enclave by default — use `app-sso platform -s` to verify registration rather than `security find-certificate`, which returns false negatives for Secure Enclave-stored keys.
+The Secure Enclave is a dedicated secure subsystem integrated into Apple's SoC, physically isolated from the main processor, that stores and manages cryptographic keys such that software—including the OS kernel—cannot extract the private key material. Keys are generated and used within the Secure Enclave; they never leave in plain-text form (Apple's own phrasing: "Not having a mechanism to transfer plain-text key data into or out of the Secure Enclave is fundamental to its security"). Hardware scope: all Apple Silicon Macs (M1 and later, 2020+) and Intel Macs with the Apple T2 Security Chip (MacBook Pro/Air 2018–2020, Mac mini 2018, iMac 2020, Mac Pro 2019); pre-2018 Intel Macs without T2 cannot use the Secure Enclave Platform Credential auth method. From August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the Secure Enclave by default—use `app-sso platform -s` to verify registration rather than `security find-certificate`, which returns false negatives for Secure Enclave-stored keys.
 
-> See also: [TPM](_glossary.md#tpm) (analogous hardware root of trust; not bit-for-bit equivalent — Secure Enclave performs no TPM-2.0/DICE attestation).
+> See also: [TPM](_glossary.md#tpm) (analogous hardware root of trust; not bit-for-bit equivalent—Secure Enclave performs no TPM-2.0/DICE attestation).
 
 ### WPJ
 
@@ -305,7 +305,7 @@ Workplace Join (WPJ) -- the cryptographic registration of a device with Microsof
 
 ### Enterprise SSO Plug-in
 
-The Microsoft Enterprise SSO plug-in for Apple devices is the umbrella product — an Apple enterprise SSO extension delivered on macOS (and iOS/iPadOS) via the Intune Company Portal app — that provides Entra ID single sign-on across apps and browsers. It contains two sub-features: Platform SSO (the modern mode, configured via Settings Catalog, macOS 13+, recommended macOS 14+) and the SSO app extension (the legacy mode, configured via Intune Device Features template). The plug-in uses the Redirect type in Apple's extensible SSO framework; the Kerberos SSO extension (for on-premises AD Kerberos) is a separate, coexisting Apple-native extension. Running both the legacy SSO app extension profile and a Platform SSO Settings Catalog policy simultaneously causes Error 10002; migration sequence is to assign Platform SSO to a pilot group, validate, then remove the legacy profile.
+The Microsoft Enterprise SSO plug-in for Apple devices is the umbrella product—an Apple enterprise SSO extension delivered on macOS (and iOS/iPadOS) through the Intune Company Portal app—that provides Entra ID single sign-on across apps and browsers. It contains two sub-features: Platform SSO (the modern mode, configured through Settings Catalog, macOS 13+, recommended macOS 14+) and the SSO app extension (the legacy mode, configured through Intune Device Features template). The plug-in uses the Redirect type in Apple's extensible SSO framework; the Kerberos SSO extension (for on-premises AD Kerberos) is a separate, coexisting Apple-native extension. Running both the legacy SSO app extension profile and a Platform SSO Settings Catalog policy simultaneously causes Error 10002; migration sequence is to assign Platform SSO to a pilot group, validate, then remove the legacy profile.
 
 > See also: [Platform SSO](#platform-sso); [Entra ID SSO](_glossary.md#entra-id-sso).
 
@@ -344,7 +344,7 @@ Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and
 | 2026-06-23 | Phase 84 (GRAPH-02): extended Platform SSO term see-also with guide 11 cross-link | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E2 cross-link from Platform SSO term to guide 07 | -- |
 | 2026-06-20 | Phase 75: added `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in); added three new terms to `## Alphabetical Index`; updated `last_verified` and `review_by` front matter | -- |
-| 2026-05-26 | Phase 67 (SWEEP-02): coordinating row for VPP location token → content token surgical rename in admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md (PITFALLS.md CI-2 closure) | -- |
+| 2026-05-26 | Phase 67 (SWEEP-02): coordinating row for VPP location token → content token surgical rename in admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md (pitfall register CI-2 closure) | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Windows equivalent:**` blockquotes for collision-matrix terms (Account-Driven User Enrollment, ADE, Await Configuration, Setup Assistant, Supervision, ABM, VPP, MAM-WE); existing `> **Windows equivalent:**` labels PRESERVED verbatim per D-15 anti-rename | -- |
 | 2026-04-24 | Phase 42: added Android Enterprise Provisioning Glossary see-also to continuation banner (AEAUDIT-03) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS terms (supervision, MAM-WE, APNs, account-driven user enrollment, jailbreak detection), updated VPP with iOS device-licensed vs user-licensed distinction, new ## App Protection (MAM) H2 | -- |

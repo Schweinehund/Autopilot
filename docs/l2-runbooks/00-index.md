@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-This is the L2 investigation-runbook index — a navigation hub routing escalated cases to the correct platform investigation runbook; it contains no investigation steps of its own. Each platform section provides a When-to-Use decision table and an L1 Escalation Mapping table showing which L1 escalation node IDs route to which L2 runbook.
+This is the L2 investigation-runbook index—a navigation hub routing escalated cases to the correct platform investigation runbook; it contains no investigation steps of its own. Each platform section provides a When-to-Use decision table and an L1 Escalation Mapping table showing which L1 escalation node IDs route to which L2 runbook.
 
 > **Version gate:** This index covers both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2) L2 runbooks.
 > APv1 runbooks are listed first, followed by APv2 runbooks.
@@ -25,7 +25,7 @@ This is the L2 investigation-runbook index — a navigation hub routing escalate
 
 Technical investigation guides for Desktop Engineers handling complex [Autopilot](../_glossary.md#apv1) failures that require registry access, [PowerShell](../reference/powershell-ref.md) execution, and event log analysis.
 
-The [Log Collection Guide](01-log-collection.md) is a **prerequisite for all investigation runbooks** — collect a complete diagnostic package before beginning any investigation. Individual runbooks direct you to which specific logs and registry keys to examine once collection is complete.
+The [Log Collection Guide](01-log-collection.md) is a **prerequisite for all investigation runbooks**—collect a complete diagnostic package before beginning any investigation. Individual runbooks direct you to which specific logs and registry keys to examine once collection is complete.
 
 ## When to Use
 
@@ -48,14 +48,14 @@ L2 runbooks receive escalations from L1 decision trees. Each L1 escalation termi
 | PRE1, PRE2, PRE3, PRE4, PRE5, PRE6 | Profile assignment failures, sync issues, group membership delays | Investigate using [ESP Deep-Dive](02-esp-deep-dive.md) or [Policy Conflict Analysis](05-policy-conflicts.md) based on symptom |
 | TRE3, TRE4, TRE5, TRE6 | Initial triage escalations — select runbook based on specific symptom from escalation checklist | Use When-to-Use table above |
 
-**Note:** When a ticket arrives via L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
+**Note:** When a ticket arrives through L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
 ---
 
 ## APv2 (Autopilot Device Preparation) Runbooks
 
-> **Version gate:** The runbooks below cover Windows Autopilot Device Preparation (APv2).
-> For APv1 (classic Autopilot) runbooks, see the tables above.
+> **Version gate:** The following runbooks cover Windows Autopilot Device Preparation (APv2).
+> For APv1 (classic Autopilot) runbooks, see the preceding tables.
 
 The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite for all APv2 investigation runbooks** -- collect BootstrapperAgent event log and IME logs before beginning any investigation. The deployment report in the Intune admin center is the APv2 equivalent of registry-based ESP investigation.
 
@@ -75,14 +75,14 @@ The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite f
 | APE2 | Enrollment failed | [APv2 Deployment Report Guide](08-apv2-deployment-report.md) |
 | APE3 | IME or infrastructure failure | [APv2 Deployment Report Guide](08-apv2-deployment-report.md) + [APv2 Event ID Reference](07-apv2-event-ids.md) |
 
-**Note:** When a ticket arrives via L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each APv2 L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
+**Note:** When a ticket arrives through L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each APv2 L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
 ---
 
 ## macOS ADE Runbooks
 
-> **Version gate:** The runbooks below cover macOS Automated Device Enrollment (ADE) via Intune.
-> For Windows Autopilot runbooks, see the tables above.
+> **Version gate:** The following runbooks cover macOS Automated Device Enrollment (ADE) through Intune.
+> For Windows Autopilot runbooks, see the preceding tables.
 
 The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite for all macOS L2 investigation runbooks** -- collect IntuneMacODC diagnostic package and targeted Terminal artifacts before beginning any investigation.
 
@@ -113,14 +113,14 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 | [L1 36: Platform SSO — Secure Enclave Key Loss](../l1-runbooks/36-macos-secure-enclave-key.md) | [Platform SSO Investigation](27-macos-sso-investigation.md) — Registration Failure track (SE key re-registration path) |
 | Setup Assistant / enrollment failure (post-migration context — device recently migrated from Kandji/Iru to Intune via ABM deadline) | [macOS MDM Migration Failure](30-macos-mdm-migration-failure.md) — Track A (deadline lockout) or Track B (profile-not-delivered / enrollment-failed) |
 
-**Note:** When a ticket arrives via macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
+**Note:** When a ticket arrives through macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
 ## iOS L2 Runbooks
 
-> **Version gate:** The runbooks below cover iOS/iPadOS through Microsoft Intune.
-> For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+> **Version gate:** The following runbooks cover iOS/iPadOS through Microsoft Intune.
+> For macOS ADE runbooks, see the preceding section. For Windows Autopilot runbooks, see the preceding tables.
 
-The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for all iOS L2 investigation runbooks** -- collect a diagnostic package via one of three methods (MDM diagnostic report / Company Portal upload / Mac+cable sysdiagnose) before beginning any investigation.
+The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for all iOS L2 investigation runbooks** -- collect a diagnostic package using one of three methods (MDM diagnostic report / Company Portal upload / Mac+cable sysdiagnose) before beginning any investigation.
 
 ### When to Use
 
@@ -142,7 +142,7 @@ The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for
 | [L1 20: iOS Device Cap Reached](../l1-runbooks/20-ios-device-cap-reached.md) | [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) (token/enrollment-profile diagnostic surfaces device cap state) |
 | [L1 21: iOS Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) | [Compliance & CA Timing Investigation](17-ios-compliance-ca-timing.md) (direct — maps Cause A → timing axis, Causes B and C → config-error axis) |
 
-**Note:** iOS L2 runbook 15 has a dedicated D-17 L1 handoff block; iOS L2 runbook 17 has a Cause A/B/C Per-Cause Deep-Dive that matches L1 runbook 21's sub-cause labels — a ticket arriving with a pre-classified cause routes directly to that section.
+**Note:** iOS L2 runbook 15 has a dedicated D-17 L1 handoff block; iOS L2 runbook 17 has a Cause A/B/C Per-Cause Deep-Dive that matches L1 runbook 21's sub-cause labels—a ticket arriving with a pre-classified cause routes directly to that section.
 
 ### MAM-WE Investigation Advisory
 
@@ -154,11 +154,11 @@ The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for
 
 ## Android L2 Runbooks
 
-> **Version gate:** The runbooks below cover Android Enterprise through Microsoft Intune (GMS modes: BYOD Work Profile, Fully Managed COBO, Dedicated COSU, Zero-Touch Enrollment).
+> **Version gate:** The following runbooks cover Android Enterprise through Microsoft Intune (GMS modes: BYOD Work Profile, Fully Managed COBO, Dedicated COSU, Zero-Touch Enrollment).
 
-> AOSP is out of scope — v1.4.1. For iOS L2 runbooks, see above. For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+> AOSP is out of scope—v1.4.1. For iOS or macOS ADE L2 runbooks, see the preceding sections. For Windows Autopilot runbooks, see the preceding tables.
 
-The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequisite for all Android L2 investigation runbooks** -- select a method via the mode-first decision matrix in that guide (Company Portal logs / Microsoft Intune app logs / adb logcat) before beginning any investigation.
+The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequisite for all Android L2 investigation runbooks** -- select a method through the mode-first decision matrix in that guide (Company Portal logs / Microsoft Intune app logs / adb logcat) before beginning any investigation.
 
 ### When to Use
 
@@ -180,7 +180,7 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 | [L1 26: Android MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md) | [Android App Install Investigation](20-android-app-install-investigation.md) + see-also [Android Log Collection](18-android-log-collection.md) |
 | [L1 27: Android ZTE Enrollment Failed](../l1-runbooks/27-android-zte-enrollment-failed.md) | [Android Enrollment Investigation](19-android-enrollment-investigation.md) Pattern C + see-also [Android Log Collection](18-android-log-collection.md) |
 
-**Note:** Android L2 runbook 19 has a D-11 L1 handoff block that routes by L1 runbook number to the matching Pattern. Android L2 runbook 21 has a Per-Cause Deep-Dive that matches L1 runbook 25's Cause A/B/C/D labels — a ticket arriving with a pre-classified cause routes directly to that section.
+**Note:** Android L2 runbook 19 has a D-11 L1 handoff block that routes by L1 runbook number to the matching Pattern. Android L2 runbook 21 has a Per-Cause Deep-Dive that matches L1 runbook 25's Cause A/B/C/D labels—a ticket arriving with a pre-classified cause routes directly to that section.
 
 <a id="android-mam-we-investigation-advisory"></a>
 ### Android MAM-WE Investigation Advisory
@@ -193,9 +193,9 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 
 ## Linux L2 Runbooks
 
-> **Version gate:** The runbooks below cover Linux Intune client (`intune-portal`) on Ubuntu 24.04 LTS and 26.04 LTS, delivered as a deb package from `packages.microsoft.com`.
+> **Version gate:** The following runbooks cover Linux Intune client (`intune-portal`) on Ubuntu 24.04 LTS and 26.04 LTS, delivered as a deb package from `packages.microsoft.com`.
 
-> There is no GA snap distribution. For Android L2 runbooks, see above. For iOS L2 runbooks, see above. For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+> There is no GA snap distribution. For Android, iOS, or macOS ADE L2 runbooks, see the preceding sections. For Windows Autopilot runbooks, see the preceding tables.
 
 The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite for all Linux L2 investigation runbooks** -- collect `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before beginning any investigation.
 
@@ -216,7 +216,7 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 ## Apple Business L2 Runbooks
 
-> **Version gate:** The runbooks below cover Apple Business Delegated Governance through Apple Business portal and associated MDM surfaces (Phase 65 deliverables).
+> **Version gate:** The following runbooks cover Apple Business Delegated Governance through Apple Business portal and associated MDM surfaces (Phase 65 deliverables).
 
 ### When to Use
 
@@ -226,9 +226,9 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 ## 802.1X L2 Runbooks
 
-These runbooks cover 802.1X network authentication investigation across all five platforms (Windows, macOS, iOS/iPadOS, Android Enterprise, Linux). For platform-specific enrollment or compliance L2 runbooks, see the per-platform sections above.
+These runbooks cover 802.1X network authentication investigation across all five platforms (Windows, macOS, iOS/iPadOS, Android Enterprise, Linux). For platform-specific enrollment or compliance L2 runbooks, see the preceding per-platform sections.
 
-The [802.1X Log Collection Guide](31-8021x-log-collection.md) is a **prerequisite for both L2 investigation runbooks** — collect per-platform 802.1X diagnostic logs before beginning any investigation.
+The [802.1X Log Collection Guide](31-8021x-log-collection.md) is a **prerequisite for both L2 investigation runbooks**—collect per-platform 802.1X diagnostic logs before beginning any investigation.
 
 ### When to Use
 
@@ -249,11 +249,11 @@ The [802.1X Log Collection Guide](31-8021x-log-collection.md) is a **prerequisit
 
 ## Related Resources
 
-- [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
-- [Error Code Index](../error-codes/00-index.md) — master error code lookup covering ESP, TPM, hybrid join, pre-provisioning, and profile assignment errors
-- [Decision Trees](../decision-trees/00-initial-triage.md) — L1 triage flowcharts; escalation terminal IDs in these trees map to L2 runbooks above
-- [APv2 Failure Catalog](../error-codes/06-apv2-device-preparation.md) — symptom-based APv2 failure index organized by deployment phase
-- [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) — APv2 L1 triage flowchart; APE1/APE2/APE3 escalation nodes map to APv2 L2 runbooks above
+- [L1 Runbooks](../l1-runbooks/00-index.md)—scripted Service Desk procedures for the five highest-volume Autopilot failures
+- [Error Code Index](../error-codes/00-index.md)—primary error code lookup covering ESP, TPM, hybrid join, pre-provisioning, and profile assignment errors
+- [Decision Trees](../decision-trees/00-initial-triage.md)—L1 triage flowcharts; escalation terminal IDs in these trees map to preceding L2 runbooks
+- [APv2 Failure Catalog](../error-codes/06-apv2-device-preparation.md)—symptom-based APv2 failure index organized by deployment phase
+- [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md)—APv2 L1 triage flowchart; APE1/APE2/APE3 escalation nodes map to preceding APv2 L2 runbooks
 - [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) -- macOS L1 triage flowchart
 - [macOS Terminal Commands Reference](../reference/macos-commands.md) -- canonical macOS diagnostic command reference
 - [macOS Log Paths Reference](../reference/macos-log-paths.md) -- macOS log path and configuration profile locations

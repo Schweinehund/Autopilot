@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-This overview orients Intune administrators and L1/L2 support to the five sequential stages of the Windows Autopilot (classic) deployment lifecycle — hardware hash import, profile assignment, OOBE and deployment-mode selection, the Enrollment Status Page, and post-enrollment verification — showing how the three OOBE paths (user-driven, pre-provisioning, self-deploying) diverge and reconverge before ESP, and where common failures surface across the pipeline.
+This overview orients Intune administrators and L1/L2 support to the five sequential stages of the Windows Autopilot (classic) deployment lifecycle—hardware hash import, profile assignment, OOBE and deployment-mode selection, the Enrollment Status Page, and post-enrollment verification—showing how the three OOBE paths (user-driven, pre-provisioning, self-deploying) diverge and reconverge before ESP, and where common failures surface across the pipeline.
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
 
@@ -24,7 +24,7 @@ This overview orients Intune administrators and L1/L2 support to the five sequen
 
 ## How to Use This Guide
 
-This overview provides the end-to-end picture of the Windows Autopilot deployment lifecycle across five sequential stages. Each stage has a dedicated guide linked from the diagrams and table below — when troubleshooting a reported failure, identify which stage the failure occurred in and navigate directly to that guide. L2 technical details (registry keys, API calls, log paths) appear as callout blocks within each stage guide, keeping the main narrative accessible to L1 readers. Start here to orient yourself, then go to the relevant stage guide for actionable steps.
+This overview provides the end-to-end picture of the Windows Autopilot deployment lifecycle across five sequential stages. Each stage has a dedicated guide linked from the following diagrams and table—when troubleshooting a reported failure, identify which stage the failure occurred in and navigate directly to that guide. L2 technical details (registry keys, API calls, log paths) appear as callout blocks within each stage guide, keeping the main narrative accessible to L1 readers. Start here to orient yourself, then go to the relevant stage guide for steps you can act on.
 
 ## The Deployment Pipeline
 
@@ -78,13 +78,13 @@ All prerequisites must be met before Stage 1. Missing any prerequisite causes fa
 
 ## Related Documentation
 
-- [Glossary](../_glossary.md) — Autopilot terminology reference
-- [APv2 Lifecycle Overview](../lifecycle-apv2/00-overview.md) — APv2 deployment flow, prerequisites, and automatic mode
-- [APv1 vs APv2 Disambiguation](../apv1-vs-apv2.md) — Framework comparison
-- [Registry Paths Reference](../reference/registry-paths.md) — All Autopilot registry locations
-- [Network Endpoints Reference](../reference/endpoints.md) — Required URLs and test commands
-- [PowerShell Function Reference](../reference/powershell-ref.md) — Diagnostic and remediation functions
-- [Architecture Overview](../architecture.md) — System design context
+- [Glossary](../_glossary.md)—Autopilot terminology reference
+- [APv2 Lifecycle Overview](../lifecycle-apv2/00-overview.md)—APv2 deployment flow, prerequisites, and automatic mode
+- [APv1 vs APv2 Disambiguation](../apv1-vs-apv2.md)—Framework comparison
+- [Registry Paths Reference](../reference/registry-paths.md)—All Autopilot registry locations
+- [Network Endpoints Reference](../reference/endpoints.md)—Required URLs and test commands
+- [PowerShell Function Reference](../reference/powershell-ref.md)—Diagnostic and remediation functions
+- [Architecture Overview](../architecture.md)—System design context
 
 ## Version History
 

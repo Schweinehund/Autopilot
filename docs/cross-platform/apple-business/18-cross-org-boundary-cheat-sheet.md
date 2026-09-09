@@ -10,11 +10,11 @@ platform: ios+ipados+macos+tvos
 > boundary between Apple Business and Microsoft Intune for Apple-managed device governance
 > (iOS, iPadOS, macOS, tvOS). It is the canonical source-of-truth disambiguation table
 > (DELEG-08) that all Phase 64 delegation runbooks (`11-`–`17-`) forward-link to.
-> This cheat sheet does NOT carry a scope-boundary callout pointing to itself — it IS the SOT.
+> This cheat sheet does NOT carry a scope-boundary callout pointing to itself—it IS the SOT.
 
 > **Training-data notice:** Capability ownership assignments and integration-layer descriptions
 > are authored from AI training knowledge of Apple Business portal behavior and Microsoft Intune
-> documentation as of the pre-2026-04-14 rebrand, cross-referenced against research/STACK.md §6
+> documentation as of the pre-2026-04-14 rebrand, cross-referenced against stack research §6
 > and the C15 guard semantics. Rows marked `[CITED: training; needs live verification]` reflect
 > areas where live portal verification of exact UI labels or behavior may be needed.
 > Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
@@ -27,10 +27,10 @@ and which live in the **integration layer** between the two. Use this as the aut
 reference when a delegation runbook says "out of scope" for the Apple Business surface.
 
 **Reading the table:**
-- **Apple Business owns** — action is performed in the Apple Business portal; Apple Business
+- **Apple Business owns**—action is performed in the Apple Business portal; Apple Business
   permissions control who can perform it.
-- **Intune owns** — action is performed in Microsoft Intune; Intune governs who can perform it.
-- **Integration layer** — the handoff point or artifact shared between the two surfaces;
+- **Intune owns**—action is performed in Microsoft Intune; Intune governs who can perform it.
+- **Integration layer**—the handoff point or artifact shared between the two surfaces;
   ownership context depends on which step of the workflow is being performed.
 
 ---
@@ -60,7 +60,7 @@ reference when a delegation runbook says "out of scope" for the Apple Business s
 ### "Content token" vs "Apple VPP token"
 
 Apple Business calls the per-OU licensing credential a **content token**. Microsoft Intune
-labels the same artifact an **Apple VPP token**. They are the same cryptographic object — a
+labels the same artifact an **Apple VPP token**. They are the same cryptographic object—a
 credential that ties purchased app and book licenses to a specific OU. When following both
 portals simultaneously, expect this label difference. All Phase 64 runbooks use Apple's
 terminology ("content token").
@@ -70,16 +70,16 @@ terminology ("content token").
 The most common misconfiguration: Intune's "Reset Passcode" and "Remove Passcode" remote
 actions operate at the **device level** (clearing the device screen-lock passcode). On a
 Shared iPad, they do **NOT** reset the per-user Shared iPad partition passcode. The
-per-user partition passcode can only be reset via Path A (Apple Business UI — "Reset Shared
+per-user partition passcode can only be reset through Path A (Apple Business UI—"Reset Shared
 iPad Passcode") or factory wipe. See [12-shared-ipad-passcode-reset.md](12-shared-ipad-passcode-reset.md)
 for the full 3-path decision matrix.
 
 ### Author-Scope vs Target-Scope (Audit Logs)
 
 Apple Business audit log entries are scoped to the **author's OU**, not the target resource's
-OU. A sub-org admin for OU-A who transfers a device to OU-B generates an audit entry visible
-to OU-A's admin (the author) and to tenant-wide admins — but potentially NOT visible to OU-B's
-admin (the target-OU admin). This is the OP-14 author-scope semantic. See
+OU. A sub-org administrator for OU-A who transfers a device to OU-B generates an audit entry visible
+to OU-A's administrator (the author) and to tenant-wide administrators—but potentially NOT visible to OU-B's
+administrator (the target-OU administrator). This is the OP-14 author-scope semantic. See
 [17-audit-log-scoping-runbook.md](17-audit-log-scoping-runbook.md) for the full scoping model.
 
 ### VPP License + OU Transfer Interaction
@@ -88,7 +88,7 @@ When a device is transferred between OUs in Apple Business, **VPP device-license
 working immediately** because the license is tied to the source OU's content token. Apps must
 be explicitly revoked from the source OU (observed 30-day grace period for managed devices)
 and re-assigned from the target OU's catalog. Enrollment profiles and Intune-managed
-configuration profiles are NOT affected by the Apple Business OU transfer — they follow
+configuration profiles are NOT affected by the Apple Business OU transfer—they follow
 different assignment authorities. See [14-device-transfer-runbook.md](14-device-transfer-runbook.md)
 for the full 4-cell impact matrix.
 
@@ -99,7 +99,7 @@ for the full 4-cell impact matrix.
 After reviewing this cheat sheet:
 
 - **Confirm capability ownership before opening a ticket:** Check the table to identify
-  whether the action you need is performed in the Apple Business portal or in Intune admin
+  whether the action you need is performed in the Apple Business portal or in Intune administrator
   center. Opening an Intune ticket for an Apple Business-owned action (or vice versa) is the
   most common misdirection.
 - **For detailed runbooks on each capability:** Follow the forward links in the table rows

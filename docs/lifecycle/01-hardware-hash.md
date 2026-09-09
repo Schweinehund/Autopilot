@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-This guide covers Stage 1 of the Windows Autopilot classic lifecycle: hardware hash import and device registration. It explains how a device's hardware fingerprint reaches the Autopilot service via CSV upload, OEM registration, PowerShell collection, or Partner Center, and what to check when a device fails to register.
+This guide covers Stage 1 of the Windows Autopilot classic lifecycle: hardware hash import and device registration. It explains how a device's hardware fingerprint reaches the Autopilot service through CSV upload, OEM registration, PowerShell collection, or Partner Center, and what to check when a device fails to register.
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
 
@@ -30,7 +30,7 @@ The hardware hash is a 4K-byte device fingerprint derived from hardware identifi
 
 **Depends on:** Azure AD tenant configured; Intune licenses assigned; appropriate Graph API permissions in place.
 
-**Feeds into:** Stage 2 — Profile Assignment.
+**Feeds into:** Stage 2—Profile Assignment.
 
 ---
 
@@ -38,17 +38,17 @@ The hardware hash is a 4K-byte device fingerprint derived from hardware identifi
 
 You manage device registration in the Intune portal at **Devices > Enrollment > Windows Autopilot > Devices**. The Devices blade shows a table of registered devices with columns for Serial Number, Manufacturer, Model, Profile Status, and Group Tag.
 
-When you upload a CSV file, the portal presents a file picker followed by an upload confirmation. Newly uploaded devices appear with "Not assigned" profile status until group membership is evaluated and a profile is assigned (Stage 2). Devices registered directly by OEMs appear here automatically — you do not need to perform an upload for OEM-registered hardware.
+When you upload a CSV file, the portal presents a file picker followed by an upload confirmation. Newly uploaded devices appear with "Not assigned" profile status until group membership is evaluated and a profile is assigned (Stage 2). Devices registered directly by OEMs appear here automatically—you do not need to perform an upload for OEM-registered hardware.
 
 ---
 
 ## What Happens
 
-1. **Hash generated on device.** The hardware hash is collected from the device via the `MDM_DevDetail_Ext01` WMI class. This happens either at the factory (OEM registration), during OS setup (PowerShell collection), or on a running device before deployment.
+1. **Hash generated on device.** The hardware hash is collected from the device through the `MDM_DevDetail_Ext01` WMI class. This happens either at the factory (OEM registration), during OS setup (PowerShell collection), or on a running device before deployment.
 
-2. **Hash uploaded via one of four methods.** You or the OEM submits the hash to the Autopilot service using one of the methods described in the table below.
+2. **Hash uploaded through one of four methods.** You or the OEM submits the hash to the Autopilot service using one of the methods described in the following table.
 
-3. **ZTD service creates a ZTDID.** The Autopilot service processes the upload and assigns the device a [ZTDID](../_glossary.md#ztdid) (Zero Touch Device ID) — its unique identifier within the service.
+3. **ZTD service creates a ZTDID.** The Autopilot service processes the upload and assigns the device a [ZTDID](../_glossary.md#ztdid) (Zero Touch Device ID)—its unique identifier within the service.
 
 4. **Device is registered and ready for profile.** The device now appears in the Autopilot Devices list in Intune. Group Tag and Assigned User can be set at this point. Profile assignment begins when the device's Azure AD object joins the appropriate group (Stage 2).
 
@@ -77,7 +77,7 @@ When you upload a CSV file, the portal presents a file picker followed by an upl
 
 > It is populated later, when the device downloads its Autopilot profile during OOBE (Stage 3). See [registry-paths.md](../reference/registry-paths.md) for the full path reference.
 
-> - ZTDID assignment is tenant-scoped — the same device can be de-registered from one tenant and re-registered in another, but the hash changes if hardware changes occur.
+> - ZTDID assignment is tenant-scoped—the same device can be de-registered from one tenant and re-registered in another, but the hash changes if hardware changes occur.
 
 ---
 
@@ -93,7 +93,7 @@ When you upload a CSV file, the portal presents a file picker followed by an upl
 ## Failure Indicators
 
 - **Hash not recognized:** Device does not appear after upload. Common causes: hash extracted before sysprep completion, unsupported hardware.
-- **Duplicate device record:** Device already registered — either in this tenant or a previous one. Must be removed before re-registration.
+- **Duplicate device record:** Device already registered—either in this tenant or a previous one. Must be removed before re-registration.
 - **Tenant mismatch:** Device registered to a different tenant. Requires removal from prior tenant before import.
 - **Upload validation error:** CSV format incorrect; see Microsoft Learn for the correct column headers.
 
@@ -113,15 +113,15 @@ Remediation runbooks: (available after Phase 5)
 ## Watch Out For
 
 - **Stale device records on re-registration.** If a device was previously registered under the same or different tenant, the old record must be deleted before re-importing. Attempting to import a hash that already exists in the service produces a duplicate record error.
-- **Hash from wrong image state.** Hardware hash must be captured from the final hardware configuration — after any hardware changes, BIOS updates, or physical component replacements. A hash from a pre-sysprep state or from a different hardware configuration will not match the shipping device.
+- **Hash from wrong image state.** Hardware hash must be captured from the final hardware configuration—after any hardware changes, BIOS updates, or physical component replacements. A hash from a pre-sysprep state or from a different hardware configuration does not match the shipping device.
 - **Tenant mismatch.** Devices registered to a former employer's tenant or a previous MDM tenant cannot be enrolled into a new tenant without removal from the original tenant first. Check the device detail in Intune to see if a `CloudAssignedTenantId` is already present.
 
 ---
 
 ## Tool References
 
-- [`Get-AutopilotHardwareHash`](../reference/powershell-ref.md#get-autopilothardwarehash) — Retrieves the device hardware hash via CIM from `MDM_DevDetail_Ext01`. Use to collect hash locally before CSV export.
-- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate) — Checks registration state from registry and WMI. Useful after OOBE to confirm the device received its profile (registry key populated at profile download, not at import).
+- [`Get-AutopilotHardwareHash`](../reference/powershell-ref.md#get-autopilothardwarehash)—Retrieves the device hardware hash using CIM from `MDM_DevDetail_Ext01`. Use to collect hash locally before CSV export.
+- [`Get-AutopilotRegistrationState`](../reference/powershell-ref.md#get-autopilotregistrationstate)—Checks registration state from registry and WMI. Useful after OOBE to confirm the device received its profile (registry key populated at profile download, not at import).
 
 **Further Reading:**
 

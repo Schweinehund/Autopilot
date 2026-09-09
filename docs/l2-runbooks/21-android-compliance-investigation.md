@@ -16,9 +16,9 @@ platform: Android
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise compliance evaluation failures — Play Integrity API attestation, setting-level drift, and conditional access propagation delay — using Intune compliance reports and a Play Integrity tier table to identify root cause.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers Android Enterprise compliance evaluation failures—Play Integrity API attestation, setting-level drift, and conditional access propagation delay—using Intune compliance reports and a Play Integrity tier table to identify root cause.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation through Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 > For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -30,7 +30,7 @@ This L2 investigation runbook is entered from an L1 escalation and operates unde
 - Cause C → [CA Timing Gap (First Compliance Evaluation Pending)](#cause-c-ca-timing-gap)
 - Cause D → [Passcode / Encryption / Work Profile Security Policy Mismatch](#cause-d-passcode-encryption-policy-mismatch)
 
-**Starting fresh?** Begin at Investigation by Axis below to narrow the compliance-failure axis before locating the Cause deep-dive.
+**Starting fresh?** Begin at Investigation by Axis to narrow the compliance-failure axis before locating the Cause deep-dive.
 
 ## Context
 
@@ -38,9 +38,9 @@ This runbook covers Android Enterprise compliance failures and Conditional Acces
 
 Before starting: collect a diagnostic package per the [Android Log Collection Guide](18-android-log-collection.md) using the method appropriate for the enrollment mode. The Microsoft Intune app logs (Section 2) capture compliance-policy evaluation trace; adb logcat (Section 3) `DevicePolicyManager:*` filter captures DPC evaluation events.
 
-**Structure:** This runbook uses a Phase 31 D-14 hybrid axis structure. `## Investigation by Axis` is the starting point for fresh investigations where the cause is not yet known. `## Per-Cause Deep-Dive` is the direct handoff target for L1-routed tickets — skip to the matching cause sub-section using the Triage block above.
+**Structure:** This runbook uses a Phase 31 D-14 hybrid axis structure. `## Investigation by Axis` is the starting point for fresh investigations where the cause is not yet known. `## Per-Cause Deep-Dive` is the direct handoff target for L1-routed tickets—skip to the matching cause sub-section using the preceding Triage block.
 
-**Pareto emphasis (D-20):** Cause A (Play Integrity) and Cause C (CA Timing / Not evaluated terminal state) together account for the majority of Android compliance escalations and receive expanded coverage. Cause B (OS version) and Cause D (passcode/encryption) are compact — these are almost always ⚙️ Config fixes resolved at L1.
+**Pareto emphasis (D-20):** Cause A (Play Integrity) and Cause C (CA Timing / Not evaluated terminal state) together account for the majority of Android compliance escalations and receive expanded coverage. Cause B (OS version) and Cause D (passcode/encryption) are compact—these are almost always ⚙️ Config fixes resolved at L1.
 
 ## Investigation by Axis
 
@@ -48,26 +48,26 @@ Android compliance failures map to three axes. Rule out ⚙️ Config first (fix
 
 ### Configuration Errors
 
-Axis ⚙️ — misalignment between compliance policy settings and device state that can be fixed in Intune admin center or on the device.
+Axis ⚙️—misalignment between compliance policy settings and device state that can be fixed in Intune admin center or on the device.
 
 **Maps to:**
-- **Cause B** (OS Version Policy Mismatch — ⚙️ config axis): device OS version below `minAndroidVersion` policy value; update OS OR relax policy. Cross-references the canonical [Android version matrix](../android-lifecycle/03-android-version-matrix.md).
-- **Cause D** (Passcode / Encryption / Work Profile Security Policy Mismatch — ⚙️ config axis): passcode/PIN complexity rules, device encryption requirement, work profile security policy mismatch.
+- **Cause B** (OS Version Policy Mismatch—⚙️ configuration axis): device OS version earlier than the `minAndroidVersion` policy value; update OS OR relax policy. Cross-references the canonical [Android version matrix](../android-lifecycle/03-android-version-matrix.md).
+- **Cause D** (Passcode / Encryption / Work Profile Security Policy Mismatch—⚙️ configuration axis): passcode/PIN complexity rules, device encryption requirement, work profile security policy mismatch.
 
 ### Timing Issues
 
-Axis ⏱️ — propagation or evaluation delays where no admin change is required.
+Axis ⏱️—propagation or evaluation delays where no administrator change is required.
 
 **Maps to:**
-- **Cause C** (CA Timing Gap / First Compliance Evaluation Pending — ⏱️ timing axis): post-enrollment first-evaluation window typically 15-30 minutes `[MEDIUM, last_verified 2026-04-23]`. Device reports "Not evaluated" compliance state; Conditional Access blocks access pending first evaluation.
+- **Cause C** (CA Timing Gap / First Compliance Evaluation Pending—⏱️ timing axis): post-enrollment first-evaluation window typically 15-30 minutes `[MEDIUM, last_verified 2026-04-23]`. Device reports "Not evaluated" compliance state; Conditional Access blocks access pending first evaluation.
 
 ### Genuine Defects
 
-Axis 🐛 — cross-cutting axis for non-configurable failures.
+Axis 🐛—cross-cutting axis for non-configurable failures.
 
 **Maps to:**
-- **Cause A** (Play Integrity Verdict Failure — ⚙️ policy + 🐛 verdict anomaly): hardware-backed attestation; policy-tier mismatch is ⚙️, but verdict anomaly on an otherwise-compliant device is 🐛.
-- **Cause C "Not evaluated" terminal state** (cross-cutting 🐛 — stuck-state defect where first-evaluation never completes): see dedicated sub-section below.
+- **Cause A** (Play Integrity Verdict Failure—⚙️ policy + 🐛 verdict anomaly): hardware-backed attestation; policy-tier mismatch is ⚙️, but verdict anomaly on an otherwise-compliant device is 🐛.
+- **Cause C "Not evaluated" terminal state** (cross-cutting 🐛—stuck-state defect where first-evaluation never completes): see the dedicated sub-section that follows.
 
 ## Per-Cause Deep-Dive
 
@@ -85,23 +85,23 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 
 **Play Integrity 3-tier ladder** (Intune compliance policy UI labels verified 2026-04-23 `[MEDIUM, last_verified 2026-04-23]`):
 
-1. **Basic integrity** — UI label: "Check basic integrity". Device passes basic-integrity checks (not rooted or tampered at software level).
-2. **Basic + Device integrity** — UI label: "Check basic integrity & device integrity". Device also passes device-integrity checks (system image integrity).
-3. **Strong integrity (hardware-backed)** — UI label: "Check strong integrity using hardware-backed security features". This is a SEPARATE Intune setting (distinct toggle), NOT a third value in the "Play Integrity Verdict" dropdown. Devices lacking hardware-backed security cannot pass this tier regardless of software state.
+1. **Basic integrity**—UI label: "Check basic integrity". Device passes basic-integrity checks (not rooted or tampered at software level).
+2. **Basic + Device integrity**—UI label: "Check basic integrity & device integrity". Device also passes device-integrity checks (system image integrity).
+3. **Strong integrity (hardware-backed)**—UI label: "Check strong integrity using hardware-backed security features". This is a SEPARATE Intune setting (distinct toggle), NOT a third value in the "Play Integrity Verdict" dropdown. Devices lacking hardware-backed security cannot pass this tier regardless of software state.
 
 **Investigation Steps:**
 
 1. Intune admin center > Devices > [device] > Device compliance > review the compliance policy evaluated against the device. Identify the Play Integrity verdict value reported.
 2. Verify the compliance policy's "Play Integrity Verdict" dropdown value (Basic / Basic + Device) and the "Check strong integrity using hardware-backed security features" toggle independently. These are two separate policy controls.
 3. Device-side: `adb shell pm list packages | grep com.google.android.gms` to confirm Google Play services presence; `adb logcat -s DevicePolicyManager:*` for DPC evaluation trace `[MEDIUM, last_verified 2026-04-23]`.
-4. Cross-reference the [Android version matrix](../android-lifecycle/03-android-version-matrix.md) for Play Integrity support across Android versions; Strong integrity requires Android 8+ and hardware-backed keystore. Note: Google changed strong integrity requirements for Android 13+ in May 2025, enforced by Intune from September 30, 2025 — devices without a security patch from the last 12 months no longer meet strong integrity on Android 13+.
+4. Cross-reference the [Android version matrix](../android-lifecycle/03-android-version-matrix.md) for Play Integrity support across Android versions; Strong integrity requires Android 8+ and hardware-backed keystore. Note: Google changed strong integrity requirements for Android 13+ in May 2025, enforced by Intune from September 30, 2025—devices without a security patch from the last 12 months no longer meet strong integrity on Android 13+.
 5. Check whether the failure started after September 30, 2025 for a pattern-based OEM firmware issue: multiple users on the same device model failing Play Integrity in a pattern indicates an L2/Microsoft Support investigation.
 
 **Known Patterns:**
 
-- ⚙️ Policy-tier mismatch (device cannot meet hardware-backed tier due to device hardware limitations) — relax the "Check strong integrity using hardware-backed security features" toggle OR exclude affected devices from the policy scope using a separate compliance policy group.
-- ⚙️ Security patch age failure on Android 13+ (patch > 12 months old) — device meets hardware requirements but fails the September 2025 enforcement change; user must update security patch OR policy must be adjusted for that device class.
-- 🐛 Verdict anomaly on hardware-capable, current-patched device — Play services returning unexpected verdict; collect logs + escalate to Microsoft Support.
+- ⚙️ Policy-tier mismatch (device cannot meet hardware-backed tier due to device hardware limitations)—relax the "Check strong integrity using hardware-backed security features" toggle OR exclude affected devices from the policy scope using a separate compliance policy group.
+- ⚙️ Security patch age failure on Android 13+ (patch > 12 months old)—device meets hardware requirements but fails the September 2025 enforcement change; user must update security patch OR policy must be adjusted for that device class.
+- 🐛 Verdict anomaly on hardware-capable, current-patched device—Play services returning unexpected verdict; collect logs + escalate to Microsoft Support.
 
 **Microsoft Support escalation:**
 
@@ -123,9 +123,9 @@ Compliance policy sets a `minAndroidVersion` (or max) that the device fails. Ver
 
 1. Intune admin center > compliance policy (P-COMP) > OS version rule; record the minimum value.
 2. Device-side: Settings > About phone > Android version; OR `adb shell getprop ro.build.version.release` (Android 10+) `[HIGH, last_verified 2026-04-23]`.
-3. If device version < policy minimum, the admin has two paths: (a) update the device OS (if feasible), (b) relax the policy minimum OR scope the user into a lower-minimum compliance policy group (if the device class cannot upgrade).
+3. If device version < policy minimum, the administrator has two paths: (a) update the device OS (if feasible), (b) relax the policy minimum OR scope the user into a lower-minimum compliance policy group (if the device class cannot upgrade).
 
-**Escalation:** Rare — this cause is almost always ⚙️ Config; escalate only if device reports correct OS version but compliance evaluation still fails. Attach: compliance policy export + Settings > About phone screenshot + device enrolled-state details from P-09.
+**Escalation:** Rare—this cause is almost always ⚙️ Config; escalate only if device reports correct OS version but compliance evaluation still fails. Attach: compliance policy export + Settings > About phone screenshot + device enrolled-state details from P-09.
 
 <a id="cause-c-ca-timing-gap"></a>
 
@@ -137,17 +137,17 @@ Post-enrollment, Android devices go through a first compliance evaluation before
 
 **Compliance state strings** (verified from L1 runbook 25 Cause C):
 
-- `"Not evaluated"` — post-enrollment before first check; transitional state
-- `"In grace period"` — non-compliant within configured grace period
-- `"Not compliant"` — failing; failing settings listed in the device compliance pane
-- `"Compliant"` — passing
+- `"Not evaluated"`—post-enrollment before first check; transitional state
+- `"In grace period"`—non-compliant within configured grace period
+- `"Not compliant"`—failing; failing settings listed in the device compliance pane
+- `"Compliant"`—passing
 
 **Investigation Steps:**
 
 1. Intune admin center > Devices > [device] > Device compliance (P-09). Record current compliance state + enrollment completion timestamp.
 2. If state = "Not evaluated" and enrollment < 30 minutes ago, wait for first-evaluation completion and re-check.
-3. If state = "Not evaluated" and enrollment > 30 minutes ago, proceed to "Not evaluated" terminal-state sub-section below.
-4. If state = "Not compliant" but the failing-settings list is EMPTY: check P-08 (`Endpoint security > Device compliance > Compliance policy settings` > "Mark devices with no compliance policy assigned as"). If set to "Not compliant" AND no Android compliance policy is assigned to the user's group, this is the default-posture variant — admin must assign a compliance policy.
+3. If state = "Not evaluated" and enrollment > 30 minutes ago, proceed to "Not evaluated" terminal-state sub-section.
+4. If state = "Not compliant" but the failing-settings list is EMPTY: check P-08 (`Endpoint security > Device compliance > Compliance policy settings` > "Mark devices with no compliance policy assigned as"). If set to "Not compliant" AND no Android compliance policy is assigned to the user's group, this is the default-posture variant—administrator must assign a compliance policy.
 5. Device-side: trigger a sync (Microsoft Intune app > Settings > Sync OR Company Portal > Devices > Sync) to accelerate check-in.
 6. Runbook 18 Section 2 Microsoft Intune app log: search for compliance-evaluation events.
 
@@ -155,10 +155,10 @@ Post-enrollment, Android devices go through a first compliance evaluation before
 
 If compliance state remains "Not evaluated" beyond 30 minutes after enrollment completion, evaluate these Android-specific causes (D-21):
 
-1. **Play services network gap** — device cannot reach Google Play services endpoints. Verify via Settings > About phone > Google Play services version (recent); Settings > Network > connectivity; `adb shell ping -c 3 play.googleapis.com` if adb available `[MEDIUM, last_verified 2026-04-23]`.
-2. **MDM check-in failure** — device-to-Intune connectivity blocked (firewall, proxy, captive portal). Runbook 18 Section 2 Microsoft Intune app logs will show failed check-in attempts. Device sync from Microsoft Intune app or Company Portal fails to complete.
-3. **Compliance policy assignment missing** — device is enrolled but no compliance policy is assigned to its user/device group. Verify at Intune admin center > Endpoint security > Device compliance > Policies > [policy] > Assignments.
-4. **GMS service disruption at Google** — transient; rare. Check the Google Workspace Status Dashboard (`workspace.google.com/intl/en/resources/google-workspace-status`) before investing further investigation time.
+1. **Play services network gap**—device cannot reach Google Play services endpoints. Verify through Settings > About phone > Google Play services version (recent); Settings > Network > connectivity; `adb shell ping -c 3 play.googleapis.com` if adb available `[MEDIUM, last_verified 2026-04-23]`.
+2. **MDM check-in failure**—device-to-Intune connectivity blocked (firewall, proxy, captive portal). Runbook 18 Section 2 Microsoft Intune app logs show failed check-in attempts. Device sync from Microsoft Intune app or Company Portal fails to complete.
+3. **Compliance policy assignment missing**—device is enrolled but no compliance policy is assigned to its user/device group. Verify at Intune admin center > Endpoint security > Device compliance > Policies > [policy] > Assignments.
+4. **GMS service disruption at Google**—transient; rare. Check the Google Workspace Status Dashboard (`workspace.google.com/intl/en/resources/google-workspace-status`) before investing further investigation time.
 
 **Microsoft Support escalation (Not evaluated terminal state):**
 
@@ -171,7 +171,7 @@ If compliance state remains "Not evaluated" beyond 30 minutes after enrollment c
 - Runbook 18 Section 2 Microsoft Intune app log incident ID
 - Runbook 18 Section 3 `adb logcat` excerpt if USB debugging is available `[MEDIUM, last_verified 2026-04-23]`
 
-**Do not escalate to Microsoft Support without:** (a) confirmed P-08 default-posture value, (b) confirmed compliance policy assignment state, (c) enrollment completion timestamp, and (d) at least one sync attempt. Missing any of these four elements will cause the support case to be returned for additional data.
+**Do not escalate to Microsoft Support without:** (a) confirmed P-08 default-posture value, (b) confirmed compliance policy assignment state, (c) enrollment completion timestamp, and (d) at least one sync attempt. Missing any of these four elements causes the support case to be returned for additional data.
 
 **Terminal-state decision flow (quick reference):**
 
@@ -196,40 +196,40 @@ Compliance policy enforces passcode/PIN complexity rules (length, alphanumeric, 
 **Investigation:**
 
 1. Intune admin center > compliance policy (P-COMP) > System security rules; record required passcode complexity / encryption state.
-2. Device-side (user): Settings > Security > Screen lock — verify passcode type meets policy requirements (length, alphanumeric complexity, PIN complexity).
+2. Device-side (user): Settings > Security > Screen lock—verify passcode type meets policy requirements (length, alphanumeric complexity, PIN complexity).
 3. BYOD-specific: Settings > Accounts > Work > Work profile security (passcode/biometric on Work Profile container). BYOD devices may require a separate work-profile password distinct from the device screen lock.
-4. Encryption: Android 10+ enforces file-based encryption by default; if a compliance policy requires "full-disk encryption" on Android 10+, the policy is misaligned — file-based encryption IS the modern Android equivalent. Admin should update the policy to reflect current Android encryption behavior.
+4. Encryption: Android 10+ enforces file-based encryption by default; if a compliance policy requires "full-disk encryption" on Android 10+, the policy is misaligned—file-based encryption IS the modern Android equivalent. The administrator must update the policy to reflect current Android encryption behavior.
 
 **Escalation:** Generally User Action Required (set compliant passcode or work-profile password); escalate only if device reports compliant passcode/encryption but policy evaluation still fails. Attach: compliance policy export + Settings > Security screenshot + runbook 18 Section 2 Microsoft Intune app log incident.
 
 ## Resolution
 
-Each Per-Cause Deep-Dive sub-section above includes Investigation Steps, Known Patterns (where applicable), and Microsoft Support escalation data. This section aggregates the overall escalation decision:
+Each preceding Per-Cause Deep-Dive sub-section includes Investigation Steps, Known Patterns (where applicable), and Microsoft Support escalation data. This section aggregates the overall escalation decision:
 
-- **Cause A Play Integrity** — 🐛 Defect escalation required when hardware-capable, current-patched device returns verdict below policy with all ⚙️ Config paths ruled out; also escalate when multiple users on the same device model show a pattern failure
-- **Cause B OS Version** — almost always ⚙️ Config fix (update OS or relax policy); rare escalation only when device version matches policy requirement but evaluation still fails
-- **Cause C CA Timing** — ⏱️ Timing wait usually resolves within 30 minutes; escalate if "Not evaluated" terminal state persists per sub-section above (Play services gap, MDM check-in failure, assignment missing, GMS disruption)
-- **Cause D Passcode / Encryption / Work Profile** — generally User Action Required (set compliant passcode); rare escalation when device reports compliance but evaluation disagrees
+- **Cause A Play Integrity**—🐛 Defect escalation required when hardware-capable, current-patched device returns a verdict under the policy threshold with all ⚙️ Config paths ruled out; also escalate when multiple users on the same device model show a pattern failure
+- **Cause B OS Version**—almost always ⚙️ Config fix (update OS or relax policy); rare escalation only when device version matches policy requirement but evaluation still fails
+- **Cause C CA Timing**—⏱️ Timing wait usually resolves within 30 minutes; escalate if "Not evaluated" terminal state persists per the preceding sub-section (Play services gap, MDM check-in failure, assignment missing, GMS disruption)
+- **Cause D Passcode / Encryption / Work Profile**—generally User Action Required (set compliant passcode); rare escalation when device reports compliance but evaluation disagrees
 
 ## Escalation Criteria
 
 Escalate to Microsoft Support when:
 
 - All ⚙️ Config Error paths for the identified Cause are ruled out
-- ⏱️ Timing windows have elapsed: 30 minutes for Cause C first-evaluation; 60 minutes after policy assignment for the default-posture variant; approximately 24 hours for policy propagation after an admin change
+- ⏱️ Timing windows have elapsed: 30 minutes for Cause C first-evaluation; 60 minutes after policy assignment for the default-posture variant; approximately 24 hours for policy propagation after an administrator change
 - Cause indicators match but Resolution Steps do not restore Compliant state
 - Data collection per runbook 18 Section 1 / 2 / 3 is complete and artifacts are ready to attach
-- Multiple users on the same device model show the same compliance failure in a pattern (OEM firmware issue indicator — Cause A)
+- Multiple users on the same device model show the same compliance failure in a pattern (OEM firmware issue indicator—Cause A)
 
 ## Related Resources
 
-- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md) — prerequisite diagnostic package; collect before starting any Per-Cause investigation
-- [Android Enrollment Investigation (runbook 19)](19-android-enrollment-investigation.md) — enrollment-side failures (work profile not created, COBO stuck, ZTE device claim)
-- [Android App Install Investigation (runbook 20)](20-android-app-install-investigation.md) — MGP and LOB app install failures
-- [L1 Runbook 25: Android Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md) — L1 escalation source with matching Cause A/B/C/D anchors; Per-Cause handoff is 1:1
-- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md) — OS version requirements by enrollment mode + Android 11/12/15 breakpoints
-- [Play Integrity](../_glossary-android.md#play-integrity) — glossary entry for Play Integrity attestation mechanism
-- [L2 Runbook Index](00-index.md#android-l2-runbooks) — routing table for all Android L2 runbooks
+- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md)—prerequisite diagnostic package; collect before starting any Per-Cause investigation
+- [Android Enrollment Investigation (runbook 19)](19-android-enrollment-investigation.md)—enrollment-side failures (work profile not created, COBO stuck, ZTE device claim)
+- [Android App Install Investigation (runbook 20)](20-android-app-install-investigation.md)—MGP and LOB app install failures
+- [L1 Runbook 25: Android Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md)—L1 escalation source with matching Cause A/B/C/D anchors; Per-Cause handoff is 1:1
+- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md)—OS version requirements by enrollment mode + Android 11/12/15 breakpoints
+- [Play Integrity](../_glossary-android.md#play-integrity)—glossary entry for Play Integrity attestation mechanism
+- [L2 Runbook Index](00-index.md#android-l2-runbooks)—routing table for all Android L2 runbooks
 
 ## Version History
 

@@ -16,9 +16,9 @@ platform: macOS
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS compliance gate investigation — SCEP certificate evaluation, conditional access signal propagation, and setting-level drill-down — to identify why a device is marked non-compliant and resolve the gap without state-changing commands.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers macOS compliance gate investigation—SCEP certificate evaluation, conditional access signal propagation, and setting-level drill-down—to identify why a device is marked non-compliant and resolve the gap without state-changing commands.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 ## Triage
 
@@ -30,7 +30,7 @@ This L2 investigation runbook is entered from an L1 escalation and operates unde
 
 macOS compliance evaluation in Intune works as follows: the device checks in on a schedule (default every 8 hours), Intune evaluates device state against the assigned compliance policy, and sets the device's compliant or non-compliant status. Conditional Access policies in Entra ID use this status for resource access decisions.
 
-Unlike Windows, macOS has no Intune security baselines — compliance policies are the primary enforcement mechanism for security posture on macOS. If a compliance policy reports a setting as non-compliant, there is no automatic remediation; the issue must be resolved on the device or the policy adjusted.
+Unlike Windows, macOS has no Intune security baselines—compliance policies are the primary enforcement mechanism for security posture on macOS. If a compliance policy reports a setting as non-compliant, there is no automatic remediation; the issue must be resolved on the device or the policy adjusted.
 
 This runbook covers **L2 investigation** of why a device is non-compliant or why compliance status is not updating. The L1 runbook (`14-macos-compliance-access-blocked.md`) handles portal-observable scenarios. This L2 runbook investigates the underlying technical causes using Terminal diagnostics.
 
@@ -57,7 +57,7 @@ MDM enrollment: Yes (User Approved)
 MDM server: https://*.manage.microsoft.com/...
 ```
 
-Compliance evaluation cannot proceed if MDM enrollment is incomplete. If MDM enrollment shows `No`, the device has lost its management relationship — compliance cannot be evaluated or reported.
+Compliance evaluation cannot proceed if MDM enrollment is incomplete. If MDM enrollment shows `No`, the device has lost its management relationship—compliance cannot be evaluated or reported.
 
 See [macOS Terminal Commands Reference](../reference/macos-commands.md) for full output interpretation.
 
@@ -96,7 +96,7 @@ csrutil status
 
 Expected: `System Integrity Protection status: enabled.`
 
-If disabled: no MDM remediation exists for SIP. The user must boot to Recovery Mode (hold Power button at startup on Apple Silicon, or Cmd+R on Intel) and run `csrutil enable` from Terminal Utilities. This is a user action — it cannot be performed remotely.
+If disabled: no MDM remediation exists for SIP. The user must boot to Recovery Mode (hold Power button at startup on Apple Silicon, or Cmd+R on Intel) and run `csrutil enable` from Terminal Utilities. This is a user action—it cannot be performed remotely.
 
 **FileVault not enabled:**
 
@@ -106,7 +106,7 @@ fdesetup status
 
 Expected: `FileVault is On.`
 
-If `FileVault is Off`: check whether a FileVault configuration profile is deployed to this device (Step 3). If a profile is deployed but FileVault is off, the profile may have failed to apply — investigate with the profile delivery runbook ([macOS Profile Delivery Investigation](11-macos-profile-delivery.md)). If no profile is deployed, the admin must create and assign a FileVault enforcement profile.
+If `FileVault is Off`: check whether a FileVault configuration profile is deployed to this device (Step 3). If a profile is deployed but FileVault is off, the profile may have failed to apply—investigate with the profile delivery runbook ([macOS Profile Delivery Investigation](11-macos-profile-delivery.md)). If no profile is deployed, the administrator must create and assign a FileVault enforcement profile.
 
 **Firewall not enabled:**
 
@@ -124,11 +124,11 @@ If disabled: verify whether a firewall configuration profile is deployed and app
 sw_vers -productVersion
 ```
 
-Compare the output against the minimum OS version specified in the compliance policy. If the device is running an older version, the user must update via System Settings > Software Update. If the required version is not available from Apple for this hardware, the compliance policy minimum version may need to be adjusted.
+Compare the output against the minimum OS version specified in the compliance policy. If the device is running an older version, the user must update through System Settings > Software Update. If the required version is not available from Apple for this hardware, the compliance policy minimum version may need to be adjusted.
 
 **Password complexity requirements:**
 
-Passcode compliance is evaluated by the MDM framework based on the passcode policy profile deployed to the device. Check `sudo profiles show` for a passcode policy profile. If the profile is present but password compliance still fails, the user may need to change their password to meet the new requirements — compliance status updates on the next check-in after the password is changed.
+Passcode compliance is evaluated by the MDM framework based on the passcode policy profile deployed to the device. Check `sudo profiles show` for a passcode policy profile. If the profile is present but password compliance still fails, the user may need to change their password to meet the new requirements—compliance status updates on the next check-in after the password is changed.
 
 ### Step 6: Check Conditional Access interaction
 
@@ -137,7 +137,7 @@ If the device shows **Compliant** in Intune but the user still cannot access res
 1. Navigate to **Entra ID** > **Devices** > search for the device by serial number
 2. Check the Entra device registration status: is the device object present? Does it show the compliance status from Intune?
 3. Navigate to **Entra ID** > **Security** > **Conditional Access** > review active policies for scope and conditions that apply to this user or device
-4. Verify that Company Portal registration completed: an Entra device object must exist with compliant status synced from Intune before Conditional Access will grant access
+4. Verify that Company Portal registration completed: an Entra device object must exist with compliant status synced from Intune before Conditional Access grants access
 
 If the Entra device object exists but compliance status has not synced from Intune, check whether Company Portal is installed and signed in on the device (Stage 6 of the ADE lifecycle).
 
@@ -174,7 +174,7 @@ Guide the user through Recovery Mode to re-enable SIP. This is a user action tha
 
 **Scenario 3: OS version non-compliant but no update available**
 
-Two options: (a) Adjust the compliance policy minimum version to match the latest version available for this hardware, or (b) Add a grace period to the compliance policy to allow time for update rollout. Changing the policy applies to all devices in scope — evaluate fleet impact before adjusting.
+Two options: (a) Adjust the compliance policy minimum version to match the latest version available for this hardware, or (b) Add a grace period to the compliance policy to allow time for update rollout. Changing the policy applies to all devices in scope—evaluate the effect on the fleet before adjusting.
 
 **Scenario 4: Password timing gap**
 
@@ -186,7 +186,7 @@ If the compliance policy includes a Gatekeeper requirement but no Gatekeeper enf
 
 **Scenario 6: Compliant in Intune but Entra device not synced**
 
-Trigger a device sync in Entra ID (Entra admin center > Devices > [device] > Sync). Verify that the user has completed Company Portal sign-in on the device (required to register the device with Entra and sync compliance status). If Company Portal is not installed, deploy it via Intune.
+Trigger a device sync in Entra ID (Entra admin center > Devices > [device] > Sync). Verify that the user has completed Company Portal sign-in on the device (required to register the device with Entra and sync compliance status). If Company Portal is not installed, deploy it through Intune.
 
 ---
 
@@ -211,12 +211,12 @@ Open a Microsoft support case if:
 
 ## Related Resources
 
-- [macOS Log Collection Guide](10-macos-log-collection.md) — Prerequisite diagnostic package collection
-- [macOS Terminal Commands Reference](../reference/macos-commands.md) — Full command reference
-- [macOS Log Paths Reference](../reference/macos-log-paths.md) — Log file locations
-- [macOS Compliance and Security Policies](../admin-setup-macos/05-compliance-policy.md) — Admin-side compliance configuration
-- [Configuration Failures Reference](../admin-setup-macos/06-config-failures.md) — Compliance failure reverse-lookup table
-- [macOS Profile Delivery Investigation](11-macos-profile-delivery.md) — If a compliance-enforcing profile is not being delivered
+- [macOS Log Collection Guide](10-macos-log-collection.md)—Prerequisite diagnostic package collection
+- [macOS Terminal Commands Reference](../reference/macos-commands.md)—Full command reference
+- [macOS Log Paths Reference](../reference/macos-log-paths.md)—Log file locations
+- [macOS Compliance and Security Policies](../admin-setup-macos/05-compliance-policy.md)—Admin-side compliance configuration
+- [Configuration Failures Reference](../admin-setup-macos/06-config-failures.md)—Compliance failure reverse-lookup table
+- [macOS Profile Delivery Investigation](11-macos-profile-delivery.md)—If a compliance-enforcing profile is not being delivered
 
 ---
 

@@ -16,24 +16,24 @@ platform: Android
 
 ## Summary
 
-Routes Intune administrators to the correct Android Enterprise admin setup path across all five enrollment modes — COBO, BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), AOSP, and Samsung Knox Mobile Enrollment (KME) — by mapping each mode to its required portal(s) (Intune admin center, Managed Google Play, Zero-Touch portal, or Samsung Knox Admin Portal) and destination admin guide.
+Routes Intune administrators to the correct Android Enterprise administrator setup path across all five enrollment modes—COBO, BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), AOSP, and Samsung Knox Mobile Enrollment (KME)—by mapping each mode to its required portal(s) (Intune admin center, Managed Google Play, Zero-Touch portal, or Samsung Knox Admin Portal) and destination administrator guide.
 
 > **Platform gate:** This guide covers Android Enterprise admin setup across all enrollment modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), and AOSP.
 
-> For iOS/iPadOS admin setup, see [iOS Admin Setup Guides](../admin-setup-ios/00-overview.md). For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
+> For iOS/iPadOS administrator setup, see [iOS Admin Setup Guides](../admin-setup-ios/00-overview.md). For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 
 > For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
-This overview routes Intune administrators to the correct Android Enterprise admin setup path. Android Enterprise management depends on a tri-portal surface — the Intune admin center, Managed Google Play (MGP), and the Zero-Touch portal (ZT portal) — and which portals an admin must configure depends entirely on the chosen enrollment mode. Corporate-owned fully managed deployments (COBO), BYOD Work Profile, and Dedicated devices all converge through MGP binding; Zero-Touch Enrollment (ZTE) adds the ZT portal on top of MGP; AOSP uses neither portal. Choose a mode from the table below, then follow the guide for that mode.
+This overview routes Intune administrators to the correct Android Enterprise administrator setup path. Android Enterprise management depends on a tri-portal surface—the Intune admin center, Managed Google Play (MGP), and the Zero-Touch portal (ZT portal)—and which portals an administrator must configure depends entirely on the chosen enrollment mode. Corporate-owned fully managed deployments (COBO), BYOD Work Profile, and Dedicated devices all converge through MGP binding; Zero-Touch Enrollment (ZTE) adds the ZT portal on top of MGP; AOSP uses neither portal. Choose a mode from the following table, then follow the guide for that mode.
 
 For help choosing an enrollment mode, see the [Android Enterprise Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) (five-mode comparison on ownership × management-scope axes) and the [Android Enterprise Prerequisites](../android-lifecycle/01-android-prerequisites.md) concept-only orientation. This page assumes the mode choice has been made.
 
 ## Setup Sequence
 <a id="choose-your-mode"></a>
 
-The table below shows every Android Enterprise admin setup path. Each mode routes to the portal(s) required for that mode, then terminates at the mode-specific admin guide (authored in Phase 36–39). Find the row that matches your chosen mode; each row names the downstream admin guide that covers enrollment profile creation, app and policy assignment, and compliance for that mode.
+The following table shows every Android Enterprise administrator setup path. Each mode routes to the portal(s) required for that mode, then terminates at the mode-specific administrator guide (authored in Phase 36–39). Find the row that matches your chosen mode; each row names the downstream administrator guide that covers enrollment profile creation, app and policy assignment, and compliance for that mode.
 
-**LOCKED — 15 (nodes + labeled edges)** — 11 nodes + 4 labeled edges, independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). The single decision point (`Choose your mode`) is represented below as one row per outcome — all 6 outcomes (COBO, BYOD Work Profile, Dedicated, Zero-Touch Enrollment, AOSP, Knox — KME) preserved.
+**LOCKED—15 (nodes + labeled edges)**—11 nodes + 4 labeled edges, independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). The single decision point (`Choose your mode`) is represented in the following table as one row per outcome—all 6 outcomes (COBO, BYOD Work Profile, Dedicated, Zero-Touch Enrollment, AOSP, Knox—KME) preserved.
 
 | Mode | Required Portal(s) | Destination Guide |
 |------|---------------------|--------------------|
@@ -44,47 +44,47 @@ The table below shows every Android Enterprise admin setup path. Each mode route
 | AOSP | None (no portal) | Phase 39 — AOSP stub |
 | Knox Mobile Enrollment (KME, Samsung-only) | Samsung Knox Admin Portal | [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) |
 
-1. **[Managed Google Play Binding](01-managed-google-play.md)** — Bind the Intune tenant to Managed Google Play using an Entra account. Required for all GMS modes (COBO, BYOD WP, Dedicated, ZTE). Complete before any GMS enrollment profile.
+1. **[Managed Google Play Binding](01-managed-google-play.md)**—Bind the Intune tenant to Managed Google Play using an Entra account. Required for all GMS modes (COBO, BYOD WP, Dedicated, ZTE). Complete before any GMS enrollment profile.
 
-2. **[Zero-Touch Portal Configuration](02-zero-touch-portal.md)** — Configure the Zero-Touch portal account and DPC extras JSON, and link ZT to Intune. Required for ZTE only. Reseller relationship (Step 0) must be in place before this guide.
+2. **[Zero-Touch Portal Configuration](02-zero-touch-portal.md)**—Configure the Zero-Touch portal account and DPC extras JSON, and link ZT to Intune. Required for ZTE only. Reseller relationship (Step 0) must be in place before this guide.
 
-3. **[Knox Mobile Enrollment](07-knox-mobile-enrollment.md)** — Configure Samsung Knox Admin Portal B2B account, create EMM profile pointing at Microsoft Intune, and assign profile to Samsung devices via reseller upload OR Knox Deployment App. Required for Samsung KME path only; mutually exclusive with Zero-Touch on the same Samsung device.
+3. **[Knox Mobile Enrollment](07-knox-mobile-enrollment.md)**—Configure Samsung Knox Admin Portal B2B account, create EMM profile pointing at Microsoft Intune, and assign profile to Samsung devices through reseller upload OR Knox Deployment App. Required for Samsung KME path only; mutually exclusive with Zero-Touch on the same Samsung device.
 
 ## Prerequisites
 
-Each admin path has its own prerequisite set. Determine your path from the table above, then confirm the prerequisites for that path.
+Each administrator path has its own prerequisite set. Determine your path from the preceding table, then confirm the prerequisites for that path.
 
 ### GMS-Path Prerequisites
 
 For COBO, BYOD Work Profile, and Dedicated enrollments:
 
-- [ ] **Managed Google Play binding** — Complete [01-managed-google-play.md](01-managed-google-play.md) before any GMS enrollment profile.
-- [ ] **Intune Administrator role** — Or custom RBAC role with enrollment management permissions.
+- [ ] **Managed Google Play binding**—Complete [01-managed-google-play.md](01-managed-google-play.md) before any GMS enrollment profile.
+- [ ] **Intune Administrator role**—Or custom RBAC role with enrollment management permissions.
 - [ ] **Microsoft Intune Plan 1** (or higher) subscription.
-- [ ] **Entra tenant active** — Required for Entra-preferred MGP binding (since August 2024).
+- [ ] **Entra tenant active**—Required for Entra-preferred MGP binding (since August 2024).
 
 ### ZTE-Path Prerequisites
 
 All GMS-path prerequisites PLUS:
 
-- [ ] **Authorized Zero-Touch reseller relationship** — Devices must have been purchased from an authorized reseller. See [02-zero-touch-portal.md#step-0-reseller](02-zero-touch-portal.md#step-0-reseller).
-- [ ] **Zero-Touch portal Google account** — Corporate email (NOT Gmail). Created at `accounts.google.com/signupwithoutgmail`.
-- [ ] **ZT portal linked to Intune** — See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune).
+- [ ] **Authorized Zero-Touch reseller relationship**—Devices must have been purchased from an authorized reseller. See [02-zero-touch-portal.md#step-0-reseller](02-zero-touch-portal.md#step-0-reseller).
+- [ ] **Zero-Touch portal Google account**—Corporate email (NOT Gmail). Created at `accounts.google.com/signupwithoutgmail`.
+- [ ] **ZT portal linked to Intune**—See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune).
 
 ### KME-Path Prerequisites
 
 For Samsung Knox Mobile Enrollment (Samsung-only):
 
-- [ ] **Samsung Knox B2B account** — Approval takes 1-2 business days. See [07-knox-mobile-enrollment.md#step-0-b2b-approval](07-knox-mobile-enrollment.md#step-0-b2b-approval).
+- [ ] **Samsung Knox B2B account**—Approval takes 1-2 business days. See [07-knox-mobile-enrollment.md#step-0-b2b-approval](07-knox-mobile-enrollment.md#step-0-b2b-approval).
 - [ ] **Microsoft Intune Plan 1+** with Intune Administrator role.
-- [ ] **Samsung devices** registered in Knox Admin Portal via reseller upload OR Knox Deployment App.
-- [ ] **NOT also configured for Zero-Touch** on the same devices — KME and ZT are mutually exclusive on Samsung hardware.
+- [ ] **Samsung devices** registered in Knox Admin Portal through reseller upload OR Knox Deployment App.
+- [ ] **NOT also configured for Zero-Touch** on the same devices—KME and ZT are mutually exclusive on Samsung hardware.
 
 ### AOSP-Path Prerequisites
 
 - [ ] **Intune Administrator role**
-- [ ] **Microsoft Intune Plan 1** — Verify if Plan 2 / Intune Suite required per OEM; specialized AR/VR devices may require higher licensing. See [Phase 39 AOSP stub](06-aosp-stub.md) for OEM-specific licensing details.
-- [ ] **Device is on AOSP-supported OEM list** — See [Phase 39 AOSP stub](06-aosp-stub.md) for the OEM compatibility list.
+- [ ] **Microsoft Intune Plan 1**—Verify if Plan 2 / Intune Suite required per OEM; specialized AR/VR devices may require higher licensing. See [Phase 39 AOSP stub](06-aosp-stub.md) for OEM-specific licensing details.
+- [ ] **Device is on AOSP-supported OEM list**—See [Phase 39 AOSP stub](06-aosp-stub.md) for the OEM compatibility list.
 
 ### Shared Prerequisites (All Paths)
 

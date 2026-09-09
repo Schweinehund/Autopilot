@@ -56,7 +56,7 @@ The Intune Connector for Active Directory (ODJ Connector) log location changed w
 
 **Current log path:** `Applications and Services Logs > Microsoft > Intune > ODJConnectorService`
 
-**Legacy log path (stale):** `Applications and Services Logs > ODJ Connector Service` — this path no longer receives entries in current connector versions. Do not reference this location for investigation.
+**Legacy log path (stale):** `Applications and Services Logs > ODJ Connector Service`—this path no longer receives entries in current connector versions. Do not reference this location for investigation.
 
 **Minimum version:** 6.2501.2000.5 or later. Earlier connector versions cause enrollment failures independent of configuration. Verify connector version before investigating hybrid join failures.
 

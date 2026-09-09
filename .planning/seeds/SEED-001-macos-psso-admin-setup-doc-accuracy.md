@@ -3,7 +3,7 @@ seed_id: SEED-001
 planted: 2026-06-28
 planted_during: "v1.13 pre-scoping — live macOS PSSO build/troubleshooting + cross-doc audit session"
 trigger_when: "scoping a macOS admin-setup / Platform SSO documentation milestone (v1.13+)"
-status: planted
+status: closed
 ---
 
 # SEED-001: macOS Platform SSO / Admin-Setup Documentation Accuracy + Depth

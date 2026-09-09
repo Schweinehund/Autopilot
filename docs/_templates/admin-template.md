@@ -17,6 +17,9 @@
      - Use imperative voice for steps ("Navigate to...", "Select...", "Enter...")
      - Include full Intune portal navigation paths (e.g., Intune admin center > Devices > ...)
      - Link to relevant troubleshooting runbooks from "what breaks" callouts
+     - Author this document's prose against the Prose Style Authoring Standard
+       (docs/_standards/EEE-SOP-standard.md, "## Prose Style Authoring Standard")
+       before promoting status from Draft to Approved
      - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: Intune Admin Lead (role, not person name)
 -->
@@ -38,7 +41,7 @@ audience: admin
 
 ## Summary
 
-[2–3 sentences describing the scope, target audience, and any safety or version constraints for this guide. Minimum 30 words. State which Autopilot framework (APv1, APv2, or both) this guide covers, the platform it applies to, and the admin role or permissions required to follow the steps.]
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this guide. Minimum 30 words. State which Autopilot framework (APv1, APv2, or both) this guide covers, the platform it applies to, and the administrator role or permissions required to follow the steps.]
 
 > **Version gate:** [This guide covers Windows Autopilot (classic) | This guide covers Windows Autopilot Device Preparation (APv2)].
 > For [the other framework], see [link].
@@ -46,7 +49,7 @@ audience: admin
 
 ## Prerequisites
 
-- [Required admin role or RBAC permissions]
+- [Required administrator role or RBAC permissions]
 - [Required license or subscription]
 - [Prior configuration that must be completed first -- link to that guide]
 
@@ -58,7 +61,7 @@ audience: admin
 2. Select **[option]**.
 3. Configure **[setting name]**: [value or instruction].
 
-   > **What breaks if misconfigured:** [Specific downstream failure this causes. Include: what the admin will see, what the end user will see, and link to the troubleshooting runbook that covers this failure.]
+   > **What breaks if misconfigured:** [Specific downstream failure this causes. Include: what the administrator sees, what the end user sees, and link to the troubleshooting runbook that covers this failure.]
    > See: [Troubleshooting Runbook Title](../l1-runbooks/relevant-runbook.md)
 
 4. [Next action in this step].
@@ -84,6 +87,6 @@ audience: admin
 
 ## See Also
 
-- [Related admin guide](link)
+- [Related administrator guide](link)
 - [Relevant lifecycle overview](link)
 - [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)

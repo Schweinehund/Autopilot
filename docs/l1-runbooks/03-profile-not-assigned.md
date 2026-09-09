@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides agents through verifying a registered Autopilot device has no deployment profile, checking group membership against the profile target group, adding the device to a static group where L1 permissions allow, and collecting portal data for L2 escalation when the profile still fails to assign.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides agents through verifying a registered Autopilot device has no deployment profile, checking group membership against the profile target group, adding the device to a static group where L1 permissions allow, and collecting portal data for L2 escalation when the profile still fails to assign.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
@@ -39,9 +39,9 @@ Use this runbook when a device is registered in the [Autopilot](../_glossary.md#
 3. Search for the device serial number. Click on the device entry.
 
 4. Check the **Profile** column. Note the current profile assignment status:
-   - **"Assigned"** — a profile is assigned. Skip to step 10.
-   - **"Not assigned"** — profile is NOT assigned. Continue to step 5.
-   - **"Pending"** — profile assignment is in progress. Skip to step 10.
+   - **"Assigned"**—a profile is assigned. Skip to step 10.
+   - **"Not assigned"**—profile is NOT assigned. Continue to step 5.
+   - **"Pending"**—profile assignment is in progress. Skip to step 10.
 
 5. Determine which [Azure AD](../_glossary.md#hybrid-join) group the deployment profile targets. Navigate to **Devices** > **Enrollment** > **Windows Autopilot** > **Deployment Profiles** > select the expected profile > **Assignments**. Note the target group name.
 
@@ -51,14 +51,14 @@ Use this runbook when a device is registered in the [Autopilot](../_glossary.md#
 
    > **Say to the user:** "I've added your device to the correct group. The profile should apply within a few minutes. I'll monitor this and let you know when it's ready."
 
-8. If the device IS in the group but the profile still shows "Not assigned": this is beyond L1 scope — proceed to Escalation Criteria.
+8. If the device IS in the group but the profile still shows "Not assigned": this is beyond L1 scope—proceed to Escalation Criteria.
 
 9. After adding the device to the group, wait for the profile to assign. Refresh the Autopilot devices page every 5 minutes.
-   - Static group assignment: profile available within 1–5 minutes after the admin adds the device.
+   - Static group assignment: profile available within 1–5 minutes after the administrator adds the device.
    - Dynamic group evaluation: 5–15 minutes for simple rules; up to 24 hours for complex rules in large tenants (see [Profile Assignment lifecycle guide](../lifecycle/02-profile-assignment.md) for details).
    - If status has not changed after 30 minutes, proceed to Escalation Criteria.
 
-10. If the profile status is "Assigned" or has just become assigned: trigger a sync on the device. Navigate to **Devices** > **Windows** > find the device > **Sync**.
+10. If the profile status is "Assigned" or has recently become assigned: trigger a sync on the device. Navigate to **Devices** > **Windows** > find the device > **Sync**.
 
     > **Say to the user:** "Your device has a profile assigned. I'm triggering a sync now. Please restart the device and try the setup process again. This typically takes 5–10 minutes."
 
@@ -71,7 +71,7 @@ Use this runbook when a device is registered in the [Autopilot](../_glossary.md#
 Escalate to L2 if:
 
 - Device is in the correct group but the profile still shows "Not assigned" after 30 minutes
-- The wrong profile is assigned (requires admin correction — not L1 scope)
+- The wrong profile is assigned (requires administrator correction—not L1 scope)
 - Profile shows "Assigned" but the device fails to apply it after sync and reboot
 - You cannot determine which group the deployment profile targets
 

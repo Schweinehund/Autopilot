@@ -16,17 +16,17 @@ platform: macOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing missing or non-functional macOS configuration profiles after enrollment, covering profile assignment and group membership checks, as well as type-specific guidance for Wi-Fi, FileVault, VPN, and restriction profiles before escalating to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing missing or non-functional macOS configuration profiles after enrollment, covering profile assignment and group membership checks, as well as type-specific guidance for Wi-Fi, FileVault, VPN, and restriction profiles before escalating to L2.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
-Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected configuration is missing — for example, the device is not connected to the corporate Wi-Fi automatically, a VPN profile is not present, FileVault is not enabled, or restrictions are not in effect.
+Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected configuration is missing—for example, the device is not connected to the corporate Wi-Fi automatically, a VPN profile is not present, FileVault is not enabled, or restrictions are not in effect.
 
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com)
 - Device serial number
-- Name of the configuration profile or setting that is expected but missing (ask the user what should be working)
+- Name of the configuration profile or setting that is expected but missing (ask the user what they expect to work)
 
 ## How to Use This Runbook
 
@@ -41,19 +41,19 @@ Go directly to the section that matches the observation:
 
 ## Profile Not Showing
 
-**Entry condition:** A profile that should be assigned to this device is absent from the Intune device profile list.
+**Entry condition:** A profile expected to be assigned to this device is absent from the Intune device profile list.
 
-1. > **Say to the user:** "We're checking your device's configuration settings. Some settings require a device restart to take effect — please don't restart until we've finished checking."
+1. > **Say to the user:** "We're checking your device's configuration settings. Some settings require a device restart to take effect—please don't restart until we've finished checking."
 
 2. In Intune admin center, navigate to **Devices** > **macOS** > select the device by serial number > **Configuration profiles**. Review the list of profiles shown for this device.
 
-3. Note which profile is expected but not listed. Ask the user: "What specifically is missing — is it Wi-Fi, VPN, restrictions, FileVault, or something else?"
+3. Note which profile is expected but not listed. Ask the user: "What specifically is missing—is it Wi-Fi, VPN, restrictions, FileVault, or something else?"
 
 4. Navigate to the expected profile: **Devices** > **macOS configuration profiles** > search for the profile name. Open the profile and select **Properties** > **Assignments**.
 
 5. Check that the device's Entra group is listed in the Included groups. Common issues:
    - The device's Entra group is not in the assignment.
-   - The assignment targets a user group but the profile is a device-targeted profile — dynamic device groups may not have updated yet.
+   - The assignment targets a user group but the profile is a device-targeted profile—dynamic device groups may not have updated yet.
 
 6. If the assignment looks correct, check the group membership: navigate to **Groups** in Intune admin center (or Entra ID > Groups), open the assigned group, and confirm this device appears as a member.
 
@@ -79,7 +79,7 @@ Go directly to the section that matches the observation:
 
 5. **For restriction profiles (disabling AirDrop, camera, etc.):** Confirm the restriction profile uses the correct payload type for macOS. Some restriction payloads behave differently on macOS 14+ (Sonoma) compared to earlier versions. Note the macOS version (Apple menu > About This Mac) for escalation if needed.
 
-6. If the specific setting type is not covered above, try a manual sync: navigate to **Devices** > **macOS** > [device] > **Sync**. Wait 5 minutes and ask the user to check whether the setting is now active.
+6. If the specific setting type is not covered earlier, try a manual sync: navigate to **Devices** > **macOS** > [device] > **Sync**. Wait 5 minutes and ask the user to check whether the setting is now active.
 
 7. If the setting remains inactive after a sync: proceed to [Escalation Criteria](#escalation-criteria).
 
@@ -103,7 +103,7 @@ Escalate to L2 if:
 - Profile name showing the issue
 - Profile status in Intune (screenshot from Devices > macOS > [device] > Configuration profiles)
 - Assignment group name and confirmation the device is a member (screenshot)
-- Description of expected vs. actual behavior
+- Description of expected versus actual behavior
 - Steps already attempted (sync, log out/in, Wi-Fi toggle)
 
 See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for profile delivery log investigation. For configuration profile reference, see [Configuration Profiles Guide](../admin-setup-macos/03-configuration-profiles.md).

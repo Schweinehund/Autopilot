@@ -22,7 +22,7 @@ This reference document provides Entra ID prerequisite configuration guidance fo
 
 > For APv1 deployment profile setup, see [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-Autopilot depends on Entra ID (formerly Azure AD) settings that must be configured correctly before the first device enrollment. Several settings are silently misconfigured by default in new tenants — the device joins Entra but MDM policies never apply, and no error is shown during provisioning.
+Autopilot depends on Entra ID (formerly Azure AD) settings that must be configured correctly before the first device enrollment. Several settings are silently misconfigured by default in new tenants—the device joins Entra but MDM policies never apply, and no error is shown during provisioning.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ Autopilot depends on Entra ID (formerly Azure AD) settings that must be configur
 
 ## Required Settings
 
-Configure all 6 settings in the table below. Each setting includes the portal path, required value, and the specific failure that occurs if the setting is wrong.
+Configure all 6 settings in the following table. Each setting includes the portal path, required value, and the specific failure that occurs if the setting is wrong.
 
 | Setting | Portal Path | Required Value | Consequence if Missing or Wrong |
 |---------|-------------|----------------|--------------------------------|
@@ -51,7 +51,7 @@ Configure all 6 settings in the table below. Each setting includes the portal pa
 
    > **What breaks if misconfigured:** MDM user scope = None means no user triggers automatic MDM enrollment after Entra join. Device joins Entra ID but receives no Intune policies. Admin sees device in Entra ID portal with no Intune management status. See: [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
 
-3. Verify **MDM terms of use URL**, **MDM discovery URL**, and **MDM compliance URL** are populated automatically (they are when Microsoft Intune is selected — do not change these values).
+3. Verify **MDM terms of use URL**, **MDM discovery URL**, and **MDM compliance URL** are populated automatically (they are when Microsoft Intune is selected—do not change these values).
 4. Set **WIP user scope** to **None** unless you have a specific WIP deployment. If you use WIP, ensure the WIP groups do NOT overlap with MDM user scope groups.
 
    > **What breaks if misconfigured:** Overlapping WIP + MDM groups cause enrollment to apply WIP policies instead of full MDM management. Device may appear enrolled but behaves as a WIP-managed (not MDM-managed) device.
@@ -63,7 +63,7 @@ Configure all 6 settings in the table below. Each setting includes the portal pa
 1. Navigate to **Entra ID** > **Devices** > **Device settings**.
 2. Set **Users may join devices to Azure AD** to **All** or **Selected** (include the group that contains Autopilot provisioning users).
 
-   > **What breaks if misconfigured:** None = user-driven Autopilot mode fails at Entra join. The device reaches the sign-in page but cannot complete the join. Error: "Your organization does not allow you to join this device." Pre-provisioning and self-deploying modes are NOT affected — they use device token authentication, not user join permission.
+   > **What breaks if misconfigured:** None = user-driven Autopilot mode fails at Entra join. The device reaches the sign-in page but cannot complete the join. Error: "Your organization does not allow you to join this device." Pre-provisioning and self-deploying modes are NOT affected—they use device token authentication, not user join permission.
 
 3. Set **Maximum number of devices per user** to **20** (default) or a higher value appropriate for your environment.
 
@@ -76,17 +76,17 @@ Configure all 6 settings in the table below. Each setting includes the portal pa
 1. Navigate to **Intune admin center** (intune.microsoft.com) > **Tenant administration** > **Tenant status**.
 2. Verify **MDM authority** shows **Microsoft Intune**.
 
-   > **What breaks if misconfigured:** MDM authority set to Basic Mobility and Security (Office 365) means Autopilot profiles cannot be assigned and full Intune management is unavailable. Changing MDM authority on a live tenant with enrolled devices requires careful migration planning — do not change this on a production tenant without planning.
+   > **What breaks if misconfigured:** MDM authority set to Basic Mobility and Security (Office 365) means Autopilot profiles cannot be assigned and full Intune management is unavailable. Changing MDM authority on a live tenant with enrolled devices requires careful migration planning—do not change this on a production tenant without planning.
 
 ## Verification
 
 After completing all steps, verify each setting:
 
-- [ ] Navigate to **Entra ID > Mobility (MDM and MAM) > Microsoft Intune** — MDM user scope shows **All** or **Some** (not **None**)
-- [ ] Same page — MDM discovery URL is populated (auto-set by Microsoft Intune selection)
-- [ ] Navigate to **Entra ID > Devices > Device settings** — "Users may join devices to Azure AD" is **All** or **Selected**
-- [ ] Same page — Maximum number of devices is sufficient (≥ 20 for most environments)
-- [ ] Navigate to **Intune admin center > Tenant administration > Tenant status** — MDM authority is **Microsoft Intune**
+- [ ] Navigate to **Entra ID > Mobility (MDM and MAM) > Microsoft Intune**—MDM user scope shows **All** or **Some** (not **None**)
+- [ ] Same page—MDM discovery URL is populated (auto-set by Microsoft Intune selection)
+- [ ] Navigate to **Entra ID > Devices > Device settings**—"Users may join devices to Azure AD" is **All** or **Selected**
+- [ ] Same page—Maximum number of devices is sufficient (≥ 20 for most environments)
+- [ ] Navigate to **Intune admin center > Tenant administration > Tenant status**—MDM authority is **Microsoft Intune**
 - [ ] WIP user scope does not overlap with MDM user scope groups
 
 ## Configuration-Caused Failures

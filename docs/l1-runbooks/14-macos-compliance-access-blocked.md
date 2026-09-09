@@ -16,18 +16,18 @@ platform: macOS
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through two distinct macOS scenarios — a device showing as non-compliant in Intune, and a device showing as compliant but with Microsoft 365 access still blocked — using Intune and Entra admin center checks before escalating to L2.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through two distinct macOS scenarios—a device showing as non-compliant in Intune, and a device showing as compliant but with Microsoft 365 access still blocked—using Intune and Entra admin center checks before escalating to L2.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a Mac shows as non-compliant in Intune, OR when a user cannot access Microsoft 365 resources (email, Teams, SharePoint) despite the device appearing enrolled and compliant.
 
-**Important:** These are two distinct scenarios. A device can be compliant but still have access blocked due to Conditional Access policy. Use the navigation below to go to the correct section.
+**Important:** These are two distinct scenarios. A device can be compliant but still have access blocked due to Conditional Access policy. Use the following navigation to go to the correct section.
 
 ## Prerequisites
 
 - Access to Intune admin center (https://intune.microsoft.com)
-- Access to Microsoft Entra admin center (https://entra.microsoft.com) — read-only is sufficient for investigation
+- Access to Microsoft Entra admin center (https://entra.microsoft.com)—read-only is sufficient for investigation
 - Device serial number
 - User's UPN (email address)
 
@@ -46,16 +46,16 @@ Go directly to the section that matches the observation:
 
 **Entry condition:** Intune admin center shows this macOS device with a "Not compliant" status.
 
-1. In Intune admin center, navigate to **Devices** > **macOS** > [device] > **Compliance**. Review the compliance policy results for each assigned policy. Note which specific rules are showing "Not compliant" — the list shows the exact setting that failed.
+1. In Intune admin center, navigate to **Devices** > **macOS** > [device] > **Compliance**. Review the compliance policy results for each assigned policy. Note which specific rules are showing "Not compliant"—the list shows the exact setting that failed.
 
 2. **For System Integrity Protection (SIP) disabled:**
 
    > **Say to the user:** "Your device's System Integrity Protection is disabled. This is a security feature that needs to be re-enabled. This requires a special restart that I'll walk you through. Please save any open work before we continue."
 
-   Inform the user: SIP re-enabling requires booting into macOS Recovery Mode. This is a user-guided procedure. For the re-enable steps, escalate to L2 — this is a hardware-mode operation that L1 cannot perform remotely via portal.
+   Inform the user: SIP re-enabling requires booting into macOS Recovery Mode. This is a user-guided procedure. For the re-enable steps, escalate to L2—this is a hardware-mode operation that L1 cannot perform remotely through portal.
 
 3. **For OS version non-compliance:** Check the compliance policy minimum OS version. Navigate to **Devices** > **macOS compliance policies** > [policy] > **Properties** > **System Security**. Compare the required minimum version to the device's current version.
-   - If the device is on a supported but not-yet-updated macOS version: prompt the user to install macOS updates via **Apple menu** > **System Preferences** (or System Settings on macOS 13+) > **Software Update**.
+   - If the device is on a supported but not-yet-updated macOS version: prompt the user to install macOS updates through **Apple menu** > **System Preferences** (or System Settings on macOS 13+) > **Software Update**.
    - If the required version is ahead of what Apple currently offers: the compliance policy minimum version may be misconfigured. Proceed to [Escalation Criteria](#escalation-criteria).
 
 4. **For password compliance:** Compliance policies require the device to have a password set. Ask the user: "Do you have a login password set on your Mac?" If not, guide them to **System Settings** > **Lock Screen** > **Require password** to set one. Allow up to 15 minutes for the compliance state to update after the password is set, then trigger a sync: **Devices** > **macOS** > [device] > **Sync**.
@@ -78,9 +78,9 @@ Go directly to the section that matches the observation:
 
 2. In Microsoft Entra admin center (https://entra.microsoft.com), navigate to **Devices** > **All devices**. Search for the device by name or serial number. Confirm a device record exists in Entra.
 
-3. If no Entra device record exists: the device is enrolled in Intune but not registered in Entra ID. This is a Company Portal sign-in gap — the user may not have completed the Company Portal registration step. Refer the user to [Company Portal Sign-In Runbook](15-macos-company-portal-sign-in.md).
+3. If no Entra device record exists: the device is enrolled in Intune but not registered in Entra ID. This is a Company Portal sign-in gap—the user may not have completed the Company Portal registration step. Refer the user to [Company Portal Sign-In Runbook](15-macos-company-portal-sign-in.md).
 
-4. If the Entra device record exists: check the **Join type** and **Compliance** fields on the Entra device record. Compliance should show "Compliant". If it shows "Not evaluated" or "Not compliant", wait 15 minutes for Intune-to-Entra sync to complete, then recheck.
+4. If the Entra device record exists: check the **Join type** and **Compliance** fields on the Entra device record. Confirm Compliance shows "Compliant". If it shows "Not evaluated" or "Not compliant", wait 15 minutes for Intune-to-Entra sync to complete, then recheck.
 
 5. Check whether a Conditional Access grace period applies. Some CA policies include a "Sign-in frequency" or "Use app enforced restrictions" setting that allows access for a limited time before blocking. Ask the user: "When did you first try to access this resource? Has it ever worked from this device?"
 

@@ -49,7 +49,7 @@ Each scenario has a recommended timeout and the specific failure that occurs if 
 
 > With only 20 minutes remaining after ODJ completes, app installs cannot finish. ESP times out.
 
-> Device appears "not configured" to the user — they reach the desktop with missing apps and no domain-joined state.
+> Device appears "not configured" to the user—they reach the desktop with missing apps and no domain-joined state.
 
 Set to **100 minutes** minimum for hybrid join. If your app payload takes longer than 60 minutes, add the app install time on top of the 40-minute ODJ overhead.
 
@@ -57,9 +57,9 @@ Set to **100 minutes** minimum for hybrid join. If your app payload takes longer
 
 > **What breaks without adding buffer:** Quality update download and install consumes part of the timeout budget.
 
-> For a cumulative update (e.g., monthly rollup ~500 MB-2 GB), the update itself takes 20-40 minutes depending on disk speed and restart time.
+> For a cumulative update (for example, monthly rollup ~500 MB-2 GB), the update itself takes 20-40 minutes depending on disk speed and restart time.
 
-> No time budget remains for app installs. ESP times out after update completes — all app installs are marked failed.
+> No time budget remains for app installs. ESP times out after update completes—all app installs are marked failed.
 
 Add 20-40 minutes to the base timeout whenever "Install Windows quality updates" is enabled in the ESP profile. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) for the quality update setting details.
 
@@ -81,7 +81,7 @@ Recommended timeout =
   + (Safety margin: 15 min)
 ```
 
-**Example — hybrid join with apps and quality updates:**
+**Example—hybrid join with apps and quality updates:**
 - Hybrid ODJ overhead: 40 min
 - App install time (measured from test run): 35 min
 - Quality updates enabled: 30 min (estimated)
@@ -102,9 +102,9 @@ Recommended timeout =
 
 When you observe ESP timeouts in the deployment report:
 
-1. Navigate to **Intune admin center** > **Devices** > **Monitor** > **Enrollment failures** — filter by "Timeout" error.
+1. Navigate to **Intune admin center** > **Devices** > **Monitor** > **Enrollment failures**—filter by "Timeout" error.
 2. Check the actual provisioning time from device logs or deployment reports.
-3. Recalculate using the formula above.
+3. Recalculate using the preceding formula.
 4. Navigate to **Intune admin center** > **Devices** > **Enrollment** > **Windows** > **Windows Autopilot** > **Enrollment Status Page** > select the profile > **Properties** > **Edit** > adjust timeout.
 
 > **What breaks if adjusted too aggressively low:** Reducing timeout to match only successful deployments leaves no margin for slower devices or network conditions.
@@ -113,8 +113,8 @@ When you observe ESP timeouts in the deployment report:
 
 ## See Also
 
-- [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) — ESP settings definitions, blocking app list, all "What breaks" callouts
-- [Win32 App Packaging](win32-app-packaging.md) — Detection rules, dependencies, install order
+- [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md)—ESP settings definitions, blocking app list, all "What breaks" callouts
+- [Win32 App Packaging](win32-app-packaging.md)—Detection rules, dependencies, install order
 - [ESP Lifecycle Stage](../lifecycle/04-esp.md)
 
 ## Version History

@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers three distinct Enrollment Status Page failure scenarios: the device phase stuck with no error code, the user phase stuck with no error code, and ESP displaying a hex error code. Each section provides step-by-step guidance including a single restart attempt and data collection before escalation.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers three distinct Enrollment Status Page failure scenarios: the device phase stuck with no error code, the user phase stuck with no error code, and ESP displaying a hex error code. Each section provides step-by-step guidance including a single restart attempt and data collection before escalation.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
@@ -28,7 +28,7 @@ The [Enrollment Status Page](../_glossary.md#esp) ([ESP](../_glossary.md#esp)) i
 - Access to Intune admin center (https://intune.microsoft.com) with permissions to view device enrollment status
 - Device serial number from the device label or user report
 - Verified: device IS registered in the Autopilot portal (if not, use the [Device Not Registered runbook](01-device-not-registered.md))
-- Verified: network connectivity is working — the device reached the sign-in screen, which confirms basic network access
+- Verified: network connectivity is working—the device reached the sign-in screen, which confirms basic network access
 - Know which ESP phase the device is in: the screen heading tells you which phase:
   - **"Setting up your device..."** = device phase (runs before any user logs in)
   - **"Setting up for [username]..."** = user phase (runs after the user signs in)
@@ -37,9 +37,9 @@ The [Enrollment Status Page](../_glossary.md#esp) ([ESP](../_glossary.md#esp)) i
 
 This runbook has three sections based on the ESP symptom. Go directly to the section that matches your situation:
 
-- [Device Phase Steps](#device-phase-steps) — ESP shows "Setting up your device..." and appears stuck
-- [User Phase Steps](#user-phase-steps) — ESP shows "Setting up for [username]..." and appears stuck
-- [Error Code Steps](#error-code-steps) — ESP displayed an error code
+- [Device Phase Steps](#device-phase-steps)—ESP shows "Setting up your device..." and appears stuck
+- [User Phase Steps](#user-phase-steps)—ESP shows "Setting up for [username]..." and appears stuck
+- [Error Code Steps](#error-code-steps)—ESP displayed an error code
 
 ---
 
@@ -53,7 +53,7 @@ The device phase installs security settings, policies, and apps required for the
 
 1. > **Say to the user:** "Your device is in the initial setup phase. This process installs required security settings and applications. It normally takes 15 to 45 minutes. Since it has been over 30 minutes, I'm going to try a restart to see if that helps it continue."
 
-2. Note the current time and record what the ESP screen shows — specifically, which app or step name is currently displayed (if any). You will need this information if you need to escalate.
+2. Note the current time and record what the ESP screen shows—specifically, which app or step name is currently displayed (if any). You need this information if you escalate.
 
 3. Restart the device: press and hold the power button for 10 seconds until the device powers off. Wait 30 seconds, then press the power button to turn it on.
 
@@ -68,7 +68,7 @@ The device phase installs security settings, policies, and apps required for the
 
 7. **If ESP is stuck at the same point after the restart:** Do NOT restart again. Proceed to [Escalation Criteria](#escalation-criteria).
 
-8. **Optional check — app assignment type:** If the ESP screen shows an app name, you can verify whether it is assigned as Required or Available. Only "Required" apps block the ESP; "Available" apps do not. In the Intune admin center, navigate to **Apps** > **Windows** > select the app > **Assignments**. If the blocking app is assigned as Available (not Required), note this as a possible misconfiguration for L2.
+8. **Optional check—app assignment type:** If the ESP screen shows an app name, you can verify whether it is assigned as Required or Available. Only "Required" apps block the ESP; "Available" apps do not. In the Intune admin center, navigate to **Apps** > **Windows** > select the app > **Assignments**. If the blocking app is assigned as Available (not Required), note this as a possible misconfiguration for L2.
 
 ---
 
@@ -103,7 +103,7 @@ The user phase installs apps and settings assigned to the user's account. It typ
 
 ## Error Code Steps
 
-**Entry condition:** ESP displayed an error code — typically a hex code starting with `0x` (for example, `0x81036502`) or a descriptive failure message.
+**Entry condition:** ESP displayed an error code—typically a hex code starting with `0x` (for example, `0x81036502`) or a descriptive failure message.
 
 1. Note the exact error code and any message text shown on the ESP screen. Write down the full hex value.
 
@@ -142,7 +142,7 @@ Escalate to L2 if:
 - Time spent on ESP after the restart
 - Username shown on ESP screen at time of failure (user phase only)
 - App name or step name shown on ESP screen when stuck (if visible)
-- Error code (if displayed) — write down the full hex value
+- Error code (if displayed)—write down the full hex value
 - Screenshot of the ESP screen
 
 **See also:** For ESP phase details and app type tracking, see [Enrollment Status Page Lifecycle Guide](../lifecycle/04-esp.md).

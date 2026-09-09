@@ -20,11 +20,11 @@ Reference decision table for Windows Autopilot (classic APv1 and self-deploying 
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-Use this tree to triage [TPM](../_glossary.md#tpm) (Trusted Platform Module) failures that occur during [pre-provisioning](../_glossary.md#pre-provisioning) or self-deploying mode provisioning. Both modes require TPM 2.0 attestation before the device can complete enrollment. This tree covers the checks an L1 agent can perform — BIOS settings verification and error code lookup — before escalating. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
+Use this tree to triage [TPM](../_glossary.md#tpm) (Trusted Platform Module) failures that occur during [pre-provisioning](../_glossary.md#pre-provisioning) or self-deploying mode provisioning. Both modes require TPM 2.0 attestation before the device can complete enrollment. This tree covers the checks an L1 agent can perform—BIOS settings verification and error code lookup—before escalating. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
 
 ## Decision Tree
 
-**LOCKED — 33 (nodes + labeled edges)** — 18 nodes + 15 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped below into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges — no row collapses more than one incoming edge.
+**LOCKED—33 (nodes + labeled edges)**—18 nodes + 15 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges—no row collapses more than one incoming edge.
 
 ### Stage 1: TPM Failure & BIOS Gate (TPD1 → TPD2 → TPD3)
 

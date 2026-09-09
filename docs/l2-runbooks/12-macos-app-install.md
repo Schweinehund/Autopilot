@@ -16,9 +16,9 @@ platform: macOS
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS enterprise app install investigation across three delivery channels — managed App Store (VPP), LOB PKG, and DMG — using Intune device install-status reports and a per-channel decision matrix to isolate configuration and policy root causes.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval. Covers macOS enterprise app install investigation across three delivery channels—managed App Store (VPP), LOB PKG, and DMG—using Intune device install-status reports and a per-channel decision matrix to isolate configuration and policy root causes.
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+> **Platform gate:** This guide covers macOS ADE troubleshooting through Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 ## Triage
 
@@ -82,7 +82,7 @@ Expected output: both `IntuneMdmDaemon` and `IntuneMdmAgent` processes listed.
 
 If `IntuneMdmDaemon` is absent, the Intune management extension is not active. The device cannot receive or process DMG/PKG install requests. This may indicate the device lost its MDM relationship or the Intune Management Extension was removed.
 
-See [macOS Terminal Commands Reference — pgrep](../reference/macos-commands.md) for expected process names.
+See [macOS Terminal Commands Reference—pgrep](../reference/macos-commands.md) for expected process names.
 
 ### Step 5: Check IntuneMDMDaemon log (DMG/PKG apps)
 
@@ -112,15 +112,15 @@ grep -i "AppNameHere" /Library/Logs/Microsoft/Intune/IntuneMDMDaemon*.log | tail
 | `Disk space insufficient` | Not enough free space | Device needs free space freed before retry |
 | `InstallApplication failed` | General install failure | Check exit code and detection rule |
 
-Note any exit codes for investigation. The `IntuneMDMDaemon*.log` path is only valid on macOS 13 and 14; on macOS 15, this file may also be present — check [macOS Log Paths Reference](../reference/macos-log-paths.md) for version-specific availability.
+Note any exit codes for investigation. The `IntuneMDMDaemon*.log` path is only valid on macOS 13 and 14; on macOS 15, this file may also be present—check [macOS Log Paths Reference](../reference/macos-log-paths.md) for version-specific availability.
 
 ### Step 6: Investigate specific DMG/PKG failure scenarios
 
 Cross-reference against [App Deployment Failures](../admin-setup-macos/06-config-failures.md):
 
-- **Non-.app file in DMG `Included apps` list:** Verify the DMG contains a `.app` bundle at the path specified in the Intune app definition. If the DMG was updated and the `.app` path changed, the detection will fail silently.
-- **PKG > 2 GB:** Intune cannot upload PKG files larger than 2 GB. The admin must split the package or repackage before upload.
-- **PKG without payload:** A PKG that installs no files to a detectable path creates a continuous reinstall loop — the detection rule always returns "not installed" immediately after each install.
+- **Non-.app file in DMG `Included apps` list:** Verify the DMG contains a `.app` bundle at the path specified in the Intune app definition. If the DMG was updated and the `.app` path changed, the detection fails silently.
+- **PKG > 2 GB:** Intune cannot upload PKG files larger than 2 GB. The administrator must split the package or repackage before upload.
+- **PKG without payload:** A PKG that installs no files to a detectable path creates a continuous reinstall loop—the detection rule always returns "not installed" immediately after each install.
 - **Detection rule mismatch:** If the detection rule checks for a file path or bundle version that does not match the actual installed output, Intune marks the app as "not installed" after every successful install.
 
 ### Step 7: Check VPP token and license status (VPP apps)
@@ -131,13 +131,13 @@ In Intune admin center:
 2. Check token status: **Active**, **Expired**, or **Expiring**
 3. Check license count for the specific app: **Total licenses** vs **assigned** vs **consumed**
 
-If the token is **Expired**: VPP apps stop syncing and cannot be assigned or delivered. The admin must renew the token in Apple Business Manager (Settings > Apps and Books > [token]) and re-upload to Intune.
+If the token is **Expired**: VPP apps stop syncing and cannot be assigned or delivered. The administrator must renew the token in Apple Business Manager (Settings > Apps and Books > [token]) and re-upload to Intune.
 
 ### Step 8: Check VPP assignment type (VPP apps)
 
 A common VPP failure scenario:
 
-- VPP app assigned as **Available** to a **device group** → app will NOT appear in Company Portal
+- VPP app assigned as **Available** to a **device group** → the app does NOT appear in Company Portal
 - VPP Available assignment must target a **user group** for the app to appear in Company Portal
 
 Verify the assignment in Intune admin center > Apps > macOS > [app] > Assignments. Change **Available** assignments from device groups to user groups.
@@ -156,7 +156,7 @@ Update the detection rule in Intune to match the actual install path or bundle i
 
 **Scenario 3: VPP token expired**
 
-Admin must renew the token in Apple Business Manager: **Settings** > **Apps and Books** > **[MDM server]** > download new token. Then upload the renewed token in Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > **Edit** > upload new `.vpptoken` file.
+Administrator must renew the token in Apple Business Manager: **Settings** > **Apps and Books** > **[MDM server]** > download new token. Then upload the renewed token in Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > **Edit** > upload new `.vpptoken` file.
 
 **Scenario 4: VPP Available assigned to device group**
 
@@ -164,7 +164,7 @@ Change the VPP app assignment from Available to a device group to Available to a
 
 **Scenario 5: Insufficient disk space**
 
-Free space on the device (minimum varies by app size). Trigger reinstall via Sync after space is available. If the device cannot be accessed, contact the user to free space and retry.
+Free space on the device (minimum varies by app size). Trigger reinstall using Sync after space is available. If the device cannot be accessed, contact the user to free space and retry.
 
 ---
 
@@ -188,12 +188,12 @@ Open a Microsoft support case if:
 
 ## Related Resources
 
-- [macOS Log Collection Guide](10-macos-log-collection.md) — Prerequisite diagnostic package collection
-- [macOS Terminal Commands Reference](../reference/macos-commands.md) — Full command reference
-- [macOS Log Paths Reference](../reference/macos-log-paths.md) — Log file locations and format notes
-- [App Deployment Failures](../admin-setup-macos/06-config-failures.md) — Admin-side failure reverse-lookup table
-- [macOS App Deployment Guide](../admin-setup-macos/04-app-deployment.md) — DMG, PKG, and VPP configuration
-- [macOS Profile Delivery Investigation](11-macos-profile-delivery.md) — For configuration profile issues
+- [macOS Log Collection Guide](10-macos-log-collection.md)—Prerequisite diagnostic package collection
+- [macOS Terminal Commands Reference](../reference/macos-commands.md)—Full command reference
+- [macOS Log Paths Reference](../reference/macos-log-paths.md)—Log file locations and format notes
+- [App Deployment Failures](../admin-setup-macos/06-config-failures.md)—Admin-side failure reverse-lookup table
+- [macOS App Deployment Guide](../admin-setup-macos/04-app-deployment.md)—DMG, PKG, and VPP configuration
+- [macOS Profile Delivery Investigation](11-macos-profile-delivery.md)—For configuration profile issues
 
 ---
 

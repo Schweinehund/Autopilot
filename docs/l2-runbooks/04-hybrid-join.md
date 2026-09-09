@@ -16,14 +16,14 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook performs change-controlled hybrid join registration remediation — including dsregcmd-driven re-registration and ODJ Connector reconfiguration — all actions require L2 approval. It covers hybrid Azure AD join failure investigation including ODJ Connector version verification, event log analysis, domain controller reachability, and OU permission delegation for the three distinct 0x80070774 root causes.
+This L2 investigation runbook performs change-controlled hybrid join registration remediation—including dsregcmd-driven re-registration and ODJ Connector reconfiguration—all actions require L2 approval. It covers hybrid Azure AD join failure investigation including ODJ Connector version verification, event log analysis, domain controller reachability, and OU permission delegation for the three distinct 0x80070774 root causes.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
-[Hybrid join](../_glossary.md#hybrid-join) failures occur when domain-joined devices fail to complete the hybrid identity registration flow during [OOBE](../_glossary.md#oobe) or [ESP](../_glossary.md#esp). The ODJ (Offline Domain Join) Connector bridges the cloud-managed Autopilot provisioning flow with on-premises Active Directory — failures can originate in the connector itself, in domain controller reachability, or in Active Directory permissions.
+[Hybrid join](../_glossary.md#hybrid-join) failures occur when domain-joined devices fail to complete the hybrid identity registration flow during [OOBE](../_glossary.md#oobe) or [ESP](../_glossary.md#esp). The ODJ (Offline Domain Join) Connector bridges the cloud-managed Autopilot provisioning flow with on-premises Active Directory—failures can originate in the connector itself, in domain controller reachability, or in Active Directory permissions.
 
 Common presentations: error 0x80070774 on the OOBE/ESP screen, event IDs 807, 809, 815, 908, 171, or 172 in the event log, or a device that completes ESP but is never joined to the domain.
 
@@ -58,9 +58,9 @@ Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Intune Connector for AD" -ErrorAction
     Select-Object DisplayVersion, InstallDate
 ```
 
-**Version verification note:** If this registry path does not exist on the connector server, use the Event Viewer log path instead — the presence of the current log path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) itself confirms the connector version is 6.2501.2000.5 or later, since the log location changed with that version.
+**Version verification note:** If this registry path does not exist on the connector server, use the Event Viewer log path instead—the presence of the current log path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) itself confirms the connector version is 6.2501.2000.5 or later, since the log location changed with that version.
 
-**If connector version is below 6.2501.2000.5:** Update the connector before investigating further. Older versions produce failures that appear as configuration issues but are actually version defects. Download the current connector from the Intune admin center > Tenant administration > Connectors and tokens > On-premises AD connector.
+**If connector version is earlier than 6.2501.2000.5:** Update the connector before investigating further. Older versions produce failures that appear as configuration issues but are actually version defects. Download the current connector from the Intune admin center > Tenant administration > Connectors and tokens > On-premises AD connector.
 
 ### Step 3: Check ODJ Connector event log
 
@@ -73,9 +73,9 @@ Get-WinEvent -LogName "Microsoft-Intune-ODJConnectorService/Operational" -MaxEve
     Format-Table TimeCreated, Id, Message -AutoSize
 ```
 
-**Do not use** the legacy path `Applications and Services Logs > ODJ Connector Service` — it no longer receives log entries on connectors v6.2501.2000.5 and later. Querying the legacy path will return no results and mislead the investigation.
+**Do not use** the legacy path `Applications and Services Logs > ODJ Connector Service`—it no longer receives log entries on connectors v6.2501.2000.5 and later. Querying the legacy path returns no results and misleads the investigation.
 
-Look for event IDs listed in [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md): 807, 809, 815, 908, 171, 172. Do not reproduce the event ID mapping table here — the error codes file is the source of truth. Filter to events within 30 minutes of the reported failure timestamp.
+Look for event IDs listed in [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md): 807, 809, 815, 908, 171, 172. Do not reproduce the event ID mapping table here—the error codes file is the source of truth. Filter to events within 30 minutes of the reported failure timestamp.
 
 ### Step 4: Check domain controller reachability
 
@@ -89,7 +89,7 @@ nltest /dsgetdc:contoso.com    # replace with actual domain name
 Test-ComputerSecureChannel -Verbose
 ```
 
-If domain controller lookup fails or the secure channel is broken, this is a network/infrastructure issue — see Escalation Ceiling.
+If domain controller lookup fails or the secure channel is broken, this is a network/infrastructure issue—see Escalation Ceiling.
 
 ### Step 5: Check OU permissions for connector service account
 
@@ -109,7 +109,7 @@ The Autopilot deployment profile has a user assignment configured. The "Assign u
 **Fix:**
 1. In the Intune admin center, navigate to Devices > Windows > Enrollment > Windows Autopilot > Deployment profiles
 2. Open the affected hybrid profile
-3. Remove any value in the "Assign user" field — it must be empty for hybrid join
+3. Remove any value in the "Assign user" field—it must be empty for hybrid join
 4. Save the profile and allow up to 15 minutes for the change to sync before retrying provisioning
 
 This is a profile configuration fix, not an infrastructure issue. No connector or AD changes are needed.
@@ -137,7 +137,7 @@ The ODJ Connector service account does not have the permissions needed to create
 
 ### Scenario D: ODJ Connector version outdated
 
-Connector version is below 6.2501.2000.5 (identified in Step 2).
+Connector version is earlier than 6.2501.2000.5 (identified in Step 2).
 
 **Fix:** Download and install the current connector version from Intune admin center > Tenant administration > Connectors and tokens > On-premises AD connector. After installation, verify the new version appears in the Intune admin center and the current log path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) is populated before retrying provisioning.
 
@@ -145,7 +145,7 @@ Connector version is below 6.2501.2000.5 (identified in Step 2).
 
 Step 4 confirmed the connector server cannot reach the domain controller, or `Test-ComputerSecureChannel` reports a broken channel.
 
-**Action:** This is a network or infrastructure issue — it is not resolvable by Desktop Engineering. Escalate per Escalation Ceiling below. Collect the `nltest` output and `Test-ComputerSecureChannel` output before escalating.
+**Action:** This is a network or infrastructure issue—it is not resolvable by Desktop Engineering. Escalate per the Escalation Ceiling section. Collect the `nltest` output and `Test-ComputerSecureChannel` output before escalating.
 
 ## Escalation Ceiling
 
@@ -161,11 +161,11 @@ Escalate when domain controller or AD Connect issues are confirmed. These are in
 
 ## Tool References
 
-- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus) — device state snapshot including registration state
-- [Reset-AutopilotRegistration](../reference/powershell-ref.md#reset-autopilotregistration) — clears local Autopilot registration state if re-registration is needed after connector fix
-- [Registry Paths](../reference/registry-paths.md) — Autopilot registration state paths
-- [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md) — event ID and error code lookup including all three 0x80070774 causes and ODJ Connector version notes
-- [Network Endpoints](../reference/endpoints.md) — if connectivity verification between connector and Microsoft cloud is needed
+- [Get-AutopilotDeviceStatus](../reference/powershell-ref.md#get-autopilotdevicestatus)—device state snapshot including registration state
+- [Reset-AutopilotRegistration](../reference/powershell-ref.md#reset-autopilotregistration)—clears local Autopilot registration state if re-registration is needed after connector fix
+- [Registry Paths](../reference/registry-paths.md)—Autopilot registration state paths
+- [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md)—event ID and error code lookup including all three 0x80070774 causes and ODJ Connector version notes
+- [Network Endpoints](../reference/endpoints.md)—if connectivity verification between connector and Microsoft cloud is needed
 
 ---
 

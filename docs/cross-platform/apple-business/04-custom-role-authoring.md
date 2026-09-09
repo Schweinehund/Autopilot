@@ -7,7 +7,7 @@ platform: ios+macos
 ---
 
 > **Platform applicability:** Custom roles in Apple Business are the Apple-side mechanism for
-> granting per-permission capabilities to sub-organization admins, scoped to one or more
+> granting per-permission capabilities to sub-organization administrators, scoped to one or more
 > Organizational Units (OUs). This document covers Apple Business custom role authoring only.
 > See the [Apple Business Governance Glossary](../../_glossary-apple-business.md) for
 > terminology canon.
@@ -29,28 +29,28 @@ This document cites `01-role-permission-model.md` as the source of truth for the
 All permission names used in this document are verbatim from
 [01-role-permission-model.md](01-role-permission-model.md).
 
-**Purpose:** An admin at the tenant level authors ONE canonical "Sub-Org Admin" custom role
-bundle and assigns it (scoped to the target OU) to each sub-organization admin. This role
-represents the minimum-viable delegation surface for a sub-org admin to manage devices,
+**Purpose:** An administrator at the tenant level authors ONE canonical "Sub-Org Admin" custom role
+bundle and assigns it (scoped to the target OU) to each sub-organization administrator. This role
+represents the minimum-viable delegation surface for a sub-org administrator to manage devices,
 content, and user accounts within their assigned Organizational Unit.
 
 ---
 
-> **Critical (OP-2 / DA-2): Account Holder — DO NOT DELEGATE**
+> **Critical (OP-2 / DA-2): Account Holder—DO NOT DELEGATE**
 >
-> The **Account Holder** role MUST NOT be delegated to any sub-organization admin, any
+> The **Account Holder** role MUST NOT be delegated to any sub-organization administrator, any
 > individual employee, or any non-canonical managed account. Account Holder is the
 > tenant-level Apple Business owner with irrevocable lockout-recovery authority. It is the
 > only role that can re-accept Apple Terms of Service, transfer Account Holder status, manage
 > federation root, and recover lost IT Administrator passwords at the tenant level.
 >
-> Custom roles for sub-org admins MUST be built from preset roles and per-permission grants.
-> NEVER elevate a sub-org admin to Account Holder.
+> Custom roles for sub-org administrators MUST be built from preset roles and per-permission grants.
+> NEVER elevate a sub-org administrator to Account Holder.
 >
-> See [01-role-permission-model.md — OP-2 DO-NOT-DELEGATE callout](01-role-permission-model.md#top-level-roles-4)
-> and PITFALLS.md OP-2 for the full lockout-recovery rationale.
+> See [01-role-permission-model.md—OP-2 DO-NOT-DELEGATE callout](01-role-permission-model.md#top-level-roles-4)
+> and pitfall register OP-2 for the full lockout-recovery rationale.
 
-**Account Holder: ❌ EXCLUDED (OP-2)** — singleton tenant role, structurally non-delegable.
+**Account Holder: ❌ EXCLUDED (OP-2)**—singleton tenant role, structurally non-delegable.
 Never appears in any custom role bundle.
 
 ---
@@ -60,11 +60,11 @@ Never appears in any custom role bundle.
 The following table defines the ONE canonical Sub-Org Admin permission bundle. This bundle
 is designed as the minimum-viable set: 3 Edit/Manage permissions paired with their 3
 required companion View permissions (OP-3), covering device assignment, content-token
-visibility, and Managed Apple Account creation within the sub-org admin's assigned OU.
+visibility, and Managed Apple Account creation within the sub-org administrator's assigned OU.
 
-The bundle is **singular** — there are no tiered add-ons or alternative archetypes. Admins
-who need additional capabilities must be elevated via the IT Administrator top-level role
-(tenant-wide) or via an Account-Holder-reviewed custom role expansion, not through the
+The bundle is **singular**—there are no tiered add-ons or alternative archetypes. Administrators
+who need additional capabilities must be elevated through the IT Administrator top-level role
+(tenant-wide) or an Account-Holder-reviewed custom role expansion, not the
 Sub-Org Admin bundle.
 
 | Permission | Scope | Edit / View | OP-1 flag | OP-3 companion View | Apple anchor |
@@ -76,7 +76,7 @@ Sub-Org Admin bundle.
 | View users | OU-scoped | View-only | always-grant | — | axm97dd59159 |
 | Create Managed Apple Accounts | OU-scoped | Edit | conditionally-grant | View users | axm97dd59159 |
 
-[CITED: training; needs live verification — see training-data notice above]
+[CITED: training; needs live verification—see the preceding training-data notice]
 
 **Bundle summary:** 6 permissions total (3 Edit + 3 View companion). All Edit permissions
 are OU-scoped (conditionally-grant). No tenant-wide or DENY-by-default permissions are
@@ -86,7 +86,7 @@ included. Bundle is within the 4–6 permission range specified by OU-02.
 paired with its required companion View permission in the same bundle. Granting an Edit
 permission without its companion View causes blank-UI symptoms. For the full Edit-without-View
 dependency table, see
-[01-role-permission-model.md — Edit-without-View Dependency Table (OP-3 Prevention)](01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention).
+[01-role-permission-model.md—Edit-without-View Dependency Table (OP-3 Prevention)](01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention).
 Do NOT assign "Assign devices to MDM server" without "View Devices", nor "Assign content
 (device-licensed)" without "View content tokens", nor "Create Managed Apple Accounts" without
 "View users".
@@ -108,25 +108,25 @@ added without an Account-Holder-level review:
 
 ---
 
-> **"Manage MDM Servers" — DENY-by-default (OP-1 superprivilege):**
+> **"Manage MDM Servers"—DENY-by-default (OP-1 superprivilege):**
 >
 > "Manage MDM Servers" in the Devices subgroup is a superprivilege that bundles four actions
 > Apple does not separately gate in their UI:
-> (a) Add MDM server — creates a competing MDM server entry (the dangerous action)
-> (b) Edit MDM server — modifies name/token of an existing server
-> (c) Assign devices to MDM server — the legitimate sub-org admin action
-> (d) Download MDM server token — retrieves the .p7m token for MDM push certificate pairing
+> (a) Add MDM server—creates a competing MDM server entry (the dangerous action)
+> (b) Edit MDM server—modifies name/token of an existing server
+> (c) Assign devices to MDM server—the legitimate sub-org administrator action
+> (d) Download MDM server token—retrieves the .p7m token for MDM push certificate pairing
 >
-> Sub-org admins legitimately need (c) but should never have (a). Since Apple bundles all four
+> Sub-org administrators legitimately need (c) but must never have (a). Since Apple bundles all four
 > under one permission toggle, the **DENY-by-default** contract applies: "Manage MDM Servers"
 > MUST be denied in all non-Account-Holder reference roles unless explicitly reviewed and
-> approved by the tenant's IT Administrator. If sub-org admins need device-to-MDM-server
+> approved by the tenant's IT Administrator. If sub-org administrators need device-to-MDM-server
 > assignment, the "Assign devices to MDM server" permission (included in the Sub-Org Admin
-> bundle above) provides this capability through the narrower grant — NOT through "Manage MDM
+> preceding bundle) provides this capability through the narrower grant—NOT through "Manage MDM
 > Servers".
 >
-> Source: [01-role-permission-model.md — OP-1 Superprivilege Explainer](01-role-permission-model.md)
-> and PITFALLS.md OP-1 — whitelist-first invariant.
+> Source: [01-role-permission-model.md—OP-1 Superprivilege Explainer](01-role-permission-model.md)
+> and pitfall register OP-1—whitelist-first invariant.
 
 ---
 
@@ -135,11 +135,11 @@ added without an Account-Holder-level review:
 1. **Sign in** to the Apple Business portal as Account Holder or IT Administrator.
 2. Navigate to **Settings → Roles**.
 3. Select **Custom Roles** and choose **Create Role**.
-4. Name the role (for example, "Sub-Org Admin — v1.6").
-5. Enable only the six permissions listed in the Sub-Org Admin Bundle table above.
+4. Name the role (for example, "Sub-Org Admin—v1.6").
+5. Enable only the six permissions listed in the preceding Sub-Org Admin Bundle table.
 6. Verify that "Manage MDM Servers" remains **off** (DENY-by-default per OP-1).
 7. Save the role.
-8. Assign the role to the target admin, scoped to the target OU. See
+8. Assign the role to the target administrator, scoped to the target OU. See
    [05-sub-org-admin-onboarding.md](05-sub-org-admin-onboarding.md) for the full
    onboarding procedure including OU scoping and paired offboarding (OP-8).
 
@@ -167,19 +167,19 @@ assignments" invariant that governs cross-OU permissions, see
 ## Cross-References
 
 - **Permission catalog (SOT):** [01-role-permission-model.md](01-role-permission-model.md)
-  — 7-subgroup per-permission catalog; DENY-by-default flags; OP-1 superprivilege explainer;
+—7-subgroup per-permission catalog; DENY-by-default flags; OP-1 superprivilege explainer;
   OP-2 Account Holder DO-NOT-DELEGATE callout;
   [Edit-without-View Dependency Table (OP-3 Prevention)](01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention)
 - **Delegation topology decision:** [03-ous-vs-custom-roles.md](03-ous-vs-custom-roles.md)
-  — when to use custom roles vs. OUs-only vs. combined topology (OU-01, Phase 63)
-- **OU architecture:** [02-ous-architecture.md](02-ous-architecture.md) — OU scope coverage;
+—when to use custom roles versus OUs-only versus combined topology (OU-01, Phase 63)
+- **OU architecture:** [02-ous-architecture.md](02-ous-architecture.md)—OU scope coverage;
   depth ≤ 2 constraint (D-06); OP-4 "most-permissive wins" additive-scope invariant
-- **Sub-org admin onboarding:** [05-sub-org-admin-onboarding.md](05-sub-org-admin-onboarding.md)
-  — role assignment, OU scoping, paired offboarding (OU-03, Phase 63)
+- **Sub-org administrator onboarding:** [05-sub-org-admin-onboarding.md](05-sub-org-admin-onboarding.md)
+—role assignment, OU scoping, paired offboarding (OU-03, Phase 63)
 - **MDM server assignment:** [06-mdm-server-assignment.md](06-mdm-server-assignment.md)
-  — per-OU MDM server assignment procedure; OP-1 DENY-by-default guidance (OU-04, Phase 63)
-- **Glossary:** [Apple Business Governance Glossary](../../_glossary-apple-business.md) —
-  custom role, preset role, Organizational Unit, sub-org admin terminology canon
+—per-OU MDM server assignment procedure; OP-1 DENY-by-default guidance (OU-04, Phase 63)
+- **Glossary:** [Apple Business Governance Glossary](../../_glossary-apple-business.md)—
+  custom role, preset role, Organizational Unit, sub-org administrator terminology canon
 
 ---
 

@@ -23,7 +23,7 @@ This guide covers the Windows Autopilot (APv1) deployment profile configuration,
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-The Autopilot deployment profile controls how the device behaves during OOBE -- which screens the user sees, what join type is used, and whether pre-provisioning is allowed. Every OOBE setting has downstream consequences documented below.
+The Autopilot deployment profile controls how the device behaves during OOBE -- which screens the user sees, what join type is used, and whether pre-provisioning is allowed. Every OOBE setting has downstream consequences documented in the following sections.
 
 ## Prerequisites
 
@@ -37,12 +37,12 @@ The Autopilot deployment profile controls how the device behaves during OOBE -- 
 ### Step 1: Create Deployment Profile
 
 1. Navigate to **Intune admin center** > **Devices** > **Windows** > **Enrollment** > **Windows Autopilot** > **Deployment Profiles** > **Create Profile** > **Windows PC**.
-2. Enter a descriptive name (e.g., "APv1-UserDriven-EntraJoin").
-3. Set **Convert all targeted devices to Autopilot** to the desired value (see setting 11 below).
+2. Enter a descriptive name (for example, "APv1-UserDriven-EntraJoin").
+3. Set **Convert all targeted devices to Autopilot** to the intended value (see setting 11).
 
 ### Step 2: Configure OOBE Settings
 
-Configure each setting below. Every setting includes a what-breaks callout documenting what happens if misconfigured.
+Configure each of the following settings. Every setting includes a what-breaks callout documenting what happens if misconfigured.
 
 1. **Deployment mode**: User-Driven or Self-Deploying.
 
@@ -54,11 +54,11 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 3. **Microsoft Software License Terms**: Show or Hide.
 
-   > **What breaks if misconfigured:** Show adds a user-facing license acceptance screen. No functional impact but adds an extra step to the user experience.
+   > **What breaks if misconfigured:** Show adds a user-facing license acceptance screen. No functional effect but adds an extra step to the user experience.
 
 4. **Privacy settings**: Show or Hide.
 
-   > **What breaks if misconfigured:** Hiding disables location services by default. Apps relying on location services will fail until the user manually enables them in Settings.
+   > **What breaks if misconfigured:** Hiding disables location services by default. Apps relying on location services fail until the user manually enables them in Settings.
 
 5. **Hide change account options**: Show or Hide.
 
@@ -66,7 +66,7 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 6. **User account type**: Administrator or Standard User.
 
-   > **What breaks if misconfigured:** Administrator grants local admin rights to the joining user. This may violate your organization's security policy. Standard User is recommended unless local admin is explicitly required.
+   > **What breaks if misconfigured:** Administrator grants local administrator rights to the joining user. This may violate your organization's security policy. Standard User is recommended unless local administrator is explicitly required.
 
 7. **Allow pre-provisioned deployment**: Yes or No.
 

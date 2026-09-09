@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It provides a tiered BootstrapperAgent event ID reference for APv2 provisioning failures, distinguishing actionable event IDs (2002, 3002, 4002, 5002, 6002, 9001, 9999) from informational state transitions.
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails—all state-changing remediation requires L2 approval and follows the escalation path documented here. It provides a tiered BootstrapperAgent event ID reference for APv2 provisioning failures, distinguishing event IDs you can act on (2002, 3002, 4002, 5002, 6002, 9001, 9999) from informational state transitions.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2) BootstrapperAgent event IDs. These are NOT the same as APv1 event IDs from ModernDeployment-Diagnostics-Provider/Autopilot.
 
@@ -25,7 +25,7 @@ This L2 investigation runbook is entered from an L1 escalation and operates unde
 ## Triage
 
 **From L1 escalation ([APE3](../decision-trees/04-apv2-triage.md))?**
-L1 collected: full deployment report with phase breakdown, device serial number, network information, timestamp of failure. Skip to the event ID lookup tables below.
+L1 collected: full deployment report with phase breakdown, device serial number, network information, timestamp of failure. Skip to the following event ID lookup tables.
 
 **Starting fresh?** Collect logs first per [APv2 Log Collection Guide](06-apv2-log-collection.md), then return here.
 
@@ -102,13 +102,13 @@ Compact reference for informational, rare, or low-actionability event IDs.
 | 9001 | Deployment timeout triggered | [oofhours.com](https://oofhours.com) |
 | 9999 | Provisioning state error (generic) | [Call4Cloud](https://call4cloud.nl) |
 
-**Note:** Event IDs not listed here may appear in the BootstrapperAgent log. Unknown event IDs should be noted with full event XML and included in any escalation to Microsoft Premier Support. To capture full event XML: right-click the event in Event Viewer > Copy > Copy Details as XML.
+**Note:** Event IDs not listed here may appear in the BootstrapperAgent log. Note unknown event IDs with full event XML and include them in any escalation to Microsoft Premier Support. To capture full event XML: right-click the event in Event Viewer > Copy > Copy Details as XML.
 
 ---
 
 ## Escalation Ceiling
 
-If investigation using the event IDs above does not identify a resolvable root cause, escalate to Microsoft Premier Support with:
+If investigation using the preceding event IDs does not identify a resolvable root cause, escalate to Microsoft Premier Support with:
 
 - BootstrapperAgent `.evtx` export
 - Full event XML for unrecognized or undocumented event IDs

@@ -51,9 +51,12 @@ python scripts/docs-style/sweep3.py <ROOT> scripts/docs-style/_CONTENT-PINS.txt 
 ### 1. The checks that already exist — do not reimplement these
 
 ```bash
-python scripts/docs-style/verify2.py                    # link + anchor health, before/after
-python scripts/docs-style/pins2.py > /tmp/pins-now.txt \
-  && grep -vxF -f /tmp/pins-now.txt scripts/docs-style/_CONTENT-PINS.txt   # any output = broken pin
+python scripts/docs-style/verify2.py BASE                # link + anchor health, before/after
+python scripts/docs-style/pins2.py scripts/validation docs > /tmp/pins-now.txt \
+  && grep -vxF -f /tmp/pins-now.txt scripts/docs-style/_CONTENT-PINS.txt
+  # one permanent line is expected here: `## Prose Style Authoring Standard`
+  # (pins2.py globs *.mjs only, so this heading pin never round-trips). A
+  # second line beyond that one is the real signal that a pin broke.
 ```
 Plus the repo gate: `c17-eee-contract.mjs`, `check-nav-hub-links.mjs`, the apex
 `check-phase-NNN.mjs`. Run the apex **without** `CHECK_PHASE_NESTED=1` or 99 of 101
@@ -115,6 +118,11 @@ second is the larger one:**
 > next sentence: `must never have (a)` sat directly above "unless explicitly reviewed and
 > approved"; `must fall back` sat inside a stated Recommended/Second/Third preference order.
 > When a real alternative exists in the surrounding text, `should` was right.
+>
+> `[PILOT]` is the same kind of signal, introduced this milestone: it marks a behaviour
+> observed on one device in one tenant. Promoting its hedge to a mandate, or flattening it
+> into a bare assertion, converts a single-tenant observation into documentation — exactly
+> the defect the 26-to-19 split above predicts a judge will commit.
 
 Real examples — the fixes, not the theory:
 
@@ -171,7 +179,7 @@ is normal here; a residual you did not read is not.
 
 On the completed 9-batch pass (281 files, 6,166 changed lines) this reports **40
 deterministic findings** and a **653-hunk judge worklist, 164 high-risk** — versus
-`check.py`'s 9,363 candidates on the same accepted corpus. If findings ever reach the
+`check.py`'s more than ten thousand candidates on the same accepted corpus. If findings ever reach the
 hundreds, a rule is over-firing: fix the rule, do not bulk-disposition. Three of the six
 classes did over-fire on first contact and were tightened to zero false positives by
 reusing `mech_canon()`; the deterministic set landed at 10 real defects and 6 documented

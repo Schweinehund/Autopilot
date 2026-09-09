@@ -68,7 +68,7 @@ curl -v --max-time 5 https://cs.dds.microsoft.com
 
 ## macOS ADE Endpoints
 
-Network endpoints required for macOS Automated Device Enrollment (ADE) via Apple Business Manager and Intune. Shared Microsoft endpoints are annotated with (shared) -- they appear in the Windows table above and must also be accessible for macOS enrollment.
+Network endpoints required for macOS Automated Device Enrollment (ADE) through Apple Business Manager and Intune. Shared Microsoft endpoints are annotated with (shared) -- they appear in the preceding Windows table and must also be accessible for macOS enrollment.
 
 ### Apple-Specific Endpoints (ADE and MDM)
 

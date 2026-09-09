@@ -1,0 +1,183 @@
+# Style dispositions for the fifty-nine-file docs/ edit set 3a5c74b6^..937d0a1f
+# (byte-identical to d0b611e8..937d0a1f), Phase 158's own scripts/docs-style/
+# sibling table (D-59). Columns, tab-separated, in this order:
+#   file  ord  line  rule  token  verdict  ground  fix_sha  post_line
+# `line` is relative to the named pre-edit revision 937d0a1f (Phase 157's last
+# docs/ commit, before this phase's hand remediation and mechanical sweep).
+# No anchor column: an anchor would be a frozen copy of a live line with no
+# staleness gate, and twenty of the flagged occurrences sit on lines this
+# phase itself rewrote -- the occurrence ordinal plus the revision-qualified
+# line number is the key instead (D-59).
+#
+# Verdict vocabulary, exactly these seven values: EDIT | KEEP-PROTECTED |
+# KEEP-BY-RULE | KEEP-FLAGGED | MASK-ARTIFACT | SWEPT | NO-CANDIDATES.
+#   EDIT           -- one of this phase's five named style edits (D-61);
+#                     fix_sha and post_line name the real landed commit.
+#   SWEPT          -- tightened by the mechanical em-dash sweep (44ab8c21).
+#   KEEP-PROTECTED -- sits in a structural class sweep3.py already protects
+#                     (here: every occurrence is a table row -- sweep3.py
+#                     skips any line starting with "|" outright).
+#   MASK-ARTIFACT  -- check.py's own mask_code() manufactured the match: it
+#                     blanks a markdown link target to spaces of equal
+#                     length, and the em-dash-spaced rule then fires on that
+#                     manufactured whitespace rather than real prose.
+#   KEEP-BY-RULE   -- the word-list or voice entry's own scope, sense, or
+#                     named exemption does not actually cover this occurrence
+#                     (a parser artifact, a proper noun, a different sense of
+#                     the word, or a self-contradictory scoped entry); ground
+#                     names the specific mismatch, never the phrase "product
+#                     term".
+#   KEEP-FLAGGED   -- a genuine candidate under the rule's own definition,
+#                     left un-rewritten this phase; every passive occurrence
+#                     is KEEP-FLAGGED without exception (D-39/D-61: no actor
+#                     is invented for a sentence that withheld one).
+#   NO-CANDIDATES  -- one of the twenty-seven edited files in this range that
+#                     carries neither a candidate nor a sweep edit on any
+#                     line the range added.
+#
+# Instrument (D-60): scripts/validation/check-prose-style.py's own
+# _load_module() helper imports check.py's RULES/mask_code and sweep3.py's
+# structural classifiers by file location, in process -- no enumeration
+# script, no per-file-fragment method. Whole-file structural-rule and
+# word-list hits are computed once per file, then intersected with that
+# file's added-line numbers from the range diff (both cited derivations of
+# the fifty-nine-file list agree byte-for-byte).
+#
+# Measured, not copied: 184 added lines (27 blank, 24 mask-blanked template
+# bullets, 11 headings -> 122 scannable / 62 non-dispositionable) -- matches
+# 158-CONTEXT.md D-11 exactly. 94 raw occurrences (47 word-list / 25 passive /
+# 19 em-dash-spaced / 3 directional) across 53 lines in 32 files -- matches
+# D-59/D-60 exactly. Two divergences from the written record, both recorded
+# rather than forced to match: (1) check.py's own RULES independently fire
+# BOTH the "directional" structural rule and a separate word-list "above"
+# entry on the identical token at docs/_standards/EEE-SOP-standard.md:658;
+# both are resolved by the single fix_sha 3c53f72a edit, so the duplicate
+# word-list finding is folded into that one EDIT row (keyed under
+# "directional") rather than given a second row -- any other verdict on that
+# second row would fail the post-edit byte-identity re-proof, since the line
+# genuinely changed. This drops the table to 93 occurrence rows, not 94.
+# (2) Twenty-seven of the fifty-nine files carry neither a candidate nor a
+# sweep edit, not the twenty-six D-59 recorded -- one additional _templates/
+# file's added lines are entirely mask-blanked (docs/_glossary-macos.md and
+# eight docs/_templates/*.md files all resolve to zero scannable candidates).
+# Total table rows: 93 + 27 = 120.
+docs/_glossary-linux.md	1	19	word-list	access	KEEP-BY-RULE	word-list.md 'access (verb)': check.py's parser strips the '(verb)' qualifier (re.sub over the parenthetical), so the term matches noun uses too; here 'access' sits inside the proper noun 'Conditional Access', not verb usage -- a parser artifact, not a real candidate.		
+docs/_glossary-linux.md	1	19	word-list	compliance	KEEP-BY-RULE	word-list.md 'compliant, compliance': scoped to a standards-compliance CLAIM ('a claim that a product or its output is compliant with a standard'); every occurrence here is Intune's own device-compliance-policy or Conditional Access vocabulary, not a standards claim.		
+docs/_glossary-linux.md	1	33	word-list	Google	KEEP-BY-RULE	word-list.md 'Google, Googling': scoped to verb/gerund usage ('search with Google'); every occurrence here is the proper noun inside a product name (Managed Google Play, Google AE Help, Google Developers), never a verb.		
+docs/_glossary-linux.md	1	33	word-list	compliance	KEEP-BY-RULE	word-list.md 'compliant, compliance': scoped to a standards-compliance CLAIM ('a claim that a product or its output is compliant with a standard'); every occurrence here is Intune's own device-compliance-policy or Conditional Access vocabulary, not a standards claim.		
+docs/_glossary-linux.md	1	143	em-dash-spaced	—	SWEPT	sweep3.py's unmodified em-dash rule tightened this line's spaced dash in commit 44ab8c21 (the em-dash sweep); this line also carries a separate non-em-dash EDIT (see its own row) or hand-remediation on the same file.	44ab8c21	143
+docs/_glossary-linux.md	1	143	passive	are configured	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary-linux.md	1	143	passive	is delivered	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary-linux.md	1	143	passive	is signaled	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary-linux.md	1	143	word-list	check	KEEP-BY-RULE	word-list.md 'check': scoped to marking a checkbox ('use select' instead); every occurrence here uses 'check' in the verify/examine sense (a license check, 'a check tests both', 'Check OIDC ... registration'), not checkbox-marking.		
+docs/_glossary-linux.md	1	143	word-list	native	EDIT	Nativeness-word replacement per the word list's own 'built-in' example: 'a native Intune profile' -> 'a built-in Intune profile' (D-61).	804e12ba	143
+docs/_glossary-linux.md	1	279	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/_glossary-linux.md	1	280	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/_glossary-linux.md	1	280	passive	was written	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary-macos.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_glossary.md	1	33	word-list	admin	KEEP-BY-RULE	word-list.md 'admin': write out 'administrator' unless it's the name of a UI label or other element. This occurrence is the alphabetical-index entry for 'Sure Admin', HP's BIOS-security feature proper noun -- the rule's own named exemption.		
+docs/_glossary.md	1	33	word-list	compliance	KEEP-BY-RULE	word-list.md 'compliant, compliance': scoped to a standards-compliance CLAIM ('a claim that a product or its output is compliant with a standard'); every occurrence here is Intune's own device-compliance-policy or Conditional Access vocabulary, not a standards claim.		
+docs/_glossary.md	1	33	word-list	config	KEEP-BY-RULE	word-list.md 'config': scoped to a shorthand for 'configuration'; this occurrence is the alphabetical-index entry 'Think BIOS Config', a vendor (Lenovo) feature proper noun.		
+docs/_glossary.md	1	33	word-list	white glove	KEEP-BY-RULE	word-list.md 'White glove' (avoid the marketing metaphor); this occurrence is the alphabetical-index entry for the proper noun Windows Autopilot deployment mode name, not the metaphor the rule targets.		
+docs/_glossary.md	1	328	passive	be enabled	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	328	passive	be offered	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	334	passive	be removed	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	340	em-dash-spaced	—	SWEPT	sweep3.py's unmodified em-dash rule tightened this line's spaced dash in commit 44ab8c21 (the em-dash sweep); this line also carries a separate non-em-dash EDIT (see its own row) or hand-remediation on the same file.	44ab8c21	340
+docs/_glossary.md	2	340	em-dash-spaced	—	SWEPT	sweep3.py's unmodified em-dash rule tightened this line's spaced dash in commit 44ab8c21 (the em-dash sweep); this line also carries a separate non-em-dash EDIT (see its own row) or hand-remediation on the same file.	44ab8c21	340
+docs/_glossary.md	1	340	passive	be configured	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	340	passive	is steered	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	346	passive	is blocked	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	346	passive	is delivered	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_glossary.md	1	346	word-list	check	KEEP-BY-RULE	word-list.md 'check': scoped to marking a checkbox ('use select' instead); every occurrence here uses 'check' in the verify/examine sense (a license check, 'a check tests both', 'Check OIDC ... registration'), not checkbox-marking.		
+docs/_glossary.md	1	346	word-list	new	KEEP-FLAGGED	word-list.md 'new, newer': avoid in timeless documentation because this word can become outdated. Genuine candidate, not among this phase's five named edits.		
+docs/_glossary.md	1	357	passive	was written	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	642	word-list	wish	EDIT	Desire-verb word-list replacement per the word list's plainer-form guidance: 'wish' -> 'want' (D-01/D-61).	3c53f72a	642
+docs/_standards/EEE-SOP-standard.md	1	646	word-list	would	KEEP-FLAGGED	word-list.md 'would': avoid, use 'can' where possible. Genuine candidate, not among this phase's five named edits.		
+docs/_standards/EEE-SOP-standard.md	1	650	passive	was removed	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	650	passive	was weakened	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	650	passive	were preserved	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	654	passive	is flagged	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	658	directional	above	EDIT	Directional reference fixed per accessibility.md's ban: 'above' -> 'the preceding' (D-42/D-04).	3c53f72a	658
+docs/_standards/EEE-SOP-standard.md	1	658	word-list	currently	KEEP-FLAGGED	word-list.md 'currently': avoid because implied and can prematurely disclose product/feature strategy. Genuine candidate, not among this phase's five named edits.		
+docs/_standards/EEE-SOP-standard.md	1	658	word-list	should	KEEP-FLAGGED	word-list.md 'should, should be': Generally avoid -- ambiguous by definition. Genuine candidate, not among this phase's five named edits.		
+docs/_standards/EEE-SOP-standard.md	1	658	word-list	under	KEEP-BY-RULE	word-list.md 'under' has two scoped senses (a version-number range; a position in the UI); this occurrence ('enrolled under this document's EEE structural sections') is a general structural preposition matching neither sense.		
+docs/_standards/EEE-SOP-standard.md	1	662	passive	was checked	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	662	word-list	new	KEEP-FLAGGED	word-list.md 'new, newer': avoid in timeless documentation because this word can become outdated. Genuine candidate, not among this phase's five named edits.		
+docs/_standards/EEE-SOP-standard.md	1	674	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/_standards/EEE-SOP-standard.md	1	674	passive	are unchanged	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_standards/EEE-SOP-standard.md	1	675	passive	was written	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/_templates/admin-template-android.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/admin-template-ios.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/admin-template-macos.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/admin-template.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/l1-template.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/l2-template.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/recipe-template.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/_templates/reference-template.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/admin-setup-8021x/01-eap-method-overview.md	1	179	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-8021x/01-eap-method-overview.md	2	179	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/02-zero-touch-portal.md	1	268	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/02-zero-touch-portal.md	1	268	word-list	Google	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-android/08-cope-full-admin.md	1	395	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/08-cope-full-admin.md	1	395	word-list	new	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-android/10-aosp-zebra.md	1	216	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/10-aosp-zebra.md	1	216	word-list	admin	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-android/12-aosp-htc-vive-focus.md	1	182	passive	is reproduced	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/admin-setup-android/12-aosp-htc-vive-focus.md	1	182	word-list	administrator	KEEP-BY-RULE	word-list.md carries two entries that contradict on this term: a global rule to write out 'administrator', and a separate 'Android: administrator' DON'T-USE entry check.py applies to every file regardless of platform, truncating the adjacent note that 'admin' is merely OK (not mandatory) in Android docs. Each of these four sits either in a genuinely Android file where writing 'administrator' matches the corpus's own default convention, or in a non-Android file the scoped rule was never meant to reach.		
+docs/admin-setup-android/13-aosp-meta-quest.md	1	257	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/13-aosp-meta-quest.md	2	257	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/admin-setup-android/13-aosp-meta-quest.md	1	257	word-list	admin	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-android/13-aosp-meta-quest.md	1	257	word-list	portal	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-android/13-aosp-meta-quest.md	1	265	passive	IS verified	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/admin-setup-apv2/03-device-preparation-policy.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/admin-setup-ios/05-app-deployment.md	1	273	directional	above	KEEP-FLAGGED	accessibility.md: no directional language; use earlier/preceding/following. Genuine candidate, not among this phase's five named edits.		
+docs/admin-setup-ios/05-app-deployment.md	1	273	word-list	above	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-macos/04-app-deployment.md	1	199	directional	above	KEEP-FLAGGED	accessibility.md: no directional language; use earlier/preceding/following. Genuine candidate, not among this phase's five named edits.		
+docs/admin-setup-macos/04-app-deployment.md	1	199	word-list	above	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/admin-setup-macos/08-auth-methods-deep-dive.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/admin-setup-macos/10-kerberos-sso-extension.md	1	274	word-list	Cloud	KEEP-BY-RULE	word-list.md 'Cloud': scoped to informal shorthand for Google Cloud; here 'Cloud' is a component of the Microsoft product name 'Azure Files Cloud Kerberos', not that shorthand.		
+docs/admin-setup-macos/10-kerberos-sso-extension.md	1	274	word-list	administrator	KEEP-BY-RULE	word-list.md carries two entries that contradict on this term: a global rule to write out 'administrator', and a separate 'Android: administrator' DON'T-USE entry check.py applies to every file regardless of platform, truncating the adjacent note that 'admin' is merely OK (not mandatory) in Android docs. Each of these four sits either in a genuinely Android file where writing 'administrator' matches the corpus's own default convention, or in a non-Android file the scoped rule was never meant to reach.		
+docs/cross-platform/apple-business/01-role-permission-model.md	1	17	word-list	portal	KEEP-BY-RULE	word-list.md 'portal': scoped to the Google Cloud console ('Don't use to refer to the Google Cloud console'); every occurrence here names a Microsoft Intune, Apple Business, or Meta for Work portal -- a different product's portal, outside this rule's scope.		
+docs/cross-platform/apple-business/04-custom-role-authoring.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/06-mdm-server-assignment.md	1	30	passive	are marked	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/cross-platform/apple-business/07-vpp-content-token-consolidation.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/08-managed-apple-account-provisioning.md	1	31	word-list	portal	KEEP-BY-RULE	word-list.md 'portal': scoped to the Google Cloud console ('Don't use to refer to the Google Cloud console'); every occurrence here names a Microsoft Intune, Apple Business, or Meta for Work portal -- a different product's portal, outside this rule's scope.		
+docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/11-vpp-catalog-runbook.md	1	25	passive	are marked	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md	1	201	word-list	allowlist	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/cross-platform/apple-business/13-device-release-runbook.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/14-device-transfer-runbook.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/15-mdm-server-reassign-runbook.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/cross-platform/apple-business/16-managed-apple-account-runbook.md	1	192	word-list	administrator	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/cross-platform/apple-business/16-managed-apple-account-runbook.md	1	234	passive	being federated	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/cross-platform/apple-business/16-managed-apple-account-runbook.md	1	317	em-dash-spaced	—	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- the em dash here is the corpus's own table N/A placeholder or sits inside a Version History row this phase's protection classes never touch.		
+docs/cross-platform/apple-business/16-managed-apple-account-runbook.md	1	317	word-list	check	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md	1	63	word-list	portal	KEEP-BY-RULE	word-list.md 'portal': scoped to the Google Cloud console ('Don't use to refer to the Google Cloud console'); every occurrence here names a Microsoft Intune, Apple Business, or Meta for Work portal -- a different product's portal, outside this rule's scope.		
+docs/cross-platform/apple-business/17-audit-log-scoping-runbook.md	1	150	word-list	admin	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/decision-trees/08-android-triage.md	1	98	word-list	now	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/index.md	1	305	word-list	via	EDIT	index.md hub line's tool-sense preposition, fixed via->using at the Patch & Update Management hub (D-10).	1c4f7880	305
+docs/l1-runbooks/29-android-aosp-enrollment-failed.md	1	237	word-list	administrator	KEEP-BY-RULE	word-list.md carries two entries that contradict on this term: a global rule to write out 'administrator', and a separate 'Android: administrator' DON'T-USE entry check.py applies to every file regardless of platform, truncating the adjacent note that 'admin' is merely OK (not mandatory) in Android docs. Each of these four sits either in a genuinely Android file where writing 'administrator' matches the corpus's own default convention, or in a non-Android file the scoped rule was never meant to reach.		
+docs/l2-runbooks/24-linux-log-collection.md	1	78	passive	is documented	KEEP-FLAGGED	voice.md: prefer active voice. Every passive occurrence stays flagged in full per D-39/D-61 -- no actor is invented for a sentence that deliberately withheld one, and a glossary definition is no exception.		
+docs/l2-runbooks/24-linux-log-collection.md	1	134	word-list	compliance	KEEP-BY-RULE	word-list.md 'compliant, compliance': scoped to a standards-compliance CLAIM ('a claim that a product or its output is compliant with a standard'); every occurrence here is Intune's own device-compliance-policy or Conditional Access vocabulary, not a standards claim.		
+docs/l2-runbooks/25-linux-agent-investigation.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/l2-runbooks/26-apple-business-permission-denied.md	1	81	word-list	access	KEEP-BY-RULE	word-list.md 'access (verb)': check.py's parser strips the '(verb)' qualifier (re.sub over the parenthetical), so the term matches noun uses too; here 'access' sits inside the proper noun 'Conditional Access', not verb usage -- a parser artifact, not a real candidate.		
+docs/l2-runbooks/26-apple-business-permission-denied.md	1	81	word-list	admin	KEEP-BY-RULE	word-list.md 'admin': write out 'administrator' unless it's the name of a UI label or other element. This occurrence is 'Intune admin center', the product's own official surface name -- the rule's own named exemption.		
+docs/l2-runbooks/26-apple-business-permission-denied.md	1	81	word-list	compliance	KEEP-BY-RULE	word-list.md 'compliant, compliance': scoped to a standards-compliance CLAIM ('a claim that a product or its output is compliant with a standard'); every occurrence here is Intune's own device-compliance-policy or Conditional Access vocabulary, not a standards claim.		
+docs/l2-runbooks/33-8021x-radius-eap-investigation.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/operations/00-index.md	1	28	word-list	via	EDIT	operations/00-index.md hub line's tool-sense preposition, fixed via->using at the Patch & Update Management hub (D-10).	1c4f7880	28
+docs/operations/app-lifecycle/00-overview.md	1	220	em-dash-spaced	—	MASK-ARTIFACT	check.py's mask_code() blanks the preceding markdown link target (']('...')' -> spaces of equal length) immediately before this em dash; the raw prose has no space there ('...md)—Cross-reference...') -- the masked whitespace, not real prose, is what the em-dash-spaced rule matched.		
+docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md	1	213	em-dash-spaced	—	MASK-ARTIFACT	check.py's mask_code() blanks the preceding markdown link target (']('...')' -> spaces of equal length) immediately before this em dash; the raw prose has no space there ('...md)—Cross-reference...') -- the masked whitespace, not real prose, is what the em-dash-spaced rule matched.		
+docs/operations/co-management/03-cocmgmt-migration-paths.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/operations/drift-migration/00-overview.md	1	204	em-dash-spaced	—	MASK-ARTIFACT	check.py's mask_code() blanks the preceding markdown link target (']('...')' -> spaces of equal length) immediately before this em dash; the raw prose has no space there ('...md)—Cross-reference...') -- the masked whitespace, not real prose, is what the em-dash-spaced rule matched.		
+docs/operations/drift-migration/01-windows-drift-detection.md	1	221	em-dash-spaced	—	MASK-ARTIFACT	check.py's mask_code() blanks the preceding markdown link target (']('...')' -> spaces of equal length) immediately before this em dash; the raw prose has no space there ('...md)—Cross-reference...') -- the masked whitespace, not real prose, is what the em-dash-spaced rule matched.		
+docs/operations/drift-migration/02-macos-drift-detection.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/operations/drift-migration/03-ios-android-drift-detection.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/operations/patch-management/00-overview.md	1	267	em-dash-spaced	—	MASK-ARTIFACT	check.py's mask_code() blanks the preceding markdown link target (']('...')' -> spaces of equal length) immediately before this em dash; the raw prose has no space there ('...md)—Cross-reference...') -- the masked whitespace, not real prose, is what the em-dash-spaced rule matched.		
+docs/operations/patch-management/01-windows-wufb-rings.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/reference/android-capability-matrix.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/reference/aosp-oem-matrix.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/reference/linux-capability-matrix.md	1				NO-CANDIDATES	no candidate and no sweep edit landed on any line this range added to this file		
+docs/reference/macos-capability-matrix.md	1	70	word-list	type	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/reference/macos-capability-matrix.md	1	70	word-list	via	KEEP-PROTECTED	structural class: table row. sweep3.py skips every line starting with '|' outright -- this term sits inside a Version History row or a table cell this phase's protection classes never touch.		
+docs/v1.9-DEFERRED-CLEANUP.md	1	19	word-list	future	KEEP-FLAGGED	word-list.md 'future, in the future': avoid in timeless documentation because this word or phrase can become outdated. Genuine candidate, not among this phase's five named edits.		

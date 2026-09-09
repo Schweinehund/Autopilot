@@ -16,7 +16,7 @@ audience: L1
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments that timed out before completing. Agents check the configured timeout value against the count of assigned apps and scripts, identify whether a Windows 365 known issue applies, and escalate when the root cause cannot be confirmed from portal data alone.
+This runbook covers read-only L1 diagnostic steps only—no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments that timed out before completing. Agents check the configured timeout value against the count of assigned apps and scripts, identify whether a Windows 365 known issue applies, and escalate when the root cause cannot be confirmed from portal data alone.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).

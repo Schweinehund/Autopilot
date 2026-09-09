@@ -38,17 +38,21 @@ def literals(src):
 
 
 
-V = pathlib.Path("D:/claude/Autopilot/scripts/validation")
-D = pathlib.Path("D:/claude/docs-google-style-test")
+V = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path("D:/claude/Autopilot/scripts/validation")
+D = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else pathlib.Path("D:/claude/docs-google-style-test")
 MIN = 12  # shorter literals match too much to be meaningful pins
 
-lits = set()
+lits = {}  # insertion-ordered dedup set: a bare `set()` here made two runs over the
+           # same corpus emit ties (equal-length literals) in a different order each
+           # process, because str hashing is randomized per-process -- the sort below
+           # is stable, so a deterministic input order is what makes the OUTPUT
+           # reproducible run to run (Rule 1 fix, no change to literals()/MIN/the sort)
 for f in sorted(V.glob("*.mjs")):
     for s in literals(f.read_text(encoding="utf-8", errors="replace")):
         s = s.strip()
         # a literal spanning lines can't pin a single doc line
         if len(s) >= MIN and "\n" not in s:
-            lits.add(s)
+            lits[s] = None
 
 docs = {p: p.read_text(encoding="utf-8", errors="replace")
         for p in D.rglob("*.md") if ".git" not in p.parts}

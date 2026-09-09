@@ -9,12 +9,12 @@ platform: ios+macos
 > **Platform applicability:** This tree covers Apple Business delegated governance on iOS,
 <!-- ABAUDIT-02: next line explicitly declares Intune-side surfaces OUT OF SCOPE; C15 regex 4 false-positive exemption (scope disclaimer is the inverse of an Intune-delegation anti-pattern) per AEAUDIT-04 precedent -->
 > iPadOS, and macOS Apple-managed devices. Microsoft Intune-side surfaces (RBAC, scope tags,
-> admin role assignments within Intune) are out of scope per Q5(b); see the
+> administrator role assignments within Intune) are out of scope per Q5(b); see the
 > [Apple Business Governance Glossary](../../_glossary-apple-business.md) for terminology canon.
 
 > **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on
 > 2026-04-14. This documentation uses the new terminology throughout. Legacy term "Apple Business
-> Manager" is searchable via the [Apple Business Governance Glossary](../../_glossary-apple-business.md)
+> Manager" is searchable through the [Apple Business Governance Glossary](../../_glossary-apple-business.md)
 > rebrand-mapping table. See also: Apple's [transition announcement](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web).
 
 # Apple Business Governance Overview
@@ -60,9 +60,9 @@ any hub files (`docs/operations/00-index.md`, `docs/quick-ref-l1.md`, `docs/comm
 ## Style Guide: HTML-Comment Allowlist Exemptions
 
 For v1.6 Apple Business documentation that legitimately discusses both Apple Business surfaces
-AND Intune surfaces (e.g., the future `18-cross-org-boundary-cheat-sheet.md` disambiguation
+AND Intune surfaces (for example, the future `18-cross-org-boundary-cheat-sheet.md` disambiguation
 table in Phase 64), the audit harness's C15 banned-phrase guard provides an allowlist exemption
-via HTML comments in this form:
+through HTML comments in this form:
 
 ```html
 <!-- ABAUDIT-01: intentional Apple-Business-vs-Intune disambiguation table; C15 false-positive allowlisted -->
