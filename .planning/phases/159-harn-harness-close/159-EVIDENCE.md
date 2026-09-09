@@ -2453,3 +2453,158 @@ call for all four, exactly as at the v1.21 close, goes to the owner at the push 
 All other figures in this section (the ten readings' triples, the globbing member's triple, the three
 carried readings, the worktree-tip table) match their respective source sections and D-26/D-41
 exactly — delta 0.
+
+---
+
+## §24 — Plan 159-09 Task 3: close the evidence document for checkpoint readiness
+
+### Corrected-figure table
+
+Every value `159-CONTEXT.md` or `159-RESEARCH.md` marked as measured that has since moved, gathered
+from its own section into one place. Every date below is this session's date, 2026-09-09.
+
+| Figure | CONTEXT/RESEARCH figure | Live figure | Command | Section |
+|---|---|---|---|---|
+| Tracked leak population (D-05) | 1 file, 1 occurrence | 2 files, 5 occurrences | `git grep -l -- "$T" HEAD` | §1 |
+| Ahead count after Task 1's scrub commit | RESEARCH 182 / CONTEXT 179 | 188 | `git rev-list --count master..HEAD` | §2 |
+| Working-tree census, all-untracked form (D-41) | 105 | 53 at §4, **47** re-measured in this plan | `git status --porcelain --untracked-files=all \| wc -l` | §4, §23 |
+| Working-tree census, collapsed form | not carried | 8 at §4, **2** re-measured in this plan | `git status --porcelain \| wc -l` | §4, §23 |
+| `.claude/worktrees/` disk size (D-41) | "13 directories, ~81 MB" | 18 MB for the 6 remaining directories (a smaller population, not directly comparable) | manual directory-size measurement | §4 |
+| Batch-10 dispositions row count (D-35) | "at least 1 data row" for all three tables | `_DISPOSITIONS-batch10.tsv` genuinely carries 0 rows (correct empty state, not a regression) | `wc -l scripts/docs-style/_DISPOSITIONS-batch10.tsv` | §14 (line 1348) |
+| `check-phase-153.mjs` triple (D-29's cited precedent) | `110 PASS, 0 FAIL, 1 SKIPPED` | `111 PASS, 0 FAIL, 0 SKIPPED` (v1.21 archived since the precedent was recorded) | `node scripts/validation/check-phase-153.mjs` | §19 |
+| 300 s cap scope (D-29) | "applies only to the AUDIT-HARNESS spawn" | Also applied to `V-159-HARN03` (both harness-spawning legs, same fast deterministic target class) | `grep -c 300000 scripts/validation/check-phase-159.mjs` | §19 |
+| Apex plain-run wall time | not previously measured | ~101 s (`1m40.926s`), ~73 s of which is `check-phase-157.mjs` alone | `time node scripts/validation/check-phase-159.mjs` | §19 |
+| Job-count grep pattern (D-30) | expected to print 13 / 16 | prints 14 / 17 — the pattern also matches the `on:` block's bare `schedule:` trigger key; real counts (13/16) confirmed by direct job-name enumeration | `grep -nE "^  [a-z][a-z0-9-]*:" .github/workflows/audit-harness-v1.2{1,2}-integrity.yml \| wc -l` | §20 |
+| `actions/setup-python@v5` / `python-version: '3.13'` literal counts (D-30) | exactly 3 each | initially 4 each (header comment double-counted); reworded, now 3 each | `grep -c "actions/setup-python@v5\|python-version: '3.13'" .github/workflows/audit-harness-v1.22-integrity.yml` | §20 |
+
+All other figures across §1-§23 reproduce their carried values exactly — delta 0, already stated
+individually in each section's own delta table (§2, §6-8, §9-11, §12-13, §14-17, §18-21, §23).
+
+### Squash message file — full text appendix
+
+Already present in this document at §2 ("Full message text, verbatim (appendix, per this task's
+acceptance criteria)"), written by 159-01. Not duplicated here.
+
+### Remote census — the never-a-target remote named
+
+```
+$ git remote -v
+origin   https://github.com/Schweinehund/Autopilot.git (fetch)
+origin   https://github.com/Schweinehund/Autopilot.git (push)
+scratch  D:/claude/docs-google-style-test (fetch)
+scratch  D:/claude/docs-google-style-test (push)
+```
+
+Two remotes. `origin` is the only push target the checkpoint's proposed push command touches.
+**`scratch` is never a push target** — it is a local-path remote pointing at a sibling working
+directory on this machine (`D:/claude/docs-google-style-test`), used for cross-repo comparison work
+earlier in this milestone, and no command in this phase, this plan, or the next plan's checkpoint
+pushes to it.
+
+### Scope ruling on tracked-but-unpushed populations
+
+Three populations are tracked and unpushed, all landed inside the single squash commit `9cc84aa6` or
+the bundle-adding commit `f8750c6d`, both inside the 53-commit unpushed range
+(`git rev-list --count origin/master..master` → **53**):
+
+| Population | Where it lives | Separable from the push set? |
+|---|---|---|
+| RE-237 (imported from outside GSD, Phase 155) | `docs/_registry/RE-index.md` row, `docs/recipes/06-walk-up-avd-kiosk.md` and related content, inside `9cc84aa6` | No — inside the single-parent squash commit; excluding it means rewriting that commit |
+| 29 kiosk-recipe assets | `assets/recipes/06-walk-up-avd-kiosk/` (`git diff --name-only origin/master master -- assets/recipes/06-walk-up-avd-kiosk/` → 29 files), inside `9cc84aa6` | No — same squash commit |
+| `.planning/artifacts/154-scratch-corpus.bundle` | Added by `f8750c6d`, its own commit inside the unpushed range | No — removing it now would mean a `git rm` commit on top (leaving it in history) or a rewrite of `f8750c6d`; §22 already ruled it stays tracked |
+
+**Ruling: none of the three is separable from the push set without rewriting unpushed history.** A
+`proceed` or `partial` push that includes commit `9cc84aa6` or `f8750c6d` publishes all three
+automatically; there is no push command that includes the squash commit but excludes RE-237 or the
+kiosk assets, because they are files inside that one commit's tree, not separate commits.
+
+### The exact push command and what it publishes
+
+```
+git push origin master
+```
+
+At the time this plan closes, this command would fast-forward `origin/master` by the full 53-commit
+unpushed range (`git rev-list --count origin/master..master`), currently headed at
+`c4088fc0` (subject to change by the time the checkpoint itself re-measures it, per D-65 — the
+checkpoint's own presentation re-measures this count fresh rather than reusing this plan's figure).
+This publishes: the entire squashed v1.22 milestone (Phases 154-158 plus Phase 159's planning
+documents, commit `9cc84aa6`), every Phase 159 plan commit executed so far (159-01 through this
+plan), the pre-push guard hook's tracked reference scripts, and the scratch corpus bundle. A partial
+push (`git push origin <sha>:master`) would publish any prefix of this same linear history instead of
+the whole range.
+
+### The one-way statement
+
+**This push, once it succeeds, cannot be undone by any command available to this project.**
+`origin/master` is a real GitHub remote; once `origin/master` fast-forwards to include these commits,
+un-publishing them requires a force-push that rewrites public history other clones may have already
+fetched — an operation this project's own `destructive_git_prohibition` rules out for any branch this
+session did not create, and one the pre-push hook installed in 159-01 (§3) does not defend against in
+the reverse direction (it blocks the *archived* history from ever being pushed; it does not un-push
+anything already accepted). Declining now and pushing later remains available; un-pushing after a
+successful push does not.
+
+### The consequence of declining
+
+If the owner declines or defers the push at the next plan's checkpoint: `origin/master` stays at its
+current tip, none of the 53 unpushed commits (the squashed milestone, the Phase 159 work so far, the
+pre-push guard, the bundle) reaches the remote, no CI workflow that requires the file to exist on the
+default branch (`workflow_dispatch:` targets, including the newly landed
+`audit-harness-v1.22-integrity.yml`) can be dispatched, and the v1.22 milestone does not close. A
+`defer` halts cleanly with a named blocker; continuation is a fresh agent, and cross-session re-entry
+is plan-granular through `safe_resume_gate` — declining is not a dead end, but it does mean HARN-06
+stays recorded UNMET until the owner revisits the decision.
+
+### Checkpoint-readiness index
+
+Eleven items, numbered, each with a pointer to the section holding it:
+
+1. **Ahead and behind counts** — §2 (ahead after Task 1), this section ("The exact push command and
+   what it publishes": 53 ahead, 0 behind, re-measured here).
+2. **Working-tree state, in both forms** — §4 (159-01's own reading: 8 / 53) and §23 (this plan's
+   re-measurement: 2 / 47).
+3. **The derived-token scan across all five surfaces** — §1 (the D-06 five-surface table).
+4. **Tree equality** — §2 (`master^{tree}` vs. `refs/archive/v1.22-landing^{tree}`, both
+   `15f9d290…`, MATCH at the time of the squash; §2's branch-afterlife note also records that the
+   two trees diverge again immediately afterward as expected, once later commits land on `master`).
+5. **The remote census, with the never-a-target remote named** — this section ("Remote census").
+6. **The scope ruling on tracked-but-unpushed populations** — this section ("Scope ruling on
+   tracked-but-unpushed populations").
+7. **The branch inventory** — §4 (landing branch deleted, worktree branches deleted) and §23 (the
+   atom-branch inventory, all four KEEP-pending).
+8. **The per-pattern bundle scan counts** — §22.
+9. **The exact push command and what it publishes** — this section ("The exact push command and
+   what it publishes").
+10. **The one-way statement** — this section ("The one-way statement").
+11. **The consequence of declining** — this section ("The consequence of declining").
+
+### Three planning-tree validators, run now
+
+```
+$ node scripts/validation/check-phase-54.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-55.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-56.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+```
+
+### Ahead/behind, no push occurred
+
+```
+$ git rev-list --left-right --count origin/master...master
+0	53
+```
+
+Behind: **0**. This plan pushes nothing — confirmed by this same count being re-checked immediately
+after this task's own commit below, with no push command run in between.
+
+### docs/ untouched
+
+```
+$ git status --porcelain -- docs/
+(empty)
+```
+
+No file under `docs/` was read-write touched by this plan's three tasks.
