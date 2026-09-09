@@ -286,7 +286,7 @@ Plans:
 
 **[Phase 158 note, D-28]:** the history-removal mechanism for the scrubbed CMG hostname at commit `9a114815` (`git branch -r --contains 9a114815` empty; `AR-155-01` / carried forward as `AR-158-01`) is this phase's decision to make, not Phase 158's — Phase 158 recorded the position and the squash-merge recommendation in `REQUIREMENTS.md`'s HARN-06 amendment; this note does not change the dependency line above.
 
-**Plans**: 6/13 plans executed in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
+**Plans**: 7/13 plans executed in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
 
 Plans:
 
@@ -316,7 +316,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
-- [ ] 159-07-PLAN.md — Write the `check-phase-159` apex with a generated chain range, an empty skip set, and one additive leg that spawns the converted v1.21 harness without a nested-flag skip
+- [x] 159-07-PLAN.md — Write the `check-phase-159` apex with a generated chain range, an empty skip set, and one additive leg that spawns the converted v1.21 harness without a nested-flag skip
 
 **Wave 8** *(blocked on Wave 7 completion)*
 

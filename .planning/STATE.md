@@ -5,16 +5,16 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-06-PLAN.md
-last_updated: "2026-09-09T13:30:12.228Z"
+stopped_at: Completed 159-07-PLAN.md
+last_updated: "2026-09-09T13:48:18.678Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: 4036a93f5bd46685a685b60d003d9462e0224aa5
+state_head: 608ccf1f34ed9ceb36a28298dc87a162a45a34e2
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 36
+  completed_plans: 37
   percent: 83
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 7 of 13
+Plan: 8 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
@@ -134,6 +134,7 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 | Phase 159 P04 | 12min | 3 tasks | 2 files |
 | Phase 159 P05 | 55min | 3 tasks | 4 files |
 | Phase 159 P06 | 42min | 3 tasks | 3 files |
+| Phase 159 P07 | 55 min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -228,6 +229,8 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 - [Phase 159]: _DISPOSITIONS-batch10.tsv needle narrowed to presence-only; live measurement found 0 data rows, correctly, against D-35's assumed >=1
 - [Phase 159]: Only the five full D-01..D-05 heading texts are pinnable in check-phase-157.mjs; colon-prefix and bare forms both collide with unrelated D-series and are never used. — Colon-prefix counts 3/3/3/3/2 across three unrelated D-series; bare form additionally collides with an unrelated heading at line 134.
 - [Phase 159]: check-phase-158.mjs uses a default child_process import (cp.execFileSync) instead of a destructured one to minimize its literal execFileSync-substring count to exactly 1. — Satisfies that leaf's own exact-count gate as tightly as the mandated single spawn permits.
+- [Phase 159]: V-159-HARN03 additive leg copies AUDIT-HARNESS's shape but omits the NESTED-skip branch (D-25) -- the converted v1.21 harness is exercised for real in every apex invocation
+- [Phase 159]: Archive-root token 'v1.22-phases' named directly from D-29, never transcribed from check-phase-153.mjs's own token -- unfalsifiable in-phase per the resolver's live-path-first behavior
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -286,8 +289,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T13:30:10.799Z
-Stopped at: Completed 159-06-PLAN.md
+Last session: 2026-09-09T13:48:17.287Z
+Stopped at: Completed 159-07-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
