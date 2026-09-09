@@ -208,3 +208,8 @@ step (D-61) — this plan only records the pointer, per its own scope.
 ---
 *Phase: 159-harn-harness-close*
 *Completed: 2026-09-09*
+
+## Self-Check: PASSED
+
+All three created leaves confirmed present on disk; SUMMARY.md confirmed present; all three task
+commits (`b97508f0`, `7cf7e356`) plus the metadata commit (`7a648306`) confirmed in `git log`.

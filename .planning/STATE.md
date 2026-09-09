@@ -5,17 +5,17 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-04-PLAN.md
-last_updated: "2026-09-09T12:45:31.148Z"
+stopped_at: Completed 159-05-PLAN.md
+last_updated: "2026-09-09T13:00:31.609Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: b8edc36f1ecdefd59bd7f31489e0f2c4d55773de
+state_head: 7a6483066bc3f1b41cdad7d393387b2125d11d5e
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 34
-  percent: 79
+  completed_plans: 35
+  percent: 81
 ---
 
 # Project State
@@ -30,11 +30,11 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 5 of 13
+Plan: 6 of 13
 Status: Ready to execute
 Last activity: 2026-09-09 — Phase 159 execution started
 
-Progress: [████████░░] 79% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
+Progress: [████████░░] 81% — 5/6 phases complete; 30/30 authored plans complete (Phase 159 not yet planned)
 
 ## v1.22 Requirement Coverage (39/39 mapped — roadmap created 2026-08-31)
 
@@ -132,6 +132,7 @@ Progress: [████████░░] 79% — 5/6 phases complete; 30/30 au
 | Phase 159 P02 | 8min | 3 tasks | 2 files |
 | Phase 159 P03 | 13min | 3 tasks | 4 files |
 | Phase 159 P04 | 12min | 3 tasks | 2 files |
+| Phase 159 P05 | 55min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -222,6 +223,8 @@ Progress: [████████░░] 79% — 5/6 phases complete; 30/30 au
 - [Phase 159]: Fork ordering proven: three-way hash equality (frozen blob, unconverted working copy, new v1.22-milestone-audit.mjs) confirmed before any identity edit — D-22 requires the fork source be the frozen v1.21 blob at e129081e, never the working copy, so the byte-equality assertion is the evidence the order was honoured
 - [Phase 159]: Sidecar and BASELINE_26 populations re-measured live reproduce D-23/D-24's carried figures exactly (89/73/33/44 total; 40/44 pass-both, 7/9 BASELINE_9 lines changed) -- zero delta on every figure — D-65 measurement discipline: live value wins over any carried figure, and a zero delta is itself a result worth recording
 - [Phase 159]: Converted v1.21-milestone-audit.mjs to frozen V121 reads per D-18/D-19/D-20/D-21, proven by scratch-clone perturbation and two negative probes (D-26) — Discharges HARN-03 and closes the C17-FROZEN-AWARE-RESIDUE-V21 class
+- [Phase 159]: sign into pinned literal case-sensitive (not case-insensitive) — the CI reading never reaches 0 at HEAD
+- [Phase 159]: _DISPOSITIONS-batch10.tsv needle narrowed to presence-only; live measurement found 0 data rows, correctly, against D-35's assumed >=1
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -280,8 +283,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-09T12:45:29.789Z
-Stopped at: Completed 159-04-PLAN.md
+Last session: 2026-09-09T13:00:30.109Z
+Stopped at: Completed 159-05-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
