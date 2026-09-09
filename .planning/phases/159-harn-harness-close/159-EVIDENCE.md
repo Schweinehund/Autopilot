@@ -1771,3 +1771,140 @@ is authored, satisfying the precondition for Task 2.
 
 No source file was modified by this task — `159-EVIDENCE.md` is the only file this task's frontmatter
 lists, and `git status --porcelain` confirms no other tracked file changed.
+
+## §19 — Plan 159-07 Task 3: apex evidence, plain-vs-nested scan, wall time, archive-root provenance
+
+### Plain and nested apex triples, side by side
+
+```
+$ node scripts/validation/check-phase-159.mjs --verbose
+...
+Result: 116 PASS, 0 FAIL, 1 SKIPPED (total checks: 117)
+```
+
+```
+$ CHECK_PHASE_NESTED=1 node scripts/validation/check-phase-159.mjs --verbose
+...
+Result: 2 PASS, 0 FAIL, 115 SKIPPED (total checks: 117)
+```
+
+Both runs exit 0. No FAIL in either mode.
+
+### Leg-by-leg differences between the two invocations
+
+| Leg | Plain verdict | Nested verdict | Differs? | Legitimate? |
+|---|---|---|---|---|
+| `V-159-AUDIT` | SKIPPED (`159-VERIFICATION.md` not yet authored) | SKIPPED (same reason) | No | N/A — identical in both modes; this leg does not read `NESTED` at all |
+| `V-159-CHAIN-{48..158,30,31}` (113 legs) | PASS (real recursive `execFileSync` per member) | SKIPPED (`nested invocation: skip recursive chain-guard expansion`) | Yes (113 legs) | Yes — the standard apex-generation nested-flag optimization (inherited mechanism from `check-phase-119.mjs` onward via the `check-phase-153.mjs` template); the underlying content is independently re-verified via each member's own standalone run (159-05/159-06 SUMMARYs record 154-158 each green standalone; the remaining 108 members are the same pre-existing chain this apex inherits unmodified) |
+| `V-159-AUDIT-HARNESS` | PASS (`v1.22-milestone-audit.mjs` re-run for real) | SKIPPED (`skip AUDIT-HARNESS re-run against evolved corpus`) | Yes (1 leg) | Yes — explicit, by-design: a harness that audits the live, evolving `docs/` corpus has a real reason to skip re-auditing under a recursive nested invocation, exactly the `check-phase-153.mjs` template's own established rationale |
+| `V-159-HARN03` | PASS (real spawn, `v1.21-milestone-audit.mjs` exits 0) | PASS (real spawn, same, with `nested invocation -- real pass, no skip` in the detail) | **No** | N/A — confirmed NOT among the differing legs, by design (D-25): the frozen harness has no evolved corpus to skip for |
+| `V-159-SELF` | PASS | PASS | No | N/A — identical in both modes; does not read `NESTED` |
+
+**114 of 117 legs differ in verdict class between plain and nested** (113 `CHAIN` legs plus
+`AUDIT-HARNESS`), and every one of those differences is the legitimate, by-design
+nested-optimization skip this repository's apex lineage has carried since `check-phase-119.mjs`.
+**The conversion leg (`V-159-HARN03`) is confirmed NOT among the differing legs** — it reports a
+real, identical pass in both invocations, which is exactly what D-25 requires and what Task 2's own
+two acceptance-command runs (plain and nested, both grepped for `HARN03`, neither line containing a
+skip marker) already proved individually; this section additionally confirms it at the full-apex
+level, side by side with every other leg.
+
+### Derived arithmetic, restated with its command (cross-referencing §18)
+
+```
+node -e "const s=48,e=158;const n=e-s+1;const extra=[30,31];const inter=extra.filter(x=>x>=s&&x<=e);
+if(inter.length){console.error('extra entries intersect the generated range:',inter);process.exit(1)}
+const total=1+n+extra.length+1+1+1;console.log('chain='+n+' extra='+extra.length+' total='+total);
+if(n!==111||total!==117){console.error('arithmetic mismatch');process.exit(1)}"
+```
+→ `chain=111 extra=2 total=117`. Generated chain length 111 (`[48..158]`), `CHAIN_EXTRA=[30,31]`
+disjoint (empty intersection, proven by the same command), `CHAIN_SKIP` empty (proven separately by
+the module-load-guard-declaration assertion in Task 2's own acceptance run — `skip set is empty`),
+total 117. See §18 for the full Task 1 derivation; this section restates only the command and
+result for this section's self-containedness.
+
+### Apex wall time, plain run, with the enforcing gate's contribution named separately
+
+```
+$ time node scripts/validation/check-phase-159.mjs --verbose
+...
+real  1m40.926s
+```
+
+```
+$ time node scripts/validation/check-phase-157.mjs
+...
+Result: 34 PASS, 0 FAIL, 0 SKIPPED
+real  1m12.620s
+```
+
+The apex's plain-run wall time is **~101 s**. Of that, the `V-159-CHAIN-157` leg — which spawns
+`check-phase-157.mjs` as a chain child, which in turn spawns the now-enforcing
+`check-prose-style.py` gate in full (Plan 159-06, STD-02) — independently measures **~73 s**
+standalone, i.e. roughly **72% of the apex's total plain-run cost**. This one-time gate-enforcement
+cost, first made enforcing in Plan 159-06, now lands on every future invocation of this apex (and,
+transitively, on the CI `linux-chain-ubuntu-latest` and `check-phase-159` jobs in the 159-08
+workflow), exactly as 159-06's own D-38/159-CONTEXT accepted at authoring time ("the cost of about
++76 s on every future apex is accepted"). The remaining ~28 s covers the other 112 chain members,
+`AUDIT-HARNESS` (`v1.22-milestone-audit.mjs`, 16 checks) and `HARN03` (`v1.21-milestone-audit.mjs`,
+16 checks, ~2 s), `AUDIT` and `SELF`.
+
+### Archive-root token: unfalsifiable in-phase, named from the decision record
+
+`ARCHIVE_ROOT_TOKEN = 'v1.22-phases'` is asserted in `check-phase-159.mjs` as a literal string,
+named directly from D-29 (159-CONTEXT.md) rather than transcribed from any predecessor apex file.
+It cannot be falsified in-phase: `resolveArchivedPhasePath` (`scripts/validation/_lib/archive-path.mjs`)
+checks the LIVE path (`.planning/phases/159-harn-harness-close/159-VERIFICATION.md`) first and
+returns that path whenever it exists, succeeding (or here, correctly reporting the file absent and
+SKIP-PASSing) regardless of what `ARCHIVE_ROOT_TOKEN` names — the archive directory
+`.planning/milestones/v1.22-phases/` cannot exist while this phase is still running, since archival
+happens only at `/gsd-complete-milestone`, after the phase closes. A predecessor apex,
+`check-phase-125.mjs:86`, has carried the wrong token (`['v1.15-phases']`) permanently green with a
+false detail string for two milestones for exactly this reason — the resolver's live-path-first
+behavior never surfaces a wrong token pre-archival, and nobody has re-checked it post-archival
+since. This is why `v1.22-phases` was derived here from the decision record (D-29) at authoring
+time, not copied forward from `check-phase-153.mjs`'s own `'v1.21-phases'` token.
+
+### Predecessor apex re-run: still green
+
+```
+$ node scripts/validation/check-phase-153.mjs
+...
+Result: 111 PASS, 0 FAIL, 0 SKIPPED (total checks: 111)
+```
+
+Exit 0, 0 FAIL. Note the triple is now **111/0/0** rather than the pre-close-gate **110/0/1** this
+same file's own header comment documents — `153-VERIFICATION.md` is archived at
+`.planning/milestones/v1.21-phases/153-harness-close-v120-pin-c17-frozen-aware-residue-19th-path-a/153-VERIFICATION.md`
+(v1.21 has already closed), so `V-153-AUDIT` now finds the file via its `['v1.21-phases']` resolver
+root and reports a real PASS instead of the pre-close SKIP-PASS. `check-phase-153.mjs`'s
+`V-153-C17CARVEOUT-SUCCESSOR` leg (the carve-out successor named in this plan's `key_links`) is
+still true after the v1.21-to-v1.22 conversion work this phase performed: it is scoped to the same
+six named C17-bearing harness files (`v1.15` through `v1.20`), none of which this phase's Plans
+159-01..159-06 touched (only `v1.21-milestone-audit.mjs` and the new `v1.22-milestone-audit.mjs`
+were created/converted, both outside that six-file scope), so nothing in this phase's own work
+required — or could have required — the successor leg to compensate for anything.
+
+`check-phase-54.mjs`, `-55.mjs` and `-56.mjs` all report `Summary: 32 passed, 0 failed, 0 skipped`,
+confirmed after this plan's two commits (159-EVIDENCE.md §18, then `check-phase-159.mjs`).
+
+### Flagged planner assumption, recorded verbatim (restated here per this task's own instruction)
+
+> HARN-04 unclassified edge (probe row remains unresolved and is surfaced, never dismissed): the
+> deterministic probe could not classify HARN-04's edge family. Flagged planner assumption — the
+> lineage's failure modes are operationalized here as a missing chain member read as a hard FAIL, an
+> empty skip set that must stay empty, an archive-root token that cannot be falsified until
+> archival, and a nested-flag skip applied to a leg that must not skip; there may be a fifth failure
+> mode no gate covers. Residual risk recorded, not dismissed.
+
+### Deltas: every figure whose live value differs from CONTEXT's or RESEARCH's
+
+| Figure | CONTEXT/RESEARCH value | Live value | Delta |
+|---|---|---|---|
+| `check-phase-153.mjs` triple | `110 PASS, 0 FAIL, 1 SKIPPED` (D-29's cited pre-close-gate precedent) | `111 PASS, 0 FAIL, 0 SKIPPED` | v1.21 has archived since that precedent was recorded; `V-153-AUDIT` now finds `153-VERIFICATION.md` live at its archived path and reports a real PASS rather than a SKIP-PASS. Not a regression — the expected post-archival state for a milestone that has closed. |
+| 300 s cap scope | D-29: "300 s applies only to the AUDIT-HARNESS spawn" | `check-phase-159.mjs` applies the same 300,000 ms cap to both `V-159-AUDIT-HARNESS` and `V-159-HARN03` (three occurrences of the literal `300000` in the file: the two spawn timeouts plus the leaf's own `err.status === 127` conditional block is unrelated and does not add to the count) | Both harness-spawning legs share the shorter cap because both target a fast, deterministic ~2 s harness run; the chain legs (the only legs D-29 contrasts the 300 s cap against) correctly use the 600 s `isPeer` cap starting at `phaseNum >= 67`, unchanged. Recorded here rather than silently narrowing HARN03 to no explicit cap (which would default to no timeout at all, a strictly worse outcome). |
+| Apex plain-run wall time | Not previously measured for this apex (no prior 159-07 run) | ~101 s (`1m40.926s`), of which ~73 s is `check-phase-157.mjs`'s own standalone cost (the enforcing prose-style gate) | Matches 159-06's own accepted "+76 s on every future apex" estimate closely (measured contribution here: ~73 s from 157 alone, consistent within a few seconds of variance) |
+
+All other figures (chain length 111, extra disjointness, skip-set emptiness, total 117, both
+pre-verification and post-verification triples, both harness triples 16/0/0) match §18's Task-1
+derivation and this section's own re-measurement exactly — delta 0.
