@@ -286,13 +286,13 @@ Plans:
 
 **[Phase 158 note, D-28]:** the history-removal mechanism for the scrubbed CMG hostname at commit `9a114815` (`git branch -r --contains 9a114815` empty; `AR-155-01` / carried forward as `AR-158-01`) is this phase's decision to make, not Phase 158's — Phase 158 recorded the position and the squash-merge recommendation in `REQUIREMENTS.md`'s HARN-06 amendment; this note does not change the dependency line above.
 
-**Plans**: 13 plans in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
+**Plans**: 1/13 plans executed in 13 waves (strictly sequential — CONTEXT D-27 fixes the plan count and the order: the leak scrub before the squash, the squash before every other commit, `.gitattributes` as the first commit after it, the pin before the fork, the fork from the frozen blob before the conversion edits the working copy, all five leaves before the apex because a missing chain member is a hard FAIL, the apex re-measured after the workflow lands, local evidence before the push checkpoint, the corrective push before the three axes, and the close artifacts before the close gate)
 
 Plans:
 
 **Wave 1**
 
-- [ ] 159-01-PLAN.md — Scrub the tracked verifier leak on the landing branch, squash it onto `master` with plumbing under a tree-equality assertion, archive and delete the branch, land the end-of-line attribute and the clone-tested pre-push guard, complete close-time hygiene, and land the five amendment blocks in one gated commit
+- [x] 159-01-PLAN.md — Scrub the tracked verifier leak on the landing branch, squash it onto `master` with plumbing under a tree-equality assertion, archive and delete the branch, land the end-of-line attribute and the clone-tested pre-push guard, complete close-time hygiene, and land the five amendment blocks in one gated commit
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
