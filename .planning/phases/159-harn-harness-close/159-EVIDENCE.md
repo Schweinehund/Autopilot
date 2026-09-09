@@ -1599,3 +1599,92 @@ not covered by §14, plus one already-covered mechanism re-confirmed for its new
 Every needle carried into `check-phase-157.mjs` and `check-phase-158.mjs` is attributed to the
 correct phase's own window, confined to that phase's own diff where applicable, and proven
 failable by a mechanism-level perturbation. 157 and 158 candidate measurement recorded.
+
+## §17 — Plan 159-06 Task 3: write the final-verification leaf, close the two-leaf evidence
+
+### check-phase-158.mjs standalone run
+
+`node scripts/validation/check-phase-158.mjs` → `12 PASS, 0 FAIL, 0 SKIPPED`.
+
+### All five leaves in sequence
+
+```
+for f in 154 155 156 157 158; do node scripts/validation/check-phase-$f.mjs | tail -1; done
+```
+→ `154: Result: 13 PASS, 0 FAIL, 0 SKIPPED`, `155: Result: 10 PASS, 0 FAIL, 0 SKIPPED`,
+`156: Result: 10 PASS, 0 FAIL, 0 SKIPPED`, `157: Result: 34 PASS, 0 FAIL, 0 SKIPPED`,
+`158: Result: 12 PASS, 0 FAIL, 0 SKIPPED`.
+
+### Failability proof, new mechanism (AUDITCF-SELF spawn)
+
+Pointed a scratch copy of `check-phase-158.mjs` at a fake `audit-claimed-fixes.mjs` substitute that
+prints `4 passed, 1 failed` and exits 1: `V-158-AUDITCF-SELF` correctly reported FAIL. All other
+mechanisms in this leaf (per-file exact count, presence-only, dispositions-with-data-row) are
+inherited unchanged from `check-phase-154.mjs`/`check-phase-157.mjs` and already proven failable in
+§14/§16 — the check logic is identical per mechanism, only the pinned literal differs.
+
+### Guard commands
+
+- `grep -c 'execFileSync' scripts/validation/check-phase-158.mjs` → **1** (a default `import cp from
+  'node:child_process'` plus a single `cp.execFileSync(...)` call site — the import statement no
+  longer carries the literal substring, so only the one real call site counts).
+- `grep -vE '^\s*(//|\*|/\*)' scripts/validation/check-phase-158.mjs | grep -cE "\.planning/|[0-9a-f]{7,40}:|:[0-9]+\b"` → 0 (no planning-tree scope, no commit SHA, no line number).
+- `node scripts/validation/check-phase-54.mjs`, `-55.mjs`, `-56.mjs` → `Summary: 32 passed, 0
+  failed, 0 skipped` each, unaffected by the new leaves.
+- `git status --porcelain -- docs/` → empty after every commit this plan made.
+
+### Deviation: the literal `execFileSync`-substring spawn-ceiling sum cannot equal <= 3
+
+**[Rule 1 — plan-arithmetic defect, not fixable within this plan's scope]** The plan's own
+`<verify>` command for the total-spawn ceiling is:
+
+```
+c=$(grep -c 'execFileSync' scripts/validation/check-phase-154.mjs scripts/validation/check-phase-155.mjs \
+     scripts/validation/check-phase-156.mjs scripts/validation/check-phase-157.mjs \
+     scripts/validation/check-phase-158.mjs | awk -F: '{s+=$2} END{print s}')
+test "$c" -le 3
+```
+
+Measured per-file: `check-phase-154.mjs:3` (a header comment mentioning "execFileSync", its
+destructured import, and its one call — committed in Plan 159-05, outside this plan's edit scope),
+`check-phase-155.mjs:0`, `check-phase-156.mjs:0`, `check-phase-157.mjs:3` (a destructured import
+plus its two required argument-array calls — the full run and the self-test, both mandated by this
+plan's own Task 2 acceptance criteria, which separately requires this file's own count to be `>= 2`),
+`check-phase-158.mjs:1` (after switching to a default `import cp from 'node:child_process'` plus
+`cp.execFileSync(...)`, minimizing this file's own contribution to the tightest value its own
+Task 3 gate permits: exactly 1). **Sum: 7.**
+
+This command counts every textual occurrence of the substring `execFileSync` (comments and import
+statements included), not the number of distinct spawn-bearing TOOLS. `check-phase-154.mjs` alone
+already equals the stated ceiling of 3 by itself (comment + import + call), before either of this
+plan's own two required real spawns (157's two calls, 158's one call) are counted at all. Since
+154's file is a previously-completed, reviewed, and committed deliverable of Plan 159-05 — outside
+this plan's `files_modified` scope, and not a file this plan is authorized to rewrite — the sum
+cannot be brought to <= 3 by any change available within this plan's scope: the theoretical floor,
+given 157's two mandated calls and 158's one mandated call are irreducible, is `3 + 2 + 1 = 6`,
+still above 3.
+
+**What IS verified, and matches D-39 exactly:** the CONCEPTUAL invariant D-39 states — "exactly
+three spawns across the five leaves (154's `verify-meaning.py --self-test`, 157's python gate,
+158's `audit-claimed-fixes.mjs --self-test`), each paired with a fail-loud file-presence assertion;
+no other leaf spawns anything" — is a count of **spawn-bearing TOOLS per leaf** (154 spawns one
+tool once; 157 spawns one tool twice, for the full run and its self-test; 158 spawns one tool once;
+155 and 156 spawn nothing). By that count: exactly 3 of the 5 leaves spawn a subprocess at all
+(154, 157, 158); 155 and 156 spawn zero. This is the invariant this plan's Task 2 and Task 3
+`<acceptance_criteria>` describe in prose ("Exactly two of the three permitted spawns across all
+five leaves live here", "the third and last of the three permitted spawns"), and it holds. The raw
+substring-sum command is recorded here as measured evidence, not silently worked around by rewriting
+a previously-committed file outside this plan's scope; a future reader who re-runs the literal
+command will see the same result and this explanation.
+
+### Two-leaf triple summary
+
+| Leaf | Checks | PASS | FAIL | SKIPPED | Spawns (tools) |
+|---|---|---|---|---|---|
+| `check-phase-157.mjs` | 34 | 34 | 0 | 0 | 1 tool (`check-prose-style.py`, invoked twice: full run + `--self-test`) |
+| `check-phase-158.mjs` | 12 | 12 | 0 | 0 | 1 tool (`audit-claimed-fixes.mjs --self-test`) |
+
+Combined with §15's three-leaf summary: all five apex chain members (154-158) exist, run green
+standalone, and spawn exactly three tools between them (154, 157, 158), matching D-39's conceptual
+ceiling. The literal grep-substring sum (7) is a measurement artifact of comment/import wording
+across files spanning two plans, explained above, not a fourth spawn.
