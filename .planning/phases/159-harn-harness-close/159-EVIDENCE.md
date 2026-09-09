@@ -564,3 +564,131 @@ same taxonomy the V118-V120 entries already exercise; the file's own SWEEP-04 he
 
 All three guards are 0 FAIL, recorded verbatim before any edit to `frozen-at-close.mjs`. No file is
 modified in this task except this evidence document.
+
+---
+
+## §7 — Plan 159-02 Task 2 (TRACER): pin insertion, export append, end-to-end proof
+
+Full task detail lives in the commit itself (`c6e37a6c`); this section carries the post-edit
+half of the six recorded guard readings and the frozen-read proof, cross-referenced from §6.
+
+### Post-edit guard triple (same three live guards, re-run after the edit)
+
+| Guard | Result |
+|---|---|
+| V-140-V14PIN | `[V14PIN/5] ... PASS` — aggregate `Result: 5 PASS, 0 FAIL, 0 SKIPPED` |
+| V-120-HYG01 | `[HYG01/6] ... PASS` — aggregate `Result: 6 PASS, 0 FAIL, 0 SKIPPED` |
+| V-73-LIB-EXISTS | `[LIB-EXISTS/40] ... PASS` — aggregate `Result: 40 PASS, 0 FAIL, 0 SKIPPED` |
+
+Six readings total (three before in §6, three after here), all 0 FAIL.
+
+### Object-order assertion (proves position, not inspected from the diff)
+
+```
+node -e "... V121 before V14; V14 still last key ..."
+```
+Output: `V121 before V14; V14 still last key`. The pin check's post-`V14` slice contains zero V-tag
+key matches — same PASS verdict, same detail string as before the edit (`159-CONTEXT.md` truth #10).
+
+### End-to-end frozen read (D-17)
+
+`readAtV121Close('docs/recipes/05-enterprise-update-plan.md')` returned **113,803 bytes** of
+non-empty content. `lsTreeAtV121Close('docs')` returned a non-empty list of **307 paths** —
+matching D-17's `[MEASURED]` prediction of 307 exactly (no delta).
+
+### Deviation (Rule 3 — mis-specified verify command)
+
+**[Rule 3 - Mis-specified verify command] Task 2's own literal export-count check never matches this
+file's export style.**
+- **Found during:** Task 2 acceptance-criteria verification.
+- **Issue:** The acceptance criteria's literal command, `` grep -c "export function readAtV1" ``,
+  can never return a non-zero count for this file — every convenience export in
+  `frozen-at-close.mjs`, from `readAtV14Close` through the new `readAtV121Close`, is declared
+  `export const readAtV1...Close = (p) => ...`, never `export function`. The literal command reads
+  `0` both before and after the edit, so it cannot distinguish "the run grew by one" from "nothing
+  changed."
+- **Fix:** Used the intent-true check instead — `grep -c "^export const readAtV1"` (pre-edit, via
+  `git show HEAD~1:...`: **19**; post-edit: **20**, i.e. grew by exactly one) and
+  `grep -c "^export const lsTreeAtV1"` (pre-edit: **18**; post-edit: **19**, grew by exactly one).
+  Confirmed both new lines (`readAtV121Close` at line 290, `lsTreeAtV121Close` at line 360) sit
+  contiguously inside their existing runs, immediately after the `V120` entries, with no new export
+  block created (both runs remain single, unbroken sequences).
+- **Files modified:** none (verification-only).
+- **Verification:** counts above, plus a full listing of both export runs confirming contiguity.
+- **Committed in:** `c6e37a6c` (documented here, in `159-EVIDENCE.md`).
+
+### docs/ untouched
+
+`git status --porcelain -- docs/` returned empty for both the Task 2 commit and this evidence
+commit. `git show --stat HEAD` (Task 2 commit `c6e37a6c`) lists exactly one source file:
+`scripts/validation/_lib/frozen-at-close.mjs`.
+
+---
+
+## §8 — Plan 159-02 Task 3: one-step-back discriminator measurement and flagged assumption
+
+### Docs tree path counts, V121 vs V120
+
+| Version | SHA | `git ls-tree -r --name-only <sha> -- docs \| wc -l` |
+|---|---|---|
+| V121 | `e129081e` | **307** |
+| V120 | `246fa3dd` | **296** |
+
+**Difference: 11.** V121's docs tree strictly dominates V120's (307 > 296), matching D-20's
+`[MEASURED]` figures exactly — no delta to record. This 11-path gap is what makes
+`docs/recipes/05-enterprise-update-plan.md` a strictly stronger one-step-back discriminator than
+v1.20's own recipe-03 member, which discriminates V118 but not V119/V120 (those two trees are
+identical for that member).
+
+### Known-member presence/absence (each its own command, quoted)
+
+```
+git cat-file -e e129081e:docs/recipes/05-enterprise-update-plan.md && echo "known member present at V121"
+```
+→ `known member present at V121`
+
+```
+git cat-file -e 246fa3dd:docs/recipes/05-enterprise-update-plan.md 2>/dev/null && echo "UNEXPECTED present at V120" || echo "known member absent at V120 (expected)"
+```
+→ `known member absent at V120 (expected)` (the "UNEXPECTED" branch did not fire)
+
+### Materialized-set-coupling re-verification (the library's header mandate, D-20)
+
+```
+git log --oneline e129081e..HEAD -- scripts/validation/c17-eee-contract.mjs | wc -l
+```
+→ **0** commits touching the structural contract validator since the V121 close SHA.
+
+Read-surface check (`grep -n "readFileSync\|readFile(" scripts/validation/c17-eee-contract.mjs`):
+outside the `--self-test` block (which reads two fixture files under
+`scripts/validation/c17-fixtures/`), the validator's only reads are `readFile(relPath)` calls over
+paths produced by `walkMd('docs')` — confirming the library header's claim that this validator
+reads only the docs walk outside its self-test flag.
+
+### Flagged planner assumption (recorded verbatim, not dismissed)
+
+> HARN-02 unclassified edge (probe row remains unresolved and is surfaced, never dismissed): the
+> deterministic probe could not classify HARN-02's edge family. Flagged planner assumption — the
+> two new exports' failure modes are operationalized here as name collision with the existing
+> export run, wrong close-tag argument, and a read that resolves at the wrong SHA; there may be a
+> fourth failure mode no gate covers. Residual risk recorded, not dismissed.
+
+No gate in this plan's `<verify>` set independently proves the absence of a fourth, uncovered
+failure mode for the two new exports — the three named modes (collision, wrong tag, wrong-SHA
+resolution) are each covered by an existing check (contiguity/no-new-block above, the tag-string
+literal in the export itself, and the byte-count/path-count proof), but the possibility of a
+failure class outside this taxonomy is not something any command run in this plan can rule out. It
+is recorded here as open residual risk, per the must-have's own instruction, rather than folded
+into a false "all failure modes covered" claim.
+
+### Delta summary (D-65 — every figure re-run live, not carried)
+
+Every figure measured in §6-§8 matches its CONTEXT/RESEARCH-carried value exactly (V121 SHA
+`e129081e`, byte count 307 docs paths, known member present/absent, 0 commits since close) —
+**no deltas to record** for this plan. This is itself worth stating explicitly per D-65's own
+discipline: a zero-delta result is a result, not a skipped measurement.
+
+### Post-task validator triple
+
+`node scripts/validation/check-phase-54.mjs` reports `Summary: 32 passed, 0 failed, 0 skipped`,
+re-run immediately before this evidence commit.
