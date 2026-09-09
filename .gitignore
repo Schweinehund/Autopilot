@@ -74,3 +74,13 @@ graphify-out/
 
 # Research-store scratch written by gsd-project-researcher agents
 .planning/research/.cache/
+
+# Phase 159 close-time hygiene (D-41): runtime/tool-local state, never
+# read by scripts/validation/ or .github/workflows/ (confirmed by grep
+# before adding).
+.planning/state.json
+.obsidian/
+.playwright-mcp/
+.gsd/
+.agents/
+skills-lock.json

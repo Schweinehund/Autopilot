@@ -307,3 +307,151 @@ Exit status: **1**.
 `git config --get-all core.hooksPath` in the real repository returns the same single value
 (`D:\claude\Autopilot\.git\hooks`) before and after this task; the throwaway clone's own
 `.git/hooks/pre-push` install is per-clone and never touches the real repository's config.
+
+---
+
+## §4 — Task 5: close-time hygiene, ignore list, config guard, installer re-encode
+
+### CRITICAL near-miss, caught and fixed (Rule 1 — also logged as WINDOWS.md row 18)
+
+D-41 characterized the 6 filesystem directories under `.claude/worktrees/` that are unregistered
+with `git worktree list` as "orphan directories... invisible to `git status`." **This is false for 5
+of the 6.** Before deleting, `git ls-files` was checked only after the `rm -rf`, not before —
+deleting all 6 directories per the plan's literal instruction removed **16 files tracked in git since
+Phases 16/22/23** (docs content and their SUMMARY.md files), left at that path by a historical
+cwd-drift bug in those phases' own worktree agents and coincidentally sharing today's
+`.claude/worktrees/agent-*` naming pattern. This surfaced immediately as 16 unstaged deletions in
+`git status --porcelain --untracked-files=all` before any commit was made, and was fully reverted via
+`git checkout -- .claude/worktrees/` (confirmed byte-identical restoration: `git diff --stat` empty,
+`git ls-files .claude/worktrees/` still lists all 16 paths). Only `agent-afb6faa2` — confirmed to hold
+zero tracked files via `git ls-files` — was genuinely orphaned and stays deleted. See WINDOWS.md row
+18 for the full record and the handoff to future milestone-close hygiene passes.
+
+### Worktree tips (recorded before removal)
+
+| Worktree | Tip SHA |
+|---|---|
+| `.claude/worktrees/agent-a30e3c02` | `919ccfe2` |
+| `.claude/worktrees/agent-a7060637` | `b60392ba` |
+| `.claude/worktrees/agent-a78a3e75` | `0f3ba159` |
+| `.claude/worktrees/agent-a7915453` | `2d64d956` |
+| `.claude/worktrees/agent-aa31f5d9` | `e1ce22f4` |
+| `.claude/worktrees/agent-adf4846f` | `ad67c271` |
+| `.claude/worktrees/agent-af6387cf` | `9f805ed1` |
+
+All 7 registered worktrees removed via `git worktree remove --force`; `git worktree list` afterward
+shows only the main checkout (count 1). 1 genuine orphan directory deleted (`agent-afb6faa2`, 0
+tracked files); the other 5 nominal "orphans" hold tracked content and were preserved (see above).
+
+Live disk-size re-measurement: `.claude/worktrees/` measured **18 MB** for the 6 remaining directories
+after the 7 registered worktrees were already removed (not a full-13-directory reading) — this is a
+smaller population than CONTEXT's carried "13 directories, ~81 MB" describes, so the two figures are
+not directly comparable; recorded as the actual measurement taken rather than reconciled against the
+carried figure.
+
+### Branches deleted
+
+All 13 `worktree-agent-*` local branches deleted (`git branch -D`, listed individually in the
+command transcript above). `phase-139-atom-5` confirmed to survive. The 4 remote atom branches
+(`origin/phase-119-atom-2`, `origin/phase-125-atom-2`, `origin/phase-128-atom-2`,
+`origin/phase-139-atom-5`) are listed as KEEP with their current tips; none deleted (this plan never
+deletes a remote branch, per its own prohibitions list).
+
+### `.gitignore`
+
+Grep confirmed, before adding, that nothing under `scripts/validation/` or `.github/workflows/`
+references any of the 6 new entries (`.planning/state.json`, `.obsidian/`, `.playwright-mcp/`,
+`.gsd/`, `.agents/`, `skills-lock.json`) — all six greps returned zero hits. All six lines added.
+
+### Config guard
+
+`"branching_strategy": "none"` added inside the `workflow` object of `.planning/config.json`.
+`159-RESEARCH.md`'s Planner Assumption 1 marked RESOLVED AT EXECUTION in place, re-confirming the key
+was still absent immediately before this commit.
+
+### Orphan artifacts committed by explicit path
+
+`154-PATTERNS.md` and `.claude/skills/jira-milestone/install-jira-milestone-hook.cjs` — both staged
+individually by path, never via a blanket add.
+
+### Installer payload re-encode
+
+The live adapted hook `.claude/hooks/jira-milestone-gate.cjs` (7,075 bytes) was base64-encoded with
+no line wrapping and the installer's `HOOK_B64` constant replaced with that value. Verified by
+decoding the committed constant back to bytes and comparing to the tracked hook file:
+`installer payload equals live hook, 7075 bytes`. Before the re-encode, the installer's `HOOK_B64`
+decoded to a *different*, generic hook (reads `STATE.total_phases`, ~7,552 bytes) than the tracked,
+adapted hook (counts ROADMAP rows instead, since `STATE.total_phases` is stale in this repo) — the
+two were NOT byte-identical before this task, confirming D-67's premise.
+
+### Case collision recorded (not fixed)
+
+The skill manifest lives on disk as `.claude/skills/jira-milestone/skill.md` (lowercase), but the
+installer's own `writeIfAbsent` call and its own console instructions both reference
+`.claude/skills/jira-milestone/SKILL.md` (uppercase) — two literal occurrences in
+`install-jira-milestone-hook.cjs`. On this Windows/NTFS checkout the two names resolve to the same
+file (invisible collision, confirmed via `find -iname`); on a case-sensitive checkout (Linux, macOS
+APFS in case-sensitive mode) the installer would create a **second**, separate `SKILL.md` file
+alongside the existing `skill.md` rather than updating it. Recorded per D-67; not fixed (out of this
+task's scope, which is the `HOOK_B64` re-encode only).
+
+### `settings.local.json` — never committed
+
+`git ls-files --error-unmatch .claude/settings.local.json` exits non-zero (confirmed, both before and
+after this task). Its two registered Stop hooks on the authoring machine, read directly from the file
+(never echoing secrets — there are none in this file): `jira-milestone-gate.cjs` and
+`publish-bundle-gate.cjs`, matching D-54.
+
+### Untracked census
+
+| Form | Count |
+|---|---|
+| Collapsed (`git status --porcelain`) | 8 |
+| All-untracked (`git status --porcelain --untracked-files=all`) | **53** (not CONTEXT's carried 105 — see population breakdown below; delta explained by population change, not measurement error) |
+
+**Population breakdown of the 53, each marked ruled or deliberately unruled:**
+
+- **46 files** under `.claude/skills/fireworks-tech-graph/` — a third-party diagramming skill plugin
+  directory (LICENSE, README, templates, fixtures, scripts). Not named by any D-41 scope item, not a
+  Phase 159 deliverable. **Deliberately unruled**: pre-existing before this plan started (present in
+  the very first `git status` this session), out of phase scope, left for the repository owner to
+  decide whether to commit or gitignore in a future session.
+- **1 file**, `.claude/skills/jira-milestone/install-jira-milestone-hook.cjs` — **ruled**: committed
+  by explicit path in this task, per D-67.
+- **1 file**, `.planning/phases/154-style-landing-merge-the-verified-google-style-pass/154-PATTERNS.md`
+  — **ruled**: committed by explicit path in this task, per D-41.
+- **1 file**, `.planning/milestone.lock` — a session-scoped runtime lock file created by the GSD
+  harness for this very execution session (holds this session's own session ID and PID). **Deliberately
+  unruled**: not named in D-41's six-entry gitignore list (a minor plan omission, same class as the
+  other mis-specifications already logged); it self-describes as transient session state and is left
+  untouched rather than unilaterally expanding D-41's named scope.
+
+After this task's `.gitignore` additions, the 6 newly-ignored patterns (`.planning/state.json`,
+`.obsidian/`, `.playwright-mcp/`, `.gsd/`, `.agents/`, `skills-lock.json`) no longer appear in either
+census form — confirmed by their absence from the post-commit `git status --porcelain
+--untracked-files=all` output.
+
+### STATE reconciliation (D-46, restated with live readings)
+
+- `e1`, `e2`, `ee` stray debug files at repo root: confirmed absent (`ls e1 e2 ee` — no such files).
+- `/gsd-secure-phase 158` has run: confirmed — `158-SECURITY.md` exists with `status: secured`
+  (Sign-Off section, all boxes checked).
+- Glossary metadata: `docs/_glossary.md` and `docs/_glossary-linux.md` both read `last_verified:
+  2026-06-29` / `review_by: 2026-09-27` (grep-confirmed, both files, both fields). No gate compares
+  either date to the current date (2026-09-09, still inside the margin).
+- STATE's progress figures (`total_phases: 6`, `completed_phases: 5`, `percent: 70` as of this
+  session's start) are the harness's own rolling bookkeeping, updated automatically by
+  `state.advance-plan`/`state.update-progress` at each plan boundary — not a record defect.
+
+### Durable carve-outs restated (for the archival step, D-45)
+
+1. **Never `git rm .planning/REQUIREMENTS.md`** — `check-phase-54.mjs` live-reads it outside the
+   frozen-at-close mechanism.
+2. **Any `.planning/ROADMAP.md` shrink goes through the write-guard sentinel**, with
+   `check-phase-54.mjs` and `check-phase-61.mjs` run immediately after.
+3. **The `MILESTONES.md` entry and its task count are rewritten by hand** from summary frontmatter —
+   the `milestone.complete` summarizer has undercounted tasks and scraped deviation-log fragments as
+   accomplishments in two consecutive prior closes (per STATE.md's own carried note).
+4. **STATE's Operator Next Steps are re-authored** at close, not left as this phase's stale text.
+5. **The nine un-acknowledgeable `DEFER-121-07-A` rows are disclosed, not fixed** — no v1.22
+   requirement names their remediation.
