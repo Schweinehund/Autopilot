@@ -2608,3 +2608,252 @@ $ git status --porcelain -- docs/
 ```
 
 No file under `docs/` was read-write touched by this plan's three tasks.
+
+---
+
+## §25 — Plan 159-10 Task 1: pre-flights measured at the checkpoint, presentation block
+
+Per D-55, every figure below is measured **now**, at this task's own execution time — none is
+carried from `159-CONTEXT.md`, `159-RESEARCH.md`, or any earlier plan's evidence section, including
+§24's own figures from Plan 159-09. Where a figure has moved since §24, the delta and its cause are
+stated explicitly (D-65 measurement discipline: the live value wins).
+
+### 25.1 Ahead/behind, measured now
+
+```
+$ git fetch --prune
+$ git rev-list --left-right --count origin/master...master
+0	57
+```
+
+`[MEASURED]` **0 behind, 57 ahead.** `master` = `4a1153ee8f7995b875666a63f4c58ea6475d29f0`,
+`origin/master` = `c4088fc072b3c4eecc71ea7745165cdd727cd17e` (unmoved — nothing has been pushed
+this milestone). This supersedes §24's carried **53** — four additional commits landed after §24
+was written: Plan 159-09's own Task 3 commit (`e80e8627`) plus its plan-metadata/summary commits
+(`132e5451`, `6fe55312`, `4a1153ee`). 53 + 4 = 57, confirmed by direct enumeration
+(`git log --oneline -4` shows exactly these four as the most recent commits).
+
+### 25.2 Working-tree state, both forms, re-measured now
+
+```
+$ git status --porcelain | wc -l
+2
+$ git status --porcelain --untracked-files=all | wc -l
+47
+```
+
+`[MEASURED]` **2 bare / 47 all-untracked** — unchanged from §23's reading (Tasks in 159-09 and
+159-10 Task 1 touched only tracked files already committed). `git worktree list` re-confirmed:
+only the main checkout (`D:/claude/Autopilot [master]`), count 1.
+
+Every remaining untracked population, marked ruled or deliberately unruled:
+
+| Population | Count | Disposition |
+|---|---|---|
+| `.claude/skills/fireworks-tech-graph/*` (third-party diagramming skill plugin) | 46 | **Deliberately unruled** — pre-existing before Phase 159 started, out of phase scope, left for the repository owner to decide in a future session (unchanged since §4) |
+| `.planning/milestone.lock` | 1 | **Deliberately unruled** — this execution session's own transient runtime lock, self-describing and not named in D-41's gitignore list (unchanged since §4/§23) |
+
+46 + 1 = 47, matching the all-untracked count exactly; the directory collapses to one entry under
+the bare form, matching 2 (1 directory + 1 lock file).
+
+### 25.3 Derived-token scan, all five surfaces, re-run now
+
+The token is re-derived in-process, exactly as D-06 specifies (`git diff 077b29b7^ 077b29b7 --
+assets/recipes/06-walk-up-avd-kiosk/NOTICE`, removed-minus-added 9-character token). Held only in a
+shell variable; never echoed, never written to a file, no scanner or hash of it committed anywhere.
+
+```
+$ T=$(git diff 077b29b7^ 077b29b7 -- assets/recipes/06-walk-up-avd-kiosk/NOTICE | grep -oE '^-[^-].*' | grep -oE '[A-Z0-9]{9}' | sort -u | head -1)
+$ a=$(git grep -l -- "$T" HEAD 2>/dev/null | wc -l)
+$ b=$(git grep --untracked -l -- "$T" 2>/dev/null | wc -l)
+$ c=$(git log --format=%B origin/master..master | grep -c -- "$T")
+$ d=$(git log -p origin/master..master | grep -c -- "$T")
+```
+
+| # | Surface | Command | Result |
+|---|---|---|---|
+| 1 | Tracked files at HEAD | `git grep -l -- "$T" HEAD` | **0** |
+| 2 | Untracked-inclusive grep | `git grep --untracked -l -- "$T"` | **0** |
+| 3 | Every commit message in the unpushed range | `git log --format=%B origin/master..master \| grep -c -- "$T"` | **0** |
+| 4 | Squash message file | N/A — the file was written to a scratch location outside the repository and consumed by `git commit-tree` (§2); it was never persisted to disk in this repository and does not exist to scan. Its content is embedded in the squash commit `9cc84aa6`, which is inside `origin/master..master` and is therefore covered by surfaces 3 and 5. |
+| 5 | Blob content in the unpushed range's patch output | `git log -p origin/master..master \| grep -c -- "$T"` | **0** |
+
+**All measurable surfaces read 0.** The exact three-number scan command from this task's own
+`<verify>` block was also run directly and confirms the same result:
+
+```
+$ T=$(git diff 077b29b7^ 077b29b7 -- assets/recipes/06-walk-up-avd-kiosk/NOTICE | grep -oE '^-[^-].*' | grep -oE '[A-Z0-9]{9}' | sort -u | head -1); a=$(git grep -l -- "$T" HEAD 2>/dev/null | wc -l); b=$(git log --format=%B origin/master..master | grep -c -- "$T"); c=$(git log -p origin/master..master | grep -c -- "$T"); echo "tracked=$a messages=$b blobs=$c"
+tracked=0 messages=0 blobs=0
+```
+
+**The proceed branch is offered on this axis** — no surface reads above 0.
+
+### 25.4 Tree equality, re-asserted, with the divergence explained
+
+```
+$ git rev-parse master^{tree}
+d9e5682312db72ddf229c482f901cb35261f5756
+$ git rev-parse refs/archive/v1.22-landing^{tree}
+15f9d29017b042e4feea3af118140c392bed71f3
+```
+
+`[MEASURED]` **The two trees no longer match.** This is expected and already anticipated by this
+document's own record, not a new finding. D-03 scopes the equality assertion to Plan 159-01's own
+squash-time measurement: §2 recorded both hashes as `15f9d290…`, a MATCH, at the moment the squash
+landed. §2's own branch-afterlife note and §24 item 4 both state explicitly that "the two trees
+diverge again immediately afterward as expected, once later commits land on `master`" — and eight
+plans' worth of legitimate commits (159-01 Task 5 hygiene through 159-09) have landed on `master`
+since that moment, none of them on the archived ref, which stays frozen at the squash point by
+design (that is what "archived" means for `refs/archive/v1.22-landing`). Quoting both current
+hashes discharges this presentation item; the D-06 leak scan in §25.3, not tree equality, is the
+gate that governs whether a leak has been re-introduced, and it reads clean.
+
+### 25.5 Remote census
+
+```
+$ git remote -v
+origin   https://github.com/Schweinehund/Autopilot.git (fetch)
+origin   https://github.com/Schweinehund/Autopilot.git (push)
+scratch  D:/claude/docs-google-style-test (fetch)
+scratch  D:/claude/docs-google-style-test (push)
+```
+
+Two remotes, unchanged from §24. **`origin` is the only push target this checkpoint's proposed
+command touches. `scratch` is never a push target** — a local-path remote pointing at a sibling
+working directory on this machine, used for cross-repo comparison work earlier in this milestone.
+
+### 25.6 Scope ruling on tracked-but-unpushed populations, re-confirmed
+
+```
+$ git rev-list --count origin/master..master
+57
+$ git rev-list origin/master..master | grep -c 9cc84aa6
+1
+$ git rev-list origin/master..master | grep -c f8750c6d
+1
+$ git diff --name-only origin/master master -- assets/recipes/06-walk-up-avd-kiosk/ | wc -l
+29
+```
+
+All three tracked-but-unpushed populations §24 identified are re-confirmed still present, inside
+the same two commits, inside the now-57-commit unpushed range:
+
+| Population | Where it lives | Separable? |
+|---|---|---|
+| RE-237 (imported from outside GSD, Phase 155) | `docs/_registry/RE-index.md`, `docs/recipes/06-walk-up-avd-kiosk.md`, inside `9cc84aa6` | No — inside the single-parent squash commit |
+| 29 kiosk-recipe assets | `assets/recipes/06-walk-up-avd-kiosk/` (re-confirmed: 29 files), inside `9cc84aa6` | No — same squash commit |
+| `.planning/artifacts/154-scratch-corpus.bundle` | Added by `f8750c6d` | No — removing it now means a `git rm` commit on top (leaving it in history) or a rewrite of `f8750c6d`; §22 already ruled it stays tracked (bundle scan: not a true hit, see §25.8) |
+
+**Ruling, unchanged from §24: none of the three is separable from the push set without rewriting
+unpushed history.** A `proceed` or `partial` push that includes commit `9cc84aa6` or `f8750c6d`
+publishes all three automatically.
+
+### 25.7 Branch inventory, re-confirmed
+
+```
+$ git branch --list "v1.22/154-style-landing"
+(empty)
+$ git ls-remote --heads origin | grep '154-style-landing'
+(no output — 0 matches)
+$ git rev-parse refs/archive/v1.22-landing
+9cc765874978c0c77fcc6b3587426226137f737e
+$ git branch --list "worktree-agent-*" "agent-*"
+(empty)
+$ git ls-remote origin 'refs/archive/*' | wc -l
+0
+```
+
+- **Landing branch deleted**: absent locally and on the remote.
+- **Archive ref resolves**: `9cc765874978c0c77fcc6b3587426226137f737e`, and is confirmed absent
+  from the remote (0 matches for `refs/archive/*`).
+- **Agent/worktree branches removed**: no `worktree-agent-*` or `agent-*` local branch remains.
+- **Remote atom branches**, re-fetched and re-confirmed byte-identical to §23/153-EVIDENCE §5.4:
+
+| Branch | Tip | Reachable from `origin/master` | Evidence resting on this tip |
+|---|---|---|---|
+| `origin/phase-119-atom-2` | `652f48e7` | Yes | Phase 119's Axis-2 GHA cascade — v1.15 close's CI evidence |
+| `origin/phase-125-atom-2` | `ce62fe58` | Yes | Phase 125's Axis-2 GHA cascade — v1.16 close's CI evidence |
+| `origin/phase-128-atom-2` | `4e89d68c` | Yes | Phase 128's Atom-2a/2b, opened the PR that fired the CI cascade — v1.17 close's CI evidence |
+| `origin/phase-139-atom-5` | `c2450efa` | Yes | 16/16 `frozen-read-probe` jobs, closes SWEEP-01 SC#2 / D-24-rescoped SWEEP-02; a deleted remote branch has no reflog |
+
+All four tips are unchanged since the v1.21 close. **No branch is deleted by this task.** All four
+are marked **KEEP-ruled pending the owner's explicit delete-or-keep call at Task 2.**
+
+### 25.8 Per-pattern bundle-scan counts, restated from §22
+
+| # | Pattern class | Matched blobs | Distinct paths | Verdict |
+|---|---|---|---|---|
+| 1 | Private-key header markers | 0 | 0 | clean |
+| 2 | Bearer/session/cloud-key shapes | 0 | 0 | clean |
+| 3 | Email addresses outside the owner | 118 | 23 | not a true hit — Microsoft-documentation placeholder domains (`contoso.com`, `onmicrosoft.com`, `domain.com`, `your-tenant.tld`, `orgdomain.com`, `school.org`) and non-email protocol identifiers (`@odata.id`, `@KERBEROS.MICROSOFTONLINE.COM`) inside the pre-style-pass docs corpus |
+| 4 | Corporate-domain hostname shapes | 4 | 1 | not a true hit — same placeholder domain class |
+| 5 | Derived leak-scrub label (D-06) | 0 | 0 | clean |
+
+**Verdict, restated: not a true hit on any pattern.** The bundle stays tracked; no removal.
+
+### 25.9 The exact push command and what it publishes
+
+```
+git push origin master
+```
+
+At this task's execution time, this command would fast-forward `origin/master` by the full
+**57-commit** unpushed range (§25.1 — supersedes §24's stale 53), currently headed at `master` =
+`4a1153ee8f7995b875666a63f4c58ea6475d29f0`. This publishes: the entire squashed v1.22 milestone
+(Phases 154-158 plus Phase 159's planning documents, commit `9cc84aa6`), every Phase 159 plan
+commit executed so far (159-01 through this plan's own Task 1 commit), the pre-push guard hook's
+tracked reference scripts (`scripts/hooks/pre-push.sh`), and the scratch corpus bundle
+(`.planning/artifacts/154-scratch-corpus.bundle`, added by `f8750c6d`). A partial push
+(`git push origin <sha>:master`) would publish any prefix of this same linear history instead of
+the whole range.
+
+### 25.10 The one-way statement
+
+**This push, once it succeeds, cannot be undone by any command available to this project.**
+`origin/master` is a real GitHub remote; once it fast-forwards to include these commits,
+un-publishing them requires a force-push that rewrites public history other clones may already have
+fetched — an operation this project's `destructive_git_prohibition` rules out for any branch this
+session did not create, and one the pre-push hook installed in 159-01 (§3) does not defend against
+in the reverse direction (it blocks the *archived* history from ever being pushed; it does not
+un-push anything already accepted). Declining now and pushing later remains available; un-pushing
+after a successful push does not.
+
+### 25.11 The consequence of declining
+
+If the owner declines or defers this push: `origin/master` stays at its current tip
+(`c4088fc072b3c4eecc71ea7745165cdd727cd17e`), none of the 57 unpushed commits (the squashed
+milestone, all of Phase 159's work so far, the pre-push guard, the bundle) reaches the remote, no CI
+workflow that requires the file to exist on the default branch (`workflow_dispatch:` targets,
+including the newly landed `audit-harness-v1.22-integrity.yml`) can be dispatched, both reproduction
+axes cannot run against a shared commit, and the v1.22 milestone does not close. A `defer` halts
+cleanly with a named blocker; continuation is a fresh agent, and cross-session re-entry is
+plan-granular through `safe_resume_gate` — declining is not a dead end, but HARN-06 stays recorded
+UNMET until the owner revisits the decision. A `decline` records HARN-06 UNMET explicitly; no
+accepted-red disposition is created or invoked under any branch.
+
+### The eleven presentation items, put to the owner in this order
+
+1. **Ahead/behind, measured now (§25.1):** 57 ahead of `origin/master`, 0 behind.
+2. **Working-tree state, both forms (§25.2):** 2 bare / 47 all-untracked; both populations
+   (46 `fireworks-tech-graph` files, 1 `milestone.lock`) named and marked deliberately unruled.
+3. **Derived-token scan, all five surfaces (§25.3):** all read 0 (surface 4 — the squash message
+   file — never existed on disk and is covered by surfaces 3 and 5, which also read 0).
+4. **Tree equality (§25.4):** `master^{tree}` = `d9e56823…`, archive tree = `15f9d290…` — no
+   longer matching, exactly as expected per D-03/§2/§24: the archive ref is frozen at the squash
+   point while eight plans' worth of legitimate work has landed on `master` since.
+5. **Remote census (§25.5):** `origin` and `scratch`; `scratch` is never a push target.
+6. **Scope ruling (§25.6):** RE-237, the 29 kiosk assets, and the scratch bundle all ride the push
+   inside commits `9cc84aa6`/`f8750c6d`; none is separable without a history rewrite.
+7. **Branch inventory (§25.7):** landing branch deleted, archive ref resolves and is absent from
+   the remote, agent/worktree branches removed, all four remote atom branches shown with tips as
+   KEEP-ruled. **Explicit question to the owner: delete or keep each of the four atom branches?**
+   No branch is deleted by this task regardless of the answer.
+8. **Bundle-scan per-pattern counts (§25.8):** 0/0/118/4/0 — patterns 3 and 4 judged not a true
+   hit (documentation placeholders); bundle stays tracked.
+9. **The exact push command and what it publishes (§25.9):** `git push origin master`, publishing
+   57 commits including the squash, RE-237, the kiosk assets, the bundle, and the pre-push guard.
+10. **The one-way statement (§25.10):** there is no un-push.
+11. **The consequence of declining (§25.11):** no dispatch axis, no shared commit, the milestone
+    does not close this phase; HARN-06 stays UNMET until revisited.
+
+**No accepted-red disposition exists at this close and none will be created under any branch.**
