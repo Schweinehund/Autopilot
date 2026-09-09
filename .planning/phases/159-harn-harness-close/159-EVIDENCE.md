@@ -2292,3 +2292,164 @@ sequence (D-01 through D-67) never performs.
 
 `git ls-files --error-unmatch .planning/artifacts/154-scratch-corpus.bundle` → exit 0, "bundle still
 tracked" — confirmed unchanged by this task, as expected given no true hit.
+
+---
+
+## §23 — Plan 159-09 Task 2: harness and lineage run set, consolidated at one head
+
+### Ten current readings, one shared head commit
+
+All ten re-run in this task, in this order, at:
+
+```
+$ git rev-parse HEAD
+58a49e2a0aa6dca25ad2bb0ca11c8ac975d267dd
+```
+
+| # | Reading | Command | Result |
+|---|---|---|---|
+| 1 | Converted predecessor harness | `node scripts/validation/v1.21-milestone-audit.mjs --verbose` | `Summary: 16 passed, 0 failed, 0 skipped` |
+| 2 | New harness | `node scripts/validation/v1.22-milestone-audit.mjs --verbose` | `Summary: 16 passed, 0 failed, 0 skipped` |
+| 3 | Converted predecessor self-test | `node scripts/validation/v1.21-milestone-audit.mjs --self-test` | `Self-test: 9 passed, 0 failed` |
+| 4 | New harness self-test | `node scripts/validation/v1.22-milestone-audit.mjs --self-test` | `Self-test: 9 passed, 0 failed` |
+| 5 | Leaf `check-phase-154.mjs` | `node scripts/validation/check-phase-154.mjs` | `Result: 13 PASS, 0 FAIL, 0 SKIPPED` |
+| 6 | Leaf `check-phase-155.mjs` | `node scripts/validation/check-phase-155.mjs` | `Result: 10 PASS, 0 FAIL, 0 SKIPPED` |
+| 7 | Leaf `check-phase-156.mjs` | `node scripts/validation/check-phase-156.mjs` | `Result: 10 PASS, 0 FAIL, 0 SKIPPED` |
+| 8 | Leaf `check-phase-157.mjs` | `node scripts/validation/check-phase-157.mjs` | `Result: 34 PASS, 0 FAIL, 0 SKIPPED` |
+| 9 | Leaf `check-phase-158.mjs` | `node scripts/validation/check-phase-158.mjs` | `Result: 12 PASS, 0 FAIL, 0 SKIPPED` |
+| 10 | Apex `check-phase-159.mjs` | `node scripts/validation/check-phase-159.mjs` | `Result: 116 PASS, 0 FAIL, 1 SKIPPED (total checks: 117)` — the one skip is `V-159-AUDIT`, unchanged from §19/§21 (`159-VERIFICATION.md` not yet authored, the expected pre-close-gate state) |
+
+All ten were run in a single sequential shell loop that captured `git rev-parse HEAD` first,
+confirming every reading below shares that one value — no reading in this table was taken at a
+different commit than any other.
+
+### The globbing chain member's triple, same head
+
+```
+$ node scripts/validation/check-phase-139.mjs
+Result: 5 PASS, 0 FAIL, 0 SKIPPED
+```
+Recorded at the identical head `58a49e2a0aa6dca25ad2bb0ca11c8ac975d267dd`.
+
+`git worktree list` at this same point reports only the main checkout (count 1) — matches this
+task's own acceptance command.
+
+### Three carried readings — quoted verbatim, marked carried, attributed
+
+These three cannot be reproduced now: the unconverted-harness baseline no longer exists in the
+working tree (the harness was converted in 159-04 Task 2), and the perturbation/negative-probe work
+ran in throwaway scratch clones that were discarded at the end of that plan's own task. All three are
+quoted here exactly as 159-04 recorded them.
+
+**CARRIED from 159-04 Task 1 (§12) — unconverted live triple, before conversion:**
+```
+node scripts/validation/v1.21-milestone-audit.mjs --verbose 2>&1 | tail -1
+```
+→ `Summary: 16 passed, 0 failed, 0 skipped`
+
+**CARRIED from 159-04 Task 3 (§13) — scratch-copy perturbation transcript:**
+```
+Edited coordinate: docs/_glossary-android.md, one blank line inserted immediately above the
+supervision_exemptions pinned line 37, shifting content to line 38.
+
+Converted harness, before and after the edit (scratch clone):
+  before: Summary: 16 passed, 0 failed, 0 skipped
+  after:  Summary: 16 passed, 0 failed, 0 skipped   (unchanged -- reads the frozen V121 blob)
+
+Same edit against the pre-conversion unconverted snapshot (scratch clone):
+  [2/16] C2: Zero supervision as Android mgmt term ... FAIL -- 25 un-exempted supervision reference(s)
+  [7/16] C7: bare-"Knox" disambiguation check ... FAIL -- 5 bare "Knox" occurrence(s) without SKU qualifier
+  [9/16] C9: COPE banned-phrase check ... FAIL -- 1 un-exempted COPE banned-phrase hit(s)
+  Summary: 13 passed, 3 failed, 0 skipped
+```
+
+**CARRIED from 159-04 Task 3 (§13) — two guard-firing negative probes:**
+```
+Negative probe 1 (bogus known member, repointed to a nonexistent file):
+  [17/16] C17: EEE document contract ... FAIL -- C17 FAIL: known-member guard failed
+  Summary: 15 passed, 1 failed, 0 skipped
+
+Negative probe 2 (wrong milestone tag, withDocsAtClose repointed to 'V120'):
+  [17/16] C17: EEE document contract ... FAIL -- C17 FAIL: known-member guard failed
+  Summary: 15 passed, 1 failed, 0 skipped
+```
+Both probes were reverted and re-confirmed green (`16 passed, 0 failed, 0 skipped`) before the
+scratch clone was discarded, per 159-04's own record.
+
+**Attribution:** all three readings above were produced by Plan `159-04`, Task 1 (§12) and Task 3
+(§13) of this same evidence document; none is re-run here.
+
+### The nested limitation, stated plainly
+
+**Under `CHECK_PHASE_NESTED=1` the apex (`check-phase-159.mjs`) cannot see any of the harness or
+lineage evidence in this section except through the single additive `V-159-HARN03` leg** — every
+other harness-spawning check in the apex-generation chain (`AUDIT-HARNESS` inside
+`check-phase-119/125/128/134/138/144.mjs`) still skips under the nested flag exactly as 153-EVIDENCE
+§1 recorded for the v1.21 apex, and that skip fan-out is unchanged by anything this phase has done.
+A reader who assumes a clean apex triple proves the ten readings above would be wrong; this section,
+not the apex, is where those ten readings are actually proven.
+
+### Hygiene material, carried into this section
+
+**Worktree tips, recorded before removal (159-01 Task 5, §4):**
+
+| Worktree | Tip SHA |
+|---|---|
+| `.claude/worktrees/agent-a30e3c02` | `919ccfe2` |
+| `.claude/worktrees/agent-a7060637` | `b60392ba` |
+| `.claude/worktrees/agent-a78a3e75` | `0f3ba159` |
+| `.claude/worktrees/agent-a7915453` | `2d64d956` |
+| `.claude/worktrees/agent-aa31f5d9` | `e1ce22f4` |
+| `.claude/worktrees/agent-af6387cf` | `9f805ed1` |
+| `.claude/worktrees/agent-adf4846f` | `ad67c271` |
+
+All 7 removed; `git worktree list` today (re-confirmed above) still shows only the main checkout.
+
+**Working-tree census, all-untracked form, re-measured now:**
+
+| Form | §4's reading (159-01) | Live reading (this task) |
+|---|---|---|
+| Collapsed (`git status --porcelain`) | 8 | **2** |
+| All-untracked (`--untracked-files=all`) | 53 | **47** |
+
+**Delta, explained:** the two files §4 marked "ruled" (`.claude/skills/jira-milestone/install-jira-milestone-hook.cjs`
+and `154-PATTERNS.md`) are committed and no longer appear in either census. The remaining population
+is the same two items §4 already classified:
+
+- **46 files** under `.claude/skills/fireworks-tech-graph/` — pre-existing, out of Phase 159 scope.
+  **Deliberately unruled**, unchanged disposition from §4: left for the repository owner to decide in
+  a future session.
+- **1 file**, `.planning/milestone.lock` — this execution session's own transient runtime lock.
+  **Deliberately unruled**, unchanged disposition from §4.
+
+Collapsed count of 2 = these same two populations (the directory collapses to one entry, plus the
+lock file), matching 46+1 files exactly under the all-untracked form's 47.
+
+**Atom-branch inventory, tips and evidence, all KEEP-pending:**
+
+`git fetch origin` was run before recording these tips.
+
+| Branch | Tip commit | Reachable from `origin/master` | Evidence resting on this tip |
+|---|---|---|---|
+| `origin/phase-119-atom-2` | `652f48e7` | Yes | Phase 119's Axis-2 GHA cascade, conclusion success — the v1.15 close's CI evidence |
+| `origin/phase-125-atom-2` | `ce62fe58` | Yes | Phase 125's Axis-2 GHA cascade — the v1.16 close's CI evidence |
+| `origin/phase-128-atom-2` | `4e89d68c` | Yes | Phase 128's Atom-2a/2b pushed as this branch, opening the PR that fired the CI cascade — the v1.17 close's CI evidence |
+| `origin/phase-139-atom-5` | `c2450efa` | Yes | 16/16 `frozen-read-probe` jobs report job-level success across all 16 `audit-harness-*.yml` workflows dispatched against this branch — closes SWEEP-01 SC#2 and the D-24-rescoped SWEEP-02; a deleted remote branch has no reflog |
+
+All four tips are byte-identical to 153-EVIDENCE §5.4's own reading — no branch has moved since the
+v1.21 close. The local `phase-139-atom-5` branch (tip `c2450efa`, matching its remote counterpart) is
+also confirmed reachable from local HEAD. **No branch is deleted by this task.** The delete-or-keep
+call for all four, exactly as at the v1.21 close, goes to the owner at the push checkpoint (Plan
+159-10) — every row above is marked KEEP pending that decision, not a ruling made here.
+
+### Deltas: every figure whose live value differs from CONTEXT's or RESEARCH's
+
+| Figure | CONTEXT/RESEARCH value | Live value (this task) | Delta |
+|---|---|---|---|
+| Untracked census, all-untracked form | D-41 carried 105 (159-01's own §4 measurement was already a first delta, at 53) | **47** | Population continues to shrink as ruled files are committed across plans; no new unruled population appeared. |
+| Untracked census, collapsed form | Not carried in CONTEXT | **2** (was 8 at §4) | Same population shrink as above. |
+| Atom-branch tips | Not carried in 159-CONTEXT (no v1.22-specific figure); 153-EVIDENCE §5.4 recorded the v1.21-close reading | Identical to 153-EVIDENCE's four tips | Delta 0 — no atom branch has moved since the v1.21 close. |
+
+All other figures in this section (the ten readings' triples, the globbing member's triple, the three
+carried readings, the worktree-tip table) match their respective source sections and D-26/D-41
+exactly — delta 0.
