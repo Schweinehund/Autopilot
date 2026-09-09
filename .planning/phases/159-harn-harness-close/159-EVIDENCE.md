@@ -1908,3 +1908,148 @@ confirmed after this plan's two commits (159-EVIDENCE.md §18, then `check-phase
 All other figures (chain length 111, extra disjointness, skip-set emptiness, total 117, both
 pre-verification and post-verification triples, both harness triples 16/0/0) match §18's Task-1
 derivation and this section's own re-measurement exactly — delta 0.
+
+## §20 — Plan 159-08 Task 1: enumerate the predecessor, derive the thirteen-job diff plan
+
+### Predecessor enumeration (from the live file, not a carried count)
+
+`.github/workflows/audit-harness-v1.21-integrity.yml` job names, in file order (16 total):
+
+`parse`, `path-match`, `harness-run`, `linux-chain-ubuntu-latest`, `check-phase-145`,
+`check-phase-146`, `check-phase-147`, `check-phase-148`, `check-phase-149`, `check-phase-150`,
+`check-phase-151`, `check-phase-152`, `check-phase-153`, `rotting-external-quarterly`,
+`pin-helper-advisory`, `frozen-read-probe`.
+
+Trigger set: `pull_request` (path-filtered on `scripts/validation/v1.21-*`,
+`scripts/validation/check-phase-*.mjs`, `.github/workflows/audit-harness-v1.21-integrity.yml`,
+`.planning/REQUIREMENTS.md`, `.planning/milestones/v1.21-*`), `schedule` (two crons — weekly
+Monday 08:00 UTC bitrot catch, quarterly 08:00 UTC 1st-of-Jan/Apr/Jul/Oct `c13_rotting_external`
+check), `workflow_dispatch`. No `push` trigger — confirmed:
+`grep -c "^  push:" .github/workflows/audit-harness-v1.21-integrity.yml` returns `0`.
+
+Header annotations (quoted from the file's own comment block):
+- **DUAL-APEX** (Pitfall 6, D-128-4, carried to GA-4 D-04, re-affirmed 144-08 D-16, re-affirmed
+  153 D-52): "the standalone check-phase-153 job AND linux-chain-ubuntu-latest BOTH run the full
+  apex recursion 48..152. This is intentional and audited -- do NOT deduplicate... No job in this
+  file runs the predecessor milestone's apex validator -- the immediately-prior milestone's
+  workflow is the only file that ever carried a standalone predecessor-apex job, and
+  forward-duplicating that job is the defect D-54 names, not the pattern to copy."
+- **CARVE-1** (unresolved, deliberately untouched, out of this phase's scope): the `harness-run`
+  job's checkout carries no `ref`.
+- **HARNESS-DEPENDENCY CASCADE**: every job except `frozen-read-probe` transitively `needs:
+  harness-run`.
+- **ADVISORY NON-EVIDENCE** (D-54/D-48): `pin-helper-advisory` is structurally always-success
+  (`continue-on-error: true` plus `|| true`/`|| echo` fallbacks) and is never cited as evidence.
+
+### Mechanical diff plan
+
+| Predecessor job | Disposition | Reason |
+|---|---|---|
+| `parse` | carried | Repointed to the v1.22 sidecar (`v1.22-audit-allowlist.json`); same shape. |
+| `path-match` | carried | Repointed to grep the v1.22 harness for the v1.22 sidecar's literal path. |
+| `harness-run` | carried | Repointed to run `v1.22-milestone-audit.mjs --verbose`; CARVE-1 (no `ref`) stays untouched, out of scope. |
+| `linux-chain-ubuntu-latest` | carried | Repointed to spawn `check-phase-159.mjs` (this milestone's apex); gains the Python setup step (transitively runs the 157 leaf). |
+| `check-phase-145` | dropped | v1.21-milestone content leaf; this milestone's content phases are 154-158, not 145-152. |
+| `check-phase-146` | dropped | Same reason as 145. |
+| `check-phase-147` | dropped | Same reason as 145. |
+| `check-phase-148` | dropped | Same reason as 145. |
+| `check-phase-149` | dropped | Same reason as 145. |
+| `check-phase-150` | dropped | Same reason as 145. |
+| `check-phase-151` | dropped | Same reason as 145. |
+| `check-phase-152` | dropped | Same reason as 145. |
+| `check-phase-153` | dropped (as a job name) | Was the predecessor's own apex job; not carried forward and never forward-duplicated — replaced by a new `check-phase-159` apex job authored fresh, per D-30's own naming ("one job per check-phase-154..159"). |
+| — | added | `check-phase-154` (new leaf). |
+| — | added | `check-phase-155` (new leaf). |
+| — | added | `check-phase-156` (new leaf). |
+| — | added | `check-phase-157` (new leaf); gains the Python setup step (it directly runs the authoring-standard gate). |
+| — | added | `check-phase-158` (new leaf). |
+| — | added | `check-phase-159` (new apex job, standalone); gains the Python setup step (transitively runs the 157 leaf via the chain). |
+| `rotting-external-quarterly` | carried | Unchanged shape; still reads `c13_rotting_external` from whichever sidecar the workflow generation points at. |
+| `pin-helper-advisory` | carried | Unchanged shape; still structurally always-success, still non-evidence. |
+| `frozen-read-probe` | carried | Unchanged shape; still carries no `needs:` key. |
+
+### Arithmetic
+
+Five leaves (`check-phase-154`..`check-phase-158`) + one apex (`check-phase-159`) + seven support
+jobs (`parse`, `path-match`, `harness-run`, `linux-chain-ubuntu-latest`, `rotting-external-quarterly`,
+`pin-helper-advisory`, `frozen-read-probe`) = **13**. `5 + 1 + 7 = 13` — confirmed by direct
+addition, matching D-30's carried figure exactly (delta 0).
+
+### Dual-apex reading
+
+The standalone `check-phase-159` job and the `linux-chain-ubuntu-latest` job are the two counted
+members of this generation's dual-apex pair — both exercise the full v1.22 apex recursion, both are
+counted in the 13-job total (as one job each; the pair is a *property*, not a 14th job). No job in
+this workflow runs `check-phase-153.mjs` (the predecessor's own apex) or any earlier predecessor
+apex. Forward-duplicating a predecessor-apex job into this workflow is the defect to avoid, not a
+pattern to copy — exactly the shape the predecessor's own header names as its own inherited
+prohibition (D-54).
+
+### The two requirements the globbing chain member (`check-phase-139.mjs`) imposes, quoted verbatim
+
+- **`V-139-FETCHDEPTH`**: "every `.github/workflows/audit-harness-*.yml` has checkout-step count
+  === fetch-depth:0 count" — computed per file as
+  `(stripped.match(/actions\/checkout@v\d+/g) || []).length` compared against
+  `(stripped.match(/fetch-depth:\s*0/g) || []).length`, after `#`-led comment lines are stripped.
+  A mismatch in any single file is reported by name with both counts.
+- **`V-139-PROBEJOB`**: "every `audit-harness-*.yml` declares a `frozen-read-probe` job with no
+  `needs:` key" — computed per file by locating the line matching `^\s{2}frozen-read-probe:\s*$`,
+  slicing that job's own block up to the next 2-space-indented job header, and asserting no line in
+  that slice matches `^\s+needs:`. A missing job or a job carrying a `needs:` key is reported by
+  name and reason.
+
+Both requirements have literal, mechanical targets: the authoring task must produce a file where
+every checkout step pairs 1:1 with a `fetch-depth: 0` setting, and a `frozen-read-probe` job block
+containing no `needs:` line anywhere inside it.
+
+### Live workflow file count and ordinal correction
+
+`ls .github/workflows/*.yml | wc -l` returns **18**. Delta against 18: **0** — no workflow files
+have been added or removed since 159-01's own recorded count (`159-EVIDENCE.md` §5, ROADMAP D-51
+amendment). This plan's own commit will bring the count to 19.
+
+**Ordinal correction restated with both ordinals**: this workflow is the **19th CI coexistence
+workflow** (18 exist today; this plan's commit makes 19), while the Path-A harness-generation
+lineage this workflow coexists with is the **20th** bump in that separate sequence (v1.4, v1.4.1,
+v1.5 ... v1.21, v1.22 — one bump per milestone's own `vX.Y-milestone-audit.mjs`, a different count
+than the CI-workflow-file count). ROADMAP's own D-51 amendment states this correction verbatim;
+v1.21's own workflow header states the precedent form ("19th entry, 18th CI coexistence workflow").
+
+### Python pin decision — RESOLVED
+
+**Pinned minor: `3.13`** (via `actions/setup-python@v5`, `python-version: '3.13'`), placed in
+exactly the three jobs that transitively run `check-phase-157.mjs`'s authoring-standard leaf:
+`linux-chain-ubuntu-latest`, `check-phase-157`, `check-phase-159`.
+
+**Reason**: this session's local machine (the Axis-1 fresh-clone reproduction environment) reports
+`Python 3.13.5`. Pinning `3.13` in CI means the cross-OS evidence axis (`linux-chain-ubuntu-latest`
+on `ubuntu-latest`) and the local fresh-clone reproduction axis exercise the same interpreter minor,
+rather than whichever Python 3 `ubuntu-latest`'s runner image happens to ship that week. D-30
+requires an explicit pin "for reproducibility" — an unpinned `python-version` would make that clause
+vacuous, since `setup-python@v5` would then silently resolve to the runner's own shifting default.
+
+**Rejected alternative**: omit the `python-version` input entirely and let `actions/setup-python@v5`
+resolve `ubuntu-latest`'s default Python 3. Rejected because it reintroduces exactly the
+non-reproducibility D-30's explicit-pin requirement exists to prevent — the runner image's default
+minor is not controlled by this repository and can drift between CI runs without any change to this
+workflow file.
+
+`159-RESEARCH.md`'s Planner Assumption 2 (line 573) is marked RESOLVED in place, mirroring
+Assumption 1's own `[RESOLVED AT EXECUTION, ...]` in-place annotation shape.
+
+### Measurement-command anomaly (documented, not a code defect)
+
+This task's own second `<verify>` command,
+`grep -nE "^  [a-z][a-z0-9-]*:" .github/workflows/audit-harness-v1.21-integrity.yml | wc -l`,
+prints **17**, not the expected **16**. Root cause: the `on:` block's own `schedule:` trigger key is
+also a bare-lowercase, 2-space-indented, colon-terminated line, which the pattern
+`^  [a-z][a-z0-9-]*:` cannot distinguish from a job-name line under `jobs:` — both blocks use
+identical 2-space top-level indentation. `pull_request:` and `workflow_dispatch:` do NOT
+false-positive-match (their underscores fall outside `[a-z0-9-]`, so the pattern can never reach a
+literal `:` immediately after them), but `schedule:` has no underscore and matches cleanly. The
+predecessor's real job count, confirmed by direct enumeration of job names from the file's `jobs:`
+block (the sixteen names listed above), is **16** — unchanged, matching D-30's carried figure
+exactly. This same false-positive recurs against the new v1.22 file's own trigger block (which also
+carries a bare `schedule:` key) in Task 2's analogous verify command; it is recorded here so Task 2
+does not mistake a count of 14 (13 real jobs + 1 `schedule:` false positive) for a real job-count
+defect.
