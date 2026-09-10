@@ -7,7 +7,10 @@
 # value in its local commit history (Phase 159 Task 1 scrub); the branch was
 # squashed onto master via plumbing and archived at refs/archive/v1.22-landing,
 # then deleted. That archived history must never reach a remote. This hook is
-# the sole mechanical guard between the archived history and any remote push.
+# an opt-in, per-clone mechanical guard against the archived history reaching
+# a remote push -- it must be manually installed (see README.md "Install
+# (one-time per clone)") and is bypassable via `git push --no-verify`; it is
+# fast local feedback, not an enforced or CI-backed control.
 
 set -e
 
