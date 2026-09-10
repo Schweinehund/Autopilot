@@ -3153,3 +3153,466 @@ head, **`828df055cde076dfcbdda22de3d49850908ddbe1`**, is recorded as THE SHARED 
 audit axes bind to, local and remote proven identical, its position in the terminal ordering
 recorded, the hook and issue-tracker sequencing recorded as one ordered decision, and the flagged
 planner assumption on HARN-05's unclassified edge family carried forward verbatim.
+
+## §29 — Plan 159-11 Task 2: the dispatch axis
+
+### 29.1 Live enumeration at dispatch time
+
+```
+$ ls .github/workflows/*.yml | wc -l
+19
+```
+
+`[MEASURED]` **19 workflow files**, enumerated live from the directory listing at dispatch time (not carried from any prior plan's count):
+
+- `audit-harness-integrity.yml`
+- `audit-harness-v1.10-integrity.yml`
+- `audit-harness-v1.11-integrity.yml`
+- `audit-harness-v1.12-integrity.yml`
+- `audit-harness-v1.13-integrity.yml`
+- `audit-harness-v1.14-integrity.yml`
+- `audit-harness-v1.15-integrity.yml`
+- `audit-harness-v1.16-integrity.yml`
+- `audit-harness-v1.17-integrity.yml`
+- `audit-harness-v1.18-integrity.yml`
+- `audit-harness-v1.19-integrity.yml`
+- `audit-harness-v1.20-integrity.yml`
+- `audit-harness-v1.21-integrity.yml`
+- `audit-harness-v1.22-integrity.yml`
+- `audit-harness-v1.5-integrity.yml`
+- `audit-harness-v1.6-integrity.yml`
+- `audit-harness-v1.7-integrity.yml`
+- `audit-harness-v1.8-integrity.yml`
+- `audit-harness-v1.9-integrity.yml`
+
+### 29.2 Dispatch command and per-run head read-back
+
+Each workflow was dispatched individually with `gh workflow run <file> --ref master`, at a moment when `origin/master` was proven (§28.3) to equal the shared commit `828df055cde076dfcbdda22de3d49850908ddbe1`. All 19 runs were captured via `gh run list --json databaseId,workflowName,headSha,status,conclusion,event,createdAt` filtered to `headSha == 828df055...`, then polled to `status: completed`.
+
+| # | Workflow file | Run ID | Event | Head commit | Read-back assertion |
+|---|---|---|---|---|---|
+| 1 | `audit-harness-integrity.yml` | 34425887829 | workflow_dispatch | `828df055` | MATCH |
+| 2 | `audit-harness-v1.10-integrity.yml` | 34425891839 | workflow_dispatch | `828df055` | MATCH |
+| 3 | `audit-harness-v1.11-integrity.yml` | 34425896091 | workflow_dispatch | `828df055` | MATCH |
+| 4 | `audit-harness-v1.12-integrity.yml` | 34425900210 | workflow_dispatch | `828df055` | MATCH |
+| 5 | `audit-harness-v1.13-integrity.yml` | 34425904350 | workflow_dispatch | `828df055` | MATCH |
+| 6 | `audit-harness-v1.14-integrity.yml` | 34425908114 | workflow_dispatch | `828df055` | MATCH |
+| 7 | `audit-harness-v1.15-integrity.yml` | 34425912399 | workflow_dispatch | `828df055` | MATCH |
+| 8 | `audit-harness-v1.16-integrity.yml` | 34425916274 | workflow_dispatch | `828df055` | MATCH |
+| 9 | `audit-harness-v1.17-integrity.yml` | 34425920384 | workflow_dispatch | `828df055` | MATCH |
+| 10 | `audit-harness-v1.18-integrity.yml` | 34425924695 | workflow_dispatch | `828df055` | MATCH |
+| 11 | `audit-harness-v1.19-integrity.yml` | 34425928990 | workflow_dispatch | `828df055` | MATCH |
+| 12 | `audit-harness-v1.20-integrity.yml` | 34425932752 | workflow_dispatch | `828df055` | MATCH |
+| 13 | `audit-harness-v1.21-integrity.yml` | 34425936876 | workflow_dispatch | `828df055` | MATCH |
+| 14 | `audit-harness-v1.22-integrity.yml` | 34425941191 | workflow_dispatch | `828df055` | MATCH |
+| 15 | `audit-harness-v1.5-integrity.yml` | 34425945785 | workflow_dispatch | `828df055` | MATCH |
+| 16 | `audit-harness-v1.6-integrity.yml` | 34425950285 | workflow_dispatch | `828df055` | MATCH |
+| 17 | `audit-harness-v1.7-integrity.yml` | 34425954969 | workflow_dispatch | `828df055` | MATCH |
+| 18 | `audit-harness-v1.8-integrity.yml` | 34425959152 | workflow_dispatch | `828df055` | MATCH |
+| 19 | `audit-harness-v1.9-integrity.yml` | 34425963462 | workflow_dispatch | `828df055` | MATCH |
+
+All 19 read-back assertions MATCH the recorded shared commit `828df055`; no run carries a different head, so no run's evidence is invalidated.
+
+### 29.3 Job-level evidence, all four keys, per workflow
+
+**1. `audit-harness-integrity.yml`** (run 34425887829, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Sidecar JSON parse | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Sidecar path matches harness | success | success |
+| Harness replay | success | success |
+| Supervision pin helper (advisory) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+
+**2. `audit-harness-v1.10-integrity.yml`** (run 34425891839, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.10 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.10 sidecar | success | success |
+| Run v1.10 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-84 validator | success | success |
+| check-phase-88 validator | success | success |
+| check-phase-85 validator | success | success |
+| check-phase-86 validator | success | success |
+| check-phase-87 validator | success | success |
+| check-phase-83 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**3. `audit-harness-v1.11-integrity.yml`** (run 34425896091, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.11 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.11 sidecar | success | success |
+| Run v1.11 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-93 validator | success | success |
+| check-phase-90 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-89 validator | success | success |
+| check-phase-92 validator | success | success |
+| check-phase-91 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**4. `audit-harness-v1.12-integrity.yml`** (run 34425900210, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.12 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.12 sidecar | success | success |
+| Run v1.12 milestone audit harness | success | success |
+| check-phase-94 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-95 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**5. `audit-harness-v1.13-integrity.yml`** (run 34425904350, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.13 sidecar JSON | success | success |
+| Harness references v1.13 sidecar | success | success |
+| Run v1.13 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-99 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-98 validator | success | success |
+| check-phase-97 validator | success | success |
+| check-phase-96 validator | success | success |
+| check-phase-100 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**6. `audit-harness-v1.14-integrity.yml`** (run 34425908114, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.14 sidecar JSON | success | success |
+| Harness references v1.14 sidecar | success | success |
+| Run v1.14 milestone audit harness | success | success |
+| check-phase-104 validator | success | success |
+| check-phase-105 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-101 validator | success | success |
+| check-phase-109 validator | success | success |
+| check-phase-102 validator | success | success |
+| check-phase-107 validator | success | success |
+| check-phase-103 validator | success | success |
+| check-phase-106 validator | success | success |
+| check-phase-111 validator | success | success |
+| check-phase-108 validator | success | success |
+| check-phase-112 validator | success | success |
+| check-phase-110 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**7. `audit-harness-v1.15-integrity.yml`** (run 34425912399, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.15 sidecar JSON | success | success |
+| Harness references v1.15 sidecar | success | success |
+| Run v1.15 milestone audit harness | success | success |
+| check-phase-115 validator | success | success |
+| check-phase-116 validator | success | success |
+| check-phase-119 validator (apex; recursively spawns 48..118) | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-114 validator | success | success |
+| check-phase-118 validator | success | success |
+| check-phase-113 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-117 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**8. `audit-harness-v1.16-integrity.yml`** (run 34425916274, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.16 sidecar JSON | success | success |
+| Harness references v1.16 sidecar | success | success |
+| Run v1.16 milestone audit harness | success | success |
+| check-phase-123 validator | success | success |
+| check-phase-122 validator | success | success |
+| check-phase-120 validator | success | success |
+| check-phase-124 validator | success | success |
+| check-phase-125 validator (apex; recursively spawns 48..124) | success | success |
+| check-phase-121 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**9. `audit-harness-v1.17-integrity.yml`** (run 34425920384, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.17 sidecar JSON | success | success |
+| Harness references v1.17 sidecar | success | success |
+| Run v1.17 milestone audit harness | success | success |
+| check-phase-126 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-128 validator (apex; recursively spawns 48..127) | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-127 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**10. `audit-harness-v1.18-integrity.yml`** (run 34425924695, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.18 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.18 sidecar | success | success |
+| Run v1.18 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-131 validator | success | success |
+| check-phase-129 validator | success | success |
+| check-phase-132 validator | success | success |
+| check-phase-130 validator | success | success |
+| check-phase-134 validator (apex; recursively spawns 48..133) | success | success |
+| check-phase-133 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**11. `audit-harness-v1.19-integrity.yml`** (run 34425928990, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.19 sidecar JSON | success | success |
+| Harness references v1.19 sidecar | success | success |
+| Run v1.19 milestone audit harness | success | success |
+| check-phase-138 validator (apex; recursively spawns 48..137) | success | success |
+| check-phase-137 validator | success | success |
+| check-phase-136 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-135 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**12. `audit-harness-v1.20-integrity.yml`** (run 34425932752, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.20 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.20 sidecar | success | success |
+| Run v1.20 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-143 validator | success | success |
+| check-phase-141 validator | success | success |
+| check-phase-139 validator | success | success |
+| check-phase-142 validator | success | success |
+| check-phase-140 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-144 validator (apex; recursively spawns 48..143) | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**13. `audit-harness-v1.21-integrity.yml`** (run 34425936876, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.21 sidecar JSON | success | success |
+| Harness references v1.21 sidecar | success | success |
+| Run v1.21 milestone audit harness | success | success |
+| check-phase-148 validator | success | success |
+| check-phase-145 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-150 validator | success | success |
+| check-phase-152 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-146 validator | success | success |
+| check-phase-147 validator | success | success |
+| check-phase-149 validator | success | success |
+| check-phase-153 validator (apex; recursively spawns 48..152) | success | success |
+| check-phase-151 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**14. `audit-harness-v1.22-integrity.yml`** (run 34425941191, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.22 sidecar JSON | success | success |
+| Harness references v1.22 sidecar | success | success |
+| Run v1.22 milestone audit harness | success | success |
+| check-phase-157 validator (authoring-standard gate) | success | success |
+| check-phase-156 validator | success | success |
+| check-phase-155 validator | success | success |
+| check-phase-158 validator | success | success |
+| check-phase-154 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-159 validator (apex; recursively spawns 48..158) | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**15. `audit-harness-v1.5-integrity.yml`** (run 34425945785, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.5 sidecar JSON | success | success |
+| Harness references v1.5 sidecar | success | success |
+| Run v1.5 milestone audit harness | success | success |
+| check-phase-49 validator | success | success |
+| check-phase-50 validator | success | success |
+| check-phase-48 validator | success | success |
+| check-phase-53 validator | success | success |
+| check-phase-56 validator | success | success |
+| check-phase-57 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-54 validator | success | success |
+| check-phase-51 validator | success | success |
+| check-phase-58 validator | success | success |
+| check-phase-60 validator | success | success |
+| check-phase-55 validator | success | success |
+| check-phase-59 validator | success | success |
+| check-phase-61 validator | success | success |
+| check-phase-52 validator | success | success |
+
+**16. `audit-harness-v1.6-integrity.yml`** (run 34425950285, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.6 sidecar JSON | success | success |
+| Harness references v1.6 sidecar | success | success |
+| Run v1.6 milestone audit harness | success | success |
+| check-phase-64 validator | success | success |
+| check-phase-66 validator | success | success |
+| check-phase-63 validator | success | success |
+| check-phase-65 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-62 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**17. `audit-harness-v1.7-integrity.yml`** (run 34425954969, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Parse v1.7 sidecar JSON | success | success |
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Harness references v1.7 sidecar | success | success |
+| Run v1.7 milestone audit harness | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-67 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| check-phase-69 validator | success | success |
+| check-phase-68 validator | success | success |
+| check-phase-70 validator | success | success |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**18. `audit-harness-v1.8-integrity.yml`** (run 34425959152, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.8 sidecar JSON | success | success |
+| Harness references v1.8 sidecar | success | success |
+| Run v1.8 milestone audit harness | success | success |
+| check-phase-74 validator | success | success |
+| check-phase-73 validator | success | success |
+| check-phase-72 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-71 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+**19. `audit-harness-v1.9-integrity.yml`** (run 34425963462, event `workflow_dispatch`, head `828df055`)
+
+| Job display name | Conclusion | Classification |
+|---|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | success |
+| Parse v1.9 sidecar JSON | success | success |
+| Harness references v1.9 sidecar | success | success |
+| Run v1.9 milestone audit harness | success | success |
+| check-phase-77 validator | success | success |
+| check-phase-75 validator | success | success |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) | success | success |
+| check-phase-78 validator | success | success |
+| check-phase-76 validator | success | success |
+| check-phase-80 validator | success | success |
+| check-phase-79 validator | success | success |
+| check-phase-82 validator | success | success |
+| check-phase-81 validator | success | success |
+| Supervision-pin drift advisory (CI) | success | non-evidence (continue-on-error: true — D-54/D-48, never a success) |
+| Quarterly c13_rotting_external link-check | skipped | legitimate skip (event-gated: schedule-only guard) |
+
+### 29.4 The legitimate-skip anchor — derived by reading each workflow's own guard
+
+The anchor is derived by reading each workflow file's own `jobs.<id>.if:` condition, never by
+grepping a fixed string across all 19 (a fixed grep would be wrong for two of them — see below).
+
+Two guard shapes exist for the same job, `rotting-external-quarterly` ("Quarterly c13_rotting_external
+link-check"), both event-gated to the scheduled quarterly cron and nothing else:
+
+```
+# audit-harness-v1.8 .. v1.22 (12 files) and v1.9, v1.10:
+if: github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+
+# audit-harness-v1.6, v1.7 (2 files) — functionally identical, `always()` guards against an
+# upstream job failure short-circuiting evaluation, it does not change the event gate:
+if: always() && github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+```
+
+Reading every workflow's job list individually (not grepping) establishes which files carry this
+job at all:
+
+| Has `rotting-external-quarterly` job (17) | Does NOT have it (2) |
+|---|---|
+| v1.6, v1.7, v1.8, v1.9, v1.10, v1.11, v1.12, v1.13, v1.14, v1.15, v1.16, v1.17, v1.18, v1.19, v1.20, v1.21, v1.22 | `audit-harness-integrity.yml` (Android, base), `audit-harness-v1.5-integrity.yml` |
+
+Because every run in this dispatch used the `workflow_dispatch` event (§29.2), `github.event_name`
+is never `'schedule'` for any of these 19 runs, so the job's `if:` evaluates false in all 17 files
+that carry it — a **legitimate skip** in every one of the 17 occurrences observed (§29.3), derived
+from the guard's own text, not from a string search across the corpus. The two files that lack the
+job entirely produced zero skip rows from it, consistent with reading each file individually rather
+than assuming a uniform job set.
+
+### 29.5 Totals
+
+| Metric | Count |
+|---|---|
+| Jobs observed | 240 |
+| Successes | 204 |
+| Legitimate skips | 17 |
+| Illegitimate skips | 0 |
+| Failures | 0 |
+| Non-evidence | 19 |
+| **Sum of categories** | **240** (= jobs observed) |
+
+The 19 non-evidence jobs are every workflow's `pin-helper-advisory` job ("Supervision-pin drift
+advisory (CI)" / "Supervision pin helper (advisory)" in the base workflow) — `continue-on-error:
+true` per the workflow file's own D-54/D-48 comment, which states this job's conclusion is
+"structurally always success" and must "never [be] cited as pin-drift proof for any requirement."
+Per this plan's own acceptance criteria ("no job marked continue-on-error counts as a success"), all
+19 are excluded from the success count regardless of GitHub's reported `conclusion: success` and
+counted as non-evidence instead. Zero failures and zero illegitimate skips were observed — every
+non-success/non-evidence job is one of the 17 anchor-derived legitimate skips named individually in
+§29.3.
+
+**No accepted-red disposition is available at this close, and none is invoked here: there is no red
+to absorb.** Nothing in this axis entered the one permitted remediation round; the pre-remediation
+state IS the final state because every job resolved to success, legitimate skip, or non-evidence.
+
+### 29.6 Summary of Task 2's outcome
+
+All 19 workflow files enumerated live match the directory listing (19). All 19 dispatched runs read
+back with `headSha == 828df055` (§29.2), so none is invalidated. Every one of the 240 observed jobs
+is classified: 204 successes, 17 legitimate skips (all the same anchor job, derived from each
+workflow's own event guard), 0 illegitimate skips, 0 failures, 19 non-evidence (continue-on-error
+advisory jobs). The categories sum to the observed count. No accepted-red disposition was created or
+needed.
+<!-- gsd:write-continue -->
