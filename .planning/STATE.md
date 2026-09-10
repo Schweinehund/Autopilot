@@ -5,16 +5,16 @@ milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-
 current_phase: 159
 current_phase_name: HARN — Harness Close
 status: executing
-stopped_at: Completed 159-11-PLAN.md (owner ruled all-green on the three-axis re-audit)
-last_updated: "2026-09-10T04:09:43.596Z"
+stopped_at: Completed 159-12-PLAN.md (wrote both v1.22 close artifacts ahead of the close gate)
+last_updated: "2026-09-10T04:30:08.133Z"
 last_activity: 2026-09-09
 last_activity_desc: Phase 159 execution started
-state_head: 853d2724600eea710188d387ba923d206f07d74d
+state_head: 54f6758bdd8ccac41ca72d97089e930d97112a23
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 43
-  completed_plans: 41
+  completed_plans: 42
   percent: 83
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 ## Current Position
 
 Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 12 of 13
+Plan: 13 of 13
 Status: PAUSED at Task 4 checkpoint:decision (gate=blocking-human) — Tasks 1-3 committed (322e9259 corrective push/shared commit, fa6ea6ae dispatch axis, 659e1d94 fresh-clone + blind-agent axes); awaiting the owner's ruling (all-green / remediate / unmet) on the three-axis re-audit evidence before a continuation agent finalizes the plan
 Last activity: 2026-09-09 — Phase 159 execution started
 
@@ -139,6 +139,7 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 | Phase 159 P09 | 55 min | 3 tasks | 1 files |
 | Phase 159 P10 | 11min | 3 tasks | 2 files |
 | Phase 159 P11 | 26min | 4 tasks | 2 files |
+| Phase 159 P12 | 28min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -242,6 +243,9 @@ Progress: [████████░░] 83% — 5/6 phases complete; 30/30 au
 - [Phase 159]: Owner ruled proceed on the milestone-close push; git push origin master published 60 commits to origin/master at 326af04d, with all four remote atom branches kept. — Blocking-human checkpoint per D-10/D-55; owner's verbatim ruling recorded in 159-EVIDENCE.md sections 26-27.
 - [Phase 159]: [Phase 159]: 159-11: Re-established the true shared commit (828df055) via a corrective push of the previous plan's boundary commits (requirement-flip + summary commit); all three re-audit axes bound to it.
 - [Phase 159]: [Phase 159]: 159-11: Dispatch axis (19 workflows, 240 jobs), fresh-clone axis, and blind-agent axis all ran byte-identical at 828df055 -- 0 failures, 0 illegitimate skips, 0 incomplete legs, 0 retries; owner ruled all-green at the Task 4 blocking-human checkpoint, no accepted-red disposition invoked.
+- [Phase 159]: NESTED-GUARD-SECOND-ORDER-ASYMMETRY carried with V-159-HARN03's partial discharge noted, not closed -- general apex-guard architecture unchanged
+- [Phase 159]: Eight of Phase 158's twelve Deferred Ideas merged into one Part A entry (PHASE-158-CARRIED-RESIDUE) under a stated shared root cause; four remain their own named entries
+- [Phase 159]: Four falsifications tracing to 158-VERIFICATION.md:97 grouped under one milestone-audit correction of record rather than reported separately
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -300,8 +304,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-10T04:09:41.928Z
-Stopped at: Completed 159-11-PLAN.md (owner ruled all-green on the three-axis re-audit)
+Last session: 2026-09-10T04:30:06.569Z
+Stopped at: Completed 159-12-PLAN.md (wrote both v1.22 close artifacts ahead of the close gate)
 Resume file: None
 Next action: `/gsd-plan-phase 154`
 
