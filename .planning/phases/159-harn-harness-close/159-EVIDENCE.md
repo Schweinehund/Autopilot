@@ -2876,4 +2876,143 @@ exactly as they are, at their current tips, with no delete operation run against
 this plan or any later one. No branch is deleted by this task, consistent with Task 2's acceptance
 criteria — this section only records the answer; the branches are not touched here.
 
-No push occurred during this task. The `proceed` selection is executed by Task 3, next.**
+No push occurred during this task. The `proceed` selection is executed by Task 3, next.
+
+## §27 — Plan 159-10 Task 3: the push executed, resulting head recorded
+
+### 27.1 Ahead/behind, re-measured immediately before the push (not reused from §25.1)
+
+```
+$ git fetch --prune
+$ git rev-list --left-right --count origin/master...master
+0	60
+```
+
+`[MEASURED]` **0 behind, 60 ahead** — supersedes §25.1's **57**. Three additional commits landed
+between Task 1's measurement and this task's own: the Task 1 evidence commit itself (`9875eb36`),
+the STATE.md checkpoint-pause commit (`295a1e89`), and this plan's own §26 owner-ruling commit
+(`326af04d`). 57 + 3 = 60, confirmed. `master` = `326af04dced1dedecf048c9ce22942060eab25a2`,
+`origin/master` unmoved at `c4088fc072b3c4eecc71ea7745165cdd727cd17e`.
+
+### 27.2 Deviation (Rule 1 — bug found, cannot be fixed retroactively): the tracked pre-push guard was not installed in this working tree
+
+`scripts/hooks/pre-push.sh` is a **tracked reference script**, not an active git hook by itself.
+§3 (Plan 159-01 Task 4) explicitly tested it only inside three throwaway clones created in the OS
+temp directory, and states in its own closing line: *"the throwaway clone's own `.git/hooks/pre-push`
+install is per-clone and never touches the real repository's config."* This working tree's own
+`.git/hooks/` directory was checked immediately before the push and contained only git's stock
+`*.sample` files — no executable `pre-push` hook was present:
+
+```
+$ git config --get core.hooksPath
+D:\claude\Autopilot\.git\hooks
+$ ls .git/hooks/pre-push* 
+.git/hooks/pre-push.sample*      (not executable as a hook name; git only invokes the exact filename "pre-push")
+```
+
+Consequently, when `git push origin master` ran below, **no pre-push hook executed** — not because
+`--no-verify` was used (it was not), but because no hook file existed for git to invoke. This is a
+silent no-op, not a bypass: the guard was never wired into this real repository by any earlier task,
+by design (159-01 tested the guard mechanism, but installing it into the real repo's `.git/hooks/`
+was never a task action anywhere in the plan set). No "guard allow output" exists to record because
+the guard did not run.
+
+**Independent confirmation the push carried none of what the guard would have rejected:** the guard's
+two rejection rules are (1) reject any refspec whose remote ref is under `refs/archive/*`, and (2)
+reject any range containing the archived scrub-source commit `9a1148156e049bc4ff9cf208de869739a8ff5d43`.
+This push's refspec (`master` → `master`) was never a `refs/archive/*` target, and §25.3 and §25.4
+already established that the unpushed range and the current tree carry no leaked token and are not the
+raw archived branch (the archived history was squashed onto `master` at `9cc84aa6` in Plan 159-01,
+which is the sanctioned, squashed form the guard is designed to allow through — see §3 Test (c)). The
+post-push scans in §27.5 below independently re-confirm no archived-history marker or scrubbed token
+reached the remote, providing the same assurance the guard would have, by different means.
+
+**Remediation taken:** `scripts/hooks/pre-push.sh` was copied to `.git/hooks/pre-push` and made
+executable in this working tree immediately after this push (`cp scripts/hooks/pre-push.sh
+.git/hooks/pre-push && chmod +x .git/hooks/pre-push`), so any future push from this working tree in
+this or a later plan is mechanically guarded. This is a local, untracked `.git/hooks/` file (git
+hooks are never committed) — no repository commit results from this action, and it does not and
+cannot retroactively guard the push already completed below.
+
+### 27.3 The push command and its output
+
+```
+$ git push origin master
+To https://github.com/Schweinehund/Autopilot.git
+   c4088fc0..326af04d  master -> master
+```
+
+Exactly one command ran: a push of the local `master` branch to the remote named `origin`, by name,
+targeting the remote branch `master`. No `--all`, no `--tags`, no `--mirror`, no `--force` / `-f`, no
+archive refspec, and no reference to the `scratch` remote.
+
+### 27.4 Resulting head
+
+`origin/master` fast-forwarded from `c4088fc072b3c4eecc71ea7745165cdd727cd17e` to
+**`326af04dced1dedecf048c9ce22942060eab25a2`** — the exact local `master` tip at push time (§27.1),
+confirmed identical:
+
+```
+$ git rev-parse origin/master
+326af04dced1dedecf048c9ce22942060eab25a2
+$ git log -1 --format=%s origin/master
+docs(159-10): record the owner's push ruling and atom-branch answer
+```
+
+This selection was `proceed`, not `partial`, so the pushed head is the full local `master` tip, not
+an explicitly-named prefix commit.
+
+**This pushed head is NOT this plan's final head.** Per D-10 and this plan's own `<action>` text: the
+requirement-flip and summary commits for this plan land after this plan's last task (this task is the
+last task, but this plan's `update_requirements`/`create_summary`/`git_commit_metadata` steps still
+run afterward and will add further commits to `master`). The head the three audit axes actually key to
+is produced by the **next plan's** (159-11's) first task, which will re-measure and push those
+boundary commits. No later reader should treat `326af04d` as the shared commit — the predecessor
+milestone (v1.21, Phase 153) had to supersede in exactly this same shape.
+
+### 27.5 Post-push re-measurement
+
+```
+$ git rev-list --left-right --count origin/master...master
+0	0
+```
+
+`[MEASURED]` **0 ahead, 0 behind** — the local and remote `master` are identical immediately after
+the push, confirming the push completed (a `proceed` push with a non-zero ahead count afterward would
+mean the push did not complete).
+
+**Post-push derived-token scan, the two remote-facing surfaces:**
+
+```
+$ T=$(git diff 077b29b7^ 077b29b7 -- assets/recipes/06-walk-up-avd-kiosk/NOTICE | grep -oE '^-[^-].*' | grep -oE '[A-Z0-9]{9}' | sort -u | head -1)
+$ git grep -l -- "$T" origin/master 2>/dev/null | wc -l
+0
+$ git log -p c4088fc0..326af04d | grep -c -- "$T"
+0
+```
+
+Both remote-facing surfaces read **0**: tracked files at the new `origin/master` tip, and blob
+content across every commit the push just introduced.
+
+**Landing branch and archive ref, re-confirmed absent from the remote after the push:**
+
+```
+$ git ls-remote --heads origin | grep -c '154-style-landing'
+0
+$ git ls-remote origin 'refs/archive/*' | wc -l
+0
+```
+
+Neither the landing branch nor any `refs/archive/*` ref reached the remote. No tag was pushed (the
+push command named only `master`; `git push` never pushes tags implicitly, and no `--tags`/`--follow-tags`
+flag was used) — the tag is discharged at archival, per this plan's own acceptance criteria, and
+remains a matter for a later milestone-close step, not this plan.
+
+### 27.6 Summary of Task 3's outcome
+
+The owner's `proceed` selection was executed with exactly one command. The pre-push guard mechanism
+did not fire because it was never installed as an active hook in this real working tree (a Rule 1
+deviation discovered during this task, documented above with independent post-push confirmation that
+the push carried none of what the guard exists to reject); the guard is now installed locally for any
+future push in this session. `origin/master` now sits at `326af04d`, recorded here as provisional —
+the next plan's first task produces the head the three audit axes actually bind to.**
