@@ -3615,4 +3615,235 @@ is classified: 204 successes, 17 legitimate skips (all the same anchor job, deri
 workflow's own event guard), 0 illegitimate skips, 0 failures, 19 non-evidence (continue-on-error
 advisory jobs). The categories sum to the observed count. No accepted-red disposition was created or
 needed.
-<!-- gsd:write-continue -->
+
+## §30 — Plan 159-11 Task 3, part A: the fresh-clone axis
+
+### 30.1 The clone
+
+```
+$ git clone https://github.com/Schweinehund/Autopilot.git <scratch-dir>/axis1-clone
+$ cd <scratch-dir>/axis1-clone
+$ git checkout 828df055cde076dfcbdda22de3d49850908ddbe1
+HEAD is now at 828df055 docs(159-10): complete push-checkpoint plan
+```
+
+A full-depth clone of the REMOTE (`https://github.com/Schweinehund/Autopilot.git`, not a `file://`
+of this local repository, which would also fetch the archived landing ref) into a scratch directory
+outside `D:\claude\Autopilot`. `git checkout` landed exactly on the shared commit because it was
+already `origin/master`'s tip at clone time — no divergent commit exists to check out past it.
+
+### 30.2 Non-shallow proof, quoted before any leg ran
+
+```
+$ git rev-parse --is-shallow-repository
+false
+$ git rev-list --count HEAD
+3602
+```
+
+`[MEASURED]` **non-shallow, 3602 commits reachable from HEAD** — the full project history, not a
+truncated clone. This assertion ran before any of the nine legs below.
+
+### 30.3 Nine legs, each with an explicit timeout
+
+| # | Leg | Command | Tool-call timeout | Wall time | Result | Outcome |
+|---|---|---|---|---|---|---|
+| 1 | New harness, verbose | `node scripts/validation/v1.22-milestone-audit.mjs --verbose` | 90s | 1.498s | Summary: 16 passed, 0 failed, 0 skipped | COMPLETE |
+| 2 | New harness, self-test | `node scripts/validation/v1.22-milestone-audit.mjs --self-test` | 90s | 0.137s | Self-test: 9 passed, 0 failed | COMPLETE |
+| 3 | Converted predecessor harness | `node scripts/validation/v1.21-milestone-audit.mjs --verbose` | 90s | 2.025s | Summary: 16 passed, 0 failed, 0 skipped | COMPLETE |
+| 4 | Content leaf | `node scripts/validation/check-phase-154.mjs` | 150s (batch) | 1.149s | 13 PASS, 0 FAIL, 0 SKIPPED | COMPLETE |
+| 5 | Content leaf | `node scripts/validation/check-phase-155.mjs` | 150s (batch) | 0.139s | 10 PASS, 0 FAIL, 0 SKIPPED | COMPLETE |
+| 6 | Content leaf | `node scripts/validation/check-phase-156.mjs` | 150s (batch) | 0.414s | 10 PASS, 0 FAIL, 0 SKIPPED | COMPLETE |
+| 7 | Content leaf (authoring-standard gate) | `node scripts/validation/check-phase-157.mjs` | 150s (batch) | 68.649s | 34 PASS, 0 FAIL, 0 SKIPPED | COMPLETE |
+| 8 | Content leaf | `node scripts/validation/check-phase-158.mjs` | 150s (batch) | 1.590s | 12 PASS, 0 FAIL, 0 SKIPPED | COMPLETE |
+| 9 | Apex (recursively spawns 48..158) | `node scripts/validation/check-phase-159.mjs --verbose` | background, polled | ~93s (01:46:52Z→01:48:25Z) | 116 PASS, 0 FAIL, 1 SKIPPED (117 total checks), exit 0 | COMPLETE |
+
+Leg 9's one internal `SKIPPED` (`V-159-AUDIT`) is the apex's own known pre-close-gate self-check —
+`159-VERIFICATION.md not yet authored (PASS-via-skip until the Phase 159 close-gate lands...)` — an
+expected, self-documented skip inside the validator's own check list, not a workflow-job skip and not
+an incomplete leg.
+
+**Leg 9 polling record:** dispatched via `run_in_background`, output redirected to a log file, polled
+every 20s for output-size growth; completed on the 5th poll (~100s elapsed from dispatch to the
+completion notification), well inside the tool cap and consistent with the harness's own `29.5s`+
+`76s`-python-gate profile carried in D-47/D-50.
+
+**No leg was incomplete. No retry was used on any leg (0 of the 1-per-leg, 3-overall ceiling).**
+
+### 30.4 Fresh-clone axis outcome
+
+All nine legs ran to completion with an explicit outcome, all nine passed with zero failures, and the
+clone was proven non-shallow (§30.2) before any leg ran. This axis's head commit is
+`828df055cde076dfcbdda22de3d49850908ddbe1` — the same value checked out at §30.1, independently
+re-confirmed:
+
+```
+$ git -C <scratch-dir>/axis1-clone rev-parse HEAD
+828df055cde076dfcbdda22de3d49850908ddbe1
+```
+
+## §31 — Plan 159-11 Task 3, part B: the blind-agent axis
+
+### 31.1 The second clone
+
+A second, independent full-depth clone of the same remote, into a separate scratch directory, checked
+out at the same shared commit, with the planning tree intact (`.planning/` is tracked — 2503 files —
+so an ordinary `git clone` of the remote already carries it; nothing was stripped):
+
+```
+$ git clone https://github.com/Schweinehund/Autopilot.git <scratch-dir>/axis3-clone
+$ cd <scratch-dir>/axis3-clone
+$ git checkout 828df055cde076dfcbdda22de3d49850908ddbe1
+HEAD is now at 828df055 docs(159-10): complete push-checkpoint plan
+$ git rev-parse --is-shallow-repository
+false
+$ ls .planning | head -5
+artifacts/  config.json  jira/  milestones/  MILESTONES.md
+```
+
+**Why the planning tree is kept intact:** per D-49, the majority of the apex's chain members read
+`.planning/` (`[MEASURED]` 63 chain members read it), and the apex itself reads a materially
+different triple of counts without it (`94/16/1` instead of the full chain's larger population) — a
+clone that stripped `.planning/` would not exercise the same code paths the real close-gate apex run
+exercises, and its result would not be comparable to Axis 1 or Axis 2.
+
+### 31.2 Dispatch
+
+```
+$ cd <scratch-dir>/axis3-clone
+$ claude -p "<prompt, verbatim below>" --tools "Bash,Read" --output-format text </dev/null \
+    > axis3-raw-output.log 2>axis3-raw-stderr.log
+```
+
+Dispatched from a working directory outside the owner's repository (`D:\claude\Autopilot`) — the cwd
+was the second clone's own root, a separate filesystem location holding a separate `.git`. Started
+`2026-09-10T01:49:23Z`, completed `2026-09-10T01:53:44Z` (4m21s wall time — the majority of it is the
+apex leg's own ~93s plus the `check-phase-157` python prose-style gate's ~69s, run twice: once
+directly as leg 7 and once again inside the apex's own recursive chain).
+
+**The prompt, carrying only the nine legs' commands with no expected values, recorded verbatim:**
+
+```
+Run each of the following nine shell commands, in order, from the current working directory. For each
+command, report: the exact command you ran, its exit code, and the last 5 lines of its stdout/stderr
+output. Do not skip any command. Do not read any files before running the commands. After running all
+nine, give a one-line summary listing each command's exit code.
+
+1. node scripts/validation/v1.22-milestone-audit.mjs --verbose
+2. node scripts/validation/v1.22-milestone-audit.mjs --self-test
+3. node scripts/validation/v1.21-milestone-audit.mjs --verbose
+4. node scripts/validation/check-phase-154.mjs
+5. node scripts/validation/check-phase-155.mjs
+6. node scripts/validation/check-phase-156.mjs
+7. node scripts/validation/check-phase-157.mjs
+8. node scripts/validation/check-phase-158.mjs
+9. node scripts/validation/check-phase-159.mjs --verbose
+```
+
+No pass/fail counts, no expected exit codes, and no reference to any prior axis's result appear
+anywhere in the prompt.
+
+### 31.3 Raw output, captured before transcription, then checked for planning-tree citations
+
+The full raw stdout was redirected straight to `axis3-raw-output.log` at dispatch time (§31.2), before
+any of the summarizing prose below was written. `axis3-raw-stderr.log` is empty (0 bytes) — no
+warnings or errors were emitted to stderr by the CLI invocation itself.
+
+**Planning-tree citation check**, run against the captured raw file:
+
+```
+$ grep -ci '\.planning' axis3-raw-output.log
+0
+$ grep -ni '\.planning\|CONTEXT\.md\|EVIDENCE\.md\|ROADMAP\.md\|STATE\.md' axis3-raw-output.log
+(no matches)
+```
+
+**Zero citations of `.planning/` or any planning document anywhere in the returned report** — the
+agent's own transcript never names a planning artifact, consistent with the prompt carrying only the
+nine bare commands and no framing that would prompt it to.
+
+### 31.4 Leg-by-leg result, transcribed from the raw log
+
+| # | Leg | Exit | Result |
+|---|---|---|---|
+| 1 | `v1.22-milestone-audit.mjs --verbose` | 0 | Summary: 16 passed, 0 failed, 0 skipped |
+| 2 | `v1.22-milestone-audit.mjs --self-test` | 0 | Self-test: 9 passed, 0 failed |
+| 3 | `v1.21-milestone-audit.mjs --verbose` (converted) | 0 | Summary: 16 passed, 0 failed, 0 skipped |
+| 4 | `check-phase-154.mjs` | 0 | 13 PASS, 0 FAIL, 0 SKIPPED |
+| 5 | `check-phase-155.mjs` | 0 | 10 PASS, 0 FAIL, 0 SKIPPED |
+| 6 | `check-phase-156.mjs` | 0 | 10 PASS, 0 FAIL, 0 SKIPPED |
+| 7 | `check-phase-157.mjs` | 0 | 34 PASS, 0 FAIL, 0 SKIPPED |
+| 8 | `check-phase-158.mjs` | 0 | 12 PASS, 0 FAIL, 0 SKIPPED |
+| 9 | `check-phase-159.mjs --verbose` (apex) | 0 | 116 PASS, 0 FAIL, 1 SKIPPED (117 total) |
+
+Every one of the nine legs completed (none incomplete, no output-growth stall) and every one exited 0.
+No retry was needed on any leg (0 of the 1-per-leg, 3-overall ceiling). This is byte-identical to
+§30.3's fresh-clone-axis leg results, including the apex's single self-skip and its exact 116/0/1
+split.
+
+### 31.5 The confinement disclosure — recorded verbatim as a measured property
+
+**The blind agent is prompt-barred, same-host, and not isolated.** This dispatch used
+`--tools "Bash,Read"` and a cwd inside the second clone; it did NOT pass `--add-dir` or `--restricted`.
+Naming the three measured flag behaviors, in the predecessor milestone's measurement-(a) style (a
+statement of fact, not a reassurance):
+
+- `--add-dir` **grants** additional directory access rather than **confining** the agent to one — it
+  widens scope, it does not narrow it.
+- `--restricted` confines only file tools (Read/Write/Edit-family), not Bash.
+- **No flag confines Bash execution to a directory.** A Bash-capable Claude Code invocation can `cd`
+  and read/execute anywhere the OS-level user account can reach, including back into
+  `D:\claude\Autopilot` itself, regardless of the cwd it was launched from.
+
+This dispatch is therefore **same-host** (it ran on the same Windows machine as every other axis in
+this plan, not a genuinely separate host) and **not isolated** (nothing in the CLI's own flag surface
+would have stopped the agent's Bash tool from reading or writing outside the second clone had the
+prompt asked it to). It is **prompt-barred**: the only reason the agent's report contains zero
+`.planning/` citations (§31.3) is that the prompt itself carried no instruction to read anything
+beyond the nine commands — not that a sandbox mechanism prevented it. This is the same category of
+gap the predecessor milestone's Axis-3 measurement (a) disclosed for its own same-host proxy, applied
+here to a genuinely dispatched, context-independent agent instead.
+
+### 31.6 The reopened untracked-file asymmetry
+
+With both reproduction axes (fresh-clone, §30; blind-agent, §31) now running from clean `git clone`
+checkouts of the remote, **no axis in this plan covers untracked files** — anything present only in
+the real working tree's untracked/unstaged state (never committed, never pushed) is invisible to
+every axis that ran this plan, including the dispatch axis (§29, which also only ever sees committed,
+pushed content). This is the same asymmetry the predecessor milestone (153-12, D-64) recorded once;
+it is **recorded here as REOPENED**, not silently inherited or assumed still-covered by some other
+mechanism — this plan does nothing to close it, and nothing in this plan's scope requires it to.
+
+### 31.7 Retry spend against the ceiling
+
+| Axis | Legs run | Retries used | Ceiling (per-leg) | Ceiling (overall) |
+|---|---|---|---|---|
+| Dispatch (§29) | 19 workflow runs, 240 jobs | 0 | 1 | 3 |
+| Fresh-clone (§30) | 9 | 0 | 1 | 3 |
+| Blind-agent (§31) | 9 | 0 | 1 | 3 |
+| **Total this plan** | — | **0** | — | **3** |
+
+Zero retries were used against a ceiling of one per leg and three overall. No leg in any axis required
+a second attempt.
+
+### 31.8 The identical head commit, quoted from three independent sources
+
+| Source | Command | Value |
+|---|---|---|
+| 1. The corrective push itself (§28.3) | `git rev-parse origin/master` (this working tree) | `828df055cde076dfcbdda22de3d49850908ddbe1` |
+| 2. The dispatch axis read-back (§29.2) | `gh run list --json headSha` for all 19 runs | `828df055cde076dfcbdda22de3d49850908ddbe1` (19/19) |
+| 3. The fresh-clone axis (§30.4) and the blind-agent axis (§31.1) | `git rev-parse HEAD` in each independent clone | `828df055cde076dfcbdda22de3d49850908ddbe1` (both) |
+
+All three (four, counting the two clones separately) independently-obtained values are identical.
+
+### 31.9 Summary of Task 3's outcome
+
+Both reproduction axes ran against the remote at the shared commit in independently-cloned,
+proven-non-shallow working directories. Every leg in both axes completed with an explicit outcome —
+none incomplete, none recorded as a pass by default. The fresh-clone and blind-agent results are
+byte-identical to each other and to the dispatch axis's own harness/apex job outcomes (§29.3). The
+blind agent's real confinement — prompt-barred, same-host, not isolated — is disclosed verbatim as a
+measured property, its report cites zero planning-tree documents, and the reopened untracked-file
+asymmetry is recorded as reopened rather than inherited. The shared commit is quoted from three
+independent sources and all values are identical. Zero retries were spent against the ceiling of one
+per leg and three overall.
