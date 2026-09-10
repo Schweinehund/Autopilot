@@ -167,3 +167,12 @@ v1.22 is SHIPPED as of this plan's close-gate commit: 39/39 requirements Validat
 ---
 *Phase: 159-harn-harness-close*
 *Completed: 2026-09-10*
+
+## Self-Check: PASSED
+
+All created/modified files confirmed present on disk (`159-13-SUMMARY.md`, `159-VERIFICATION.md`,
+`REQUIREMENTS.md`, `ROADMAP.md`, `STATE.md`, `PROJECT.md`). All three commit hashes (`71339db6`,
+`0399e715`, `7615c8fe`) confirmed present in `git log --oneline --all`. Task 3's full `<verify>`
+block re-ran at the final HEAD: close-gate stat exactly 4 documents, discriminator = 1, zero
+unflipped HARN rows, apex 117/0/0, `check-phase-54/55/56.mjs` all 32/0/0, zero tags, zero
+documentation diff.
