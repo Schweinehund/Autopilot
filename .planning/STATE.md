@@ -1,15 +1,14 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.22
-milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe (Phases 154-159) — SHIPPED 2026-09-10
+milestone_name: phase summary (Phases 154-159) — IN PROGRESS
 current_phase: 159
-current_phase_name: HARN — Harness Close
-status: shipped
-stopped_at: "Completed 159-13-PLAN.md — v1.22 MILESTONE CLOSE, 39/39 requirements Validated"
-last_updated: "2026-09-10T05:00:00.000Z"
+status: completed
+stopped_at: Phase 159 complete — all phases complete
+last_updated: "2026-09-10T05:28:41.167Z"
 last_activity: 2026-09-10
-last_activity_desc: Phase 159 close-gate landed — v1.22 SHIPPED
-state_head: 262a6fc7982cd2a4a680dfdc8dc0cb46f19cb3a3
+last_activity_desc: Phase 159 complete
+state_head: 2236bc717d42877c38974e2f47272889cbb398b3
 progress:
   total_phases: 6
   completed_phases: 6
@@ -29,10 +28,10 @@ See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions 
 
 ## Current Position
 
-Phase: 159 (HARN — Harness Close) — COMPLETE
-Plan: 13 of 13
-Status: v1.22 SHIPPED — 39/39 requirements Validated via the Phase 159 Plan 159-13 single close-gate commit. Owner ruling on the close gate: "proceed" (Task 2, recorded verbatim in `159-EVIDENCE.md` §35). Task 1 committed (71339db6: bundle asserted before the gate at 4,105,804 bytes with an empty restricted diff, requirement total derived by command at 39 across its six pillars). Task 3 committed the close-gate flip and the post-gate confirmatory apex in its own commit.
-Last activity: 2026-09-10 — Phase 159 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
+Phase: 159
+Plan: Not started
+Status: All phases complete
+Last activity: 2026-09-10 — Phase 159 complete
 
 **Next step:** Code review of the close-gate and harness-conversion changes, then user-acceptance testing, then `/gsd-secure-phase 159` (register carries AR-159-01, the verifier-leak finding, and the archived-history residual), then `/gsd-complete-milestone` (archive v1.22, tag, push) or `/gsd-new-milestone` to scope v1.23. The close-gate commit and its follow-on stay local — pushing them is the owner's call, out of this phase's scope.
 
@@ -307,7 +306,7 @@ docs/android-lifecycle/01-android-prerequisites.md
 ## Session Continuity
 
 Last session: 2026-09-10T05:00:00.000Z
-Stopped at: "Completed 159-13-PLAN.md — v1.22 MILESTONE CLOSE, 39/39 requirements Validated"
+Stopped at: Phase 159 complete — all phases complete
 Resume file: None
 Next action: Code review, user-acceptance testing and `/gsd-secure-phase 159`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
