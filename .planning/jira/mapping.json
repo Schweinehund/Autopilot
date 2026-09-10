@@ -1063,6 +1063,13 @@
         }
       },
       "completedDate": "2026-09-10"
+    },
+    "v1.23": {
+      "epicKey": null,
+      "status": "blocked_auth",
+      "created": null,
+      "note": "2026-09-10: Epic NOT created. Atlassian MCP returns the generic 'trouble completing this action' error on every call and the REST fallback's refresh_token was rotated/invalidated by the earlier session. Re-run `/mcp` to re-auth, then `jira-milestone create v1.23` (fills epicKey, status=created) and `sync v1.23` after ROADMAP approval.",
+      "phases": {}
     }
   },
   "lastUpdated": "2026-07-30",
