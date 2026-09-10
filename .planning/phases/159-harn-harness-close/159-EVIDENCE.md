@@ -4207,3 +4207,160 @@ commit-not-tag class).
 No planning document (`.planning/REQUIREMENTS.md`, `.planning/ROADMAP.md`, `.planning/STATE.md`,
 `.planning/PROJECT.md`) is flipped by this task — only `159-EVIDENCE.md` is written. The four
 planning documents are Task 3's work, gated on Task 2's owner ruling.
+
+## §35 — Plan 159-13 Task 2: the owner's ruling, recorded verbatim
+
+All six presentation items assembled in §34.8 were put to the owner before the selection was
+requested — the evidence in one screen, the bundle result, both close artifacts, what the gate does
+with the derived 39 shown as its six pillar components (never recalled), that it is one-way and the
+requirements-document carve-out, and that the bundle already ran deliberately before the gate.
+
+**The owner's selection, verbatim:** "proceed" (Proceed — take the single close-gate commit).
+
+No accepted-red disposition is created or invoked under this branch — none existed to begin with;
+both were discharged and deleted at the predecessor close (v1.21 Phase 153). The selection is
+`proceed`, not `hold` or `unmet`, so no blocker is named and Task 3 runs.
+
+No commit is made in this task — this ruling is recorded here and lands in the repository as part of
+Task 3's post-gate apex commit, alongside that task's own evidence.
+
+## §36 — Plan 159-13 Task 3: the close-gate commit, the post-gate apex, and the archival handoff
+
+### 36.1 The single close-gate commit, asserted
+
+```
+$ git show --stat 0399e715 --format= | tail -6
+ .planning/PROJECT.md      |  4 +++-
+ .planning/REQUIREMENTS.md | 10 ++++----
+ .planning/ROADMAP.md      |  8 +++----
+ .planning/STATE.md        | 59 ++++++++++++++++++++++-------------------------
+ 4 files changed, 40 insertions(+), 41 deletions(-)
+```
+
+**Exactly the four planning documents, nothing else.** `HARN-05` and `HARN-06` were hand-flipped
+inside this same commit, each carrying an annotate-and-supersede note stating that the
+after-archival apex re-run and the tag with its push are discharged at archival (D-12).
+
+### 36.2 The discriminator, before and after
+
+```
+$ git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.22/ && $2 ~ /MILESTONE CLOSE/' | wc -l
+0        # measured before the commit, at HEAD 262a6fc7
+$ git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.22/ && $2 ~ /MILESTONE CLOSE/' | wc -l
+1        # measured after the commit, at HEAD 0399e715
+```
+
+**Both readings recorded.** The commit is recoverable by a future milestone's back-anchor pin at
+exactly one candidate.
+
+### 36.3 The harness-owned flip proven a no-op
+
+```
+$ node gsd-core/bin/gsd-tools.cjs query requirements.ready-ids .planning/phases/159-harn-harness-close/159-13-PLAN.md HARN-05 HARN-06
+2/2 requirement(s) ready to mark complete
+$ node gsd-core/bin/gsd-tools.cjs query requirements.mark-complete HARN-05 HARN-06
+{
+  "updated": false,
+  "marked_complete": [],
+  "already_complete": ["HARN-05", "HARN-06"],
+  "write_set_complete": false,
+  ...
+}
+$ git status --short .planning/REQUIREMENTS.md
+(no output)
+$ git diff --stat .planning/REQUIREMENTS.md
+(no output)
+```
+
+**The plan-boundary metadata run wrote nothing to `REQUIREMENTS.md`.** Both requirement IDs were
+already `already_complete` from the hand-flip inside the close-gate commit; the automated flip found
+nothing left to do, proving the single-commit design rather than a second, silent write (D-28).
+
+### 36.4 Requirement rows and tag state, re-asserted after the commit
+
+```
+$ grep -c '^- \[ \] \*\*HARN-0' .planning/REQUIREMENTS.md
+0
+$ git tag --list 'v1.22' | wc -l
+0
+$ test -z "$(git status --porcelain -- docs/)" && git diff --stat master@{1} -- docs/ | wc -l
+0
+```
+
+Zero unflipped harness rows; no tag created early; no documentation path changed during the close.
+
+### 36.5 `159-VERIFICATION.md` authored, then the post-gate apex re-run
+
+`.planning/phases/159-harn-harness-close/159-VERIFICATION.md` is authored ahead of the apex re-run
+(not listed in this plan's own `files_modified` frontmatter, added under deviation Rule 2 — the
+plan's own must-haves and Task 3 acceptance criteria require the apex to read "no skip because this
+phase's verification document now exists," which is only true once the file is on disk with a
+matching `Phase 159` heading; `check-phase-159.mjs`'s `V-159-AUDIT` check reads exactly that file
+and that heading).
+
+```
+$ node scripts/validation/check-phase-159.mjs --verbose 2>&1 | tail -1
+Result: 117 PASS, 0 FAIL, 0 SKIPPED (total checks: 117)
+$ echo $?
+0
+```
+
+**117 PASS / 0 FAIL / 0 SKIPPED, exit 0** — one more check than the pre-gate reading (§34.5's 116)
+and zero skips, because `V-159-AUDIT` now resolves to a real pass instead of a skip-pass: the total
+check count is 117 (116 checks unchanged in kind, plus `V-159-AUDIT` converting from a skip to a
+counted pass). This is the apex's own required "full total with no skip" (D-11, D-29).
+
+### 36.6 The three planning-tree validators, re-gated after both commits
+
+```
+$ node scripts/validation/check-phase-54.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-55.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-56.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+```
+
+All three unchanged at 32/0/0 — the live-read validators over the two files the gate rewrote
+(`REQUIREMENTS.md`, `ROADMAP.md`) confirm clean post-gate.
+
+### 36.7 The archival handoff, in order
+
+What discharges each remaining clause, named in writing rather than assumed:
+
+1. **The retroactive security pass (`/gsd-secure-phase 159`).** Runs after this apex commit and
+   before archival, so `159-SECURITY.md` archives with the phase and sits inside the tag. Its
+   register carries `AR-159-01` (the verifier-leak finding, D-05) and the archived-history residual
+   (the scrubbed-hostname commit `9a114815`, unreachable from any pushed ref per Plan 159-01).
+   Remediation, if any is found, re-enters the terminal chain at the affected step and replays
+   through the close gate.
+
+2. **The moved-tree apex re-run at archival.** At `/gsd-complete-milestone`, after the phase
+   directories move to `.planning/milestones/v1.22-phases/` and before any commit, the apex is
+   re-run on the moved working tree. Its result is written into four places: `MILESTONES.md`,
+   `STATE.md`, `PROJECT.md`, and the annotated tag message itself.
+
+3. **The combined moves-and-record commit and its tag.** The phase-directory moves and the
+   four-document archival record land in one commit (v1.21's `24c4cbeb` shape); that commit is
+   tagged `v1.22` (annotated).
+
+4. **The explicit branch-and-tag push.** `git push origin master v1.22` is run explicitly,
+   replacing the archival workflow's tag-only prompt — never a force flag.
+
+5. **The two remote readings.** `git rev-list --left-right --count origin/master...master` and
+   `git ls-remote --tags origin v1.22` are recorded after the push, confirming the remote carries
+   both the commit and the tag.
+
+**Durable carve-outs restated for archival:** `.planning/REQUIREMENTS.md` is never removed —
+`check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism. Any roadmap shrink goes
+through the write-guard sentinel with `check-phase-54.mjs` and the other roadmap-reading validator
+run immediately after. The `MILESTONES.md` entry and its task count are rewritten by hand from
+summary frontmatter, not trusted from the `milestone.complete` summarizer at face value (two prior
+closes undercounted tasks). The Operator Next Steps are re-authored for the new milestone. The 9
+un-acknowledgeable audit items are disclosed in `v1.22-DEFERRED-CLEANUP.md` rather than fixed.
+
+**Issue-tracker sequencing restated:** RTS-829 (this phase's story) stays In Progress until
+`159-VERIFICATION.md` records a pass — it now does (`status: passed`, this document, §Verdict). The
+milestone epic (RTS-823) flips Done at archival, when `STATE.md` reads "Awaiting next milestone."
+`STATE.md`'s `milestone:` field is not bumped forward to v1.23 before `/gsd-complete-milestone`
+runs (D-53).
