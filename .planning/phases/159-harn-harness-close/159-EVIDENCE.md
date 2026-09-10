@@ -4016,3 +4016,194 @@ Zero dropped.**
 `node scripts/validation/check-phase-54.mjs` / `-55.mjs` / `-56.mjs`, all three: **32 passed, 0
 failed, 0 skipped**, re-confirmed immediately before this task's commit (this task modifies only
 `159-EVIDENCE.md`; no close artifact is written by this task, per its own acceptance criteria).
+
+---
+
+## §34 — Plan 159-13 Task 1: bundle assertion before the gate, requirement-total derivation, six presentation items
+
+### 34.1 The publish bundle is asserted, not rebuilt (D-44)
+
+```
+$ ls -l dist/docs-library-v1.22.zip
+-rw-r--r-- 1 joanderson 197121 4105804 Sep  8 03:17 dist/docs-library-v1.22.zip
+```
+
+**The versioned archive exists: `dist/docs-library-v1.22.zip`, 4,105,804 bytes, dated Sep 8 03:17** —
+non-zero size, confirmed present.
+
+```
+$ git rev-parse 86c5f074^{tree}
+2c9174350e0f50712447f108ff7dd3073b151843
+```
+
+`86c5f074` is the build commit that produced this zip. Per D-44, the build commit is **unreachable
+from the published branch after the squash** — the squash (Plan 159-01, `git commit-tree` plumbing)
+replaced the pre-squash history with a single tree-equal commit, so a commit reference to `86c5f074`
+would not resolve as an ancestor of HEAD, while its **tree object** (`2c9174350e...`) still resolves
+independently of reachability. The tree object name is what this assertion is expressed against.
+
+```
+$ git diff --stat 2c9174350e0f50712447f108ff7dd3073b151843 HEAD -- docs/ scripts/pipeline/
+(no output)
+```
+
+**The restricted diff between the build tree and the current head, over `docs/` and
+`scripts/pipeline/` only, is empty.** No content the bundle depends on (the corpus or the publish
+pipeline) has moved since the build. **No rebuild is needed; none was performed.**
+
+The end-of-line remediation the predecessor phase hit on one pipeline file (a `git checkout --`
+against `filename-map.md`) is **moot here** — it applies only when a rebuild's `.gitattributes`
+normalization touches that file, and no rebuild ran. Recorded per the plan's own instruction, not
+because it fired.
+
+### 34.2 The bundle gate's own idempotency probe (D-04, `.claude/hooks/publish-bundle-gate.cjs`)
+
+Live invocation against this repository's real `STATE.md` (`milestone: v1.22`, `status: executing`,
+`percent: 83`):
+
+```
+$ echo '{"cwd":"D:/claude/Autopilot"}' | node .claude/hooks/publish-bundle-gate.cjs
+(no stdout)
+$ echo $?
+0
+```
+
+**Silent allow, exit 0.** Two independent reasons converge on this result: the zip already exists
+(the D-04 read-only idempotency guard short-circuits before either external-converter probe runs),
+and — independently — today's `status`/`percent` do not shape a complete-milestone signal yet
+(`executing` / `83`, not `percent === 100` with a complete-shaped status), so the hook's own
+`completeSignalPreCheck` gate would keep the probes off the hot path even if the zip were absent.
+
+The hook's self-test proves the full decision matrix, including both external-converter probe
+branches, against synthetic fixtures (its own probe functions are not exported, so this is the
+sanctioned way to exercise the nudge/warn/allow branches without mutating real state):
+
+```
+$ node .claude/hooks/publish-bundle-gate.cjs --self-test
+[ST] (a) nudge fires: complete + zip absent + prereqs present ... PASS -- {"action":"block","kind":"nudge"}
+[ST] (b1) warn-and-allow: pandoc absent ... PASS -- {"action":"block","kind":"warn","missing":["pandoc"]}
+[ST] (b2) warn-and-allow: pwsh absent ... PASS -- {"action":"block","kind":"warn","missing":["pwsh"]}
+[ST] (c) allow: zip already exists (D-04 idempotency) ... PASS -- {"action":"allow"}
+... (6 more, all PASS)
+11 passed, 0 failed
+```
+
+**What the two external-converter probes saw in this environment**, checked directly (the probes
+themselves are `execFileSync('pandoc', ['--version'], ...)` / `execFileSync('pwsh', [...], ...)` with
+a 4s timeout each):
+
+```
+$ pandoc --version | head -1
+pandoc.exe 3.7.0.2
+$ pwsh -NoProfile -Command "exit 0"; echo $?
+0
+```
+
+**Both external converters are present and respond well inside the 4s probe timeout** — `pandoc`
+3.7.0.2, `pwsh` exits clean. This is moot for today's outcome (the zip already exists, so the probes
+never fire on the real hot path), but it means that if the zip were ever absent at a future
+complete-milestone Stop-hook invocation, the gate would take the `nudge` branch (both prerequisites
+present), not the `warn` branch.
+
+### 34.3 Documentation diff assertion (D-62)
+
+```
+$ test -z "$(git status --porcelain -- docs/)" && echo "working tree carries no docs change"
+working tree carries no docs change
+```
+
+**The documentation tree is unchanged.** No file under `docs/` was touched by this phase, confirmed
+directly against the working tree (not merely against the squash tree, which §34.1's restricted diff
+already covers) — the no-documentation-edits guardrail is proven, not merely asserted.
+
+### 34.4 The requirement total, derived from its six pillars by command (D-57)
+
+```
+$ for p in STYLE VERIFY RCP STD HYG HARN; do printf "%s: " "$p"; grep -cE "^- \[.\] \*\*$p-[0-9]+\*\*" .planning/REQUIREMENTS.md; done
+STYLE: 6
+VERIFY: 6
+RCP: 10
+STD: 4
+HYG: 7
+HARN: 6
+```
+
+**Six components: STYLE 6, VERIFY 6, RCP 10, STD 4, HYG 7, HARN 6. Sum: 6+6+10+4+7+6 = 39.** This
+total is **not recalled** — it is the sum of six counts each produced by the command above at this
+task's own execution time, and it matches `REQUIREMENTS.md`'s own `## Traceability` coverage line
+("v1.22 requirements: 39 total (STYLE 6, VERIFY 6, RCP 10, STD 4, HYG 7, HARN 6)") exactly, with zero
+delta between the recalled line and the live re-derivation.
+
+### 34.5 Apex re-confirmation ahead of the gate
+
+```
+$ node scripts/validation/check-phase-159.mjs --verbose 2>&1 | tail -1
+Result: 116 PASS, 0 FAIL, 1 SKIPPED (total checks: 117)
+$ echo $?
+0
+```
+
+Unchanged from the fresh-clone axis's own leg 9 (§30.3) and the milestone audit's own recorded
+`apex_count_standalone_pre_close`: **116 PASS / 0 FAIL / 1 SKIPPED**, exit 0. The single skip
+(`V-159-AUDIT`) is the expected pre-close-gate self-check — it resolves once `159-VERIFICATION.md`
+exists, which happens only after this plan's Task 3 post-gate apex commit, not before.
+
+### 34.6 Both close artifacts, gated
+
+```
+$ node scripts/validation/check-phase-54.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-55.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+$ node scripts/validation/check-phase-56.mjs | tail -1
+Summary: 32 passed, 0 failed, 0 skipped
+```
+
+Both `.planning/milestones/v1.22-MILESTONE-AUDIT.md` (52,185 bytes) and
+`.planning/milestones/v1.22-DEFERRED-CLEANUP.md` (46,915 bytes) exist on disk (Plan 159-12) and both
+pass all three live planning-tree gates, unchanged since Plan 159-12's own self-check.
+
+### 34.7 The flagged planner assumption, recorded verbatim
+
+> HARN-06 unclassified edge (probe row remains unresolved and is surfaced, never dismissed): the
+> deterministic probe could not classify HARN-06's edge family. Flagged planner assumption — the
+> close's failure modes are operationalized here as a flip landing before the gate, a tag created
+> before the close-gate commit exists, a bundle assertion failing after an irreversible flip, and a
+> remote that carries the commit but not the tag; there may be a fifth failure mode no gate covers.
+> Residual risk recorded, not dismissed.
+
+This residual is carried into the Task 2 checkpoint unresolved — it names no specific fifth failure
+mode, because none was found; it names the possibility that one exists outside the four the gate
+already covers (§34.1's pre-flip bundle assertion; §34.4/§35's single-commit flip; the tag-after-
+archival ordering enforced in Task 3; §34.1's build-tree-vs-HEAD diff covering the remote-carries-
+commit-not-tag class).
+
+### 34.8 The six presentation items, assembled for Task 2's checkpoint
+
+1. **The evidence in one screen.** The three-axis re-audit (§28-§32) at shared commit
+   `828df055cde076dfcbdda22de3d49850908ddbe1`: dispatch axis 240 jobs classified (204 success / 17
+   legitimate skip / 0 illegitimate skip / 0 failure / 19 non-evidence, §29); fresh-clone and
+   blind-agent axes 9 legs each, byte-identical, 0 incomplete, 0 retries (§30-§31); the apex triple
+   from its own isolated invocation (leg 9, §30.3) — **116 PASS / 0 FAIL / 1 SKIPPED, exit 0**; the
+   single permitted remediation round **unspent** (0 of 1-per-leg, 0 of 3-overall, §32.1 item 5); the
+   reopened untracked-file asymmetry disclosed, not silently inherited (§32.1 item 6).
+2. **The bundle result.** `dist/docs-library-v1.22.zip`, **4,105,804 bytes**, and an **empty**
+   restricted diff (`docs/`, `scripts/pipeline/`) against the build tree `2c9174350e...` (§34.1). The
+   output directory is `.gitignore`d, so this post-run check is the only proof that will ever exist.
+3. **Both close artifacts.** `v1.22-MILESTONE-AUDIT.md` and `v1.22-DEFERRED-CLEANUP.md` (Plan
+   159-12) both exist and both pass all three live planning-tree gates — **32 passed, 0 failed, 0
+   skipped**, all three, both before and after their own commits (§34.6).
+4. **What the gate does.** Flips the milestone's 39 requirement rows to validated in one commit
+   across four documents (`.planning/REQUIREMENTS.md`, `.planning/ROADMAP.md`, `.planning/STATE.md`,
+   `.planning/PROJECT.md`). The total is derived at this checkpoint by counting the six pillar
+   components — STYLE 6, VERIFY 6, RCP 10, STD 4, HYG 7, HARN 6 — shown, not recalled (§34.4).
+5. **That it is one-way.** The flip cannot be cleanly undone once the milestone is archived and
+   tagged. `.planning/REQUIREMENTS.md` is never removed at close, because a chain member
+   (`check-phase-54.mjs`) live-reads it outside the frozen-read mechanism — removing it would break
+   that validator for every future milestone, not just this one.
+6. **That the bundle already ran.** Deliberately before the gate (§34.1-§34.2), because a conversion
+   failure exits non-zero and that failure must not land after an irreversible flip.
+
+No planning document (`.planning/REQUIREMENTS.md`, `.planning/ROADMAP.md`, `.planning/STATE.md`,
+`.planning/PROJECT.md`) is flipped by this task — only `159-EVIDENCE.md` is written. The four
+planning documents are Task 3's work, gated on Task 2's owner ruling.
