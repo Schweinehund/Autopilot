@@ -1,21 +1,21 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.22
-milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe
+milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe (Phases 154-159) — SHIPPED 2026-09-10
 current_phase: 159
 current_phase_name: HARN — Harness Close
-status: executing
-stopped_at: PAUSED at 159-13 Task 2 checkpoint:decision (gate=blocking-human) — Task 1 committed (bundle asserted, requirement total derived at 39)
-last_updated: "2026-09-10T04:41:15.000Z"
-last_activity: 2026-09-09
-last_activity_desc: Phase 159 execution started
-state_head: 71339db670e9086fc26ed8c1f32cc2b3f373fc90
+status: shipped
+stopped_at: "Completed 159-13-PLAN.md — v1.22 MILESTONE CLOSE, 39/39 requirements Validated"
+last_updated: "2026-09-10T05:00:00.000Z"
+last_activity: 2026-09-10
+last_activity_desc: Phase 159 close-gate landed — v1.22 SHIPPED
+state_head: 262a6fc7982cd2a4a680dfdc8dc0cb46f19cb3a3
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 43
-  completed_plans: 42
-  percent: 83
+  completed_plans: 43
+  percent: 100
 ---
 
 # Project State
@@ -25,16 +25,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-08 after Phase 158 — Key Decisions row + footer; v1.22 scoped 2026-08-31: 39 requirements across 6 pillars)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.22 makes that corpus read as one voice: a single adopted writing standard applied to every document, proven not to have changed any document's meaning, and carried forward into how new documents are authored — plus the field-validated walk-up AVD kiosk build formalized as Recipe #6.
-**Current focus:** Phase 159 — HARN — Harness Close
+**Current focus:** v1.22 SHIPPED 2026-09-10 (Phase 159 close-gate complete, 39/39 requirements Validated) — next: code review, user-acceptance testing, `/gsd-secure-phase 159`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 ## Current Position
 
-Phase: 159 (HARN — Harness Close) — EXECUTING
-Plan: 13 of 13 (final plan of the phase — the close gate)
-Status: PAUSED at Task 2 checkpoint:decision (gate=blocking-human) — Task 1 committed (71339db6: bundle asserted before the gate at 4,105,804 bytes with an empty restricted diff, requirement total derived by command at 39 across its six pillars, apex re-confirmed 116/0/1, both close artifacts re-confirmed 32/0/0 on all three planning-tree gates); awaiting the owner's ruling (proceed / hold / unmet) on the single close-gate flip before a continuation agent runs Task 3
-Last activity: 2026-09-09 — Phase 159 execution started
+Phase: 159 (HARN — Harness Close) — COMPLETE
+Plan: 13 of 13
+Status: v1.22 SHIPPED — 39/39 requirements Validated via the Phase 159 Plan 159-13 single close-gate commit. Owner ruling on the close gate: "proceed" (Task 2, recorded verbatim in `159-EVIDENCE.md` §35). Task 1 committed (71339db6: bundle asserted before the gate at 4,105,804 bytes with an empty restricted diff, requirement total derived by command at 39 across its six pillars). Task 3 committed the close-gate flip and the post-gate confirmatory apex in its own commit.
+Last activity: 2026-09-10 — Phase 159 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
 
-Progress: [████████░░] 83% — 5/6 phases complete; Phase 159 (final phase) 12/13 plans complete, Plan 13 (the close gate) at Task 1 of 3 committed
+**Next step:** Code review of the close-gate and harness-conversion changes, then user-acceptance testing, then `/gsd-secure-phase 159` (register carries AR-159-01, the verifier-leak finding, and the archived-history residual), then `/gsd-complete-milestone` (archive v1.22, tag, push) or `/gsd-new-milestone` to scope v1.23. The close-gate commit and its follow-on stay local — pushing them is the owner's call, out of this phase's scope.
+
+Progress: [██████████] 100% (6 of 6 phases; 43/43 planned plans complete)
 
 ## v1.22 Requirement Coverage (39/39 mapped — roadmap created 2026-08-31)
 
@@ -304,29 +306,22 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-10T04:30:06.569Z
-Stopped at: Completed 159-12-PLAN.md (wrote both v1.22 close artifacts ahead of the close gate)
+Last session: 2026-09-10T05:00:00.000Z
+Stopped at: "Completed 159-13-PLAN.md — v1.22 MILESTONE CLOSE, 39/39 requirements Validated"
 Resume file: None
-Next action: `/gsd-plan-phase 154`
+Next action: Code review, user-acceptance testing and `/gsd-secure-phase 159`, then `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 ## Operator Next Steps
 
-1. **`/gsd-secure-phase 158`** first (security enforcement is on and no `158-SECURITY.md` exists), then **`/gsd-discuss-phase 159`** — the HARN harness-close phase has no CONTEXT.md yet. Phases 154-158 are complete and verified (30/30 plans); the landing branch `v1.22/154-style-landing` is 170+ commits ahead of local `master` and nothing has been pushed this milestone — the push is Phase 159's HARN-06. Optional before 159: `/gsd-code-review 158 --fix` for the three audit-runner findings.
+1. **v1.22 SHIPPED 2026-09-10.** All six pillars closed: the Google-style pass landed and extended (STYLE), all four verification halves proven (VERIFY), Recipe #6 / RE-237 formalized (RCP), the authoring standard wired in with a bounded gate (STD), the located hygiene defects closed (HYG), and both harness debts discharged — the `V121` back-anchor pin, the C17 frozen-aware residue conversion, the 19th CI coexistence workflow, the three-axis terminal re-audit, and the single close-gate commit (HARN). Remaining before archival: code review, user-acceptance testing, `/gsd-secure-phase 159` (register carries `AR-159-01`, the verifier-leak finding, and the archived-history residual — runs after the post-gate apex commit and before archival per D-13), then `/gsd-complete-milestone`.
 
-2. **`V121-PIN-DEFERRAL` is MANDATORY at the v1.22 close (Phase 159)** — the sixth link in an unbroken back-anchor chain (V117 → V118 → V119 → V120 → V121). Phase 159 must add to `scripts/validation/_lib/frozen-at-close.mjs`:
-   - `MILESTONE_CLOSE_SHAS.V121 = 'e129081e'` — **inserted before the `V14` entry, never appended.**
-   - `readAtV121Close` / `lsTreeAtV121Close` exports, following the V18..V120 single-entry pattern.
-   - Recover the SHA with the **subject-line pair discriminator** (returns count=1), never the naive dual-token `--grep --all-match` form:
-     ```
-     git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.21/ && $2 ~ /MILESTONE CLOSE/'
-     ```
-     Already recovered and confirmed at v1.21's own close: `e129081e`. Re-verify before trusting it.
+2. **The tag and its push are archival steps, not done yet.** Per `HARN-06`'s annotate-and-supersede note (D-12): at `/gsd-complete-milestone`, after the phase directories move and before any commit, the apex is re-run on the moved working tree and the result is written into `MILESTONES.md`, `STATE.md`, `PROJECT.md` and the annotated tag message; the moves and the record are committed together, that commit is tagged `v1.22`, and `git push origin master v1.22` is run explicitly — an explicit branch-and-tag push replacing the archival workflow's tag-only prompt. `git tag --list 'v1.22'` is confirmed empty as of this plan's own close (no tag created early).
 
-3. **Also open at this roadmap's creation:**
-   - `C17-FROZEN-AWARE-RESIDUE-V21` — `v1.21-milestone-audit.mjs` is live-HEAD by construction, because no `V121` pin exists yet. Resolves when Phase 159 lands.
-   - **9 un-acknowledgeable audit items** (see `## Deferred Items` above) — not in v1.22's requirement scope; will resurface at the v1.22 close unless a future milestone scopes their fix.
+3. **Also open, carried to archival:**
+   - **9 un-acknowledgeable audit items** (see `## Deferred Items` above) — not in v1.22's requirement scope; carried into `v1.22-DEFERRED-CLEANUP.md` (Phase 159, Plan 159-12) for the next milestone.
+   - `AR-159-01` (the verifier-leak finding, D-05) and the archived-history residual — named for `/gsd-secure-phase 159`'s register.
 
-4. **Durable close-time carve-outs for this repo** (sixth consecutive milestone applying them):
+4. **Durable close-time carve-outs for this repo** (seventh consecutive milestone applying them):
    - **Never `git rm .planning/REQUIREMENTS.md`.** `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism.
    - **`.planning/ROADMAP.md` is also live-read** by `check-phase-54` (`V-54-21`/`V-54-32`: the off-by-one compliance-policy filename must be absent, and the file must be non-empty). This roadmap was authored with zero occurrences of that filename — verify `check-phase-54.mjs` still passes after any future edit to this file or to ROADMAP.md.
    - **The `milestone.complete` summarizer cannot be trusted at face value.** Two consecutive closes undercounted tasks and scraped deviation-log fragments into MILESTONES.md as accomplishments. Rewrite the entry, the task count, and these Operator Next Steps by hand at the v1.22 close.

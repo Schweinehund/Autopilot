@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🚧 **v1.22 Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe** — Phases 154-159 (in progress, started 2026-08-31)
+- ✅ **v1.22 Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe** — Phases 154-159 (shipped 2026-09-10)
 - ✅ **v1.21 Enterprise Update, Driver & Firmware/BIOS Governance** — Phases 145-153 (shipped 2026-08-30)
 - ✅ **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (shipped 2026-08-18)
 - ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
@@ -60,7 +60,7 @@ Full per-phase goals, dependencies, requirements and success criteria are in `##
 - [x] **Phase 156: STYLE Extension & Full-Landing Verification** - Batch 10 over the post-fork stragglers plus RE-237, then prove the whole landing with a fresh judge pass and an after-measurement (completed 2026-09-05)
 - [x] **Phase 157: STD + HYG — Authoring Standard & Corpus Hygiene** - Wire Google style into the authoring flow with a bounded gate, and close the located hygiene defects plus the stale SEED-001 (completed 2026-09-05)
 - [x] **Phase 158: Final Corpus Verification & Publish Bundle** - Confirm every claimed fix against git history and rebuild the `.docx` publish bundle from the final corpus (completed 2026-09-08)
-- [ ] **Phase 159: HARN — Harness Close** - V121 back-anchor pin, C17 frozen-aware residue conversion, 20th Path-A lineage bump, three-axis terminal re-audit, tag and push
+- [x] **Phase 159: HARN — Harness Close** - V121 back-anchor pin, C17 frozen-aware residue conversion, 20th Path-A lineage bump, three-axis terminal re-audit, tag and push (completed 2026-09-10)
 
 ### v1.21 phase summary (Phases 145-153) — SHIPPED 2026-08-30
 
@@ -340,7 +340,7 @@ Plans:
 
 **Wave 13** *(blocked on Wave 12 completion)*
 
-- [ ] 159-13-PLAN.md — Assert the publish bundle before the gate, take the close gate as one four-document commit with the harness flip proven a no-op, and confirm it with a post-gate apex in its own commit (HARN-05, HARN-06)
+- [x] 159-13-PLAN.md — Assert the publish bundle before the gate, take the close gate as one four-document commit with the harness flip proven a no-op, and confirm it with a post-gate apex in its own commit (HARN-05, HARN-06)
 
 ## Progress
 
@@ -369,6 +369,6 @@ Plans:
 | v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
 | v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | ✅ Shipped | 2026-08-18 |
 | v1.21 Enterprise Update, Driver & Firmware/BIOS Governance | 145-153 | ✅ Shipped | 2026-08-30 |
-| v1.22 Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe | 154-159 | 🚧 In Progress | - |
+| v1.22 Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe | 154-159 | ✅ Shipped | 2026-09-10 |
 
 Per-phase completion tables for shipped milestones are archived alongside their roadmaps in `.planning/milestones/vX.Y-ROADMAP.md`.
