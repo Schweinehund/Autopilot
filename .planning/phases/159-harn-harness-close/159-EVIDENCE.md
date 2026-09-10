@@ -3847,3 +3847,62 @@ measured property, its report cites zero planning-tree documents, and the reopen
 asymmetry is recorded as reopened rather than inherited. The shared commit is quoted from three
 independent sources and all values are identical. Zero retries were spent against the ceiling of one
 per leg and three overall.
+
+## §32 — Plan 159-11 Task 4: the owner's ruling, recorded verbatim
+
+### 32.1 Presentation, before the ruling was requested
+
+The orchestrator presented all six items required by this task's `<context>` to the owner, quoting
+directly from the sections above:
+
+1. **The dispatch axis** (§29) — job-level totals across all 19 workflows enumerated live: 240 jobs
+   observed, 204 successes, 17 legitimate skips (all one anchor job, derived from each workflow's
+   own `if:` guard — §29.4), 0 illegitimate skips, 0 failures, 19 non-evidence
+   (`continue-on-error` advisory jobs excluded from the success count per this plan's own rule).
+   There is no failure and no illegitimate skip to name individually — that list is empty, and the
+   emptiness is itself the reported fact, not an omission (§29.5-29.6).
+2. **The fresh-clone axis** (§30) — the nine-leg table, all nine legs complete, all nine exit 0, zero
+   legs labelled incomplete, zero retries used.
+3. **The blind-agent axis** (§31) — the nine-leg table (§31.4), byte-identical to the fresh-clone
+   axis's own results including the apex's single self-skip (116/0/1), plus the verbatim disclosure
+   that the agent is prompt-barred, same-host, and not isolated (§31.5), and the zero-citation
+   planning-tree check (§31.3).
+4. **The identical head commit**, quoted three times from three independent sources (§31.8):
+   the corrective push's own `git rev-parse origin/master`, the dispatch axis's `gh run list
+   --json headSha` across all 19 runs, and each reproduction clone's own `git rev-parse HEAD` — all
+   four independently-obtained readings equal `828df055cde076dfcbdda22de3d49850908ddbe1`.
+5. **The remediation spend so far** (§31.7) — 0 of 1-per-leg and 0 of 3-overall, across all three
+   axes; no remediation round was entered because nothing red or gapped was ever recorded.
+6. **The reopened asymmetry** (§31.6) — with both reproduction axes now clean clones of the remote,
+   no axis in this plan covers untracked files; recorded as REOPENED, not inherited or assumed
+   closed by some other mechanism.
+
+The orchestrator additionally confirmed independently, outside this evidence document's own
+sections, that all 19 runs at `828df055` report `success`/`completed` on GitHub, corroborating §29's
+own read-back.
+
+### 32.2 The owner's ruling, verbatim and unedited
+
+**Ruling — verbatim: "all-green"** (Accept — the evidence is green at one shared commit). This
+selects option `all-green` from Task 4's three-branch decision: the three-axis evidence captured in
+§28 through §31, all keyed to the single shared commit `828df055cde076dfcbdda22de3d49850908ddbe1`,
+is accepted as sufficient to proceed to the close artifacts and the close gate. Neither the
+`remediate` branch nor the `unmet` branch is selected; the recorded cons the owner accepted along
+with `all-green` are exactly the two named in this task's own options table — any defect not visible
+to these three axes ships with the milestone, and the reopened untracked-file asymmetry (§32.1 item
+6) is one named example of such a defect class.
+
+**No accepted-red disposition is created or invoked under any branch.** There was no red to accept:
+every axis's own totals (§29.5, §30, §31.4) resolved to success, legitimate skip, or an explicit
+non-red category before this ruling was ever requested — the `all-green` selection ratifies that
+pre-existing state, it does not manufacture it.
+
+### 32.3 Task 4's outcome
+
+The six presentation items were put to the owner before the selection was requested (§32.1); every
+failure and every illegitimate skip was named individually as an empty, explicitly-stated list rather
+than summarized as a bare total; the identical head commit was shown quoted from three independent
+sources; the retry spend was shown against its ceiling; the owner's `all-green` selection is recorded
+verbatim above; and no accepted-red disposition was created or invoked under any branch. This
+plan's own tasks are now complete — the close artifacts and the close gate are Plan 159-12's and
+Plan 159-13's work, not this plan's.
