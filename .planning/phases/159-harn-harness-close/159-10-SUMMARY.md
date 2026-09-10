@@ -132,3 +132,14 @@ None - no external service configuration required.
 ---
 *Phase: 159-harn-harness-close*
 *Completed: 2026-09-09*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/159-harn-harness-close/159-EVIDENCE.md`
+- FOUND: `.planning/phases/159-harn-harness-close/159-10-SUMMARY.md`
+- FOUND commit `9875eb36` (Task 1)
+- FOUND commit `295a1e89` (checkpoint pause)
+- FOUND commit `326af04d` (Task 2 — owner ruling recorded)
+- FOUND commit `20edd011` (Task 3 — push executed, head recorded)
+- FOUND commit `28b9572f` (this summary)
+- `git rev-parse origin/master` = `326af04dced1dedecf048c9ce22942060eab25a2`, matching the head recorded in evidence §27.4
