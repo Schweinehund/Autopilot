@@ -1,7 +1,7 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.22
-milestone_name: phase summary (Phases 154-159) — IN PROGRESS
+milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe (Phases 154-159) — SHIPPED 2026-09-10
 current_phase: 159
 status: completed
 stopped_at: Phase 159 complete — all phases complete
