@@ -2856,4 +2856,24 @@ accepted-red disposition is created or invoked under any branch.
 11. **The consequence of declining (§25.11):** no dispatch axis, no shared commit, the milestone
     does not close this phase; HARN-06 stays UNMET until revisited.
 
-**No accepted-red disposition exists at this close and none will be created under any branch.**
+**No accepted-red disposition exists at this close and none will be created under any branch.
+
+## §26 — Plan 159-10 Task 2: the owner's ruling, recorded verbatim
+
+The orchestrator presented all eleven items from §25 (items 1 through 11 above) to the owner. The
+owner's ruling, recorded verbatim and unedited:
+
+**Push ruling — verbatim: "Proceed"** (push the full unpushed set to the default branch with
+`git push origin master`). This selects option `proceed` from Task 2's four-branch decision:
+the full 57-commit unpushed range, including the squash, RE-237, the 29 kiosk assets, the scratch
+bundle, and the pre-push guard, is authorized to publish to `origin/master` by exactly the command
+named in §25.9.
+
+**Atom-branch delete-or-keep question — verbatim: "Keep all four"** (no branch is deleted). This
+answers the explicit question raised in §25.7 item 7: `origin/phase-119-atom-2`,
+`origin/phase-125-atom-2`, `origin/phase-128-atom-2`, and `origin/phase-139-atom-5` all remain
+exactly as they are, at their current tips, with no delete operation run against any of them by
+this plan or any later one. No branch is deleted by this task, consistent with Task 2's acceptance
+criteria — this section only records the answer; the branches are not touched here.
+
+No push occurred during this task. The `proceed` selection is executed by Task 3, next.**
