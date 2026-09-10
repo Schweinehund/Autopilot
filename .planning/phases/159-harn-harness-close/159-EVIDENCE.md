@@ -3906,3 +3906,113 @@ sources; the retry spend was shown against its ceiling; the owner's `all-green` 
 verbatim above; and no accepted-red disposition was created or invoked under any branch. This
 plan's own tasks are now complete — the close artifacts and the close gate are Plan 159-12's and
 Plan 159-13's work, not this plan's.
+
+---
+
+## §33 — Plan 159-12 Task 1: source-count measurement, double-booking adjudication, no-dropped-entry mapping
+
+### 33.1 The four source counts, each its own command, result recorded live (D-65)
+
+| # | Source | Command | Result | Of the total, how many still open |
+|---|---|---|---|---|
+| 1 | `v1.21-DEFERRED-CLEANUP.md` Part A (heading-counted) | `awk '/^## Part A/{p=1} /^## Part B/{p=0} p' .planning/milestones/v1.21-DEFERRED-CLEANUP.md \| grep -c '^### '` | **4** | Of the 4, 2 are still open (`MATERIALIZED-SET-COUPLING`, `NESTED-GUARD-SECOND-ORDER-ASYMMETRY`) and 2 close at this v1.22 milestone (`V121-PIN-DEFERRAL`, `C17-FROZEN-AWARE-RESIDUE-V21`) |
+| 2 | `v1.21-DEFERRED-CLEANUP.md` Part B (heading-counted) | `awk '/^## Part B/{p=1} /^## Part C/{p=0} p' .planning/milestones/v1.21-DEFERRED-CLEANUP.md \| grep -c '^### '` | **19** | Of the 19, 19 are still open — this document carries all 19 verbatim into its own Part B; none is discharged this milestone (Phase 159 is harness-only and touches no `docs/` content, so no corpus-hygiene trigger fired) |
+| 3 | `v1.21-DEFERRED-CLEANUP.md` Part C (numbered-bold-item counted — **never a heading count, which returns 0 here**) | `awk '/^## Part C/{p=1} /^## Part D/{p=0} p' .planning/milestones/v1.21-DEFERRED-CLEANUP.md \| grep -cE '^[0-9]+\. \*\*'` | **17** | Of the 17, 17 are still open — same reasoning as row 2. **Trap recorded explicitly:** the heading-count form of the identical command (`grep -c '^### '` in place of the numbered-bold-item pattern) over the same Part C slice returns **0**, because Part C's own items are numbered bold list entries (`1. **Title**`), not `### ` headings — confirmed live: `awk '/^## Part C/{p=1} /^## Part D/{p=0} p' .planning/milestones/v1.21-DEFERRED-CLEANUP.md \| grep -c '^### '` → **0** |
+| 4 | `.planning/REQUIREMENTS.md` Future Requirements bullets | `awk '/^## Future Requirements/{p=1} /^## Out of Scope/{p=0} p' .planning/REQUIREMENTS.md \| grep -c '^- '` | **8** | Of the 8, 8 are still open — none is fixed, all remain deferred. Of those 8: 5 restate content already carried in v1.21 Part C (past-due population; the three do-not-edit-ruled defects, one bullet; SEMM; the hotpatch eligibility question; CSP-partner registration + standalone Surface UEFI, one bullet), 1 is a bare cross-reference to the v1.21 Part B carry-forward list (bullet at REQUIREMENTS.md:121), and 2 are genuinely net-new (the pilot's kiosk-class follow-ups; the pilot's observed-behaviour follow-ups) |
+
+Both the Part A and Part B counts (rows 1-2) and the REQUIREMENTS.md count (row 4) match
+`159-CONTEXT.md` D-58's carried figures exactly — delta 0, a result per D-65, not a skipped
+measurement. Row 3 (Part C, 17) also matches D-58 exactly.
+
+### 33.2 Double-Booking Guard — both populations adjudicated in writing
+
+**Population 1 — `NESTED-GUARD-SECOND-ORDER-ASYMMETRY` (v1.21 Part A survivor) versus this phase's
+own `V-159-HARN03` leg.** The entry's claim — that the apex-generation `AUDIT-HARNESS` skip-under-
+`CHECK_PHASE_NESTED` guard permanently hides the benefit of a frozen-corpus harness conversion from
+the apex — is **not fully discharged** by this phase's own work, but it is **partially discharged**
+and that partial discharge is recorded rather than silently folded into either "still fully open" or
+"closed." `check-phase-159.mjs`'s own additive leg, `V-159-HARN03` (which re-spawns the newly
+frozen `v1.21-milestone-audit.mjs`), is **confirmed NOT among the legs that differ between a plain
+and a `CHECK_PHASE_NESTED=1` invocation** (§19, the leg-by-leg table): it reports a real, identical
+PASS in both modes, by design (D-25) — a frozen harness has no evolved corpus to skip against, so
+its own re-run is never gated by the nested flag. This is a genuine, structural exception carved
+into exactly **one** leg (the just-frozen v1.21 harness), not a general fix to the guard mechanism
+itself: the other 113 chain legs plus `V-159-AUDIT-HARNESS` (the *live*, still-evolving v1.22
+harness) still skip under nesting, for the same reason every predecessor apex-generation validator's
+`AUDIT-HARNESS` check still skips. **Adjudication: `NESTED-GUARD-SECOND-ORDER-ASYMMETRY` is carried
+forward verbatim into this document's own Part B (it is not closed, since the general architectural
+property it names is unchanged), with `V-159-HARN03`'s partial discharge noted as an addendum to the
+carried entry** — the identical shape a future milestone's own newly-frozen harness will repeat: each
+milestone's own just-converted harness gains this same one-leg exception the moment its own back-
+anchor pin lands, exactly as v1.21's own harness gained it this close.
+
+**Population 2 — the past-due-population overlap between v1.21 Part C item 1 and REQUIREMENTS.md's
+Future Requirements bullet 1.** Both name the identical measured fact: `[MEASURED]` 217 of 271
+date-stamped corpus files are past their `review_by`, worst 71 days, and no validator compares
+`review_by` to the current date. v1.21's own predecessor document records this as its own Part C
+item 1 (a v1.21-generated deferral, now preserved verbatim in this document's own Part B under the
+preserved-wrapper heading — see Task 2). `.planning/REQUIREMENTS.md`'s own live Future Requirements
+section restates the identical figure as its own first bullet. **Adjudication: this milestone's
+deferred-cleanup ledger (`v1.22-DEFERRED-CLEANUP.md`) is named the owning document going forward** —
+it is the durable, milestone-scoped backlog record, whereas `REQUIREMENTS.md`'s Future Requirements
+section is a live, per-milestone-scoped document that is archived and superseded at every close.
+REQUIREMENTS.md's bullet 1 is **not** promoted into a second, distinct Part C entry in this
+document — Task 2's ledger cross-references it back to the preserved v1.21 Part C item 1 rather than
+duplicating the fact under a new identifier.
+
+### 33.3 No-dropped-entry mapping — Phase 158's twelve Deferred Ideas, each mapped to its disposition
+
+Source: `.planning/phases/158-final-corpus-verification-publish-bundle/158-CONTEXT.md`'s own
+`## Deferred Ideas` section (12 bullets, confirmed by `grep -c '^- \*\*' .planning/phases/158-final-corpus-verification-publish-bundle/158-CONTEXT.md` intersected with that section's own bounds).
+
+| # | 158 Deferred Idea (as authored) | Disposition in `v1.22-DEFERRED-CLEANUP.md` |
+|---|---|---|
+| 1 | The history mechanism at close (squash merge recommended) | **Discharged this phase** — Plan 159-01 executed the `git commit-tree` plumbing squash (§2). Not carried; not a Part A entry. |
+| 2 | `.gitattributes * text=auto eol=lf` | **Discharged this phase** — Plan 159-01 appended the line per D-40. Not carried; not a Part A entry. |
+| 3 | The wrapped-guard hazard (`subs-batch10.tsv:33` + 16 other rows across 8 sets, WINDOWS row 15) | Carried, own Part A entry: **`WRAPPED-LOOKBEHIND-GUARD`** |
+| 4 | The user-level skill copies (`cp -r google-style-verify`, re-sync `google-style`) | **Owner action, not repo-trackable** — recorded as a cross-reference note, not a Part A entry (the action has no repository-tracked artifact for a future milestone to discharge against) |
+| 5 | verify2's explicit-anchor blind spot (284 of 289 items) and its lack of fence masking | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 6 | `check-prose-style.py`'s exclusion record has no producer for five of six figures | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 7 | The nine blank `status:` frontmatter keys (RE-228…RE-236) | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 8 | `scripts/pipeline/README.md:122-130` omits three pipeline files | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 9 | The remaining ~18 RESUME rulings with no single literal | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 10 | More style EDITs on 157's prose (reader-actor passives) | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 11 | The 95-file `Phase NN` body-prose population and the bundle of items carried from Phase 157 unchanged (requirement-identifier leak arm, citation freshness drift, DEFERRED-CLEANUP convergence flag, `docs/operations/` EEE enrollment, seed-status normalisation, `_glossary.md:33`'s index tail, the merge-marker gate, the `V-132`/`V-137`-HUBSNOTWIRED regex repair, the evidence-label taxonomy, `judge-packets.py` alignment quality, `pins2.py` cross-repo geometry) | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+| 12 | The `scripts/pipeline/` "built-ins only" convention vs. `unzip` | Carried, merged into **`PHASE-158-CARRIED-RESIDUE`** |
+
+**Merge justification for `PHASE-158-CARRIED-RESIDUE` (items 5-12, eight of the twelve):** all eight
+share the identical root cause — each is a residual item Phase 158 itself named but explicitly left
+outside VERIFY-05/VERIFY-06's own mandate (dist rebuild and fix-verification discipline), with no
+v1.22 requirement scoping its remediation. None is dropped and none is filed under a name that
+obscures its origin: the bundled entry's own text (Task 2) names all eight individually inside one
+`### PHASE-158-CARRIED-RESIDUE` entry, rather than either dropping them or inflating eight
+one-line stub headings that would never individually be revisited.
+
+**All twelve items are accounted for: 2 discharged this phase, 1 an owner action outside repo-Part-A
+scope, 1 its own named Part A entry, 8 merged into one Part A entry with a stated shared cause.
+Zero dropped.**
+
+### 33.4 What does NOT enter these documents (recorded per the plan's own instruction)
+
+- **The reopened untracked-file asymmetry** (§31.5/§32.1 item 6 — with both reproduction axes now
+  clean clones, no axis covers untracked files) is an **evidence disclosure**, already recorded in
+  this evidence document (§31, §32) under D-49. It is explicitly **not** a Part A entry in
+  `v1.22-DEFERRED-CLEANUP.md` — it names no future remediation obligation of the kind Part A exists
+  to track; it is a measured property of this close's own audit surface, already durable at the
+  evidence-document level.
+- **The end-of-line attribute** (`.gitattributes * text=auto eol=lf`, item 2 above) and **the
+  Accepted-Risks-register rows** (`AR-159-01` and any other `158-SECURITY.md`/`159-*` AR rows) are
+  different artifact classes from a deferred-cleanup Part D discharge: Part D exists to record a
+  **carried-forward backlog item that this milestone resolved**, not a same-milestone housekeeping
+  commit (the `.gitattributes` line) or a standing accepted-risk register entry (which lives in its
+  owning `*-SECURITY.md` file, not the deferred-cleanup ledger). Neither enters Part D.
+- **Superseded in-session rulings** (the `_JUDGE-VERDICTS.json` needle candidate, the 14-job dispatch
+  count later corrected, the two-row source table later corrected to four rows) belong in
+  `159-CONTEXT.md`'s own decision record, where the supersession already lives, not in
+  `v1.22-MILESTONE-AUDIT.md` (Task 3).
+
+### 33.5 Gate readings after this task's own commit
+
+`node scripts/validation/check-phase-54.mjs` / `-55.mjs` / `-56.mjs`, all three: **32 passed, 0
+failed, 0 skipped**, re-confirmed immediately before this task's commit (this task modifies only
+`159-EVIDENCE.md`; no close artifact is written by this task, per its own acceptance criteria).
