@@ -67,7 +67,7 @@
 // Usage: node scripts/validation/v1.21-milestone-audit.mjs [--verbose] [--self-test]
 // Exit code: 0 on all-PASS; 1 on any-FAIL.
 
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
@@ -81,10 +81,13 @@ const SELF_TEST = argv.includes('--self-test');
 // Phase 159 Plan 159-04 (D-18): this harness reads its corpus and its sidecar frozen at its own
 // milestone-close SHA (V121 = e129081e, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for the
 // pin) instead of live HEAD -- including the C17 contract-presence guard below (check id 17),
-// which stays a LIVE question per D-19. The `node:fs` existsSync/readFileSync/readdirSync/statSync
-// import stays in place because the C17 leg's existence guard is deliberately still live and is
-// otherwise unused by the helpers below (mirrors the v1.19/v1.20-milestone-audit.mjs precedent,
-// which also keeps now-unused readdirSync/statSync imports after conversion).
+// which stays a LIVE question per D-19. Fixed by Phase 159 REVIEW.md CR-01: the "root singleton"
+// gates in androidDocPaths()/linuxDocPaths()/appleBusinessDocPaths() previously called
+// `existsSync(join(process.cwd(), p))`, which stats the LIVE working tree instead of the frozen
+// V121 snapshot -- now `FROZEN.has(p)`, matching the v1.15-v1.20 precedent exactly. The `node:fs`
+// existsSync import stays in place solely for the C17 leg's live existence guard (lines below);
+// it is otherwise unused by the helpers above. readFileSync/readdirSync/statSync were dropped
+// from the import (confirmed dead by grep) rather than kept-but-unused.
 const MILESTONE_TAG = 'V121';
 const SIDECAR_PATH = 'scripts/validation/v1.21-audit-allowlist.json'; // UNCHANGED literal -- GOV-02
                                                                        // pins search for this exact string
@@ -135,7 +138,7 @@ function appleBusinessDocPaths() {
   for (const p of [
     'docs/_glossary-apple-business.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walk: all .md under docs/cross-platform/apple-business/
@@ -148,7 +151,7 @@ function appleBusinessDocPaths() {
     'docs/admin-setup-macos/01-abm-configuration.md',
     'docs/admin-setup-ios/02-abm-token.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // D-24 scope-filter: exclude any DIRECTORY segment starting with "_"
@@ -196,7 +199,7 @@ function androidDocPaths() {
     'docs/reference/android-capability-matrix.md',
     'docs/decision-trees/08-android-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks (all .md under these two lifecycle and admin trees are Android-scoped by construction)
@@ -247,7 +250,7 @@ function linuxDocPaths() {
     'docs/reference/linux-capability-matrix.md',
     'docs/decision-trees/09-linux-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks
