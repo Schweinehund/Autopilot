@@ -1028,7 +1028,7 @@
     },
     "v1.22": {
       "epicKey": "RTS-823",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-08-31",
       "phases": {
         "154": {
@@ -1058,10 +1058,11 @@
         },
         "159": {
           "issueKey": "RTS-829",
-          "status": "in_progress",
+          "status": "done",
           "name": "HARN — Harness Close"
         }
-      }
+      },
+      "completedDate": "2026-09-10"
     }
   },
   "lastUpdated": "2026-07-30",
