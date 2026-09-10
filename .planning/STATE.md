@@ -1,37 +1,33 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.22
-milestone_name: Google-Style Corpus Landing, Authoring-Standard Adoption & Walk-Up AVD Kiosk Recipe (Phases 154-159) — SHIPPED, ARCHIVED & TAGGED 2026-09-10
-status: Awaiting next milestone
-stopped_at: Milestone v1.22 archived and tagged — awaiting /gsd-new-milestone
-last_updated: "2026-09-10T19:47:15.907Z"
+milestone: v1.23
+milestone_name: Walk-Up AVD Kiosk Class Follow-Through (L2 Triage, Host-Pool SSO, Licensing Standard) & Harness Close
+status: planning
+last_updated: "2026-09-10T22:05:58.164Z"
 last_activity: 2026-09-10
-last_activity_desc: Milestone v1.22 completed, archived and tagged
-state_head: dce5fe0b923b24552feff1f583bc540dd47c37b3
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 43
-  completed_plans: 43
-  percent: 100
-current_phase: 159
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-10 after the v1.22 milestone close)
+See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. As of v1.22 the corpus reads as one voice under a single adopted writing standard, proven not to have changed any document's meaning, with the standard carried forward into how new documents are authored.
 **Current focus:** Awaiting next milestone — `/gsd-new-milestone` scopes v1.23 starting at **Phase 160**. Backlog source: `.planning/milestones/v1.22-DEFERRED-CLEANUP.md`, whose Part A opens with `V122-PIN-DEFERRAL`.
 
 ## Current Position
 
-Phase: Milestone v1.22 complete (Phases 154-159 archived to `.planning/milestones/v1.22-phases/`)
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-09-10 — Milestone v1.22 completed, archived and tagged `v1.22`
+Status: Defining requirements
+Last activity: 2026-09-10 — Milestone v1.23 started
 
 ## Performance Metrics
 
@@ -136,9 +132,9 @@ docs/android-lifecycle/01-android-prerequisites.md
 ## Session Continuity
 
 Last session: 2026-09-10
-Stopped at: Milestone v1.22 archived to `.planning/milestones/` and tagged `v1.22`
+Stopped at: Milestone v1.23 started — PROJECT.md and STATE.md reset; requirements next
 Resume file: None
-Next action: `/gsd-new-milestone` to scope v1.23 from Phase 160
+Next action: define `.planning/REQUIREMENTS.md`, then roadmap (in progress via `/gsd-new-milestone`)
 
 ## Operator Next Steps
 
