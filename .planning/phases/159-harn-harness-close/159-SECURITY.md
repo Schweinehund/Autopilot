@@ -6,6 +6,7 @@ status: secured
 threats_open: 0
 asvs_level: 1
 created: "2026-09-10"
+updated: "2026-09-10"
 ---
 
 # Phase 159 — Security
@@ -20,18 +21,33 @@ a `## Threat Flags` entry. Verified by three parallel `gsd-security-auditor` run
 01–04 / 05–09 / 10–13. The ASVS-L1 short-circuit was deliberately not taken (Phase 157 and 158
 precedent), and the owner selected "Verify all open threats" at the Step 4 gate.
 
-**One threat left open, below the blocking threshold.** Every `mitigate` row was closed by
-re-executing the mitigation's own check against HEAD `05cc9d64` (the post-close-gate head that
-also carries the code-review report), not by reading the SUMMARY's claim. T-159-20 (medium,
-Repudiation, plan 159-04) stays **open** because `159-REVIEW.md` CR-01, independently reconfirmed
-by two auditors, shows `scripts/validation/v1.21-milestone-audit.mjs` lines 138, 151, 199 and 250
-still gate three root-singleton doc-path lists with a live `existsSync(join(process.cwd(), p))`
-instead of the `FROZEN.has(p)` form every v1.15–v1.20 sibling uses at the identical site. The
-perturbation test recorded in `159-EVIDENCE.md` §13 exercised only a sidecar-pinned line, so the
-row's "the working tree no longer influences the verdict" claim is proven for one dimension only.
-The defect is dormant while the five singleton files exist at HEAD; `V-159-HARN03` asserts exit 0
-plus a substring and cannot see it. Fix route: `/gsd-code-review 159 --fix` (CR-01) or a v1.23
-gap item; re-run `/gsd-secure-phase 159` afterward to close T-159-20.
+**First audit (HEAD `05cc9d64`): one threat left open, below the blocking threshold.** Every
+`mitigate` row was closed by re-executing the mitigation's own check against HEAD `05cc9d64` (the
+post-close-gate head that also carries the code-review report), not by reading the SUMMARY's claim.
+T-159-20 (medium, Repudiation, plan 159-04) stayed **open** because `159-REVIEW.md` CR-01,
+independently reconfirmed by two auditors, showed `scripts/validation/v1.21-milestone-audit.mjs`
+lines 138, 151, 199 and 250 still gated three root-singleton doc-path lists with a live
+`existsSync(join(process.cwd(), p))` instead of the `FROZEN.has(p)` form every v1.15–v1.20 sibling
+uses at the identical site. The perturbation test recorded in `159-EVIDENCE.md` §13 exercised only
+a sidecar-pinned line, so the row's "the working tree no longer influences the verdict" claim was
+proven for one dimension only.
+
+**Re-audit (HEAD `d4aee5df`): T-159-20 closed, zero open.** `/gsd-code-review 159 --fix` landed
+four commits (`dfa75ff9` CR-01, `01f928cf` WR-01, `bdd8b45f` WR-02, `7476cfdc` WR-03; report
+`d4aee5df`). The re-run scoped one `gsd-security-auditor` (Sonnet) to T-159-20 plus the fourteen
+closed rows whose component file a fix commit touched (T-159-02/04/05 pre-push hook and installer;
+T-159-16/17/19/31 the converted harness and its apex leg; T-159-36..40 the workflow; T-159-25/58
+`.gitattributes`); the other 60 rows stand on the first audit. The ASVS-L1 short-circuit was again
+not taken. T-159-20's missing dimension was closed two ways, both against the main tree with the
+tree proven restored (`git status --short docs/` empty): (1) with the singleton docs moved out of
+the working tree (orchestrator: 3 files; auditor independently: all 11 root-singleton paths), the
+fixed harness's `--verbose` output is byte-identical to baseline, still 16/0/0; (2) a discriminator
+run of instrumented scratch copies of the pre-fix blob (`05cc9d64`) and post-fix blob (HEAD)
+printed the three helpers' path counts as 32/17/23 with the files present and, with three removed,
+31/16/22 for the pre-fix code against an unchanged 32/17/23 for the post-fix code. The remaining
+`existsSync` sites (lines 871, 888) are the C17 contract-presence guard that D-19 keeps live. All
+fourteen re-verified rows held; T-159-37's row text was amended because WR-01 correctly made the
+Python setup step count four, not three.
 
 **Disclosed-and-compensated deviation on T-159-45 (plan 159-10).** The tracked pre-push guard was
 not installed as `.git/hooks/pre-push` when 159-10 pushed (plan 159-01 proved it only in throwaway
@@ -122,7 +138,7 @@ evidence, recorded here because the mechanism that ran differs from the one the 
 | T-159-17 | 159-04 | Elevation of Privilege | subprocess invocation with a swapped working directory | high | mitigate | Argument-array spawn only, no shell string; the contract path is absolutized from the live repository root before the swap so the child never resolves its own script through the materialized tree. A grep asserting the absence of string-command spawns is an acceptance command. | closed |
 | T-159-18 | 159-04 | Tampering | the structural contract validator | medium | mitigate | The plan reads it and never writes it; a numeric-stat diff against the V121 close is an acceptance command, and its zero-commit history since that close is measured in Task 1. | closed |
 | T-159-19 | 159-04 | Spoofing | the milestone tag reaching the reader | medium | mitigate | The tag is a literal looked up in the close-SHA map, which throws when the key is absent; the wrong-tag negative probe demonstrates that a mismatched tag produces a real failure rather than a silent pass. | closed |
-| T-159-20 | 159-04 | Repudiation | claiming a frozen result from a live run | medium | mitigate | The C17 detail string names the frozen corpus and the materialized file count, the perturbation test shows the working tree no longer influences the verdict, and both triples are recorded side by side. | open — below high threshold (non-blocking) |
+| T-159-20 | 159-04 | Repudiation | claiming a frozen result from a live run | medium | mitigate | The C17 detail string names the frozen corpus and the materialized file count, the perturbation test shows the working tree no longer influences the verdict, and both triples are recorded side by side. Re-audit `d4aee5df`: CR-01 fix `dfa75ff9` replaced the four live `existsSync(join(process.cwd(), p))` singleton gates with `FROZEN.has(p)`; with the root-singleton docs moved out of the working tree the fixed harness's verbose output is byte-identical (16/0/0), and the pre-fix versus post-fix discriminator shows path counts 31/16/22 versus 32/17/23 under the same removal. | closed |
 | T-159-SC | 159-04 | Tampering | npm/pip/cargo installs | low | accept | This plan performs zero package-manager installs. It edits one harness file and runs existing Node scripts using built-ins only. | closed |
 | T-159-21 | 159-05 | Information Disclosure | a vacuously green corpus-wide zero | high | mitigate | Every corpus-wide negative carries the corpus-floor sentinel as a hard FAIL below 250 files, the floor literal's presence is a grep-based acceptance command, and the live documentation file count is measured and asserted above the floor. | closed |
 | T-159-22 | 159-05 | Repudiation | a needle attributed to the wrong phase | high | mitigate | Every corpus-wide zero carries a full boundary series proving the transition landed inside the owning phase's window and stayed stable at every later boundary; the predecessor's misattributions are enumerated and superseded in writing. | closed |
@@ -143,7 +159,7 @@ evidence, recorded here because the mechanism that ran differs from the one the 
 | T-159-35 | 159-07 | Tampering | a negative content assertion that silently rots | medium | mitigate | No negative substring assertion about any harness is written; a detector for that pattern is an acceptance command, and the positive-only rule is stated in the plan's prohibitions. | closed |
 | T-159-SC | 159-07 | Tampering | npm/pip/cargo installs | low | accept | This plan performs zero package-manager installs. It creates one Node orchestrator that spawns already-tracked scripts. | closed |
 | T-159-36 | 159-08 | Information Disclosure | a shallow checkout silently disabling frozen reads | high | mitigate | Every checkout step pairs one-to-one with a full-depth fetch setting, asserted by a count-equality acceptance command that fails when the two counts diverge. | closed |
-| T-159-37 | 159-08 | Tampering | third-party action versions | medium | mitigate | Every action is pinned at a major version already used across the eighteen existing workflows; the newly introduced Python action is additionally pinned at an explicit minor, and its job placement is asserted by a count of exactly three. | closed |
+| T-159-37 | 159-08 | Tampering | third-party action versions | medium | mitigate | Every action is pinned at a major version already used across the eighteen existing workflows; the newly introduced Python action is additionally pinned at an explicit minor, and its job placement is asserted by a count of exactly three. Amended at re-audit `d4aee5df`: WR-01 (`01f928cf`) added the step to check-phase-154, which spawns python3 independently, so the count is four (linux-chain-ubuntu-latest, check-phase-154, check-phase-157, check-phase-159), all at minor 3.13; the pinning mitigation is unchanged. | closed |
 | T-159-38 | 159-08 | Denial of Service | a probe job with a dependency key | medium | mitigate | The probe job's dependency-free requirement is asserted by a scoped scan of that job's own block, and the globbing chain member is run standalone before and after the commit. | closed |
 | T-159-39 | 159-08 | Repudiation | a forward-duplicated predecessor apex job | medium | mitigate | A phase-numbered job scan asserts exactly six jobs, all at or above the first content phase of this milestone, so no predecessor apex can be present unnoticed. | closed |
 | T-159-40 | 159-08 | Elevation of Privilege | workflow triggers | medium | mitigate | The trigger set is asserted to carry no push trigger, matching every existing workflow; the file is dispatched manually and on a schedule only. | closed |
@@ -206,9 +222,9 @@ evidence, recorded here because the mechanism that ran differs from the one the 
 
 ## Open Threats (non-blocking)
 
-| Threat ID | Severity | Why open |
-|---|---|---|
-| T-159-20 | medium | CR-01: v1.21-milestone-audit.mjs:138,151,199,250 gate root-singleton doc paths with live existsSync(join(process.cwd(), p)) instead of FROZEN.has(p); the perturbation test in EVIDENCE §13 only exercised a sidecar-pinned line, so 'working tree no longer influences the verdict' is proven for one dimension only. Dormant while the 5 singleton files exist at HEAD. |
+None. T-159-20 was listed here after the first audit (CR-01: four live `existsSync` singleton gates in
+v1.21-milestone-audit.mjs; EVIDENCE §13's perturbation covered one dimension only) and was closed at
+the `d4aee5df` re-audit after fix `dfa75ff9`; see the register row for the evidence.
 
 ---
 
@@ -216,10 +232,12 @@ evidence, recorded here because the mechanism that ran differs from the one the 
 
 Surface the auditors found that no T-159-NN row models. None blocks; each is recorded so it cannot be lost.
 
-1. CR-01 live-existsSync sites in v1.21-milestone-audit.mjs:138,151,199,250 — no threat row in 159-01..04; recommend a v1.23 fix item
-2. WR-01 confirmed live: the workflow's check-phase-154 job (lines 121-134) has no setup-python step while check-phase-154.mjs V-154-SELFTEST spawns python3 and hard-FAILs on a missing runtime (source lines 167-171); masked only by ubuntu-latest's system python3. Add a setup-python step to that job or model it as a threat row.
-3. WR-03: pre-push.sh is optional, per-clone and bypassable with no CI backstop; belongs to T-159-02 and T-159-45/46. No 05-09 threat relies on it.
-4. CR-01 cross-reference: v1.21-milestone-audit.mjs live existsSync at 4 sites; does not undermine T-159-31 (the HARN03 leg genuinely never skips) but the leg exercises a harness with a latent frozen-read gap.
+1. CR-01 live-existsSync sites in v1.21-milestone-audit.mjs:138,151,199,250 — no threat row in 159-01..04; recommend a v1.23 fix item. **Resolved** by `dfa75ff9` (re-audit `d4aee5df`).
+2. WR-01 confirmed live: the workflow's check-phase-154 job (lines 121-134) has no setup-python step while check-phase-154.mjs V-154-SELFTEST spawns python3 and hard-FAILs on a missing runtime (source lines 167-171); masked only by ubuntu-latest's system python3. Add a setup-python step to that job or model it as a threat row. **Resolved** by `01f928cf` (re-audit `d4aee5df`); the CI job itself was not executed locally.
+3. WR-03: pre-push.sh is optional, per-clone and bypassable with no CI backstop; belongs to T-159-02 and T-159-45/46. No 05-09 threat relies on it. Still true; `7476cfdc` reworded the hook's header to say so. No CI backstop was added.
+4. CR-01 cross-reference: v1.21-milestone-audit.mjs live existsSync at 4 sites; does not undermine T-159-31 (the HARN03 leg genuinely never skips) but the leg exercises a harness with a latent frozen-read gap. **Resolved** with item 1; `V-159-HARN03` still asserts only exit 0 plus a substring, so it would not catch a recurrence.
+5. Re-audit `d4aee5df`: the machine-local `.git/hooks/pre-push` on the authoring clone is the pre-WR-03 copy and differs from the tracked hook in comment lines 10-13 only; non-comment lines are byte-identical. Untracked state, no row affected; refresh with the README install step when convenient.
+6. Re-audit `d4aee5df`: the tracked bundle `.planning/artifacts/154-scratch-corpus.bundle` carries `text: auto, eol: lf` from the wildcard rule with no explicit `binary` attribute, before and after WR-02; git's NUL heuristic is what keeps it unnormalized. Unchanged by this phase's fixes; recorded for a future `.gitattributes` pass.
 
 ---
 
@@ -227,6 +245,7 @@ Surface the auditors found that no T-159-NN row models. None blocks; each is rec
 
 - pre-push guard not installed at push time (EVIDENCE §27.2) does not reopen T-159-02: 159-01 promised only a tracked, documented, clone-tested script; corroborates WR-03; relevant to T-159-45/46 in the 10-13 slice
 - T-159-45 closed as disclosed-and-compensated: the pre-push guard was not installed in .git/hooks at 159-10's push (EVIDENCE §27.2) and did not fire; independent post-push scans of the two rejection conditions substituted and were re-verified live (landing branch and refs/archive/* absent from remote, five-surface token scan 0). Guard fired (pre-push: OK, §28.2) on 159-11's corrective push.
+- Re-audit `d4aee5df` (scoped to T-159-20 plus the fourteen rows whose file a review-fix commit touched): all fifteen closed. The auditor's perturbation moved all eleven root-singleton paths named by the three helpers out of the working tree (one, `docs/_templates/admin-template-linux.md`, was already absent live), got byte-identical verbose output at 16/0/0, and restored the tree. `_lib/frozen-at-close.mjs` and `check-phase-159.mjs` are unchanged since `05cc9d64`; `CHECK_PHASE_NESTED=1` still reports HARN03 PASS, not SKIP. Trigger set parsed as pull_request, schedule, workflow_dispatch, no push. `.gitattributes` diff moved only the docx line; docs and bundle attributes unchanged.
 
 ---
 
@@ -235,6 +254,7 @@ Surface the auditors found that no T-159-NN row models. None blocks; each is rec
 | Audit Date | Threats Total | Closed | Open | Run By |
 |------------|---------------|--------|------|--------|
 | 2026-09-10 | 75 | 74 | 1 | 3× gsd-security-auditor (Sonnet) via /gsd-secure-phase 159; orchestrator Claude Fable 5.1 |
+| 2026-09-10 (re-audit at `d4aee5df`) | 75 | 75 | 0 | 1× gsd-security-auditor (Sonnet), scoped to 15 rows, via /gsd-secure-phase 159; orchestrator Claude Fable 5.1 |
 
 ---
 
@@ -242,7 +262,8 @@ Surface the auditors found that no T-159-NN row models. None blocks; each is rec
 
 - [x] All threats have a disposition (mitigate / accept / transfer)
 - [x] Accepted risks documented in Accepted Risks Log
-- [x] `threats_open: 0` confirmed (one medium-severity threat open, below the `high` block threshold)
+- [x] `threats_open: 0` confirmed (no open threats at any severity after the re-audit)
 - [x] `status: secured` set in frontmatter
 
-**Approval:** secured 2026-09-10 — T-159-20 carried open until CR-01 is fixed.
+**Approval:** secured 2026-09-10 at `05cc9d64` with T-159-20 carried open; T-159-20 closed at the
+`d4aee5df` re-audit after CR-01 fix `dfa75ff9`. 75/75 closed.
