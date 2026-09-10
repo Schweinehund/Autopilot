@@ -3016,3 +3016,140 @@ deviation discovered during this task, documented above with independent post-pu
 the push carried none of what the guard exists to reject); the guard is now installed locally for any
 future push in this session. `origin/master` now sits at `326af04d`, recorded here as provisional —
 the next plan's first task produces the head the three audit axes actually bind to.**
+
+## §28 — Plan 159-11 Task 1: the corrective push and the shared commit
+
+### 28.1 Ahead/behind, re-measured at this plan's own start (not reused from §27.1)
+
+```
+$ git fetch --prune
+$ git rev-list --left-right --count origin/master...master
+0	3
+```
+
+`[MEASURED]` **0 behind, 3 ahead**, superseding §27.5's `0 0` — three further commits landed on
+`master` after Plan 159-10's Task 3 push, comprised of exactly:
+
+```
+$ git log --oneline origin/master..master
+828df055 docs(159-10): complete push-checkpoint plan
+28b9572f docs(159-10): add plan summary
+20edd011 docs(159-10): execute the owner-approved push, record the resulting head
+```
+
+These are Plan 159-10's own boundary commits: the Task 3 commit itself (`20edd011`, committed
+*after* the push it records — the push's refspec target at push time was the then-current tip
+`326af04d`, not `20edd011`), the plan's `create_summary` commit (`28b9572f`), and the plan's
+`update_requirements`/`git_commit_metadata` close-out commit (`828df055`). This is exactly the
+supersession D-10 and this plan's own `<action>` text predicted: the pushed head from a
+`checkpoint:decision` push is never a plan's final head, because the requirement-flip and summary
+commits land after the plan's last task.
+
+### 28.2 The corrective push
+
+```
+$ git push origin master
+pre-push: OK - no archived history and no refs/archive/* target detected
+To https://github.com/Schweinehund/Autopilot.git
+   326af04d..828df055  master -> master
+```
+
+Exactly one push command ran, in the same permitted shape as Plan 159-10 Task 3's (§27.3): a push of
+the local `master` branch to the remote named `origin`, by name, targeting the remote branch
+`master`. No `--all`, no `--tags`, no `--mirror`, no `--force`/`-f`, no archive refspec, and no
+reference to the `scratch` remote. Unlike §27.2 (Plan 159-10 Task 3), the tracked pre-push guard
+installed as a deviation in that task's Task 3 close-out is now an active `.git/hooks/pre-push` in
+this real working tree, and it fired on this push, printing `pre-push: OK - no archived history and
+no refs/archive/* target detected` before git proceeded with the fast-forward.
+
+### 28.3 The resulting head — THE SHARED COMMIT
+
+**`origin/master` fast-forwarded from `326af04dced1dedecf048c9ce22942060eab25a2` to
+`828df055cde076dfcbdda22de3d49850908ddbe1`. This value, `828df055cde076dfcbdda22de3d49850908ddbe1`
+(short form `828df055`), is recorded here as THE SHARED COMMIT that all three audit axes in this
+plan's remaining tasks bind to.**
+
+Local and remote heads proven identical, and the post-push ahead/behind proven zero:
+
+```
+$ git rev-list --left-right --count origin/master...master
+0	0
+$ git rev-parse origin/master
+828df055cde076dfcbdda22de3d49850908ddbe1
+$ git rev-parse master
+828df055cde076dfcbdda22de3d49850908ddbe1
+$ git log -1 --format=%s origin/master
+docs(159-10): complete push-checkpoint plan
+```
+
+The printed subject line (`docs(159-10): complete push-checkpoint plan`) contains no close-gate
+marker phrase — no close-gate commit has been published ahead of the close gate, so the terminal
+ordering below is not violated.
+
+### 28.4 Terminal ordering and the shared commit's position
+
+Per D-11 (Phase 153's shape), the terminal ordering for the remainder of this milestone's close is:
+
+1. **The shared commit — `828df055` — HERE, first.** All three audit axes in this plan's Tasks 2–3
+   key to this exact value.
+2. The close-gate commit (a later plan in this phase).
+3. The post-gate confirmatory apex, in its own commit.
+4. Archival, the `v1.22` tag, and the after-archival apex (at `/gsd-complete-milestone`).
+
+No commit past position 1 exists yet in this repository; this section records only where the shared
+commit sits in that sequence, not that later positions have been reached.
+
+### 28.5 Hook sequencing — one ordered decision (D-53, D-54)
+
+Both registered Stop hooks (`jira-milestone-gate.cjs`, `publish-bundle-gate.cjs`, wired in
+gitignored `.claude/settings.local.json`) saw a consistent `STATE.md` at every Stop this phase,
+because D-01's plumbing squash never changed the working tree mid-phase. Naming which hook fires at
+which step of the terminal ordering (§28.4), in order:
+
+1. **`jira-milestone-gate.cjs` nudges at `phase.complete`** — driven by `STATE.md`'s
+   `completed_phases` field, not the ROADMAP checkbox — which is **pre-verification**: this phase's
+   Jira story (RTS-829) is therefore held **In Progress** at that nudge, per D-53. On the sync nudge
+   the executor syncs the mapping and the epic (RTS-823) but leaves RTS-829 In Progress; the owner or
+   the skill flips it Done only after `/gsd-verify-work` writes a `passed` result to
+   `159-VERIFICATION.md`.
+2. **`publish-bundle-gate.cjs` blocks on the milestone-complete transition** — it fires later, at
+   `/gsd-complete-milestone`, when `STATE.md`'s `status` carries the milestone-complete signal at
+   100%. It demands this milestone's archive (`dist/docs-library-v1.22.zip`) exist before allowing
+   the Stop to proceed silently; this has not happened yet in this plan.
+3. **The informative Stop to record is the first one after the `phase.complete` transition** — that
+   is where the Jira sync gate blocks (step 1 above fires first, chronologically, in this phase's
+   own lifecycle), consistent with D-54.
+
+**The single sentence on the protected-branch warning:** the protected-branch warning is evaluated
+once at phase start against the landing branch and never fires this phase, and nothing further is
+written about it.
+
+### 28.6 The issue-tracker ruling (D-53)
+
+The issue-tracker story for this phase (RTS-829) is held **In Progress** until this phase's
+verification document (`159-VERIFICATION.md`) records a `passed` result; on the hook's sync nudge
+(triggered by `phase.complete` in `STATE.md`, not the ROADMAP checkbox), the executor syncs the
+Jira mapping and the epic (RTS-823) but leaves the story In Progress. The milestone epic (RTS-823)
+flips Done only at archival, when `STATE.md`'s `milestone` field reads that it is awaiting the next
+milestone (`Awaiting next milestone`) after `/gsd-complete-milestone` runs. `STATE.md`'s `milestone:`
+field is never bumped forward to `v1.23` before the `complete v1.22` workflow runs — doing so early
+would strand the `v1.22` epic entry In Progress with no later trigger to close it, since the window
+for that transition closes at `/gsd-new-milestone`.
+
+### 28.7 Flagged planner assumption on the unclassified edge family — recorded verbatim
+
+> HARN-05 unclassified edge (probe row remains unresolved and is surfaced, never dismissed): the
+> deterministic probe could not classify HARN-05's edge family. Flagged planner assumption — the
+> three-axis re-audit's failure modes are operationalized here as a head-commit mismatch between
+> axes, an incomplete leg mistaken for a pass, an illegitimate skip mistaken for a legitimate one,
+> and an untracked-file population no axis covers; there may be a fifth failure mode no gate covers.
+> Residual risk recorded, not dismissed.
+
+### 28.8 Summary of Task 1's outcome
+
+The boundary commits Plan 159-10 itself authored (`20edd011`, `28b9572f`, `828df055`) are now
+published to `origin/master` with exactly one push command in the permitted shape. The resulting
+head, **`828df055cde076dfcbdda22de3d49850908ddbe1`**, is recorded as THE SHARED COMMIT all three
+audit axes bind to, local and remote proven identical, its position in the terminal ordering
+recorded, the hook and issue-tracker sequencing recorded as one ordered decision, and the flagged
+planner assumption on HARN-05's unclassified edge family carried forward verbatim.
