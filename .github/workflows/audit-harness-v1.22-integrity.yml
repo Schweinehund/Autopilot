@@ -28,9 +28,12 @@
 # ADVISORY NON-EVIDENCE (D-54/D-48): pin-helper-advisory combines continue-on-error:true with a
 #   trailing `|| true` and `|| echo` fallback on both its steps, so its conclusion is structurally
 #   ALWAYS success. It is never evidence for any requirement.
-# PYTHON (D-30, 159-08 Task 1): the pinned-minor Python 3 setup step is added to exactly the three
-#   jobs that transitively run the authoring-standard leaf (check-phase-157.mjs):
-#   linux-chain-ubuntu-latest, check-phase-157, check-phase-159. Nowhere else.
+# PYTHON (D-30, 159-08 Task 1; corrected by Phase 159 REVIEW.md WR-01): the pinned-minor Python 3
+#   setup step is added to the jobs that spawn a python3 subprocess -- linux-chain-ubuntu-latest,
+#   check-phase-157, and check-phase-159 transitively run the authoring-standard leaf
+#   (check-phase-157.mjs's V-157 python3 spawn), and check-phase-154 independently spawns python3
+#   via its own V-154-SELFTEST check (check-phase-154.mjs's verify-meaning.py --self-test). Nowhere
+#   else spawns python3.
 
 name: Audit Harness v1.22 Integrity
 
@@ -129,6 +132,8 @@ jobs:
         with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.13' }
       - name: Run check-phase-154.mjs
         run: node scripts/validation/check-phase-154.mjs
 
