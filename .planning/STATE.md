@@ -5,8 +5,9 @@ milestone_name: Walk-Up AVD Kiosk Class Follow-Through (L2 Triage, Host-Pool SSO
 status: planning
 last_updated: "2026-09-10T22:05:58.164Z"
 last_activity: 2026-09-10
+current_phase: 160
 progress:
-  total_phases: 0
+  total_phases: 8
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -24,9 +25,9 @@ See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 160 (not started)
 Plan: —
-Status: Defining requirements
+Status: Ready to plan
 Last activity: 2026-09-10 — Milestone v1.23 started
 
 ## Performance Metrics
@@ -134,7 +135,7 @@ docs/android-lifecycle/01-android-prerequisites.md
 Last session: 2026-09-10
 Stopped at: Milestone v1.23 started — PROJECT.md and STATE.md reset; requirements next
 Resume file: None
-Next action: define `.planning/REQUIREMENTS.md`, then roadmap (in progress via `/gsd-new-milestone`)
+Next action: `/gsd-discuss-phase 160`
 
 ## Operator Next Steps
 

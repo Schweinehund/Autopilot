@@ -124,43 +124,43 @@ Deferred, tracked, not in this roadmap:
 
 ## Traceability
 
-Which phases cover which requirements. Populated during roadmap creation.
+Which phases cover which requirements.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TRI-01 | — | Pending |
-| TRI-02 | — | Pending |
-| TRI-03 | — | Pending |
-| TRI-04 | — | Pending |
-| REF-01 | — | Pending |
-| REF-02 | — | Pending |
-| REF-03 | — | Pending |
-| REF-04 | — | Pending |
-| REF-05 | — | Pending |
-| SSO-01 | — | Pending |
-| SSO-02 | — | Pending |
-| SSO-03 | — | Pending |
-| LIC-01 | — | Pending |
-| LIC-02 | — | Pending |
-| VND-01 | — | Pending |
-| VND-02 | — | Pending |
-| VND-03 | — | Pending |
-| CLK-01 | — | Pending |
-| CLK-02 | — | Pending |
-| HYG-01 | — | Pending |
-| HYG-02 | — | Pending |
-| HARN-01 | — | Pending |
-| HARN-02 | — | Pending |
-| HARN-03 | — | Pending |
-| HARN-04 | — | Pending |
-| HARN-05 | — | Pending |
-| HARN-06 | — | Pending |
+| TRI-01 | Phase 164 | Pending |
+| TRI-02 | Phase 164 | Pending |
+| TRI-03 | Phase 164 | Pending |
+| TRI-04 | Phase 164 | Pending |
+| REF-01 | Phase 165 | Pending |
+| REF-02 | Phase 165 | Pending |
+| REF-03 | Phase 165 | Pending |
+| REF-04 | Phase 165 | Pending |
+| REF-05 | Phase 165 | Pending |
+| SSO-01 | Phase 166 | Pending |
+| SSO-02 | Phase 166 | Pending |
+| SSO-03 | Phase 166 | Pending |
+| LIC-01 | Phase 160 | Pending |
+| LIC-02 | Phase 160 | Pending |
+| VND-01 | Phase 161 | Pending |
+| VND-02 | Phase 161 | Pending |
+| VND-03 | Phase 161 | Pending |
+| CLK-01 | Phase 163 | Pending |
+| CLK-02 | Phase 163 | Pending |
+| HYG-01 | Phase 162 | Pending |
+| HYG-02 | Phase 162 | Pending |
+| HARN-01 | Phase 167 | Pending |
+| HARN-02 | Phase 167 | Pending |
+| HARN-03 | Phase 167 | Pending |
+| HARN-04 | Phase 167 | Pending |
+| HARN-05 | Phase 167 | Pending |
+| HARN-06 | Phase 167 | Pending |
 
 **Coverage:**
 - v1.23 requirements: 27 total
-- Mapped to phases: 0
-- Unmapped: 27 ⚠️ (filled by the roadmapper)
+- Mapped to phases: 27
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-09-10*
-*Last updated: 2026-09-10 after initial definition*
+*Last updated: 2026-09-10 after roadmap creation — 27/27 requirements mapped across Phases 160-167, zero orphans*
