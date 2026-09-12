@@ -1,0 +1,155 @@
+{
+  "phase_baseline": {
+    "sha": "f45ac9e2fae07f3c9dc012129f9369308d31ac00",
+    "sha_short": "f45ac9e2",
+    "branch": "master",
+    "measured_at": "2026-09-12T15:43:58Z",
+    "path_note": "This artifact lives at .planning/phases/160-licensing-hardware-decision-record/ for the duration of v1.23; it relocates to .planning/milestones/v1.23-phases/ only at milestone close. Later plans in this phase must resolve the path rather than hardcode it.",
+    "structural_gate": {
+      "check-phase-54": {
+        "script": "scripts/validation/check-phase-54.mjs",
+        "invocation": "node scripts/validation/check-phase-54.mjs",
+        "exitCode": 0,
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0,
+        "tallyLine": "Summary: 32 passed, 0 failed, 0 skipped"
+      },
+      "c17-eee-contract": {
+        "script": "scripts/validation/c17-eee-contract.mjs",
+        "invocation": "node scripts/validation/c17-eee-contract.mjs",
+        "exitCode": 0,
+        "filesChecked": 237,
+        "totalViolations": 0,
+        "perAssertionViolations": {
+          "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0,
+          "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0
+        },
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check-nav-hub-links": {
+        "script": "scripts/validation/check-nav-hub-links.mjs",
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "check-phase-155": {
+        "script": "scripts/validation/check-phase-155.mjs",
+        "invocation": "node scripts/validation/check-phase-155.mjs",
+        "exitCode": 0,
+        "pass": 10,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 10 PASS, 0 FAIL, 0 SKIPPED"
+      },
+      "check-phase-156": {
+        "script": "scripts/validation/check-phase-156.mjs",
+        "invocation": "node scripts/validation/check-phase-156.mjs",
+        "exitCode": 0,
+        "pass": 10,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 10 PASS, 0 FAIL, 0 SKIPPED",
+        "note": "This run is also the V-156-ADMIN-4 and V-156-SIGNINTO reading; the validator's own printed per-file count is the source of the RE-237 administrator=10 figure recorded under pin_residency, not a separate hand grep."
+      },
+      "check-phase-159": {
+        "script": "scripts/validation/check-phase-159.mjs",
+        "invocation": "node scripts/validation/check-phase-159.mjs",
+        "exitCode": 0,
+        "pass": 117,
+        "fail": 0,
+        "skipped": 0,
+        "wallClock": "1m56s",
+        "tallyLine": "Result: 117 PASS, 0 FAIL, 0 SKIPPED (total checks: 117)",
+        "note": "Apex is the ~2 minute run, never the stale ~17s figure. Measured wall-clock this run via `date +%s` before/after: 116 seconds (well above the 30s done-criteria floor)."
+      }
+    },
+    "style_residual": {
+      "note_directory_scope": "sweep3.py is run PER DIRECTORY (docs/recipes, then docs/reference) and never as bare `docs`, because bare `docs` reports a pre-existing TOTAL edit in docs/operations/ at HEAD that does not belong to this phase's scope, and a single FILE path always reports a vacuous 0 files / 0 edits rather than genuinely scanning anything.",
+      "note_blind_spots": "sweep3.py skips every line starting with the pipe character (table rows) and sets do_em = False unconditionally, so a green sweep3 reading is never evidence for new table cells or for tight-em-dash (D-47) compliance in this phase's later table-row and blockquote edits.",
+      "check_py": {
+        "invocation_re237": "python .claude/skills/google-style/check.py --no-headings docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "candidates_re237": 86,
+        "invocation_matrix": "python .claude/skills/google-style/check.py --no-headings docs/reference/licensing-matrix.md",
+        "candidates_matrix": 20,
+        "classification": "report-only candidate count, never a threshold (9,363 candidates on the finished corpus per D-34)"
+      },
+      "sweep3": {
+        "invocation_recipes": "python scripts/docs-style/sweep3.py docs/recipes scripts/docs-style/_CONTENT-PINS.txt",
+        "totalEdits_recipes": 0,
+        "filesScanned_recipes_nonzero": true,
+        "invocation_reference": "python scripts/docs-style/sweep3.py docs/reference scripts/docs-style/_CONTENT-PINS.txt",
+        "totalEdits_reference": 0,
+        "filesScanned_reference_nonzero": true,
+        "pinsLoaded": 563
+      }
+    },
+    "pin_residency": {
+      "commandForm": "grep -oE <pattern> <file> | wc -l -- grep -c counts matching LINES not occurrences, and would under-report 'administrator', which shares lines",
+      "administrator_re237": {
+        "invocation": "grep -oE 'administrator' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 10
+      },
+      "administrator_matrix": {
+        "invocation": "grep -oE 'administrator' docs/reference/licensing-matrix.md | wc -l",
+        "value": 1
+      },
+      "ask_the_admin_re237": {
+        "invocation": "grep -cE '^> \\*\\*Ask the admin:\\*\\*' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "value": 4
+      },
+      "what_breaks_if_misconfigured_re237": {
+        "invocation": "grep -cE '^> \\*\\*What breaks if misconfigured:\\*\\*' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "value": 8
+      },
+      "reported_as_unactivated_re237": {
+        "invocation": "grep -oE 'reported as unactivated' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 6
+      },
+      "step5_anchor_re237": {
+        "invocation": "grep -oE '#step-5-author-the-assignedaccessconfiguration-xml' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 6
+      },
+      "blockquote_runs_re237": {
+        "invocation": "python one-liner: count contiguous '>'-prefixed line runs and the max character length of each run joined after stripping the leading '> '",
+        "runCount": 25,
+        "maxJoinedRunLength": 198
+      },
+      "blockquote_runs_matrix": {
+        "invocation": "python one-liner: count contiguous '>'-prefixed line runs and the max character length of each run joined after stripping the leading '> '",
+        "runCount": 9,
+        "maxJoinedRunLength": 187
+      }
+    },
+    "line_endings": {
+      "docs/recipes/06-walk-up-avd-kiosk-autologon.md": {
+        "crlf": 308,
+        "bareLf": 0,
+        "endsWithNewline": true,
+        "bytes": 40334
+      },
+      "docs/reference/licensing-matrix.md": {
+        "crlf": 101,
+        "bareLf": 0,
+        "endsWithNewline": false,
+        "bytes": 6428,
+        "lastByte": "0x7c (pipe character)"
+      },
+      ".planning/ROADMAP.md": {
+        "crlf": 0,
+        "bareLf": 233,
+        "endsWithNewline": true,
+        "bytes": 24891,
+        "note": "160-DRAFTS.md recorded 220 bare-LF / 23,426 bytes at HEAD 3a4b78db. This reading (233 bare-LF / 24,891 bytes) is a genuine drift, not a measurement error: commit c04c5721 (docs(160): create phase plan) inserted the 13-line Wave 1/2/3 plan list into Phase 160's ROADMAP section between 3a4b78db and this plan's HEAD f45ac9e2, replacing the prior '**Plans**: TBD' line. Phase 160 success criterion 2's own text (the Task 2 edit target) is unchanged by that commit -- confirmed by direct read before this task ran. Per this task's own instruction, the live-measured figure is recorded here and DRAFTS' stale figure is not carried forward."
+      },
+      ".planning/REQUIREMENTS.md": {
+        "crlf": 0,
+        "bareLf": 166,
+        "endsWithNewline": true,
+        "bytes": 23379
+      }
+    }
+  }
+}
