@@ -79,7 +79,20 @@ Full per-phase goals, dependencies, requirements and success criteria are in `##
   2. `docs/reference/licensing-matrix.md` reflects the ruling as cell-value edits only (no structural edits, respecting the `V-58-22`/`V-58-23` pin hazard), consistent with the per-user-vs-per-device consequence RCP-08 landed in v1.22.
   3. The `Class is not licensed for use` / `-2016281112` activation observation is present and labelled `[PILOT]`, and the "ShellLauncher node is not supported in Windows 10 Pro" claim is `[SOURCED, assignedaccess-csp, ms.date 2025-03-12]`.
 
-**Plans**: TBD
+**Plans**: 3 plans in 3 waves (strictly sequential — the SC2/LIC-02 amendment must land before any corpus edit it permits, and 160-03 declares its dependency on 160-02 because both write `160-EVIDENCE.md`)
+
+Plans:
+**Wave 1**
+
+- [ ] 160-01-PLAN.md — **Tracer**: the SC2/LIC-02 annotate-and-supersede amendment landed by direct `Edit` with `check-phase-54` measured on both sides, plus the single pre-edit `160-GATE-BASELINE.json` snapshot covering five leaves, the apex and both report-only style instruments (`requirements: []` for flip control)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 160-02-PLAN.md — LIC-01: the read-only pilot reading with a non-halting `decline`, both Learn pages re-fetched as source bytes, the STD-05 Case-1 decision block inserted at the top of RE-237 Step 4 per the locked placement spec, the five-class fact check in a fresh `claude -p` process, the Shell Launcher remedy cell restated per SKU with a hand-built judge packet, two external See Also entries, the file's first Version History change row, the re-stamp, and the Phase 167 needle list
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 160-03-PLAN.md — LIC-02: the licensing matrix's Windows Subscription Activation Notes cell amended with a hand-built judge packet, one new 186-char OEM-versus-Volume-License blockquote as its own run, one Version History row inserted newest-first by anchor match, the re-stamp, and the post-edit apex against plan 01's pre-edit anchor
 
 ### Phase 161: Vendor De-Bloat into the Kiosk Baseline
 
