@@ -1,11 +1,14 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.23
-milestone_name: Walk-Up AVD Kiosk Class Follow-Through (L2 Triage, Host-Pool SSO, Licensing Standard) & Harness Close
-status: planning
-last_updated: "2026-09-10T22:05:58.164Z"
-last_activity: 2026-09-10
+milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 160
+status: planning
+stopped_at: Phase 160 context gathered
+last_updated: "2026-09-12T13:56:00.490Z"
+last_activity: 2026-09-10
+last_activity_desc: Milestone v1.23 started
+state_head: 08ea300f6ee8a605a1c0b2676eb5b2c2ee3ad3fe
 progress:
   total_phases: 8
   completed_phases: 0
@@ -132,9 +135,9 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-10
-Stopped at: Milestone v1.23 started — PROJECT.md and STATE.md reset; requirements next
-Resume file: None
+Last session: 2026-09-12T13:56:00.450Z
+Stopped at: Phase 160 context gathered
+Resume file: .planning/phases/160-licensing-hardware-decision-record/160-CONTEXT.md
 Next action: `/gsd-discuss-phase 160`
 
 ## Operator Next Steps
