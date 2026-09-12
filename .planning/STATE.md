@@ -3,18 +3,18 @@ gsd_state_version: 1.0
 milestone: v1.23
 milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 160
-current_phase_name: licensing-hardware-decision-record
+current_phase_name: Licensing / Hardware Decision Record
 status: executing
-stopped_at: Phase 160 context gathered
-last_updated: "2026-09-12T15:34:12.542Z"
-last_activity: 2026-09-10
-last_activity_desc: Milestone v1.23 started
-state_head: 9054df5d9f3d9743b3a5e174c9fb117ba6d3ded5
+stopped_at: Completed 160-01-PLAN.md
+last_updated: "2026-09-12T15:48:13.627Z"
+last_activity: 2026-09-12
+last_activity_desc: Phase 160 execution started
+state_head: bb8b652fbf9453066da1850d08dd930463ad3a47
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. As of v1.22 the corpus reads as one voice under a single adopted writing standard, proven not to have changed any document's meaning, with the standard carried forward into how new documents are authored.
-**Current focus:** Awaiting next milestone — `/gsd-new-milestone` scopes v1.23 starting at **Phase 160**. Backlog source: `.planning/milestones/v1.22-DEFERRED-CLEANUP.md`, whose Part A opens with `V122-PIN-DEFERRAL`.
+**Current focus:** Phase 160 — Licensing / Hardware Decision Record
 
 ## Current Position
 
-Phase: 160 (licensing-hardware-decision-record) — READY TO EXECUTE
-Plan: —
+Phase: 160 (Licensing / Hardware Decision Record) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-09-10 — Milestone v1.23 started
+Last activity: 2026-09-12 — Phase 160 execution started
 
 ## Performance Metrics
 
@@ -64,6 +64,11 @@ Last activity: 2026-09-10 — Milestone v1.23 started
 - v1.22: 6 phases (154-159), 43 plans, 130 tasks — shipped 2026-09-10 (10 days, 2026-08-31 → 2026-09-10)
 
 **Per-plan duration history (v1.0–v1.22):** archived per milestone in `.planning/milestones/vX.Y-phases/*/*-SUMMARY.md` frontmatter and in `.planning/MILESTONES.md`. v1.22's 43-row per-plan table lived here through the close and is reproducible from the archived summaries (`grep -h '^duration:' .planning/milestones/v1.22-phases/*/*-SUMMARY.md`). Re-populated per-plan as v1.23 phases execute.
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 160 P01 | 12min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -87,6 +92,8 @@ Last activity: 2026-09-10 — Milestone v1.23 started
 - Line numbers are convenience pointers, never identity; coordinate rows go stale inside their own phase.
 
 *(Full v1.0–v1.22 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md`, `.planning/MILESTONES.md` and each milestone's `vX.Y-ROADMAP.md`. The per-plan D-NN decision ledger for v1.22's own Phases 154-159 lives in `.planning/milestones/v1.22-phases/*/*-SUMMARY.md`, `159-EVIDENCE.md` and `.planning/milestones/v1.22-ROADMAP.md`.)*
+
+- [Phase 160]: D-28 amendment appended to ROADMAP SC2 and REQUIREMENTS LIC-02 by direct Edit (D-39 carve-out); 160-GATE-BASELINE.json records a genuine ROADMAP.md byte-count drift from 160-DRAFTS.md caused by an intervening plan-authoring commit, unrelated to the edit target. — Pre-edit baseline and the SC2/LIC-02 amendment must both land before 160-02/160-03 touch the corpus; check-phase-54 32/0 both sides confirms the amendment did not break a live-read assertion.
 
 ### Pending Todos
 
@@ -136,9 +143,9 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-12T13:56:00.450Z
-Stopped at: Phase 160 context gathered
-Resume file: .planning/phases/160-licensing-hardware-decision-record/160-CONTEXT.md
+Last session: 2026-09-12T15:47:54.404Z
+Stopped at: Completed 160-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 160`
 
 ## Operator Next Steps
