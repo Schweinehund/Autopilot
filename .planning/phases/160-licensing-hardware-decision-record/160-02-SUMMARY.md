@@ -272,3 +272,11 @@ plan's needle list flagged as "not yet present." LIC-01 is complete. No blockers
 ---
 *Phase: 160-licensing-hardware-decision-record*
 *Completed: 2026-09-15*
+
+## Self-Check: PASSED
+
+All 8 key files confirmed present with `[ -f ]`. All 11 referenced commit hashes confirmed present with
+`git log --oneline --all`. All plan-level `<verify>`/`<acceptance_criteria>` gates (C17, check-nav-hub-
+links, check-phase-155/156/54, sweep3.py, check.py, the must_haves.prohibitions needles, and the
+`reported as unactivated` / `Class is not licensed for use` / `Windows 365` pin counts) were re-run
+immediately before this SUMMARY and are green.
