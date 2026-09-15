@@ -22,10 +22,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
+See: .planning/PROJECT.md (updated 2026-09-15 after Phase 160)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. As of v1.22 the corpus reads as one voice under a single adopted writing standard, proven not to have changed any document's meaning, with the standard carried forward into how new documents are authored.
-**Current focus:** Phase 160 — Licensing / Hardware Decision Record
+**Current focus:** Phase 161 — Vendor De-Bloat into the Kiosk Baseline
 
 ## Current Position
 
@@ -111,6 +111,12 @@ None open. v1.23 candidates are enumerated in `.planning/milestones/v1.22-DEFERR
 
 No open blockers. v1.22 shipped clean: 39/39 Validated, 6/6 phases verified, milestone audit `passed`, apex `check-phase-159` 117/0/0 measured before and after archival, three-axis re-audit owner-ruled all-green at `828df055` (240 jobs, 0 failures). `origin/master` carried `828df055` at archive time with the close-out commits and this archive pushed together with tag `v1.22` — re-measure `origin/master...master` at v1.23 scoping rather than assuming it still holds.
 
+**Phase 160 carry-forwards (2026-09-15):**
+
+- **The pilot device is still unactivated.** The owner declined the slmgr reading at 160-02 (still shows the activation watermark). The ruling is worded as the standard PLUS a MAK-entitlement prerequisite; no plan in v1.23 asserts an activation state until a device is actually activated. Shell Launcher re-test stays DEFERRED.
+- **160-REVIEW.md left 2 advisory warnings on RE-237** (WR-01 unlinked "Reversibility notes" reference; WR-02 the new Standard row routes unconditionally to multi-app while the unchanged activation-status table still routes activated Enterprise to Shell Launcher) plus 2 info items. Not gaps against LIC-01/LIC-02; a `/gsd-code-review 160 --fix` or a Phase 161+ HYG task can take them.
+- **`/gsd-secure-phase 160` not yet run** — security enforcement is active and no 160-SECURITY.md exists.
+
 **Live watch items carried into v1.23:**
 
 - **`V122-PIN-DEFERRAL` is mandatory at the v1.23 close (its HARN phase).** Insert `MILESTONE_CLOSE_SHAS.V122` strictly before the `V14` entry in `frozen-at-close.mjs`, never appended, plus `readAtV122Close`/`lsTreeAtV122Close`. The pin target is the v1.22 close-gate commit (`0399e715` per `v1.22-DEFERRED-CLEANUP.md` Part A) — re-confirm with the subject-line pair discriminator at plan time, count=1. Seventh link in the unbroken V117→V122 chain.
@@ -151,12 +157,14 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-15T05:45:28.898Z
+Last session: 2026-09-15T05:55:01.626Z
 Stopped at: Phase 160 complete, ready to plan Phase 161
 Resume file: None
-Next action: `/gsd-discuss-phase 160`
+Next action: `/gsd-discuss-phase 161`
 
 ## Operator Next Steps
+
+0. **Phase 160 COMPLETE 2026-09-15** (3/3 plans, verified `passed` 3/3, code review 0 critical / 2 warning / 2 info, apex 117/0 before and after). LIC-01 and LIC-02 Validated. Next: `/gsd-secure-phase 160`, then `/gsd-discuss-phase 161` (Vendor De-Bloat into the Kiosk Baseline; no CONTEXT.md yet).
 
 1. **v1.22 SHIPPED, ARCHIVED & TAGGED 2026-09-10.** All six pillars closed and archived: ROADMAP and REQUIREMENTS snapshots in `.planning/milestones/v1.22-{ROADMAP,REQUIREMENTS}.md`, phase directories in `.planning/milestones/v1.22-phases/`, the milestone audit and deferred-cleanup ledger beside them. The apex was re-run on the moved tree before this commit — 117 PASS / 0 FAIL / 0 SKIPPED, byte-identical to the pre-archival reading — and that result is recorded here, in `MILESTONES.md`, in `PROJECT.md` and in the annotated `v1.22` tag on the archive commit, per HARN-05/HARN-06's D-12 amendment. `git push origin master v1.22` was run explicitly after tagging.
 
