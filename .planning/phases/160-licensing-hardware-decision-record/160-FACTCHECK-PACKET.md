@@ -89,3 +89,42 @@ Activate with a per-device volume key (a MAK, delivered through an Intune Editio
 > A MAK activation is permanent for that installation and consumes one activation from the agreement's
 > count; there is nothing to roll back. Switching the device from the multi-app branch to Shell Launcher
 > after activation is a profile swap, subject to the one-writer rule above.
+
+## Round 3 (fragment-only re-judge)
+
+Round 2 judged the full corrected packet above and returned 34 of 38 PRESERVED. Three fragments below
+were rewritten in response to round 2's findings and are re-judged here in isolation, each with the
+same supporting extract it was judged against in round 2. A fourth round-2 finding (the `:42` remedy
+cell) belongs to a different task and is not re-judged here.
+
+### Fragment 1 — row-1 consequence cell, PILOT clause (was: "kept failing"; round-2 verdict STRENGTHENED)
+
+New text: `**[PILOT]** an image showing as unactivated failed the ShellLauncher node`
+
+Supporting extract (pre-edit line of this same document, unmodified, from Prerequisites): "**[PILOT]**
+the `ShellLauncher` node also failed with `Class is not licensed for use` on an installed Enterprise
+image that was reported as unactivated; that observation is not first-party-documented and is recorded
+here as what happened, not as why."
+
+### Fragment 2 — row-2 when-to-choose cell (was: "...IoT Enterprise LTSC, not the general availability channel)"; round-2 verdict INVERTED/unsupported)
+
+New text: `long-term servicing wanted (IoT Enterprise LTSC)`
+
+Supporting extract (Windows IoT Enterprise licensing page, `ms.date` 2026-06-24): "Volume licenses for
+Windows IoT Enterprise LTSC are available through the following Volume License programs..." Definitions:
+"LTSC = Long-Term Servicing Channel."
+
+### Fragment 3 — P1, prerequisite-rationale clause (was: "because every pilot image observed to date has shown as unactivated, never as activated"; round-2 verdict STRENGTHENED, missing PILOT marker)
+
+New text: `because the **[PILOT]** image recorded in Prerequisites showed as unactivated, never confirmed as activated.`
+
+Supporting extract (pre-edit line of this same document, unmodified, from Prerequisites): "**[PILOT]**
+the `ShellLauncher` node also failed with `Class is not licensed for use` on an installed Enterprise
+image that was reported as unactivated; that observation is not first-party-documented and is recorded
+here as what happened, not as why."
+
+### Instructions for round 3
+
+For each fragment, judge only against its own supporting extract above (do not use outside knowledge).
+Report PRESERVED / STRENGTHENED / INVERTED / WEAKENED / FAIL per the rubric's classes and
+fail-on-any-promotion rule, with a one-sentence reason per fragment.
