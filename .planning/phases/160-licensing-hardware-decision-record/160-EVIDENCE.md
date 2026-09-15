@@ -177,6 +177,66 @@ confirmed byte-unchanged: `git diff --name-only 71e91f82..HEAD` lists no path un
 `docs/recipes/03-windows-11-multi-app-kiosk.md`, and `docs/reference/licensing-matrix.md` is likewise
 absent (that file is 160-03's scope, not 160-02's).
 
+## Task 1 (160-03): Windows Subscription Activation Notes-cell judge packet
+
+**Pre-edit SHA:** `f479b35a6a771de2f5ae3f3949aef1909ea00bb2` (HEAD at the start of this plan, before
+any 160-03 edit landed). The hand-built packet's BEFORE block was cut from
+`docs/reference/licensing-matrix.md` at this commit.
+
+**Why hand-built, not the automated packet tool:** the Notes cell carries zero modals
+(`should`/`will`/`would`/`could`/`must`) both before and after the edit — the changed clauses are a
+directional cross-reference and a new declarative ruling sentence, neither hedged. `judge-packets.py`
+keeps only modal-bearing baseline lines, so it would emit zero packets for this cell and a green
+automated run would prove nothing (D-32), exactly as Task 5 of 160-02 found for the `:42` remedy cell.
+
+**Packet contents:** the pre-edit cell and its post-edit counterpart, each with 5 lines of table-row
+context either side plus the trailing "What breaks if missing" blockquote line, per the google-style-
+verify rule to judge a hunk with its surrounding lines, never the line alone. The judging instructions
+told the process to treat the appended ruling sentence as new content where the before-cell was silent
+(an addition, not a certainty change to an existing claim) — the same class distinction 160-02 Task 5
+used for its own hand-built packet.
+
+**Dispatch shape (continuing 160-02's `claude -p` dispatch shape, `160-FACTCHECK.md` `dispatch_command`):**
+
+```
+timeout 600 claude -p "$(cat 160-03-task1-packet.md)" --output-format text </dev/null > 160-03-task1-verdict.txt
+```
+
+Fresh OS process, stdin redirected from `/dev/null`, `--output-format text`, no tool list beyond the
+implicit read of the packet text passed via command substitution. Dispatched outside the context that
+produced the edit.
+
+**Verdict: PRESERVED.** Transcribed verbatim from the captured output:
+
+> VERDICT: PRESERVED
+>
+> Per-clause breakdown:
+>
+> - Clause 1, "the blockquote below" to "the following blockquote." Pure navigation, no factual claim
+>   changed... The referent is correct only once the promised ruling blockquote is inserted directly
+>   after the table. If that insertion is dropped or lands elsewhere, this becomes a prose cross-reference
+>   defect that no link checker can see. Verdict on this clause stands as PRESERVED under the packet's
+>   stated premise.
+> - Clause 2, the appended "Ruled 2026-09-10" sentence. New content where the BEFORE cell was silent, so
+>   it is an addition and not a certainty change. It does not contradict its surroundings... No hedge was
+>   promoted and no expectation was flattened into an assertion.
+> - Unchanged clauses. The Business Premium and F-series exclusion, the manual-upgrade consequence, and
+>   the kiosk non-applicability all carry over verbatim.
+
+The judge's noted dependency — that "the following blockquote" only resolves correctly once the new
+ruling blockquote lands immediately after this row — is satisfied by Task 2 of this same plan, which
+inserts that blockquote in that exact position before this plan's own commit sequence completes.
+
+**Continued process number: 6** (5 recorded in `160-FACTCHECK.md` after 160-02 Task 5 — 3 from Task 4's
+fact check, 2 from Task 5's meaning-preservation dispatches — plus this plan's 1). Cross-referenced by
+name to `160-FACTCHECK.md`, which is 160-02's own declared artifact and is read-only in this plan; this
+process and its verdict are recorded here in `160-EVIDENCE.md` instead, per this plan's `files_modified`
+declaration. `160-FACTCHECK.md` is unmodified by this plan.
+
+**No fact check ran for this cell.** The ruling clause reuses sentences 160-02's fact check already
+cleared — see the reuse statement in the "Matrix section" below (Task 3) for the named cross-reference
+to the covering `160-FACTCHECK.md` verdict rows.
+
 ## Needle list handed to Phase 167 (HARN-04)
 
 Every count below is re-measured at this landing commit. No anchor pin, no date literal, and no

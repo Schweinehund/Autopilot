@@ -59,7 +59,7 @@ Some Autopilot features require licenses beyond the base requirement. Verify you
 | APv2 (Device Preparation) | Any license in table above | Same licensing as APv1 |
 | Autopilot Reset | Any license in table above | APv1 only; no additional license |
 | Dynamic device groups | Entra ID P1 (included in all above) | Required for automatic profile assignment by group membership |
-| Windows Subscription Activation (Pro→Enterprise) | Microsoft 365 E3, E5, or A3/A5 | NOT available in Business Premium or F-series; manual OS upgrade required without this. Also does not apply to a self-deploying, userless kiosk device—see the blockquote below |
+| Windows Subscription Activation (Pro→Enterprise) | Microsoft 365 E3, E5, or A3/A5 | NOT available in Business Premium or F-series; manual OS upgrade required without this. Also does not apply to a self-deploying, userless kiosk device—see the following blockquote. Ruled 2026-09-10 for the walk-up AVD kiosk class: MAK-activated Windows Enterprise on the current hardware is the standard, OEM-licensed IoT Enterprise hardware the alternative for purpose-built procurement |
 | Microsoft Defender for Endpoint (P2) | Microsoft 365 E5 or Defender for Endpoint standalone | Defender P1 included in M365 Business Premium |
 | Endpoint Analytics (Intune suite) | Intune Plan 2 or Microsoft Intune Suite add-on | Optional; required for advanced deployment reporting |
 
