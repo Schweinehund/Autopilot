@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
-last_verified: 2026-09-03
-review_by: 2026-12-02
+last_verified: 2026-09-14
+review_by: 2026-12-13
 applies_to: Walk-up AVD kiosk — Windows 11 Enterprise, Autopilot self-deploying, Entra-joined only, internet-only network, Assigned Access multi-app with a local autologon account and Windows App auto-launched
 audience: admin
 ---
@@ -315,9 +315,12 @@ Removing this recipe's configuration is not the same as returning the device to 
 - [Windows Drift Detection](../operations/drift-migration/01-windows-drift-detection.md) — the detect/remediate pair pattern the Step 8 remediations follow
 - [Autopilot Licensing Requirements](../reference/licensing-matrix.md) — per-user versus per-device Windows Enterprise licensing
 - [Co-Management Overview](../operations/co-management/00-overview.md) — workload authority, relevant to Step 9
+- [Windows IoT Enterprise Licensing (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/commercialization/licensing) — Microsoft's OEM-versus-Volume-License requirement matrix for reaching Windows IoT Enterprise (ms.date 2026-06-24)
+- [AssignedAccess CSP Reference (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/client-management/mdm/assignedaccess-csp) — the ShellLauncher node's Windows Enterprise/Education edition gate and the Windows 10 Pro exclusion (ms.date 2025-03-12)
 
 ## Version History
 
 | Date | Change |
 |------|--------|
+| 2026-09-14 | Recorded the kiosk-class licensing/hardware ruling as a Step-4 STD-05 decision block; restated the Shell Launcher anti-feature remedy per SKU; added the two Microsoft Learn licensing sources to See Also |
 | 2026-08-31 | Initial Draft — authored from the 2026-08-27 to 2026-08-30 pilot build of one walk-up AVD kiosk on HP hardware; all mechanism claims field-validated on that device, tenant-specific observations labelled as such |
