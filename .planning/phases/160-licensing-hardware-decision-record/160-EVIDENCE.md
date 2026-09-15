@@ -261,7 +261,115 @@ file.
 | `V-156-SIGNINTO` needle (`sign into`, corpus-wide) | 0 | negative count, unchanged |
 | `administrator` (lowercase) on RE-237 | 10 | negative-adjacent count, unchanged |
 | `administrator` (case-insensitive) on the matrix | 1 | unchanged; matrix untouched by this plan |
-| Two matrix literals 160-03 will land | not yet present | `docs/reference/licensing-matrix.md` is out of this plan's scope; 160-03 lands them |
+| Two matrix literals 160-03 will land | present (confirmed by 160-03) | `OEM-licensed at manufacture` count 1, `Ruled 2026-09-10` count 1, both re-measured at 160-03's landing commit; `administrator` on the matrix still 1 |
+
+**160-03 confirmation (2026-09-15):** both matrix literals named above are present at this plan's landing
+commit, `administrator` on `docs/reference/licensing-matrix.md` remains at 1, and this needle list still
+carries no `#`-prefixed anchor pin, no date literal presented as a pin, and no line-number or run-count
+pin — the omission reason is unchanged from 160-02's original statement: `check-nav-hub-links.mjs`
+already resolves every in-recipe fragment corpus-wide and fails on a missing anchor, so an anchor pin
+here would duplicate that validator's job, and a line-number or run-count pin would break on the next
+unrelated edit to either file. `scripts/validation/check-phase-160.mjs` does not exist
+(`test ! -e scripts/validation/check-phase-160.mjs` succeeds) — Phase 167 owns every `check-phase-160..167`
+leaf and this phase authors none.
+
+## Task 3 (160-03): Matrix measurements, style-instrument limits, reuse statement, and the post-edit apex
+
+Every figure below is from a command run in this task; the paired pre-edit figure and its source are
+named beside it. No figure is carried forward from `160-CONTEXT.md`, `160-RESEARCH.md` or
+`160-DRAFTS.md`.
+
+### Byte and blockquote-run measurements
+
+| Measurement | Command | Pre-edit (source) | Post-edit |
+|---|---|---|---|
+| File byte count | `python -c "len(open(...,'rb').read())"` | 6,428 bytes (`160-GATE-BASELINE.json` `line_endings["docs/reference/licensing-matrix.md"]`) | 6,993 bytes |
+| CRLF count | same | 101 | 104 |
+| Bare-LF count | same | 0 | 0 |
+| Final byte | same | `\|` (pipe, 0x7c) | `\|` (pipe, 0x7c) — confirmed via `tail -c 1` |
+| Total `>` runs | Python one-liner grouping contiguous `>`-prefixed lines, joined after stripping `> ` | 9 (`160-GATE-BASELINE.json` `pin_residency.blockquote_runs_matrix.runCount`) | 10 |
+| Max joined run length (chars) | same | 187 (`160-GATE-BASELINE.json` same key) | 186 |
+| Runs over 200 chars | same | 0 | 0 |
+| New run's measured length | same | n/a (run did not exist pre-edit) | 186 |
+| `administrator` (case-insensitive) on the matrix | `grep -oE 'administrator' docs/reference/licensing-matrix.md \| wc -l` | 1 (`160-GATE-BASELINE.json` `pin_residency.administrator_matrix.value`) | 1 |
+| `## Version History` data-row count | `grep -c '^\| 20' docs/reference/licensing-matrix.md` | 2 (pre-edit table had the 2026-09-03 and 2026-07-06 rows) | 3 |
+| `last_verified` / `review_by` | `sed -n '1,12p'` | `2026-09-03` / `2026-12-02` | `2026-09-15` / `2026-12-14` (execution date + exactly 90 days, the EEE-SOP ceiling) |
+
+The pre-edit `>`-run total of 9 and max length of 187 for this file come from `160-GATE-BASELINE.json`'s
+`pin_residency.blockquote_runs_matrix` key, recorded in 160-01 before any content edit in this phase
+touched the matrix; the post-edit figures above are this task's own re-run of the same counting method
+against the landing commit.
+
+### Structural gates, re-run at the end of this plan
+
+- `check-phase-155.mjs` → `Result: 10 PASS, 0 FAIL, 0 SKIPPED`.
+- `check-phase-156.mjs` → `Result: 10 PASS, 0 FAIL, 0 SKIPPED`.
+- `c17-eee-contract.mjs` → `C17 summary: 237 files checked, 0 with violations, 0 total violations` (assertion 12 at 0).
+- `check-nav-hub-links.mjs` → `0 hub-presence failure(s), 0 corpus-link failure(s), 0 total`.
+- `check-phase-54.mjs` → `Summary: 32 passed, 0 failed, 0 skipped` (V-54-27's recursive `.planning/` walk covers this task's own append).
+- No `2026-09-DD` placeholder remains in `docs/reference/licensing-matrix.md` or `docs/recipes/06-walk-up-avd-kiosk-autologon.md` (`grep -cE '2026-09-DD'` both files → 0).
+
+### Style-instrument readings (report-only, limits stated as limits)
+
+`check.py --no-headings` on the matrix: pre-edit **20** candidates (`160-GATE-BASELINE.json`
+`style_residual.check_py.candidates_matrix`), post-edit **19** candidates
+(`python .claude/skills/google-style/check.py --no-headings docs/reference/licensing-matrix.md`). This is
+a recorded count, never a threshold — the finished corpus carries 9,363 candidates per D-34, and a
+lower post-edit count here is incidental (the new blockquote's "following" replaces a "below" directional
+flag) rather than a compliance target.
+
+`sweep3.py` run over `docs/reference` **as a directory**
+(`python scripts/docs-style/sweep3.py docs/reference scripts/docs-style/_CONTENT-PINS.txt`) →
+`0 TOTAL edits`, 563 pins loaded, 848 table-row em dashes + 3 heading-line + 2 UI-label-line em dashes
+registered as protected — evidence the tool walked real content in the directory, not a vacuous
+zero-file run (the printed "0 files" figure is the tool's touched-files counter, which is 0 by
+construction whenever TOTAL edits is 0; it is never run as a single FILE path, which always reports a
+vacuous 0-files/0-edits reading, and never as bare `docs`, which reports one pre-existing edit in
+`docs/operations/` unrelated to this phase). **This is not evidence for tight-em-dash compliance in the
+new Version History row or the new blockquote**: `sweep3.py` skips every line beginning with the pipe
+character (so it never inspects the new Version History table row, where the row's own em dash — the
+Author-column `—` placeholder — lives) and its em-dash transform is switched off unconditionally (`do_em
+= False`), so it never tests em dashes at all, anywhere, tight or spaced. Tight-em-dash compliance for
+this plan's new prose (the blockquote's semicolon-joined clause and the Notes cell's dash-joined clause,
+both written in the tight, no-surrounding-spaces form matching D-47's canon) is therefore a **hand ruling
+with no instrument**, verified by direct inspection of the diff — a green `sweep3.py` run is not proof
+for those spans.
+
+### Reuse statement (D-33 scope, D-36)
+
+No fact check ran in this plan. The Notes-cell ruling clause and the new blockquote both reuse sentences
+`160-02`'s fact check already cleared, rather than asserting new, unchecked claims:
+
+- The Notes cell's "MAK-activated Windows Enterprise on the current hardware is the standard,
+  OEM-licensed IoT Enterprise hardware the alternative for purpose-built procurement" reuses the same
+  ruling-attribution and per-arm framing as RE-237's Table row-1/row-2 Option labels ("MAK-activated
+  Windows Enterprise on the current HP hardware", round 2 entry 3, PRESERVED; "OEM-licensed Windows IoT
+  Enterprise hardware", round 2 entry 14, PRESERVED) and the "Purpose-built procurement of further
+  hardware" condition (round 2 entry 15, PRESERVED), and P1's ruling sentence ("The Intune Admin Lead
+  ruled on 2026-09-10 that the walk-up AVD kiosk class standardizes on MAK-activated, volume-licensed
+  Windows Enterprise on the current HP hardware, with OEM-licensed Windows IoT Enterprise hardware as the
+  alternative for purpose-built procurement", round 2 entries 21-22, PRESERVED) — see `160-FACTCHECK.md`
+  "Round 2 — full packet, corrected", entries 3, 14, 15, 21, 22.
+- The new blockquote's "IoT Enterprise is OEM-licensed at manufacture" and "Volume Licensing only
+  upgrades a qualifying OS" reuse RE-237's already-cleared "an OEM licenses a device into IoT Enterprise
+  at manufacture" (round 2 entry 10, PRESERVED) and "Volume Licensing reaches IoT Enterprise only by
+  upgrading a device that already runs a qualifying operating system" (round 2 entry 8, PRESERVED) — see
+  `160-FACTCHECK.md` "Round 2 — full packet, corrected", entries 8 and 10, and the row-2 restatement at
+  entry 19 (also PRESERVED).
+
+`160-FACTCHECK.md` is unmodified by this plan; it remains 160-02's own declared artifact, read-only here,
+and is named by heading and entry number above rather than duplicated.
+
+### Post-edit apex
+
+`node scripts/validation/check-phase-159.mjs` → `Result: 117 PASS, 0 FAIL, 0 SKIPPED (total checks: 117)`,
+measured wall-clock **119 seconds** via `date +%s` before/after (well above the 30-second done-criteria
+floor, confirming the run did the work 117 checks require — never the stale ~17-second figure).
+
+This matches plan 01's pre-edit anchor exactly: `160-GATE-BASELINE.json`
+`structural_gate.check-phase-159` recorded `117 PASS, 0 FAIL, 0 SKIPPED` at wall-clock **116 seconds**
+(measured at HEAD `f45ac9e2`, 2026-09-12). The phase's corpus edits across all three plans did not move
+the apex.
 
 This section carries no `#`-prefixed anchor fragment presented as a pin, no date literal presented as a
 pin, and no line-number or run-count pin — every figure above is a plain count, re-measurable by
