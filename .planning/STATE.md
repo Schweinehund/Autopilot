@@ -5,16 +5,16 @@ milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 160
 current_phase_name: Licensing / Hardware Decision Record
 status: executing
-stopped_at: Completed 160-01-PLAN.md
-last_updated: "2026-09-12T15:48:13.627Z"
+stopped_at: Completed 160-02-PLAN.md
+last_updated: "2026-09-15T05:31:53.928Z"
 last_activity: 2026-09-12
 last_activity_desc: Phase 160 execution started
-state_head: bb8b652fbf9453066da1850d08dd930463ad3a47
+state_head: 6278d26d94cc8e9de87483dedab198b43d10c244
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
 ## Current Position
 
 Phase: 160 (Licensing / Hardware Decision Record) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-09-12 — Phase 160 execution started
 
@@ -69,6 +69,7 @@ Last activity: 2026-09-12 — Phase 160 execution started
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 160 P01 | 12min | 2 tasks | 3 files |
+| Phase 160 P02 | 3h10min | 6 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -94,6 +95,9 @@ Last activity: 2026-09-12 — Phase 160 execution started
 *(Full v1.0–v1.22 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md`, `.planning/MILESTONES.md` and each milestone's `vX.Y-ROADMAP.md`. The per-plan D-NN decision ledger for v1.22's own Phases 154-159 lives in `.planning/milestones/v1.22-phases/*/*-SUMMARY.md`, `159-EVIDENCE.md` and `.planning/milestones/v1.22-ROADMAP.md`.)*
 
 - [Phase 160]: D-28 amendment appended to ROADMAP SC2 and REQUIREMENTS LIC-02 by direct Edit (D-39 carve-out); 160-GATE-BASELINE.json records a genuine ROADMAP.md byte-count drift from 160-DRAFTS.md caused by an intervening plan-authoring commit, unrelated to the edit target. — Pre-edit baseline and the SC2/LIC-02 amendment must both land before 160-02/160-03 touch the corpus; check-phase-54 32/0 both sides confirms the amendment did not break a live-read assertion.
+- [Phase 160]: Task 1 pilot licensing checkpoint resolved DECLINED (2026-09-14); LIC-01 flipped at the plan boundary regardless per D-30
+- [Phase 160]: Task 4 fact-check round 1 failed mostly due to an incomplete packet (missing source table + pre-edit RE-237 citations), not content defects; corrected packet reached 34/38 then 4/4 PRESERVED
+- [Phase 160]: Task 5 remedy-cell hedge wording tuned from a flat 'until confirmed otherwise' assertion to a neutral 'targeting' label after the meaning-preservation judge flagged a certainty downgrade (WEAKENED -> PRESERVED)
 
 ### Pending Todos
 
@@ -143,8 +147,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-12T15:47:54.404Z
-Stopped at: Completed 160-01-PLAN.md
+Last session: 2026-09-15T05:31:53.879Z
+Stopped at: Completed 160-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 160`
 
