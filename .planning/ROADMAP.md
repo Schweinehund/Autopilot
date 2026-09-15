@@ -57,7 +57,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 Full per-phase goals, dependencies, requirements and success criteria are in `## Phase Details` below (required by downstream `/gsd-plan-phase` parsing — this milestone is active, so details live here rather than in an archive).
 
-- [ ] **Phase 160: Licensing / Hardware Decision Record** — Rule on MAK-Enterprise vs. OEM-licensed IoT-Enterprise hardware and land the decision in RE-237 and the licensing matrix
+- [x] **Phase 160: Licensing / Hardware Decision Record** — Rule on MAK-Enterprise vs. OEM-licensed IoT-Enterprise hardware and land the decision in RE-237 and the licensing matrix (completed 2026-09-15)
 - [ ] **Phase 161: Vendor De-Bloat into the Kiosk Baseline** — Vendor `RemoveBloat.ps1` at a pinned, GPL-3.0-compliant commit, review it for kiosk-account safety, and wire it into the Baseline package
 - [ ] **Phase 162: Riders — Glossary & DEFER-121-07-A Cleanup** — Add kiosk-class glossary terms and close the recurring `DEFER-121-07-A` open-item resurfacing
 - [ ] **Phase 163: STORIS ClickOnce Investigation** — Investigate the per-user ClickOnce install on the pilot device and record the outcome (positive or documented negative) in RE-237

@@ -2,20 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.23
 milestone_name: phase summary (Phases 160-167) — IN PROGRESS
-current_phase: 160
-current_phase_name: Licensing / Hardware Decision Record
-status: verifying
-stopped_at: Completed 160-03-PLAN.md
-last_updated: "2026-09-15T05:45:28.947Z"
-last_activity: 2026-09-12
-last_activity_desc: Phase 160 execution started
-state_head: 01b1428055b3e7fe375bf17d6e0814fd8c57e416
+current_phase: 161
+current_phase_name: Vendor De-Bloat into the Kiosk Baseline
+status: planning
+stopped_at: Phase 160 complete, ready to plan Phase 161
+last_updated: "2026-09-15T05:53:19.583Z"
+last_activity: 2026-09-15
+last_activity_desc: Phase 160 complete, transitioned to Phase 161
+state_head: 7014d9db3ee17c32a8570dcb168c5636b485777f
 progress:
   total_phases: 8
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
   completed_plans: 3
-  percent: 0
+  percent: 13
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-09-10 after the v1.23 milestone start)
 
 ## Current Position
 
-Phase: 160 (Licensing / Hardware Decision Record) — EXECUTING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
-Last activity: 2026-09-12 — Phase 160 execution started
+Phase: 161 — Vendor De-Bloat into the Kiosk Baseline
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-09-15 — Phase 160 complete, transitioned to Phase 161
 
 ## Performance Metrics
 
@@ -152,7 +152,7 @@ docs/android-lifecycle/01-android-prerequisites.md
 ## Session Continuity
 
 Last session: 2026-09-15T05:45:28.898Z
-Stopped at: Completed 160-03-PLAN.md
+Stopped at: Phase 160 complete, ready to plan Phase 161
 Resume file: None
 Next action: `/gsd-discuss-phase 160`
 
