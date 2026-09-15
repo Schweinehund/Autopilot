@@ -3,8 +3,8 @@ doc_id: RE-157
 status: Approved
 owner: Intune Admin Lead
 doc_type: Reference
-last_verified: 2026-09-03
-review_by: 2026-12-02
+last_verified: 2026-09-15
+review_by: 2026-12-14
 applies_to: both
 audience: admin
 platform: Windows
@@ -73,6 +73,8 @@ Some Autopilot features require licenses beyond the base requirement. Verify you
 
 > Not pilot-tested—stated as reasoning from the licensing structure, not as an observation.
 
+> [IoT Enterprise is OEM-licensed at manufacture](https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/commercialization/licensing); Volume Licensing only upgrades a qualifying OS.
+
 > See [Walk-Up AVD Kiosk (RE-237)](../recipes/06-walk-up-avd-kiosk-autologon.md) for the worked case.
 
 ## License Assignment Verification
@@ -98,5 +100,6 @@ From Intune admin center: Navigate to **Intune admin center** > **Users** > sele
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-09-15 | Phase 160 LIC-02: kiosk-class licensing ruling recorded in the Windows Subscription Activation row; OEM-versus-Volume-License note added | — |
 | 2026-09-03 | Phase 155 RCP-08: self-deploying kiosk userless-device activation consequence documented in Feature-to-License Mapping | — |
 | 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
