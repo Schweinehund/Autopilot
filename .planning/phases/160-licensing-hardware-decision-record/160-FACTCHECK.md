@@ -258,9 +258,62 @@ Round 3 verdicts, each fragment judged only against its own supporting extract.
 Round 3 result: 4 of 4 clauses PRESERVED, no STRENGTHENED, INVERTED, WEAKENED, or FAIL. The `:42` remedy cell remains out of scope per the packet.
 ```
 
-## Disposition
+## Disposition (Task 4)
 
 All RE-237 Step-4 block content (bridge, lead-in, table, P1, P2) that Task 4 owns is PRESERVED as of
 round 3. The `:42` remedy cell (entry 35/49) is Task 5's responsibility and is re-judged there with its
 own hand-built packet before that cell is edited. P2 still carries its one `should` hedge and the
 reasoning-not-observation clause, unchanged and unpromoted throughout all three rounds.
+
+`process_count` after Task 4: 3 (rounds 1, 2, 3 above).
+
+## Task 5 — hand-built-packet meaning-preservation check for the `:42` remedy cell
+
+`dispatch_command` (Task 5, process 4): `timeout 600 claude -p "<judging-role preamble><newline><newline>## Packet<newline><newline>$(cat 160-02-TASK5-PACKET.md)" --output-format text </dev/null > <outfile>`
+
+`judge-packets.py` was NOT used for this cell: the cell carries zero modals (`should`/`will`/`would`/
+`could`/`must`), so the tool's modal-survival filter emits zero packets for it, and a green automated
+run over an empty bin would prove nothing per D-32. The packet was built by hand instead: pre-edit cell
+text cut from commit `0b456a3a27767f4a08bc4be8fac5e864d4ccccb9` (the block Task 4 had just committed),
+paired with the intended post-edit text, each with five lines of surrounding table-row context. Both
+the rubric and the packet were committed before each dispatch (`052328ed`, `9a76a3f8`).
+
+**Process 4 (first dispatch, packet as committed at `052328ed`) — WEAKENED.** Verdict on the cell as a
+whole: "the three paths and the MAK-via-Edition-upgrade-profile delivery mechanism survive, but the
+after-text downgrades the MAK path from an asserted working option to a provisional one ('is planned to
+activate ... until confirmed otherwise') ... so the cell now commits to less than it did." This was a
+genuine finding: the wording carried over verbatim from Task 4's round-2/round-3 fix for the same
+MAK-outcome claim (a hedge required there because the claim was newly asserted as fact) reads, against
+the ORIGINAL pre-edit cell — which made no outcome claim at all — as a certainty downgrade rather than
+an added label. Logged rather than discarded, per the no-unlogged-re-roll rule.
+
+**Fix applied:** replaced "is planned to activate volume-licensed Windows Enterprise until confirmed
+otherwise" with "targeting volume-licensed Windows Enterprise" — a non-committal label matching the
+before-cell's own instructional (not outcome-asserting) register, so the SKU name is added without
+asserting or hedging an achieved outcome either way. The packet's judging instructions were also
+tightened to distinguish a newly-added label (the before-cell was silent on the point) from an existing
+claim whose certainty changed (the rubric's actual concern), without asserting which category applied
+to this specific cell.
+
+**Process 5 (second dispatch, packet as committed at `9a76a3f8`) — PRESERVED.** "The after-cell still
+directs the reader to the same three actions in the same order, and no claim the before-cell made has
+been reversed, hedged, or hardened." Per-clause breakdown classified each clause as either (b) an
+existing before-cell claim carried through unchanged (the volume-key/Edition-upgrade-profile
+instruction, "buy" -> "procure", the multi-app branch) or (a) new content where the before-cell was
+silent (the "Intune" qualifier, "targeting volume-licensed Windows Enterprise", the IoT-Enterprise
+qualifying-path clause, "OEM-licensed", the Step 4 cross-reference) — "No modal was added, removed, or
+promoted anywhere in the cell." The process also flagged that the committed packet's After block used
+plain-text "Step 4" where the working tree already carried the `[Step 4](#step-4-choose-the-delivery-
+mechanism)` markdown link; the packet was corrected to match (this is a packet-accuracy fix, not a
+re-judged fragment, and does not consume a sixth process).
+
+**`process_count` after Task 5: 5** (3 from Task 4 + 2 from Task 5), within the 6-process cap. No
+fragment reached its two-round limit without a PRESERVED/PASS outcome, so no `checkpoint:decision`
+escalation was triggered.
+
+## Disposition (Task 5)
+
+The `:42` remedy cell names the SKU each path targets (D-10), keeps the pinned middle cell
+byte-identical (`Class is not licensed for use` still occurs at its pre-edit count of 6), and PRESERVED
+the meaning-preservation check in its second dispatch. Committed as `fix(160-02)` per the correction
+convention (this rewrites existing text; new prose elsewhere in this plan is `docs()`).
