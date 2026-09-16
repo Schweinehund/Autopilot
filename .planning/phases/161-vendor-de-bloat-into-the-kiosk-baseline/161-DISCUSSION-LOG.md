@@ -83,7 +83,7 @@
 
 ## Round 2 — Area G: Pilot record & scrub allowlist
 
-**Notes (no owner call):** the sensor's RUN/RUN1 lines emit the kiosk SID (dead guard at line 111), so a raw paste can never pass a zero-SID check; the paste rule became redact-then-verify (any SID form → `<SID>`, non-kiosk profile paths → `<USER>`). Both the Finder and the Adversary fabricated a PSADT log-header citation (`Computer Name is [...]`); the Referee measured the real strings (logged-on users, SIDs, domain, profile paths). Hostname needle struck (cannot be derived in-process). Sensor defect recorded and handed to Phase 164.
+**Notes (no owner call):** the sensor's RUN/RUN1 lines emit the kiosk SID (dead guard at line 111), so a raw paste can never pass a zero-SID check; the paste rule became redact-then-verify (any SID form → `<SID>`, non-kiosk profile paths → `<USER>`). The round-2 and round-3 Referees ruled that the PSADT log-header string `Computer Name is [...]` exists nowhere in PSADT 4.1.7; a direct UTF-16LE scan of `lib\PSADT.dll` on 2026-09-16 found it, together with `Current User is [...]` and a reference to `envComputerNameFQDN`, so the Adversary's late note was correct and the Referees' absence ruling was the fabrication. D-46 was corrected before planning: the header discloses the machine FQDN, the current user, the logged-on user list and the session dump. Hostname needle struck (cannot be derived in-process). Sensor defect recorded and handed to Phase 164.
 
 ## Round 2 — Area H: Review artifacts' shape
 
