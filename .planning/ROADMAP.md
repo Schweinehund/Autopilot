@@ -105,7 +105,24 @@ Plans:
   2. The Baseline `README.md` records the line-by-line kiosk-account-safety review (nothing removed is on the PROTECTED list, `MicrosoftEdgeUpdate` above all since it services WebView2) and the pattern-list reconciliation against `Remove-KioskOemBloat.ps1`, and the script carries the same Authenticode signing chain as the rest of the Baseline package.
   3. The Baseline package invokes the vendored script in the documented order, RE-237 Step 8 names it, and a pilot-device run's second-boot block-sensor reading is recorded as `[PILOT]`.
 
-**Plans**: TBD
+**Plans**: 4 plans in 4 waves (strictly sequential on master per D-35/O-2 — each plan reads or re-measures what the one before it landed, and all four write `161-EVIDENCE.md`, which is a shared `files_modified` entry and therefore a real dependency rather than reflexive chaining)
+
+Plans:
+**Wave 1**
+
+- [ ] 161-01-PLAN.md — **Tracer**: the four D-27 annotate-and-supersede appends to SC2, SC3, VND-02 and VND-03 landed by direct `Edit` under the anti-pattern-15 carve-out with `check-phase-54` measured 32/0 on both sides in the same task, plus the single pre-wave `161-GATE-BASELINE.json` snapshot across four sections and the `161-EVIDENCE.md` bootstrap (`requirements: []` for flip control)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 161-02-PLAN.md — VND-01: `RemoveBloat.ps1` and the GPL-3.0 text vendored verbatim at a GitHub-API-confirmed commit with two independent fetches compared byte for byte, the one-command SHA256 proof against HEAD, the full `Plan 161 vendoring` provenance entry in `NOTICE` with the GAP paragraph closed rather than deleted and the 155-05 artifact count superseded in place, the README attribution section, and the pre-commit scrub scan against ten pre-declared upstream identifiers
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 161-03-PLAN.md — the line-by-line kiosk-account-safety review in the Baseline README with its PROTECTED list, re-measured class table naming the one PROTECTED item on the removal list and the single upstream whitelist line that spares it, five counted negative controls, the standing `-custombloatlist` prohibition, the five runtime fetch paths with the Office Deployment Tool one stated as unconditional during ESP, the fifteen-row pattern-list reconciliation, and a second fresh-context confirmation pass (`requirements: []`, because VND-02's amended clause settles at the 161-04 checkpoint)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 161-04-PLAN.md — VND-02 + VND-03: the `$script:BundledScripts` install order with the reachable 70002 gate and the hive-unload line, both comment surfaces amended, the README assembly/detection/re-pin sections, the `NOTICE` re-hash, the owner's `checkpoint:human-action` pilot run with a non-halting `decline` and an in-process redaction pass, the RE-237 Step 8 ruling and Asset Provenance correction with a fact check and a hand-built meaning judge, and the forty-row needle list handed to Phase 167
 
 ### Phase 162: Riders — Glossary & DEFER-121-07-A Cleanup
 

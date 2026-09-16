@@ -135,7 +135,7 @@ So an unhandled throw from `Start-ADTProcess` inside `Install-ADTDeployment` pro
 | REQUIREMENTS.md VND checkbox anchors | `^- \[ \] \*\*VND-0[23]\*\*:` = 2 | `grep -cE` | **MATCH** |
 | `roadmap.get-phase 161` | 3 success_criteria | `gsd_run query roadmap.get-phase 161` | **MATCH** |
 | The four amendment antecedents (E-A1..A4) | Present byte-exact, each in exactly one file | `grep -cF` of each exact antecedent string against both files | **MATCH** -- all four present exactly once in their own file, zero in the other |
-| `Build-WindowsAppPackage.ps1` `.PARAMETER CodeSigningCertThumbprint` and signing idiom | Lines 21, 86-93 | Not re-opened this session (budget); no contradicting signal found elsewhere | **No observation this session** -- re-grep at plan time per DRAFTS's own rule |
+| `Build-WindowsAppPackage.ps1` `.PARAMETER CodeSigningCertThumbprint` and signing idiom | Lines 21, 86-93 | Re-grepped at plan time (2026-09-16, plan-phase pass): line 21 is `.PARAMETER CodeSigningCertThumbprint` exactly, and lines 86-93 are the `Sign-Script` function with `Get-ChildItem Cert:\CurrentUser\My, Cert:\LocalMachine\My`, the thumbprint filter, `Set-AuthenticodeSignature -TimestampServer -HashAlgorithm SHA256` and the `throw` on a non-`Valid` status | **MATCH** -- assumption A1 is now a measurement, not an assumption |
 
 ### (e) Validators bounding the edits -- all run live at HEAD `8d1baeb0`
 
@@ -303,7 +303,7 @@ Not applicable in the usual "library X replaced library Y" sense -- this is a si
 
 | # | Claim | Section | Risk if Wrong |
 |---|-------|---------|---------------|
-| A1 | `Build-WindowsAppPackage.ps1` lines 21 and 86-93 still contain the `.PARAMETER CodeSigningCertThumbprint` and signing idiom as CONTEXT.md describes | Don't Hand-Roll; Re-measurement (d) | Low -- this file is untouched by any prior phase's edits and no drift was suggested by any other measurement; if wrong, 161-04's README `## Assemble` signing-step prose would cite a stale idiom, caught by the plan's own fact-check pass (D-33) before it lands |
+| A1 | ~~`Build-WindowsAppPackage.ps1` lines 21 and 86-93 still contain the `.PARAMETER CodeSigningCertThumbprint` and signing idiom as CONTEXT.md describes~~ **RESOLVED 2026-09-16 at plan time: re-grepped live, both MATCH.** No longer an assumption. | Don't Hand-Roll; Re-measurement (d) | None remaining -- the reading is now direct. 161-04 Task 1's `<read_first>` names the file so the executor re-confirms it once more before the README `## Assemble` signing-step prose cites it |
 | A2 | RE-237 Step 4/8/Provenance/Version-History exact line ranges (100-116, 207-225, 234-243, 321-326) have not shifted, based on aggregate count corroboration rather than a fresh line-by-line walk | Re-measurement (d) | Low -- DRAFTS.md's own rule already treats these as convenience pointers ("locate by quoted text, then re-measure"); the plan's task list re-locates by quoted antecedent text regardless, per E-R6/E-R1..R5's own anchoring method |
 | A3 | Sensor v6 line numbers (87, 111, 113, 123) are unchanged since CONTEXT.md's measurement | Re-measurement (a), note | Low -- D-50 hands this to Phase 164; if wrong, only `161-EVIDENCE.md` §8's hand-off note would need a corrected line number, not any locked string or plan behavior |
 
@@ -378,7 +378,7 @@ This phase does not build a web application; the closest ASVS mapping is around 
 
 ### Tertiary (LOW confidence, `[ASSUMED]`)
 - The four RE-237 anchor line ranges not individually re-walked this session (Step 4 100-116, Step 8 207-225, Provenance 234-243, Version History 321-326) -- corroborated only by aggregate count matches, not a direct line-by-line re-read; see Assumptions Log A2.
-- `Build-WindowsAppPackage.ps1` lines 21/86-93 not re-opened this session; see Assumptions Log A1.
+- ~~`Build-WindowsAppPackage.ps1` lines 21/86-93 not re-opened this session~~ -- **promoted to Primary 2026-09-16**: re-grepped live at plan time, both MATCH; see Assumptions Log A1.
 
 ## Metadata
 

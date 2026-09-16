@@ -3,17 +3,17 @@ gsd_state_version: 1.0
 milestone: v1.23
 milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
-current_phase_name: Vendor De-Bloat into the Kiosk Baseline
-status: planning
+current_phase_name: vendor-de-bloat-into-the-kiosk-baseline
+status: executing
 stopped_at: Phase 161 context gathered
-last_updated: "2026-09-16T13:08:56.520Z"
+last_updated: "2026-09-16T14:43:39.548Z"
 last_activity: 2026-09-15
 last_activity_desc: Phase 160 complete, transitioned to Phase 161
-state_head: da793b1a9b47f3a2a491d11e58bf42d40fe63118
+state_head: e9b33afe7eb3c3d971b9ae8cbc3af2673163d91a
 progress:
   total_phases: 8
   completed_phases: 1
-  total_plans: 3
+  total_plans: 7
   completed_plans: 3
   percent: 13
 ---
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-09-15 after Phase 160)
 
 ## Current Position
 
-Phase: 161 — Vendor De-Bloat into the Kiosk Baseline
+Phase: 161 (vendor-de-bloat-into-the-kiosk-baseline) — READY TO EXECUTE
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-09-15 — Phase 160 complete, transitioned to Phase 161
 
 ## Performance Metrics
