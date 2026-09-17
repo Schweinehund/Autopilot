@@ -5,16 +5,16 @@ milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
 current_phase_name: Vendor De-Bloat into the Kiosk Baseline
 status: executing
-stopped_at: Completed 161-01-PLAN.md
-last_updated: "2026-09-17T02:12:50.837Z"
+stopped_at: Completed 161-02-PLAN.md
+last_updated: "2026-09-17T02:29:52.250Z"
 last_activity: 2026-09-16
 last_activity_desc: Phase 161 execution started
-state_head: 618b68d71815939c2c0e7d440d49c6446544dc36
+state_head: da71b68e00746de9c6741eba15be9b9bc8574bf5
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   percent: 13
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-15 after Phase 160)
 ## Current Position
 
 Phase: 161 (Vendor De-Bloat into the Kiosk Baseline) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-09-16 — Phase 161 execution started
 
@@ -72,6 +72,7 @@ Last activity: 2026-09-16 — Phase 161 execution started
 | Phase 160 P02 | 3h10min | 6 tasks | 8 files |
 | Phase 160 P03 | 30min | 3 tasks | 2 files |
 | Phase 161 P01 | 16min | 3 tasks | 4 files |
+| Phase 161 P02 | 15min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,8 @@ Last activity: 2026-09-16 — Phase 161 execution started
 - [Phase 160]: 160-03: post-edit apex check-phase-159.mjs 117 PASS / 0 FAIL at 119s, matching plan 01's 116s pre-edit anchor -- Phase 160's three plans introduced zero structural drift
 - [Phase 161]: No requirements.mark-complete call was made in 161-01; requirements: [] is the sole flip control, VND-01/02/03 remain unchecked — cmdRequirementsMarkComplete has no dry-run parameter and would flip VND-02/VND-03 before their content exists (D-40)
 - [Phase 161]: The four D-27 amendment strings were extracted programmatically from 161-DRAFTS.md's fenced blocks and appended via exact-match line replacement rather than retyped — eliminates transcription risk for byte-exact strings up to 1,850 characters (D-27, D-38, D-55, D-56)
+- [Phase 161]: Phase 161 Plan 02: E-N3 header wrap used the pre-authorized alternate break to keep the mandated single-line needle intact, producing a zero-deletion NOTICE diff instead of the expected one-line replace
+- [Phase 161]: Phase 161 Plan 02: employer-name scrub needle derived in-process from an out-of-repository staging file (never persisted in the repo, per Phase 155-03's own design); count 0 across all files this plan creates or edits
 
 ### Pending Todos
 
@@ -160,8 +163,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-17T02:12:50.438Z
-Stopped at: Completed 161-01-PLAN.md
+Last session: 2026-09-17T02:29:51.858Z
+Stopped at: Completed 161-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 161`
 
