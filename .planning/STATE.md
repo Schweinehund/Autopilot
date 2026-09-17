@@ -5,16 +5,16 @@ milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
 current_phase_name: Vendor De-Bloat into the Kiosk Baseline
 status: executing
-stopped_at: Completed 161-02-PLAN.md
-last_updated: "2026-09-17T02:29:52.250Z"
+stopped_at: Completed 161-03-PLAN.md
+last_updated: "2026-09-17T02:56:30.340Z"
 last_activity: 2026-09-16
 last_activity_desc: Phase 161 execution started
-state_head: da71b68e00746de9c6741eba15be9b9bc8574bf5
+state_head: 579182c7801259bc43d92a1b69485a7e382f7bc3
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 13
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-09-15 after Phase 160)
 ## Current Position
 
 Phase: 161 (Vendor De-Bloat into the Kiosk Baseline) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-09-16 — Phase 161 execution started
 
@@ -73,6 +73,7 @@ Last activity: 2026-09-16 — Phase 161 execution started
 | Phase 160 P03 | 30min | 3 tasks | 2 files |
 | Phase 161 P01 | 16min | 3 tasks | 4 files |
 | Phase 161 P02 | 15min | 3 tasks | 5 files |
+| Phase 161 P03 | 35min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,7 @@ Last activity: 2026-09-16 — Phase 161 execution started
 - [Phase 161]: The four D-27 amendment strings were extracted programmatically from 161-DRAFTS.md's fenced blocks and appended via exact-match line replacement rather than retyped — eliminates transcription risk for byte-exact strings up to 1,850 characters (D-27, D-38, D-55, D-56)
 - [Phase 161]: Phase 161 Plan 02: E-N3 header wrap used the pre-authorized alternate break to keep the mandated single-line needle intact, producing a zero-deletion NOTICE diff instead of the expected one-line replace
 - [Phase 161]: Phase 161 Plan 02: employer-name scrub needle derived in-process from an out-of-repository staging file (never persisted in the repo, per Phase 155-03's own design); count 0 across all files this plan creates or edits
+- [Phase 161]: Phase 161 Plan 03: three fresh-context confirmation rounds (D-52 cap) all found zero PROTECTED-list breaches in RemoveBloat.ps1; the round-3 residual (a Dell hardcoded-path uninstaller trio and one registry write) was folded into the README and recorded as a named open finding on the README surface itself, not only in the evidence file — D-52 requires a suppressed residual never be the outcome at the round cap
 
 ### Pending Todos
 
@@ -163,8 +165,8 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-17T02:29:51.858Z
-Stopped at: Completed 161-02-PLAN.md
+Last session: 2026-09-17T02:56:22.051Z
+Stopped at: Completed 161-03-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 161`
 
