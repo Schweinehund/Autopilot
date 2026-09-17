@@ -5,9 +5,15 @@
 ##
 ## PURPOSE: run DURING ESP device setup, BEFORE the kiosk account exists, so the first kiosk profile
 ## is born clean: no OEM/consumer bloat to block, no OneDrive seed to install, no launcher popups.
-## ESP-BLOCKING by design: local-only work, seconds to run, no network dependencies.
+## ESP-BLOCKING by design. The EEE scripts are local-only; the vendored De-Bloat script has five
+## runtime fetch paths, four conditional and one - the Office Deployment Tool - unconditional during
+## ESP. All five are listed in README.
 ##
-## Files\ must contain (copied from the SAME repo commit as the remediation packages - one source):
+## Files\ must contain - the two EEE scripts copied from the SAME repo commit as the remediation
+## packages (one source for their pattern lists), plus the vendored De-Bloat script and its license
+## text at the commit NOTICE pins:
+##   RemoveBloat.ps1              (vendored, GPL-3.0, see NOTICE)
+##   LICENSE.GPL-3.0.txt          (vendored license text, see NOTICE)
 ##   Remove-KioskOemBloat.ps1     (pattern list vN - lockstep with Detect-KioskOemBloat.ps1)
 ##   Remove-KioskRunTasks.ps1     (v2+ - launchers, OneDrive root fixes, orphan profiles)
 ##
@@ -18,15 +24,15 @@
 $adtSession = @{
     AppVendor                   = '<ORGANIZATION> EEE'
     AppName                     = 'Kiosk-Baseline'
-    AppVersion                  = '1.0.0'          # bump whenever either bundled script's lists change
+    AppVersion                  = '1.1.0'          # bump whenever either bundled script's lists change
     AppArch                     = 'x64'
     AppLang                     = 'EN'
     AppRevision                 = '01'
     AppSuccessExitCodes         = @(0)
     AppRebootExitCodes          = @(1641, 3010)
     AppProcessesToClose         = @()
-    AppScriptVersion            = '1.0.0'
-    AppScriptDate               = '2026-08-29'
+    AppScriptVersion            = '1.1.0'
+    AppScriptDate               = '2026-09-16'
     AppScriptAuthor             = 'Josh'
     InstallName                 = ''
     InstallTitle                = ''
@@ -38,15 +44,25 @@ $adtSession = @{
 
 $script:RegKey = 'HKLM:\SOFTWARE\EEE\KioskBaseline'
 
+$script:BundledScripts = @(
+    @{ File = 'RemoveBloat.ps1';           Args = '-AllowStartMenuReset false' }   # vendored, GPL-3.0, see NOTICE.
+                                                                                   # No -customwhitelist (owner ruling 2026-09-15); adding one
+                                                                                   # re-runs the README PROTECTED review first.
+                                                                                   # NEVER pass -custombloatlist: it strips entries from the
+                                                                                   # upstream protection list (RemoveBloat.ps1:519).
+    @{ File = 'Remove-KioskOemBloat.ps1';  Args = '' }
+    @{ File = 'Remove-KioskRunTasks.ps1';  Args = '' }
+)
+
 function Install-ADTDeployment
 {
     ##================================================
     ## MARK: Pre-Install
     ##================================================
     $adtSession.InstallPhase = "Pre-$($adtSession.DeploymentType)"
-    foreach ($f in 'Remove-KioskOemBloat.ps1','Remove-KioskRunTasks.ps1') {
-        if (-not (Test-Path (Join-Path $adtSession.DirFiles $f))) {
-            Write-ADTLogEntry -Message "Bundled script missing: $f" -Severity 3
+    foreach ($s in $script:BundledScripts) {
+        if (-not (Test-Path (Join-Path $adtSession.DirFiles $s.File))) {
+            Write-ADTLogEntry -Message "Bundled script missing: $($s.File)" -Severity 3
             Close-ADTSession -ExitCode 70001
         }
     }
@@ -55,16 +71,26 @@ function Install-ADTDeployment
     ## MARK: Install
     ##================================================
     $adtSession.InstallPhase = $adtSession.DeploymentType
-    ## Invoke the SAME scripts the drift remediations use. Each is defensive (SilentlyContinue) and
-    ## exits 0; a non-zero here means the script itself is broken, which should fail provisioning
-    ## loudly rather than ship a device that only looks clean.
-    foreach ($f in 'Remove-KioskOemBloat.ps1','Remove-KioskRunTasks.ps1') {
-        Write-ADTLogEntry -Message "Running $f"
+    ## Invoke the bundled scripts in $script:BundledScripts order: the vendored De-Bloat pass first,
+    ## then the two EEE scripts the drift remediations also use. The EEE pair is defensive
+    ## (SilentlyContinue) and exits 0; the vendored script's exit behaviour is upstream's and is not
+    ## assumed here. A non-zero from any of them should fail provisioning loudly rather than ship a
+    ## device that only looks clean.
+    foreach ($s in $script:BundledScripts) {
+        Write-ADTLogEntry -Message "Running $($s.File) $($s.Args)"
+        # -ErrorAction SilentlyContinue is load-bearing, not defensive noise: without it PSADT 4.1.7
+        # throws on a non-zero exit and $r is never assigned, so the 70002 gate below is unreachable
+        # and the session exits 60001 instead - a code this package's Intune return-code map does not carry.
         $r = Start-ADTProcess -FilePath "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" `
-              -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$(Join-Path $adtSession.DirFiles $f)`"" `
-              -WindowStyle Hidden -PassThru
-        Write-ADTLogEntry -Message "$f exit code $($r.ExitCode)"
+              -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$(Join-Path $adtSession.DirFiles $s.File)`" $($s.Args)" `
+              -WindowStyle Hidden -PassThru -ErrorAction SilentlyContinue
+        Write-ADTLogEntry -Message "$($s.File) exit code $($r.ExitCode)"
         if ($r.ExitCode -ne 0) { Close-ADTSession -ExitCode 70002 }
+        if ($s.File -eq 'RemoveBloat.ps1') {
+            # De-Bloat mounts C:\Users\Default\NTUSER.DAT as HKU\temphive three times (:1250/:1417/:1529)
+            # and never checks its own unloads. A leaked mount blocks Remove-KioskRunTasks.ps1:52.
+            reg unload HKU\temphive 2>&1 | Out-Null
+        }
     }
 
     ##================================================
