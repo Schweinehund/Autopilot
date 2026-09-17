@@ -19,24 +19,44 @@ the deployed package is read here as discharging GPL-3.0's conveyance obligation
 script, and the aggregation reading is read as covering the EEE-authored scripts that travel
 beside it in the same package without themselves becoming derivative works.
 
-## Assemble (same repo commit as the remediation packages - ONE source for pattern lists)
+## Assemble (EEE scripts from the SAME repo commit as the remediation packages - ONE source for their pattern lists; De-Bloat vendored at the commit NOTICE pins)
 1. Fresh PSADT v4 template; paste KioskBaseline-Invoke-AppDeployToolkit-functions.ps1 over the
    session block + three deployment functions.
-2. Files\ <- Remove-KioskOemBloat.ps1, Remove-KioskRunTasks.ps1 (current copies included here).
-3. Sign scripts; IntuneWinAppUtil -c . -s Invoke-AppDeployToolkit.exe -o .\out
+2. Files\ <- RemoveBloat.ps1 (vendored, see NOTICE), LICENSE.GPL-3.0.txt, Remove-KioskOemBloat.ps1,
+   Remove-KioskRunTasks.ps1.
+3. Sign all three scripts (RemoveBloat.ps1, Remove-KioskOemBloat.ps1, Remove-KioskRunTasks.ps1) with
+   the same code-signing certificate, using the thumbprint idiom Build-WindowsAppPackage.ps1 already
+   documents (.PARAMETER CodeSigningCertThumbprint, lines 21-24; the Sign-Script function, lines 86-90:
+   Set-AuthenticodeSignature -TimestampServer ... -HashAlgorithm SHA256, cert selected by thumbprint
+   from Cert:\CurrentUser\My or Cert:\LocalMachine\My). The signature replaces the upstream author's
+   retained block on RemoveBloat.ps1. Signed bytes are never committed -- this repository's reading is
+   that Authenticode signing gates execution policy on the organization's own devices and does not
+   restrict a recipient's GPL-3.0 right to modify and run the script. Then IntuneWinAppUtil -c . -s
+   Invoke-AppDeployToolkit.exe -o .\out
 
 ## Intune Win32 app
 Install:   Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent
 Uninstall: Invoke-AppDeployToolkit.exe -DeploymentType Uninstall -DeployMode Silent
 System | no restart action | x64 | Win11 22H2+
-Detection: registry HKLM\SOFTWARE\EEE\KioskBaseline\Version equals <AppVersion-Rev>
-Returns: defaults + 70001/70002 Failed
+Detection: registry HKLM\SOFTWARE\EEE\KioskBaseline\Version equals <AppVersion-Rev>, currently 1.1.0-01.
+Returns: defaults + 70001 (bundled script missing) / 70002 (bundled script exit non-zero) Failed. The
+Install loop's -ErrorAction SilentlyContinue on Start-ADTProcess is what keeps 70002 reachable; without
+it PSADT 4.1.7 throws on a non-zero exit, $r is never assigned, and the session exits 60001 instead --
+a code this package's Intune return-code map does not carry.
 Assign: Required -> kiosk device group. ESP: ADD to blocking apps list (this package is the
 exception to the "nothing extra in ESP" rule: local-only, fast, and its whole point is pre-first-logon).
 
 ## Versioning
 Pattern change anywhere = update the shared Remove-* scripts once, re-upload to BOTH the remediation
 packages and this package's Files\, bump AppVersion + detection. Never let the copies diverge.
+
+Re-pinning RemoveBloat.ps1 to a new upstream commit: query GitHub's commits?path=De-Bloat/RemoveBloat.ps1
+for the new SHA, re-run this file's `## Kiosk-safety review` and `## Pattern-list reconciliation` against
+the new bytes, re-verify the Microsoft.MicrosoftEdge.Stable control count and the version-baked
+"Application Support for Chrome 122.0.6261.139" literal (either may move at a new pin), then update
+NOTICE's Plan 161 vendoring entry and bump this package's AppVersion/AppScriptVersion. Running this
+procedure twice at the same SHA changes nothing; running it at a new SHA re-derives every verdict that
+depended on the old one.
 
 ## Known runtime fetch paths and their triggers
 Five paths in `Files\RemoveBloat.ps1` reach outside the device at runtime. Four are conditional;

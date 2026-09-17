@@ -408,11 +408,11 @@ package-sources/kiosk-baseline/Files/LICENSE.GPL-3.0.txt
   Bytes: 35149.
 
 Post-161 edit -- KioskBaseline-Invoke-AppDeployToolkit-functions.ps1 and README.md
-  (date pending 161-04). Re-hashed after this phase's edits (three-script install loop, the
+  (2026-09-16). Re-hashed after this phase's edits (three-script install loop, the
   hive-unload line, AppVersion/AppScriptVersion 1.1.0, the README's attribution,
   fetch-path, review and reconciliation sections):
-    KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  PENDING (161-04)
-    README.md                                            PENDING (161-04)
+    KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  b01f783a35d9e23a0cda23425d43f7fba5a2c7787169a21480545c34a51f35d7
+    README.md                                            985e18bf8b3ada7340325f093ac322b6560c14e022574965263768cc114e0a28
 
 Plan 155-05 wiring
 ====================
