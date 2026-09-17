@@ -245,6 +245,110 @@ SKIPPED.
 
 ---
 
-*Sections 5 through 9 are owned by 161-03 and 161-04. `## Needle list handed to Phase 167
+## Task 1 (161-03): Review and reconciliation record
+
+**Five negative-control counts, measured against the committed bytes (matching the values recorded
+in the plan, none differed):**
+
+| Control | Expected | Measured |
+|---|---|---|
+| `Microsoft.MicrosoftEdge.Stable` | 2 | 2 (lines 332, 444) |
+| `edgeupdate` (case-insensitive) | 0 | 0 |
+| `Windows365` (case-insensitive) | 0 | 0 |
+| `AssignedAccess` | 1 | 1 (line 368) |
+| `New-PSDrive` | 0 | 0 |
+
+**Re-measured class-table line ranges.** Every range Task 1 cites in the README's `## Kiosk-safety
+review` class table was re-measured against the committed bytes in this task, not carried from
+`161-DRAFTS.md`'s pinned-SHA pointers. All ranges matched the DRAFTS pointer exactly (the vendored
+bytes have not moved since research — confirmed identically at `bf0f4bd0…`) **except one:** the
+McAfee block. DRAFTS pointed to lines 3945-3985 (the two removal-tool download/run sub-blocks
+only); the full `if ($mcafeeinstalled -eq "true")` block, re-measured in this task, actually spans
+lines 3943-4052 — it includes the WebAdvisor and SafeConnect cleanup that follows the two removal
+tools, which DRAFTS' narrower pointer did not cover. The wider, correct range is what the README
+records.
+
+**The Edge finding.** `Microsoft.MicrosoftEdge.Stable` is the one PROTECTED item that sits on the
+removal list (`$Bloatware`, line 444). It survives removal only because line 332 lists the
+identical string in `$WhitelistedApps`, which both `$Bloatware` removal predicates (lines 529 and
+547, `-notin $appstoignore`) exclude from the actual `Remove-AppxPackage` /
+`Remove-AppxProvisionedPackage` calls. The whitelist mechanism is a single line, not a structural
+property of the script — a future upstream commit could delete the whitelist entry without
+touching the bloat-list entry, which is why the README states this as a finding to be re-verified
+at every re-pin (`## Versioning`) rather than an assumed safety property. The negative-control
+count of 2 for the literal string (332 + 444) is the measurement that would change first if this
+finding ever stopped holding.
+
+**Reconciliation group totals.** Fifteen `Remove-KioskOemBloat.ps1` patterns checked against the
+vendored script's `$Bloatware` and `$WhitelistedApps` arrays: **7** removed by `$Bloatware`
+(`Microsoft.BingNews` 436, `Microsoft.BingSearch` 437, `Microsoft.BingWeather` 438,
+`Microsoft.GetHelp` 439, `Microsoft.GamingApp` 441, `Microsoft.MicrosoftSolitaireCollection` 448,
+`Microsoft.PowerAutomateDesktop` 457); **2** kept by the upstream whitelist
+(`Microsoft.MicrosoftStickyNotes` 305, `Microsoft.OutlookForWindows` 330); **5** not listed upstream
+(`MicrosoftWindows.Client.WebExperience` — commented out at 507, `aimgr`,
+`Microsoft.Office.ActionsServer`, `Clipchamp.Clipchamp` — changelog mention only at line 27,
+`AdvancedMicroDevicesInc-2.AMDRadeonSoftware`); **1** HP-publisher partial (`^AD2F1837\.`, catching
+one AppX entry at line 427 plus eight separate Win32 entries at 2199-2205/2219 that the AppX-only
+regex cannot reach). **7 + 2 + 5 + 1 = 15.** Conclusion recorded in the README: De-Bloat is not a
+superset of the EEE removal list; the overlay stays load-bearing for seven of the fifteen patterns,
+and neither EEE script changes (confirmed by `check-phase-155.mjs` reporting `V-155-ASSETPAIR-*`
+PASS both before and after this plan's commits).
+
+**Three named acceptances**, each recorded as an accepted finding rather than an omission:
+- **CrossDevice (D-14):** `MicrosoftWindows.CrossDevice` removal (line 480, `$Bloatware`) is
+  accepted. RE-237's `crossdeviceresume.exe` allow-list entry is not edited by this plan; the
+  consequence is noted for Phase 165.
+- **Quick Assist (D-19):** removal accepted as a measured exception (line 479, `$Bloatware`, no
+  whitelist entry); RE-237 Step 8 item 1 names Quick Assist as a viewing path elsewhere in the
+  recipe, and a note goes to Phase 165.
+- **Realtek audio (D-17):** `RealtekSemiconductorCorp.HPAudioControl` (AppX, HP Win32 list lines
+  2206 and 2209) removal is accepted; `RtkAudUService` (the Realtek audio user service) is
+  untouched by both `RemoveBloat.ps1` and `Remove-KioskOemBloat.ps1` — neither string appears in
+  either file — so the residue row stays consistent with the Phase 165 inventory.
+
+**Confirmation pass (D-52).** Three fresh-context rounds ran, logged verbatim in
+`161-FACTCHECK.md`. **Round 1** and **Round 2** and **Round 3** each returned zero omitted
+PROTECTED hits and unchanged negative-control counts; each round's disclosed completeness gaps
+(omitted removal classes below the PROTECTED-safety level) were folded into the README's class
+table before the next round dispatched. At the three-round cap, two small items remained (a further
+Dell hardcoded-path uninstaller trio, lines 2883-2914; a single non-hive registry-value write,
+lines 959-978) plus a minor count correction (six, not five, HP-block Start Menu `.lnk` targets).
+Per D-52, these were folded into the README and the residual is recorded as a **named open
+finding directly on the README surface** — the "Named open finding (D-52 round cap reached)"
+paragraph in `## Kiosk-safety review` — rather than suppressed. Zero PROTECTED-list breaches were
+found in any of the three rounds; the residual is a completeness-of-enumeration matter, not a
+safety finding.
+
+**Landing commit.** Task 1 (the README additions): `7dbedb20` —
+`docs(161-03): record the kiosk-safety review and pattern-list reconciliation in the Baseline
+README`. Task 2 (the confirmation-pass log and README corrections): `96dd1d01` —
+`docs(161-03): log the second-pass review dispatches and verdicts`.
+
+**PART G needle rows 23-26, re-measured at this plan's own landing commit (D-45):**
+
+| # | Needle | Value |
+|---|---|---|
+| 23 | README new H2s (`## Attribution and license`, `## Known runtime fetch paths and their triggers`, `## Kiosk-safety review`, `## Pattern-list reconciliation`) | 1 each. Only three of the four landed in this plan (the fetch-path, kiosk-safety-review and reconciliation headings, Task 1); `## Attribution and license` landed in 161-02 and is confirmed here as still present, unchanged. |
+| 24 | README existing final H2 (`## Validation (pilot)`) | 1 — still present, untouched by this plan. |
+| 24b | README `## Assemble` H2, E-B1 form | 0 — E-B1 lands in 161-04; the pre-edit `## Assemble` heading (this plan's own prohibition target) remains byte-unchanged at 1 occurrence, confirmed separately in Task 1's verify block. |
+
+**Excluded-identifier needle check (D-46, D-48), over the README, `161-FACTCHECK.md` and this
+section, each needle derived in-process and reported as a count only:** security-identifier
+sequence (`S-1-[0-9]+(-[0-9]+)+`) = 0; employer name (derived from the same out-of-repository,
+never-committed source 161-02 used, never printed) = 0; the certificate Subject/Issuer
+distinguished-name field prefix = 0, scoped to these three plan-owned files. (The ten pre-declared
+upstream GUIDs and the two git object identifiers — the pinned commit SHA
+and blob SHA-1 — recorded in this file's Task 1/161-02 section are pre-existing, publicly-declared
+identifiers under D-06/D-36, not the class of identifier D-46/D-48 excludes; they are unchanged by
+this plan and are not re-counted here as a violation.)
+
+**Validator confirmation:** `check-phase-54.mjs` — Summary: 32 passed, 0 failed, 0 skipped (both
+before and after this task's edits). `check-phase-155.mjs` — 10 PASS, 0 FAIL, 0 SKIPPED (both EEE
+asset pairs still byte-identical). `test ! -e scripts/validation/check-phase-161.mjs` succeeds — no
+leaf validator was authored in this phase; Phase 167 owns that leaf under HARN-04.
+
+---
+
+*Sections 6 through 9 are owned by 161-04. `## Needle list handed to Phase 167
 (HARN-04)` lands inside section 9 (D-42, D-57). No empty headings are pre-created for them here —
 each later plan creating its own section is what makes the shared-file dependency real (D-35).*
