@@ -8,6 +8,8 @@ SHA and the date the bytes were retrieved.
 
 This repository carries no LICENSE file. Founding one is deliberately out of
 scope for this phase (v1.22 Phase 155); the absence below is not an oversight.
+One third-party license text is carried in the tree for the vendored GPL-3.0 script;
+see the Files/RemoveBloat.ps1 entry under Plan 161 vendoring.
 
 Assets
 ------
@@ -341,6 +343,11 @@ of vendoring, that vendoring is a future plan's scope, following the same
 pinned-SHA-plus-GitHub-API-confirmation method 155-02 used for the Windows
 App files.
 
+CLOSED 2026-09-16 (v1.23 Phase 161). The admin decision this paragraph deferred
+was ruled at v1.23 scoping (2026-09-10) in favour of vendoring; the vendored
+bytes are recorded under "Plan 161 vendoring" below. This paragraph is retained
+as the record of the gap.
+
 Mechanical scrub verification note (backstop, not the control — see Task 3's
 full read of every delivered file). A GUID-shaped pattern search over the
 entire `assets/` tree returns two distinct values, not the single expected
@@ -359,6 +366,54 @@ Assigned Access profile identifier:
     recorded against it and break the "vendored verbatim" guarantee that
     hash exists to prove. Reported here as a finding, not scrubbed.
 
+Plan 161 vendoring
+==================
+
+package-sources/kiosk-baseline/Files/RemoveBloat.ps1
+  Origin: vendored verbatim from andrew-s-taylor/public, De-Bloat/RemoveBloat.ps1
+    (upstream-declared Version: 5.6.4 at line 20 of the script).
+  Pinned SHA: 11918c5085b1be5ba25ace74c5cf3a52bfd37b26   Blob SHA-1: 80c67dcf35418bd675dd2f8e1a4b2ade576a5440
+  Retrieval date: 2026-09-16 (GitHub API commits?path= returned this commit first;
+    the raw file was fetched twice at that SHA and the two downloads compared equal).
+  License: GPL-3.0 (repository root LICENSE at the same SHA); full text carried at
+    package-sources/kiosk-baseline/Files/LICENSE.GPL-3.0.txt.
+  Local modifications: NONE. The committed bytes equal the upstream blob; verify with
+    `git show HEAD:<this path> | sha256sum`. The repository's `* text=auto eol=lf`
+    rule is a no-op on this LF file.
+  Upstream Authenticode signature block: retained in-repo (lines 4229-4405, the
+    upstream author's certificate); replaced at assembly by the Baseline's own
+    signing step (README, Assemble).
+  Invocation: first in the Baseline's Install loop with `-AllowStartMenuReset false`
+    and no `-customwhitelist` (owner ruling 2026-09-15); `-custombloatlist` is never
+    passed on this device class (README, Kiosk-safety review).
+  Runtime fetch paths (5): start2.bin (line 1716; skipped by the parameter above);
+    HPConnOpt.iss (line 2288; only if the HP Connect Optimizer InstallShield folder
+    exists); mcafeeclean.zip (line 3951) and mccleanup.zip (line 3970; only if a
+    McAfee uninstall entry exists); the Office Deployment Tool from
+    officecdn.microsoft.com (line 4189) -- UNCONDITIONAL during ESP device setup,
+    because the enclosing gate at line 4097 tests OOBE completion, not an Intune
+    app count.
+  Upstream identifiers pre-declared (public, not scrubbed): ten distinct GUIDs at
+    lines 352-355, 818, 900-901, 966, 976, 1487, 1599, 2286, 2290, 2910, 3594
+    (fifteen occurrences).
+  Size: at 179,789 bytes this is the largest tracked file outside .planning/; the
+    repository-wide precedent named in RE-237 and above (1.6 MB) is not breached.
+  SHA256 (as written, equals upstream): bf0f4bd01991bb1becf5e33a24ad410c3781281afe3c1774cbf3225a17d24e99
+  Bytes: 179789
+
+package-sources/kiosk-baseline/Files/LICENSE.GPL-3.0.txt
+  Origin: verbatim andrew-s-taylor/public root LICENSE at the same pinned SHA
+    (GPL-3.0, "Version 3, 29 June 2007").
+  SHA256 (as written): 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986
+  Bytes: 35149.
+
+Post-161 edit -- KioskBaseline-Invoke-AppDeployToolkit-functions.ps1 and README.md
+  (date pending 161-04). Re-hashed after this phase's edits (three-script install loop, the
+  hive-unload line, AppVersion/AppScriptVersion 1.1.0, the README's attribution,
+  fetch-path, review and reconciliation sections):
+    KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  PENDING (161-04)
+    README.md                                            PENDING (161-04)
+
 Plan 155-05 wiring
 ====================
 
@@ -376,3 +431,12 @@ RemoveBloat.ps1 (Andrew Taylor's public De-Bloat — still an open "Ask the
 admin" decision in RE-237 Step 8, not vendored). No new asset was added to
 this tree by plan 155-05; every linked path above was already committed by
 plan 155-02 or 155-03.
+
+SUPERSEDED IN PART 2026-09-16 (v1.23 Phase 161). The paragraph above records
+plan 155-05's own wiring correctly and is retained unchanged. Two of its
+statements are no longer true of this tree: RemoveBloat.ps1 is now vendored
+here, at a pinned commit under GPL-3.0, and the "Ask the admin" decision it
+cites as still open was ruled in favour of vendoring at v1.23 scoping
+(2026-09-10) and is recorded in RE-237 Step 8. RE-237 now names two
+uncommitted artifacts, not three. See the Files/RemoveBloat.ps1 entry under
+Plan 161 vendoring above.

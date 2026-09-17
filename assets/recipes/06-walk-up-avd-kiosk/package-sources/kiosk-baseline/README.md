@@ -6,6 +6,19 @@ OneDrive seeding and OEM/consumer bloat are FIRST-LOGON effects. Cleaning during
 Daily remediations (OemDebloat, RunTaskCleanup) stay assigned as the drift janitor.
 Autopilot Reset wipes IME tracking -> this package re-runs during the reset's ESP automatically.
 
+## Attribution and license
+`Files\RemoveBloat.ps1` is vendored verbatim from Andrew Taylor's public De-Bloat script
+(`andrew-s-taylor/public`, `De-Bloat/RemoveBloat.ps1`) at the pinned commit recorded in this
+recipe tree's `NOTICE` file, under the GPL-3.0 license. The full license text is carried
+alongside it at `Files\LICENSE.GPL-3.0.txt`, so it travels inside the `.intunewin` package
+rather than depending on a runtime fetch. See `NOTICE` for the pinned commit SHA, blob SHA-1,
+retrieval date and SHA256 identity proof.
+
+This is the repository's own reading, not legal advice: shipping the full license text inside
+the deployed package is read here as discharging GPL-3.0's conveyance obligation for this
+script, and the aggregation reading is read as covering the EEE-authored scripts that travel
+beside it in the same package without themselves becoming derivative works.
+
 ## Assemble (same repo commit as the remediation packages - ONE source for pattern lists)
 1. Fresh PSADT v4 template; paste KioskBaseline-Invoke-AppDeployToolkit-functions.ps1 over the
    session block + three deployment functions.
