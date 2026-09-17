@@ -3,18 +3,18 @@ gsd_state_version: 1.0
 milestone: v1.23
 milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
-current_phase_name: vendor-de-bloat-into-the-kiosk-baseline
+current_phase_name: Vendor De-Bloat into the Kiosk Baseline
 status: executing
-stopped_at: Phase 161 context gathered
-last_updated: "2026-09-16T14:43:39.548Z"
-last_activity: 2026-09-15
-last_activity_desc: Phase 160 complete, transitioned to Phase 161
-state_head: e9b33afe7eb3c3d971b9ae8cbc3af2673163d91a
+stopped_at: Completed 161-01-PLAN.md
+last_updated: "2026-09-17T02:12:50.837Z"
+last_activity: 2026-09-16
+last_activity_desc: Phase 161 execution started
+state_head: 618b68d71815939c2c0e7d440d49c6446544dc36
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 7
-  completed_plans: 3
+  completed_plans: 4
   percent: 13
 ---
 
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-09-15 after Phase 160)
 
 ## Current Position
 
-Phase: 161 (vendor-de-bloat-into-the-kiosk-baseline) — READY TO EXECUTE
-Plan: Not started
+Phase: 161 (Vendor De-Bloat into the Kiosk Baseline) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-09-15 — Phase 160 complete, transitioned to Phase 161
+Last activity: 2026-09-16 — Phase 161 execution started
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Last activity: 2026-09-15 — Phase 160 complete, transitioned to Phase 161
 | Phase 160 P01 | 12min | 2 tasks | 3 files |
 | Phase 160 P02 | 3h10min | 6 tasks | 8 files |
 | Phase 160 P03 | 30min | 3 tasks | 2 files |
+| Phase 161 P01 | 16min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -102,6 +103,8 @@ Last activity: 2026-09-15 — Phase 160 complete, transitioned to Phase 161
 - [Phase 160]: 160-03: Notes-cell rewrite judged with a hand-built claude -p packet (zero modals; automated judge-packets.py would emit nothing); returned PRESERVED as process 6 of the phase's fact-check/judge count
 - [Phase 160]: 160-03: no new fact-check round ran for the ruling clause or new blockquote; both reuse 160-02-cleared sentences, named explicitly by 160-FACTCHECK.md round/entry number in 160-EVIDENCE.md
 - [Phase 160]: 160-03: post-edit apex check-phase-159.mjs 117 PASS / 0 FAIL at 119s, matching plan 01's 116s pre-edit anchor -- Phase 160's three plans introduced zero structural drift
+- [Phase 161]: No requirements.mark-complete call was made in 161-01; requirements: [] is the sole flip control, VND-01/02/03 remain unchecked — cmdRequirementsMarkComplete has no dry-run parameter and would flip VND-02/VND-03 before their content exists (D-40)
+- [Phase 161]: The four D-27 amendment strings were extracted programmatically from 161-DRAFTS.md's fenced blocks and appended via exact-match line replacement rather than retyped — eliminates transcription risk for byte-exact strings up to 1,850 characters (D-27, D-38, D-55, D-56)
 
 ### Pending Todos
 
@@ -157,9 +160,9 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-16T13:08:51.942Z
-Stopped at: Phase 161 context gathered
-Resume file: .planning/phases/161-vendor-de-bloat-into-the-kiosk-baseline/161-CONTEXT.md
+Last session: 2026-09-17T02:12:50.438Z
+Stopped at: Completed 161-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 161`
 
 ## Operator Next Steps
