@@ -1,0 +1,201 @@
+{
+  "phase_baseline": {
+    "sha": "fa951b900b40dae40a1964c44f04db7c4554ebd8",
+    "sha_short": "fa951b90",
+    "branch": "master",
+    "measured_at": "2026-09-17T02:10:00Z",
+    "path_note": "This artifact lives at .planning/phases/161-vendor-de-bloat-into-the-kiosk-baseline/ for the duration of v1.23; it relocates to .planning/milestones/v1.23-phases/ only at milestone close. Later plans in this phase must resolve the path rather than hardcode it.",
+    "structural_gate": {
+      "check-phase-54": {
+        "script": "scripts/validation/check-phase-54.mjs",
+        "invocation": "node scripts/validation/check-phase-54.mjs",
+        "exitCode": 0,
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0,
+        "tallyLine": "Summary: 32 passed, 0 failed, 0 skipped"
+      },
+      "c17-eee-contract": {
+        "script": "scripts/validation/c17-eee-contract.mjs",
+        "invocation": "node scripts/validation/c17-eee-contract.mjs",
+        "exitCode": 0,
+        "filesChecked": 237,
+        "totalViolations": 0,
+        "perAssertionViolations": {
+          "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0,
+          "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0
+        },
+        "tallyLine": "C17 summary: 237 files checked, 0 with violations, 0 total violations"
+      },
+      "check-nav-hub-links": {
+        "script": "scripts/validation/check-nav-hub-links.mjs",
+        "invocation": "node scripts/validation/check-nav-hub-links.mjs",
+        "exitCode": 0,
+        "hubPresenceFailures": 0,
+        "corpusLinkFailures": 0,
+        "tallyLine": "check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total"
+      },
+      "check-phase-155": {
+        "script": "scripts/validation/check-phase-155.mjs",
+        "invocation": "node scripts/validation/check-phase-155.mjs",
+        "exitCode": 0,
+        "pass": 10,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 10 PASS, 0 FAIL, 0 SKIPPED",
+        "note": "This validator pins only the two EEE script pairs (Remove-KioskOemBloat.ps1, Remove-KioskRunTasks.ps1) and NOTICE presence; it enumerates no directory, so adding new files under Files/ in 161-02 cannot move its tally."
+      },
+      "check-phase-156": {
+        "script": "scripts/validation/check-phase-156.mjs",
+        "invocation": "node scripts/validation/check-phase-156.mjs",
+        "exitCode": 0,
+        "pass": 10,
+        "fail": 0,
+        "skipped": 0,
+        "tallyLine": "Result: 10 PASS, 0 FAIL, 0 SKIPPED",
+        "note": "This run is also the V-156-ADMIN-4 reading: docs/recipes/06-walk-up-avd-kiosk-autologon.md carries exactly 10 occurrences of 'administrator', confirmed by the validator's own printed line rather than a separate hand grep."
+      },
+      "check-phase-159": {
+        "script": "scripts/validation/check-phase-159.mjs",
+        "invocation": "node scripts/validation/check-phase-159.mjs",
+        "exitCode": 0,
+        "pass": 117,
+        "fail": 0,
+        "skipped": 0,
+        "wallClock": "124s",
+        "tallyLine": "Result: 117 PASS, 0 FAIL, 0 SKIPPED (total checks: 117)",
+        "note": "Apex run un-nested (CHECK_PHASE_NESTED unset). Measured wall-clock via `date +%s` before/after: 124 seconds, well above the 30s short-circuit floor and the ~2 minute expected band; not the stale ~17s nested reading."
+      },
+      "claude-auth": {
+        "invocation": "claude auth status",
+        "loggedIn": true,
+        "authMethod": "claude.ai",
+        "subscriptionType": "max"
+      },
+      "claude-pong": {
+        "invocation": "claude -p \"reply with exactly the word PONG and nothing else\"",
+        "roundTrip": true,
+        "response": "PONG"
+      },
+      "npm-test": {
+        "invocation": "npm test",
+        "classification": "compare-not-count",
+        "exitCode": 1,
+        "outcome": "'vitest' is not recognized as an internal or external command, operable program or batch file -- frontend (src/frontend) test dependencies are not installed in this environment. This is the pre-existing failure 161-RESEARCH.md records, not a regression; the identical failure before and after this wave is the no-drift signal, never a pass requirement."
+      },
+      "git-status": {
+        "invocation": "git status --porcelain",
+        "output": [
+          " M .planning/STATE.md",
+          "?? .claude/skills/fireworks-tech-graph/",
+          "?? .planning/milestone.lock"
+        ],
+        "note": ".claude/skills/fireworks-tech-graph/ is a pre-existing user-added skill directory, out of scope for this phase (carried in STATE.md's live watch items). .planning/milestone.lock is also pre-existing at this reading and untouched by this plan's tasks. .planning/STATE.md shows modified because normal session/position tracking runs ahead of this task's own commits."
+      }
+    },
+    "style_residual": {
+      "note_directory_scope": "sweep3.py is run PER DIRECTORY (docs/recipes, then docs/reference) and never as bare `docs`, because bare `docs` reports a pre-existing TOTAL edit in docs/operations/ at HEAD that does not belong to this phase's scope, and a single FILE path always reports a vacuous 0 files / 0 edits rather than genuinely scanning anything.",
+      "note_blind_spots": "sweep3.py skips every line starting with the pipe character, so it can never see a table cell, and it sets the em-dash rule off unconditionally, so D-28's tight-em-dash requirement for new docs/ strings has no instrument at all and is a hand ruling in 161-04 Task 6.",
+      "note_files_field": "sweep3.py's own printed 'N files' figure counts files it TOUCHED (edited), not files scanned; with TOTAL edits at 0 this figure is always 0 by construction and is not itself the vacuity signal. The nonzero 'protected (em dashes left alone)' counts below prove the directory was genuinely walked and its content genuinely evaluated, which is the actual anti-vacuity evidence for a directory target (contrast the single-FILE-path case, which reports 0 files AND 0 protected entries).",
+      "check_py": {
+        "invocation_re237": "python .claude/skills/google-style/check.py --no-headings docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "candidates_re237": 93,
+        "classification": "report-only candidate count, never a threshold (9,363 candidates on the finished corpus per D-34)"
+      },
+      "sweep3": {
+        "invocation_recipes": "python scripts/docs-style/sweep3.py docs/recipes scripts/docs-style/_CONTENT-PINS.txt",
+        "totalEdits_recipes": 0,
+        "filesTouched_recipes": 0,
+        "protected_recipes": {
+          "table row": 291,
+          "validator-pinned string": 29,
+          "cited verbatim quotation": 1
+        },
+        "invocation_reference": "python scripts/docs-style/sweep3.py docs/reference scripts/docs-style/_CONTENT-PINS.txt",
+        "totalEdits_reference": 0,
+        "filesTouched_reference": 0,
+        "protected_reference": {
+          "table row": 848,
+          "heading line": 3,
+          "UI label line": 2
+        },
+        "pinsLoaded": 563
+      }
+    },
+    "pin_residency": {
+      "commandForm": "grep -oE|-oF <pattern> <file> | wc -l -- grep -c counts matching LINES not occurrences, and would under-report 'administrator' and 'Deploy-WindowsApp.ps1', which both share lines",
+      "ask_the_admin_re237": {
+        "invocation": "grep -cE '^> \\*\\*Ask the admin:\\*\\*' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "value": 5
+      },
+      "what_breaks_if_misconfigured_re237": {
+        "invocation": "grep -cE '^> \\*\\*What breaks if misconfigured:\\*\\*' docs/recipes/06-walk-up-avd-kiosk-autologon.md",
+        "value": 9
+      },
+      "administrator_re237": {
+        "invocation": "grep -oE 'administrator' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 10
+      },
+      "ruled_2026-09-10_re237": {
+        "invocation": "grep -oF 'ruled 2026-09-10' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 1,
+        "note": "161's delta over 160's baseline (D-39); 160-04 landed this string once. 161-04's RE-237 Step 8 ruling paragraph is expected to raise this to 2."
+      },
+      "deploy-windowsapp_ps1_re237": {
+        "invocation": "grep -oF 'Deploy-WindowsApp.ps1' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 4,
+        "note": "161's delta over 160's baseline (D-39)."
+      },
+      "ascii_double_hyphen_re237": {
+        "invocation": "grep -oF ' -- ' docs/recipes/06-walk-up-avd-kiosk-autologon.md | wc -l",
+        "value": 0,
+        "note": "161's delta over 160's baseline (D-39): the ASCII space-hyphen-hyphen-space negative on RE-237, confirming tight em dash (U+2014) is the only long-dash idiom this corpus file uses."
+      },
+      "blockquote_runs_re237": {
+        "invocation": "python one-liner: count contiguous '>'-prefixed line runs and the max character length of each run joined after stripping the leading '> '",
+        "runCount": 27,
+        "maxJoinedRunLength": 197
+      }
+    },
+    "line_endings": {
+      "docs/recipes/06-walk-up-avd-kiosk-autologon.md": {
+        "crlf": 326,
+        "bareLf": 0,
+        "endsWithNewline": true,
+        "bytes": 45844
+      },
+      "assets/recipes/06-walk-up-avd-kiosk/NOTICE": {
+        "crlf": 0,
+        "bareLf": 378,
+        "endsWithNewline": true,
+        "bytes": 24387
+      },
+      "assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/KioskBaseline-Invoke-AppDeployToolkit-functions.ps1": {
+        "crlf": 0,
+        "bareLf": 90,
+        "endsWithNewline": true,
+        "bytes": 4432
+      },
+      "assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/README.md": {
+        "crlf": 0,
+        "bareLf": 31,
+        "endsWithNewline": true,
+        "bytes": 1944
+      },
+      "pending": {
+        "assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/Files/RemoveBloat.ps1": {
+          "invocation": "git check-attr -a assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/Files/RemoveBloat.ps1",
+          "text": "auto",
+          "eol": "lf",
+          "note": "Path does not exist yet; check-attr answers from .gitattributes patterns and does not require the file to exist."
+        },
+        "assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/Files/LICENSE.GPL-3.0.txt": {
+          "invocation": "git check-attr -a assets/recipes/06-walk-up-avd-kiosk/package-sources/kiosk-baseline/Files/LICENSE.GPL-3.0.txt",
+          "text": "auto",
+          "eol": "lf",
+          "note": "Path does not exist yet; check-attr answers from .gitattributes patterns and does not require the file to exist. Both future vendored paths inheriting eol: lf makes D-06's 'the eol rule is a no-op on these LF files' claim a reading rather than an assumption."
+        }
+      }
+    }
+  }
+}
