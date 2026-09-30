@@ -89,7 +89,9 @@ function Install-ADTDeployment
         if ($s.File -eq 'RemoveBloat.ps1') {
             # De-Bloat mounts C:\Users\Default\NTUSER.DAT as HKU\temphive three times (:1250/:1417/:1529)
             # and never checks its own unloads. A leaked mount blocks Remove-KioskRunTasks.ps1:52.
-            reg unload HKU\temphive 2>&1 | Out-Null
+            # Redirect inside cmd: under the template's EAP Stop, Windows PowerShell 5.1 turns reg's stderr
+            # ("not loaded" is the normal case) into a terminating error when redirected here -> exit 60001.
+            cmd.exe /c 'reg unload HKU\temphive >nul 2>&1'
         }
     }
 

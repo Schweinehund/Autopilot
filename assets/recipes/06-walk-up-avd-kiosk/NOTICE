@@ -414,6 +414,13 @@ Post-161 edit -- KioskBaseline-Invoke-AppDeployToolkit-functions.ps1 and README.
     KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  b01f783a35d9e23a0cda23425d43f7fba5a2c7787169a21480545c34a51f35d7
     README.md                                            985e18bf8b3ada7340325f093ac322b6560c14e022574965263768cc114e0a28
 
+SUPERSEDED IN PART 2026-09-30 (v1.23 Phase 161, pilot fix). The functions-file
+  hash above is retained as the 2026-09-16 record. The pilot install exited
+  60001 (0x8007EA61): under the PSADT template's EAP Stop, Windows PowerShell
+  5.1 raised the hive-unload line's redirected reg stderr as a terminating
+  error. The unload now redirects inside cmd.exe. README.md is unchanged.
+    KioskBaseline-Invoke-AppDeployToolkit-functions.ps1  0439e9e959f47d3e8327889d9043dec6bb0422a33693c172d2a3437cf496a4fb
+
 Plan 155-05 wiring
 ====================
 
