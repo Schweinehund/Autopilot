@@ -16,12 +16,12 @@ platform: android
 
 ## Summary
 
-This guide covers Android Enterprise 802.1X Wi-Fi network profile configuration through Intune across Fully Managed (COBO), Corporate-Owned Work Profile (COPE), Dedicated (COSU), and Personally Owned Work Profile (BYOD-WP) enrollment modes, including certificate access and UPN-in-SAN requirements. It requires an Intune administrator role and, for enrollment provisioning, Managed Google Play and Zero-Touch portal access where applicable.
+This guide covers Android Enterprise 802.1X Wi-Fi network profile configuration through Intune across Fully Managed (COBO), Corporate-Owned Work Profile (COPE), Dedicated (COSU), and Personally Owned Work Profile (BYOD-WP) enrollment modes, including certificate access and UPN-in-SAN requirements. It requires an Intune administrator role and, for enrollment provisioning, Managed Google Play and Zero-Touch portal access where applicable. A separate section covers 802.1X Wi-Fi for Samsung devices that Knox Manage manages instead of Intune.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
 
-> **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
+> **Scope:** Intune and Knox Manage client-side configuration. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
 
 ## Common Profile Mechanics
 
@@ -123,10 +123,66 @@ For NAC (Network Access Control) environments where the RADIUS policy is keyed t
 
 ---
 
+<a id="knox-manage-8021x-wi-fi"></a>
+## Knox Manage 802.1X Wi-Fi
+
+Use this section only for Samsung devices that Knox Manage manages. Knox Manage is Samsung's own MDM, and this corpus treats it as an alternative to Intune rather than a companion to it; see the [Knox SKU disambiguation](../admin-setup-android/07-knox-mobile-enrollment.md#sku-disambiguation). None of the Intune profiles in the preceding sections reach a device that Knox Manage manages, so you configure the trusted root, the client certificate, and the Wi-Fi network in the Knox Manage console instead.
+
+The steps follow Samsung's documentation for the Knox Manage original console. Samsung's [new console Android Enterprise policies reference](https://docs.samsungknox.com/admin/knox-manage/new-console/manage-profiles-and-policies/android-enterprise-policies/) (last updated October 8, 2026) lists **802.1xEAP** as a **Security type** value but documents none of its EAP fields, so this section doesn't describe the new console. These steps weren't pilot-tested in this environment.
+
+### Register the Certificates
+
+Register the RADIUS server's root CA certificate in Knox Manage before you create the Wi-Fi policy. Samsung's [external certificates guide](https://docs.samsungknox.com/admin/knox-manage/original-console/configure/certificates/external-certificates/) (last updated January 22, 2024) documents these steps:
+
+1. In the Knox Manage console, go to **Advanced** > **Certificate** > **External Certificate**, and then click **Add**.
+2. In **Purpose**, select **Wi-Fi**.
+3. In **Type**, select **Root**.
+4. Upload the certificate file in CER, DER, PFX, or P12 format, and then click **Save**.
+
+How you register the client certificate depends on the **Select certificate to use** value you plan to set in the Wi-Fi policy:
+
+| Select certificate to use | Where the client certificate comes from |
+|---|---|
+| **EMM Management Certificate** | One external certificate with **Purpose** set to **Wi-Fi** and **Type** set to **User**, uploaded in PFX or P12 format at **Advanced** > **Certificate** > **External Certificate**. Samsung's reference states that all users share this one certificate, so RADIUS sees the same client identity from every device. |
+| **Connector interworking** | A per-user .p12 or .pfx certificate that Knox Manage finds through an AD/LDAP directory connector registered at **Advanced** > **System Integration** > **Directory Connector** with the service type **Profile Configuration(Certification)**. |
+| **Issuing external CA** | A certificate that your CA issues. Register the CA at **Advanced** > **Certificate** > **Certificate Authority (CA)** (ADCS, Generic SCEP, or NDES), and then add a template at **Advanced** > **Certificate** > **Certificate Template** with **Certificate Usage** set to **Wi-Fi**. See Samsung's [certificate authority guide](https://docs.samsungknox.com/admin/knox-manage/original-console/configure/certificates/certificate-authority-ca/) and [certificate templates guide](https://docs.samsungknox.com/admin/knox-manage/original-console/configure/certificates/certificate-templates/). |
+
+### Configure the Wi-Fi Policy
+
+In the Android Enterprise profile, add a Wi-Fi configuration and set the 802.1X fields. Samsung's [original console Android Enterprise policies reference](https://docs.samsungknox.com/admin/knox-manage/original-console/configure/profile/configure-profile-policies/android-enterprise-policies/) (last updated October 8, 2026) defines these fields:
+
+| Field | Value |
+|---|---|
+| **Security type** | **802.1xEAP** |
+| **EAP Method** | **PEAP** or **TTLS**. Samsung's reference lists no other method for this policy. |
+| **2-step authentication** | **PAP**, **MSCHAP**, or **MSCHAPV2** (the inner method) |
+| **Set user sign-in information** | **Manual Input**, **Connector interworking**, or **User Information** |
+| **Select certificate to use** | The client certificate source from the table in [Register the Certificates](#register-the-certificates) |
+| **CA certificate (Alias)** | The root certificate that you registered with **Purpose** set to **Wi-Fi** and **Type** set to **Root**. This field is required. |
+| **Domain** or **Alternate Subject** | The RADIUS server's domain or alternate subject names. You must provide at least one of the two. |
+| **Trust on First Use** | **Do Not Use** |
+
+Samsung's [EAP-PEAP knowledge base article](https://docs.samsungknox.com/admin/knox-manage/kbas/kba-142-wifi-eap-peap-with-cert-in-knox-manage/) (last updated August 26, 2025) states that Samsung devices running Android 13 or later with a June 2023 or later security patch require **CA certificate** and either **Domain** or **Alternate Subject**. If either is missing, the configuration fails, and you might see error KMA_D9001.
+
+### Compare With This Guide's Requirements
+
+Knox Manage can't meet every requirement this guide sets for Intune. Review each difference before you deploy:
+
+| Requirement in this guide | Knox Manage behavior, from Samsung's original console reference |
+|---|---|
+| [Server Validation](#server-validation) | Set **CA certificate (Alias)** and **Domain** or **Alternate Subject**. **Trust on First Use** (Android 13 or later) skips both requirements, so set it to **Do Not Use**. |
+| [Anonymous Outer Identity](#anonymous-outer-identity-identity-privacy) | The reference lists no identity privacy or outer identity field, so you can't set an anonymous outer identity from this policy. |
+| EAP-TLS | The **EAP Method** field offers PEAP and TTLS only. Samsung's EAP-PEAP knowledge base article names EAP-TLS among the EAP types that Knox Manage supports, but the Android Enterprise Wi-Fi policy doesn't list it. |
+| Work profile coverage | The original console reference states that the Wi-Fi configuration isn't applied to the work profile area, and isn't applied at all to a device enrolled as Work Profile. The new console reference lists **Work profile** as a supported system for its Wi-Fi policy. Test on a work profile device before you rely on either statement. |
+| MAC address randomization | The reference lists no MAC address randomization field. |
+
+---
+
 ## See Also
 
 - [EAP Method Overview](01-eap-method-overview.md) -- co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance
 - [Certificate Delivery Foundation](02-cert-delivery-foundation.md) -- deployment ordering rule, EKU requirements, SCEP/PKCS cert delivery, per-platform cert matrix (incl. Android Enterprise BYOD UPN-in-SAN requirement)
+- [Configure Knox Mobile Enrollment](../admin-setup-android/07-knox-mobile-enrollment.md) -- Knox SKUs, including why Knox Manage is an alternative MDM to Intune
 - [Network Authentication Glossary](../_glossary-network.md) -- 802.1X, EAP, RADIUS, supplicant, server-name validation, inner-outer identity, SCEP, PKCS, trusted root
 
 ---
@@ -141,4 +197,5 @@ For NAC (Network Access Control) environments where the RADIUS policy is keyed t
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-10-09 | Added the Knox Manage 802.1X Wi-Fi section (original console), sourced from Samsung Knox Manage documentation; not pilot-tested. Summary and scope updated. | — |
 | 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
