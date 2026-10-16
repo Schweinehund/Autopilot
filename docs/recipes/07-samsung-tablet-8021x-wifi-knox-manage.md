@@ -91,7 +91,7 @@ If you chose **EMM Management Certificate**, register the shared certificate:
 
    > **What breaks if misconfigured:** Samsung's reference states that all users share this one certificate, so RADIUS sees the same client identity from every tablet, and revoking it disconnects every tablet at once.
 
-If you chose **Issuing external CA**, register your CA and a Wi-Fi certificate template:
+If you chose **Issuing external CA**, register your CA and a Wi-Fi certificate template. For an internal Microsoft CA, follow [Knox Manage Certificate Authority: NDES and Samsung Cloud Connector Integration](08-knox-manage-ca-ndes-scc.md) instead of the following summary:
 
 1. Go to **Advanced** > **Certificate** > **Certificate Authority (CA)**, click **Add**, and register your CA as described in Samsung's [certificate authority guide](https://docs.samsungknox.com/admin/knox-manage/original-console/configure/certificates/certificate-authority-ca/) (last updated November 19, 2024).
 2. Go to **Advanced** > **Certificate** > **Certificate Template**, and then click **Add**.
