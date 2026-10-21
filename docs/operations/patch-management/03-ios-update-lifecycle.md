@@ -1,13 +1,13 @@
 ---
-last_verified: 2026-08-19
-review_by: 2026-10-18
+last_verified: 2026-10-21
+review_by: 2026-12-20
 applies_to: all
 audience: admin
 platform: iOS
 ---
 
-> **Platform applicability:** This guide is iOS/iPadOS-specific (DDM update policies;
-> unsupervised iOS 17+ retraction effective Aug 2025). For the cross-platform overview, see
+> **Platform applicability:** This guide is iOS/iPadOS-specific (DDM update policies for
+> supervised and unsupervised iOS 17+ devices). For the cross-platform overview, see
 > [Patch Management Overview](00-overview.md).
 > **Windows:** See [Windows WUfB Rings](01-windows-wufb-rings.md).
 > **macOS:** See [macOS DDM Update Enforcement](02-macos-update-enforcement.md).
@@ -16,10 +16,10 @@ platform: iOS
 # iOS Update Lifecycle: DDM-Based Enforcement
 
 This guide is the iOS/iPadOS-specific patch and update lifecycle reference. It covers the
-**Declarative Device Management (DDM)** update keys configured through Intune Apple update policies
-(Intune > Devices > Apple updates > iOS/iPadOS update policies) and the August 2025 retraction
-of the prior supervised-only-DDM constraint—DDM update enforcement now works on **unsupervised**
-iOS 17+ devices.
+**Declarative Device Management (DDM)** update keys, how to create the Intune settings catalog
+policy that delivers them, and which enrollment types can receive them. DDM update enforcement
+works on both supervised and **unsupervised** iOS 17+ devices; it doesn't work on User Enrollment
+devices.
 
 For the cross-platform comparison, see [Patch Management Overview](00-overview.md). For macOS
 DDM (the related Apple platform), see [macOS DDM Update Enforcement](02-macos-update-enforcement.md).
@@ -29,104 +29,214 @@ DDM (the related Apple platform), see [macOS DDM Update Enforcement](02-macos-up
 iOS update enforcement uses **DDM (Declarative Device Management)** as the canonical mechanism for
 iOS 17 and later. The DDM update model differs from legacy MDM update commands:
 
-- **Declarative:** The MDM server (Intune) declares the target version + enforcement deadline; the
-  OS itself enforces installation. The server does NOT push an explicit install command per device.
-- **Per-device assertion:** Each enrolled device receives a DDM update assertion describing the
-  required iOS version and deadline.
-- **OS-managed user notification:** The OS displays update prompts to the user per the DDM
-  assertion's grace-period configuration. The user cannot defer past the declared deadline.
+- **Declarative:** The MDM server (Intune) declares the target version and enforcement deadline;
+  the OS itself enforces installation. The server doesn't push an explicit install command to
+  each device.
+- **Per-device declaration:** Each enrolled device receives a DDM software update declaration
+  that describes the required iOS version and deadline.
+- **OS-managed user notification:** The OS shows update notifications to the user as the deadline
+  approaches, and the user can't defer past the deadline. A separate Software Update Settings
+  policy can limit these to the notification one hour before the deadline and the restart
+  countdown.
 
-Configuration path: **Intune > Devices > Apple updates > iOS/iPadOS update policies > Create**.
-Profile uses the DDM update keys enumerated in [DDM Update Keys](#ddm-update-keys).
+Configuration path: **Devices** > **Manage devices** > **Configuration** > **Create** > **New
+policy**, with platform **iOS/iPadOS** and profile type **Settings catalog**. The profile uses
+the DDM update keys enumerated in [DDM Update Keys](#ddm-update-keys); for the full procedure,
+see [Create the DDM Update Policy](#create-ddm-update-policy).
 
-**Eligibility:** iOS 17.0 and later. Earlier iOS versions cannot receive DDM update enforcement;
-they continue to use legacy MDM device-restriction "Defer software updates" (supervised-only) and
-the legacy `ScheduleOSUpdate` MDM command. Both legacy mechanisms are being deprecated by Apple.
+**Eligibility:** iOS 17.0 and later. Earlier iOS versions can't receive DDM update enforcement.
+They rely on the legacy, supervised-only MDM mechanisms: the device restriction "Defer software
+updates" (`forceDelayedSoftwareUpdates`) and the `ScheduleOSUpdate` command. Apple deprecated
+both in iOS 26.0 and removed them in iOS 27.0, and Microsoft states that Intune will end support
+for MDM-based Apple software update policies.
+
+**Source:** [Apple device-management schema: Schedule OS Update command](https://github.com/apple/device-management/blob/release/mdm/commands/system.update.schedule.yaml) and [Apple device-management schema: Restrictions payload](https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.applicationaccess.yaml) (Release-v27.0, updated 2026-09-17)—the supervised-only requirement, the iOS 26.0 deprecation, and the iOS 27.0 removal. [Use Microsoft Intune to manage software updates for supervised iOS/iPadOS devices](https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios) (updated 2025-10-15)—Intune's end of support for MDM-based policies.
 
 <a id="ddm-update-keys"></a>
 ## DDM Update Keys
 
-The DDM iOS update assertion exposes six fields in the Intune Settings Catalog—**Target OS
-Version**, **Target Build Version**, **Target Date Time**, **Delay in Days**, **Install Time**,
-and **Details URL**—as the display names for the underlying Apple declarative software-update
-payload keys. This guide's enforcement target is declared by three of those keys:
+Apple's software update enforcement declaration,
+`com.apple.configuration.softwareupdate.enforcement.specific`, has four keys. Intune shows them
+in the **Software Update** settings catalog configuration under the display names in the
+following table:
 
 | Settings Catalog Display Name | Declarative Key | Type | Description |
 |---|---|---|---|
-| Target OS Version | `TargetOSVersion` | string | Required iOS version (for example `18.2`). The device must reach this version by `TargetLocalDateTime`. |
-| Target Build Version | `TargetBuildVersion` | string | Required build version (for example `22C152`). Used when a specific build is required (rare; typically used for security-fix tracking). Optional if `TargetOSVersion` is present. |
-| Target Date Time | `TargetLocalDateTime` | string (ISO 8601 local) | Hard deadline for the device to be on `TargetOSVersion`. Format: `YYYY-MM-DDTHH:MM:SS` (device-local time). |
+| Target OS Version | `TargetOSVersion` | string | Required. The iOS version that the device must reach by `TargetLocalDateTime`, for example `18.2`. |
+| Target Build Version | `TargetBuildVersion` | string | Optional. A specific build, for example `22C152`, which can include a supplemental version identifier. Apple recommends it for testing during seeding (beta) periods. |
+| Target Date Time | `TargetLocalDateTime` | string (local date and time) | Required. The hard deadline for the device to be on `TargetOSVersion`. Format: `YYYY-MM-DDTHH:MM:SS` in device-local time, with no time zone offset. |
+| Details URL | `DetailsURL` | string | Optional. A web page with your organization's details about the enforced update. |
 
-The Intune Apple update policy blade exposes these as form fields under their Settings Catalog
-display names. The underlying DDM assertion JSON shows the declarative keys directly when
-inspected through Intune Configuration Audit logs.
+**Minimum required keys:** `TargetOSVersion` + `TargetLocalDateTime`.
 
-**Minimum required keys:** `TargetOSVersion` + `TargetLocalDateTime`. `TargetBuildVersion` is an
-optional qualifier.
+Intune's **Software Update Enforce Latest** configuration has two more settings, **Delay in
+Days** and **Install Time**. Neither has a matching key in Apple's enforcement declaration, and
+Apple's schema defines no separate enforce-latest declaration.
 
-**`OfferPrograms` is a separate key, not an enforcement key.** It lives in Apple's `Beta`
-dictionary and governs beta-programme enrolment (developer beta, public beta, etc.), not update
-enforcement—it is unrelated to the preceding three enforcement keys despite sitting in the same
-Settings Catalog category. This guide previously listed it as a fourth "basic" update-enforcement
-key; that categorisation is corrected here.
+If `TargetOSVersion` and `TargetBuildVersion` don't match an available update, the device keeps
+the declaration active but can't update. If a matching update becomes available later, the
+device processes it.
 
-**Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) (published 2024-09-25)—the `Beta` dictionary's beta-programme key definition, cited in the preceding paragraph.
+**`OfferPrograms` isn't an enforcement key.** It's a subkey of the `Beta` dictionary in a separate
+declaration, `com.apple.configuration.softwareupdate.settings`, and it governs beta-program
+enrollment, not update enforcement. Intune shows that declaration as its own **Software Update
+Settings** configuration in the same **Declarative Device Management** category. Earlier
+versions of this guide listed `OfferPrograms` as a fourth enforcement key.
 
-**Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) (published 2024-09-25) and [Intune: ref-apple-settings](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/ref-apple-settings) (updated 2026-07-01)—Settings Catalog display names for the three enforcement keys.
+**Source:** [Apple device-management schema: softwareupdate.enforcement.specific](https://github.com/apple/device-management/blob/release/declarative/declarations/configurations/softwareupdate.enforcement.specific.yaml) and [softwareupdate.settings](https://github.com/apple/device-management/blob/release/declarative/declarations/configurations/softwareupdate.settings.yaml) (Release-v27.0, updated 2026-09-17)—the four enforcement keys, their presence and formats, the unmatched-update behavior, and the `Beta` dictionary.
 
-## Supervised-Only Retraction (Effective August 2025)
+**Source:** [Configure update policies for Apple devices](https://learn.microsoft.com/en-us/intune/device-updates/apple/) (updated 2026-02-24)—the Settings Catalog display names and the Enforce Latest settings. [Intune: ref-apple-settings](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/ref-apple-settings) (updated 2024-11-13)—Software Update and Software Update Settings as separate configurations in the Declarative Device Management category.
 
-The DDM iOS update enforcement model originally constrained DDM update keys to **supervised**
-devices only (Apple Configurator, Apple Business Manager / Apple School Manager auto-enrolled
-devices). That constraint has been retracted as of August 2025.
+<a id="create-ddm-update-policy"></a>
+## Create the DDM Update Policy
 
-> ⚠️ **August 2025 retraction:** As of August 2025, the DDM update-enforcement keys
-> (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime) work on **unsupervised** iOS 17+
-> devices—the prior supervised-only constraint has been retracted. Both ADE-supervised and
-> Device-Enrollment-unsupervised iOS 17+ devices can now receive DDM update enforcement.
-> `OfferPrograms` is a separate `Beta`-dictionary key for beta-programme enrolment, not an
-> update-enforcement key, and is unaffected by this retraction.
+You create a DDM update policy as a settings catalog profile. The settings catalog offers two
+update categories under **Declarative Device Management**. Choose the one that matches how much
+control you need over the OS version:
 
-**Implications for BYOD fleets:** Tenants enrolling iOS devices through User Enrollment (BYOD) or
-Device Enrollment (corporate-owned non-supervised) can now apply DDM update enforcement—
-previously they would have been gated on the supervised-only constraint and forced to use legacy
-MDM `ScheduleOSUpdate` (now deprecated).
+- **Software Update Enforce Latest:** devices install the most recent OS version that Apple
+  releases, after a delay that you set. Use this category when you want fast patching with
+  little ongoing administrator work.
+- **Software Update:** devices install the OS version that you specify, by a deadline that you
+  set. Use this category when you need control over the version, for example for app
+  compatibility testing or a ring-based rollout. These are the keys in
+  [DDM Update Keys](#ddm-update-keys).
 
-**Implications for documentation:** This guide formally retracts the v1.3 supervised-only-DDM
-callout that previously appeared in `docs/admin-setup-ios/07-device-enrollment.md:35` (now
-corrected to reflect DDM-on-unsupervised). Cross-references from iOS admin-setup content forward
-here as the canonical iOS update enforcement reference.
+Before you start, confirm the following:
+
+- Devices run iOS 17.0 or iPadOS 17.0 or later.
+- Devices enrolled through Device Enrollment or Automated Device Enrollment. These are the
+  enrollment methods that Microsoft lists as supported for this policy.
+- Your account has at least the **Policy and Profile Manager** built-in Intune role.
+
+To create the policy, do the following:
+
+1. Sign in to the [Microsoft Intune admin center](https://go.microsoft.com/fwlink/?linkid=2109431).
+2. Select **Devices** > **Manage devices** > **Configuration** > **Create** > **New policy**.
+3. For **Platform**, select **iOS/iPadOS**.
+4. For **Profile type**, select **Settings catalog**, and then select **Create**.
+5. On the **Basics** page, enter a **Name** that identifies the platform, the update target, and
+   the ring, for example `iOS: DDM update - pilot ring`. Optionally, enter a **Description**.
+6. Select **Next**.
+7. On the **Configuration settings** page, select **Add settings**.
+8. In the settings picker, select the **Declarative Device Management** category, and then select
+   **Software Update Enforce Latest** or **Software Update**.
+9. Add the settings that your category needs, and then close the settings picker. For the
+   settings and their values, see
+   [Software Update Enforce Latest Settings](#software-update-enforce-latest-settings) or
+   [Software Update Settings for a Targeted Version](#software-update-targeted-settings).
+10. Enter a value for each setting, and then select **Next**.
+11. Optional: On the **Scope tags** page, add scope tags, and then select **Next**.
+12. On the **Assignments** page, select the group of users or devices that receives the policy,
+    and then select **Next**.
+13. On the **Review + create** page, review the settings, and then select **Create**.
+
+Devices apply the policy the next time they check in with Intune.
+
+To stage a rollout, create one **Software Update** policy for each ring and assign each policy to
+that ring's group. Set each policy's **Target Date Time** by using the offsets in
+[Rollout Patterns](#rollout-patterns).
+
+<a id="software-update-enforce-latest-settings"></a>
+### Software Update Enforce Latest Settings
+
+| Setting | Value |
+|---|---|
+| **Delay in Days** | The number of days before the update deadline takes effect. The delay counts from either the date that Apple posts the update or the date that you configure the policy. The delay sets only the enforcement deadline; it doesn't change when the device offers the update to users. |
+| **Install Time** | The local device time when the device enforces the update, in 24-hour format with a leading zero, for example `02:00`. Midnight is `00:00` and 11:59 PM is `23:59`. |
+
+<a id="software-update-targeted-settings"></a>
+### Software Update Settings for a Targeted Version
+
+| Setting | Value |
+|---|---|
+| **Target OS Version** | Required. The OS version that devices update to, for example `26.0`. You can include a supplemental version identifier, for example `26.0.1`. |
+| **Target Date Time** | Required. The date and time when the device forces the installation, in the device's local time zone. For example, a policy set to 2:00 PM installs at 2:00 PM local time on each device. |
+| **Target Build Version** | Optional. The build that devices update to, for example `25A354` or `25A354a`. If this value doesn't match **Target OS Version**, **Target OS Version** takes precedence. |
+| **Details URL** | Optional. The URL of a web page, typically hosted by your organization, that gives users help with the update. |
+
+If the user hasn't installed the update by **Target Date Time**, the device shows a one-minute
+countdown, and then installs the update and restarts. If the device is off at the deadline, it
+gets a one-hour grace period after it powers on, and then installs the update and restarts.
+
+While an update enforcement policy applies to the device, the device ignores its software update
+settings, including automatic update actions. The update can install before the deadline if the
+device is idle.
+
+<a id="confirm-ddm-update-policy"></a>
+### Confirm That Devices Update
+
+A policy status of **Success** means only that the policy installed on the device, not that the
+device updated. To confirm the update itself, use the Apple software update reports:
+
+- **Summary:** select **Reports** > **Device management** > **Apple updates** > **Summary**.
+- **Fleet report:** select **Reports** > **Device management** > **Apple updates** >
+  **Reports** > **Apple software update report**, and then select **Generate**.
+- **Failures:** select **Devices** > **Monitor** > **Apple software update failures**.
+- **Single device:** select **Devices** > **iOS/iPadOS**, select the device, and then select
+  **Monitor** > **iOS software updates**.
+
+After a device updates to a later OS version than a **Software Update** policy targets, that
+policy reports an error, because the device treats the policy as a downgrade. Remove that
+earlier-version policy from those devices.
+
+**Source:** [Configure update policies for Apple devices](https://learn.microsoft.com/en-us/intune/device-updates/apple/) (updated 2026-02-24)—both setting categories, setting values, deadline behavior, supported enrollment methods, and the Success-status caveat.
+
+**Source:** [Create a policy using settings catalog in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/) (updated 2026-09-17)—the admin center path, the minimum role, and the profile creation steps.
+
+**Source:** [View software update reports for Apple devices](https://learn.microsoft.com/en-us/intune/device-updates/apple/monitor-reports) (updated 2025-10-14)—the report paths.
+
+## Supervision and Enrollment Type
+
+DDM update enforcement doesn't require supervision. On iOS, Apple's enforcement declaration
+allows supervised devices and unsupervised Device Enrollment devices, and it has allowed
+unsupervised Device Enrollment since Apple introduced the declaration in iOS 17.0. The
+declaration has never allowed User Enrollment, so BYOD devices enrolled through User Enrollment
+can't receive DDM update enforcement.
+
+The supervised-only requirement belongs to the legacy mechanisms: the `ScheduleOSUpdate` command
+and the `forceDelayedSoftwareUpdates` restriction both require supervision, and Apple removed both
+in iOS 27.0.
+
+**Correction to earlier versions of this guide:** Earlier versions said that a supervised-only
+DDM constraint was retracted in August 2025 and that User Enrollment (BYOD) devices became
+eligible at that point. Apple's schema history supports neither claim. Every release of the
+declaration since iOS 17.0 allows unsupervised Device Enrollment, nothing changed in 2025, and no
+release allows User Enrollment.
+
+Cross-references from iOS admin-setup content forward here as the canonical iOS update
+enforcement reference.
+
+**Source:** [Apple device-management schema: softwareupdate.enforcement.specific](https://github.com/apple/device-management/blob/release/declarative/declarations/configurations/softwareupdate.enforcement.specific.yaml), commit history from Release_iOS-17-0_macOS-14-0 (2023-09-14) through Release-v27.0 (2026-09-17)—the allowed enrollment types for iOS in every release.
 
 ## Supervision Matrix: DDM Update Enforcement
 
-| Enrollment Type | Supervision | Pre-Aug-2025 | Post-Aug-2025 |
-|-----------------|-------------|--------------|---------------|
-| ADE / Apple Business Manager | Supervised | ✅ DDM update enforcement | ✅ DDM update enforcement |
-| ADE / Apple School Manager | Supervised | ✅ DDM update enforcement | ✅ DDM update enforcement |
-| Device Enrollment (corporate, non-supervised) | Unsupervised | ❌ DDM blocked | ✅ DDM update enforcement |
-| User Enrollment (BYOD) | Unsupervised | ❌ DDM blocked | ✅ DDM update enforcement |
-| Account-driven Device Enrollment | Unsupervised | ❌ DDM blocked | ✅ DDM update enforcement |
+| Enrollment Type | Supervision | Apple Declaration Allows | Microsoft Lists as Supported |
+|-----------------|-------------|--------------------------|------------------------------|
+| ADE / Apple Business Manager | Supervised | ✅ Yes | ✅ Yes (Automated Device Enrollment) |
+| ADE / Apple School Manager | Supervised | ✅ Yes | ✅ Yes (Automated Device Enrollment) |
+| Device Enrollment (corporate, non-supervised) | Unsupervised | ✅ Yes | ✅ Yes (Device Enrollment) |
+| Account-driven Device Enrollment | Unsupervised | ✅ Yes (device enrollment type) | Not listed separately |
+| User Enrollment (BYOD) | Unsupervised | ❌ No | ❌ Not listed |
 
-**Forward-compatibility note:** The supervised-only constraint retraction is part of Apple's
-broader move toward DDM as the canonical update enforcement primitive. Tenants planning long-term
-update enforcement should standardize on DDM regardless of supervision state. Legacy MDM
-`ScheduleOSUpdate` (the pre-DDM enforcement primitive) is being deprecated and may be removed in
-future iOS releases.
+**Forward-compatibility note:** Apple has moved update enforcement to DDM. Standardize long-term
+update enforcement on DDM regardless of supervision state. The
+legacy `ScheduleOSUpdate` command and `forceDelayedSoftwareUpdates` restriction no longer work on
+devices that run iOS 27.0 or later.
 
 ## Rollout Patterns
 
 Administrators typically deploy iOS DDM update policies through Intune in three rollout stages:
 
-1. **Pilot ring (devices in pilot Azure AD group):** TargetLocalDateTime = +14 days from policy
-   assignment. Validate update success rate before promotion.
+1. **Pilot ring (devices in a pilot Microsoft Entra group):** TargetLocalDateTime = +14 days from
+   policy assignment. Validate the update success rate before promotion.
 2. **Broad ring (production fleet):** TargetLocalDateTime = +30 days from major iOS release.
    Standard cadence for non-security-critical updates.
 3. **Critical ring (security-driven):** TargetLocalDateTime = +7 days. Used when Apple ships an
-   urgent security update (RSR—Rapid Security Response—for example).
+   urgent security update.
 
-Pre-Aug-2025 these rings could only contain supervised devices. Post-Aug-2025 the same rings can
-include unsupervised BYOD and corporate-non-supervised devices. The DDM assertion does not
-distinguish supervision state in the assertion payload itself.
+Each ring can include supervised devices and unsupervised Device Enrollment devices, but not
+User Enrollment devices. The DDM declaration itself doesn't distinguish supervision state.
 
 ## Related Resources
 
@@ -137,7 +247,7 @@ distinguish supervision state in the assertion payload itself.
 
 ## External References
 
-- [Software Updates Guide for iOS/iPadOS (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/protect/software-updates-guide-ios-ipados)
-- [iOS Device Restrictions (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/intune-service/protect/device-restrictions-ios)
-- [DDM Software Update (Apple Developer)](https://developer.apple.com/documentation/devicemanagement/softwareupdateenforcement)
-- [Apple Platform Deployment—Software Update](https://support.apple.com/guide/deployment/software-update-management-depc4c80847a/web)
+- [Configure Update Policies for Apple Devices (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-updates/apple/)
+- [Manage Software Updates for Supervised iOS/iPadOS Devices, Legacy MDM Policies (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios)
+- [Software Update Enforcement Specific (Apple Developer)](https://developer.apple.com/documentation/devicemanagement/softwareupdateenforcementspecific)
+- [About Software Updates (Apple Platform Deployment)](https://support.apple.com/guide/deployment/about-software-updates-depc4c80847a/web)
