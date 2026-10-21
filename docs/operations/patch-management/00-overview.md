@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-08-23
-review_by: 2026-10-22
+last_verified: 2026-10-21
+review_by: 2026-12-20
 applies_to: all
 audience: admin
 platform: cross-platform
@@ -12,7 +12,7 @@ platform: cross-platform
 > **Windows:** See [Windows WUfB Rings](01-windows-wufb-rings.md) for ring topology and Autopatch
 > disambiguation.
 > **macOS:** See [macOS Update Enforcement](02-macos-update-enforcement.md) for the DDM forward
-> path (legacy MDM commands deprecated and removed with Apple OS 26).
+> path (legacy MDM commands deprecated in Apple OS 26 and non-functional in Apple OS 27.0).
 > **iOS/iPadOS:** See [iOS Update Lifecycle](03-ios-update-lifecycle.md) for DDM update keys on
 > supervised and unsupervised iOS 17+ devices (not User Enrollment).
 > **Android:** See [Android Patch Delivery](04-android-patch-delivery.md) for Play Integrity
@@ -52,11 +52,11 @@ single row can be read horizontally to compare how each platform implements the 
 
 | Concept | Windows | macOS | iOS/iPadOS | Android | Linux |
 |---------|---------|-------|------------|---------|-------|
-| Cadence model | WUfB deployment rings (deferral periods) | macOS Software Update + DDM | iOS update policies (DDM iOS 17+) | Google Play monthly + OEM (LifeGuard / KSP) | distro-native `apt` + `unattended-upgrades`, no Intune orchestration |
-| Deferral mechanism | WUfB deployment rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated; pre-OS 26) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated in iOS 26.0, removed in iOS 27.0) | (No tenant-side deferral; Google Play handles) | (No Intune-side deferral; distro-native only) |
+| Cadence model | WUfB deployment rings (deferral periods) | macOS Software Update + DDM | DDM software update policies (iOS 17+) | Google Play monthly + OEM (LifeGuard / KSP) | distro-native `apt` + `unattended-upgrades`, no Intune orchestration |
+| Deferral mechanism | WUfB deployment rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated in Apple OS 26; non-functional in Apple OS 27.0) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated in iOS 26.0, removed in iOS 27.0) | (No tenant-side deferral; Google Play handles) | (No Intune-side deferral; distro-native only) |
 | Enforcement primitive | Deadline + grace period in Update ring | DDM "Software Update Enforce Latest" (Settings Catalog) | DDM update keys — Target OS Version, Target Build Version, Target Date Time (`OfferPrograms` recategorised: `Beta`-dict beta-enrolment key, not enforcement) | Play Integrity MEETS_STRONG_INTEGRITY (compliance gate) | (None — compliance policy + web-app CA is attestation only) |
-| Hotpatch / EOL surface | Hotpatch (Win 11 Ent 24H2+ default May 2026) + VBS prereq | Apple OS 26 removes legacy MDM | Legacy `ScheduleOSUpdate` and deferral restriction removed in iOS 27.0 | Android 13+ ≤12-month patch age; Zebra LifeGuard Jan 2026 GA; Samsung KSP | Livepatch via Ubuntu Pro (Canonical-side entitlement) |
-| Hard deadline | (soft cutovers; no hard deadline) | **[HARD-DEADLINE]** Apple OS 26 release | (soft cutover; legacy MDM update mechanisms removed in iOS 27.0) | **[HARD-DEADLINE]** Oct 31 2026 fleet compliance | (no hard deadline) |
+| Hotpatch / EOL surface | Hotpatch (Win 11 Ent 24H2+ default May 2026) + VBS prereq | Apple OS 26 deprecates legacy MDM; non-functional in Apple OS 27.0 | Legacy `ScheduleOSUpdate` and deferral restriction removed in iOS 27.0 | Android 13+ ≤12-month patch age; Zebra LifeGuard Jan 2026 GA; Samsung KSP | Livepatch via Ubuntu Pro (Canonical-side entitlement) |
+| Hard deadline | (soft cutovers; no hard deadline) | **[HARD-DEADLINE]** Apple OS 26 release (deprecation); Apple OS 27.0 (non-functional) | (soft cutover; legacy MDM update mechanisms removed in iOS 27.0) | **[HARD-DEADLINE]** Oct 31 2026 fleet compliance | (no hard deadline) |
 
 The table reads platforms as columns and concepts as rows. The two `**[HARD-DEADLINE]**` cells—
 macOS Apple OS 26 and Android October 31 2026—flag the only two hard cutovers in scope across
@@ -74,7 +74,8 @@ assigns. This section disambiguates them and the separate driver/firmware update
 
 - **WUfB deployment ring**—A Windows Update client policy in Intune configures deferral periods,
   deadlines, and restart behavior for quality and feature updates. Tenants assign devices to WUfB
-  deployment rings through Intune > Devices > Update rings, and devices receive Microsoft updates
+  deployment rings through **Devices** > **By platform** > **Windows** > **Manage updates** >
+  **Windows updates** in the Intune admin center, and devices receive Microsoft updates
   directly per the ring's configured deferral cadence. WUfB deployment rings are the manual,
   tenant-owned ring topology.
 - **Autopatch ring**—A Windows Autopatch ring is a service-managed device cohort. Windows
@@ -97,7 +98,7 @@ assigns. This section disambiguates them and the separate driver/firmware update
   [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md)
   for the full approval-mode, workflow, and deferral treatment.
 
-**Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02)
+**Source:** [Windows Update client policies](https://learn.microsoft.com/en-us/windows/deployment/update/windows-update-client-policies) (updated 2026-08-19) and [Manage Windows Update ring policies](https://learn.microsoft.com/en-us/intune/device-updates/windows/manage-update-rings) (updated 2026-01-12)—the admin center path
 
 **Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2025-06-17)
 
@@ -122,8 +123,9 @@ the prerequisite for choosing the right per-platform mechanism:
   days quality; 0–365 days feature); macOS legacy MDM `forceDelayedSoftwareUpdates`; iOS legacy
   device-restrictions "Defer software updates" (supervised-only). Deferral is a soft control: the
   user retains the ability to install earlier; the deferral expires after the configured
-  window. In modern Apple platforms, deferral is being deprecated in favor of declarative
-  enforcement (see the following section).
+  window. On Apple platforms, the legacy MDM deferral primitives no longer work in Apple OS 27.0;
+  deferral moves to the DDM Software Update Settings declaration, which is supervised-only on iOS,
+  and enforcement moves to the DDM enforcement declaration (see the following section).
 - **Enforcement**—A tenant-side hard requirement that the OS install an update by a specific
   deadline. The user does not retain "install later" optionality past the deadline. Examples:
   Windows Update client policy deadline + grace period (after the deadline elapses, force-install
@@ -146,9 +148,9 @@ the prerequisite for choosing the right per-platform mechanism:
 **Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) and [Intune: ref-apple-settings](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/ref-apple-settings) (Apple published 2024-09-25; Intune updated 2026-07-01)
 
 The deferral / enforcement / attestation distinction explains why each platform's update model
-looks superficially different but maps to the same conceptual control surface. Modern Apple
-platforms (Apple OS 26 forward) are deprecating deferral primitives entirely in favor of DDM
-enforcement; Android leans heavily on attestation for compliance signals; Windows offers all three
+looks superficially different but maps to the same conceptual control surface. Apple
+deprecated the legacy MDM deferral and enforcement primitives in Apple OS 26, and they no longer
+work in Apple OS 27.0; DDM carries both deferral and enforcement; Android leans heavily on attestation for compliance signals; Windows offers all three
 (Windows Update client policy deferral periods + deadlines for enforcement + Microsoft Defender +
 compliance signals for attestation-equivalent gating). See per-platform guides for migration
 timelines and concrete configuration steps.
@@ -192,30 +194,30 @@ across all five platforms and benefit from being addressed once at the program l
 re-discovered in each per-platform rollout:
 
 - **Cadence alignment**—Each platform has its own native update cadence (Windows monthly Patch
-  Tuesday plus quarterly feature updates; macOS major-version annual with security responses;
-  iOS rapid security responses plus point releases; Android monthly Google Play and OEM cycles;
+  Tuesday plus an annual feature update; macOS major-version annual with security responses;
+  iOS point releases plus Background Security Improvements, formerly Rapid Security Responses; Android monthly Google Play and OEM cycles;
   Linux distro-native `apt` updates on the distribution's own release and security-pocket cadence).
   Aligning fleet maintenance windows across platforms typically requires accepting that the
   cadences are independent—there is no single "patch day" across the fleet, and attempting to
   force one usually creates unnecessary deferral on the platform with the fastest native cadence.
 - **Compliance signal harmonization**—The five platforms expose different compliance signals
-  (Windows: Update Compliance + Endpoint Manager device-compliance state; macOS: device-compliance
-  state from MDM checkin; iOS: device-compliance state plus DDM acknowledgment; Android: Play
+  (Windows: Windows Update for Business reports + Intune device-compliance state; macOS: device-compliance
+  state from MDM checkin; iOS: device-compliance state plus DDM software update status reports; Android: Play
   Integrity verdicts plus device-compliance state; Linux: custom compliance script output only).
   A unified Conditional Access posture must
   account for the fact that each platform's "compliant" verdict has different latency and
   different remediation paths.
 - **Communications cadence**—End-user communications about update windows must be platform-aware.
   Users on Windows expect Windows Update client policy notifications and a deadline experience;
-  users on macOS expect either MDM-driven prompts (legacy) or DDM-enforced silent installs
-  (forward); users on iOS expect DDM update keys to deliver invisible enforcement; users on Android
+  users on macOS and iOS see DDM update notifications as the deadline approaches, then a restart
+  countdown and a forced install at the deadline; users on Android
   expect Google Play to handle most of the experience invisibly; users on Linux see whatever the
   distro's own update tooling shows, because Intune sends no Linux update notification at all.
   Unified user-facing messaging that
   does not match the actual platform UX creates support load.
 - **Reporting parity**—Reporting on patch posture across platforms requires accepting that the
   data models are not parity-aligned. Windows exposes ring-bound deferral state; macOS exposes
-  enforcement target version; iOS exposes DDM update key state; Android exposes patch level age
+  enforcement target version; iOS exposes DDM software update status (pending version, install state, failure reason); Android exposes patch level age
   plus Play Integrity verdict; Linux exposes only what a custom compliance script reports. Building
   a single dashboard that compares apples to apples requires
   either choosing a lowest-common-denominator metric (typically "is the device at or above the
@@ -225,6 +227,8 @@ re-discovered in each per-platform rollout:
   uniform when handled at the compliance-policy layer rather than at the per-platform update
   policy layer—exclude exception devices from compliance enforcement, and document the
   exception in a shared register, regardless of platform.
+
+**Source:** [Update release cycle for Windows clients](https://learn.microsoft.com/en-us/windows/deployment/update/release-cycle) (updated 2026-09-29)—the annual feature update. [Windows Update for Business reports overview](https://learn.microsoft.com/en-us/windows/deployment/update/wufb-reports-overview) (updated 2022-11-15)—the former Update Compliance pages redirect here. [Apple device-management schema: softwareupdate.settings](https://github.com/apple/device-management/blob/release/declarative/declarations/configurations/softwareupdate.settings.yaml) (Release-v27.0, updated 2026-09-17)—Background Security Improvements, notifications, and supervised-only deferrals on iOS. [Configure update policies for Apple devices](https://learn.microsoft.com/en-us/intune/device-updates/apple/) (updated 2026-02-24)—the deadline countdown and forced install.
 
 These considerations are program-level concerns; the per-platform guides handle the platform-specific
 mechanics. If the program-level decisions in this section are not yet made for your tenant, make
@@ -246,10 +250,10 @@ flow downstream from the program-level posture.
 - [Windows Application Updates](08-windows-app-updates.md)—application update mechanism
   choice, the Microsoft 365 Apps update channel model, Enterprise App Management, the Microsoft
   Store app (new) update split, and the Windows Package Manager control surface
-- [macOS Update Enforcement](02-macos-update-enforcement.md)—DDM forward path; Apple OS 26
-  legacy-command removal
-- [iOS Update Lifecycle](03-ios-update-lifecycle.md)—DDM-on-unsupervised-iOS-17+ retraction
-  (Aug 2025)
+- [macOS Update Enforcement](02-macos-update-enforcement.md)—DDM forward path; legacy commands deprecated in Apple OS 26
+  and non-functional in Apple OS 27.0
+- [iOS Update Lifecycle](03-ios-update-lifecycle.md)—DDM update keys, policy creation, supervision and
+  enrollment scope, and rollout patterns
 - [Android Patch Delivery](04-android-patch-delivery.md)—Play Integrity strong-integrity
   enforcement cascade; Zebra LifeGuard; Samsung KSP
 - [Linux Update Delivery](05-linux-update-delivery.md)—no native Intune update policy; Bash
