@@ -162,7 +162,7 @@ Device restrictions expose the largest set of supervised-only settings in iOS/iP
 
 ### Software Update Note
 
-The legacy "Defer software updates" setting in device restrictions remains supervised-only but is being deprecated by Apple. For software update enforcement, use the dedicated DDM-based path at **Devices** > **Apple updates** > **iOS/iPadOS update policies**, which works on both supervised and unsupervised devices (iOS 17.0+). Software update policies are not covered in this guide. For full iOS update enforcement guidance including DDM key reference, supervision matrix, and rollout patterns, see [iOS Update Lifecycle](../operations/patch-management/03-ios-update-lifecycle.md).
+The legacy "Defer software updates" setting in device restrictions is supervised-only, and Apple deprecated it in iOS 26.0 and removed it in iOS 27.0. For software update enforcement, use a DDM software update policy, which you create as a settings catalog profile at **Devices** > **Manage devices** > **Configuration** and which works on both supervised and unsupervised devices (iOS 17.0+). It doesn't apply to User Enrollment devices. Software update policies are not covered in this guide. For full iOS update enforcement guidance including DDM key reference, supervision matrix, and rollout patterns, see [iOS Update Lifecycle](../operations/patch-management/03-ios-update-lifecycle.md).
 
 ### General
 
@@ -178,7 +178,7 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Block app clips (iOS 14.0+) | 🔒 | Prevents App Clips from running on the device |
 | Force automatic date and time | 🔒 | Locks date/time to automatic network time; prevents manual changes |
 | Block VPN creation | 🔒 | Prevents users from creating VPN configurations in Settings |
-| Defer software updates (legacy MDM path — deprecating) | 🔒 | Delays OS update visibility; being replaced by DDM-based update policies |
+| Defer software updates (legacy MDM path — removed in iOS 27.0) | 🔒 | Delays OS update visibility; replaced by DDM software update policies |
 | Block screenshots and screen recording | — | Prevents user screenshots and screen recording |
 | Require iTunes Store password for all purchases | — | Prompts for App Store password on every purchase |
 | Block in-app purchases | — | Disables in-app purchase dialogs |
@@ -506,7 +506,7 @@ Block pairing with non-Configurator hosts prevents the device from establishing 
 | Block modification of account settings active during Entra re-auth requirement | Intune | User cannot re-authenticate; remediation requires device wipe | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; wipe remediation and CA re-auth investigation are L2+admin scope |
 | Activation Lock enabled without bypass code escrow | Intune | Device bricked at activation screen if user forgets Apple ID | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; Activation Lock bypass requires L2 + admin-scope recovery |
 | Home screen layout references uninstalled bundle ID | Intune | Blank icons on device home screen | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for home-screen config failures; L2 profile-delivery investigation |
-| Legacy "Defer software updates" used for update enforcement (deprecated path) | Intune | Updates not enforced; Apple is deprecating MDM-based update workloads — use DDM-based "iOS/iPadOS update policies" instead | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; DDM migration is admin-scope and out of L1 triage scope |
+| Legacy "Defer software updates" used for update enforcement (deprecated path) | Intune | Updates not enforced; Apple deprecated MDM-based update workloads and removed this setting in iOS 27.0 — use a DDM software update policy (settings catalog) instead | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; DDM migration is admin-scope and out of L1 triage scope |
 
 ## See Also
 

@@ -14,7 +14,7 @@ platform: cross-platform
 > **macOS:** See [macOS Update Enforcement](02-macos-update-enforcement.md) for the DDM forward
 > path (legacy MDM commands deprecated and removed with Apple OS 26).
 > **iOS/iPadOS:** See [iOS Update Lifecycle](03-ios-update-lifecycle.md) for DDM update keys on
-> unsupervised iOS 17+ devices (effective August 2025).
+> supervised and unsupervised iOS 17+ devices (not User Enrollment).
 > **Android:** See [Android Patch Delivery](04-android-patch-delivery.md) for Play Integrity
 > enforcement (October 31 2026 fleet compliance deadline) plus Zebra and Samsung OEM mechanisms.
 > **Linux:** See [Linux Update Delivery](05-linux-update-delivery.md) for the absence of any native
@@ -53,10 +53,10 @@ single row can be read horizontally to compare how each platform implements the 
 | Concept | Windows | macOS | iOS/iPadOS | Android | Linux |
 |---------|---------|-------|------------|---------|-------|
 | Cadence model | WUfB deployment rings (deferral periods) | macOS Software Update + DDM | iOS update policies (DDM iOS 17+) | Google Play monthly + OEM (LifeGuard / KSP) | distro-native `apt` + `unattended-upgrades`, no Intune orchestration |
-| Deferral mechanism | WUfB deployment rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated; pre-OS 26) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated) | (No tenant-side deferral; Google Play handles) | (No Intune-side deferral; distro-native only) |
+| Deferral mechanism | WUfB deployment rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated; pre-OS 26) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated in iOS 26.0, removed in iOS 27.0) | (No tenant-side deferral; Google Play handles) | (No Intune-side deferral; distro-native only) |
 | Enforcement primitive | Deadline + grace period in Update ring | DDM "Software Update Enforce Latest" (Settings Catalog) | DDM update keys — Target OS Version, Target Build Version, Target Date Time (`OfferPrograms` recategorised: `Beta`-dict beta-enrolment key, not enforcement) | Play Integrity MEETS_STRONG_INTEGRITY (compliance gate) | (None — compliance policy + web-app CA is attestation only) |
-| Hotpatch / EOL surface | Hotpatch (Win 11 Ent 24H2+ default May 2026) + VBS prereq | Apple OS 26 removes legacy MDM | Aug 2025 unsupervised DDM retraction | Android 13+ ≤12-month patch age; Zebra LifeGuard Jan 2026 GA; Samsung KSP | Livepatch via Ubuntu Pro (Canonical-side entitlement) |
-| Hard deadline | (soft cutovers; no hard deadline) | **[HARD-DEADLINE]** Apple OS 26 release | (soft cutover; Aug 2025 retraction) | **[HARD-DEADLINE]** Oct 31 2026 fleet compliance | (no hard deadline) |
+| Hotpatch / EOL surface | Hotpatch (Win 11 Ent 24H2+ default May 2026) + VBS prereq | Apple OS 26 removes legacy MDM | Legacy `ScheduleOSUpdate` and deferral restriction removed in iOS 27.0 | Android 13+ ≤12-month patch age; Zebra LifeGuard Jan 2026 GA; Samsung KSP | Livepatch via Ubuntu Pro (Canonical-side entitlement) |
+| Hard deadline | (soft cutovers; no hard deadline) | **[HARD-DEADLINE]** Apple OS 26 release | (soft cutover; legacy MDM update mechanisms removed in iOS 27.0) | **[HARD-DEADLINE]** Oct 31 2026 fleet compliance | (no hard deadline) |
 
 The table reads platforms as columns and concepts as rows. The two `**[HARD-DEADLINE]**` cells—
 macOS Apple OS 26 and Android October 31 2026—flag the only two hard cutovers in scope across
@@ -172,8 +172,8 @@ Use the following routing matrix to choose the correct per-platform guide for yo
   [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md).
 - For macOS tenants planning the migration from legacy MDM software-update commands to DDM
   declarative enforcement, start with [macOS Update Enforcement](02-macos-update-enforcement.md).
-- For iOS and iPadOS tenants planning DDM update key rollouts (especially on previously
-  unsupervised devices that became eligible in August 2025), start with
+- For iOS and iPadOS tenants planning DDM update key rollouts (including unsupervised
+  Device Enrollment devices, which have been eligible since iOS 17.0), start with
   [iOS Update Lifecycle](03-ios-update-lifecycle.md).
 - For Android tenants planning fleet compliance with Play Integrity verdict requirements, plus
   Zebra and Samsung OEM patch mechanisms, start with [Android Patch Delivery](04-android-patch-delivery.md).
