@@ -844,7 +844,7 @@ open gap cannot be ranked against a measured one.
 **Expedited update policies:**
 
 - Deleting an expedite policy removes it from Intune but does not uninstall an update that has already completed installation. Windows Update attempts to cancel an installation still in progress, and successful cancellation cannot be guaranteed.
-- This is one of the six recorded absences, and the only one with no operations guide behind it. No guide in this corpus covers expedited updates, so this entry carries no onward link—read it as a record made here rather than as a treatment carried from elsewhere, and treat the absence of a link as the honest answer rather than one invented to stand in for a guide.
+- This is one of the six recorded absences. [Windows Expedited Quality Updates](../operations/patch-management/10-windows-expedited-updates.md#manage-a-policy) covers the same limit, and [Emergency Security Update](10-windows-emergency-expedite.md#rollbackrecovery) applies it to a fleet rollout.
 
 **Hotpatch security updates:**
 

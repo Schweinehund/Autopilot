@@ -172,6 +172,11 @@ Use the following routing matrix to choose the correct per-platform guide for yo
 - For Windows tenants choosing an application update mechanism, setting a Microsoft 365 Apps update channel, or scoping what the Enterprise App Catalog and the Microsoft Store app (new) type can and cannot do, start with [Windows Application Updates](08-windows-app-updates.md).
 - For Windows tenants planning driver and firmware approval workflows, start with
   [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md).
+- For Windows tenants targeting or holding a Windows version, staging a feature update, or
+  upgrading Windows 10 devices to Windows 11, start with
+  [Windows Feature Updates](09-windows-feature-updates.md).
+- For Windows tenants installing one security update ahead of the update ring schedule, start with
+  [Windows Expedited Quality Updates](10-windows-expedited-updates.md).
 - For macOS tenants planning the migration from legacy MDM software-update commands to DDM
   declarative enforcement, start with [macOS Update Enforcement](02-macos-update-enforcement.md).
 - For iOS and iPadOS tenants planning DDM update key rollouts (including unsupervised
@@ -250,6 +255,10 @@ flow downstream from the program-level posture.
 - [Windows Application Updates](08-windows-app-updates.md)—application update mechanism
   choice, the Microsoft 365 Apps update channel model, Enterprise App Management, the Microsoft
   Store app (new) update split, and the Windows Package Manager control surface
+- [Windows Feature Updates](09-windows-feature-updates.md)—feature update policies, staged
+  rollouts, the Windows 11 upgrade, and the feature update reports
+- [Windows Expedited Quality Updates](10-windows-expedited-updates.md)—expedite policies, device
+  preparation, the restart deadline, and the expedite reports
 - [macOS Update Enforcement](02-macos-update-enforcement.md)—DDM forward path; legacy commands deprecated in Apple OS 26
   and non-functional in Apple OS 27.0
 - [iOS Update Lifecycle](03-ios-update-lifecycle.md)—DDM update keys, policy creation, supervision and
