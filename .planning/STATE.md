@@ -5,11 +5,11 @@ milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
 current_phase_name: Vendor De-Bloat into the Kiosk Baseline
 status: executing
-stopped_at: Completed 161-03-PLAN.md
-last_updated: "2026-11-18T17:25:25.703Z"
+stopped_at: Phase 161.1 context gathered (161-04 still owed)
+last_updated: "2026-11-18T20:46:02.703Z"
 last_activity: 2026-09-16
 last_activity_desc: Phase 161 execution started
-state_head: 9e98ab356d2d5d837c8f6e2bc9eaa3343056f1f3
+state_head: ed258359fea1d8719d74324a14ee15016df2f30e
 progress:
   total_phases: 9
   completed_phases: 1
@@ -170,9 +170,9 @@ docs/android-lifecycle/01-android-prerequisites.md
 
 ## Session Continuity
 
-Last session: 2026-09-17T02:56:22.051Z
-Stopped at: Completed 161-03-PLAN.md
-Resume file: None
+Last session: 2026-11-18T20:45:57.151Z
+Stopped at: Phase 161.1 context gathered (161-04 still owed)
+Resume file: .planning/phases/161.1-macos-platform-sso-recipes-and-zero-trust-configuration/161.1-CONTEXT.md
 Next action: `/gsd-discuss-phase 161`
 
 ## Operator Next Steps
