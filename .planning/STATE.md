@@ -113,7 +113,7 @@ Last activity: 2026-09-16 — Phase 161 execution started
 
 ### Pending Todos
 
-None open. v1.23 candidates are enumerated in `.planning/milestones/v1.22-DEFERRED-CLEANUP.md` (Part A: 9 new; Part B: 38 carried from v1.21; Part C: 2 new from the pilot's own follow-ups; Part D: 2 dropped-and-closed).
+- [2026-11-18] [docs] Document Knox Manage management of Galaxy Tab Active4 Pro and Active5 — [todo file](.planning/todos/pending/2026-11-18-document-knox-manage-management-of-galaxy-tab-active4-pro-an.md)
 
 ### Blockers/Concerns
 
