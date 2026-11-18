@@ -59,6 +59,7 @@ Full per-phase goals, dependencies, requirements and success criteria are in `##
 
 - [x] **Phase 160: Licensing / Hardware Decision Record** — Rule on MAK-Enterprise vs. OEM-licensed IoT-Enterprise hardware and land the decision in RE-237 and the licensing matrix (completed 2026-09-15)
 - [ ] **Phase 161: Vendor De-Bloat into the Kiosk Baseline** — Vendor `RemoveBloat.ps1` at a pinned, GPL-3.0-compliant commit, review it for kiosk-account safety, and wire it into the Baseline package
+- [ ] **Phase 161.1: macOS Platform SSO Recipes and Zero-Trust Configuration** (INSERTED) — Two macOS device recipes (Secure Enclave key, password sync) and a zero-trust configuration
 - [ ] **Phase 162: Riders — Glossary & DEFER-121-07-A Cleanup** — Add kiosk-class glossary terms and close the recurring `DEFER-121-07-A` open-item resurfacing
 - [ ] **Phase 163: STORIS ClickOnce Investigation** — Investigate the per-user ClickOnce install on the pilot device and record the outcome (positive or documented negative) in RE-237
 - [ ] **Phase 164: L2 Kiosk Block-Dialog Triage Runbook** — Ship and wire the numbered L2 runbook that triages the kiosk block-dialog symptom
@@ -123,6 +124,16 @@ Plans:
 **Wave 4** *(blocked on Wave 3 completion)*
 
 - [ ] 161-04-PLAN.md — VND-02 + VND-03: the `$script:BundledScripts` install order with the reachable 70002 gate and the hive-unload line, both comment surfaces amended, the README assembly/detection/re-pin sections, the `NOTICE` re-hash, the owner's `checkpoint:human-action` pilot run with a non-halting `decline` and an in-process redaction pass, the RE-237 Step 8 ruling and Asset Provenance correction with a fact check and a hand-built meaning judge, and the forty-row needle list handed to Phase 167
+
+### Phase 161.1: macOS Platform SSO Recipes and Zero-Trust Configuration (INSERTED)
+
+**Goal:** An admin can build a working ADE-enrolled Mac from either of two device recipes, passwordless Secure Enclave key Platform SSO or password-sync Platform SSO, and apply a zero-trust configuration that ties Platform SSO to compliance policy and Conditional Access; the recipes link to RE-123 and RE-124 rather than repeating them. Source todo: `.planning/todos/pending/2026-11-18-add-macos-platform-sso-recipes-and-zero-trust-configuration.md`.
+**Requirements**: TBD
+**Depends on:** Phase 161
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 161.1 to break down)
 
 ### Phase 162: Riders — Glossary & DEFER-121-07-A Cleanup
 

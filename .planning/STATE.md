@@ -1,21 +1,21 @@
 ---
-gsd_state_version: 1.0
+gsd_state_version: "1.0"
 milestone: v1.23
 milestone_name: phase summary (Phases 160-167) — IN PROGRESS
 current_phase: 161
 current_phase_name: Vendor De-Bloat into the Kiosk Baseline
 status: executing
 stopped_at: Completed 161-03-PLAN.md
-last_updated: "2026-09-17T02:56:30.340Z"
+last_updated: "2026-11-18T17:25:25.703Z"
 last_activity: 2026-09-16
 last_activity_desc: Phase 161 execution started
-state_head: 579182c7801259bc43d92a1b69485a7e382f7bc3
+state_head: 9e98ab356d2d5d837c8f6e2bc9eaa3343056f1f3
 progress:
-  total_phases: 8
+  total_phases: 9
   completed_phases: 1
   total_plans: 7
   completed_plans: 6
-  percent: 13
+  percent: 11
 ---
 
 # Project State
@@ -135,6 +135,10 @@ No open blockers. v1.22 shipped clean: 39/39 Validated, 6/6 phases verified, mil
 - **Glossary zero-margin hazard remains live.** Re-measure glossary `last_verified` / `review_by` at plan time; Phase 157 deliberately froze those fields when adding five terms.
 - **The corpus-wide past-due `review_by` sweep (217 of 271 at v1.22 scoping) stays OUT** until a milestone names it; no validator compares `review_by` to today.
 - **Untracked at archive time and left alone:** `.claude/skills/fireworks-tech-graph/` (a user-added skill directory, not part of any milestone).
+
+### Roadmap Evolution
+
+- Phase 161.1 inserted after Phase 161: macOS Platform SSO recipes (Secure Enclave key, password sync) and zero-trust configuration (URGENT)
 
 ## Deferred Items
 
