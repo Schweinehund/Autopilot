@@ -113,8 +113,8 @@ Last activity: 2026-09-16 — Phase 161 execution started
 
 ### Pending Todos
 
-- [2026-11-18] [docs] Document Knox Manage management of Galaxy Tab Active4 Pro and Active5 — [todo file](.planning/todos/pending/2026-11-18-document-knox-manage-management-of-galaxy-tab-active4-pro-an.md)
 - [2026-11-18] [docs] Add macOS Platform SSO recipes and zero-trust configuration — [todo file](.planning/todos/pending/2026-11-18-add-macos-platform-sso-recipes-and-zero-trust-configuration.md)
+- [2026-11-18] [docs] Document Knox Manage management of Galaxy Tab Active4 Pro and Active5 — [todo file](.planning/todos/pending/2026-11-18-document-knox-manage-management-of-galaxy-tab-active4-pro-an.md)
 
 ### Blockers/Concerns
 
