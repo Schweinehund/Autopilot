@@ -1065,14 +1065,60 @@
       "completedDate": "2026-09-10"
     },
     "v1.23": {
-      "epicKey": null,
-      "status": "blocked_auth",
-      "created": null,
-      "note": "2026-09-10: Epic NOT created. Atlassian MCP returns the generic 'trouble completing this action' error on every call and the REST fallback's refresh_token was rotated/invalidated by the earlier session. Re-run `/mcp` to re-auth, then `jira-milestone create v1.23` (fills epicKey, status=created) and `sync v1.23` after ROADMAP approval.",
-      "phases": {}
+      "epicKey": "RTS-1008",
+      "status": "in_progress",
+      "created": "2026-11-18",
+      "phases": {
+        "160": {
+          "issueKey": "RTS-1009",
+          "status": "done",
+          "name": "Licensing / Hardware Decision Record"
+        },
+        "161": {
+          "issueKey": "RTS-1010",
+          "status": "in_progress",
+          "name": "Vendor De-Bloat into the Kiosk Baseline"
+        },
+        "162": {
+          "issueKey": "RTS-1012",
+          "status": "todo",
+          "name": "Riders — Glossary & DEFER-121-07-A Cleanup"
+        },
+        "163": {
+          "issueKey": "RTS-1013",
+          "status": "todo",
+          "name": "STORIS ClickOnce Investigation"
+        },
+        "164": {
+          "issueKey": "RTS-1014",
+          "status": "todo",
+          "name": "L2 Kiosk Block-Dialog Triage Runbook"
+        },
+        "165": {
+          "issueKey": "RTS-1015",
+          "status": "todo",
+          "name": "Kiosk-Class Reference Rows"
+        },
+        "166": {
+          "issueKey": "RTS-1016",
+          "status": "todo",
+          "name": "AVD Host-Pool Entra SSO"
+        },
+        "167": {
+          "issueKey": "RTS-1017",
+          "status": "todo",
+          "name": "Harness Close"
+        },
+        "161.1": {
+          "issueKey": "RTS-1011",
+          "status": "todo",
+          "name": "macOS Platform SSO Recipes and Zero-Trust Configuration"
+        }
+      },
+      "note": "2026-11-18: auth restored; Epic and 9 phase Stories created and synced (160 Done, 161 In Progress, rest To Do). Superseded note: 2026-09-10: Epic NOT created. Atlassian MCP returns the generic 'trouble completing this action' error on every call and the REST fallback's refresh_token was rotated/invalidated by the earlier session. Re-run `/mcp` to re-auth, then `jira-milestone create v1.23` (fills epicKey, status=created) and `sync v1.23` after ROADMAP approval."
     }
   },
-  "lastUpdated": "2026-07-30",
+  "lastUpdated": "2026-11-18",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending.",
   "assigneeAccountId": "712020:70012a54-aa0a-46d8-bf7a-4b5eab5925bb"
 }
